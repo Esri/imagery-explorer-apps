@@ -1,11 +1,12 @@
 import '../../styles/index.css';
 import React from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import MapView from '../MapView/MapViewContainer';
 
 const AppLayout = () => {
     return (
         <ErrorBoundary>
-            <div>{IMAGERY_SERVICE}</div>
+            <MapView></MapView>
         </ErrorBoundary>
     );
 };
