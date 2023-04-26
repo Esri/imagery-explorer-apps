@@ -2,6 +2,7 @@ import '../../styles/index.css';
 import React, { lazy, Suspense, FC, useEffect, useState } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import MapView from '../MapView/MapViewContainer';
+import LoadingIndicator from './LoadingIndicator';
 
 const LandsatLayout = lazy(
     () =>
@@ -22,12 +23,7 @@ const AppLayout = () => {
     return (
         <ErrorBoundary>
             <MapView></MapView>
-            <Suspense
-                fallback={
-                    // <calcite-loader active></calcite-loader>
-                    null
-                }
-            >
+            <Suspense fallback={<LoadingIndicator />}>
                 {IMAGERY_SERVICE === 'landsat' && <LandsatLayout />}
                 {IMAGERY_SERVICE === 'sentinel-2' && <Sentinel2Layout />}
             </Suspense>
