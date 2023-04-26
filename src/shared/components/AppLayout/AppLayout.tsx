@@ -1,12 +1,36 @@
 import '../../styles/index.css';
-import React from 'react';
+import React, { lazy, Suspense, FC, useEffect, useState } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import MapView from '../MapView/MapViewContainer';
+
+const LandsatLayout = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "landsat" */
+            '../../../landsat-explorer/components/Layout/Layout'
+        )
+);
+const Sentinel2Layout = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "sentinel2" */
+            '../../../sentinel2-explorer/components/Layout/Layout'
+        )
+);
 
 const AppLayout = () => {
     return (
         <ErrorBoundary>
             <MapView></MapView>
+            <Suspense
+                fallback={
+                    // <calcite-loader active></calcite-loader>
+                    null
+                }
+            >
+                {IMAGERY_SERVICE === 'landsat' && <LandsatLayout />}
+                {IMAGERY_SERVICE === 'sentinel-2' && <Sentinel2Layout />}
+            </Suspense>
         </ErrorBoundary>
     );
 };
