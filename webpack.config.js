@@ -6,6 +6,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports =  (env, options)=> {
@@ -14,11 +15,30 @@ module.exports =  (env, options)=> {
 
     process.env.NODE_ENV = options.mode;
 
+    /**
+     * imagery service the explorer app to support:
+     * - landsat
+     * - sentinel-2
+     */
+    const imageryService = env['imagery-service']
+
+    if(
+        !imageryService || 
+        (imageryService !== 'landsat' && imageryService !== 'sentinel-2')
+    ){
+        throw new Error(
+            'A valid `imagery-service` is not found in environment variables, '+
+            'try `npm run start-landsat` or `npm run start-sentinel2` instead.\n'
+        )
+    } else {
+        console.log(`starting imagery explorer app for ${imageryService}\n`);
+    }
+
     return {
         mode: options.mode,
         entry: path.resolve(__dirname, './src/index.tsx'),
         output: {
-            path: path.resolve(__dirname, './dist'),
+            path: path.resolve(__dirname, `./dist/${imageryService}`),
             filename: '[name].[contenthash].js',
             chunkFilename: '[name].[contenthash].js',
             clean: true
@@ -68,6 +88,13 @@ module.exports =  (env, options)=> {
         plugins: [
             // need to use ForkTsCheckerWebpackPlugin because Babel loader ignores the compilation errors for Typescript
             new ForkTsCheckerWebpackPlugin(),
+            new DefinePlugin({
+                /**
+                 * node running environment
+                 */
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                IMAGERY_SERVICE: JSON.stringify(imageryService),
+            }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
