@@ -7,14 +7,14 @@ const LandsatLayout = lazy(
     () =>
         import(
             /* webpackChunkName: "landsat" */
-            '../../../landsat-explorer/components/Layout/Layout'
+            '../../../landsat-explorer/'
         )
 );
 const Sentinel2Layout = lazy(
     () =>
         import(
             /* webpackChunkName: "sentinel2" */
-            '../../../sentinel2-explorer/components/Layout/Layout'
+            '../../../sentinel2-explorer/'
         )
 );
 
