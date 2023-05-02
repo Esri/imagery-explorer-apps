@@ -75,9 +75,9 @@ const MonthGrid: FC<MonthGridProps> = ({ abbrLabel, days }: MonthGridProps) => {
     };
 
     return (
-        <div className="text-center border mx-1">
+        <div className="text-center mx-1">
             <h4>{abbrLabel}</h4>
-            <div className="grid grid-cols-4 gap-[1px]">{getGridCells()}</div>
+            <div className="grid grid-cols-4 gap-[2px]">{getGridCells()}</div>
         </div>
     );
 };
