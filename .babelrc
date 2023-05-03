@@ -8,5 +8,17 @@
         "@babel/plugin-syntax-dynamic-import",
         "@babel/plugin-proposal-class-properties",
         "@babel/plugin-transform-runtime"
-    ]
+    ],
+    "env": {
+        "production": {
+            "plugins": [
+                [
+                    "babel-plugin-jsx-remove-data-test-id",
+                    {
+                        "attributes": ["data-test-id", "data-testid", "data-test-attr"]
+                    }
+                ]
+            ]
+        }
+    }
 }
