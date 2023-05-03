@@ -75,7 +75,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                             availableDates.includes(formatedDateStr),
                     })}
                     key={index}
-                    data-test-id={formatedDateStr}
+                    data-testid={formatedDateStr}
                 ></div>
             );
         });

@@ -50,6 +50,7 @@
     "@storybook/react": "^7.0.7",
     "@storybook/react-webpack5": "^7.0.7",
     "@storybook/testing-library": "^0.0.14-next.2",
+    "@testing-library/react": "^14.0.0",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^26.0.15",
     "@types/react-redux": "^7.1.16",
