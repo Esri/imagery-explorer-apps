@@ -1,5 +1,68 @@
 import { format } from 'date-fns';
 
+export const MonthData = [
+    {
+        abbrLabel: 'J',
+        days: 31,
+        label: 'January',
+    },
+    {
+        abbrLabel: 'F',
+        days: 28,
+        label: 'February',
+    },
+    {
+        abbrLabel: 'M',
+        days: 31,
+        label: 'March',
+    },
+    {
+        abbrLabel: 'A',
+        days: 30,
+        label: 'April',
+    },
+    {
+        abbrLabel: 'M',
+        days: 31,
+        label: 'May',
+    },
+    {
+        abbrLabel: 'J',
+        days: 30,
+        label: 'June',
+    },
+    {
+        abbrLabel: 'J',
+        days: 31,
+        label: 'July',
+    },
+    {
+        abbrLabel: 'J',
+        days: 31,
+        label: 'August',
+    },
+    {
+        abbrLabel: 'S',
+        days: 30,
+        label: 'September',
+    },
+    {
+        abbrLabel: 'O',
+        days: 31,
+        label: 'October',
+    },
+    {
+        abbrLabel: 'N',
+        days: 30,
+        label: 'November',
+    },
+    {
+        abbrLabel: 'D',
+        days: 31,
+        label: 'December',
+    },
+];
+
 export const isLeapYear = (year: number) => {
     if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
         return true;

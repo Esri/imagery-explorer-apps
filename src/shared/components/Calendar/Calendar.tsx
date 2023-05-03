@@ -1,75 +1,30 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { getFormatedDateString, isLeapYear } from './helpers';
+import { MonthData, getFormatedDateString, isLeapYear } from './helpers';
 
-const MonthData = [
-    {
-        abbrLabel: 'J',
-        days: 31,
-        label: 'January',
-    },
-    {
-        abbrLabel: 'F',
-        days: 28,
-        label: 'February',
-    },
-    {
-        abbrLabel: 'M',
-        days: 31,
-        label: 'March',
-    },
-    {
-        abbrLabel: 'A',
-        days: 30,
-        label: 'April',
-    },
-    {
-        abbrLabel: 'M',
-        days: 31,
-        label: 'May',
-    },
-    {
-        abbrLabel: 'J',
-        days: 30,
-        label: 'June',
-    },
-    {
-        abbrLabel: 'J',
-        days: 31,
-        label: 'July',
-    },
-    {
-        abbrLabel: 'J',
-        days: 31,
-        label: 'August',
-    },
-    {
-        abbrLabel: 'S',
-        days: 30,
-        label: 'September',
-    },
-    {
-        abbrLabel: 'O',
-        days: 31,
-        label: 'October',
-    },
-    {
-        abbrLabel: 'N',
-        days: 30,
-        label: 'November',
-    },
-    {
-        abbrLabel: 'D',
-        days: 31,
-        label: 'December',
-    },
-];
-
-type MonthGridProps = {
+type CalendarProps = {
     /**
-     * selected year (e.g. `2023`)
+     * the selected year of the calendar app
      */
     year: number;
+    /**
+     * Selected imagery acquisition date as a string in format of (YYYY-MM-DD)
+     * @example `2023-05-03`
+     */
+    selectedDate: string;
+    /**
+     * array of dates in format of (YYYY-MM-DD) that contains updates of selected imagery service
+     * @example [`2023-01-03`, `2023-01-10`, `2023-01-17`, `2023-01-14`, ...]
+     */
+    availableDates: string[];
+    /**
+     * array of dates in format of (YYYY-MM-DD) that contains updates of selected imagery service with could covers
+     * @example [`2023-02-05`, `2023-05-10`, `2023-07-17`, ...]
+     */
+    cloudyDates: string[];
+};
+
+type MonthGridProps = CalendarProps & {
     /**
      * month number from 1 to 12
      */
@@ -89,6 +44,9 @@ const MonthGrid: FC<MonthGridProps> = ({
     month,
     abbrLabel,
     days,
+    selectedDate,
+    availableDates,
+    cloudyDates,
 }: MonthGridProps) => {
     const getGridCells = () => {
         return [...new Array(days)].map((_, index) => {
@@ -103,9 +61,19 @@ const MonthGrid: FC<MonthGridProps> = ({
 
             return (
                 <div
-                    className={classNames(
-                        'h-2 w-2 border border-custom-calendar-border'
-                    )}
+                    className={classNames('h-2 w-2 border', {
+                        'border-custom-calendar-border':
+                            formatedDateStr !== selectedDate,
+                        'border-custom-calendar-border-selected':
+                            formatedDateStr === selectedDate ||
+                            cloudyDates.includes(formatedDateStr),
+                        'bg-custom-calendar-background-selected':
+                            formatedDateStr === selectedDate,
+                        'bg-custom-calendar-background-cloudy':
+                            cloudyDates.includes(formatedDateStr),
+                        'bg-custom-calendar-background-available':
+                            availableDates.includes(formatedDateStr),
+                    })}
                     key={index}
                     data-test-id={formatedDateStr}
                 ></div>
@@ -125,19 +93,17 @@ const MonthGrid: FC<MonthGridProps> = ({
     );
 };
 
-type CalendarProps = {
-    /**
-     * the selected year of the calendar app
-     */
-    year: number;
-};
-
 /**
  * This calendar component enables filtering of the imagery layer and visualization of
  * additional information, such as dates with available data and those with cloudy conditions.
  * @returns
  */
-const Calendar: FC<CalendarProps> = ({ year }: CalendarProps) => {
+const Calendar: FC<CalendarProps> = ({
+    year,
+    selectedDate,
+    availableDates,
+    cloudyDates,
+}: CalendarProps) => {
     return (
         <div className="flex">
             {MonthData.map((d, index) => {
@@ -152,6 +118,9 @@ const Calendar: FC<CalendarProps> = ({ year }: CalendarProps) => {
                         key={d.label}
                         abbrLabel={d.abbrLabel}
                         days={days}
+                        selectedDate={selectedDate}
+                        availableDates={availableDates}
+                        cloudyDates={cloudyDates}
                     />
                 );
             })}
