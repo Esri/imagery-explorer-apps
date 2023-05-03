@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Calendar from './Calendar';
@@ -12,6 +13,15 @@ const meta: Meta<typeof Calendar> = {
     argTypes: {
         // backgroundColor: { control: 'color' },
     },
+    decorators: [
+        (Story) => {
+            return (
+                <div className="theme-background p-4">
+                    <Story />
+                </div>
+            );
+        },
+    ],
 };
 
 export default meta;
@@ -23,5 +33,6 @@ export const Primary: Story = {
     args: {
         // primary: true,
         // label: 'Button',
+        year: 2023,
     },
 };

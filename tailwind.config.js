@@ -22,6 +22,20 @@ module.exports = {
           90: 'rgba(0,35,47, .9)',
           85: 'rgba(0,35,47, .85)',
           70: 'rgba(0,35,47, .7)',
+        },
+        'calendar': {
+          border: {
+            DEFAULT: '#1C3D48',
+            // 'cloudy': '#678A97',
+            // 'available': '#678A97',
+            'selected': '#678A97',
+          },
+          background: {
+            DEFAULT: '#03232F',
+            // 'cloudy': '#03232F',
+            'available': '#678A97',
+            'selected': '#C2EEFE',
+          }
         }
       }
     },
