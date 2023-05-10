@@ -20,7 +20,7 @@ const BottomPanel: FC<Props> = ({ children }) => {
                     <div className="theme-background absolute top-0 left-0 w-full h-full"></div>
                     <div className="bottom-panel-top-shadow absolute top-0 left-0 w-full"></div>
 
-                    <div className="relative w-full h-full p-2 pt-4 text-custom-light-blue z-10 overflow-y-auto xl:overflow-y-unset">
+                    <div className="relative flex w-full h-full p-2 pt-4 text-custom-light-blue z-10 overflow-y-auto xl:overflow-y-unset">
                         {children}
                     </div>
                 </div>

@@ -23,6 +23,12 @@ type RasterFunctionInfos = {
 };
 
 /**
+ * cache the raster function infos using imagery service URL as key
+ */
+const rasterFunctionInfosByServiceURL: Map<string, RasterFunctionInfos> =
+    new Map();
+
+/**
  * The rasterFunctionInfos resource returns raster function information for the image services,
  * including the name, description, help, function type, and a thumbnail of preconfigured raster function templates.
  *
@@ -53,6 +59,10 @@ type RasterFunctionInfos = {
 export const fetchRasterFunctionInfos = async (
     imageryServiceURL: string
 ): Promise<RasterFunctionInfos> => {
+    if (rasterFunctionInfosByServiceURL.has(imageryServiceURL)) {
+        return rasterFunctionInfosByServiceURL.get(imageryServiceURL);
+    }
+
     try {
         const res = await fetch(
             `${imageryServiceURL}/rasterFunctionInfos?f=json`
@@ -69,6 +79,8 @@ export const fetchRasterFunctionInfos = async (
         if (data.error) {
             throw data.error;
         }
+
+        rasterFunctionInfosByServiceURL.set(imageryServiceURL, data);
 
         return data as RasterFunctionInfos;
     } catch (err) {

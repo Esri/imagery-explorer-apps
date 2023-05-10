@@ -1,6 +1,7 @@
 import React from 'react';
 import Calendar from '../../../shared/components/Calendar/Calendar';
 import BottomPanel from '../../../shared/components/BottomPanel/BottomPanel';
+import { RasterFunctionSelector } from '../RasterFunctionSelector';
 
 const Layout = () => {
     return (
@@ -12,6 +13,7 @@ const Layout = () => {
                     availableDates={[]}
                     cloudyDates={[]}
                 />
+                <RasterFunctionSelector />
             </BottomPanel>
         </>
     );

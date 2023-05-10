@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { RasterFunctionInfo } from '../../services/imagery-service/rasterFunctionInfos';
+import classNames from 'classnames';
 
 type Props = {
     /**
@@ -9,7 +10,7 @@ type Props = {
     /**
      * list of available raster functions
      */
-    rasterFunctionInfo: RasterFunctionInfo[];
+    rasterFunctionInfos: RasterFunctionInfo[];
     /**
      * Fires when user selects a new raster function
      * @param name name of new raster function
@@ -20,10 +21,43 @@ type Props = {
 
 const RasterFunctionSelector: FC<Props> = ({
     nameOfSelectedRasterFunction,
-    rasterFunctionInfo,
+    rasterFunctionInfos,
     onChange,
 }) => {
-    return <div>RasterFunctionSelector</div>;
+    return (
+        <div className="grid grid-cols-3 gap-1 h-auto">
+            {rasterFunctionInfos.slice(0, 9).map((d) => {
+                const { name, thumbnail } = d;
+
+                const selected = nameOfSelectedRasterFunction === name;
+
+                return (
+                    <div
+                        className="relative w-36 bg-cover"
+                        style={{
+                            background: `url(${thumbnail})`,
+                        }}
+                        key={name}
+                    >
+                        <div
+                            className={classNames(
+                                'absolute top-0 left-0 w-full h-full bg-black flex items-end p-1 cursor-pointer',
+                                {
+                                    'bg-opacity-60': !selected,
+                                    'bg-opacity-20': selected,
+                                }
+                            )}
+                            onClick={onChange.bind(null, name)}
+                        >
+                            <div className="text-ellipsis whitespace-nowrap overflow-hidden">
+                                <span className="text-xs shadow">{name}</span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    );
 };
 
 export default RasterFunctionSelector;
