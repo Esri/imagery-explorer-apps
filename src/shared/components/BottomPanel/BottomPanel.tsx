@@ -1,3 +1,4 @@
+import './BottomPanel.css';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { selectHideBottomPanel } from '../../store/UI/selectors';
