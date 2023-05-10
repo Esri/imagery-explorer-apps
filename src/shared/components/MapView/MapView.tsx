@@ -71,23 +71,23 @@ const MapView: React.FC<Props> = ({
         }
     };
 
-    const updateWebmap = async () => {
-        type Modules = [typeof IWebMap];
+    // const updateWebmap = async () => {
+    //     type Modules = [typeof IWebMap];
 
-        try {
-            const [WebMap] = await (loadModules([
-                'esri/WebMap',
-            ]) as Promise<Modules>);
+    //     try {
+    //         const [WebMap] = await (loadModules([
+    //             'esri/WebMap',
+    //         ]) as Promise<Modules>);
 
-            mapView.map = new WebMap({
-                portalItem: {
-                    id: webmapId,
-                },
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    //         mapView.map = new WebMap({
+    //             portalItem: {
+    //                 id: webmapId,
+    //             },
+    //         });
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
 
     useEffect(() => {
         // loadCss();
@@ -98,11 +98,11 @@ const MapView: React.FC<Props> = ({
         };
     }, []);
 
-    useEffect(() => {
-        if (mapView) {
-            updateWebmap();
-        }
-    }, [webmapId]);
+    // useEffect(() => {
+    //     if (mapView) {
+    //         updateWebmap();
+    //     }
+    // }, [webmapId]);
 
     return (
         <>

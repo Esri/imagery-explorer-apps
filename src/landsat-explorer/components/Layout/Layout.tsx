@@ -1,5 +1,5 @@
 import React from 'react';
-import Calendar from '../shared/components/Calendar/Calendar';
+import Calendar from '../../../shared/components/Calendar/Calendar';
 
 const Layout = () => {
     return (
