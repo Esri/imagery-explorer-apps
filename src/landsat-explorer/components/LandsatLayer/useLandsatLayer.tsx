@@ -5,10 +5,14 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 
 type Props = {
     visible?: boolean;
+    /**
+     * name of selected raster function that will be used to render the landsat layer
+     */
+    rasterFunction: string;
     // mapView?: IMapView;
 };
 
-const useLandsatLayer = ({ visible = true }: Props) => {
+const useLandsatLayer = ({ visible = true, rasterFunction }: Props) => {
     const layerRef = useRef<IImageryLayer>();
 
     const [landsatLayer, setLandsatLayer] = useState<IImageryLayer>();
@@ -27,9 +31,9 @@ const useLandsatLayer = ({ visible = true }: Props) => {
             // URL to the imagery service
             url: LANDSAT_LEVEL_2_SERVICE_URL,
             // mosaicRule: createMosaicRuleByYear(year, aquisitionMonth) as any,
-            // renderingRule: {
-            //     functionName: selectedRasterFunction,
-            // },
+            renderingRule: {
+                functionName: rasterFunction,
+            },
             visible,
             // blendMode: 'multiply'
         });
@@ -47,6 +51,16 @@ const useLandsatLayer = ({ visible = true }: Props) => {
             // ) as any;
         }
     }, []);
+
+    useEffect(() => {
+        if (!layerRef.current) {
+            return;
+        }
+
+        layerRef.current.renderingRule = {
+            functionName: rasterFunction,
+        } as any;
+    }, [rasterFunction]);
 
     useEffect(() => {
         if (!layerRef.current) {

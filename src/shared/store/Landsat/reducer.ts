@@ -8,26 +8,28 @@ import {
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
 export type LandsatState = {
-    // ArcGIS Online Webmap Item Id
-    webmapId?: string;
+    /**
+     * name of selected raster function
+     */
+    rasterFunctionName?: string;
 };
 
 export const initialLandsatState: LandsatState = {
-    webmapId: '67372ff42cd145319639a99152b15bc3', // Topographic
+    rasterFunctionName: 'Natural Color with DRA', // Topographic
 };
 
 const slice = createSlice({
     name: 'Landsat',
     initialState: initialLandsatState,
     reducers: {
-        webmapIdChanged: (state, action: PayloadAction<string>) => {
-            state.webmapId = action.payload;
+        rasterFunctionNameChanged: (state, action: PayloadAction<string>) => {
+            state.rasterFunctionName = action.payload;
         },
     },
 });
 
 const { reducer } = slice;
 
-export const { webmapIdChanged } = slice.actions;
+export const { rasterFunctionNameChanged } = slice.actions;
 
 export default reducer;
