@@ -8,6 +8,7 @@ import {
     selectMapZoom,
     selectWebmapId,
 } from '../../store/Map/selectors';
+import { selectHideBottomPanel } from '../../store/UI/selectors';
 
 type Props = {
     children?: React.ReactNode;
@@ -20,8 +21,15 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     const zoom = useSelector(selectMapZoom);
 
+    const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
+
     return (
-        <div className={classNames('absolute top-0 left-0 w-full bottom-0')}>
+        <div
+            className={classNames('absolute top-0 left-0 w-full', {
+                'bottom-0': shouldHideBottomPanel === true,
+                'bottom-bottom-panel-height': shouldHideBottomPanel === false,
+            })}
+        >
             <MapView webmapId={webmapId} center={center} zoom={zoom}>
                 {children}
             </MapView>

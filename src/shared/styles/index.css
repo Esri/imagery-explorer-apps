@@ -26,5 +26,5 @@
 }
 
 body {
-    @apply text-custom-light-blue
+    @apply text-custom-light-blue overflow-y-hidden;
 }
