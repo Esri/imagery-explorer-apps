@@ -3,22 +3,26 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { format } from 'date-fns';
 
-type MapPoint = {
-    spatialReference: {
-        wkid: number;
-    };
-    x: number;
-    y: number;
-};
-
 type GetLandsatScenesParams = {
+    /**
+     * year of acquisition
+     */
     year: number;
+    /**
+     * longitude and latitude (e.g. [-105, 40])
+     */
+    mapPoint: number[];
+    /**
+     * percent of cloud coverage that is ranged between 0 to 1
+     */
     cloudCover: number;
-    mapPoint: MapPoint;
+    /**
+     * month of acquisition
+     */
     month?: number;
 };
 
-type LandsatScene = {
+export type LandsatScene = {
     /**
      * acquisitionDate as a string in ISO format (YYYY-MM-DD).
      */
@@ -30,9 +34,18 @@ type LandsatScene = {
     name: string;
     cloudCover: number;
     best: number;
+    /**
+     * if true, this scene was acquired during a cloudy day
+     */
+    isCloudy: boolean;
 };
 
 const { ACQUISITION_DATE, CLOUD_COVER, CATEGORY, NAME, BEST } = FIELD_NAMES;
+
+/**
+ * any scene with cloud coverage beyond this will be considered as cloudy day
+ */
+const CLOUDY_THRESHOLD = 0.25;
 
 /**
  * Formats the features from Landsat-level-2 service and returns an array of LandsatScene objects.
@@ -56,13 +69,14 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             name: attributes[NAME],
             cloudCover: attributes[CLOUD_COVER],
             best: attributes[BEST],
+            isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
         } as LandsatScene;
     });
 };
 
 /**
- * Query the Landsat-level-2 service to find a list of scenes for available Landsat data that
- * intersect with the input map point and were acquired during the input year and month.
+ * Query the Landsat-level-2 imagery service to find a list of scenes for available Landsat data that
+ * intersect with the input map point or map extent and were acquired during the input year and month.
  *
  * @param {number} params.year - The year of the desired acquisition dates.
  * @param {number} [params.cloudCover=0.1] - The maximum cloud cover percentage of the desired Landsat data.
@@ -74,26 +88,38 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
  */
 export const getLandsatScenes = async ({
     year,
-    cloudCover = 0.1,
+    cloudCover,
     mapPoint,
     month,
 }: GetLandsatScenesParams): Promise<LandsatScene[]> => {
     const whereClauses = [
         `(${CATEGORY} = 1)`,
         `(${CLOUD_COVER} <= ${cloudCover})`,
+        `(${ACQUISITION_DATE} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 23:59:59')`,
     ];
+
+    const [longitude, latitude] = mapPoint;
+
+    const geometry = JSON.stringify({
+        spatialReference: {
+            wkid: 4326,
+        },
+        x: longitude,
+        y: latitude,
+    });
 
     const params = new URLSearchParams({
         f: 'json',
         spatialRel: 'esriSpatialRelIntersects',
-        geometryType: 'esriGeometryEnvelope',
-        inSR: '102100',
+        // geometryType: 'esriGeometryEnvelope',
+        geometryType: 'esriGeometryPoint',
+        // inSR: '102100',
         outFields: [ACQUISITION_DATE, CLOUD_COVER, NAME, BEST].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',
         returnGeometry: 'false',
         resultRecordCount: '1000',
-        geometry: JSON.stringify(mapPoint),
+        geometry,
         where: whereClauses.join(` AND `),
     });
 

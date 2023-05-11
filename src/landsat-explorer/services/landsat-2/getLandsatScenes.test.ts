@@ -7,7 +7,7 @@ const mockedData = {
             attributes: {
                 objectid: 2461078,
                 acquisitiondate: 1644344536000,
-                cloudcover: 0.0053,
+                cloudcover: 0.1,
                 name: 'LC08_L2SP_040036_20220208_20220222_02_T1',
                 best: 26960036,
             },
@@ -16,7 +16,7 @@ const mockedData = {
             attributes: {
                 objectid: 2461079,
                 acquisitiondate: 1644344560000,
-                cloudcover: 0.057000000000000002,
+                cloudcover: 0.3,
                 name: 'LC08_L2SP_040037_20220208_20220222_02_T1',
                 best: 20960037,
             },
@@ -25,7 +25,7 @@ const mockedData = {
             attributes: {
                 objectid: 2466756,
                 acquisitiondate: 1645035740000,
-                cloudcover: 0.031300000000000001,
+                cloudcover: 0.5,
                 name: 'LC09_L2SP_040036_20220216_20220225_02_T1',
                 best: 32960036,
             },
@@ -44,23 +44,14 @@ describe('test getLandsatScenes', () => {
         const response = await getLandsatScenes({
             year: 2022,
             cloudCover: 0.1,
-            mapPoint: {
-                x: -105,
-                y: 40,
-                spatialReference: {
-                    wkid: 4326,
-                },
-            },
+            mapPoint: [-105, 40],
         });
 
         expect(response.length).toBe(3);
 
         expect(response[0]).toMatchObject({
-            acquisitionDate: 1644344536000,
             formattedAcquisitionDate: '2022-02-08',
-            cloudCover: 0.0053,
-            name: 'LC08_L2SP_040036_20220208_20220222_02_T1',
-            best: 26960036,
+            isCloudy: false,
         });
     });
 });

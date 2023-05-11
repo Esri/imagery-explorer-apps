@@ -46,6 +46,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 <EventHandlers
                     onStationary={(center, zoom, extent) => {
                         // console.log('map view is stationary', center, zoom, extent);
+
                         batch(() => {
                             dispatch(
                                 centerChanged([
