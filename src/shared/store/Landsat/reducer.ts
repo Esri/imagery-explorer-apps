@@ -16,11 +16,21 @@ export type LandsatState = {
      * object id of selected Landsat scene
      */
     objectIdOfSelectedScene?: number;
+    /**
+     * the year that will be used to query available landsat scenes
+     */
+    acquisitionYear?: number;
+    /**
+     * the month that will be used to query available landsat scenes
+     */
+    acquisitionMonth?: number;
 };
 
 export const initialLandsatState: LandsatState = {
     rasterFunctionName: 'Natural Color with DRA', // Topographic
     objectIdOfSelectedScene: null,
+    acquisitionYear: 2023,
+    acquisitionMonth: null,
 };
 
 const slice = createSlice({
@@ -36,12 +46,22 @@ const slice = createSlice({
         ) => {
             state.objectIdOfSelectedScene = action.payload;
         },
+        acquisitionYearChanged: (state, action: PayloadAction<number>) => {
+            state.acquisitionYear = action.payload;
+        },
+        acquisitionMonthChanged: (state, action: PayloadAction<number>) => {
+            state.acquisitionMonth = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { rasterFunctionNameChanged, objectIdOfSelectedSceneChanged } =
-    slice.actions;
+export const {
+    rasterFunctionNameChanged,
+    objectIdOfSelectedSceneChanged,
+    acquisitionYearChanged,
+    acquisitionMonthChanged,
+} = slice.actions;
 
 export default reducer;
