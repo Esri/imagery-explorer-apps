@@ -15,6 +15,7 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
     const rasterFunction = useSelector(selectLandsatRasterFunction);
 
     const objectId = useSelector(selectObjectIdOfSelectedScene);
+    // const objectId = 2815517
 
     const getVisibility = () => {
         return true;
