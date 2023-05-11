@@ -1,4 +1,4 @@
-import { getAcquisitionDates } from './getAcquisitionDates';
+import { getLandsatScenes } from './getLandsatScenes';
 
 const mockedData = {
     objectIdFieldName: 'objectid',
@@ -34,22 +34,22 @@ const mockedData = {
     exceededTransferLimit: true,
 };
 
-describe('test getAcquisitionDates', () => {
-    it('should return acquisition date data', async () => {
+describe('test getLandsatScenes', () => {
+    it('should return formatted landsat scenes', async () => {
         global.fetch = jest.fn().mockResolvedValue({
             ok: true,
             json: jest.fn().mockResolvedValue(mockedData),
         });
 
-        const response = await getAcquisitionDates({
+        const response = await getLandsatScenes({
             year: 2022,
             cloudCover: 0.1,
-            mapExtent: {
-                xmin: -13064000.625930952,
-                ymin: 4028616.606602813,
-                xmax: -13017087.399820989,
-                ymax: 4040521.6737582134,
-                spatialReference: { wkid: 102100 },
+            mapPoint: {
+                x: -105,
+                y: 40,
+                spatialReference: {
+                    wkid: 4326,
+                },
             },
         });
 
