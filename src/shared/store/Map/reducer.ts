@@ -24,8 +24,8 @@ export type MapState = {
 
 export const initialMapState: MapState = {
     webmapId: '67372ff42cd145319639a99152b15bc3', // Topographic
-    center: [-105, 40],
-    zoom: 9,
+    center: [-117.18, 34.055],
+    zoom: 10,
 };
 
 const slice = createSlice({

@@ -12,10 +12,15 @@ export type LandsatState = {
      * name of selected raster function
      */
     rasterFunctionName?: string;
+    /**
+     * object id of selected Landsat scene
+     */
+    objectIdOfSelectedScene?: number;
 };
 
 export const initialLandsatState: LandsatState = {
     rasterFunctionName: 'Natural Color with DRA', // Topographic
+    objectIdOfSelectedScene: null,
 };
 
 const slice = createSlice({
@@ -25,11 +30,18 @@ const slice = createSlice({
         rasterFunctionNameChanged: (state, action: PayloadAction<string>) => {
             state.rasterFunctionName = action.payload;
         },
+        objectIdOfSelectedSceneChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.objectIdOfSelectedScene = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { rasterFunctionNameChanged } = slice.actions;
+export const { rasterFunctionNameChanged, objectIdOfSelectedSceneChanged } =
+    slice.actions;
 
 export default reducer;

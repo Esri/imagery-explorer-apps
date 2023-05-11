@@ -5,3 +5,8 @@ export const selectLandsatRasterFunction = createSelector(
     (state: RootState) => state.Landsat.rasterFunctionName,
     (rasterFunctionName) => rasterFunctionName
 );
+
+export const selectObjectIdOfSelectedScene = createSelector(
+    (state: RootState) => state.Landsat.objectIdOfSelectedScene,
+    (objectIdOfSelectedScene) => objectIdOfSelectedScene
+);
