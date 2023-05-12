@@ -12,6 +12,10 @@ export type UIState = {
      * if true, hide bottom panel
      */
     hideBottomPanel?: boolean;
+    /**
+     * If true, show About This App Modal
+     */
+    shouldShowAboutThisApp?: boolean;
 };
 
 export const initialUIState: UIState = {
@@ -25,11 +29,15 @@ const slice = createSlice({
         bottomPanelToggled: (state, action: PayloadAction<boolean>) => {
             state.hideBottomPanel = action.payload;
         },
+        shouldShowAboutThisAppToggled: (state) => {
+            state.shouldShowAboutThisApp = !state.shouldShowAboutThisApp;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { bottomPanelToggled } = slice.actions;
+export const { bottomPanelToggled, shouldShowAboutThisAppToggled } =
+    slice.actions;
 
 export default reducer;

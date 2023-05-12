@@ -30,7 +30,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
     const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
 
     useEffect(() => {
-        console.log('map view zoom and center has changed', center, zoom);
+        // console.log('map view zoom and center has changed', center, zoom);
     }, [zoom, center]);
 
     return (

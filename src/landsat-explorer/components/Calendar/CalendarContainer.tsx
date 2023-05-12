@@ -38,6 +38,8 @@ const CalendarContainer = () => {
          */
         const cloudyDates: string[] = [];
 
+        console.log(availableScenes);
+
         for (const scene of availableScenes) {
             const { formattedAcquisitionDate, isCloudy } = scene;
 

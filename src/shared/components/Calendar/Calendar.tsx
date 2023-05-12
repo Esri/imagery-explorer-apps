@@ -70,6 +70,10 @@ const MonthGrid: FC<MonthGridProps> = ({
             return (
                 <div
                     className={classNames('h-2 w-2 border', {
+                        'cursor-pointer':
+                            formatedDateStr === selectedDate ||
+                            setOfCloudyDates.has(formatedDateStr) ||
+                            setOfAvailableDates.has(formatedDateStr),
                         'border-custom-calendar-border':
                             formatedDateStr !== selectedDate,
                         'bg-custom-calendar-background-selected':
@@ -84,6 +88,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                     })}
                     key={index}
                     data-testid={formatedDateStr}
+                    title={formatedDateStr}
                 ></div>
             );
         });

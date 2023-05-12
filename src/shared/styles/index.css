@@ -28,3 +28,9 @@
 body {
     @apply text-custom-light-blue overflow-y-hidden;
 }
+
+.esri-input, 
+.esri-widget--button, 
+.esri-menu {
+    @apply bg-custom-background text-custom-light-blue;
+}
