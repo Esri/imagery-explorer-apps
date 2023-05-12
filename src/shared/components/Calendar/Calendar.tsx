@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { MonthData, getFormatedDateString, isLeapYear } from './helpers';
 
 type CalendarProps = {
@@ -48,6 +48,14 @@ const MonthGrid: FC<MonthGridProps> = ({
     availableDates,
     cloudyDates,
 }: MonthGridProps) => {
+    const setOfAvailableDates = useMemo(() => {
+        return new Set(availableDates);
+    }, [availableDates]);
+
+    const setOfCloudyDates = useMemo(() => {
+        return new Set(cloudyDates);
+    }, [cloudyDates]);
+
     const getGridCells = () => {
         return [...new Array(days)].map((_, index) => {
             /**
@@ -64,15 +72,15 @@ const MonthGrid: FC<MonthGridProps> = ({
                     className={classNames('h-2 w-2 border', {
                         'border-custom-calendar-border':
                             formatedDateStr !== selectedDate,
-                        'border-custom-calendar-border-selected':
-                            formatedDateStr === selectedDate ||
-                            cloudyDates.includes(formatedDateStr),
                         'bg-custom-calendar-background-selected':
                             formatedDateStr === selectedDate,
-                        'bg-custom-calendar-background-cloudy':
-                            cloudyDates.includes(formatedDateStr),
+                        'border-custom-calendar-border-selected':
+                            formatedDateStr === selectedDate ||
+                            setOfCloudyDates.has(formatedDateStr),
                         'bg-custom-calendar-background-available':
-                            availableDates.includes(formatedDateStr),
+                            setOfAvailableDates.has(formatedDateStr),
+                        'border-custom-calendar-background-available':
+                            setOfAvailableDates.has(formatedDateStr),
                     })}
                     key={index}
                     data-testid={formatedDateStr}
