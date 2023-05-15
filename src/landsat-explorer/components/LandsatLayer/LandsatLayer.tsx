@@ -21,11 +21,15 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
     // const objectId = 2815517
 
     const getVisibility = () => {
-        if (mode !== 'explore') {
-            return false;
+        if (mode === 'explore') {
+            return true;
         }
 
-        return true;
+        if (mode === 'find a scene' && objectId) {
+            return true;
+        }
+
+        return false;
     };
 
     const layer = useLandsatLayer({
