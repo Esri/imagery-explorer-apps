@@ -52,11 +52,7 @@ const getMosaicRule = async (objectId: number): Promise<IMosaicRule> => {
  *
  * @returns {IImageryLayer} - The Landsat-2 Imagery Layer.
  */
-const useLandsatLayer = ({
-    visible = true,
-    rasterFunction,
-    objectId,
-}: Props) => {
+const useLandsatLayer = ({ visible, rasterFunction, objectId }: Props) => {
     const layerRef = useRef<IImageryLayer>();
 
     const [landsatLayer, setLandsatLayer] = useState<IImageryLayer>();

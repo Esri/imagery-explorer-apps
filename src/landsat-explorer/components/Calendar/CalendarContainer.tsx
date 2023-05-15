@@ -1,12 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Calendar from '../../../shared/components/Calendar/Calendar';
-import { selectMapCenter } from '../../../shared/store/Map/selectors';
+// import { selectMapCenter } from '../../../shared/store/Map/selectors';
 import { useSelector } from 'react-redux';
-import {
-    getLandsatScenes,
-    LandsatScene,
-} from '../../services/landsat-2/getLandsatScenes';
-import { usePrevious } from '../../../shared/hooks/usePrevious';
 import { Dropdown } from '../../../shared/components/Dropdown';
 import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
@@ -16,10 +11,10 @@ import {
     acquisitionYearChanged,
 } from '../../../shared/store/Landsat/reducer';
 import {
-    selectAcquisitionMonth,
+    // selectAcquisitionMonth,
     selectAcquisitionYear,
 } from '../../../shared/store/Landsat/selectors';
-import useAvailableDates from './useAvailableDates';
+import useAvailableScenes from './useAvailableScenes';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -27,9 +22,9 @@ const CalendarContainer = () => {
     const acquisitionYear = useSelector(selectAcquisitionYear);
 
     /**
-     * dates that came with available landsat scene that intersect with the map center
+     * landsat scenes that intersect with the map center
      */
-    const { availableDates, cloudyDates } = useAvailableDates();
+    const { availableScenes } = useAvailableScenes();
 
     /**
      * options that will be used to populate the Dropdown Menu for month
@@ -64,8 +59,18 @@ const CalendarContainer = () => {
             <Calendar
                 year={acquisitionYear}
                 selectedDate=""
-                availableDates={availableDates}
-                cloudyDates={cloudyDates}
+                acquisitionDates={availableScenes.map((scene) => {
+                    const {
+                        formattedAcquisitionDate,
+                        acquisitionDate,
+                        isCloudy,
+                    } = scene;
+                    return {
+                        formattedAcquisitionDate,
+                        acquisitionDate,
+                        isCloudy,
+                    };
+                })}
             />
         </div>
     );

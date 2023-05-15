@@ -2,6 +2,24 @@ import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
 import { MonthData, getFormatedDateString, isLeapYear } from './helpers';
 
+/**
+ *
+ */
+type AcquisitionDateData = {
+    /**
+     * date as unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * date in format of (YYYY-MM-DD)
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * if true, this date should be rendered using the style of cloudy day
+     */
+    isCloudy: boolean;
+};
+
 type CalendarProps = {
     /**
      * the selected year of the calendar app
@@ -13,15 +31,9 @@ type CalendarProps = {
      */
     selectedDate: string;
     /**
-     * array of dates in format of (YYYY-MM-DD) that contains updates of selected imagery service
-     * @example [`2023-01-03`, `2023-01-10`, `2023-01-17`, `2023-01-14`, ...]
+     * array of acquisition dates
      */
-    availableDates: string[];
-    /**
-     * array of dates in format of (YYYY-MM-DD) that contains updates of selected imagery service with could covers
-     * @example [`2023-02-05`, `2023-05-10`, `2023-07-17`, ...]
-     */
-    cloudyDates: string[];
+    acquisitionDates?: AcquisitionDateData[];
 };
 
 type MonthGridProps = CalendarProps & {
@@ -45,16 +57,22 @@ const MonthGrid: FC<MonthGridProps> = ({
     abbrLabel,
     days,
     selectedDate,
-    availableDates,
-    cloudyDates,
+    acquisitionDates,
 }: MonthGridProps) => {
-    const setOfAvailableDates = useMemo(() => {
-        return new Set(availableDates);
-    }, [availableDates]);
+    const acquisitionDatesMap = useMemo(() => {
+        const map: Map<string, AcquisitionDateData> = new Map();
 
-    const setOfCloudyDates = useMemo(() => {
-        return new Set(cloudyDates);
-    }, [cloudyDates]);
+        if (!acquisitionDates || !acquisitionDates.length) {
+            return map;
+        }
+
+        for (const item of acquisitionDates) {
+            const { formattedAcquisitionDate } = item;
+            map.set(formattedAcquisitionDate, item);
+        }
+
+        return map;
+    }, [acquisitionDates]);
 
     const getGridCells = () => {
         return [...new Array(days)].map((_, index) => {
@@ -67,24 +85,33 @@ const MonthGrid: FC<MonthGridProps> = ({
                 day: index + 1,
             });
 
+            const acquisitionDate = acquisitionDatesMap.get(formatedDateStr);
+
+            /**
+             * if true, there is a available scene for this date
+             */
+            const hasAvailableData = acquisitionDate !== undefined;
+
             return (
                 <div
                     className={classNames('h-2 w-2 border', {
                         'cursor-pointer':
                             formatedDateStr === selectedDate ||
-                            setOfCloudyDates.has(formatedDateStr) ||
-                            setOfAvailableDates.has(formatedDateStr),
+                            hasAvailableData,
                         'border-custom-calendar-border':
                             formatedDateStr !== selectedDate,
                         'bg-custom-calendar-background-selected':
                             formatedDateStr === selectedDate,
                         'border-custom-calendar-border-selected':
                             formatedDateStr === selectedDate ||
-                            setOfCloudyDates.has(formatedDateStr),
+                            (hasAvailableData &&
+                                acquisitionDate?.isCloudy === true),
                         'bg-custom-calendar-background-available':
-                            setOfAvailableDates.has(formatedDateStr),
+                            hasAvailableData &&
+                            acquisitionDate?.isCloudy === false,
                         'border-custom-calendar-background-available':
-                            setOfAvailableDates.has(formatedDateStr),
+                            hasAvailableData &&
+                            acquisitionDate?.isCloudy === false,
                     })}
                     key={index}
                     data-testid={formatedDateStr}
@@ -114,8 +141,7 @@ const MonthGrid: FC<MonthGridProps> = ({
 const Calendar: FC<CalendarProps> = ({
     year,
     selectedDate,
-    availableDates,
-    cloudyDates,
+    acquisitionDates,
 }: CalendarProps) => {
     return (
         <div className="flex">
@@ -132,8 +158,7 @@ const Calendar: FC<CalendarProps> = ({
                         abbrLabel={d.abbrLabel}
                         days={days}
                         selectedDate={selectedDate}
-                        availableDates={availableDates}
-                        cloudyDates={cloudyDates}
+                        acquisitionDates={acquisitionDates}
                     />
                 );
             })}

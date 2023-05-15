@@ -9,8 +9,7 @@ describe('test Calendar component', () => {
             <Calendar
                 year={2020}
                 selectedDate="2020-07-13"
-                availableDates={[]}
-                cloudyDates={[]}
+                acquisitionDates={[]}
             />
         );
 
