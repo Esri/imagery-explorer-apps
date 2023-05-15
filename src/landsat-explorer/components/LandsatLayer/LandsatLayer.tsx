@@ -6,18 +6,25 @@ import {
     selectLandsatRasterFunction,
     selectObjectIdOfSelectedScene,
 } from '../../../shared/store/Landsat/selectors';
+import { selectAppMode } from '../../../shared/store/UI/selectors';
 
 type Props = {
     mapView?: MapView;
 };
 
 const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
+    const mode = useSelector(selectAppMode);
+
     const rasterFunction = useSelector(selectLandsatRasterFunction);
 
     const objectId = useSelector(selectObjectIdOfSelectedScene);
     // const objectId = 2815517
 
     const getVisibility = () => {
+        if (mode !== 'explore') {
+            return false;
+        }
+
         return true;
     };
 
