@@ -7,6 +7,7 @@ import {
     LandsatScene,
 } from '../../services/landsat-2/getLandsatScenes';
 import { usePrevious } from '../../../shared/hooks/usePrevious';
+import { Dropdown } from '../../../shared/components/Dropdown';
 
 const CalendarContainer = () => {
     const center = useSelector(selectMapCenter);
@@ -37,8 +38,6 @@ const CalendarContainer = () => {
          * [`2023-01-03`, `2023-01-10`, `2023-01-17`, `2023-01-14`, ...]
          */
         const cloudyDates: string[] = [];
-
-        console.log(availableScenes);
 
         for (const scene of availableScenes) {
             const { formattedAcquisitionDate, isCloudy } = scene;
@@ -81,12 +80,57 @@ const CalendarContainer = () => {
     }, [center]);
 
     return (
-        <Calendar
-            year={2023}
-            selectedDate=""
-            availableDates={availableDates}
-            cloudyDates={cloudyDates}
-        />
+        <div className="mx-4">
+            <div className="flex mb-1">
+                <Dropdown
+                    data={[
+                        {
+                            value: '2019',
+                            label: '2019',
+                            selected: true,
+                        },
+                        {
+                            value: '2020',
+                            label: '2020',
+                            selected: false,
+                        },
+                    ]}
+                    onChange={(year) => {
+                        // select year
+                    }}
+                />
+
+                <Dropdown
+                    data={[
+                        {
+                            value: '',
+                            label: 'All Months',
+                            selected: true,
+                        },
+                        {
+                            value: '1',
+                            label: '1',
+                            selected: false,
+                        },
+                        {
+                            value: '2',
+                            label: '2',
+                            selected: false,
+                        },
+                    ]}
+                    onChange={(month) => {
+                        // select month
+                    }}
+                />
+            </div>
+
+            <Calendar
+                year={2023}
+                selectedDate=""
+                availableDates={availableDates}
+                cloudyDates={cloudyDates}
+            />
+        </div>
     );
 };
 
