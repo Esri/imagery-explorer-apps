@@ -10,3 +10,8 @@ export const selectShouldShowAboutThisApp = createSelector(
     (state: RootState) => state.UI.shouldShowAboutThisApp,
     (shouldShowAboutThisApp) => shouldShowAboutThisApp
 );
+
+export const selectAppMode = createSelector(
+    (state: RootState) => state.UI.appMode,
+    (appMode) => appMode
+);
