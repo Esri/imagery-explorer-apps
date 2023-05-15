@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { FC, useRef, useState } from 'react';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 
-type DropdownData = {
+export type DropdownData = {
     /**
      * value of this item
      */
@@ -42,6 +42,10 @@ export const Dropdown: FC<Props> = ({ data, disabled, onChange }: Props) => {
         return selectedItem.label || selectedItem.value;
     };
 
+    if (!data || !data.length) {
+        return null;
+    }
+
     return (
         <div ref={containerRef} className={classNames('relative')}>
             <div
@@ -77,7 +81,9 @@ export const Dropdown: FC<Props> = ({ data, disabled, onChange }: Props) => {
                                     setShouldShowOptions(false);
                                 }}
                             >
-                                {label || value}
+                                <span className="uppercase">
+                                    {label || value}
+                                </span>
                             </div>
                         );
                     })}

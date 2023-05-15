@@ -8,6 +8,8 @@ import {
 } from '../../services/landsat-2/getLandsatScenes';
 import { usePrevious } from '../../../shared/hooks/usePrevious';
 import { Dropdown } from '../../../shared/components/Dropdown';
+import { useMonthOptions } from './useMonthOptions';
+import { useYearOptions } from './useYearOptions';
 
 const CalendarContainer = () => {
     const center = useSelector(selectMapCenter);
@@ -62,6 +64,16 @@ const CalendarContainer = () => {
         return [availableDates, cloudyDates];
     }, [availableScenes]);
 
+    /**
+     * options that will be used to populate the Dropdown Menu for month
+     */
+    const monthOptions = useMonthOptions();
+
+    /**
+     * options that will be used to populate the Dropdown Menu for year
+     */
+    const yearOptions = useYearOptions();
+
     useEffect(() => {
         (async () => {
             // abort if the new value of map center is the same as the previous value
@@ -83,41 +95,14 @@ const CalendarContainer = () => {
         <div className="mx-4">
             <div className="flex mb-1">
                 <Dropdown
-                    data={[
-                        {
-                            value: '2019',
-                            label: '2019',
-                            selected: true,
-                        },
-                        {
-                            value: '2020',
-                            label: '2020',
-                            selected: false,
-                        },
-                    ]}
+                    data={yearOptions}
                     onChange={(year) => {
                         // select year
                     }}
                 />
 
                 <Dropdown
-                    data={[
-                        {
-                            value: '',
-                            label: 'All Months',
-                            selected: true,
-                        },
-                        {
-                            value: '1',
-                            label: '1',
-                            selected: false,
-                        },
-                        {
-                            value: '2',
-                            label: '2',
-                            selected: false,
-                        },
-                    ]}
+                    data={monthOptions}
                     onChange={(month) => {
                         // select month
                     }}
