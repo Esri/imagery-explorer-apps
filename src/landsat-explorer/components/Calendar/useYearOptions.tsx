@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DropdownData } from '../../../shared/components/Dropdown/Dropdown';
 import { getTimeExtent } from '../../services/landsat-2/getTimeExtent';
+import { useSelector } from 'react-redux';
+import { selectAcquisitionYear } from '../../../shared/store/Landsat/selectors';
 
 export const useYearOptions = (): DropdownData[] => {
+    const acquisitionYear = useSelector(selectAcquisitionYear);
+
     const [years, setYears] = useState<number[]>([]);
 
     const options = useMemo(() => {
@@ -15,10 +19,10 @@ export const useYearOptions = (): DropdownData[] => {
 
             return {
                 value,
-                selected: false,
+                selected: year === acquisitionYear,
             };
         });
-    }, [years]);
+    }, [years, acquisitionYear]);
 
     useEffect(() => {
         (async () => {

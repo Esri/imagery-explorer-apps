@@ -10,59 +10,26 @@ import { usePrevious } from '../../../shared/hooks/usePrevious';
 import { Dropdown } from '../../../shared/components/Dropdown';
 import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
+import { useDispatch } from 'react-redux';
+import {
+    acquisitionMonthChanged,
+    acquisitionYearChanged,
+} from '../../../shared/store/Landsat/reducer';
+import {
+    selectAcquisitionMonth,
+    selectAcquisitionYear,
+} from '../../../shared/store/Landsat/selectors';
+import useAvailableDates from './useAvailableDates';
 
 const CalendarContainer = () => {
-    const center = useSelector(selectMapCenter);
+    const dispatch = useDispatch();
+
+    const acquisitionYear = useSelector(selectAcquisitionYear);
 
     /**
-     * track the previous value of map center, which will be used to prevent triggering duplicated network request
+     * dates that came with available landsat scene that intersect with the map center
      */
-    const prevCenter = usePrevious(center);
-
-    /**
-     * available landsat scenes that intersect with input map geometry and were acquired during the input year and month.
-     */
-    const [availableScenes, setAvailableScenes] = useState<LandsatScene[]>([]);
-
-    const [availableDates, cloudyDates] = useMemo(() => {
-        /**
-         * array of formatted AcquisitionDate that comes with landsat scenes without cloud coverage
-         *
-         * @example
-         * [`2023-01-03`, `2023-01-10`, `2023-01-17`, `2023-01-14`, ...]
-         */
-        const availableDates: string[] = [];
-
-        /**
-         * array of formatted AcquisitionDate that comes with landsat scenes with cloud coverage
-         *
-         * @example
-         * [`2023-01-03`, `2023-01-10`, `2023-01-17`, `2023-01-14`, ...]
-         */
-        const cloudyDates: string[] = [];
-
-        for (const scene of availableScenes) {
-            const { formattedAcquisitionDate, isCloudy } = scene;
-
-            // make sure to not push duplicated values to the output
-            if (
-                isCloudy === false &&
-                availableDates[availableDates.length - 1] !==
-                    formattedAcquisitionDate
-            ) {
-                availableDates.push(formattedAcquisitionDate);
-            }
-
-            if (
-                isCloudy &&
-                cloudyDates[cloudyDates.length - 1] !== formattedAcquisitionDate
-            ) {
-                cloudyDates.push(formattedAcquisitionDate);
-            }
-        }
-
-        return [availableDates, cloudyDates];
-    }, [availableScenes]);
+    const { availableDates, cloudyDates } = useAvailableDates();
 
     /**
      * options that will be used to populate the Dropdown Menu for month
@@ -74,23 +41,6 @@ const CalendarContainer = () => {
      */
     const yearOptions = useYearOptions();
 
-    useEffect(() => {
-        (async () => {
-            // abort if the new value of map center is the same as the previous value
-            if (JSON.stringify(center) === JSON.stringify(prevCenter)) {
-                return;
-            }
-
-            const scenes = await getLandsatScenes({
-                year: 2023,
-                mapPoint: center,
-                cloudCover: 1,
-            });
-
-            setAvailableScenes(scenes);
-        })();
-    }, [center]);
-
     return (
         <div className="mx-4">
             <div className="flex mb-1">
@@ -98,6 +48,7 @@ const CalendarContainer = () => {
                     data={yearOptions}
                     onChange={(year) => {
                         // select year
+                        dispatch(acquisitionYearChanged(+year));
                     }}
                 />
 
@@ -105,12 +56,13 @@ const CalendarContainer = () => {
                     data={monthOptions}
                     onChange={(month) => {
                         // select month
+                        dispatch(acquisitionMonthChanged(+month));
                     }}
                 />
             </div>
 
             <Calendar
-                year={2023}
+                year={acquisitionYear}
                 selectedDate=""
                 availableDates={availableDates}
                 cloudyDates={cloudyDates}

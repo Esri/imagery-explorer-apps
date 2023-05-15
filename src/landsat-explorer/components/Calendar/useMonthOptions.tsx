@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
 import { DropdownData } from '../../../shared/components/Dropdown/Dropdown';
+import { useSelector } from 'react-redux';
+import { selectAcquisitionMonth } from '../../../shared/store/Landsat/selectors';
 
 const MONTH_ABBR = [
     'JAN',
@@ -17,6 +19,8 @@ const MONTH_ABBR = [
 ];
 
 export const useMonthOptions = (): DropdownData[] => {
+    const acquisitionMonth = useSelector(selectAcquisitionMonth);
+
     const monthOptions = useMemo(() => {
         const options = MONTH_ABBR.map((label, index) => {
             const month = index + 1;
@@ -24,7 +28,7 @@ export const useMonthOptions = (): DropdownData[] => {
             return {
                 value: month.toString(),
                 label,
-                selected: false,
+                selected: acquisitionMonth === month,
             };
         });
 
