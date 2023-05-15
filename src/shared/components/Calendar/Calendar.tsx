@@ -29,11 +29,18 @@ type CalendarProps = {
      * Selected imagery acquisition date as a string in format of (YYYY-MM-DD)
      * @example `2023-05-03`
      */
-    selectedDate: string;
+    selectedAcquisitionDate: string;
     /**
-     * array of acquisition dates
+     * Array of dates with available imagery data, these dates will be rendered using different style on the Calendar
+     * so that the user can know there are available data on these days
      */
     acquisitionDates?: AcquisitionDateData[];
+    /**
+     * Fires when user select a new acquisition date
+     * @param date date string in format of (YYYY-MM-DD)
+     * @returns
+     */
+    onSelect: (formattedAcquisitionDate?: string) => void;
 };
 
 type MonthGridProps = CalendarProps & {
@@ -56,8 +63,9 @@ const MonthGrid: FC<MonthGridProps> = ({
     month,
     abbrLabel,
     days,
-    selectedDate,
+    selectedAcquisitionDate,
     acquisitionDates,
+    onSelect,
 }: MonthGridProps) => {
     const acquisitionDatesMap = useMemo(() => {
         const map: Map<string, AcquisitionDateData> = new Map();
@@ -92,30 +100,45 @@ const MonthGrid: FC<MonthGridProps> = ({
              */
             const hasAvailableData = acquisitionDate !== undefined;
 
+            const isSelected = formatedDateStr === selectedAcquisitionDate;
+
             return (
                 <div
                     className={classNames('h-2 w-2 border', {
-                        'cursor-pointer':
-                            formatedDateStr === selectedDate ||
-                            hasAvailableData,
+                        'cursor-pointer': isSelected || hasAvailableData,
                         'border-custom-calendar-border':
-                            formatedDateStr !== selectedDate,
-                        'bg-custom-calendar-background-selected':
-                            formatedDateStr === selectedDate,
+                            formatedDateStr !== selectedAcquisitionDate,
+                        'bg-custom-calendar-background-selected': isSelected,
                         'border-custom-calendar-border-selected':
-                            formatedDateStr === selectedDate ||
+                            isSelected ||
                             (hasAvailableData &&
                                 acquisitionDate?.isCloudy === true),
                         'bg-custom-calendar-background-available':
+                            isSelected === false &&
                             hasAvailableData &&
                             acquisitionDate?.isCloudy === false,
                         'border-custom-calendar-background-available':
+                            isSelected === false &&
                             hasAvailableData &&
                             acquisitionDate?.isCloudy === false,
                     })}
                     key={index}
                     data-testid={formatedDateStr}
                     title={formatedDateStr}
+                    onClick={() => {
+                        if (!hasAvailableData) {
+                            return;
+                        }
+
+                        // use the formatted date if it is not selected already
+                        // otherwise, use an empty string to unselect it
+                        const newVal =
+                            formatedDateStr !== selectedAcquisitionDate
+                                ? formatedDateStr
+                                : '';
+
+                        onSelect(newVal);
+                    }}
                 ></div>
             );
         });
@@ -140,8 +163,9 @@ const MonthGrid: FC<MonthGridProps> = ({
  */
 const Calendar: FC<CalendarProps> = ({
     year,
-    selectedDate,
+    selectedAcquisitionDate,
     acquisitionDates,
+    onSelect,
 }: CalendarProps) => {
     return (
         <div className="flex">
@@ -157,8 +181,9 @@ const Calendar: FC<CalendarProps> = ({
                         key={d.label}
                         abbrLabel={d.abbrLabel}
                         days={days}
-                        selectedDate={selectedDate}
+                        selectedAcquisitionDate={selectedAcquisitionDate}
                         acquisitionDates={acquisitionDates}
+                        onSelect={onSelect}
                     />
                 );
             })}

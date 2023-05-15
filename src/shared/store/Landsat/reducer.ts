@@ -17,13 +17,17 @@ export type LandsatState = {
      */
     objectIdOfSelectedScene?: number;
     /**
-     * the year that will be used to query available landsat scenes
+     * the year that will be used to query available landsat scenes 
      */
     acquisitionYear?: number;
     /**
      * the month that will be used to query available landsat scenes
      */
     acquisitionMonth?: number;
+    /**
+     * user selected acquisition date in format of `YYYY-MM-DD`
+     */
+    acquisitionDate?: string;
 };
 
 export const initialLandsatState: LandsatState = {
@@ -31,6 +35,7 @@ export const initialLandsatState: LandsatState = {
     objectIdOfSelectedScene: null,
     acquisitionYear: 2023,
     acquisitionMonth: null,
+    acquisitionDate: '',
 };
 
 const slice = createSlice({
@@ -52,6 +57,9 @@ const slice = createSlice({
         acquisitionMonthChanged: (state, action: PayloadAction<number>) => {
             state.acquisitionMonth = action.payload;
         },
+        acquisitionDateChanged: (state, action: PayloadAction<string>) => {
+            state.acquisitionDate = action.payload;
+        },
     },
 });
 
@@ -62,6 +70,7 @@ export const {
     objectIdOfSelectedSceneChanged,
     acquisitionYearChanged,
     acquisitionMonthChanged,
+    acquisitionDateChanged,
 } = slice.actions;
 
 export default reducer;

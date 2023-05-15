@@ -34,7 +34,7 @@ export const Primary: Story = {
         // primary: true,
         // label: 'Button',
         year: 2023,
-        selectedDate: '2023-05-03',
+        selectedAcquisitionDate: '2023-05-03',
         // availableDates: [
         //     '2023-01-10',
         //     '2023-01-17',

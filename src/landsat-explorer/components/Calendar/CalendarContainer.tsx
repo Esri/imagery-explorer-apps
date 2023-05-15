@@ -7,10 +7,12 @@ import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
 import { useDispatch } from 'react-redux';
 import {
+    acquisitionDateChanged,
     acquisitionMonthChanged,
     acquisitionYearChanged,
 } from '../../../shared/store/Landsat/reducer';
 import {
+    selectAcquisitionDate,
     // selectAcquisitionMonth,
     selectAcquisitionYear,
 } from '../../../shared/store/Landsat/selectors';
@@ -20,6 +22,8 @@ const CalendarContainer = () => {
     const dispatch = useDispatch();
 
     const acquisitionYear = useSelector(selectAcquisitionYear);
+
+    const selectedAcquisitionDate = useSelector(selectAcquisitionDate);
 
     /**
      * landsat scenes that intersect with the map center
@@ -58,7 +62,7 @@ const CalendarContainer = () => {
 
             <Calendar
                 year={acquisitionYear}
-                selectedDate=""
+                selectedAcquisitionDate={selectedAcquisitionDate}
                 acquisitionDates={availableScenes.map((scene) => {
                     const {
                         formattedAcquisitionDate,
@@ -71,6 +75,10 @@ const CalendarContainer = () => {
                         isCloudy,
                     };
                 })}
+                onSelect={(formattedAcquisitionDate) => {
+                    // console.log(formattedAcquisitionDate)
+                    dispatch(acquisitionDateChanged(formattedAcquisitionDate));
+                }}
             />
         </div>
     );

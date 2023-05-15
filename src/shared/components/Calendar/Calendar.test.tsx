@@ -8,8 +8,11 @@ describe('test Calendar component', () => {
         const { getByTestId } = render(
             <Calendar
                 year={2020}
-                selectedDate="2020-07-13"
+                selectedAcquisitionDate="2020-07-13"
                 acquisitionDates={[]}
+                onSelect={(val) => {
+                    console.log(val);
+                }}
             />
         );
 

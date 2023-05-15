@@ -20,3 +20,8 @@ export const selectAcquisitionMonth = createSelector(
     (state: RootState) => state.Landsat.acquisitionMonth,
     (acquisitionMonth) => acquisitionMonth
 );
+
+export const selectAcquisitionDate = createSelector(
+    (state: RootState) => state.Landsat.acquisitionDate,
+    (acquisitionDate) => acquisitionDate
+);
