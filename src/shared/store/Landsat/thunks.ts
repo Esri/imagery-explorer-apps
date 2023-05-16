@@ -2,10 +2,12 @@ import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
     QueryParams4LandsatScene,
     queryParams4FindASceneModeChanged,
+    queryParams4SwipeModeChanged,
 } from './reducer';
 import {
     selectAppMode,
     selectLandsatQueryParams4SelectedMode,
+    selectSelectedSideOfSwipeMode,
 } from './selectors';
 
 export const updateLandsatQueryParams4SelectedMode =
@@ -19,7 +21,8 @@ export const updateLandsatQueryParams4SelectedMode =
         }
 
         if (mode === 'swipe') {
-            // dispatch()
+            dispatch(queryParams4SwipeModeChanged(updatedQueryParams));
+            return;
         }
 
         if (mode === 'animate') {

@@ -40,7 +40,7 @@ export const SwipeLayerSelector = () => {
 
                 <div className="text-xs text-center lowercase">
                     <span>
-                        {queryParams?.acquisitionDate || 'No selected date'}
+                        {queryParams?.acquisitionDate || 'No selected scene'}
                     </span>
 
                     <br />

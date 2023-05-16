@@ -111,6 +111,18 @@ const slice = createSlice({
         ) => {
             state.queryParams4FindASceneMode = action.payload;
         },
+        queryParams4SwipeModeChanged: (
+            state,
+            action: PayloadAction<QueryParams4LandsatScene>
+        ) => {
+            const side = state.selectedSide4SwipeMode;
+
+            if (side === 'left') {
+                state.queryParams4SwipeMode.left = action.payload;
+            } else {
+                state.queryParams4SwipeMode.right = action.payload;
+            }
+        },
         modeChanged: (state, action: PayloadAction<AppMode>) => {
             state.mode = action.payload;
         },
@@ -133,6 +145,7 @@ const { reducer } = slice;
 
 export const {
     queryParams4FindASceneModeChanged,
+    queryParams4SwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,
     indexOfSelectedQueryParams4AnimateModeChanged,
