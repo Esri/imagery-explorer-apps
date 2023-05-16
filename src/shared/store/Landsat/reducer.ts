@@ -61,15 +61,15 @@ export type LandsatState = {
         right?: QueryParams4LandsatScene;
     };
     /**
-     * selected side for Swipe Mode, this value helps us to figure out which item in `queryParams4SwipeMode` should be updated
+     * Selected side for Swipe Mode. This value determines which item in `queryParams4SwipeMode` should be updated.
      */
     selectedSide4SwipeMode?: Side4SwipeMode;
     /**
-     * array of query params to find Landsat scenes that will be animated
+     * Array of query parameters to find Landsat scenes that will be animated.
      */
     queryParams4AnimateMode?: QueryParams4LandsatScene[];
     /**
-     * index of selected query params for animate mode, this value helps us to figure out which item in `queryParams4AnimateMode` should be updated
+     * Index of the selected query parameters for animate mode. This value helps identify which item in `queryParams4AnimateMode` should be updated.
      */
     indexOfSelectedQueryParams4AnimateMode?: number;
 };
