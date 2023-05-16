@@ -28,6 +28,10 @@ export type LandsatState = {
      * user selected acquisition date in format of `YYYY-MM-DD`
      */
     acquisitionDate?: string;
+    /**
+     * percent of cloud coverage ranges from 0 to 1
+     */
+    cloudCover?: number;
 };
 
 export const initialLandsatState: LandsatState = {
@@ -36,6 +40,7 @@ export const initialLandsatState: LandsatState = {
     acquisitionYear: 2023,
     acquisitionMonth: null,
     acquisitionDate: '',
+    cloudCover: 0.1,
 };
 
 const slice = createSlice({
