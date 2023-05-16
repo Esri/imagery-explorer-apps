@@ -17,7 +17,7 @@ export type LandsatState = {
      */
     objectIdOfSelectedScene?: number;
     /**
-     * the year that will be used to query available landsat scenes 
+     * the year that will be used to query available landsat scenes
      */
     acquisitionYear?: number;
     /**

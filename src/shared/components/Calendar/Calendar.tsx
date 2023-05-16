@@ -117,7 +117,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                             isSelected === false &&
                             hasAvailableData &&
                             acquisitionDate?.isCloudy === false,
-                        'border-custom-calendar-background-available':
+                        'border-custom-calendar-background-availab':
                             isSelected === false &&
                             hasAvailableData &&
                             acquisitionDate?.isCloudy === false,
@@ -126,18 +126,18 @@ const MonthGrid: FC<MonthGridProps> = ({
                     data-testid={formatedDateStr}
                     title={formatedDateStr}
                     onClick={() => {
+                        // unselect if this date is already selected
+                        if (isSelected) {
+                            onSelect('');
+                            return;
+                        }
+
+                        // cannot be selected if this date has no available data
                         if (!hasAvailableData) {
                             return;
                         }
 
-                        // use the formatted date if it is not selected already
-                        // otherwise, use an empty string to unselect it
-                        const newVal =
-                            formatedDateStr !== selectedAcquisitionDate
-                                ? formatedDateStr
-                                : '';
-
-                        onSelect(newVal);
+                        onSelect(formatedDateStr);
                     }}
                 ></div>
             );
