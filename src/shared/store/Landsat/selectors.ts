@@ -47,3 +47,8 @@ export const selectLandsatQueryParams4SelectedMode = createSelector(
         }
     }
 );
+
+export const selectAppMode = createSelector(
+    (state: RootState) => state.Landsat.mode,
+    (mode) => mode
+);

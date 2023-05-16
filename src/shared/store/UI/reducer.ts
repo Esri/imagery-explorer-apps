@@ -7,12 +7,9 @@ import {
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
-export type AppMode = 'explore' | 'find a scene' | 'swipe' | 'animate';
-
 export type AnimationMode = 'loading' | 'playing' | 'pausing';
 
 export type UIState = {
-    appMode?: AppMode;
     /**
      * if true, hide bottom panel
      */
@@ -24,7 +21,6 @@ export type UIState = {
 };
 
 export const initialUIState: UIState = {
-    appMode: 'find a scene',
     hideBottomPanel: false,
     shouldShowAboutThisApp: false,
 };
@@ -33,9 +29,6 @@ const slice = createSlice({
     name: 'UI',
     initialState: initialUIState,
     reducers: {
-        appModeChanged: (state, action: PayloadAction<AppMode>) => {
-            state.appMode = action.payload;
-        },
         bottomPanelToggled: (state, action: PayloadAction<boolean>) => {
             state.hideBottomPanel = action.payload;
         },
@@ -47,10 +40,7 @@ const slice = createSlice({
 
 const { reducer } = slice;
 
-export const {
-    bottomPanelToggled,
-    shouldShowAboutThisAppToggled,
-    appModeChanged,
-} = slice.actions;
+export const { bottomPanelToggled, shouldShowAboutThisAppToggled } =
+    slice.actions;
 
 export default reducer;

@@ -7,17 +7,20 @@ import {
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
+/**
+ * Query Params and Rendering Options for a Landsat Scene
+ */
 export type QueryParams4LandsatScene = {
     /**
-     * the year that will be used to query available landsat scenes
+     * the year that will be used to query available Landsat scenes
      */
     acquisitionYear?: number;
     /**
-     * the month that will be used to query available landsat scenes
+     * the month that will be used to query available Landsat scenes
      */
     acquisitionMonth?: number;
     /**
-     * percent of cloud coverage ranges from 0 to 1 that will be used to query available landsat scenes
+     * percent of cloud coverage ranges from 0 to 1 that will be used to query available Landsat scenes
      */
     cloudCover?: number;
     /**
@@ -25,7 +28,7 @@ export type QueryParams4LandsatScene = {
      */
     acquisitionDate?: string;
     /**
-     * name of selected raster function
+     * name of raster function that will be used to render the Landsat scene
      */
     rasterFunctionName?: string;
     /**
@@ -34,6 +37,9 @@ export type QueryParams4LandsatScene = {
     objectIdOfSelectedScene?: number;
 };
 
+/**
+ * the app support 4 different modes that the user can use to explore the landsat data
+ */
 export type AppMode = 'explore' | 'find a scene' | 'swipe' | 'animate';
 
 export type LandsatState = {
@@ -77,11 +83,14 @@ const slice = createSlice({
         ) => {
             state.queryParams4FindASceneMode = action.payload;
         },
+        modeChanged: (state, action: PayloadAction<AppMode>) => {
+            state.mode = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { queryParams4FindASceneModeChanged } = slice.actions;
+export const { queryParams4FindASceneModeChanged, modeChanged } = slice.actions;
 
 export default reducer;

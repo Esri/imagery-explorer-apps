@@ -2,8 +2,10 @@ import MapView from 'esri/views/MapView';
 import React, { FC, useEffect } from 'react';
 import useLandsatLayer from './useLandsatLayer';
 import { useSelector } from 'react-redux';
-import { selectAppMode } from '../../../shared/store/UI/selectors';
-import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
+import {
+    selectLandsatQueryParams4SelectedMode,
+    selectAppMode,
+} from '../../../shared/store/Landsat/selectors';
 
 type Props = {
     mapView?: MapView;
