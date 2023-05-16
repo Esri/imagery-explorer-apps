@@ -3,7 +3,29 @@ import {
     QueryParams4LandsatScene,
     queryParams4FindASceneModeChanged,
 } from './reducer';
-import { selectLandsatQueryParams4SelectedMode } from './selectors';
+import {
+    selectAppMode,
+    selectLandsatQueryParams4SelectedMode,
+} from './selectors';
+
+export const updateLandsatQueryParams4SelectedMode =
+    (updatedQueryParams: QueryParams4LandsatScene) =>
+    (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const mode = selectAppMode(getState());
+
+        if (mode === 'find a scene') {
+            dispatch(queryParams4FindASceneModeChanged(updatedQueryParams));
+            return;
+        }
+
+        if (mode === 'swipe') {
+            // dispatch()
+        }
+
+        if (mode === 'animate') {
+            // dispatch()
+        }
+    };
 
 export const updateRasterFunctionName =
     (rasterFunctionName: string) =>
@@ -18,7 +40,7 @@ export const updateRasterFunctionName =
                 rasterFunctionName,
             };
 
-            dispatch(queryParams4FindASceneModeChanged(updatedQueryParams));
+            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
@@ -37,7 +59,7 @@ export const updateObjectIdOfSelectedScene =
                 objectIdOfSelectedScene,
             };
 
-            dispatch(queryParams4FindASceneModeChanged(updatedQueryParams));
+            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
@@ -56,7 +78,7 @@ export const updateAcquisitionYear =
                 acquisitionYear,
             };
 
-            dispatch(queryParams4FindASceneModeChanged(updatedQueryParams));
+            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
@@ -75,7 +97,7 @@ export const updateAcquisitionMonth =
                 acquisitionMonth,
             };
 
-            dispatch(queryParams4FindASceneModeChanged(updatedQueryParams));
+            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
@@ -94,7 +116,7 @@ export const updateAcquisitionDate =
                 acquisitionDate,
             };
 
-            dispatch(queryParams4FindASceneModeChanged(updatedQueryParams));
+            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
