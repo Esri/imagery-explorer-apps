@@ -117,7 +117,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                             isSelected === false &&
                             hasAvailableData &&
                             acquisitionDate?.isCloudy === false,
-                        'border-custom-calendar-background-availab':
+                        'border-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&
                             acquisitionDate?.isCloudy === false,

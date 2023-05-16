@@ -18,6 +18,7 @@ import {
     selectAcquisitionYear,
 } from '../../../shared/store/Landsat/selectors';
 import useAvailableScenes from './useAvailableScenes';
+import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -52,21 +53,29 @@ const CalendarContainer = () => {
 
     return (
         <div className="mx-4">
-            <div className="flex mb-1">
-                <Dropdown
-                    data={yearOptions}
-                    onChange={(year) => {
-                        // select year
-                        dispatch(acquisitionYearChanged(+year));
-                    }}
-                />
+            <div className="flex mb-1 items-center">
+                <div className="mr-2">
+                    <Dropdown
+                        data={yearOptions}
+                        onChange={(year) => {
+                            // select year
+                            dispatch(acquisitionYearChanged(+year));
+                        }}
+                    />
+                </div>
 
-                <Dropdown
-                    data={monthOptions}
-                    onChange={(month) => {
-                        // select month
-                        dispatch(acquisitionMonthChanged(+month));
-                    }}
+                <div className="mr-2">
+                    <Dropdown
+                        data={monthOptions}
+                        onChange={(month) => {
+                            // select month
+                            dispatch(acquisitionMonthChanged(+month));
+                        }}
+                    />
+                </div>
+
+                <AcquisitionDateLabel
+                    acquisitionDate={selectedAcquisitionDate}
                 />
             </div>
 
