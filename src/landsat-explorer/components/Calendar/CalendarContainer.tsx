@@ -10,6 +10,7 @@ import {
     acquisitionDateChanged,
     acquisitionMonthChanged,
     acquisitionYearChanged,
+    objectIdOfSelectedSceneChanged,
 } from '../../../shared/store/Landsat/reducer';
 import {
     selectAcquisitionDate,
@@ -39,6 +40,15 @@ const CalendarContainer = () => {
      * options that will be used to populate the Dropdown Menu for year
      */
     const yearOptions = useYearOptions();
+
+    useEffect(() => {
+        const selectedScene = availableScenes.find(
+            (d) => d.formattedAcquisitionDate === selectedAcquisitionDate
+        );
+        dispatch(
+            objectIdOfSelectedSceneChanged(selectedScene?.objectId || null)
+        );
+    }, [availableScenes, selectedAcquisitionDate]);
 
     return (
         <div className="mx-4">

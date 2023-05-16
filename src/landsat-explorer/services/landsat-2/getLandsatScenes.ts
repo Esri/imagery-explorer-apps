@@ -23,6 +23,7 @@ type GetLandsatScenesParams = {
 };
 
 export type LandsatScene = {
+    objectId: number;
     /**
      * acquisitionDate as a string in ISO format (YYYY-MM-DD).
      */
@@ -40,7 +41,8 @@ export type LandsatScene = {
     isCloudy: boolean;
 };
 
-const { ACQUISITION_DATE, CLOUD_COVER, CATEGORY, NAME, BEST } = FIELD_NAMES;
+const { OBJECTID, ACQUISITION_DATE, CLOUD_COVER, CATEGORY, NAME, BEST } =
+    FIELD_NAMES;
 
 /**
  * any scene with cloud coverage beyond this will be considered as cloudy day
@@ -64,6 +66,7 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
         const formattedAcquisitionDate = format(acquisitionDate, 'yyyy-MM-dd');
 
         return {
+            objectId: attributes[OBJECTID],
             acquisitionDate,
             formattedAcquisitionDate,
             name: attributes[NAME],
