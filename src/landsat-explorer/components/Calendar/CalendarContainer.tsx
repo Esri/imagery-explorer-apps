@@ -6,26 +6,22 @@ import { Dropdown } from '../../../shared/components/Dropdown';
 import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
 import { useDispatch } from 'react-redux';
-import {
-    acquisitionDateChanged,
-    acquisitionMonthChanged,
-    acquisitionYearChanged,
-    objectIdOfSelectedSceneChanged,
-} from '../../../shared/store/Landsat/reducer';
-import {
-    selectAcquisitionDate,
-    // selectAcquisitionMonth,
-    selectAcquisitionYear,
-} from '../../../shared/store/Landsat/selectors';
+import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
 import useAvailableScenes from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
+import {
+    updateAcquisitionDate,
+    updateAcquisitionMonth,
+    updateAcquisitionYear,
+    updateObjectIdOfSelectedScene,
+} from '../../../shared/store/Landsat/thunks';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
 
-    const acquisitionYear = useSelector(selectAcquisitionYear);
-
-    const selectedAcquisitionDate = useSelector(selectAcquisitionDate);
+    const { acquisitionYear, acquisitionDate } = useSelector(
+        selectLandsatQueryParams4SelectedMode
+    );
 
     /**
      * landsat scenes that intersect with the map center
@@ -44,12 +40,12 @@ const CalendarContainer = () => {
 
     useEffect(() => {
         const selectedScene = availableScenes.find(
-            (d) => d.formattedAcquisitionDate === selectedAcquisitionDate
+            (d) => d.formattedAcquisitionDate === acquisitionDate
         );
         dispatch(
-            objectIdOfSelectedSceneChanged(selectedScene?.objectId || null)
+            updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
         );
-    }, [availableScenes, selectedAcquisitionDate]);
+    }, [availableScenes, acquisitionDate]);
 
     return (
         <div className="mx-4">
@@ -59,7 +55,7 @@ const CalendarContainer = () => {
                         data={yearOptions}
                         onChange={(year) => {
                             // select year
-                            dispatch(acquisitionYearChanged(+year));
+                            dispatch(updateAcquisitionYear(+year));
                         }}
                     />
                 </div>
@@ -69,19 +65,17 @@ const CalendarContainer = () => {
                         data={monthOptions}
                         onChange={(month) => {
                             // select month
-                            dispatch(acquisitionMonthChanged(+month));
+                            dispatch(updateAcquisitionMonth(+month));
                         }}
                     />
                 </div>
 
-                <AcquisitionDateLabel
-                    acquisitionDate={selectedAcquisitionDate}
-                />
+                <AcquisitionDateLabel acquisitionDate={acquisitionDate} />
             </div>
 
             <Calendar
                 year={acquisitionYear}
-                selectedAcquisitionDate={selectedAcquisitionDate}
+                selectedAcquisitionDate={acquisitionDate}
                 acquisitionDates={availableScenes.map((scene) => {
                     const {
                         formattedAcquisitionDate,
@@ -96,7 +90,7 @@ const CalendarContainer = () => {
                 })}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
-                    dispatch(acquisitionDateChanged(formattedAcquisitionDate));
+                    dispatch(updateAcquisitionDate(formattedAcquisitionDate));
                 }}
             />
         </div>

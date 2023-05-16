@@ -4,9 +4,9 @@ import { fetchRasterFunctionInfos } from '../../../shared/services/imagery-servi
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 import { RasterFunctionSelector } from '../../../shared/components/RasterFunctionSelector';
 import { useDispatch } from 'react-redux';
-import { rasterFunctionNameChanged } from '../../../shared/store/Landsat/reducer';
 import { useSelector } from 'react-redux';
-import { selectLandsatRasterFunction } from '../../../shared/store/Landsat/selectors';
+import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
+import { updateRasterFunctionName } from '../../../shared/store/Landsat/thunks';
 
 const RasterFunctionSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -14,9 +14,10 @@ const RasterFunctionSelectorContainer = () => {
     const [rasterFunctionInfos, setRasterFunctionInfos] =
         useState<RasterFunctionInfo[]>();
 
-    const nameOfSelectedRasterFunction = useSelector(
-        selectLandsatRasterFunction
-    );
+    const {
+        rasterFunctionName,
+        // objectIdOfSelectedScene
+    } = useSelector(selectLandsatQueryParams4SelectedMode);
 
     useEffect(() => {
         (async () => {
@@ -38,9 +39,9 @@ const RasterFunctionSelectorContainer = () => {
     return (
         <RasterFunctionSelector
             rasterFunctionInfos={rasterFunctionInfos}
-            nameOfSelectedRasterFunction={nameOfSelectedRasterFunction}
+            nameOfSelectedRasterFunction={rasterFunctionName}
             onChange={(rasterFunctionName) => {
-                dispatch(rasterFunctionNameChanged(rasterFunctionName));
+                dispatch(updateRasterFunctionName(rasterFunctionName));
             }}
         />
     );

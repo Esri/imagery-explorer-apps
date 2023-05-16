@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { DropdownData } from '../../../shared/components/Dropdown/Dropdown';
 import { useSelector } from 'react-redux';
-import { selectAcquisitionMonth } from '../../../shared/store/Landsat/selectors';
+import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
 
 const MONTH_ABBR = [
     'JAN',
@@ -19,7 +19,9 @@ const MONTH_ABBR = [
 ];
 
 export const useMonthOptions = (): DropdownData[] => {
-    const acquisitionMonth = useSelector(selectAcquisitionMonth);
+    const { acquisitionMonth } = useSelector(
+        selectLandsatQueryParams4SelectedMode
+    );
 
     const monthOptions = useMemo(() => {
         const options = MONTH_ABBR.map((label, index) => {

@@ -7,15 +7,7 @@ import {
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
-export type LandsatState = {
-    /**
-     * name of selected raster function
-     */
-    rasterFunctionName?: string;
-    /**
-     * object id of selected Landsat scene
-     */
-    objectIdOfSelectedScene?: number;
+export type QueryParams4LandsatScene = {
     /**
      * the year that will be used to query available landsat scenes
      */
@@ -25,57 +17,71 @@ export type LandsatState = {
      */
     acquisitionMonth?: number;
     /**
-     * user selected acquisition date in format of `YYYY-MM-DD`
+     * percent of cloud coverage ranges from 0 to 1 that will be used to query available landsat scenes
+     */
+    cloudCover?: number;
+    /**
+     * selected acquisition date in format of `YYYY-MM-DD`
      */
     acquisitionDate?: string;
     /**
-     * percent of cloud coverage ranges from 0 to 1
+     * name of selected raster function
      */
-    cloudCover?: number;
+    rasterFunctionName?: string;
+    /**
+     * object id of selected Landsat scene
+     */
+    objectIdOfSelectedScene?: number;
 };
 
-export const initialLandsatState: LandsatState = {
-    rasterFunctionName: 'Natural Color with DRA', // Topographic
-    objectIdOfSelectedScene: null,
-    acquisitionYear: 2023,
+export type AppMode = 'explore' | 'find a scene' | 'swipe' | 'animate';
+
+export type LandsatState = {
+    mode?: AppMode;
+    queryParams4FindASceneMode?: QueryParams4LandsatScene;
+    queryParams4SwipeMode?: {
+        left?: QueryParams4LandsatScene;
+        right?: QueryParams4LandsatScene;
+    };
+    queryParams4AnimateMode?: QueryParams4LandsatScene[];
+};
+
+export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
+    acquisitionYear: new Date().getFullYear(),
     acquisitionMonth: null,
     acquisitionDate: '',
     cloudCover: 0.1,
+    rasterFunctionName: 'Natural Color with DRA',
+    objectIdOfSelectedScene: null,
+};
+
+export const initialLandsatState: LandsatState = {
+    mode: 'find a scene',
+    queryParams4FindASceneMode: {
+        ...DefaultQueryParams4LandsatScene,
+    },
+    queryParams4SwipeMode: {
+        left: null,
+        right: null,
+    },
+    queryParams4AnimateMode: [],
 };
 
 const slice = createSlice({
     name: 'Landsat',
     initialState: initialLandsatState,
     reducers: {
-        rasterFunctionNameChanged: (state, action: PayloadAction<string>) => {
-            state.rasterFunctionName = action.payload;
-        },
-        objectIdOfSelectedSceneChanged: (
+        queryParams4FindASceneModeChanged: (
             state,
-            action: PayloadAction<number>
+            action: PayloadAction<QueryParams4LandsatScene>
         ) => {
-            state.objectIdOfSelectedScene = action.payload;
-        },
-        acquisitionYearChanged: (state, action: PayloadAction<number>) => {
-            state.acquisitionYear = action.payload;
-        },
-        acquisitionMonthChanged: (state, action: PayloadAction<number>) => {
-            state.acquisitionMonth = action.payload;
-        },
-        acquisitionDateChanged: (state, action: PayloadAction<string>) => {
-            state.acquisitionDate = action.payload;
+            state.queryParams4FindASceneMode = action.payload;
         },
     },
 });
 
 const { reducer } = slice;
 
-export const {
-    rasterFunctionNameChanged,
-    objectIdOfSelectedSceneChanged,
-    acquisitionYearChanged,
-    acquisitionMonthChanged,
-    acquisitionDateChanged,
-} = slice.actions;
+export const { queryParams4FindASceneModeChanged } = slice.actions;
 
 export default reducer;
