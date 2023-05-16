@@ -20,7 +20,7 @@ export const Button: FC<Props> = ({
     return (
         <div
             className={classNames(
-                'p-2 px-4 border w-36 shrink-0 text-sm md:text-base border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
+                'p-2 px-4 border min-w-[9rem] shrink-0 text-sm md:text-base border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
                 {
                     'bg-custom-light-blue': appearance === 'solid',
                     'text-custom-background': appearance === 'solid',

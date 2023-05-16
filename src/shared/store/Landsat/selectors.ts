@@ -80,6 +80,11 @@ export const selectLandsatQueryParams4RightSideOfSwipeMode = createSelector(
     }
 );
 
+export const selectSelectedSideOfSwipeMode = createSelector(
+    (state: RootState) => state.Landsat.selectedSide4SwipeMode,
+    (selectedSide4SwipeMode) => selectedSide4SwipeMode
+);
+
 export const selectAppMode = createSelector(
     (state: RootState) => state.Landsat.mode,
     (mode) => mode

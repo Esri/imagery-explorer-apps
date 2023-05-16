@@ -4,6 +4,7 @@ import { RasterFunctionSelector } from '../RasterFunctionSelector';
 import { Calendar } from '../Calendar';
 import { AppHeader } from '../../../shared/components/AppHeader';
 import { ModeSelector } from '../ModeSelector';
+import { SwipeLayerSelector } from '../SwipeLayerSelector';
 
 const Layout = () => {
     return (
@@ -11,6 +12,7 @@ const Layout = () => {
             <AppHeader title="Landsat Explorer" />
             <BottomPanel>
                 <ModeSelector />
+                <SwipeLayerSelector />
                 <Calendar />
                 <RasterFunctionSelector />
             </BottomPanel>
