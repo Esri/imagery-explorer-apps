@@ -2,19 +2,22 @@ import './style.css';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 
 import ISwipe from 'esri/widgets/Swipe';
-import IMapView from 'esri/views/MapView';
+import MapView from 'esri/views/MapView';
 import { loadModules } from 'esri-loader';
 import IReactiveUtils from 'esri/core/reactiveUtils';
+import ImageryLayer from 'esri/layers/ImageryLayer';
 
 type Props = {
     /**
      * Indicate if Swipe Widget is visible
      */
     visible: boolean;
+    leadingLayer: ImageryLayer;
+    trailingLayer: ImageryLayer;
     /**
      * Map view that contains Swipe Widget
      */
-    mapView?: IMapView;
+    mapView?: MapView;
     /**
      * Fires when user drag and change swipe position
      */
@@ -31,6 +34,8 @@ type Props = {
 const SwipeWidget: FC<Props> = ({
     mapView,
     visible,
+    leadingLayer,
+    trailingLayer,
     positionOnChange,
     referenceInfoOnToggle,
 }: Props) => {
@@ -44,17 +49,12 @@ const SwipeWidget: FC<Props> = ({
             'esri/core/reactiveUtils',
         ]) as Promise<Modules>);
 
-        // mapView.map.addMany([
-        //     leadingLandCoverLayer,
-        //     leadingSentinel2Layer,
-        //     trailingLandcoverLayer,
-        //     trailingSentinel2Layer,
-        // ]);
+        mapView.map.addMany([leadingLayer, trailingLayer]);
 
         swipeWidgetRef.current = new Swipe({
             view: mapView,
-            leadingLayers: [],
-            trailingLayers: [],
+            leadingLayers: [leadingLayer],
+            trailingLayers: [trailingLayer],
             direction: 'horizontal',
             position: 50, // position set to middle of the view (50%)
             visible,
@@ -103,9 +103,9 @@ const SwipeWidget: FC<Props> = ({
         // initiate swipe widget
         if (
             mapView &&
+            leadingLayer &&
+            trailingLayer &&
             !swipeWidgetRef.current
-            // leadingLandCoverLayer &&
-            // leadingSentinel2Layer &&
             // trailingLandcoverLayer &&
             // trailingSentinel2Layer
         ) {
@@ -113,6 +113,8 @@ const SwipeWidget: FC<Props> = ({
         }
     }, [
         mapView,
+        leadingLayer,
+        trailingLayer,
         // leadingLandCoverLayer,
         // leadingSentinel2Layer,
         // trailingLandcoverLayer,

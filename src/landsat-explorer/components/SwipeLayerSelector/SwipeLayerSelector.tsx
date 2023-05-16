@@ -39,13 +39,17 @@ export const SwipeLayerSelector = () => {
                 </div>
 
                 <div className="text-xs text-center lowercase">
-                    <span>
-                        {queryParams?.acquisitionDate || 'No selected scene'}
-                    </span>
+                    {queryParams?.acquisitionDate ? (
+                        <>
+                            <span>{queryParams.acquisitionDate}</span>
 
-                    <br />
+                            <br />
 
-                    <span>{queryParams?.rasterFunctionName}</span>
+                            <span>{queryParams?.rasterFunctionName}</span>
+                        </>
+                    ) : (
+                        <span>No selected scene</span>
+                    )}
                 </div>
             </>
         );
