@@ -4,6 +4,7 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
+import { MAP_CENTER, MAP_ZOOM, WEB_MAP_ID } from '../../constants/map';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
@@ -23,9 +24,9 @@ export type MapState = {
 };
 
 export const initialMapState: MapState = {
-    webmapId: '67372ff42cd145319639a99152b15bc3', // Topographic
-    center: [-117.18, 34.055],
-    zoom: 10,
+    webmapId: WEB_MAP_ID, // Topographic
+    center: MAP_CENTER,
+    zoom: MAP_ZOOM,
 };
 
 const slice = createSlice({

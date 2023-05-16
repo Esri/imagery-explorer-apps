@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
 import MapView from './MapView';
-import { WEB_MAP_ID } from '../../constants';
+import { WEB_MAP_ID } from '../../constants/map';
 import { useSelector } from 'react-redux';
 import {
     selectMapCenter,
@@ -13,6 +13,7 @@ import EventHandlers from './EventHandlers';
 import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
 import { centerChanged, zoomChanged } from '../../store/Map/reducer';
+import { saveMapCenterToHashParams } from '../../utils/URLHashParams';
 
 type Props = {
     children?: React.ReactNode;
@@ -31,6 +32,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     useEffect(() => {
         // console.log('map view zoom and center has changed', center, zoom);
+        saveMapCenterToHashParams(center, zoom);
     }, [zoom, center]);
 
     return (

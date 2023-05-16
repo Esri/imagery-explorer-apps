@@ -7,7 +7,7 @@ import configureAppStore, {
 } from './shared/store/configureStore';
 
 (async () => {
-    const preloadedState = getPreloadedState();
+    const preloadedState = await getPreloadedState();
 
     const root = createRoot(document.getElementById('root'));
 
