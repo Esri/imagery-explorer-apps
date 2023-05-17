@@ -56,5 +56,8 @@ export const selectAppMode = createSelector(
 
 export const selectAvailableScenes = createSelector(
     (state: RootState) => state.Landsat.availableScenes,
-    (availableScenes) => availableScenes
+    (availableScenes) => {
+        const { objectIds, byObjectId } = availableScenes;
+        return objectIds.map((objectId) => byObjectId[objectId]);
+    }
 );

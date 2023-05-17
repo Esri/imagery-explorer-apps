@@ -53,9 +53,14 @@ export type QueryParams4LandsatScene = {
 export type LandsatState = {
     mode?: AppMode;
     /**
-     * Array of Landsat scenes that intersect with center point of map view and were acquired during the input year.
+     * Landsat scenes that intersect with center point of map view and were acquired during the input year.
      */
-    availableScenes?: Partial<LandsatScene>[];
+    availableScenes?: {
+        byObjectId?: {
+            [key: number]: Partial<LandsatScene>;
+        };
+        objectIds?: number[];
+    };
     /**
      * query params for the Landsat scene to be used in "Find a Scene" mode; and
      * on the left side of the "Swipe" mode
@@ -90,7 +95,10 @@ export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
 
 export const initialLandsatState: LandsatState = {
     mode: 'find a scene',
-    availableScenes: [],
+    availableScenes: {
+        byObjectId: {},
+        objectIds: [],
+    },
     queryParams4MainScene: {
         ...DefaultQueryParams4LandsatScene,
     },
@@ -110,7 +118,21 @@ const slice = createSlice({
             state,
             action: PayloadAction<LandsatScene[]>
         ) => {
-            state.availableScenes = action.payload;
+            const objectIds: number[] = [];
+
+            const byObjectId = {};
+
+            for (const scene of action.payload) {
+                const { objectId } = scene;
+
+                objectIds.push(objectId);
+                byObjectId[objectId] = scene;
+            }
+
+            state.availableScenes = {
+                objectIds,
+                byObjectId,
+            };
         },
         queryParams4MainSceneChanged: (
             state,
