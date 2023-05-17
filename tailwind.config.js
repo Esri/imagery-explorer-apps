@@ -48,7 +48,7 @@ module.exports = {
         'layer-toggle-top-position-mobile': '55px',
         'search-widget-top-position': '50px',
         'search-widget-top-position-mobile': '90px',
-        'cloud-slider-height': '100px'
+        'cloud-slider-height': '80px'
       }
     },
   },

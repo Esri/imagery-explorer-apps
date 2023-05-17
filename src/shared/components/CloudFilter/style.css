@@ -10,7 +10,7 @@
 }
 
 #cloud-filter-container.esri-widget .esri-slider__thumb {
-    @apply border-custom-light-blue bg-custom-background;
+    @apply border-custom-light-blue-80 bg-custom-light-blue-90;
 }
 
 #cloud-filter-container .esri-slider__segment-1 {
