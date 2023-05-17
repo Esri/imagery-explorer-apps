@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import useLandsatLayer from './useLandsatLayer';
 import { useSelector } from 'react-redux';
 import {
-    selectLandsatQueryParams4SelectedMode,
+    selectQueryParams4SceneInSelectedMode,
     selectAppMode,
 } from '../../../shared/store/Landsat/selectors';
 
@@ -15,7 +15,7 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
     const mode = useSelector(selectAppMode);
 
     const { rasterFunctionName, objectIdOfSelectedScene } = useSelector(
-        selectLandsatQueryParams4SelectedMode
+        selectQueryParams4SceneInSelectedMode
     );
 
     const getVisibility = () => {

@@ -5,7 +5,7 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 import { RasterFunctionSelector } from '../../../shared/components/RasterFunctionSelector';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
 import { updateRasterFunctionName } from '../../../shared/store/Landsat/thunks';
 
 const RasterFunctionSelectorContainer = () => {
@@ -17,7 +17,7 @@ const RasterFunctionSelectorContainer = () => {
     const {
         rasterFunctionName,
         // objectIdOfSelectedScene
-    } = useSelector(selectLandsatQueryParams4SelectedMode);
+    } = useSelector(selectQueryParams4SceneInSelectedMode);
 
     useEffect(() => {
         (async () => {

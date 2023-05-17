@@ -1,12 +1,12 @@
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
     QueryParams4LandsatScene,
-    queryParams4FindASceneModeChanged,
-    queryParams4SwipeModeChanged,
+    queryParams4MainSceneChanged,
+    queryParams4ScenesInSwipeModeChanged,
 } from './reducer';
 import {
     selectAppMode,
-    selectLandsatQueryParams4SelectedMode,
+    selectQueryParams4SceneInSelectedMode,
     selectSelectedSideOfSwipeMode,
 } from './selectors';
 
@@ -16,12 +16,12 @@ export const updateLandsatQueryParams4SelectedMode =
         const mode = selectAppMode(getState());
 
         if (mode === 'find a scene') {
-            dispatch(queryParams4FindASceneModeChanged(updatedQueryParams));
+            dispatch(queryParams4MainSceneChanged(updatedQueryParams));
             return;
         }
 
         if (mode === 'swipe') {
-            dispatch(queryParams4SwipeModeChanged(updatedQueryParams));
+            dispatch(queryParams4ScenesInSwipeModeChanged(updatedQueryParams));
             return;
         }
 
@@ -34,7 +34,7 @@ export const updateRasterFunctionName =
     (rasterFunctionName: string) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectLandsatQueryParams4SelectedMode(
+            const queryParams = selectQueryParams4SceneInSelectedMode(
                 getState()
             );
 
@@ -53,7 +53,7 @@ export const updateObjectIdOfSelectedScene =
     (objectIdOfSelectedScene: number) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectLandsatQueryParams4SelectedMode(
+            const queryParams = selectQueryParams4SceneInSelectedMode(
                 getState()
             );
 
@@ -72,7 +72,7 @@ export const updateAcquisitionYear =
     (acquisitionYear: number) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectLandsatQueryParams4SelectedMode(
+            const queryParams = selectQueryParams4SceneInSelectedMode(
                 getState()
             );
 
@@ -91,7 +91,7 @@ export const updateAcquisitionMonth =
     (acquisitionMonth: number) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectLandsatQueryParams4SelectedMode(
+            const queryParams = selectQueryParams4SceneInSelectedMode(
                 getState()
             );
 
@@ -110,7 +110,7 @@ export const updateAcquisitionDate =
     (acquisitionDate: string) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectLandsatQueryParams4SelectedMode(
+            const queryParams = selectQueryParams4SceneInSelectedMode(
                 getState()
             );
 

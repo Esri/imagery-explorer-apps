@@ -6,7 +6,7 @@ import { Dropdown } from '../../../shared/components/Dropdown';
 import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
 import { useDispatch } from 'react-redux';
-import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
 import useAvailableScenes from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
@@ -20,7 +20,7 @@ const CalendarContainer = () => {
     const dispatch = useDispatch();
 
     const { acquisitionYear, acquisitionDate } = useSelector(
-        selectLandsatQueryParams4SelectedMode
+        selectQueryParams4SceneInSelectedMode
     );
 
     /**

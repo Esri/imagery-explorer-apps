@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
-    selectLandsatQueryParams4LeftSideOfSwipeMode,
-    selectLandsatQueryParams4RightSideOfSwipeMode,
+    selectQueryParams4SceneOnLeftSideOfSwipeMode,
+    selectQueryParams4SceneOnRightSideOfSwipeMode,
     selectSelectedSideOfSwipeMode,
 } from '../../../shared/store/Landsat/selectors';
 import { Button } from '../../../shared/components/Button';
@@ -21,11 +21,11 @@ export const SwipeLayerSelector = () => {
     const selectedSideOfSwipeMode = useSelector(selectSelectedSideOfSwipeMode);
 
     const queryParams4LeftSide = useSelector(
-        selectLandsatQueryParams4LeftSideOfSwipeMode
+        selectQueryParams4SceneOnLeftSideOfSwipeMode
     );
 
     const queryParams4RightSide = useSelector(
-        selectLandsatQueryParams4RightSideOfSwipeMode
+        selectQueryParams4SceneOnRightSideOfSwipeMode
     );
 
     const getButtonContent = (side: Side4SwipeMode) => {

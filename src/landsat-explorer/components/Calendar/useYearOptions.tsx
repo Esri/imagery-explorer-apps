@@ -2,11 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { DropdownData } from '../../../shared/components/Dropdown/Dropdown';
 import { getTimeExtent } from '../../services/landsat-2/getTimeExtent';
 import { useSelector } from 'react-redux';
-import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
 
 export const useYearOptions = (): DropdownData[] => {
     const { acquisitionYear } = useSelector(
-        selectLandsatQueryParams4SelectedMode
+        selectQueryParams4SceneInSelectedMode
     );
 
     const [years, setYears] = useState<number[]>([]);

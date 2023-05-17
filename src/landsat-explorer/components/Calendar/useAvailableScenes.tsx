@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectLandsatQueryParams4SelectedMode } from '../../../shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
 import { selectMapCenter } from '../../../shared/store/Map/selectors';
 import {
     LandsatScene,
@@ -14,7 +14,7 @@ import {
  */
 const useAvailableScenes = () => {
     const { acquisitionYear } = useSelector(
-        selectLandsatQueryParams4SelectedMode
+        selectQueryParams4SceneInSelectedMode
     );
 
     /**

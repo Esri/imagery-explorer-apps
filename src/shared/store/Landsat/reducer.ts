@@ -50,24 +50,22 @@ export type Side4SwipeMode = 'left' | 'right';
 export type LandsatState = {
     mode?: AppMode;
     /**
-     * query params to find a single Landsat scene
+     * query params for the Landsat scene to be used in "Find a Scene" mode; and
+     * on the left side of the "Swipe" mode
      */
-    queryParams4FindASceneMode?: QueryParams4LandsatScene;
+    queryParams4MainScene?: QueryParams4LandsatScene;
     /**
-     * query params to find Landsat scenes on in swipe mode
+     * query params for the Landsat scene that will be used on the right side of the "swipe" mode
      */
-    queryParams4SwipeMode?: {
-        left?: QueryParams4LandsatScene;
-        right?: QueryParams4LandsatScene;
-    };
+    queryParams4SecondaryScene?: QueryParams4LandsatScene;
     /**
      * Selected side for Swipe Mode. This value determines which item in `queryParams4SwipeMode` should be updated.
      */
     selectedSide4SwipeMode?: Side4SwipeMode;
     /**
-     * Array of query parameters to find Landsat scenes that will be animated.
+     * Array of query parameters for Landsat scenes that will be animated.
      */
-    queryParams4AnimateMode?: QueryParams4LandsatScene[];
+    queryParams4ScenesInAnimateMode?: QueryParams4LandsatScene[];
     /**
      * Index of the selected query parameters for animate mode. This value helps identify which item in `queryParams4AnimateMode` should be updated.
      */
@@ -85,19 +83,14 @@ export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
 
 export const initialLandsatState: LandsatState = {
     mode: 'find a scene',
-    queryParams4FindASceneMode: {
+    queryParams4MainScene: {
         ...DefaultQueryParams4LandsatScene,
     },
-    queryParams4SwipeMode: {
-        left: {
-            ...DefaultQueryParams4LandsatScene,
-        },
-        right: {
-            ...DefaultQueryParams4LandsatScene,
-        },
+    queryParams4SecondaryScene: {
+        ...DefaultQueryParams4LandsatScene,
     },
     selectedSide4SwipeMode: 'left',
-    queryParams4AnimateMode: [],
+    queryParams4ScenesInAnimateMode: [],
     indexOfSelectedQueryParams4AnimateMode: 0,
 };
 
@@ -105,22 +98,22 @@ const slice = createSlice({
     name: 'Landsat',
     initialState: initialLandsatState,
     reducers: {
-        queryParams4FindASceneModeChanged: (
+        queryParams4MainSceneChanged: (
             state,
             action: PayloadAction<QueryParams4LandsatScene>
         ) => {
-            state.queryParams4FindASceneMode = action.payload;
+            state.queryParams4MainScene = action.payload;
         },
-        queryParams4SwipeModeChanged: (
+        queryParams4ScenesInSwipeModeChanged: (
             state,
             action: PayloadAction<QueryParams4LandsatScene>
         ) => {
             const side = state.selectedSide4SwipeMode;
 
             if (side === 'left') {
-                state.queryParams4SwipeMode.left = action.payload;
+                state.queryParams4MainScene = action.payload;
             } else {
-                state.queryParams4SwipeMode.right = action.payload;
+                state.queryParams4SecondaryScene = action.payload;
             }
         },
         modeChanged: (state, action: PayloadAction<AppMode>) => {
@@ -144,8 +137,8 @@ const slice = createSlice({
 const { reducer } = slice;
 
 export const {
-    queryParams4FindASceneModeChanged,
-    queryParams4SwipeModeChanged,
+    queryParams4MainSceneChanged,
+    queryParams4ScenesInSwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,
     indexOfSelectedQueryParams4AnimateModeChanged,
