@@ -1,6 +1,13 @@
+import { batch } from 'react-redux';
+import {
+    LandsatScene,
+    getLandsatScenes,
+} from '../../../landsat-explorer/services/landsat-2/getLandsatScenes';
+import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
     QueryParams4LandsatScene,
+    availableScenesUpdated,
     queryParams4MainSceneChanged,
     queryParams4ScenesInSwipeModeChanged,
 } from './reducer';
@@ -9,6 +16,50 @@ import {
     selectQueryParams4SceneInSelectedMode,
     selectSelectedSideOfSwipeMode,
 } from './selectors';
+
+/**
+ * Query Landsat Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
+ * @returns
+ */
+export const queryAvailableScenes =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        try {
+            const { acquisitionYear } = selectQueryParams4SceneInSelectedMode(
+                getState()
+            );
+
+            const center = selectMapCenter(getState());
+
+            const scenes = await getLandsatScenes({
+                year: acquisitionYear,
+                mapPoint: center,
+                cloudCover: 1,
+            });
+
+            const availableScenes: LandsatScene[] = [];
+
+            for (const scene of scenes) {
+                const { formattedAcquisitionDate } = scene;
+
+                // Only need to keep the one Landsat Scene for each day
+                if (
+                    availableScenes.length &&
+                    availableScenes[availableScenes.length - 1]
+                        .formattedAcquisitionDate == formattedAcquisitionDate
+                ) {
+                    continue;
+                }
+
+                availableScenes.push(scene);
+            }
+
+            batch(() => {
+                dispatch(availableScenesUpdated(availableScenes));
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
 export const updateLandsatQueryParams4SelectedMode =
     (updatedQueryParams: QueryParams4LandsatScene) =>

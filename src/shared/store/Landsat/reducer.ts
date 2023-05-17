@@ -4,6 +4,7 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
+import { LandsatScene } from '../../../landsat-explorer/services/landsat-2/getLandsatScenes';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
@@ -32,7 +33,11 @@ export type QueryParams4LandsatScene = {
      */
     rasterFunctionName?: string;
     /**
-     * object id of selected Landsat scene
+     * Object Id of selected Landsat scene.
+     *
+     * The Object ID of the selected Landsat scene will be automatically determined based on the changes in the `acquisitionDate` or `availableScenes`.
+     * We will use the object ID of the Landsat scene from the `availableScenes` that was acquired on the `acquisitionDate`.
+     * If no Landsat scene was acquired on that date, the object ID will be reset to null.
      */
     objectIdOfSelectedScene?: number;
 };
@@ -49,6 +54,10 @@ export type Side4SwipeMode = 'left' | 'right';
 
 export type LandsatState = {
     mode?: AppMode;
+    /**
+     * Array of Landsat scenes that intersect with center point of map view and were acquired during the input year.
+     */
+    availableScenes?: Partial<LandsatScene>[];
     /**
      * query params for the Landsat scene to be used in "Find a Scene" mode; and
      * on the left side of the "Swipe" mode
@@ -83,6 +92,7 @@ export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
 
 export const initialLandsatState: LandsatState = {
     mode: 'find a scene',
+    availableScenes: [],
     queryParams4MainScene: {
         ...DefaultQueryParams4LandsatScene,
     },
@@ -98,6 +108,12 @@ const slice = createSlice({
     name: 'Landsat',
     initialState: initialLandsatState,
     reducers: {
+        availableScenesUpdated: (
+            state,
+            action: PayloadAction<LandsatScene[]>
+        ) => {
+            state.availableScenes = action.payload;
+        },
         queryParams4MainSceneChanged: (
             state,
             action: PayloadAction<QueryParams4LandsatScene>
@@ -137,6 +153,7 @@ const slice = createSlice({
 const { reducer } = slice;
 
 export const {
+    availableScenesUpdated,
     queryParams4MainSceneChanged,
     queryParams4ScenesInSwipeModeChanged,
     modeChanged,

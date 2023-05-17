@@ -38,15 +38,6 @@ const CalendarContainer = () => {
      */
     const yearOptions = useYearOptions();
 
-    useEffect(() => {
-        const selectedScene = availableScenes.find(
-            (d) => d.formattedAcquisitionDate === acquisitionDate
-        );
-        dispatch(
-            updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
-        );
-    }, [availableScenes, acquisitionDate]);
-
     return (
         <div className="mx-4">
             <div className="flex mb-1 items-center">

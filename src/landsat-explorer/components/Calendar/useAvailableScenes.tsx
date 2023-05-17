@@ -1,11 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
-import { selectMapCenter } from '../../../shared/store/Map/selectors';
 import {
-    LandsatScene,
-    getLandsatScenes,
-} from '../../services/landsat-2/getLandsatScenes';
+    selectAvailableScenes,
+    selectQueryParams4SceneInSelectedMode,
+} from '../../../shared/store/Landsat/selectors';
+import { selectMapCenter } from '../../../shared/store/Map/selectors';
+import { useDispatch } from 'react-redux';
+import {
+    queryAvailableScenes,
+    updateObjectIdOfSelectedScene,
+} from '../../../shared/store/Landsat/thunks';
 
 /**
  * This custom hook queries the landsat service and find landsat scenes
@@ -13,7 +17,9 @@ import {
  * @returns
  */
 const useAvailableScenes = () => {
-    const { acquisitionYear } = useSelector(
+    const dispatch = useDispatch();
+
+    const { acquisitionYear, acquisitionDate } = useSelector(
         selectQueryParams4SceneInSelectedMode
     );
 
@@ -25,36 +31,24 @@ const useAvailableScenes = () => {
     /**
      * available landsat scenes that intersect with input map geometry and were acquired during the input year.
      */
-    const [availableScenes, setAvailableScenes] = useState<LandsatScene[]>([]);
+    const availableScenes = useSelector(selectAvailableScenes);
 
     useEffect(() => {
-        (async () => {
-            const scenes = await getLandsatScenes({
-                year: acquisitionYear,
-                mapPoint: center,
-                cloudCover: 1,
-            });
-
-            const availableScenes: LandsatScene[] = [];
-
-            for (const scene of scenes) {
-                const { formattedAcquisitionDate } = scene;
-
-                // make sure to not push scene acquired from same day to the output
-                if (
-                    availableScenes.length &&
-                    availableScenes[availableScenes.length - 1]
-                        .formattedAcquisitionDate == formattedAcquisitionDate
-                ) {
-                    continue;
-                }
-
-                availableScenes.push(scene);
-            }
-
-            setAvailableScenes(scenes);
-        })();
+        if (center && acquisitionYear) {
+            dispatch(queryAvailableScenes());
+        }
     }, [center, acquisitionYear]);
+
+    useEffect(() => {
+        // we should try to find a scene that was acquired from the selected acquisition date
+        // whenever the available scenes and acquisition date changes
+        const selectedScene = availableScenes.find(
+            (d) => d.formattedAcquisitionDate === acquisitionDate
+        );
+        dispatch(
+            updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
+        );
+    }, [availableScenes, acquisitionDate]);
 
     return {
         availableScenes,
