@@ -32,17 +32,44 @@ export type LandsatScene = {
      * acquisitionDate in unix timestamp
      */
     acquisitionDate: number;
-    name: string;
+    /**
+     * percent of cloud cover
+     */
     cloudCover: number;
-    best: number;
+
     /**
      * if true, this scene was acquired during a cloudy day
      */
     isCloudy: boolean;
+    /**
+     * name of the satellite (e.g. 'Landsat 8')
+     */
+    satellite: string;
+    /**
+     * Landsat path number
+     * @see https://landsat.gsfc.nasa.gov/about/the-worldwide-reference-system/
+     */
+    path: number;
+    /**
+     * Landsat Row number
+     */
+    row: number;
+    category: number;
+    name: string;
+    // best: number;
 };
 
-const { OBJECTID, ACQUISITION_DATE, CLOUD_COVER, CATEGORY, NAME, BEST } =
-    FIELD_NAMES;
+const {
+    OBJECTID,
+    ACQUISITION_DATE,
+    CLOUD_COVER,
+    CATEGORY,
+    NAME,
+    BEST,
+    SENSORNAME,
+    WRS_PATH,
+    WRS_ROW,
+} = FIELD_NAMES;
 
 /**
  * any scene with cloud coverage beyond this will be considered as cloudy day
@@ -73,6 +100,10 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             cloudCover: attributes[CLOUD_COVER],
             best: attributes[BEST],
             isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
+            satellite: attributes[SENSORNAME],
+            row: attributes[WRS_ROW],
+            path: attributes[WRS_PATH],
+            category: attributes[CATEGORY],
         } as LandsatScene;
     });
 };
@@ -117,7 +148,16 @@ export const getLandsatScenes = async ({
         // geometryType: 'esriGeometryEnvelope',
         geometryType: 'esriGeometryPoint',
         // inSR: '102100',
-        outFields: [ACQUISITION_DATE, CLOUD_COVER, NAME, BEST].join(','),
+        outFields: [
+            ACQUISITION_DATE,
+            CLOUD_COVER,
+            NAME,
+            BEST,
+            SENSORNAME,
+            WRS_PATH,
+            WRS_ROW,
+            CATEGORY,
+        ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',
         returnGeometry: 'false',

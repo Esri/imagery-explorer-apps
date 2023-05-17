@@ -61,3 +61,11 @@ export const selectAvailableScenes = createSelector(
         return objectIds.map((objectId) => byObjectId[objectId]);
     }
 );
+
+export const selectAvailableScenesByObjectId = createSelector(
+    (state: RootState) => state.Landsat.availableScenes,
+    (availableScenes) => {
+        const { byObjectId } = availableScenes;
+        return byObjectId;
+    }
+);

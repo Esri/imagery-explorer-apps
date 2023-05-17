@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { DropdownData } from '../../../shared/components/Dropdown/Dropdown';
+import { DropdownData } from '../../../shared/components/Dropdown';
 import { useSelector } from 'react-redux';
 import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
 
