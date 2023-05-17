@@ -6,7 +6,15 @@ import {
 } from '@reduxjs/toolkit';
 import { LandsatScene } from '../../../landsat-explorer/services/landsat-2/getLandsatScenes';
 
-// import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
+/**
+ * the app support 4 different modes that the user can use to explore the landsat data
+ */
+export type AppMode = 'explore' | 'find a scene' | 'swipe' | 'animate';
+
+/**
+ * Swipe Mode allows user to compare Landsat Scene the
+ */
+export type Side4SwipeMode = 'left' | 'right';
 
 /**
  * Query Params and Rendering Options for a Landsat Scene
@@ -41,16 +49,6 @@ export type QueryParams4LandsatScene = {
      */
     objectIdOfSelectedScene?: number;
 };
-
-/**
- * the app support 4 different modes that the user can use to explore the landsat data
- */
-export type AppMode = 'explore' | 'find a scene' | 'swipe' | 'animate';
-
-/**
- * Swipe Mode allows user to compare Landsat Scene the
- */
-export type Side4SwipeMode = 'left' | 'right';
 
 export type LandsatState = {
     mode?: AppMode;
