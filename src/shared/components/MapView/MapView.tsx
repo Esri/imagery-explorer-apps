@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { loadModules, loadCss } from 'esri-loader';
+import { loadModules } from 'esri-loader';
 import IMapView from 'esri/views/MapView';
 import IWebMap from 'esri/WebMap';
 import ITileInfo from 'esri/layers/support/TileInfo';
@@ -24,8 +24,6 @@ interface Props {
      */
     children?: React.ReactNode;
 }
-
-loadCss();
 
 const MapView: React.FC<Props> = ({
     webmapId,
