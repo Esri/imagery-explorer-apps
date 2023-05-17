@@ -1,0 +1,26 @@
+#cloud-filter-container.esri-widget {
+    background: transparent;
+}
+
+#cloud-filter-container.esri-widget .esri-slider__label {
+    @apply text-custom-light-blue-90;
+    background: rgba(0,0,0,.7);
+    min-width: 40px;
+    font-size: .8rem;
+}
+
+#cloud-filter-container.esri-widget .esri-slider__thumb {
+    @apply border-custom-light-blue bg-custom-background;
+}
+
+#cloud-filter-container .esri-slider__segment-1 {
+    @apply bg-custom-light-blue;
+}
+  
+#cloud-filter-container .esri-slider__segment-2,
+#cloud-filter-container .esri-slider__segment-0,
+#cloud-filter-container .esri-slider__segment-0,
+#cloud-filter-container .esri-slider__segment-1 {
+    background-color: #00232f;
+    border: 1px solid #193d49;
+}

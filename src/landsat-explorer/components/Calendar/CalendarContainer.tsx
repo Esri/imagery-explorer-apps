@@ -11,7 +11,7 @@ import useAvailableScenes from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
-    updateAcquisitionMonth,
+    // updateAcquisitionMonth,
     updateAcquisitionYear,
     updateObjectIdOfSelectedScene,
 } from '../../../shared/store/Landsat/thunks';
@@ -56,7 +56,8 @@ const CalendarContainer = () => {
                         data={monthOptions}
                         onChange={(month) => {
                             // select month
-                            dispatch(updateAcquisitionMonth(+month));
+                            // dispatch(updateAcquisitionMonth(+month));
+                            console.log(month);
                         }}
                     />
                 </div>

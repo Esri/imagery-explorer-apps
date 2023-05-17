@@ -24,16 +24,15 @@ import {
 export const queryAvailableScenes =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const { acquisitionYear } = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+            const { acquisitionYear, cloudCover } =
+                selectQueryParams4SceneInSelectedMode(getState());
 
             const center = selectMapCenter(getState());
 
             const scenes = await getLandsatScenes({
                 year: acquisitionYear,
                 mapPoint: center,
-                cloudCover: 1,
+                cloudCover,
             });
 
             const availableScenes: LandsatScene[] = [];
@@ -61,7 +60,12 @@ export const queryAvailableScenes =
         }
     };
 
-export const updateLandsatQueryParams4SelectedMode =
+/**
+ * update query params that will be used to find the Landsat Scene in the selected mode
+ * @param updatedQueryParams
+ * @returns
+ */
+export const updateQueryParams4SceneInSelectedMode =
     (updatedQueryParams: QueryParams4LandsatScene) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
         const mode = selectAppMode(getState());
@@ -94,7 +98,7 @@ export const updateRasterFunctionName =
                 rasterFunctionName,
             };
 
-            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
@@ -113,7 +117,7 @@ export const updateObjectIdOfSelectedScene =
                 objectIdOfSelectedScene,
             };
 
-            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
@@ -132,14 +136,14 @@ export const updateAcquisitionYear =
                 acquisitionYear,
             };
 
-            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
     };
 
-export const updateAcquisitionMonth =
-    (acquisitionMonth: number) =>
+export const updateCloudCover =
+    (cloudCover: number) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
             const queryParams = selectQueryParams4SceneInSelectedMode(
@@ -148,14 +152,33 @@ export const updateAcquisitionMonth =
 
             const updatedQueryParams: QueryParams4LandsatScene = {
                 ...queryParams,
-                acquisitionMonth,
+                cloudCover,
             };
 
-            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
     };
+
+// export const updateAcquisitionMonth =
+//     (acquisitionMonth: number) =>
+//     async (dispatch: StoreDispatch, getState: StoreGetState) => {
+//         try {
+//             const queryParams = selectQueryParams4SceneInSelectedMode(
+//                 getState()
+//             );
+
+//             const updatedQueryParams: QueryParams4LandsatScene = {
+//                 ...queryParams,
+//                 acquisitionMonth,
+//             };
+
+//             dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
+//         } catch (err) {
+//             console.error(err);
+//         }
+//     };
 
 export const updateAcquisitionDate =
     (acquisitionDate: string) =>
@@ -170,7 +193,7 @@ export const updateAcquisitionDate =
                 acquisitionDate,
             };
 
-            dispatch(updateLandsatQueryParams4SelectedMode(updatedQueryParams));
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
         } catch (err) {
             console.error(err);
         }
