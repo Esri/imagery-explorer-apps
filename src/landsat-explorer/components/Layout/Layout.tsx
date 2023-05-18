@@ -7,6 +7,7 @@ import { ModeSelector } from '../ModeSelector';
 import { SwipeLayerSelector } from '../SwipeLayerSelector';
 import { SceneInfo } from '../SceneInfo';
 import { CloudFilter } from '../CloudFilter';
+import { AnimationFramesControl } from '../AnimationControl';
 
 const Layout = () => {
     return (
@@ -15,6 +16,7 @@ const Layout = () => {
             <BottomPanel>
                 <ModeSelector />
                 <SwipeLayerSelector />
+                <AnimationFramesControl />
                 <CloudFilter />
                 <Calendar />
                 <RasterFunctionSelector />
