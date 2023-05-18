@@ -42,7 +42,7 @@ export const useMonthOptions = (): DropdownData[] => {
             },
             ...options,
         ];
-    }, []);
+    }, [acquisitionMonth]);
 
     return monthOptions;
 };

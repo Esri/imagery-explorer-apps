@@ -15,13 +15,16 @@ import {
     updateAcquisitionYear,
     updateObjectIdOfSelectedScene,
 } from '../../../shared/store/Landsat/thunks';
+import { getCurrentYear } from '../../../shared/utils/snippets/getCurrentYear';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
 
-    const { acquisitionYear, acquisitionDate } = useSelector(
-        selectQueryParams4SceneInSelectedMode
-    );
+    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+
+    const acquisitionDate = queryParams?.acquisitionDate;
+
+    const acquisitionYear = queryParams?.acquisitionYear || getCurrentYear();
 
     /**
      * landsat scenes that intersect with the map center

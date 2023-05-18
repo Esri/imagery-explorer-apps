@@ -12,7 +12,7 @@ export const CloudFilterContainer = () => {
 
     return (
         <CloudFilter
-            cloudCoverage={cloudCover}
+            cloudCoverage={cloudCover === undefined ? 0.5 : cloudCover}
             onChange={(newValue) => {
                 // console.log(value)
                 dispatch(updateCloudCover(newValue));

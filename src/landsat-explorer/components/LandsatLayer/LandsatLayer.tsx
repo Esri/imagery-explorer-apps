@@ -19,9 +19,9 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
     );
 
     const getVisibility = () => {
-        if (mode === 'explore') {
-            return true;
-        }
+        // if (mode === 'explore') {
+        //     return true;
+        // }
 
         if (mode === 'find a scene' && objectIdOfSelectedScene) {
             return true;

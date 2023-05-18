@@ -27,10 +27,14 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         }
 
         if (mode === 'animate') {
-            return queryParams4ScenesInAnimateMode[
-                indexOfSelectedQueryParams4AnimateMode
-            ];
+            return (
+                queryParams4ScenesInAnimateMode[
+                    indexOfSelectedQueryParams4AnimateMode
+                ] || {}
+            );
         }
+
+        return {};
     }
 );
 

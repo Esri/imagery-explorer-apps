@@ -5,6 +5,7 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { LandsatScene } from '../../../landsat-explorer/services/landsat-2/getLandsatScenes';
+import { getCurrentYear } from '../../utils/snippets/getCurrentYear';
 
 /**
  * the app support 4 different modes that the user can use to explore the landsat data
@@ -85,7 +86,7 @@ export type LandsatState = {
 };
 
 export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
-    acquisitionYear: new Date().getFullYear(),
+    acquisitionYear: getCurrentYear(),
     acquisitionMonth: null,
     acquisitionDate: '',
     cloudCover: 0.5,
