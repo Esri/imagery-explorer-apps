@@ -40,18 +40,7 @@ export const AnimationFramesControlContainer = () => {
         });
     }, [queryParams4ScenesInAnimateMode]);
 
-    useEffect(() => {
-        // add initial frames if necesary
-        if (!queryParams4ScenesInAnimateMode.length) {
-            dispatch(addAnimationFrame());
-        }
-    }, [queryParams4ScenesInAnimateMode]);
-
     if (mode !== 'animate') {
-        return null;
-    }
-
-    if (!data || !data.length) {
         return null;
     }
 

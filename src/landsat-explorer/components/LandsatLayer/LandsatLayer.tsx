@@ -27,6 +27,10 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
             return true;
         }
 
+        if (mode === 'animate' && objectIdOfSelectedScene) {
+            return true;
+        }
+
         return false;
     };
 

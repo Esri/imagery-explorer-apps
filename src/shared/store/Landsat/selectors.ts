@@ -82,10 +82,3 @@ export const selectQueryParams4ScenesInAnimateMode = createSelector(
         return frameIds.map((id) => byFrameId[id]);
     }
 );
-
-export const selectFrameIdOfSelectedQueryParams4AnimateMode = createSelector(
-    (state: RootState) =>
-        state.Landsat.frameIdOfSelectedQueryParams4AnimateMode,
-    (frameIdOfSelectedQueryParams4AnimateMode) =>
-        frameIdOfSelectedQueryParams4AnimateMode
-);

@@ -19,7 +19,6 @@ import {
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
     selectQueryParams4ScenesInAnimateMode,
-    // selectFrameIdOfSelectedQueryParams4AnimateMode
 } from './selectors';
 import { generate } from 'shortid';
 
@@ -211,10 +210,6 @@ export const addAnimationFrame =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const queryParams4ExistingScenes =
             selectQueryParams4ScenesInAnimateMode(getState());
-
-        // const idOfSelectedFrame = selectFrameIdOfSelectedQueryParams4AnimateMode(
-        //     getState()
-        // )
 
         const idOfFrame2BeAdded = generate();
 

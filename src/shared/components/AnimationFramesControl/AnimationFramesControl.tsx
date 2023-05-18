@@ -43,8 +43,8 @@ export const AnimationFramesControl: FC<Props> = ({
     removeButtonOnClick,
 }) => {
     return (
-        <div className="h-full mx-2 flex flex-col">
-            <div className="flex-grow">
+        <div className="h-full mx-2">
+            <div className="">
                 {data.map((d) => {
                     const { frameId, acquisitionDate, rasterFunctionName } = d;
 
@@ -79,7 +79,7 @@ export const AnimationFramesControl: FC<Props> = ({
             </div>
             <div className="" onClick={addButtonOnClick}>
                 <span className="text-xs text-custom-light-blue uppercase">
-                    Add A Scene
+                    Add A Frame
                 </span>
             </div>
         </div>
