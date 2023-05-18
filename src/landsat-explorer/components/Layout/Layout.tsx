@@ -8,19 +8,28 @@ import { SwipeLayerSelector } from '../SwipeLayerSelector';
 import { SceneInfo } from '../SceneInfo';
 import { CloudFilter } from '../CloudFilter';
 import { AnimationFramesControl } from '../AnimationControl';
+import { useSelector } from 'react-redux';
+import { selectAppMode } from '../../../shared/store/Landsat/selectors';
 
 const Layout = () => {
+    const mode = useSelector(selectAppMode);
+
     return (
         <>
             <AppHeader title="Landsat Explorer" />
             <BottomPanel>
                 <ModeSelector />
-                <SwipeLayerSelector />
-                <AnimationFramesControl />
-                <CloudFilter />
-                <Calendar />
-                <RasterFunctionSelector />
-                <SceneInfo />
+
+                {mode !== 'explore' && (
+                    <>
+                        <SwipeLayerSelector />
+                        <AnimationFramesControl />
+                        <CloudFilter />
+                        <Calendar />
+                        <RasterFunctionSelector />
+                        <SceneInfo />
+                    </>
+                )}
             </BottomPanel>
         </>
     );
