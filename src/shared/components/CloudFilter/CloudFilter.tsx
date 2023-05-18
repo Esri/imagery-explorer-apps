@@ -17,6 +17,11 @@ type Props = {
     onChange: (val: number) => void;
 };
 
+/**
+ * A slider component to select cloud coverage that will be used to find Landsat scenes
+ * @param param0
+ * @returns
+ */
 export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
     const containerRef = useRef<HTMLDivElement>();
 
@@ -34,8 +39,8 @@ export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
 
             sliderRef.current = new Slider({
                 container: containerRef.current,
-                min: 0,
-                max: 1,
+                min: 0, // no cloud cover at all
+                max: 1, // 100% if cloud coverage
                 steps: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
                 values: [0.5],
                 snapOnClickEnabled: false,
@@ -67,6 +72,21 @@ export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
             sliderRef.current.destroy();
         };
     }, []);
+
+    // Synchronize the position of the slider thumb with the current value of cloud coverage.
+    // The Cloud Filter component controls the cloud coverage for different scenes (e.g., left/right scenes in swipe mode).
+    // Each scene can have a different cloud coverage, and the slider component should always display the value of cloud coverage from the selected scene.
+    useEffect(() => {
+        if (!sliderRef.current) {
+            return;
+        }
+
+        // Check if the current value of the slider is different from the cloud coverage value.
+        // If so, update the slider's value to match the cloud coverage value of the selected scene.
+        if (sliderRef.current.values[0] !== cloudCoverage) {
+            sliderRef.current.viewModel.setValue(0, cloudCoverage);
+        }
+    }, [cloudCoverage]);
 
     return (
         <div className="mx-4">
