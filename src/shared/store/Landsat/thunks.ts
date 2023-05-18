@@ -9,11 +9,11 @@ import {
     DefaultQueryParams4LandsatScene,
     QueryParams4LandsatScene,
     availableScenesUpdated,
-    frameIdOfSelectedQueryParams4AnimateModeChanged,
     queryParams4MainSceneChanged,
     queryParams4ScenesInAnimationModeLoaded,
     queryParams4SceneInSwipeModeChanged,
     queryParams4SceneInAnimationModeChanged,
+    selectedAnimationFrameIdChanged,
 } from './reducer';
 import {
     selectAppMode,
@@ -213,6 +213,8 @@ export const addAnimationFrame =
 
         const idOfFrame2BeAdded = generate();
 
+        // instead of using the default data, it should use either the queryParams from main scene or query params from the previous frame
+
         batch(() => {
             dispatch(
                 queryParams4ScenesInAnimationModeLoaded([
@@ -224,11 +226,7 @@ export const addAnimationFrame =
                 ])
             );
 
-            dispatch(
-                frameIdOfSelectedQueryParams4AnimateModeChanged(
-                    idOfFrame2BeAdded
-                )
-            );
+            dispatch(selectedAnimationFrameIdChanged(idOfFrame2BeAdded));
         });
     };
 
@@ -245,4 +243,11 @@ export const removeAnimationFrame =
                 )
             )
         );
+
+        // should update frameIdOfSelectedQueryParams if the one get removed is the selected one
+        // dispatch(
+        //     selectedAnimationFrameIdChanged(
+        //         idOfFrame2BeAdded
+        //     )
+        // );
     };

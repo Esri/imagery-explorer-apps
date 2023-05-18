@@ -13,7 +13,7 @@ import {
     addAnimationFrame,
     removeAnimationFrame,
 } from '../../../shared/store/Landsat/thunks';
-import { frameIdOfSelectedQueryParams4AnimateModeChanged } from '../../../shared/store/Landsat/reducer';
+import { selectedAnimationFrameIdChanged } from '../../../shared/store/Landsat/reducer';
 
 export const AnimationFramesControlContainer = () => {
     const dispatch = useDispatch();
@@ -49,9 +49,7 @@ export const AnimationFramesControlContainer = () => {
             data={data}
             frameOnSelect={(frameId: string) => {
                 // select a scene
-                dispatch(
-                    frameIdOfSelectedQueryParams4AnimateModeChanged(frameId)
-                );
+                dispatch(selectedAnimationFrameIdChanged(frameId));
             }}
             addButtonOnClick={() => {
                 // add scene

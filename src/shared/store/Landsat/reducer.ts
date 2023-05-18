@@ -80,7 +80,7 @@ export type LandsatState = {
      */
     selectedSide4SwipeMode?: Side4SwipeMode;
     /**
-     * query parameters for Landsat scenes that will be used in the Animation Mode.
+     * query parameters for Landsat scenes that will be used in different frames of Animation Mode.
      */
     queryParams4ScenesInAnimateMode?: {
         byFrameId?: {
@@ -89,9 +89,9 @@ export type LandsatState = {
         frameIds?: string[];
     };
     /**
-     * Animation frame ID of the selected query parameters for animate mode. This value helps identify which item in `queryParams4ScenesInAnimateMode` should be updated.
+     * Id of the selected frame of the Animation Mode. This Id helps identify which item in `queryParams4ScenesInAnimateMode` should be updated.
      */
-    frameIdOfSelectedQueryParams4AnimateMode?: string;
+    selectedAnimationFrameId?: string;
 };
 
 export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
@@ -121,7 +121,7 @@ export const initialLandsatState: LandsatState = {
         byFrameId: {},
         frameIds: [],
     },
-    frameIdOfSelectedQueryParams4AnimateMode: null,
+    selectedAnimationFrameId: null,
 };
 
 const slice = createSlice({
@@ -175,11 +175,11 @@ const slice = createSlice({
         ) => {
             state.selectedSide4SwipeMode = action.payload;
         },
-        frameIdOfSelectedQueryParams4AnimateModeChanged: (
+        selectedAnimationFrameIdChanged: (
             state,
             action: PayloadAction<string>
         ) => {
-            state.frameIdOfSelectedQueryParams4AnimateMode = action.payload;
+            state.selectedAnimationFrameId = action.payload;
         },
         queryParams4ScenesInAnimationModeLoaded: (
             state,
@@ -208,7 +208,7 @@ const slice = createSlice({
             state,
             action: PayloadAction<QueryParams4LandsatScene>
         ) => {
-            const frameId = state.frameIdOfSelectedQueryParams4AnimateMode;
+            const frameId = state.selectedAnimationFrameId;
             state.queryParams4ScenesInAnimateMode.byFrameId[frameId] =
                 action.payload;
         },
@@ -223,7 +223,7 @@ export const {
     queryParams4SceneInSwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,
-    frameIdOfSelectedQueryParams4AnimateModeChanged,
+    selectedAnimationFrameIdChanged,
     queryParams4ScenesInAnimationModeLoaded,
     queryParams4SceneInAnimationModeChanged,
 } = slice.actions;
