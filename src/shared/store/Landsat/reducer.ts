@@ -49,6 +49,10 @@ export type QueryParams4LandsatScene = {
      * If no Landsat scene was acquired on that date, the object ID will be reset to null.
      */
     objectIdOfSelectedScene?: number;
+    /**
+     * unique id of the animation frame that is associated with this Landsat Scene
+     */
+    animationFrameId?: string;
 };
 
 export type LandsatState = {
@@ -76,13 +80,18 @@ export type LandsatState = {
      */
     selectedSide4SwipeMode?: Side4SwipeMode;
     /**
-     * Array of query parameters for Landsat scenes that will be animated.
+     * query parameters for Landsat scenes that will be used in the Animation Mode.
      */
-    queryParams4ScenesInAnimateMode?: QueryParams4LandsatScene[];
+    queryParams4ScenesInAnimateMode?: {
+        byFrameId?: {
+            [key: string]: QueryParams4LandsatScene;
+        };
+        frameIds?: string[];
+    };
     /**
-     * Index of the selected query parameters for animate mode. This value helps identify which item in `queryParams4AnimateMode` should be updated.
+     * Animation frame ID of the selected query parameters for animate mode. This value helps identify which item in `queryParams4ScenesInAnimateMode` should be updated.
      */
-    indexOfSelectedQueryParams4AnimateMode?: number;
+    frameIdOfSelectedQueryParams4AnimateMode?: string;
 };
 
 export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
@@ -92,6 +101,7 @@ export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
     cloudCover: 0.5,
     rasterFunctionName: 'Natural Color with DRA',
     objectIdOfSelectedScene: null,
+    animationFrameId: null,
 };
 
 export const initialLandsatState: LandsatState = {
@@ -107,8 +117,11 @@ export const initialLandsatState: LandsatState = {
         ...DefaultQueryParams4LandsatScene,
     },
     selectedSide4SwipeMode: 'left',
-    queryParams4ScenesInAnimateMode: [],
-    indexOfSelectedQueryParams4AnimateMode: 0,
+    queryParams4ScenesInAnimateMode: {
+        byFrameId: {},
+        frameIds: [],
+    },
+    frameIdOfSelectedQueryParams4AnimateMode: null,
 };
 
 const slice = createSlice({
@@ -162,11 +175,11 @@ const slice = createSlice({
         ) => {
             state.selectedSide4SwipeMode = action.payload;
         },
-        indexOfSelectedQueryParams4AnimateModeChanged: (
+        frameIdOfSelectedQueryParams4AnimateModeChanged: (
             state,
-            action: PayloadAction<number>
+            action: PayloadAction<string>
         ) => {
-            state.indexOfSelectedQueryParams4AnimateMode = action.payload;
+            state.frameIdOfSelectedQueryParams4AnimateMode = action.payload;
         },
     },
 });
@@ -179,7 +192,7 @@ export const {
     queryParams4ScenesInSwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,
-    indexOfSelectedQueryParams4AnimateModeChanged,
+    frameIdOfSelectedQueryParams4AnimateModeChanged,
 } = slice.actions;
 
 export default reducer;

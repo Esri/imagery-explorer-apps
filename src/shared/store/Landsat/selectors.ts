@@ -7,14 +7,15 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.Landsat.queryParams4SecondaryScene,
     (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
     (state: RootState) => state.Landsat.selectedSide4SwipeMode,
-    (state: RootState) => state.Landsat.indexOfSelectedQueryParams4AnimateMode,
+    (state: RootState) =>
+        state.Landsat.frameIdOfSelectedQueryParams4AnimateMode,
     (
         mode,
         queryParams4MainScene,
         queryParams4SecondaryScene,
         queryParams4ScenesInAnimateMode,
         selectedSide4SwipeMode,
-        indexOfSelectedQueryParams4AnimateMode
+        frameIdOfSelectedQueryParams4AnimateMode
     ) => {
         if (mode === 'find a scene') {
             return queryParams4MainScene;
@@ -28,8 +29,8 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
 
         if (mode === 'animate') {
             return (
-                queryParams4ScenesInAnimateMode[
-                    indexOfSelectedQueryParams4AnimateMode
+                queryParams4ScenesInAnimateMode.byFrameId[
+                    frameIdOfSelectedQueryParams4AnimateMode
                 ] || {}
             );
         }

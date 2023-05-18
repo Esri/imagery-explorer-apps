@@ -15,7 +15,7 @@ export const AnimationFramesControlContainer = () => {
 
     const data: AnimationFrameInfo[] = [
         {
-            id: '123',
+            frameId: '123',
             acquisitionDate: '2023-05-18',
             rasterFunctionName: 'DRA',
         },
@@ -36,12 +36,15 @@ export const AnimationFramesControlContainer = () => {
     return (
         <AnimationFramesControl
             data={data}
-            addSceneOnClick={() => {
+            frameOnSelect={(frameId: string) => {
+                // select a scene
+            }}
+            addButtonOnClick={() => {
                 // add scene
             }}
-            removeSceneOnClick={(id: string) => {
+            removeButtonOnClick={(frameId: string) => {
                 // remove scene
-                console.log(id);
+                console.log(frameId);
             }}
         />
     );
