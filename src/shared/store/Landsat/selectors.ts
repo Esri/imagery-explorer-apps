@@ -74,3 +74,18 @@ export const selectAvailableScenesByObjectId = createSelector(
         return byObjectId;
     }
 );
+
+export const selectQueryParams4ScenesInAnimateMode = createSelector(
+    (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
+    (queryParams4ScenesInAnimateMode) => {
+        const { byFrameId, frameIds } = queryParams4ScenesInAnimateMode;
+        return frameIds.map((id) => byFrameId[id]);
+    }
+);
+
+export const selectFrameIdOfSelectedQueryParams4AnimateMode = createSelector(
+    (state: RootState) =>
+        state.Landsat.frameIdOfSelectedQueryParams4AnimateMode,
+    (frameIdOfSelectedQueryParams4AnimateMode) =>
+        frameIdOfSelectedQueryParams4AnimateMode
+);

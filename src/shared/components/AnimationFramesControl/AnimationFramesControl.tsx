@@ -51,7 +51,7 @@ export const AnimationFramesControl: FC<Props> = ({
                     return (
                         <div
                             key={frameId}
-                            className="p-1 border border-custom-light-blue-50 mb-1 flex items-center"
+                            className="p-1 border border-custom-light-blue-50 mb-1 flex items-center cursor-pointer"
                         >
                             <div
                                 className="text-xs mr-1 text-center"
@@ -78,7 +78,7 @@ export const AnimationFramesControl: FC<Props> = ({
                 })}
             </div>
             <div className="" onClick={addButtonOnClick}>
-                <span className="text-xs text-custom-light-blue uppercase cursor-pointer">
+                <span className="text-xs text-custom-light-blue uppercase">
                     Add A Scene
                 </span>
             </div>

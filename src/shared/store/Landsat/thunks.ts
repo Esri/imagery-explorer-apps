@@ -6,16 +6,22 @@ import {
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
+    DefaultQueryParams4LandsatScene,
     QueryParams4LandsatScene,
     availableScenesUpdated,
+    frameIdOfSelectedQueryParams4AnimateModeChanged,
     queryParams4MainSceneChanged,
-    queryParams4ScenesInSwipeModeChanged,
+    queryParams4ScenesInAnimationModeLoaded,
+    queryParams4SceneInSwipeModeChanged,
+    queryParams4SceneInAnimationModeChanged,
 } from './reducer';
 import {
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
-    selectSelectedSideOfSwipeMode,
+    selectQueryParams4ScenesInAnimateMode,
+    // selectFrameIdOfSelectedQueryParams4AnimateMode
 } from './selectors';
+import { generate } from 'shortid';
 
 /**
  * Query Landsat Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
@@ -76,12 +82,14 @@ export const updateQueryParams4SceneInSelectedMode =
         }
 
         if (mode === 'swipe') {
-            dispatch(queryParams4ScenesInSwipeModeChanged(updatedQueryParams));
+            dispatch(queryParams4SceneInSwipeModeChanged(updatedQueryParams));
             return;
         }
 
         if (mode === 'animate') {
-            // dispatch()
+            dispatch(
+                queryParams4SceneInAnimationModeChanged(updatedQueryParams)
+            );
         }
     };
 
@@ -197,4 +205,49 @@ export const updateAcquisitionDate =
         } catch (err) {
             console.error(err);
         }
+    };
+
+export const addAnimationFrame =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const queryParams4ExistingScenes =
+            selectQueryParams4ScenesInAnimateMode(getState());
+
+        // const idOfSelectedFrame = selectFrameIdOfSelectedQueryParams4AnimateMode(
+        //     getState()
+        // )
+
+        const idOfFrame2BeAdded = generate();
+
+        batch(() => {
+            dispatch(
+                queryParams4ScenesInAnimationModeLoaded([
+                    ...queryParams4ExistingScenes,
+                    {
+                        ...DefaultQueryParams4LandsatScene,
+                        animationFrameId: idOfFrame2BeAdded,
+                    },
+                ])
+            );
+
+            dispatch(
+                frameIdOfSelectedQueryParams4AnimateModeChanged(
+                    idOfFrame2BeAdded
+                )
+            );
+        });
+    };
+
+export const removeAnimationFrame =
+    (idOfFrame2BeRemoved: string) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const queryParams4ExistingScenes =
+            selectQueryParams4ScenesInAnimateMode(getState());
+
+        dispatch(
+            queryParams4ScenesInAnimationModeLoaded(
+                queryParams4ExistingScenes.filter(
+                    (d) => d.animationFrameId !== idOfFrame2BeRemoved
+                )
+            )
+        );
     };

@@ -56,6 +56,7 @@
     "@types/jest": "^26.0.15",
     "@types/react-redux": "^7.1.16",
     "@types/react-responsive": "^8.0.2",
+    "@types/shortid": "^0.0.29",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "@vue/preload-webpack-plugin": "^2.0.0",
@@ -107,7 +108,8 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",
-    "redux": "^4.1.0"
+    "redux": "^4.1.0",
+    "shortid": "^2.2.16"
   },
   "browserslist": [
     "defaults"

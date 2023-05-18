@@ -154,7 +154,7 @@ const slice = createSlice({
         ) => {
             state.queryParams4MainScene = action.payload;
         },
-        queryParams4ScenesInSwipeModeChanged: (
+        queryParams4SceneInSwipeModeChanged: (
             state,
             action: PayloadAction<QueryParams4LandsatScene>
         ) => {
@@ -181,6 +181,37 @@ const slice = createSlice({
         ) => {
             state.frameIdOfSelectedQueryParams4AnimateMode = action.payload;
         },
+        queryParams4ScenesInAnimationModeLoaded: (
+            state,
+            action: PayloadAction<QueryParams4LandsatScene[]>
+        ) => {
+            const byFrameId = {};
+            const frameIds = [];
+
+            for (const item of action.payload) {
+                const { animationFrameId } = item;
+
+                if (!animationFrameId) {
+                    continue;
+                }
+
+                frameIds.push(animationFrameId);
+                byFrameId[animationFrameId] = item;
+            }
+
+            state.queryParams4ScenesInAnimateMode = {
+                byFrameId,
+                frameIds,
+            };
+        },
+        queryParams4SceneInAnimationModeChanged: (
+            state,
+            action: PayloadAction<QueryParams4LandsatScene>
+        ) => {
+            const frameId = state.frameIdOfSelectedQueryParams4AnimateMode;
+            state.queryParams4ScenesInAnimateMode.byFrameId[frameId] =
+                action.payload;
+        },
     },
 });
 
@@ -189,10 +220,12 @@ const { reducer } = slice;
 export const {
     availableScenesUpdated,
     queryParams4MainSceneChanged,
-    queryParams4ScenesInSwipeModeChanged,
+    queryParams4SceneInSwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,
     frameIdOfSelectedQueryParams4AnimateModeChanged,
+    queryParams4ScenesInAnimationModeLoaded,
+    queryParams4SceneInAnimationModeChanged,
 } = slice.actions;
 
 export default reducer;
