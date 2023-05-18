@@ -5,9 +5,8 @@ import { useSelector } from 'react-redux';
 import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
 
 export const useYearOptions = (): DropdownData[] => {
-    const { acquisitionYear } = useSelector(
-        selectQueryParams4SceneInSelectedMode
-    );
+    const { acquisitionYear } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const [years, setYears] = useState<number[]>([]);
 

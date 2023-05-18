@@ -14,9 +14,8 @@ type Props = {
 const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
     const mode = useSelector(selectAppMode);
 
-    const { rasterFunctionName, objectIdOfSelectedScene } = useSelector(
-        selectQueryParams4SceneInSelectedMode
-    );
+    const { rasterFunctionName, objectIdOfSelectedScene } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const getVisibility = () => {
         // if (mode === 'explore') {

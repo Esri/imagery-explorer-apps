@@ -8,7 +8,8 @@ import { updateCloudCover } from '../../../shared/store/Landsat/thunks';
 export const CloudFilterContainer = () => {
     const dispatch = useDispatch();
 
-    const { cloudCover } = useSelector(selectQueryParams4SceneInSelectedMode);
+    const { cloudCover } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     return (
         <CloudFilter

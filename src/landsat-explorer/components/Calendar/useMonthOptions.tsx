@@ -19,9 +19,8 @@ const MONTH_ABBR = [
 ];
 
 export const useMonthOptions = (): DropdownData[] => {
-    const { acquisitionMonth } = useSelector(
-        selectQueryParams4SceneInSelectedMode
-    );
+    const { acquisitionMonth } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const monthOptions = useMemo(() => {
         const options = MONTH_ABBR.map((label, index) => {

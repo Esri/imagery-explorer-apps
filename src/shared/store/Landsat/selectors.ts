@@ -30,11 +30,11 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
             return (
                 queryParams4ScenesInAnimateMode.byFrameId[
                     selectedAnimationFrameId
-                ] || {}
+                ] || null
             );
         }
 
-        return {};
+        return null;
     }
 );
 
@@ -79,5 +79,19 @@ export const selectQueryParams4ScenesInAnimateMode = createSelector(
     (queryParams4ScenesInAnimateMode) => {
         const { byFrameId, frameIds } = queryParams4ScenesInAnimateMode;
         return frameIds.map((id) => byFrameId[id]);
+    }
+);
+
+export const selectQueryParams4SceneInNewAnimationFrame = createSelector(
+    (state: RootState) => state.Landsat.queryParams4MainScene,
+    (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
+    (state: RootState) => state.Landsat.selectedAnimationFrameId,
+    (
+        queryParams4MainScene,
+        queryParams4ScenesInAnimateMode,
+        selectedAnimationFrameId
+    ) => {
+        const { byFrameId } = queryParams4ScenesInAnimateMode;
+        return byFrameId[selectedAnimationFrameId] || queryParams4MainScene;
     }
 );

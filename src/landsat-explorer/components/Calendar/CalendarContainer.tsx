@@ -13,9 +13,9 @@ import {
     updateAcquisitionDate,
     // updateAcquisitionMonth,
     updateAcquisitionYear,
-    updateObjectIdOfSelectedScene,
 } from '../../../shared/store/Landsat/thunks';
 import { getCurrentYear } from '../../../shared/utils/snippets/getCurrentYear';
+import classNames from 'classnames';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -42,7 +42,11 @@ const CalendarContainer = () => {
     const yearOptions = useYearOptions();
 
     return (
-        <div className="mx-4">
+        <div
+            className={classNames('mx-4', {
+                'is-disabled': !queryParams,
+            })}
+        >
             <div className="flex mb-1 items-center">
                 <div className="mr-2">
                     <Dropdown

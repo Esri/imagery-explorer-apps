@@ -19,9 +19,8 @@ import {
 const useAvailableScenes = () => {
     const dispatch = useDispatch();
 
-    const { acquisitionYear, acquisitionDate, cloudCover } = useSelector(
-        selectQueryParams4SceneInSelectedMode
-    );
+    const { acquisitionYear, acquisitionDate, cloudCover } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     /**
      * current map center

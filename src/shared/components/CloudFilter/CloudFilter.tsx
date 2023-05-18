@@ -18,6 +18,30 @@ type Props = {
     onChange: (val: number) => void;
 };
 
+type TitleTextProps = {
+    cloudCoverage: number;
+};
+
+const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
+    const getFormattedCouldCoverageInPercent = () => {
+        if (isNaN(cloudCoverage)) {
+            return 'N/A';
+        }
+
+        return `${Math.floor(cloudCoverage * 100)}% Cloud`;
+    };
+
+    return (
+        <div className="text-center text-xs mb-4">
+            <span>{getFormattedCouldCoverageInPercent()}</span>
+            <br />
+            <span className="uppercase text-custom-light-blue-50">
+                Tolerance
+            </span>
+        </div>
+    );
+};
+
 /**
  * A slider component to select cloud coverage that will be used to find Landsat scenes
  * @param param0
@@ -99,13 +123,7 @@ export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
                 'is-disabled': cloudCoverage === undefined,
             })}
         >
-            <div className="text-center text-xs mb-4">
-                <span>{Math.floor(cloudCoverage * 100)}% Cloud</span>
-                <br />
-                <span className="uppercase text-custom-light-blue-50">
-                    Tolerance
-                </span>
-            </div>
+            <TitleText cloudCoverage={cloudCoverage} />
 
             <div className="flex mx-2">
                 <div

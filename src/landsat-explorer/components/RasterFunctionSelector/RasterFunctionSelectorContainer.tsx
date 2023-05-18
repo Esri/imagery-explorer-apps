@@ -17,7 +17,7 @@ const RasterFunctionSelectorContainer = () => {
     const {
         rasterFunctionName,
         // objectIdOfSelectedScene
-    } = useSelector(selectQueryParams4SceneInSelectedMode);
+    } = useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     useEffect(() => {
         (async () => {

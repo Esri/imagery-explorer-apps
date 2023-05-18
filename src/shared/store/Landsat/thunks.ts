@@ -6,7 +6,6 @@ import {
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
-    DefaultQueryParams4LandsatScene,
     QueryParams4LandsatScene,
     availableScenesUpdated,
     queryParams4MainSceneChanged,
@@ -17,6 +16,7 @@ import {
 } from './reducer';
 import {
     selectAppMode,
+    selectQueryParams4SceneInNewAnimationFrame,
     selectQueryParams4SceneInSelectedMode,
     selectQueryParams4ScenesInAnimateMode,
 } from './selectors';
@@ -102,6 +102,12 @@ export const updateRasterFunctionName =
                 getState()
             );
 
+            // it is possible that there won't be any scene in Animation mode
+            // before user adds a frame. Therefore we should just abort
+            if (!queryParams) {
+                return;
+            }
+
             const updatedQueryParams: QueryParams4LandsatScene = {
                 ...queryParams,
                 rasterFunctionName,
@@ -120,6 +126,10 @@ export const updateObjectIdOfSelectedScene =
             const queryParams = selectQueryParams4SceneInSelectedMode(
                 getState()
             );
+
+            if (!queryParams) {
+                return;
+            }
 
             const updatedQueryParams: QueryParams4LandsatScene = {
                 ...queryParams,
@@ -140,6 +150,10 @@ export const updateAcquisitionYear =
                 getState()
             );
 
+            if (!queryParams) {
+                return;
+            }
+
             const updatedQueryParams: QueryParams4LandsatScene = {
                 ...queryParams,
                 acquisitionYear,
@@ -158,6 +172,10 @@ export const updateCloudCover =
             const queryParams = selectQueryParams4SceneInSelectedMode(
                 getState()
             );
+
+            if (!queryParams) {
+                return;
+            }
 
             const updatedQueryParams: QueryParams4LandsatScene = {
                 ...queryParams,
@@ -197,6 +215,10 @@ export const updateAcquisitionDate =
                 getState()
             );
 
+            if (!queryParams) {
+                return;
+            }
+
             const updatedQueryParams: QueryParams4LandsatScene = {
                 ...queryParams,
                 acquisitionDate,
@@ -213,16 +235,17 @@ export const addAnimationFrame =
         const queryParams4ExistingScenes =
             selectQueryParams4ScenesInAnimateMode(getState());
 
-        const idOfFrame2BeAdded = generate();
+        const queryParams4SceneInNewFrame =
+            selectQueryParams4SceneInNewAnimationFrame(getState());
 
-        // instead of using the default data, it should use either the queryParams from main scene or query params from the previous frame
+        const idOfFrame2BeAdded = generate();
 
         batch(() => {
             dispatch(
                 queryParams4ScenesInAnimationModeChanged([
                     ...queryParams4ExistingScenes,
                     {
-                        ...DefaultQueryParams4LandsatScene,
+                        ...queryParams4SceneInNewFrame,
                         animationFrameId: idOfFrame2BeAdded,
                     },
                 ])
