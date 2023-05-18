@@ -181,7 +181,7 @@ const slice = createSlice({
         ) => {
             state.selectedAnimationFrameId = action.payload;
         },
-        queryParams4ScenesInAnimationModeLoaded: (
+        queryParams4ScenesInAnimationModeChanged: (
             state,
             action: PayloadAction<QueryParams4LandsatScene[]>
         ) => {
@@ -204,7 +204,7 @@ const slice = createSlice({
                 frameIds,
             };
         },
-        queryParams4SceneInAnimationModeChanged: (
+        queryParams4SceneInSelectedAnimationFrameChanged: (
             state,
             action: PayloadAction<QueryParams4LandsatScene>
         ) => {
@@ -224,8 +224,8 @@ export const {
     modeChanged,
     selectedSide4SwipeModeChanged,
     selectedAnimationFrameIdChanged,
-    queryParams4ScenesInAnimationModeLoaded,
-    queryParams4SceneInAnimationModeChanged,
+    queryParams4ScenesInAnimationModeChanged,
+    queryParams4SceneInSelectedAnimationFrameChanged,
 } = slice.actions;
 
 export default reducer;

@@ -10,9 +10,9 @@ import {
     QueryParams4LandsatScene,
     availableScenesUpdated,
     queryParams4MainSceneChanged,
-    queryParams4ScenesInAnimationModeLoaded,
+    queryParams4ScenesInAnimationModeChanged,
     queryParams4SceneInSwipeModeChanged,
-    queryParams4SceneInAnimationModeChanged,
+    queryParams4SceneInSelectedAnimationFrameChanged,
     selectedAnimationFrameIdChanged,
 } from './reducer';
 import {
@@ -87,7 +87,9 @@ export const updateQueryParams4SceneInSelectedMode =
 
         if (mode === 'animate') {
             dispatch(
-                queryParams4SceneInAnimationModeChanged(updatedQueryParams)
+                queryParams4SceneInSelectedAnimationFrameChanged(
+                    updatedQueryParams
+                )
             );
         }
     };
@@ -217,7 +219,7 @@ export const addAnimationFrame =
 
         batch(() => {
             dispatch(
-                queryParams4ScenesInAnimationModeLoaded([
+                queryParams4ScenesInAnimationModeChanged([
                     ...queryParams4ExistingScenes,
                     {
                         ...DefaultQueryParams4LandsatScene,
@@ -237,7 +239,7 @@ export const removeAnimationFrame =
             selectQueryParams4ScenesInAnimateMode(getState());
 
         dispatch(
-            queryParams4ScenesInAnimationModeLoaded(
+            queryParams4ScenesInAnimationModeChanged(
                 queryParams4ExistingScenes.filter(
                     (d) => d.animationFrameId !== idOfFrame2BeRemoved
                 )
