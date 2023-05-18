@@ -3,6 +3,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
 import { CloudIcons } from './CloudIcons';
+import classNames from 'classnames';
 
 type Props = {
     /**
@@ -81,6 +82,10 @@ export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
             return;
         }
 
+        if (cloudCoverage === undefined) {
+            return;
+        }
+
         // Check if the current value of the slider is different from the cloud coverage value.
         // If so, update the slider's value to match the cloud coverage value of the selected scene.
         if (sliderRef.current.values[0] !== cloudCoverage) {
@@ -89,7 +94,11 @@ export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
     }, [cloudCoverage]);
 
     return (
-        <div className="mx-4">
+        <div
+            className={classNames('mx-4', {
+                'is-disabled': cloudCoverage === undefined,
+            })}
+        >
             <div className="text-center text-xs mb-4">
                 <span>{Math.floor(cloudCoverage * 100)}% Cloud</span>
                 <br />
