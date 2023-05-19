@@ -7,17 +7,25 @@ import { loadModules } from 'esri-loader';
 import { exportImage } from '../../../landsat-explorer/components/LandsatLayer/exportImage';
 import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
 import { selectQueryParams4ScenesInAnimateMode } from '../../../shared/store/Landsat/selectors';
+import { AnimationStatus } from '../../../shared/store/UI/reducer';
+import { QueryParams4LandsatScene } from '../../../shared/store/Landsat/reducer';
 
-const useMediaLayerImageElement = (mapView?: IMapView) => {
+type Props = {
+    mapView?: IMapView;
+    animationStatus: AnimationStatus;
+    queryParams4LandsatScenes: QueryParams4LandsatScene[];
+};
+
+const useMediaLayerImageElement = ({
+    mapView,
+    animationStatus,
+    queryParams4LandsatScenes,
+}: Props) => {
     const [imageElements, setImageElements] = useState<IImageElement[]>(null);
 
     const abortControllerRef = useRef<AbortController>();
 
-    const animationStatus = useSelector(selectAnimationStatus);
-
-    const queryParams4ScenesInAnimationMode = useSelector(
-        selectQueryParams4ScenesInAnimateMode
-    );
+    // const animationStatus = useSelector(selectAnimationStatus);
 
     const loadFrameData = async () => {
         if (!mapView) {
@@ -45,7 +53,7 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
             const { xmin, ymin, xmax, ymax } = extent;
 
             // get images via export image request
-            const requests = queryParams4ScenesInAnimationMode
+            const requests = queryParams4LandsatScenes
                 .filter(
                     (queryParam) => queryParam.objectIdOfSelectedScene !== null
                 )

@@ -4,7 +4,7 @@ type Props = {
     onClick: () => void;
 };
 
-const CloseBtn: FC<Props> = ({ onClick }: Props) => {
+export const CloseButton: FC<Props> = ({ onClick }: Props) => {
     return (
         <div
             className="absolute top-0 right-0 w-40 h-40 text-white"
@@ -29,5 +29,3 @@ const CloseBtn: FC<Props> = ({ onClick }: Props) => {
         </div>
     );
 };
-
-export default CloseBtn;

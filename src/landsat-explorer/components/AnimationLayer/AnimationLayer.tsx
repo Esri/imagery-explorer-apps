@@ -11,6 +11,8 @@ import { animationStatusChanged } from '../../../shared/store/UI/reducer';
 import useMediaLayerImageElement from './useMediaLayerImageElement';
 import useMediaLayerAnimation from './useMediaLayerAnimation';
 import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
+import { selectQueryParams4ScenesInAnimateMode } from '../../../shared/store/Landsat/selectors';
+import { CloseButton } from '../../../shared/components/CloseButton';
 
 type Props = {
     mapView?: IMapView;
@@ -21,9 +23,17 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
 
     const animationStatus = useSelector(selectAnimationStatus);
 
+    const queryParams4ScenesInAnimationMode = useSelector(
+        selectQueryParams4ScenesInAnimateMode
+    );
+
     const mediaLayerRef = useRef<IMediaLayer>();
 
-    const mediaLayerElements = useMediaLayerImageElement(mapView);
+    const mediaLayerElements = useMediaLayerImageElement({
+        mapView,
+        animationStatus,
+        queryParams4LandsatScenes: queryParams4ScenesInAnimationMode,
+    });
 
     useMediaLayerAnimation(animationStatus, mediaLayerElements);
 
@@ -78,7 +88,11 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
                 <calcite-loader active scale="l"></calcite-loader>
             )}
 
-            {/* <CloseButton /> */}
+            <CloseButton
+                onClick={() => {
+                    dispatch(animationStatusChanged(null));
+                }}
+            />
         </div>
     );
 };

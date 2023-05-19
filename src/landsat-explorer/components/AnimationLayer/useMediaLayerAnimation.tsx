@@ -12,8 +12,6 @@ const useMediaLayerAnimation = (
     animationStatus: AnimationStatus,
     mediaLayerElements: IImageElement[]
 ) => {
-    // const animationMode = useSelector(selectAnimationMode);
-
     const isPlayingRef = useRef<boolean>(false);
 
     const timeLastFrameDisplayed = useRef<number>(performance.now());
