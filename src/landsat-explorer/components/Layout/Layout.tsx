@@ -7,7 +7,7 @@ import { ModeSelector } from '../ModeSelector';
 import { SwipeLayerSelector } from '../SwipeLayerSelector';
 import { SceneInfo } from '../SceneInfo';
 import { CloudFilter } from '../CloudFilter';
-import { AnimationFramesControl } from '../AnimationControl';
+import { AnimationFramesControl } from '../AnimationFramesControl';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '../../../shared/store/Landsat/selectors';
 

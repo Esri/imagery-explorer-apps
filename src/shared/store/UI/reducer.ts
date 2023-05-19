@@ -7,7 +7,7 @@ import {
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
-export type AnimationMode = 'loading' | 'playing' | 'pausing';
+export type AnimationStatus = 'loading' | 'playing' | 'pausing';
 
 export type UIState = {
     /**
@@ -18,11 +18,16 @@ export type UIState = {
      * If true, show About This App Modal
      */
     shouldShowAboutThisApp?: boolean;
+    /**
+     * status of the Animation mode
+     */
+    animationStatus?: AnimationStatus;
 };
 
 export const initialUIState: UIState = {
     hideBottomPanel: false,
     shouldShowAboutThisApp: false,
+    animationStatus: null,
 };
 
 const slice = createSlice({
@@ -35,12 +40,21 @@ const slice = createSlice({
         shouldShowAboutThisAppToggled: (state) => {
             state.shouldShowAboutThisApp = !state.shouldShowAboutThisApp;
         },
+        animationStatusChanged: (
+            state,
+            action: PayloadAction<AnimationStatus>
+        ) => {
+            state.animationStatus = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { bottomPanelToggled, shouldShowAboutThisAppToggled } =
-    slice.actions;
+export const {
+    bottomPanelToggled,
+    shouldShowAboutThisAppToggled,
+    animationStatusChanged,
+} = slice.actions;
 
 export default reducer;
