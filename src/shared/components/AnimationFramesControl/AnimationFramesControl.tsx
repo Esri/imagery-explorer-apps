@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { FC } from 'react';
 
 export type AnimationFrameInfo = {
@@ -13,6 +14,10 @@ export type AnimationFrameInfo = {
      * name of the raster function that will be used to render the Landsat Scene for this frame
      */
     rasterFunctionName: string;
+    /**
+     * if true, this Animation frame is selected
+     */
+    selected: boolean;
 };
 
 type Props = {
@@ -46,12 +51,24 @@ export const AnimationFramesControl: FC<Props> = ({
         <div className="h-full mx-2">
             <div className="">
                 {data.map((d) => {
-                    const { frameId, acquisitionDate, rasterFunctionName } = d;
+                    const {
+                        frameId,
+                        acquisitionDate,
+                        rasterFunctionName,
+                        selected,
+                    } = d;
 
                     return (
                         <div
                             key={frameId}
-                            className="p-1 border border-custom-light-blue-50 mb-1 flex items-center cursor-pointer"
+                            className={classNames(
+                                'p-1 border border-custom-light-blue-80 mb-1 flex items-center cursor-pointer',
+                                {
+                                    'bg-custom-light-blue': selected,
+                                    'text-custom-background': selected,
+                                    'drop-shadow-custom-light-blue': selected,
+                                }
+                            )}
                         >
                             <div
                                 className="text-xs mr-1 text-center"

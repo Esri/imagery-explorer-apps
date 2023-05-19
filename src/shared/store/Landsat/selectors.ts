@@ -95,3 +95,8 @@ export const selectQueryParams4SceneInNewAnimationFrame = createSelector(
         return byFrameId[selectedAnimationFrameId] || queryParams4MainScene;
     }
 );
+
+export const selectSelectedAnimationFrameId = createSelector(
+    (state: RootState) => state.Landsat.selectedAnimationFrameId,
+    (selectedAnimationFrameId) => selectedAnimationFrameId
+);

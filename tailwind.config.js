@@ -49,6 +49,9 @@ module.exports = {
         'search-widget-top-position': '50px',
         'search-widget-top-position-mobile': '90px',
         'cloud-slider-height': '80px'
+      },
+      dropShadow: {
+        'custom-light-blue': '1px 1px 4px rgba(191,238,255, .5)'
       }
     },
   },

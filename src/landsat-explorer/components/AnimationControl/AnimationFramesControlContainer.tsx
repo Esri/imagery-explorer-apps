@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import {
     selectAppMode,
     selectQueryParams4ScenesInAnimateMode,
+    selectSelectedAnimationFrameId,
 } from '../../../shared/store/Landsat/selectors';
 import {
     AnimationFramesControl,
@@ -24,6 +25,10 @@ export const AnimationFramesControlContainer = () => {
         selectQueryParams4ScenesInAnimateMode
     );
 
+    const selectedAnimationFrameId = useSelector(
+        selectSelectedAnimationFrameId
+    );
+
     const data: AnimationFrameInfo[] = useMemo(() => {
         if (!queryParams4ScenesInAnimateMode.length) {
             return [];
@@ -36,9 +41,10 @@ export const AnimationFramesControlContainer = () => {
                 frameId: animationFrameId,
                 acquisitionDate: acquisitionDate || 'date not selected',
                 rasterFunctionName,
+                selected: animationFrameId === selectedAnimationFrameId,
             } as AnimationFrameInfo;
         });
-    }, [queryParams4ScenesInAnimateMode]);
+    }, [queryParams4ScenesInAnimateMode, selectedAnimationFrameId]);
 
     if (mode !== 'animate') {
         return null;
