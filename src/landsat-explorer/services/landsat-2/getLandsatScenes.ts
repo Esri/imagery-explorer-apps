@@ -2,6 +2,7 @@ import { FIELD_NAMES } from './config';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { format } from 'date-fns';
+import { parseLandsatInfo } from './helpers';
 
 type GetLandsatScenesParams = {
     /**
@@ -24,6 +25,11 @@ type GetLandsatScenesParams = {
 
 export type LandsatScene = {
     objectId: number;
+    /**
+     * Landsat product identifier
+     * @example LC08_L1GT_029030_20151209_20160131_01_RT
+     */
+    productId: string;
     /**
      * acquisitionDate as a string in ISO format (YYYY-MM-DD).
      */
@@ -54,8 +60,36 @@ export type LandsatScene = {
      * Landsat Row number
      */
     row: number;
-    category: number;
-    name: string;
+    /**
+     * name of the sensor:
+     * - OLI/TIRS combined
+     * - OLI-only
+     * - TIRS-only
+     * - ETM+
+     * - MSS
+     */
+    sensor: string;
+    /**
+     * Collection category:
+     * - Real-Time
+     * - Tier 1
+     * - Tier 2
+     */
+    collectionCategory: string;
+    /**
+     * Collection number (01, 02, …)
+     */
+    collectionNumber: string;
+    /**
+     * Processing correction level (L1TP/L1GT/L1GS)
+     */
+    correctionLevel: string;
+    /**
+     * processing date in unix timestamp
+     */
+    processingDate: number;
+    // category: number;
+    // name: string;
     // best: number;
 };
 
@@ -69,6 +103,7 @@ const {
     SENSORNAME,
     WRS_PATH,
     WRS_ROW,
+    LANDSAT_PRODUCT_ID,
 } = FIELD_NAMES;
 
 /**
@@ -87,23 +122,39 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
 
         const acquisitionDate = attributes[ACQUISITION_DATE];
 
+        const productId = attributes[LANDSAT_PRODUCT_ID];
+
         /**
          * formatted aquisition date should be like `2023-05-01`
          */
         const formattedAcquisitionDate = format(acquisitionDate, 'yyyy-MM-dd');
 
+        const {
+            collectionCategory,
+            collectionNumber,
+            correctionLevel,
+            processingDate,
+            sensor,
+        } = parseLandsatInfo(productId);
+
         return {
             objectId: attributes[OBJECTID],
+            productId,
             acquisitionDate,
             formattedAcquisitionDate,
-            name: attributes[NAME],
+            // name: attributes[NAME],
             cloudCover: attributes[CLOUD_COVER],
             best: attributes[BEST],
             isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
             satellite: attributes[SENSORNAME],
             row: attributes[WRS_ROW],
             path: attributes[WRS_PATH],
-            category: attributes[CATEGORY],
+            // category: attributes[CATEGORY],
+            collectionCategory,
+            collectionNumber,
+            correctionLevel,
+            processingDate,
+            sensor,
         } as LandsatScene;
     });
 };
@@ -157,6 +208,7 @@ export const getLandsatScenes = async ({
             WRS_PATH,
             WRS_ROW,
             CATEGORY,
+            LANDSAT_PRODUCT_ID,
         ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',

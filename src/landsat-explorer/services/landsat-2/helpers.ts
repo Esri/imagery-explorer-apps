@@ -1,5 +1,35 @@
+type LandsatProductInfo = {
+    /**
+     * name of the sensor:
+     * - OLI/TIRS combined
+     * - OLI-only
+     * - TIRS-only
+     * - ETM+
+     * - MSS
+     */
+    sensor: string;
+    /**
+     * Collection category:
+     * - Real-Time
+     * - Tier 1
+     * - Tier 2
+     */
+    collectionCategory: string;
+    /**
+     * Collection number (01, 02, …)
+     */
+    collectionNumber: string;
+    /**
+     * Processing correction level (L1TP/L1GT/L1GS)
+     */
+    correctionLevel: string;
+    /**
+     * processing date in unix timestamp
+     */
+    processingDate: number;
+};
 /**
- * Parse Landsat Product ID and get information about this Landsat Scene
+ * Parse Info of a Landsat Scene using its Product ID.
  *
  * The Landsat product identifier includes the Collection processing levels, processing date,
  * collection number, and collection tier category: `LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX`:
@@ -18,7 +48,7 @@
  * @example LC08_L1GT_029030_20151209_20160131_01_RT
  * @see https://www.usgs.gov/faqs/what-naming-convention-landsat-collections-level-1-scenes
  */
-const parseLandsatProductId = (productId: string) => {
+export const parseLandsatInfo = (productId: string): LandsatProductInfo => {
     const [
         LXSS,
         CORRECTION_LEVEL,
@@ -28,4 +58,35 @@ const parseLandsatProductId = (productId: string) => {
         COLLECTION_NUMBER,
         COLLECTION_CATEGORY,
     ] = productId.split('_');
+
+    const sensorNameLookupTable = {
+        C: 'OLI/TIRS combined',
+        O: 'OLI-only',
+        T: 'TIRS-only',
+        E: 'ETM+',
+        M: 'MSS',
+    };
+
+    const collectionCategoryLookupTable = {
+        RT: 'Real-Time',
+        T1: 'Tier 1',
+        T2: 'Tier 2',
+    };
+
+    const sensorCode = LXSS[1];
+
+    const processingDate = new Date(
+        +PROCESSING_DATE_YYYYMMDD.slice(0, 4), // year
+        +PROCESSING_DATE_YYYYMMDD.slice(4, 6) - 1, // month index
+        +PROCESSING_DATE_YYYYMMDD.slice(6) // day
+    );
+
+    return {
+        sensor: sensorNameLookupTable[sensorCode] || 'N/A',
+        collectionCategory:
+            collectionCategoryLookupTable[COLLECTION_CATEGORY] || 'N/A',
+        collectionNumber: COLLECTION_NUMBER,
+        correctionLevel: CORRECTION_LEVEL,
+        processingDate: processingDate.getTime(),
+    };
 };

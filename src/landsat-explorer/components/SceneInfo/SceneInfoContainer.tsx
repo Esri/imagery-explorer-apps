@@ -29,13 +29,31 @@ export const SceneInfoContainer = () => {
             return [];
         }
 
-        const { satellite, row, path, acquisitionDate, category, cloudCover } =
-            data;
+        const {
+            satellite,
+            row,
+            path,
+            acquisitionDate,
+            sensor,
+            cloudCover,
+            collectionCategory,
+            collectionNumber,
+            correctionLevel,
+            processingDate,
+        } = data;
 
         return [
             {
                 name: 'Satellite',
                 value: satellite,
+            },
+            {
+                name: 'Sensor',
+                value: sensor,
+            },
+            {
+                name: 'Correction',
+                value: correctionLevel,
             },
             {
                 name: 'Row',
@@ -50,8 +68,16 @@ export const SceneInfoContainer = () => {
                 value: format(acquisitionDate, 'MMM dd, yyyy'),
             },
             {
+                name: 'Processed',
+                value: format(processingDate, 'MMM dd, yyyy'),
+            },
+            {
+                name: 'Collection',
+                value: collectionNumber,
+            },
+            {
                 name: 'Category',
-                value: category.toString(),
+                value: collectionCategory,
             },
             {
                 name: 'Cloud Cover',
