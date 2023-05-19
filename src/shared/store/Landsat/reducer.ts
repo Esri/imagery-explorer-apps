@@ -34,7 +34,8 @@ export type QueryParams4LandsatScene = {
      */
     cloudCover?: number;
     /**
-     * selected acquisition date in format of `YYYY-MM-DD`
+     * User selected acquisition date in format of `YYYY-MM-DD`.
+     * This acquisition date will be used to select a Landsat Scene from `availableScenes` array.
      */
     acquisitionDate?: string;
     /**

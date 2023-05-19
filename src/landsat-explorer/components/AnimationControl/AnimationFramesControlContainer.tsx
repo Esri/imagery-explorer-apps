@@ -15,6 +15,7 @@ import {
     removeAnimationFrame,
 } from '../../../shared/store/Landsat/thunks';
 import { selectedAnimationFrameIdChanged } from '../../../shared/store/Landsat/reducer';
+import { formattedDateString2Unixtimestamp } from '../../../shared/utils/snippets/formatDateString';
 
 export const AnimationFramesControlContainer = () => {
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export const AnimationFramesControlContainer = () => {
             return [];
         }
 
-        return queryParams4ScenesInAnimateMode.map((d) => {
+        const framesInfo = queryParams4ScenesInAnimateMode.map((d) => {
             const { animationFrameId, acquisitionDate, rasterFunctionName } = d;
 
             return {
@@ -44,6 +45,28 @@ export const AnimationFramesControlContainer = () => {
                 selected: animationFrameId === selectedAnimationFrameId,
             } as AnimationFrameInfo;
         });
+
+        framesInfo.sort((a, b) => {
+            // if both frame has selected acquisition date, sort using selected acquisition date
+            if (a.acquisitionDate && b.acquisitionDate) {
+                return (
+                    formattedDateString2Unixtimestamp(a.acquisitionDate) -
+                    formattedDateString2Unixtimestamp(b.acquisitionDate)
+                );
+            }
+            // put `a` before `b` if `a` has a selected acquisition date
+            else if (a.acquisitionDate) {
+                return -1;
+            }
+            // put `b` before `a` if `b` has a selected acquisition date
+            else if (b.acquisitionDate) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        return framesInfo;
     }, [queryParams4ScenesInAnimateMode, selectedAnimationFrameId]);
 
     if (mode !== 'animate') {

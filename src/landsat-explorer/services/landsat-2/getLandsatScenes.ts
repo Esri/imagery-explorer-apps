@@ -3,6 +3,7 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { format } from 'date-fns';
 import { parseLandsatInfo } from './helpers';
+import { unixtimestamp2FormattedDateString } from '../../../shared/utils/snippets/formatDateString';
 
 type GetLandsatScenesParams = {
     /**
@@ -127,7 +128,9 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
         /**
          * formatted aquisition date should be like `2023-05-01`
          */
-        const formattedAcquisitionDate = format(acquisitionDate, 'yyyy-MM-dd');
+        const formattedAcquisitionDate = unixtimestamp2FormattedDateString(
+            +acquisitionDate
+        ); //format(acquisitionDate, 'yyyy-MM-dd');
 
         const {
             collectionCategory,
