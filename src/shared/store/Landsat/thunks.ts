@@ -19,6 +19,7 @@ import {
     selectQueryParams4SceneInNewAnimationFrame,
     selectQueryParams4SceneInSelectedMode,
     selectQueryParams4ScenesInAnimateMode,
+    selectSelectedAnimationFrameId,
 } from './selectors';
 import { generate } from 'shortid';
 
@@ -261,18 +262,30 @@ export const removeAnimationFrame =
         const queryParams4ExistingScenes =
             selectQueryParams4ScenesInAnimateMode(getState());
 
+        // remove the scene associated with the frame that user wants to remove
+        const updatedQueryParams4ScenesInAnimateMode =
+            queryParams4ExistingScenes.filter(
+                (d) => d.animationFrameId !== idOfFrame2BeRemoved
+            );
+
+        const selectedAnimationFrameId = selectSelectedAnimationFrameId(
+            getState()
+        );
+
         dispatch(
             queryParams4ScenesInAnimationModeChanged(
-                queryParams4ExistingScenes.filter(
-                    (d) => d.animationFrameId !== idOfFrame2BeRemoved
-                )
+                updatedQueryParams4ScenesInAnimateMode
             )
         );
 
-        // should update frameIdOfSelectedQueryParams if the one get removed is the selected one
-        // dispatch(
-        //     selectedAnimationFrameIdChanged(
-        //         idOfFrame2BeAdded
-        //     )
-        // );
+        // selected frame got removed, therefore we should select a new frame
+        if (selectedAnimationFrameId === idOfFrame2BeRemoved) {
+            const newSelectedAnimationFrameId =
+                updatedQueryParams4ScenesInAnimateMode[0]?.animationFrameId ||
+                null;
+
+            dispatch(
+                selectedAnimationFrameIdChanged(newSelectedAnimationFrameId)
+            );
+        }
     };
