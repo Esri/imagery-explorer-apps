@@ -95,7 +95,7 @@ export const AnimationFramesControl: FC<Props> = ({
                 })}
             </div>
             <div className="" onClick={addButtonOnClick}>
-                <span className="text-xs text-custom-light-blue uppercase">
+                <span className="text-xs text-custom-light-blue uppercase border border-custom-light-blue-80 cursor-pointer p-1">
                     Add A Frame
                 </span>
             </div>
