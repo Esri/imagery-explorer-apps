@@ -10,6 +10,7 @@ import { CloudFilter } from '../CloudFilter';
 import { AnimationFramesControl } from '../AnimationFramesControl';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '../../../shared/store/Landsat/selectors';
+import { AnimationStatusControl } from '../AnimationStatusControl';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -24,6 +25,7 @@ const Layout = () => {
                     <>
                         <SwipeLayerSelector />
                         <AnimationFramesControl />
+                        <AnimationStatusControl />
                         <CloudFilter />
                         <Calendar />
                         <RasterFunctionSelector />
