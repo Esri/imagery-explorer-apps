@@ -97,7 +97,7 @@
   "dependencies": {
     "@esri/arcgis-rest-feature-service": "^4.0.4",
     "@reduxjs/toolkit": "1.8",
-    "@types/arcgis-js-api": "4.26",
+    "@types/arcgis-js-api": "4.25",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "axios": "^0.21.2",

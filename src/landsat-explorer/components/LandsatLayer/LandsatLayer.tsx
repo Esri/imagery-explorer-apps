@@ -6,6 +6,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
     selectAppMode,
 } from '../../../shared/store/Landsat/selectors';
+import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
 
 type Props = {
     mapView?: MapView;
@@ -17,6 +18,8 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
     const { rasterFunctionName, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
+    const animationStatus = useSelector(selectAnimationStatus);
+
     const getVisibility = () => {
         // if (mode === 'explore') {
         //     return true;
@@ -26,7 +29,12 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
             return true;
         }
 
-        if (mode === 'animate' && objectIdOfSelectedScene) {
+        // when in animate mode, only need to show landsat layer if animation is not playing
+        if (
+            mode === 'animate' &&
+            objectIdOfSelectedScene &&
+            animationStatus === null
+        ) {
             return true;
         }
 

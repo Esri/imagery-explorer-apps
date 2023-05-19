@@ -56,9 +56,9 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
         if (!mediaLayerElements) {
             // animation is not started or just stopped
             // just clear all elements in media layer
-            mediaLayerRef.current.source = null; //.elements.removeAll();
+            mediaLayerRef.current.source.elements.removeAll();
         } else {
-            mediaLayerRef.current.source = mediaLayerElements[0]; //.elements.addMany(mediaLayerElements);
+            mediaLayerRef.current.source.elements.addMany(mediaLayerElements);
             // media layer elements are ready, change animation mode to playing to start the animation
             dispatch(animationStatusChanged('playing'));
         }
