@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { selectAppMode } from '../../../shared/store/Landsat/selectors';
 import { AppMode, modeChanged } from '../../../shared/store/Landsat/reducer';
+import { selectIsAnimationPlaying } from '../../../shared/store/UI/selectors';
+import classNames from 'classnames';
 
 const modes: AppMode[] = ['explore', 'find a scene', 'swipe', 'animate'];
 
@@ -12,8 +14,14 @@ export const ModeSelectorContainer = () => {
 
     const selectedMode = useSelector(selectAppMode);
 
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+
     return (
-        <div>
+        <div
+            className={classNames({
+                'is-disabled': isAnimationPlaying,
+            })}
+        >
             {modes.map((mode) => (
                 <Button
                     key={mode}
