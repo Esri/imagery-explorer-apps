@@ -15,3 +15,8 @@ export const selectAnimationStatus = createSelector(
     (state: RootState) => state.UI.animationStatus,
     (animationStatus) => animationStatus
 );
+
+export const selectIsAnimationPlaying = createSelector(
+    (state: RootState) => state.UI.animationStatus,
+    (animationStatus) => animationStatus !== null
+);

@@ -23,6 +23,10 @@ export type AnimationFrameInfo = {
 type Props = {
     data: AnimationFrameInfo[];
     /**
+     * If ture, this component will be disabled
+     */
+    disabled: boolean;
+    /**
      * fires when user select a frame
      * @param frameId
      * @returns
@@ -43,12 +47,17 @@ type Props = {
 
 export const AnimationFramesControl: FC<Props> = ({
     data,
+    disabled,
     frameOnSelect,
     addButtonOnClick,
     removeButtonOnClick,
 }) => {
     return (
-        <div className="h-full mx-2">
+        <div
+            className={classNames('h-full mx-2', {
+                'is-disabled': disabled,
+            })}
+        >
             <div className="">
                 {data.map((d) => {
                     const {

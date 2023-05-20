@@ -11,6 +11,10 @@ type Props = {
      */
     cloudCoverage: number;
     /**
+     * if true, Cloud Filter should be disabled
+     */
+    disabled: boolean;
+    /**
      * fires when user selects a new cloud coverage threshold
      * @param val new cloud coverage threshold
      * @returns
@@ -47,7 +51,11 @@ const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
  * @param param0
  * @returns
  */
-export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
+export const CloudFilter: FC<Props> = ({
+    cloudCoverage,
+    disabled,
+    onChange,
+}) => {
     const containerRef = useRef<HTMLDivElement>();
 
     const sliderRef = useRef<ISlider>();
@@ -120,7 +128,7 @@ export const CloudFilter: FC<Props> = ({ cloudCoverage, onChange }) => {
     return (
         <div
             className={classNames('mx-4', {
-                'is-disabled': cloudCoverage === undefined,
+                'is-disabled': disabled,
             })}
         >
             <TitleText cloudCoverage={cloudCoverage} />

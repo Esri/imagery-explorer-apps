@@ -16,11 +16,14 @@ import {
 } from '../../../shared/store/Landsat/thunks';
 import { getCurrentYear } from '../../../shared/utils/snippets/getCurrentYear';
 import classNames from 'classnames';
+import { selectIsAnimationPlaying } from '../../../shared/store/UI/selectors';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
@@ -44,7 +47,7 @@ const CalendarContainer = () => {
     return (
         <div
             className={classNames('mx-4', {
-                'is-disabled': !queryParams,
+                'is-disabled': !queryParams || isAnimationPlaying,
             })}
         >
             <div className="flex mb-1 items-center">

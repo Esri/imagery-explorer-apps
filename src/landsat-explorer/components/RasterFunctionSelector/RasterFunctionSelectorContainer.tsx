@@ -7,9 +7,12 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
 import { updateRasterFunctionName } from '../../../shared/store/Landsat/thunks';
+import { selectIsAnimationPlaying } from '../../../shared/store/UI/selectors';
 
 const RasterFunctionSelectorContainer = () => {
     const dispatch = useDispatch();
+
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     const [rasterFunctionInfos, setRasterFunctionInfos] =
         useState<RasterFunctionInfo[]>();
@@ -40,6 +43,7 @@ const RasterFunctionSelectorContainer = () => {
         <RasterFunctionSelector
             rasterFunctionInfos={rasterFunctionInfos}
             nameOfSelectedRasterFunction={rasterFunctionName}
+            disabled={!rasterFunctionName || isAnimationPlaying}
             onChange={(rasterFunctionName) => {
                 dispatch(updateRasterFunctionName(rasterFunctionName));
             }}

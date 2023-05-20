@@ -12,6 +12,10 @@ type Props = {
      */
     rasterFunctionInfos: RasterFunctionInfo[];
     /**
+     * if true, Raster Function selector should be disabled
+     */
+    disabled: boolean;
+    /**
      * Fires when user selects a new raster function
      * @param name name of new raster function
      * @returns
@@ -22,12 +26,13 @@ type Props = {
 const RasterFunctionSelector: FC<Props> = ({
     nameOfSelectedRasterFunction,
     rasterFunctionInfos,
+    disabled,
     onChange,
 }) => {
     return (
         <div
             className={classNames('h-full w-auto', {
-                'is-disabled': !nameOfSelectedRasterFunction,
+                'is-disabled': disabled,
             })}
         >
             <div className="grid grid-cols-3 gap-1">
