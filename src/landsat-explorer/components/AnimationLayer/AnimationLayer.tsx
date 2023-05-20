@@ -13,6 +13,7 @@ import useMediaLayerAnimation from './useMediaLayerAnimation';
 import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
 import { selectQueryParams4ScenesInAnimateMode } from '../../../shared/store/Landsat/selectors';
 import { CloseButton } from '../../../shared/components/CloseButton';
+import { sortQueryParams4ScenesByAcquisitionDate } from '../AnimationFramesControl/helpers';
 
 type Props = {
     mapView?: IMapView;
@@ -27,12 +28,17 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
         selectQueryParams4ScenesInAnimateMode
     );
 
+    const sortedQueryParams4ScenesInAnimationMode =
+        sortQueryParams4ScenesByAcquisitionDate(
+            queryParams4ScenesInAnimationMode
+        );
+
     const mediaLayerRef = useRef<IMediaLayer>();
 
     const mediaLayerElements = useMediaLayerImageElement({
         mapView,
         animationStatus,
-        queryParams4LandsatScenes: queryParams4ScenesInAnimationMode,
+        queryParams4LandsatScenes: sortedQueryParams4ScenesInAnimationMode,
     });
 
     useMediaLayerAnimation(animationStatus, mediaLayerElements);
