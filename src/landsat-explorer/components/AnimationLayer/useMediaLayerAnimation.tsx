@@ -4,19 +4,40 @@ import { AnimationStatus } from '../../../shared/store/UI/reducer';
 
 const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
 
+type Props = {
+    /**
+     * status of the animation mode
+     */
+    animationStatus: AnimationStatus;
+    /**
+     * array of image elements to be animated
+     */
+    mediaLayerElements: IImageElement[];
+    /**
+     * Fires when the active frame changes
+     * @param indexOfActiveFrame index of the active frame
+     * @returns void
+     */
+    activeFrameOnChange: (indexOfActiveFrame: number) => void;
+};
+
 /**
- * Animate media layer elements
- * @param mediaLayerElements Image Elements added to media layer
+ * This is a custom hook that handles the animation of input media layer elements
+ * @param animationStatus status of the animation
+ * @param mediaLayerElements Image Elements added to a media layer that will be animated
  */
-const useMediaLayerAnimation = (
-    animationStatus: AnimationStatus,
-    mediaLayerElements: IImageElement[]
-) => {
+const useMediaLayerAnimation = ({
+    animationStatus,
+    mediaLayerElements,
+    activeFrameOnChange,
+}: Props) => {
     const isPlayingRef = useRef<boolean>(false);
 
     const timeLastFrameDisplayed = useRef<number>(performance.now());
 
     const indexOfNextFrame = useRef<number>(0);
+
+    const activeFrameOnChangeRef = useRef<any>();
 
     const showNextFrame = () => {
         // use has stopped animation, no need to show next frame
@@ -37,6 +58,8 @@ const useMediaLayerAnimation = (
 
         timeLastFrameDisplayed.current = now;
 
+        activeFrameOnChangeRef.current(indexOfNextFrame.current);
+
         for (let i = 0; i < mediaLayerElements.length; i++) {
             const opacity = i === indexOfNextFrame.current ? 1 : 0;
             mediaLayerElements[i].opacity = opacity;
@@ -55,10 +78,19 @@ const useMediaLayerAnimation = (
     useEffect(() => {
         isPlayingRef.current = animationStatus === 'playing';
 
+        // cannot animate layers if the list is empty
+        if (!mediaLayerElements || !mediaLayerElements?.length) {
+            return;
+        }
+
         if (mediaLayerElements && animationStatus === 'playing') {
             requestAnimationFrame(showNextFrame);
         }
     }, [animationStatus, mediaLayerElements]);
+
+    useEffect(() => {
+        activeFrameOnChangeRef.current = activeFrameOnChange;
+    }, [activeFrameOnChange]);
 };
 
 export default useMediaLayerAnimation;

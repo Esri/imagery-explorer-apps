@@ -5,12 +5,18 @@ import { formattedDateString2Unixtimestamp } from '../../../shared/utils/snippet
  * Sort Query Params for Landsat Scenes using its selected Acquisition Date.
  * Items that have selected Acquisition Date will be sorted in ascending order,
  * And items that are without selected Acquisition Date will be placed at end of the array
- * @param queryParams
+ * @param queryParams query params to be sorted
+ * @param shouldExcludeQueryParamsWithoutAcquisitionDate if ture, only return query params that has selected acquisition date
  * @returns
  */
 export const sortQueryParams4ScenesByAcquisitionDate = (
-    queryParams: QueryParams4LandsatScene[]
+    queryParams: QueryParams4LandsatScene[],
+    shouldExcludeQueryParamsWithoutAcquisitionDate = false
 ): QueryParams4LandsatScene[] => {
+    if (shouldExcludeQueryParamsWithoutAcquisitionDate) {
+        queryParams = queryParams.filter((d) => d.acquisitionDate !== '');
+    }
+
     const sorted = [...queryParams].sort((a, b) => {
         // if both frame has selected acquisition date, sort using selected acquisition date
         if (a.acquisitionDate && b.acquisitionDate) {

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import IMapView from 'esri/views/MapView';
@@ -14,6 +14,8 @@ import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
 import { selectQueryParams4ScenesInAnimateMode } from '../../../shared/store/Landsat/selectors';
 import { CloseButton } from '../../../shared/components/CloseButton';
 import { sortQueryParams4ScenesByAcquisitionDate } from '../AnimationFramesControl/helpers';
+import { updateAcquisitionDate } from '../../../shared/store/Landsat/thunks';
+import { selectedAnimationFrameIdChanged } from '../../../shared/store/Landsat/reducer';
 
 type Props = {
     mapView?: IMapView;
@@ -22,26 +24,60 @@ type Props = {
 export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
     const dispatch = useDispatch();
 
+    const mediaLayerRef = useRef<IMediaLayer>();
+
     const animationStatus = useSelector(selectAnimationStatus);
 
     const queryParams4ScenesInAnimationMode = useSelector(
         selectQueryParams4ScenesInAnimateMode
     );
 
+    /**
+     * Sort query params using the Acquisition Date. Query Params that don't have selected Acquisition date
+     * will be exluded.
+     */
     const sortedQueryParams4ScenesInAnimationMode =
         sortQueryParams4ScenesByAcquisitionDate(
-            queryParams4ScenesInAnimationMode
+            queryParams4ScenesInAnimationMode,
+            true
         );
 
-    const mediaLayerRef = useRef<IMediaLayer>();
-
+    /**
+     * Array of Imagery Elements for each scene in `sortedQueryParams4ScenesInAnimationMode`
+     */
     const mediaLayerElements = useMediaLayerImageElement({
         mapView,
         animationStatus,
         queryParams4LandsatScenes: sortedQueryParams4ScenesInAnimationMode,
     });
 
-    useMediaLayerAnimation(animationStatus, mediaLayerElements);
+    /**
+     * This is a callback function that will be called each time the active frame (Image Element) in the animation layer is changed.
+     */
+    const activeFrameOnChange = useCallback(
+        (indexOfActiveFrame: number) => {
+            console.log(
+                `query params for active frame`,
+                sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame]
+            );
+
+            const queryParams4ActiveLandsatScene =
+                sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame];
+
+            dispatch(
+                selectedAnimationFrameIdChanged(
+                    queryParams4ActiveLandsatScene?.animationFrameId
+                )
+            );
+        },
+        [sortedQueryParams4ScenesInAnimationMode]
+    );
+
+    useMediaLayerAnimation({
+        animationStatus,
+        mediaLayerElements,
+        activeFrameOnChange,
+    });
 
     const initMediaLayer = async () => {
         type Modules = [typeof IMediaLayer];
