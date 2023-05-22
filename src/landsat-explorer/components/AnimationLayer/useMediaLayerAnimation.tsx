@@ -58,6 +58,12 @@ const useMediaLayerAnimation = ({
 
         timeLastFrameDisplayed.current = now;
 
+        // reset index of next frame to 0 if it is out of range.
+        // this can happen when a frame gets removed after previous animation is stopped
+        if (indexOfNextFrame.current >= mediaLayerElements.length) {
+            indexOfNextFrame.current = 0;
+        }
+
         activeFrameOnChangeRef.current(indexOfNextFrame.current);
 
         for (let i = 0; i < mediaLayerElements.length; i++) {
