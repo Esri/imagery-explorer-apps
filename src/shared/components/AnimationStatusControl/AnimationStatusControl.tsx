@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { AnimationStatus } from '../../store/UI/reducer';
+import classNames from 'classnames';
 
 const PlayButton = (
     <svg
@@ -48,15 +49,25 @@ const CloseButton = (
 
 type Props = {
     status: AnimationStatus;
+    /**
+     * if ture, the Animation Status Control Button should be disabled.
+     * This happenes when there is no frames in the Animation Layer
+     */
+    disabled?: boolean;
     statusOnChange: (newStatus?: AnimationStatus) => void;
 };
 
 export const AnimationStatusControl: FC<Props> = ({
     status,
+    disabled,
     statusOnChange,
 }: Props) => {
     return (
-        <div className="flex cursor-pointer">
+        <div
+            className={classNames('flex cursor-pointer', {
+                'is-disabled': disabled,
+            })}
+        >
             {!status && (
                 <div onClick={statusOnChange.bind(null, 'loading')}>
                     {PlayButton}

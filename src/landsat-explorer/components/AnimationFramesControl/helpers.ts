@@ -2,6 +2,17 @@ import { QueryParams4LandsatScene } from '../../../shared/store/Landsat/reducer'
 import { formattedDateString2Unixtimestamp } from '../../../shared/utils/snippets/formatDateString';
 
 /**
+ * Filter query params for Landsat Scenes and only keep the ones that has selected Acquisition Date
+ * @param queryParams
+ * @returns
+ */
+export const filterQueryParams4ScenesByAcquisitionDate = (
+    queryParams: QueryParams4LandsatScene[]
+): QueryParams4LandsatScene[] => {
+    return queryParams.filter((d) => d.acquisitionDate !== '');
+};
+
+/**
  * Sort Query Params for Landsat Scenes using its selected Acquisition Date.
  * Items that have selected Acquisition Date will be sorted in ascending order,
  * And items that are without selected Acquisition Date will be placed at end of the array
@@ -14,7 +25,7 @@ export const sortQueryParams4ScenesByAcquisitionDate = (
     shouldExcludeQueryParamsWithoutAcquisitionDate = false
 ): QueryParams4LandsatScene[] => {
     if (shouldExcludeQueryParamsWithoutAcquisitionDate) {
-        queryParams = queryParams.filter((d) => d.acquisitionDate !== '');
+        queryParams = filterQueryParams4ScenesByAcquisitionDate(queryParams);
     }
 
     const sorted = [...queryParams].sort((a, b) => {
