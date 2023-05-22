@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import IMapView from 'esri/views/MapView';
 import IImageElement from 'esri/layers/support/ImageElement';
 import IExtentAndRotationGeoreference from 'esri/layers/support/ExtentAndRotationGeoreference';
 import { loadModules } from 'esri-loader';
-import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
-import { selectQueryParams4ScenesInAnimateMode } from '../../../shared/store/Landsat/selectors';
 import { AnimationStatus } from '../../../shared/store/UI/reducer';
 import { QueryParams4LandsatScene } from '../../../shared/store/Landsat/reducer';
 import { exportImage as exportLandsatImage } from '../../services/landsat-2/exportImage';
