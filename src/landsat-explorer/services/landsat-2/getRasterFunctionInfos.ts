@@ -6,6 +6,6 @@ import { RasterFunctionInfos } from './config';
  * @returns
  */
 export const getRasterFunctionInfos = (): RasterFunctionInfo[] => {
-    const data = RasterFunctionInfos.slice(0, 9);
+    const data = RasterFunctionInfos.slice(0, 7);
     return data;
 };

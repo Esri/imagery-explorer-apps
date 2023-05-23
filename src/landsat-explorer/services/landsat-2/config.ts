@@ -66,10 +66,10 @@ export const RasterFunctionInfos = [
         label: 'Color IR',
     },
     {
-        name: 'NDVI Raw',
+        name: 'NDVI Colorized',
         description:
-            'Normalized difference vegetation index (NDVI) computed as (b5 - b4) / (b5 + b4) on apparent reflectance.',
-        label: 'NDVI',
+            'Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.',
+        label: 'NDVI Colorized',
     },
     {
         name: 'Agriculture',
@@ -148,10 +148,10 @@ export const RasterFunctionInfos = [
         label: 'Agriculture DRA',
     },
     {
-        name: 'NDVI Colorized',
+        name: 'NDVI Raw',
         description:
-            'Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.',
-        label: '',
+            'Normalized difference vegetation index (NDVI) computed as (b5 - b4) / (b5 + b4) on apparent reflectance.',
+        label: 'NDVI',
     },
     {
         name: 'QABand',
