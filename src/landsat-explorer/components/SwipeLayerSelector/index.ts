@@ -1,1 +1,1 @@
-export { SwipeLayerSelector } from './SwipeLayerSelector';
+export { SwipeLayerSelectorContainer as SwipeLayerSelector } from './SwipeLayerSelectorContainer';

@@ -8,12 +8,21 @@ type Props = {
      * The appearence of the button
      */
     appearance?: ButtonAppearance;
+    /**
+     * If true, the button should occupy the full height of the parent container
+     */
+    fullHeight?: boolean;
+    /**
+     * fire when user clicks the button
+     * @returns
+     */
     onClickHandler: () => void;
     children?: React.ReactNode;
 };
 
 export const Button: FC<Props> = ({
     appearance = 'transparent',
+    fullHeight = false,
     onClickHandler,
     children,
 }: Props) => {
@@ -27,11 +36,13 @@ export const Button: FC<Props> = ({
                     'drop-shadow-custom-light-blue': appearance === 'solid',
                     'bg-custom-background': appearance === 'transparent',
                     'text-custom-light-blue': appearance === 'transparent',
+                    'h-full': fullHeight,
+                    'flex items-center': fullHeight,
                 }
             )}
             onClick={onClickHandler}
         >
-            {children}
+            <div className="w-full">{children}</div>
         </div>
     );
 };
