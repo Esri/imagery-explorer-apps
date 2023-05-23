@@ -38,8 +38,9 @@ export const ModeSelector: FC<Props> = ({
             })}
         >
             {modes.map((mode) => (
-                <div key={mode} className="my-1 flex-grow flex items-center">
+                <div key={mode} className="my-1 h-1/4">
                     <Button
+                        fullHeight={true}
                         appearance={
                             mode === selectedMode ? 'solid' : 'transparent'
                         }
