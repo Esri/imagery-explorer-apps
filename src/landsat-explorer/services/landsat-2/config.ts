@@ -47,3 +47,120 @@ export const FIELD_NAMES = {
     SHAPE: 'shape',
     LANDSAT_SCENE_ID: 'landsat_scene_id',
 };
+
+/**
+ * Landsat-2 Raster Function Infos
+ * @see https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer/rasterFunctionInfos
+ */
+export const RasterFunctionInfos = [
+    {
+        name: 'Natural Color',
+        description:
+            'Natural Color bands red, green, blue(4, 3, 2) displayed with fixed stretch applied on apparent reflectance.',
+        label: '',
+    },
+    {
+        name: 'Color Infrared',
+        description:
+            'Bands near-IR, red, green (5, 4, 3) with fixed stretch applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
+        label: 'Color IR',
+    },
+    {
+        name: 'NDVI Raw',
+        description:
+            'Normalized difference vegetation index (NDVI) computed as (b5 - b4) / (b5 + b4) on apparent reflectance.',
+        label: 'NDVI',
+    },
+    {
+        name: 'Agriculture',
+        description:
+            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with fixed stretch applied on apparent reflectance. Vigorous vegetation is bright green, stressed vegetation dull green and bare areas as brown.',
+        label: '',
+    },
+    {
+        name: 'Bathymetric',
+        description:
+            'Bands red, green, coastal/aerosol (4, 3, 1) with fixed stretch applied on apparent reflectance. Useful in bathymetric mapping applications.',
+        label: '',
+    },
+    {
+        name: 'Geology',
+        description:
+            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
+        label: '',
+    },
+    {
+        name: 'Short-wave Infrared',
+        description:
+            'Bands shortwave infrared2, shortwave infrared1, red (7, 6, 4) with fixed stretched applied on apparent reflectance.',
+        label: 'Short-wave IR',
+    },
+    {
+        name: 'Landsat8_TIRS1_Temperature_Celcius',
+        description: 'Landsat8 TIRS1 temperature values in Celcius',
+        label: 'Temp Celcius',
+    },
+    {
+        name: 'Landsat8_TIRS1_Temperature_Farhenheit',
+        description: 'Landsat8 TIRS1 temperature values in Farhenheit',
+        label: 'Temp Farhenheit',
+    },
+    {
+        name: 'Short-wave Infrared with DRA',
+        description:
+            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied on apparent reflectance.',
+        label: 'Short-wave IR DRA',
+    },
+    {
+        name: 'Color Infrared with DRA',
+        description:
+            'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
+        label: '',
+    },
+    {
+        name: 'Geology with DRA',
+        description:
+            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
+        label: '',
+    },
+    {
+        name: 'Natural Color with DRA',
+        description:
+            'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied on apparent reflectance.',
+        label: 'Natural Color',
+    },
+    {
+        name: 'Geology with DRA',
+        description:
+            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
+        label: 'Geology',
+    },
+    {
+        name: 'Bathymetric with DRA',
+        description:
+            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied on apparent reflectance. Useful in bathymetric mapping applications.',
+        label: 'Bathymetric',
+    },
+    {
+        name: 'Agriculture with DRA',
+        description:
+            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied on apparent reflectance. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
+        label: 'Agriculture DRA',
+    },
+    {
+        name: 'NDVI Colorized',
+        description:
+            'Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.',
+        label: '',
+    },
+    {
+        name: 'QABand',
+        description: 'A raster function template.',
+        label: '',
+    },
+    {
+        name: 'None',
+        description: '',
+        label: '',
+    },
+];

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { RasterFunctionInfo } from '../../services/imagery-service/rasterFunctionInfos';
 import classNames from 'classnames';
+import { RasterFunctionInfo } from '../../../types/imagery-service';
 
 type Props = {
     /**
@@ -35,15 +35,19 @@ const RasterFunctionSelector: FC<Props> = ({
                 'is-disabled': disabled,
             })}
         >
+            <div className="text-center mb-2">
+                <span className="uppercase text-sm">Renderer</span>
+            </div>
+
             <div className="grid grid-cols-3 gap-1">
                 {rasterFunctionInfos.slice(0, 9).map((d) => {
-                    const { name, thumbnail } = d;
+                    const { name, thumbnail, label } = d;
 
                     const selected = nameOfSelectedRasterFunction === name;
 
                     return (
                         <div
-                            className="relative w-28 h-14 bg-cover"
+                            className="relative w-24 h-12 bg-cover"
                             style={{
                                 background: `url(${thumbnail})`,
                             }}
@@ -61,7 +65,7 @@ const RasterFunctionSelector: FC<Props> = ({
                             >
                                 <div className="text-ellipsis whitespace-nowrap overflow-hidden">
                                     <span className="text-xs shadow">
-                                        {name}
+                                        {label || name}
                                     </span>
                                 </div>
                             </div>
