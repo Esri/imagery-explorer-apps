@@ -26,10 +26,6 @@ export type QueryParams4LandsatScene = {
      */
     acquisitionYear?: number;
     /**
-     * the month that will be used to query available Landsat scenes
-     */
-    acquisitionMonth?: number;
-    /**
      * percent of cloud coverage ranges from 0 to 1 that will be used to query available Landsat scenes
      */
     cloudCover?: number;
@@ -97,7 +93,6 @@ export type LandsatState = {
 
 export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
     acquisitionYear: getCurrentYear(),
-    acquisitionMonth: null,
     acquisitionDate: '',
     cloudCover: 0.5,
     rasterFunctionName: 'Natural Color with DRA',

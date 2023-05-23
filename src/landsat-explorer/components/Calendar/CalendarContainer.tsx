@@ -3,7 +3,7 @@ import Calendar from '../../../shared/components/Calendar/Calendar';
 // import { selectMapCenter } from '../../../shared/store/Map/selectors';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '../../../shared/components/Dropdown';
-import { useMonthOptions } from './useMonthOptions';
+// import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
 import { useDispatch } from 'react-redux';
 import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
@@ -35,11 +35,6 @@ const CalendarContainer = () => {
     const { availableScenes } = useAvailableScenes();
 
     /**
-     * options that will be used to populate the Dropdown Menu for month
-     */
-    const monthOptions = useMonthOptions();
-
-    /**
      * options that will be used to populate the Dropdown Menu for year
      */
     const yearOptions = useYearOptions();
@@ -61,7 +56,7 @@ const CalendarContainer = () => {
                     />
                 </div>
 
-                <div className="mr-2">
+                {/* <div className="mr-2">
                     <Dropdown
                         data={monthOptions}
                         onChange={(month) => {
@@ -70,7 +65,7 @@ const CalendarContainer = () => {
                             console.log(month);
                         }}
                     />
-                </div>
+                </div> */}
 
                 <AcquisitionDateLabel acquisitionDate={acquisitionDate} />
             </div>
