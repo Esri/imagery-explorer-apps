@@ -39,7 +39,7 @@ const RasterFunctionSelector: FC<Props> = ({
                 <span className="uppercase text-sm">Renderer</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-1">
+            <div className="grid grid-cols-3 gap-[5px]">
                 {rasterFunctionInfos.slice(0, 9).map((d) => {
                     const { name, thumbnail, label } = d;
 
@@ -47,27 +47,38 @@ const RasterFunctionSelector: FC<Props> = ({
 
                     return (
                         <div
-                            className="relative w-24 h-12 bg-cover"
+                            className={classNames(
+                                'relative w-24 h-12 bg-cover cursor-pointer',
+                                {
+                                    'drop-shadow-custom-light-blue-90':
+                                        selected,
+                                }
+                            )}
                             style={{
                                 background: `url(${thumbnail})`,
                             }}
                             key={name}
+                            onClick={onChange.bind(null, name)}
                         >
                             <div
                                 className={classNames(
-                                    'absolute top-0 left-0 w-full h-full bg-black flex items-end p-1 cursor-pointer',
+                                    'absolute top-0 left-0 w-full h-full bg-black ',
                                     {
-                                        'bg-opacity-60': !selected,
-                                        'bg-opacity-20': selected,
+                                        'bg-opacity-40': !selected,
+                                        'bg-opacity-10': selected,
                                     }
                                 )}
-                                onClick={onChange.bind(null, name)}
-                            >
-                                <div className="text-ellipsis whitespace-nowrap overflow-hidden">
-                                    <span className="text-xs shadow">
-                                        {label || name}
-                                    </span>
-                                </div>
+                            ></div>
+
+                            <div className="absolute bottom-0 left-0 right-0 text-center text-ellipsis whitespace-nowrap overflow-hidden bg-gradient-to-t from-custom-background-85 z-10">
+                                <span
+                                    className="text-xs"
+                                    // style={{
+                                    //     textShadow: '1px 1px 2px rgba(191,238,255, .5)'
+                                    // }}
+                                >
+                                    {label || name}
+                                </span>
                             </div>
                         </div>
                     );

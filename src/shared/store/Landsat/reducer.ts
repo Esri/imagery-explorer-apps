@@ -95,7 +95,7 @@ export const DefaultQueryParams4LandsatScene: QueryParams4LandsatScene = {
     acquisitionYear: getCurrentYear(),
     acquisitionDate: '',
     cloudCover: 0.5,
-    rasterFunctionName: 'Natural Color with DRA',
+    rasterFunctionName: 'Natural Color',
     objectIdOfSelectedScene: null,
     animationFrameId: null,
 };

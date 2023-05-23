@@ -51,7 +51,8 @@ module.exports = {
         'cloud-slider-height': '80px'
       },
       dropShadow: {
-        'custom-light-blue': '1px 1px 4px rgba(191,238,255, .5)'
+        'custom-light-blue': '1px 1px 4px rgba(191,238,255, .5)',
+        'custom-light-blue-90': '0px 0px 3px rgba(191,238,255, .9)',
       }
     },
   },
