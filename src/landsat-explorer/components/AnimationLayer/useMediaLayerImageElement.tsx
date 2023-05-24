@@ -4,19 +4,19 @@ import IImageElement from 'esri/layers/support/ImageElement';
 import IExtentAndRotationGeoreference from 'esri/layers/support/ExtentAndRotationGeoreference';
 import { loadModules } from 'esri-loader';
 import { AnimationStatus } from '@shared/store/UI/reducer';
-import { QueryParams4LandsatScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { exportImage as exportLandsatImage } from '../../services/landsat-2/exportImage';
 
 type Props = {
     mapView?: IMapView;
     animationStatus: AnimationStatus;
-    queryParams4LandsatScenes: QueryParams4LandsatScene[];
+    QueryParams4ImageryScenes: QueryParams4ImageryScene[];
 };
 
 const useMediaLayerImageElement = ({
     mapView,
     animationStatus,
-    queryParams4LandsatScenes,
+    QueryParams4ImageryScenes,
 }: Props) => {
     const [imageElements, setImageElements] = useState<IImageElement[]>(null);
 
@@ -50,20 +50,18 @@ const useMediaLayerImageElement = ({
             const { xmin, ymin, xmax, ymax } = extent;
 
             // get images via export image request
-            const requests = queryParams4LandsatScenes
-                .filter(
-                    (queryParam) => queryParam.objectIdOfSelectedScene !== null
-                )
-                .map((queryParam) => {
-                    return exportLandsatImage({
-                        extent,
-                        width,
-                        height,
-                        objectId: queryParam.objectIdOfSelectedScene,
-                        rasterFunctionName: queryParam.rasterFunctionName,
-                        abortController: abortControllerRef.current,
-                    });
+            const requests = QueryParams4ImageryScenes.filter(
+                (queryParam) => queryParam.objectIdOfSelectedScene !== null
+            ).map((queryParam) => {
+                return exportLandsatImage({
+                    extent,
+                    width,
+                    height,
+                    objectId: queryParam.objectIdOfSelectedScene,
+                    rasterFunctionName: queryParam.rasterFunctionName,
+                    abortController: abortControllerRef.current,
                 });
+            });
 
             const responses = await Promise.all(requests);
 

@@ -1,4 +1,4 @@
-import { QueryParams4LandsatScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/snippets/formatDateString';
 
 /**
@@ -7,8 +7,8 @@ import { formattedDateString2Unixtimestamp } from '@shared/utils/snippets/format
  * @returns
  */
 export const filterQueryParams4ScenesByAcquisitionDate = (
-    queryParams: QueryParams4LandsatScene[]
-): QueryParams4LandsatScene[] => {
+    queryParams: QueryParams4ImageryScene[]
+): QueryParams4ImageryScene[] => {
     return queryParams.filter((d) => d.acquisitionDate !== '');
 };
 
@@ -21,9 +21,9 @@ export const filterQueryParams4ScenesByAcquisitionDate = (
  * @returns
  */
 export const sortQueryParams4ScenesByAcquisitionDate = (
-    queryParams: QueryParams4LandsatScene[],
+    queryParams: QueryParams4ImageryScene[],
     shouldExcludeQueryParamsWithoutAcquisitionDate = false
-): QueryParams4LandsatScene[] => {
+): QueryParams4ImageryScene[] => {
     if (shouldExcludeQueryParamsWithoutAcquisitionDate) {
         queryParams = filterQueryParams4ScenesByAcquisitionDate(queryParams);
     }

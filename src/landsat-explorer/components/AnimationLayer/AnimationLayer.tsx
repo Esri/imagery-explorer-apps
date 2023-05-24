@@ -48,7 +48,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
     const mediaLayerElements = useMediaLayerImageElement({
         mapView,
         animationStatus,
-        queryParams4LandsatScenes: sortedQueryParams4ScenesInAnimationMode,
+        QueryParams4ImageryScenes: sortedQueryParams4ScenesInAnimationMode,
     });
 
     /**

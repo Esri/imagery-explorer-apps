@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { Button } from '../Button';
 import {
-    QueryParams4LandsatScene,
+    QueryParams4ImageryScene,
     Side4SwipeMode,
 } from '../../store/Landsat/reducer';
 
 type Props = {
     selectedSide: Side4SwipeMode;
-    queryParams4SceneOnLeft: QueryParams4LandsatScene;
-    queryParams4SceneOnRight: QueryParams4LandsatScene;
+    queryParams4SceneOnLeft: QueryParams4ImageryScene;
+    queryParams4SceneOnRight: QueryParams4ImageryScene;
     onChange: (side: Side4SwipeMode) => void;
 };
 

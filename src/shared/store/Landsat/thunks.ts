@@ -6,7 +6,7 @@ import {
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
-    QueryParams4LandsatScene,
+    QueryParams4ImageryScene,
     availableScenesUpdated,
     queryParams4MainSceneChanged,
     queryParams4ScenesInAnimationModeChanged,
@@ -72,7 +72,7 @@ export const queryAvailableScenes =
  * @returns
  */
 export const updateQueryParams4SceneInSelectedMode =
-    (updatedQueryParams: QueryParams4LandsatScene) =>
+    (updatedQueryParams: QueryParams4ImageryScene) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
         const mode = selectAppMode(getState());
 
@@ -109,7 +109,7 @@ export const updateRasterFunctionName =
                 return;
             }
 
-            const updatedQueryParams: QueryParams4LandsatScene = {
+            const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 rasterFunctionName,
             };
@@ -132,7 +132,7 @@ export const updateObjectIdOfSelectedScene =
                 return;
             }
 
-            const updatedQueryParams: QueryParams4LandsatScene = {
+            const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 objectIdOfSelectedScene,
             };
@@ -155,7 +155,7 @@ export const updateAcquisitionYear =
                 return;
             }
 
-            const updatedQueryParams: QueryParams4LandsatScene = {
+            const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 acquisitionYear,
             };
@@ -178,7 +178,7 @@ export const updateCloudCover =
                 return;
             }
 
-            const updatedQueryParams: QueryParams4LandsatScene = {
+            const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 cloudCover,
             };
@@ -197,7 +197,7 @@ export const updateCloudCover =
 //                 getState()
 //             );
 
-//             const updatedQueryParams: QueryParams4LandsatScene = {
+//             const updatedQueryParams: QueryParams4ImageryScene = {
 //                 ...queryParams,
 //                 acquisitionMonth,
 //             };
@@ -220,7 +220,7 @@ export const updateAcquisitionDate =
                 return;
             }
 
-            const updatedQueryParams: QueryParams4LandsatScene = {
+            const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 acquisitionDate,
             };
