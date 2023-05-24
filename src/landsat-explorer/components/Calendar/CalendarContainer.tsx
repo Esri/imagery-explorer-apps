@@ -1,22 +1,22 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Calendar from '../../../shared/components/Calendar/Calendar';
-// import { selectMapCenter } from '../../../shared/store/Map/selectors';
+import Calendar from '@shared/components/Calendar/Calendar';
+// import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useSelector } from 'react-redux';
-import { Dropdown } from '../../../shared/components/Dropdown';
+import { Dropdown } from '@shared/components/Dropdown';
 // import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
 import { useDispatch } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
 import useAvailableScenes from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
     // updateAcquisitionMonth,
     updateAcquisitionYear,
-} from '../../../shared/store/Landsat/thunks';
-import { getCurrentYear } from '../../../shared/utils/snippets/getCurrentYear';
+} from '@shared/store/Landsat/thunks';
+import { getCurrentYear } from '@shared/utils/snippets/getCurrentYear';
 import classNames from 'classnames';
-import { selectIsAnimationPlaying } from '../../../shared/store/UI/selectors';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 // import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
-import { RasterFunctionSelector } from '../../../shared/components/RasterFunctionSelector';
+import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
-import { updateRasterFunctionName } from '../../../shared/store/Landsat/thunks';
-import { selectIsAnimationPlaying } from '../../../shared/store/UI/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
+import { updateRasterFunctionName } from '@shared/store/Landsat/thunks';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 // import { getRasterFunctionInfos } from '../../services/landsat-2/getRasterFunctionInfos';
 import { useRasterFunctionInfosWithThumbnail } from './useRasterFunctionInfosWithThumbnail';
 

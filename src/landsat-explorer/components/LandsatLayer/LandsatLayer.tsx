@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import {
     selectQueryParams4SceneInSelectedMode,
     selectAppMode,
-} from '../../../shared/store/Landsat/selectors';
-import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
+} from '@shared/store/Landsat/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type Props = {
     mapView?: MapView;

@@ -1,4 +1,4 @@
-import { RasterFunctionInfo } from '../../../types/imagery-service';
+import { RasterFunctionInfo } from '@typing/imagery-service';
 import { RasterFunctionInfos } from './config';
 
 /**

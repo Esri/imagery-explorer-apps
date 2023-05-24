@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
-import { RasterFunctionInfo } from '../../../types/imagery-service';
+import { RasterFunctionInfo } from '@typing/imagery-service';
 
 type Props = {
     /**

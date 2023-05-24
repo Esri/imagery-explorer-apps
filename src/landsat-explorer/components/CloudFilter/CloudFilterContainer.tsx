@@ -1,10 +1,10 @@
 import React from 'react';
-import { CloudFilter } from '../../../shared/components/CloudFilter';
+import { CloudFilter } from '@shared/components/CloudFilter';
 import { useSelector } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
 import { useDispatch } from 'react-redux';
-import { updateCloudCover } from '../../../shared/store/Landsat/thunks';
-import { selectIsAnimationPlaying } from '../../../shared/store/UI/selectors';
+import { updateCloudCover } from '@shared/store/Landsat/thunks';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 export const CloudFilterContainer = () => {
     const dispatch = useDispatch();

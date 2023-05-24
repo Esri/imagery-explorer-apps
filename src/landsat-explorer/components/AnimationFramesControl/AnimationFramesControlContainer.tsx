@@ -4,19 +4,19 @@ import {
     selectAppMode,
     selectQueryParams4ScenesInAnimateMode,
     selectSelectedAnimationFrameId,
-} from '../../../shared/store/Landsat/selectors';
+} from '@shared/store/Landsat/selectors';
 import {
     AnimationFramesControl,
     AnimationFrameInfo,
-} from '../../../shared/components/AnimationFramesControl';
+} from '@shared/components/AnimationFramesControl';
 import { useDispatch } from 'react-redux';
 import {
     addAnimationFrame,
     removeAnimationFrame,
-} from '../../../shared/store/Landsat/thunks';
-import { selectedAnimationFrameIdChanged } from '../../../shared/store/Landsat/reducer';
+} from '@shared/store/Landsat/thunks';
+import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
-import { selectIsAnimationPlaying } from '../../../shared/store/UI/selectors';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 export const AnimationFramesControlContainer = () => {
     const dispatch = useDispatch();

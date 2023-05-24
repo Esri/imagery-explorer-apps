@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import {
     selectAvailableScenesByObjectId,
     selectQueryParams4SceneInSelectedMode,
-} from '../../../shared/store/Landsat/selectors';
+} from '@shared/store/Landsat/selectors';
 import { LandsatScene } from '../../services/landsat-2/getLandsatScenes';
 import { format } from 'date-fns';
 import {
     SceneInfoTable,
     SceneInfoTableData,
-} from '../../../shared/components/SceneInfoTable';
+} from '@shared/components/SceneInfoTable';
 
 export const SceneInfoContainer = () => {
     const queryParams4SelectedScene = useSelector(

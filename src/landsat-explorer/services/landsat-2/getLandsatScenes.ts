@@ -1,9 +1,9 @@
 import { FIELD_NAMES } from './config';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 import { parseLandsatInfo } from './helpers';
-import { unixtimestamp2FormattedDateString } from '../../../shared/utils/snippets/formatDateString';
+import { unixtimestamp2FormattedDateString } from '@shared/utils/snippets/formatDateString';
 
 type GetLandsatScenesParams = {
     /**

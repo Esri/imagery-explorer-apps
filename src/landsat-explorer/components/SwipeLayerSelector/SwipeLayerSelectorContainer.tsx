@@ -5,10 +5,10 @@ import {
     selectQueryParams4SceneOnLeftSideOfSwipeMode,
     selectQueryParams4SceneOnRightSideOfSwipeMode,
     selectSelectedSideOfSwipeMode,
-} from '../../../shared/store/Landsat/selectors';
+} from '@shared/store/Landsat/selectors';
 import { useDispatch } from 'react-redux';
-import { SwipeLayerSelector } from '../../../shared/components/SwipeLayerSelector';
-import { selectedSide4SwipeModeChanged } from '../../../shared/store/Landsat/reducer';
+import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
+import { selectedSide4SwipeModeChanged } from '@shared/store/Landsat/reducer';
 
 export const SwipeLayerSelectorContainer = () => {
     const dispatch = useDispatch();

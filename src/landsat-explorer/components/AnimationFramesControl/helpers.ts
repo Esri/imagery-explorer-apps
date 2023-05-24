@@ -1,5 +1,5 @@
-import { QueryParams4LandsatScene } from '../../../shared/store/Landsat/reducer';
-import { formattedDateString2Unixtimestamp } from '../../../shared/utils/snippets/formatDateString';
+import { QueryParams4LandsatScene } from '@shared/store/Landsat/reducer';
+import { formattedDateString2Unixtimestamp } from '@shared/utils/snippets/formatDateString';
 
 /**
  * Filter query params for Landsat Scenes and only keep the ones that has selected Acquisition Date

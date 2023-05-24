@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import IImageElement from 'esri/layers/support/ImageElement';
-import { AnimationStatus } from '../../../shared/store/UI/reducer';
+import { AnimationStatus } from '@shared/store/UI/reducer';
 
 const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
 

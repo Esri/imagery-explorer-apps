@@ -6,16 +6,16 @@ import IMediaLayer from 'esri/layers/MediaLayer';
 import { loadModules } from 'esri-loader';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { animationStatusChanged } from '../../../shared/store/UI/reducer';
+import { animationStatusChanged } from '@shared/store/UI/reducer';
 // import CloseButton from './CloseButton';
 import useMediaLayerImageElement from './useMediaLayerImageElement';
 import useMediaLayerAnimation from './useMediaLayerAnimation';
-import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
-import { selectQueryParams4ScenesInAnimateMode } from '../../../shared/store/Landsat/selectors';
-import { CloseButton } from '../../../shared/components/CloseButton';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/Landsat/selectors';
+import { CloseButton } from '@shared/components/CloseButton';
 import { sortQueryParams4ScenesByAcquisitionDate } from '../AnimationFramesControl/helpers';
-import { updateAcquisitionDate } from '../../../shared/store/Landsat/thunks';
-import { selectedAnimationFrameIdChanged } from '../../../shared/store/Landsat/reducer';
+import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
+import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 
 type Props = {
     mapView?: IMapView;

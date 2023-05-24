@@ -1,12 +1,12 @@
 import MapView from 'esri/views/MapView';
 import React, { FC } from 'react';
-import SwipeWidget from '../../../shared/components/SwipeWidget/SwipeWidget';
+import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
     selectQueryParams4SceneOnLeftSideOfSwipeMode,
     selectQueryParams4SceneOnRightSideOfSwipeMode,
-} from '../../../shared/store/Landsat/selectors';
+} from '@shared/store/Landsat/selectors';
 import { useLandsatLayer } from '../LandsatLayer';
 
 type Props = {

@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import {
     selectAvailableScenes,
     selectQueryParams4SceneInSelectedMode,
-} from '../../../shared/store/Landsat/selectors';
-import { selectMapCenter } from '../../../shared/store/Map/selectors';
+} from '@shared/store/Landsat/selectors';
+import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 import {
     queryAvailableScenes,
     updateObjectIdOfSelectedScene,
-} from '../../../shared/store/Landsat/thunks';
+} from '@shared/store/Landsat/thunks';
 
 /**
  * This custom hook queries the landsat service and find landsat scenes

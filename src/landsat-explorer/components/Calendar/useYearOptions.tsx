@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { DropdownData } from '../../../shared/components/Dropdown';
+import { DropdownData } from '@shared/components/Dropdown';
 import { getTimeExtent } from '../../services/landsat-2/getTimeExtent';
 import { useSelector } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '../../../shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
 
 export const useYearOptions = (): DropdownData[] => {
     const { acquisitionYear } =

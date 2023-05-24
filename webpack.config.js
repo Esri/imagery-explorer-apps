@@ -45,7 +45,11 @@ module.exports =  (env, options)=> {
         },
         devtool: 'source-map',
         resolve: {
-            extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
+            extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+            alias: {
+                '@shared': path.resolve(__dirname, 'src/shared/'),
+                '@typing': path.resolve(__dirname, 'src/types/'),
+            },
         },
         module: {
             rules: [

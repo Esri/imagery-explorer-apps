@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationStatus } from '../../../shared/store/UI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { useDispatch } from 'react-redux';
-import { AnimationStatusControl } from '../../../shared/components/AnimationStatusControl';
-import { animationStatusChanged } from '../../../shared/store/UI/reducer';
+import { AnimationStatusControl } from '@shared/components/AnimationStatusControl';
+import { animationStatusChanged } from '@shared/store/UI/reducer';
 import {
     selectAppMode,
     selectQueryParams4ScenesInAnimateMode,
     selectSelectedAnimationFrameId,
-} from '../../../shared/store/Landsat/selectors';
+} from '@shared/store/Landsat/selectors';
 import { filterQueryParams4ScenesByAcquisitionDate } from '../AnimationFramesControl/helpers';
 
 export const AnimationStatusControlContainer = () => {
