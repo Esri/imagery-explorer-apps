@@ -1,6 +1,9 @@
-import { urlFns } from 'helper-toolkit-ts';
-
-type UrlHashParamKey = 'mapCenter' | 'mode';
+type UrlHashParamKey =
+    | 'mapCenter'
+    | 'mode'
+    | 'mainScene'
+    | 'secondaryScene'
+    | 'animationScenes';
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
@@ -54,3 +57,19 @@ export const getMapCenterFromHashParams = () => {
         zoom: +zoom,
     };
 };
+
+// export const saveQueryParams4MainSceneToHashParams = ()=>{
+
+// }
+
+// export const getQueryParams4MainSceneFromHashParams = ()=>{
+
+// }
+
+// export const saveQueryParams4SecondarySceneToHashParams = ()=>{
+
+// }
+
+// export const getQueryParams4SecondarySceneFromHashParams = ()=>{
+
+// }

@@ -1,8 +1,13 @@
 import { PartialRootState } from './configureStore';
 
 import { initialMapState, MapState } from '../store/Map/reducer';
-import { getMapCenterFromHashParams } from '../utils/URLHashParams';
+import {
+    getHashParamValueByKey,
+    getMapCenterFromHashParams,
+} from '../utils/url-hash-params';
 import { MAP_CENTER, MAP_ZOOM } from '../constants/map';
+import { initialUIState, UIState } from './UI/reducer';
+import { AppMode, initialLandsatState, LandsatState } from './Landsat/reducer';
 
 const getPreloadedMapState = (): MapState => {
     const mapCenterInfo = getMapCenterFromHashParams();
@@ -14,9 +19,19 @@ const getPreloadedMapState = (): MapState => {
     };
 };
 
+const getPreloadedLandsatState = (): LandsatState => {
+    const mode = getHashParamValueByKey('mode') as AppMode;
+
+    return {
+        ...initialLandsatState,
+        mode,
+    };
+};
+
 const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         Map: getPreloadedMapState(),
+        Landsat: getPreloadedLandsatState(),
     };
 };
 

@@ -13,7 +13,7 @@ import EventHandlers from './EventHandlers';
 import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
 import { centerChanged, zoomChanged } from '../../store/Map/reducer';
-import { saveMapCenterToHashParams } from '../../utils/URLHashParams';
+import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 
 type Props = {
     children?: React.ReactNode;
