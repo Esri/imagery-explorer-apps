@@ -3,7 +3,10 @@ import { useSelector } from 'react-redux';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { useDispatch } from 'react-redux';
 import { AnimationStatusControl } from '@shared/components/AnimationStatusControl';
-import { animationStatusChanged } from '@shared/store/UI/reducer';
+import {
+    animationSpeedChanged,
+    animationStatusChanged,
+} from '@shared/store/UI/reducer';
 import {
     selectAppMode,
     selectQueryParams4ScenesInAnimateMode,
@@ -54,6 +57,9 @@ export const AnimationStatusControlContainer = () => {
             disabled={disabled}
             statusOnChange={(status) => {
                 dispatch(animationStatusChanged(status));
+            }}
+            speedOnChange={(speed) => {
+                dispatch(animationSpeedChanged(speed));
             }}
         />
     );

@@ -10,7 +10,10 @@ import { animationStatusChanged } from '@shared/store/UI/reducer';
 // import CloseButton from './CloseButton';
 import useMediaLayerImageElement from './useMediaLayerImageElement';
 import useMediaLayerAnimation from './useMediaLayerAnimation';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectAnimationSpeed,
+} from '@shared/store/UI/selectors';
 import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/Landsat/selectors';
 import { CloseButton } from '@shared/components/CloseButton';
 import { sortQueryParams4ScenesByAcquisitionDate } from '../AnimationFramesControl/helpers';
@@ -27,6 +30,8 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
     const mediaLayerRef = useRef<IMediaLayer>();
 
     const animationStatus = useSelector(selectAnimationStatus);
+
+    const animationSpeed = useSelector(selectAnimationSpeed);
 
     const queryParams4ScenesInAnimationMode = useSelector(
         selectQueryParams4ScenesInAnimateMode
@@ -75,6 +80,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
 
     useMediaLayerAnimation({
         animationStatus,
+        animationSpeed,
         mediaLayerElements,
         activeFrameOnChange,
     });

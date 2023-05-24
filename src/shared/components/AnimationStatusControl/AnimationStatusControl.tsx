@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { AnimationStatus } from '../../store/UI/reducer';
 import classNames from 'classnames';
+import { AnimationSpeedControl } from './AnimationSpeedControl';
 
 const PlayButton = (
     <svg
@@ -54,45 +55,73 @@ type Props = {
      * This happenes when there is no frames in the Animation Layer
      */
     disabled?: boolean;
+    /**
+     * fires when user makes change to Animation Status
+     * @param newStatus
+     * @returns void;
+     */
     statusOnChange: (newStatus?: AnimationStatus) => void;
+    /**
+     * fires when user makes change to Animation Speed
+     * @param newSpeed speed in milliseconds
+     * @returns
+     */
+    speedOnChange: (newSpeed?: number) => void;
 };
 
 export const AnimationStatusControl: FC<Props> = ({
     status,
     disabled,
     statusOnChange,
+    speedOnChange,
 }: Props) => {
     return (
         <div
-            className={classNames('flex cursor-pointer', {
+            className={classNames('mx-1', {
                 'is-disabled': disabled,
             })}
         >
-            {!status && (
-                <div onClick={statusOnChange.bind(null, 'loading')}>
-                    {PlayButton}
-                </div>
-            )}
-            {status === 'loading' && (
-                <div>
-                    <calcite-loader scale="m" active inline></calcite-loader>
-                </div>
-            )}
-            {status === 'playing' && (
-                <div onClick={statusOnChange.bind(null, 'pausing')}>
-                    {PauseButton}
-                </div>
-            )}
-            {status === 'pausing' && (
-                <div onClick={statusOnChange.bind(null, 'playing')}>
-                    {PlayButton}
-                </div>
-            )}
-            {status && (
-                <div onClick={statusOnChange.bind(null, null)}>
-                    {CloseButton}
-                </div>
-            )}
+            <div
+                className={classNames(
+                    'flex cursor-pointer justify-center mb-1'
+                )}
+            >
+                {!status && (
+                    <div onClick={statusOnChange.bind(null, 'loading')}>
+                        {PlayButton}
+                    </div>
+                )}
+                {status === 'loading' && (
+                    <div>
+                        <calcite-loader
+                            scale="m"
+                            active
+                            inline
+                        ></calcite-loader>
+                    </div>
+                )}
+                {status === 'playing' && (
+                    <div onClick={statusOnChange.bind(null, 'pausing')}>
+                        {PauseButton}
+                    </div>
+                )}
+                {status === 'pausing' && (
+                    <div onClick={statusOnChange.bind(null, 'playing')}>
+                        {PlayButton}
+                    </div>
+                )}
+                {status && (
+                    <div onClick={statusOnChange.bind(null, null)}>
+                        {CloseButton}
+                    </div>
+                )}
+            </div>
+
+            <AnimationSpeedControl
+                onChange={(speed) => {
+                    speedOnChange(speed);
+                }}
+            />
         </div>
     );
 };

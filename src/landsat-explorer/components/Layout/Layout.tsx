@@ -23,7 +23,7 @@ const Layout = () => {
 
                 {mode !== 'explore' && (
                     <>
-                        <div className="flex w-48 shrink-0">
+                        <div className="flex w-60 shrink-0">
                             <SwipeLayerSelector />
                             <AnimationFramesControl />
                             <AnimationStatusControl />

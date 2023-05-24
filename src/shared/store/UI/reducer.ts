@@ -22,12 +22,17 @@ export type UIState = {
      * status of the Animation mode
      */
     animationStatus?: AnimationStatus;
+    /**
+     * speed of Animation in milliseconds
+     */
+    animationSpeed?: number;
 };
 
 export const initialUIState: UIState = {
     hideBottomPanel: false,
     shouldShowAboutThisApp: false,
     animationStatus: null,
+    animationSpeed: 1000,
 };
 
 const slice = createSlice({
@@ -46,6 +51,9 @@ const slice = createSlice({
         ) => {
             state.animationStatus = action.payload;
         },
+        animationSpeedChanged: (state, action: PayloadAction<number>) => {
+            state.animationSpeed = action.payload;
+        },
     },
 });
 
@@ -55,6 +63,7 @@ export const {
     bottomPanelToggled,
     shouldShowAboutThisAppToggled,
     animationStatusChanged,
+    animationSpeedChanged,
 } = slice.actions;
 
 export default reducer;

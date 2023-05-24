@@ -20,3 +20,8 @@ export const selectIsAnimationPlaying = createSelector(
     (state: RootState) => state.UI.animationStatus,
     (animationStatus) => animationStatus !== null
 );
+
+export const selectAnimationSpeed = createSelector(
+    (state: RootState) => state.UI.animationSpeed,
+    (animationSpeed) => animationSpeed
+);

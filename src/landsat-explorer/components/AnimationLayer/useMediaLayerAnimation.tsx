@@ -10,6 +10,10 @@ type Props = {
      */
     animationStatus: AnimationStatus;
     /**
+     * animation speed in millisecond
+     */
+    animationSpeed: number;
+    /**
      * array of image elements to be animated
      */
     mediaLayerElements: IImageElement[];
@@ -28,6 +32,7 @@ type Props = {
  */
 const useMediaLayerAnimation = ({
     animationStatus,
+    animationSpeed,
     mediaLayerElements,
     activeFrameOnChange,
 }: Props) => {
@@ -38,6 +43,8 @@ const useMediaLayerAnimation = ({
     const indexOfNextFrame = useRef<number>(0);
 
     const activeFrameOnChangeRef = useRef<any>();
+
+    const animationSpeedRef = useRef<number>(animationSpeed);
 
     const showNextFrame = () => {
         // use has stopped animation, no need to show next frame
@@ -51,7 +58,7 @@ const useMediaLayerAnimation = ({
         const millisecondsSinceLastFrame = now - timeLastFrameDisplayed.current;
 
         // if last frame was shown within the time window, no need to display next frame
-        if (millisecondsSinceLastFrame < ANIMATION_SPEED_IN_MILLISECONDS) {
+        if (millisecondsSinceLastFrame < animationSpeedRef.current) {
             requestAnimationFrame(showNextFrame);
             return;
         }
@@ -97,6 +104,10 @@ const useMediaLayerAnimation = ({
     useEffect(() => {
         activeFrameOnChangeRef.current = activeFrameOnChange;
     }, [activeFrameOnChange]);
+
+    useEffect(() => {
+        animationSpeedRef.current = animationSpeed;
+    }, [animationSpeed]);
 };
 
 export default useMediaLayerAnimation;
