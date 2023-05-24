@@ -52,7 +52,7 @@ export const SwipeLayerSelector: FC<Props> = ({
     return (
         <div className="mx-2 flex flex-col">
             {sides.map((side) => (
-                <div className="my-2 h-1/2 flex items-center" key={side}>
+                <div className="mb-1 h-1/2 flex items-center" key={side}>
                     <Button
                         appearance={
                             selectedSide === side ? 'solid' : 'transparent'

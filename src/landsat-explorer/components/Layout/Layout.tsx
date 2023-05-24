@@ -23,13 +23,23 @@ const Layout = () => {
 
                 {mode !== 'explore' && (
                     <>
-                        <SwipeLayerSelector />
-                        <AnimationFramesControl />
-                        <AnimationStatusControl />
-                        <CloudFilter />
-                        <Calendar />
-                        <RasterFunctionSelector />
-                        <SceneInfo />
+                        <div className="flex w-48 shrink-0">
+                            <SwipeLayerSelector />
+                            <AnimationFramesControl />
+                            <AnimationStatusControl />
+                        </div>
+
+                        <div className="flex flex-grow justify-between">
+                            <div className="flex shrink-0">
+                                <CloudFilter />
+                                <Calendar />
+                            </div>
+
+                            <div className="flex">
+                                <RasterFunctionSelector />
+                                <SceneInfo />
+                            </div>
+                        </div>
                     </>
                 )}
             </BottomPanel>

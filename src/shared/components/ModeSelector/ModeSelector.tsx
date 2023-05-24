@@ -38,7 +38,7 @@ export const ModeSelector: FC<Props> = ({
             })}
         >
             {modes.map((mode) => (
-                <div key={mode} className="my-1 h-1/4">
+                <div key={mode} className="mb-1 h-1/4">
                     <Button
                         fullHeight={true}
                         appearance={
