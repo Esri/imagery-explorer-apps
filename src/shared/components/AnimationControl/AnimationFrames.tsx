@@ -54,7 +54,7 @@ export const AnimationFrames: FC<Props> = ({
 }) => {
     return (
         <div
-            className={classNames('mx-2', {
+            className={classNames({
                 'is-disabled': disabled,
             })}
         >

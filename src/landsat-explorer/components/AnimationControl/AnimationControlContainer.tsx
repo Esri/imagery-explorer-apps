@@ -1,65 +1,61 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectIsAnimationPlaying,
+} from '@shared/store/UI/selectors';
 import { useDispatch } from 'react-redux';
-import { AnimationControl } from '@shared/components/AnimationControl';
+import {
+    AnimationControl,
+    AnimationFrames,
+    AnimationFrameInfo,
+} from '@shared/components/AnimationControl';
 import {
     animationSpeedChanged,
     animationStatusChanged,
 } from '@shared/store/UI/reducer';
+import { selectAppMode } from '@shared/store/Landsat/selectors';
 import {
-    selectAppMode,
-    selectQueryParams4ScenesInAnimateMode,
-    selectSelectedAnimationFrameId,
-} from '@shared/store/Landsat/selectors';
-import { filterQueryParams4ScenesByAcquisitionDate } from './helpers';
-import { AnimationFramesContainer } from './AnimationFramesContainer';
-import { addAnimationFrame } from '@shared/store/Landsat/thunks';
+    addAnimationFrame,
+    removeAnimationFrame,
+} from '@shared/store/Landsat/thunks';
+import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
+import { useAnimationFramesInfo } from './useAnimationFramesInfo';
+import { useShouldDisablePlayPauseButton } from './useShouldDisablePlayPauseButton';
 
 export const AnimationControlContainer = () => {
     const dispatch = useDispatch();
 
     const animationStatus = useSelector(selectAnimationStatus);
 
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+
     const mode = useSelector(selectAppMode);
 
-    // const selectedAnimationFrameId = useSelector(
-    //     selectSelectedAnimationFrameId
-    // );
+    const animationFramesData = useAnimationFramesInfo();
 
-    const queryParams4ScenesInAnimationMode = useSelector(
-        selectQueryParams4ScenesInAnimateMode
-    );
-
-    /**
-     * if true, the Animation Status Control Component will be diabled
-     */
-    const disabled = useMemo(() => {
-        /**
-         * find query params for scenes that have selected Acquisition Date
-         */
-        const filtered = filterQueryParams4ScenesByAcquisitionDate(
-            queryParams4ScenesInAnimationMode
-        );
-
-        if (!filtered || !filtered.length) {
-            return true;
-        }
-
-        return false;
-    }, [queryParams4ScenesInAnimationMode]);
+    const shouldDisablePlayPauseButton = useShouldDisablePlayPauseButton();
 
     if (mode !== 'animate') {
         return null;
     }
 
     return (
-        <div>
-            <AnimationFramesContainer />
+        <div className="w-full mx-2">
+            <AnimationFrames
+                data={animationFramesData}
+                disabled={isAnimationPlaying}
+                frameOnSelect={(frameId: string) => {
+                    dispatch(selectedAnimationFrameIdChanged(frameId));
+                }}
+                removeButtonOnClick={(frameId: string) => {
+                    dispatch(removeAnimationFrame(frameId));
+                }}
+            />
 
             <AnimationControl
                 status={animationStatus}
-                disabled={disabled}
+                shouldDisablePlayPauseButton={shouldDisablePlayPauseButton}
                 addButtonOnClick={() => {
                     dispatch(addAnimationFrame());
                 }}

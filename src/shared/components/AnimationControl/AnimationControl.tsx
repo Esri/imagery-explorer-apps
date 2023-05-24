@@ -51,10 +51,10 @@ const CloseButton = (
 type Props = {
     status: AnimationStatus;
     /**
-     * if ture, the Animation Status Control Button should be disabled.
+     * if ture, the Animation Status Control Button (Play/Pause/Close) should be disabled.
      * This happenes when there is no frames in the Animation Layer
      */
-    disabled?: boolean;
+    shouldDisablePlayPauseButton?: boolean;
     /**
      * fires when user clicks on "Add A Scene" button
      * @returns void
@@ -76,7 +76,7 @@ type Props = {
 
 export const AnimationControl: FC<Props> = ({
     status,
-    disabled,
+    shouldDisablePlayPauseButton,
     addButtonOnClick,
     statusOnChange,
     speedOnChange,
@@ -84,7 +84,7 @@ export const AnimationControl: FC<Props> = ({
     const shouldShowSpeedControl = status === 'playing' || status === 'pausing';
 
     return (
-        <div className={classNames('flex items-center mx-1')}>
+        <div className={classNames('flex items-center')}>
             {status === null && (
                 <div className="" onClick={addButtonOnClick}>
                     <span className="text-xs text-custom-light-blue uppercase border border-custom-light-blue-80 cursor-pointer p-1">
@@ -103,7 +103,7 @@ export const AnimationControl: FC<Props> = ({
 
             <div
                 className={classNames('flex cursor-pointer justify-center', {
-                    'is-disabled': disabled,
+                    'is-disabled': shouldDisablePlayPauseButton,
                 })}
             >
                 {!status && (
