@@ -1,8 +1,5 @@
 import { batch } from 'react-redux';
-import {
-    LandsatScene,
-    getLandsatScenes,
-} from '../../../landsat-explorer/services/landsat-2/getLandsatScenes';
+import { getLandsatScenes } from '@shared/services/landsat-2/getLandsatScenes';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
@@ -22,6 +19,7 @@ import {
     selectSelectedAnimationFrameId,
 } from './selectors';
 import { generate } from 'shortid';
+import { LandsatScene } from '@typing/imagery-service';
 
 /**
  * Query Landsat Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.

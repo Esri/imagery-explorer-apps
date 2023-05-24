@@ -20,3 +20,73 @@ export type RasterFunctionInfo = {
      */
     thumbnail?: string;
 };
+
+export type LandsatScene = {
+    objectId: number;
+    /**
+     * Landsat product identifier
+     * @example LC08_L1GT_029030_20151209_20160131_01_RT
+     */
+    productId: string;
+    /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * acquisitionDate in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * percent of cloud cover
+     */
+    cloudCover: number;
+
+    /**
+     * if true, this scene was acquired during a cloudy day
+     */
+    isCloudy: boolean;
+    /**
+     * name of the satellite (e.g. 'Landsat 8')
+     */
+    satellite: string;
+    /**
+     * Landsat path number
+     * @see https://landsat.gsfc.nasa.gov/about/the-worldwide-reference-system/
+     */
+    path: number;
+    /**
+     * Landsat Row number
+     */
+    row: number;
+    /**
+     * name of the sensor:
+     * - OLI/TIRS combined
+     * - OLI-only
+     * - TIRS-only
+     * - ETM+
+     * - MSS
+     */
+    sensor: string;
+    /**
+     * Collection category:
+     * - Real-Time
+     * - Tier 1
+     * - Tier 2
+     */
+    collectionCategory: string;
+    /**
+     * Collection number (01, 02, …)
+     */
+    collectionNumber: string;
+    /**
+     * Processing correction level (L1TP/L1GT/L1GS)
+     */
+    correctionLevel: string;
+    /**
+     * processing date in unix timestamp
+     */
+    processingDate: number;
+    // category: number;
+    // name: string;
+    // best: number;
+};

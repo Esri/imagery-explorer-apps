@@ -1,4 +1,4 @@
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 
 type TimeExtentData = {
     start: number;

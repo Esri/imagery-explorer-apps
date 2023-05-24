@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { getRasterFunctionInfos } from '../../services/landsat-2/getRasterFunctionInfos';
+import { getRasterFunctionInfos } from '@shared/services/landsat-2/getRasterFunctionInfos';
 
 import Agriculture from './thumbnails/Agriculture.jpg';
 import Bathymetric from './thumbnails/Bathymetric.jpg';

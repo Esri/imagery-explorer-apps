@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import IImageryLayer from 'esri/layers/ImageryLayer';
 import { loadModules } from 'esri-loader';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
 import IMosaicRule from 'esri/layers/support/MosaicRule';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-2/config';
 
 type Props = {
     /**

@@ -1,5 +1,5 @@
 import IExtent from 'esri/geometry/Extent';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '../../config';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 
 type ExportImageParams = {
     /**

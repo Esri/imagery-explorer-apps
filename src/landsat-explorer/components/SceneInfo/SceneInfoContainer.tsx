@@ -4,12 +4,12 @@ import {
     selectAvailableScenesByObjectId,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
-import { LandsatScene } from '../../services/landsat-2/getLandsatScenes';
 import { format } from 'date-fns';
 import {
     SceneInfoTable,
     SceneInfoTableData,
 } from '@shared/components/SceneInfoTable';
+import { LandsatScene } from '@typing/imagery-service';
 
 export const SceneInfoContainer = () => {
     const queryParams4SelectedScene = useSelector(
