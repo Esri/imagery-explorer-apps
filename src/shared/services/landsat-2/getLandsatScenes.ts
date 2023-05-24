@@ -15,14 +15,14 @@ type GetLandsatScenesParams = {
      * longitude and latitude (e.g. [-105, 40])
      */
     mapPoint: number[];
-    /**
-     * percent of cloud coverage that is ranged between 0 to 1
-     */
-    cloudCover: number;
-    /**
-     * month of acquisition
-     */
-    month?: number;
+    // /**
+    //  * percent of cloud coverage that is ranged between 0 to 1
+    //  */
+    // cloudCover: number;
+    // /**
+    //  * month of acquisition
+    //  */
+    // month?: number;
 };
 
 const {
@@ -79,7 +79,7 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             // name: attributes[NAME],
             cloudCover: attributes[CLOUD_COVER],
             best: attributes[BEST],
-            isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
+            // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
             satellite: attributes[SENSORNAME],
             row: attributes[WRS_ROW],
             path: attributes[WRS_PATH],
@@ -107,13 +107,13 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
  */
 export const getLandsatScenes = async ({
     year,
-    cloudCover,
     mapPoint,
-    month,
-}: GetLandsatScenesParams): Promise<LandsatScene[]> => {
+}: // cloudCover,
+// month,
+GetLandsatScenesParams): Promise<LandsatScene[]> => {
     const whereClauses = [
         `(${CATEGORY} = 1)`,
-        `(${CLOUD_COVER} <= ${cloudCover})`,
+        // `(${CLOUD_COVER} <= ${cloudCover})`,
         `(${ACQUISITION_DATE} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 23:59:59')`,
     ];
 

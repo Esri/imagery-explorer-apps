@@ -40,11 +40,10 @@ export type LandsatScene = {
      * percent of cloud cover
      */
     cloudCover: number;
-
-    /**
-     * if true, this scene was acquired during a cloudy day
-     */
-    isCloudy: boolean;
+    // /**
+    //  * if true, this scene was acquired during a cloudy day
+    //  */
+    // isCloudy: boolean;
     /**
      * name of the satellite (e.g. 'Landsat 8')
      */

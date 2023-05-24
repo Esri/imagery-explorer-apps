@@ -26,7 +26,7 @@ export type QueryParams4ImageryScene = {
      */
     acquisitionYear?: number;
     /**
-     * percent of cloud coverage ranges from 0 to 1 that will be used to query available Imagery scenes
+     * use selected cloud coverage threshold ranges from 0 to 1
      */
     cloudCover?: number;
     /**

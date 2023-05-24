@@ -31,7 +31,7 @@ const CalendarContainer = () => {
 
     const acquisitionYear = queryParams?.acquisitionYear || getCurrentYear();
 
-    const cloudCover = queryParams?.cloudCover;
+    const cloudCoverThreshold = queryParams?.cloudCover;
 
     /**
      * landsat scenes that intersect with the map center
@@ -67,8 +67,10 @@ const CalendarContainer = () => {
                 </div>
 
                 <CloudFilter
-                    cloudCoverage={cloudCover}
-                    disabled={cloudCover === undefined || isAnimationPlaying}
+                    cloudCoverage={cloudCoverThreshold}
+                    disabled={
+                        cloudCoverThreshold === undefined || isAnimationPlaying
+                    }
                     onChange={(newValue) => {
                         dispatch(updateCloudCover(newValue));
                     }}
@@ -82,12 +84,14 @@ const CalendarContainer = () => {
                     const {
                         formattedAcquisitionDate,
                         acquisitionDate,
-                        isCloudy,
+                        // isCloudy,
+                        cloudCover,
                     } = scene;
+
                     return {
                         formattedAcquisitionDate,
                         acquisitionDate,
-                        isCloudy,
+                        isCloudy: cloudCover > cloudCoverThreshold,
                     };
                 })}
                 onSelect={(formattedAcquisitionDate) => {

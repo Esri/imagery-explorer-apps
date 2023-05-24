@@ -19,7 +19,7 @@ import {
 const useAvailableScenes = () => {
     const dispatch = useDispatch();
 
-    const { acquisitionYear, acquisitionDate, cloudCover } =
+    const { acquisitionYear, acquisitionDate } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     /**
@@ -36,7 +36,7 @@ const useAvailableScenes = () => {
         if (center && acquisitionYear) {
             dispatch(queryAvailableScenes());
         }
-    }, [center, acquisitionYear, cloudCover]);
+    }, [center, acquisitionYear]);
 
     useEffect(() => {
         // we should try to find a scene that was acquired from the selected acquisition date

@@ -43,7 +43,7 @@ describe('test getLandsatScenes', () => {
 
         const response = await getLandsatScenes({
             year: 2022,
-            cloudCover: 0.1,
+            // cloudCover: 0.1,
             mapPoint: [-105, 40],
         });
 
@@ -51,7 +51,7 @@ describe('test getLandsatScenes', () => {
 
         expect(response[0]).toMatchObject({
             formattedAcquisitionDate: '2022-02-08',
-            isCloudy: false,
+            // isCloudy: false,
         });
     });
 });

@@ -28,15 +28,16 @@ import { LandsatScene } from '@typing/imagery-service';
 export const queryAvailableScenes =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const { acquisitionYear, cloudCover } =
-                selectQueryParams4SceneInSelectedMode(getState());
+            const { acquisitionYear } = selectQueryParams4SceneInSelectedMode(
+                getState()
+            );
 
             const center = selectMapCenter(getState());
 
             const scenes = await getLandsatScenes({
                 year: acquisitionYear,
                 mapPoint: center,
-                cloudCover,
+                // cloudCover,
             });
 
             const availableScenes: LandsatScene[] = [];
