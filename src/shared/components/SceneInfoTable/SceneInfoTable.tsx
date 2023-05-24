@@ -35,7 +35,7 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value }) => {
 export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
     return (
         <div>
-            <div className="text-center">
+            <div className="text-center mb-3">
                 <h4 className="uppercase text-sm">Scene Information</h4>
             </div>
 

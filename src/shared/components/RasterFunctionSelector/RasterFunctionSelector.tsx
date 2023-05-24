@@ -31,11 +31,11 @@ const RasterFunctionSelector: FC<Props> = ({
 }) => {
     return (
         <div
-            className={classNames('h-full w-auto', {
+            className={classNames('h-full w-auto mx-2', {
                 'is-disabled': disabled,
             })}
         >
-            <div className="text-center mb-2">
+            <div className="text-center mb-3">
                 <span className="uppercase text-sm">Renderer</span>
             </div>
 
