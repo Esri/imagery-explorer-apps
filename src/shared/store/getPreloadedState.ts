@@ -20,11 +20,11 @@ const getPreloadedMapState = (): MapState => {
 };
 
 const getPreloadedLandsatState = (): LandsatState => {
-    const mode = getHashParamValueByKey('mode') as AppMode;
+    const mode = getHashParamValueByKey('mode') as AppMode | '';
 
     return {
         ...initialLandsatState,
-        mode,
+        mode: mode || 'find a scene',
     };
 };
 

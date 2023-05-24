@@ -6,7 +6,6 @@ import { AppHeader } from '@shared/components/AppHeader';
 import { ModeSelector } from '../ModeSelector';
 import { SwipeLayerSelector } from '../SwipeLayerSelector';
 import { SceneInfo } from '../SceneInfo';
-import { CloudFilter } from '../CloudFilter';
 import { AnimationFramesControl } from '../AnimationFramesControl';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
@@ -31,7 +30,6 @@ const Layout = () => {
 
                         <div className="flex flex-grow justify-between">
                             <div className="flex shrink-0">
-                                <CloudFilter />
                                 <Calendar />
                             </div>
 

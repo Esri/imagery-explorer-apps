@@ -32,16 +32,16 @@ const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
             return 'N/A';
         }
 
-        return `${Math.floor(cloudCoverage * 100)}% Cloud`;
+        return `${Math.floor(cloudCoverage * 100)}%`;
     };
 
     return (
-        <div className="text-center text-xs mb-4">
-            <span>{getFormattedCouldCoverageInPercent()}</span>
-            <br />
-            <span className="uppercase text-custom-light-blue-50">
-                Tolerance
+        <div className="text-xs">
+            <span className="uppercase text-custom-light-blue-50 mr-1">
+                Cloud Tolerance
             </span>
+
+            <span>{getFormattedCouldCoverageInPercent()}</span>
         </div>
     );
 };
@@ -81,7 +81,7 @@ export const CloudFilter: FC<Props> = ({
                     labels: false,
                     rangeLabels: false,
                 },
-                layout: 'vertical',
+                // layout: 'vertical',
             });
 
             sliderRef.current.on('thumb-drag', (evt) => {
@@ -127,20 +127,24 @@ export const CloudFilter: FC<Props> = ({
 
     return (
         <div
-            className={classNames('mx-4', {
+            className={classNames('mx-2 flex items-center', {
                 'is-disabled': disabled,
             })}
         >
             <TitleText cloudCoverage={cloudCoverage} />
 
-            <div className="flex mx-2">
+            <div className="flex items-center ml-3">
+                {/* use offline icon to indicate low cloud tolerance */}
+                <calcite-icon scale="s" icon="offline" />
+
                 <div
                     id="cloud-filter-container"
-                    className="text-custom-light-blue h-cloud-slider-height w-6"
+                    className="text-custom-light-blue w-20 h-4 mx-3"
                     ref={containerRef}
                 ></div>
 
-                <CloudIcons />
+                {/* use online icon to indicate high cloud tolerance */}
+                <calcite-icon scale="s" icon="online" />
             </div>
         </div>
     );
