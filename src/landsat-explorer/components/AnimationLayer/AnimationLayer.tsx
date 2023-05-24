@@ -16,8 +16,7 @@ import {
 } from '@shared/store/UI/selectors';
 import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/Landsat/selectors';
 import { CloseButton } from '@shared/components/CloseButton';
-import { sortQueryParams4ScenesByAcquisitionDate } from '../AnimationFramesControl/helpers';
-import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
+import { sortQueryParams4ScenesByAcquisitionDate } from '../AnimationControl/helpers';
 import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 
 type Props = {

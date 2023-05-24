@@ -32,11 +32,11 @@ type Props = {
      * @returns
      */
     frameOnSelect: (frameId: string) => void;
-    /**
-     * fires when user clicks on "Add A Scene" button
-     * @returns void
-     */
-    addButtonOnClick: () => void;
+    // /**
+    //  * fires when user clicks on "Add A Scene" button
+    //  * @returns void
+    //  */
+    // addButtonOnClick: () => void;
     /**
      * fires when user clicks on "Remove Scene" button
      * @param id identifier of the scene to be removed
@@ -45,16 +45,16 @@ type Props = {
     removeButtonOnClick: (frameId: string) => void;
 };
 
-export const AnimationFramesControl: FC<Props> = ({
+export const AnimationFrames: FC<Props> = ({
     data,
     disabled,
     frameOnSelect,
-    addButtonOnClick,
+    // addButtonOnClick,
     removeButtonOnClick,
 }) => {
     return (
         <div
-            className={classNames('h-full mx-2', {
+            className={classNames('mx-2', {
                 'is-disabled': disabled,
             })}
         >
@@ -103,11 +103,11 @@ export const AnimationFramesControl: FC<Props> = ({
                     );
                 })}
             </div>
-            <div className="" onClick={addButtonOnClick}>
+            {/* <div className="" onClick={addButtonOnClick}>
                 <span className="text-xs text-custom-light-blue uppercase border border-custom-light-blue-80 cursor-pointer p-1">
                     Add A Frame
                 </span>
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -1,27 +1,25 @@
 import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
-    selectAppMode,
+    // selectAppMode,
     selectQueryParams4ScenesInAnimateMode,
     selectSelectedAnimationFrameId,
 } from '@shared/store/Landsat/selectors';
 import {
-    AnimationFramesControl,
+    AnimationFrames,
     AnimationFrameInfo,
-} from '@shared/components/AnimationFramesControl';
+} from '@shared/components/AnimationControl';
 import { useDispatch } from 'react-redux';
 import {
-    addAnimationFrame,
+    // addAnimationFrame,
     removeAnimationFrame,
 } from '@shared/store/Landsat/thunks';
 import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
-export const AnimationFramesControlContainer = () => {
+export const AnimationFramesContainer = () => {
     const dispatch = useDispatch();
-
-    const mode = useSelector(selectAppMode);
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
@@ -55,21 +53,13 @@ export const AnimationFramesControlContainer = () => {
         return framesInfo;
     }, [queryParams4ScenesInAnimateMode, selectedAnimationFrameId]);
 
-    if (mode !== 'animate') {
-        return null;
-    }
-
     return (
-        <AnimationFramesControl
+        <AnimationFrames
             data={data}
             disabled={isAnimationPlaying}
             frameOnSelect={(frameId: string) => {
                 // select a scene
                 dispatch(selectedAnimationFrameIdChanged(frameId));
-            }}
-            addButtonOnClick={() => {
-                // add scene
-                dispatch(addAnimationFrame());
             }}
             removeButtonOnClick={(frameId: string) => {
                 // remove scene

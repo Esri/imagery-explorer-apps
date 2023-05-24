@@ -56,6 +56,11 @@ type Props = {
      */
     disabled?: boolean;
     /**
+     * fires when user clicks on "Add A Scene" button
+     * @returns void
+     */
+    addButtonOnClick: () => void;
+    /**
      * fires when user makes change to Animation Status
      * @param newStatus
      * @returns void;
@@ -69,22 +74,37 @@ type Props = {
     speedOnChange: (newSpeed?: number) => void;
 };
 
-export const AnimationStatusControl: FC<Props> = ({
+export const AnimationControl: FC<Props> = ({
     status,
     disabled,
+    addButtonOnClick,
     statusOnChange,
     speedOnChange,
 }: Props) => {
+    const shouldShowSpeedControl = status === 'playing' || status === 'pausing';
+
     return (
-        <div
-            className={classNames('mx-1', {
-                'is-disabled': disabled,
-            })}
-        >
+        <div className={classNames('flex items-center mx-1')}>
+            {status === null && (
+                <div className="" onClick={addButtonOnClick}>
+                    <span className="text-xs text-custom-light-blue uppercase border border-custom-light-blue-80 cursor-pointer p-1">
+                        Add A Frame
+                    </span>
+                </div>
+            )}
+
+            {shouldShowSpeedControl && (
+                <AnimationSpeedControl
+                    onChange={(speed) => {
+                        speedOnChange(speed);
+                    }}
+                />
+            )}
+
             <div
-                className={classNames(
-                    'flex cursor-pointer justify-center mb-1'
-                )}
+                className={classNames('flex cursor-pointer justify-center', {
+                    'is-disabled': disabled,
+                })}
             >
                 {!status && (
                     <div onClick={statusOnChange.bind(null, 'loading')}>
@@ -116,12 +136,6 @@ export const AnimationStatusControl: FC<Props> = ({
                     </div>
                 )}
             </div>
-
-            <AnimationSpeedControl
-                onChange={(speed) => {
-                    speedOnChange(speed);
-                }}
-            />
         </div>
     );
 };

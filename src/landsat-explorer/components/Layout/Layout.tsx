@@ -6,10 +6,9 @@ import { AppHeader } from '@shared/components/AppHeader';
 import { ModeSelector } from '../ModeSelector';
 import { SwipeLayerSelector } from '../SwipeLayerSelector';
 import { SceneInfo } from '../SceneInfo';
-import { AnimationFramesControl } from '../AnimationFramesControl';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
-import { AnimationStatusControl } from '../AnimationStatusControl';
+import { AnimationControl } from '../AnimationControl';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -24,8 +23,8 @@ const Layout = () => {
                     <>
                         <div className="flex w-60 shrink-0">
                             <SwipeLayerSelector />
-                            <AnimationFramesControl />
-                            <AnimationStatusControl />
+                            {/* <AnimationFrames /> */}
+                            <AnimationControl />
                         </div>
 
                         <div className="flex flex-grow justify-between">

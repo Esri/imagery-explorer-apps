@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { useDispatch } from 'react-redux';
-import { AnimationStatusControl } from '@shared/components/AnimationStatusControl';
+import { AnimationControl } from '@shared/components/AnimationControl';
 import {
     animationSpeedChanged,
     animationStatusChanged,
@@ -12,18 +12,20 @@ import {
     selectQueryParams4ScenesInAnimateMode,
     selectSelectedAnimationFrameId,
 } from '@shared/store/Landsat/selectors';
-import { filterQueryParams4ScenesByAcquisitionDate } from '../AnimationFramesControl/helpers';
+import { filterQueryParams4ScenesByAcquisitionDate } from './helpers';
+import { AnimationFramesContainer } from './AnimationFramesContainer';
+import { addAnimationFrame } from '@shared/store/Landsat/thunks';
 
-export const AnimationStatusControlContainer = () => {
+export const AnimationControlContainer = () => {
     const dispatch = useDispatch();
 
     const animationStatus = useSelector(selectAnimationStatus);
 
     const mode = useSelector(selectAppMode);
 
-    const selectedAnimationFrameId = useSelector(
-        selectSelectedAnimationFrameId
-    );
+    // const selectedAnimationFrameId = useSelector(
+    //     selectSelectedAnimationFrameId
+    // );
 
     const queryParams4ScenesInAnimationMode = useSelector(
         selectQueryParams4ScenesInAnimateMode
@@ -47,20 +49,27 @@ export const AnimationStatusControlContainer = () => {
         return false;
     }, [queryParams4ScenesInAnimationMode]);
 
-    if (mode !== 'animate' || !selectedAnimationFrameId) {
+    if (mode !== 'animate') {
         return null;
     }
 
     return (
-        <AnimationStatusControl
-            status={animationStatus}
-            disabled={disabled}
-            statusOnChange={(status) => {
-                dispatch(animationStatusChanged(status));
-            }}
-            speedOnChange={(speed) => {
-                dispatch(animationSpeedChanged(speed));
-            }}
-        />
+        <div>
+            <AnimationFramesContainer />
+
+            <AnimationControl
+                status={animationStatus}
+                disabled={disabled}
+                addButtonOnClick={() => {
+                    dispatch(addAnimationFrame());
+                }}
+                statusOnChange={(status) => {
+                    dispatch(animationStatusChanged(status));
+                }}
+                speedOnChange={(speed) => {
+                    dispatch(animationSpeedChanged(speed));
+                }}
+            />
+        </div>
     );
 };
