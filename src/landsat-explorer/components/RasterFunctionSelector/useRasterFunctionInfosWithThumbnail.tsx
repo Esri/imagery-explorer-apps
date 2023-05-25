@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { getRasterFunctionInfos } from '@shared/services/landsat-2/getRasterFunctionInfos';
 
-import Agriculture from './thumbnails/Agriculture.jpg';
-import Bathymetric from './thumbnails/Bathymetric.jpg';
-import ColorIR from './thumbnails/Color-IR.jpg';
-import NaturalColor from './thumbnails/natural-color.jpg';
-import Geology from './thumbnails/Geology.jpg';
-import NDVI from './thumbnails/NDVI.jpg';
-import ShortWaveIR from './thumbnails/Short-Wave-IR.jpg';
+import Agriculture from './thumbnails/Render_Agriculture.jpg';
+import Bathymetric from './thumbnails/Render_Bathymetric.jpg';
+import ColorIR from './thumbnails/Render_ColorIR.jpg';
+import NaturalColor from './thumbnails/Render_NaturalColor.jpg';
+import Geology from './thumbnails/Render_Geology.jpg';
+import NDVI from './thumbnails/Render_NDVI.jpg';
+import ShortWaveIR from './thumbnails/Render_ShortwaveIR.jpg';
 
 const thumbnailByRasterFunctionName = {
     Agriculture: Agriculture,
