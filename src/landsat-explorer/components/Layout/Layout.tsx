@@ -21,7 +21,7 @@ const Layout = () => {
 
                 {mode !== 'explore' && (
                     <>
-                        <div className="flex w-44 shrink-0">
+                        <div className="flex w-40 shrink-0">
                             <SwipeLayerSelector />
                             {/* <AnimationFrames /> */}
                             <AnimationControl />

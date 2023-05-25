@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
 import classNames from 'classnames';
+import { Slider } from '../Slider';
 
 type Props = {
     /**
@@ -23,62 +24,23 @@ const MAX_SPEED = 2000;
  * @returns
  */
 export const AnimationSpeedControl: FC<Props> = ({ onChange }) => {
-    const containerRef = useRef<HTMLDivElement>();
-
-    const sliderRef = useRef<ISlider>();
-
-    const debounceDelay = useRef<NodeJS.Timeout>();
-
-    const init = async () => {
-        type Modules = [typeof ISlider];
-
-        try {
-            const [Slider] = await (loadModules([
-                'esri/widgets/Slider',
-            ]) as Promise<Modules>);
-
-            sliderRef.current = new Slider({
-                container: containerRef.current,
-                min: 0, // slowest speed
-                max: 1, // fastest speed
-                steps: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-                values: [0.5],
-                snapOnClickEnabled: false,
-                visibleElements: {
-                    labels: false,
-                    rangeLabels: false,
-                },
-                // layout: 'vertical',
-            });
-
-            sliderRef.current.on('thumb-drag', (evt) => {
-                // console.log(evt.value)
-                clearTimeout(debounceDelay.current);
-
-                debounceDelay.current = setTimeout(() => {
-                    const ratio = +evt.value;
-                    const speed = ratio * MAX_SPEED;
-                    onChange(speed);
-                }, 500);
-            });
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    useEffect(() => {
-        init();
-
-        return () => {
-            sliderRef.current.destroy();
-        };
-    }, []);
-
     return (
         <div
             // id="cloud-filter-container"
-            className="text-custom-light-blue w-20 h-6"
-            ref={containerRef}
-        ></div>
+            className="flex-grow px-2 pt-2"
+        >
+            <Slider
+                value={0.5} // 0.5 as the mid point of the slider, which is equivelant to 1 second per frame
+                onChange={(newVal) => {
+                    // speed cannot be zero, therefore we just use 0.1, which will be 20 milisecond per frame
+                    newVal = newVal || 0.01;
+                    onChange(newVal * MAX_SPEED);
+                }}
+            />
+
+            <div className="text-xs text-center mt-1">
+                <span>Speed</span>
+            </div>
+        </div>
     );
 };
