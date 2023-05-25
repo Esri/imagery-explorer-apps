@@ -29,7 +29,7 @@ export const useAnimationFramesInfo = () => {
 
             return {
                 frameId: animationFrameId,
-                acquisitionDate: acquisitionDate || 'date not selected',
+                acquisitionDate: acquisitionDate || 'No Date Selected',
                 rasterFunctionName,
                 selected: animationFrameId === selectedAnimationFrameId,
             } as AnimationFrameInfo;

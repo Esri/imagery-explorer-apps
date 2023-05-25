@@ -56,6 +56,11 @@ type Props = {
      */
     shouldDisablePlayPauseButton?: boolean;
     /**
+     * if ture, Add a Frame Button should be disabled.
+     * This happenes when number of frames hits the upper limit
+     */
+    shouldDisableAddFrameButton?: boolean;
+    /**
      * fires when user clicks on "Add A Scene" button
      * @returns void
      */
@@ -77,6 +82,7 @@ type Props = {
 export const AnimationControl: FC<Props> = ({
     status,
     shouldDisablePlayPauseButton,
+    shouldDisableAddFrameButton,
     addButtonOnClick,
     statusOnChange,
     speedOnChange,
@@ -88,7 +94,12 @@ export const AnimationControl: FC<Props> = ({
             <div className="flex items-center flex-grow">
                 {status === null && (
                     <div
-                        className="w-full border border-custom-light-blue-80 cursor-pointer px-1 text-center"
+                        className={classNames(
+                            'w-full border border-custom-light-blue-80 cursor-pointer px-1 text-center',
+                            {
+                                'is-disabled': shouldDisableAddFrameButton,
+                            }
+                        )}
                         onClick={addButtonOnClick}
                     >
                         <span className="text-xs text-custom-light-blue uppercase">
@@ -107,9 +118,12 @@ export const AnimationControl: FC<Props> = ({
             </div>
 
             <div
-                className={classNames('flex cursor-pointer justify-center', {
-                    hidden: shouldDisablePlayPauseButton,
-                })}
+                className={classNames(
+                    'flex cursor-pointer justify-center items-center',
+                    {
+                        hidden: shouldDisablePlayPauseButton,
+                    }
+                )}
             >
                 {!status && (
                     <div onClick={statusOnChange.bind(null, 'loading')}>

@@ -7,11 +7,11 @@ export type AnimationFrameInfo = {
      */
     frameId: string;
     /**
-     * acquisition date that will be used to query Landsat Scene for this frame
+     * acquisition date that will be used to query Imagery Scene for this frame
      */
     acquisitionDate: string;
     /**
-     * name of the raster function that will be used to render the Landsat Scene for this frame
+     * name of the raster function that will be used to render the Imagery Scene for this frame
      */
     rasterFunctionName: string;
     /**
@@ -71,7 +71,11 @@ export const AnimationFrames: FC<Props> = ({
                         <div
                             key={frameId}
                             className={classNames(
-                                'p-1 border border-custom-light-blue-80 mb-1 flex items-center cursor-pointer',
+                                /**
+                                 * add `group` class name to this element, so the close button can be displayed when hover over this element
+                                 * @see https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-parent-state
+                                 */
+                                'relative px-1 border border-custom-light-blue-80 mb-1 flex items-center cursor-pointer group',
                                 {
                                     'bg-custom-light-blue': selected,
                                     'text-custom-background': selected,
@@ -80,7 +84,7 @@ export const AnimationFrames: FC<Props> = ({
                             )}
                         >
                             <div
-                                className="text-xs mr-1 text-center"
+                                className="w-full text-xs mr-1 text-center leading-[.9rem]"
                                 onClick={frameOnSelect.bind(null, frameId)}
                             >
                                 <span>{acquisitionDate}</span>
@@ -88,17 +92,22 @@ export const AnimationFrames: FC<Props> = ({
                                 <span>{rasterFunctionName}</span>
                             </div>
 
-                            <calcite-icon
+                            <div
+                                // only show close icon when hover over the frame card, which is controlled by the `group-hover:block` class name
+                                className="absolute top-0 right-0 hidden group-hover:block"
                                 onClick={removeButtonOnClick.bind(
                                     null,
                                     frameId
                                 )}
-                                icon="x"
-                                scale="s"
-                                style={{
-                                    cursor: 'pointer',
-                                }}
-                            />
+                            >
+                                <calcite-icon
+                                    icon="x"
+                                    scale="s"
+                                    style={{
+                                        cursor: 'pointer',
+                                    }}
+                                />
+                            </div>
                         </div>
                     );
                 })}
