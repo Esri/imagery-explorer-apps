@@ -1,9 +1,8 @@
-import './style.css';
 import React, { FC, useEffect, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
-import { CloudIcons } from './CloudIcons';
 import classNames from 'classnames';
+import { Slider } from '../Slider/Slider';
 
 type Props = {
     /**
@@ -56,77 +55,29 @@ export const CloudFilter: FC<Props> = ({
     disabled,
     onChange,
 }) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const cloudIconOnClick = (shouldDecrement: boolean) => {
+        // do the calculation using integer to make the result more accurate
+        let newVal = cloudCoverage * 100;
 
-    const sliderRef = useRef<ISlider>();
-
-    // const debounceDelay = useRef<NodeJS.Timeout>();
-
-    const init = async () => {
-        type Modules = [typeof ISlider];
-
-        try {
-            const [Slider] = await (loadModules([
-                'esri/widgets/Slider',
-            ]) as Promise<Modules>);
-
-            sliderRef.current = new Slider({
-                container: containerRef.current,
-                min: 0, // no cloud cover at all
-                max: 1, // 100% if cloud coverage
-                steps: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-                values: [0.5],
-                snapOnClickEnabled: false,
-                visibleElements: {
-                    labels: false,
-                    rangeLabels: false,
-                },
-                // layout: 'vertical',
-            });
-
-            sliderRef.current.on('thumb-drag', (evt) => {
-                // console.log(evt.value)
-                // clearTimeout(debounceDelay.current);
-
-                // debounceDelay.current = setTimeout(() => {
-                //     const value = +evt.value;
-                //     onChange(value);
-                // }, 500);
-
-                const value = +evt.value;
-                onChange(value);
-            });
-        } catch (err) {
-            console.error(err);
+        if (shouldDecrement) {
+            newVal -= 10;
+        } else {
+            newVal += 10;
         }
+
+        if (newVal > 100) {
+            newVal = 100;
+        }
+
+        if (newVal < 0) {
+            newVal = 0;
+        }
+
+        // convert back to the val within range of 0 - 1
+        newVal = newVal / 100;
+
+        onChange(newVal);
     };
-
-    useEffect(() => {
-        init();
-
-        return () => {
-            sliderRef.current.destroy();
-        };
-    }, []);
-
-    // Synchronize the position of the slider thumb with the current value of cloud coverage.
-    // The Cloud Filter component controls the cloud coverage for different scenes (e.g., left/right scenes in swipe mode).
-    // Each scene can have a different cloud coverage, and the slider component should always display the value of cloud coverage from the selected scene.
-    useEffect(() => {
-        if (!sliderRef.current) {
-            return;
-        }
-
-        if (cloudCoverage === undefined) {
-            return;
-        }
-
-        // Check if the current value of the slider is different from the cloud coverage value.
-        // If so, update the slider's value to match the cloud coverage value of the selected scene.
-        if (sliderRef.current.values[0] !== cloudCoverage) {
-            sliderRef.current.viewModel.setValue(0, cloudCoverage);
-        }
-    }, [cloudCoverage]);
 
     return (
         <div
@@ -138,16 +89,31 @@ export const CloudFilter: FC<Props> = ({
 
             <div className="flex items-center ml-3">
                 {/* use offline icon to indicate low cloud tolerance */}
-                <calcite-icon scale="s" icon="offline" />
+                <calcite-icon
+                    scale="s"
+                    icon="offline"
+                    style={{
+                        cursor: 'pointer',
+                    }}
+                    onClick={cloudIconOnClick.bind(null, true)}
+                />
 
                 <div
-                    id="cloud-filter-container"
-                    className="text-custom-light-blue w-20 h-4 mx-3"
-                    ref={containerRef}
-                ></div>
+                    // id="cloud-filter-container"
+                    className="w-20 h-4 mx-3"
+                >
+                    <Slider value={cloudCoverage} onChange={onChange} />
+                </div>
 
                 {/* use online icon to indicate high cloud tolerance */}
-                <calcite-icon scale="s" icon="online" />
+                <calcite-icon
+                    scale="s"
+                    icon="online"
+                    style={{
+                        cursor: 'pointer',
+                    }}
+                    onClick={cloudIconOnClick.bind(null, false)}
+                />
             </div>
         </div>
     );
