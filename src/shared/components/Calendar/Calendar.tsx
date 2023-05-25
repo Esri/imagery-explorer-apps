@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
-import { MonthData, getFormatedDateString, isLeapYear } from './helpers';
+import { MonthData, isLeapYear } from './helpers';
+import { getFormatedDateString } from '@shared/utils/snippets/formatDateString';
 
 /**
  *
