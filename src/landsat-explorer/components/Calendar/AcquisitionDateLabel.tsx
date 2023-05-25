@@ -1,4 +1,6 @@
-import React, { FC } from 'react';
+import { formattedDateString2Unixtimestamp } from '@shared/utils/snippets/formatDateString';
+import { format } from 'date-fns';
+import React, { FC, useMemo } from 'react';
 
 type Props = {
     /**
@@ -16,6 +18,16 @@ export const AcquisitionDateLabel: FC<Props> = ({
     acquisitionDate,
     closeBtnOnClick,
 }) => {
+    const formattedAcquisitionDate = useMemo(() => {
+        if (!acquisitionDate) {
+            return '';
+        }
+
+        const timestamp = formattedDateString2Unixtimestamp(acquisitionDate);
+
+        return format(timestamp, 'MMM dd, yyyy');
+    }, [acquisitionDate]);
+
     if (!acquisitionDate) {
         return null;
     }
@@ -24,7 +36,7 @@ export const AcquisitionDateLabel: FC<Props> = ({
         <div className="text-xs mx-2 flex items-center">
             <div className="mr-1">
                 <span className="opacity-50 mr-2">Date</span>
-                <span>{acquisitionDate}</span>
+                <span className="uppercase">{formattedAcquisitionDate}</span>
             </div>
 
             <div className="cursor-pointer" onClick={closeBtnOnClick}>

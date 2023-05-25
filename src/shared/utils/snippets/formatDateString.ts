@@ -9,6 +9,12 @@ import { format } from 'date-fns';
 //     return format(timestamp, 'yyyy-MM-dd');
 // };
 
+/**
+ * Get unix timestamp from formated times string
+ *
+ * @param formattedDate string in format of `yyyy-MM-dd`
+ * @returns unix timestamp
+ */
 export const formattedDateString2Unixtimestamp = (
     formattedDate: string
 ): number => {
