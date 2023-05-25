@@ -48,11 +48,7 @@ const RasterFunctionSelector: FC<Props> = ({
                     return (
                         <div
                             className={classNames(
-                                'relative w-24 h-12 bg-cover cursor-pointer',
-                                {
-                                    'drop-shadow-custom-light-blue-90':
-                                        selected,
-                                }
+                                'relative w-24 h-12 bg-cover cursor-pointer'
                             )}
                             style={{
                                 background: `url(${thumbnail})`,
@@ -62,23 +58,21 @@ const RasterFunctionSelector: FC<Props> = ({
                         >
                             <div
                                 className={classNames(
-                                    'absolute top-0 left-0 w-full h-full bg-black ',
+                                    'absolute top-0 left-0 w-full h-full',
                                     {
-                                        'bg-opacity-40': !selected,
-                                        'bg-opacity-10': selected,
+                                        'border-2': selected,
+                                        'border-custom-light-blue': selected,
+                                        'drop-shadow-active-renderer-selector':
+                                            selected,
                                     }
                                 )}
+                                style={{
+                                    background: `linear-gradient(0deg, rgba(2,28,36,1) 0%, rgba(2,28,36,0.6) 30%, rgba(2,28,36,0) 50%, rgba(2,28,36,0) 100%)`,
+                                }}
                             ></div>
 
-                            <div className="absolute bottom-0 left-0 right-0 text-center text-ellipsis whitespace-nowrap overflow-hidden bg-gradient-to-t from-custom-background-85 z-10">
-                                <span
-                                    className="text-xs"
-                                    // style={{
-                                    //     textShadow: '1px 1px 2px rgba(191,238,255, .5)'
-                                    // }}
-                                >
-                                    {label || name}
-                                </span>
+                            <div className="absolute bottom-0 left-0 right-0 text-center text-ellipsis whitespace-nowrap overflow-hidden z-10">
+                                <span className="text-xs">{label || name}</span>
                             </div>
                         </div>
                     );

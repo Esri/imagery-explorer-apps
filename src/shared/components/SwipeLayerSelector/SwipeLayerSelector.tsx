@@ -42,7 +42,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                             <span>{queryParams?.rasterFunctionName}</span>
                         </>
                     ) : (
-                        <span>No selected scene</span>
+                        <span>No Scene Selected</span>
                     )}
                 </div>
             </>
