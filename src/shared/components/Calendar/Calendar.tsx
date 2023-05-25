@@ -19,6 +19,10 @@ type AcquisitionDateData = {
      * if true, this date should be rendered using the style of cloudy day
      */
     isCloudy: boolean;
+    /**
+     * percent of cloud coverage of the selected Imagery Scene acquired on this day
+     */
+    cloudCover: number;
 };
 
 type CalendarProps = {
@@ -98,7 +102,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                 acquisitionDateDataMap.get(formatedDateStr);
 
             /**
-             * if true, there is a available scene for this date
+             * if true, there is a available scene for this day
              */
             const hasAvailableData = acquisitionDateData !== undefined;
 
@@ -126,7 +130,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                     })}
                     key={index}
                     data-testid={formatedDateStr}
-                    title={formatedDateStr}
+                    // title={formatedDateStr}
                     onClick={() => {
                         // unselect if this date is already selected
                         if (isSelected) {
@@ -142,11 +146,17 @@ const MonthGrid: FC<MonthGridProps> = ({
                         onSelect(formatedDateStr);
                     }}
                 >
-                    {/* {
-                        (hasAvailableData) && (
-                            <div className='absolute top-[-8px] left-3 bg-red-500 text-xs z-10 hidden group-hover:block'>{data.acquisitionDate}</div>
-                        )
-                    } */}
+                    {hasAvailableData && (
+                        <div className="absolute bottom-[-30px] left-5 w-[150px] bg-custom-background border border-custom-light-blue-50 py-[2px] text-xs z-10 hidden group-hover:block">
+                            <span>
+                                {`${
+                                    acquisitionDateData.formattedAcquisitionDate
+                                } | ${Math.ceil(
+                                    acquisitionDateData.cloudCover * 100
+                                )}% Cloudy`}
+                            </span>
+                        </div>
+                    )}
                 </div>
             );
         });

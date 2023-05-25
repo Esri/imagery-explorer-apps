@@ -97,6 +97,7 @@ const CalendarContainer = () => {
                         formattedAcquisitionDate,
                         acquisitionDate,
                         isCloudy: cloudCover > cloudCoverThreshold,
+                        cloudCover,
                     };
                 })}
                 onSelect={(formattedAcquisitionDate) => {
