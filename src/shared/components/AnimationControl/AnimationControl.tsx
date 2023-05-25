@@ -85,25 +85,30 @@ export const AnimationControl: FC<Props> = ({
 
     return (
         <div className={classNames('flex items-center')}>
-            {status === null && (
-                <div className="" onClick={addButtonOnClick}>
-                    <span className="text-xs text-custom-light-blue uppercase border border-custom-light-blue-80 cursor-pointer p-1">
-                        Add A Frame
-                    </span>
-                </div>
-            )}
+            <div className="flex items-center flex-grow">
+                {status === null && (
+                    <div
+                        className="w-full border border-custom-light-blue-80 cursor-pointer px-1 text-center"
+                        onClick={addButtonOnClick}
+                    >
+                        <span className="text-xs text-custom-light-blue uppercase">
+                            Add A Frame
+                        </span>
+                    </div>
+                )}
 
-            {shouldShowSpeedControl && (
-                <AnimationSpeedControl
-                    onChange={(speed) => {
-                        speedOnChange(speed);
-                    }}
-                />
-            )}
+                {shouldShowSpeedControl && (
+                    <AnimationSpeedControl
+                        onChange={(speed) => {
+                            speedOnChange(speed);
+                        }}
+                    />
+                )}
+            </div>
 
             <div
                 className={classNames('flex cursor-pointer justify-center', {
-                    'is-disabled': shouldDisablePlayPauseButton,
+                    hidden: shouldDisablePlayPauseButton,
                 })}
             >
                 {!status && (
