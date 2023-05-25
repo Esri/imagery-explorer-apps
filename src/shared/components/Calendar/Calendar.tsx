@@ -4,7 +4,7 @@ import { MonthData, isLeapYear } from './helpers';
 import { getFormatedDateString } from '@shared/utils/snippets/formatDateString';
 
 /**
- *
+ * Data about the acquisition date of the selected Imagery Scene
  */
 type AcquisitionDateData = {
     /**
@@ -68,7 +68,7 @@ const MonthGrid: FC<MonthGridProps> = ({
     acquisitionDates,
     onSelect,
 }: MonthGridProps) => {
-    const acquisitionDatesMap = useMemo(() => {
+    const acquisitionDateDataMap = useMemo(() => {
         const map: Map<string, AcquisitionDateData> = new Map();
 
         if (!acquisitionDates || !acquisitionDates.length) {
@@ -94,18 +94,19 @@ const MonthGrid: FC<MonthGridProps> = ({
                 day: index + 1,
             });
 
-            const acquisitionDate = acquisitionDatesMap.get(formatedDateStr);
+            const acquisitionDateData =
+                acquisitionDateDataMap.get(formatedDateStr);
 
             /**
              * if true, there is a available scene for this date
              */
-            const hasAvailableData = acquisitionDate !== undefined;
+            const hasAvailableData = acquisitionDateData !== undefined;
 
             const isSelected = formatedDateStr === selectedAcquisitionDate;
 
             return (
                 <div
-                    className={classNames('h-2 w-2 border', {
+                    className={classNames('relative h-2 w-2 border group', {
                         'cursor-pointer': isSelected || hasAvailableData,
                         'border-custom-calendar-border':
                             formatedDateStr !== selectedAcquisitionDate,
@@ -113,15 +114,15 @@ const MonthGrid: FC<MonthGridProps> = ({
                         'border-custom-calendar-border-selected':
                             isSelected ||
                             (hasAvailableData &&
-                                acquisitionDate?.isCloudy === true),
+                                acquisitionDateData?.isCloudy === true),
                         'bg-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            acquisitionDate?.isCloudy === false,
+                            acquisitionDateData?.isCloudy === false,
                         'border-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            acquisitionDate?.isCloudy === false,
+                            acquisitionDateData?.isCloudy === false,
                     })}
                     key={index}
                     data-testid={formatedDateStr}
@@ -140,7 +141,13 @@ const MonthGrid: FC<MonthGridProps> = ({
 
                         onSelect(formatedDateStr);
                     }}
-                ></div>
+                >
+                    {/* {
+                        (hasAvailableData) && (
+                            <div className='absolute top-[-8px] left-3 bg-red-500 text-xs z-10 hidden group-hover:block'>{data.acquisitionDate}</div>
+                        )
+                    } */}
+                </div>
             );
         });
     };
