@@ -63,7 +63,12 @@ const CalendarContainer = () => {
                         }}
                     />
 
-                    <AcquisitionDateLabel acquisitionDate={acquisitionDate} />
+                    <AcquisitionDateLabel
+                        acquisitionDate={acquisitionDate}
+                        closeBtnOnClick={() => {
+                            dispatch(updateAcquisitionDate(''));
+                        }}
+                    />
                 </div>
 
                 <CloudFilter
