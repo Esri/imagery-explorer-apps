@@ -60,7 +60,7 @@ export const CloudFilter: FC<Props> = ({
 
     const sliderRef = useRef<ISlider>();
 
-    const debounceDelay = useRef<NodeJS.Timeout>();
+    // const debounceDelay = useRef<NodeJS.Timeout>();
 
     const init = async () => {
         type Modules = [typeof ISlider];
@@ -86,12 +86,15 @@ export const CloudFilter: FC<Props> = ({
 
             sliderRef.current.on('thumb-drag', (evt) => {
                 // console.log(evt.value)
-                clearTimeout(debounceDelay.current);
+                // clearTimeout(debounceDelay.current);
 
-                debounceDelay.current = setTimeout(() => {
-                    const value = +evt.value;
-                    onChange(value);
-                }, 500);
+                // debounceDelay.current = setTimeout(() => {
+                //     const value = +evt.value;
+                //     onChange(value);
+                // }, 500);
+
+                const value = +evt.value;
+                onChange(value);
             });
         } catch (err) {
             console.error(err);
