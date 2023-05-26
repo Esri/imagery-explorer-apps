@@ -23,19 +23,21 @@ import { LandsatScene } from '@typing/imagery-service';
 
 /**
  * Query Landsat Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
+ * @param year use selected acquisition year
  * @returns
  */
 export const queryAvailableScenes =
-    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+    (year: number) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const { acquisitionYear } = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+            // const { acquisitionYear } = selectQueryParams4SceneInSelectedMode(
+            //     getState()
+            // );
 
             const center = selectMapCenter(getState());
 
             const scenes = await getLandsatScenes({
-                year: acquisitionYear,
+                year,
                 mapPoint: center,
                 // cloudCover,
             });
@@ -142,28 +144,28 @@ export const updateObjectIdOfSelectedScene =
         }
     };
 
-export const updateAcquisitionYear =
-    (acquisitionYear: number) =>
-    async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        try {
-            const queryParams = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+// export const updateAcquisitionYear =
+//     (acquisitionYear: number) =>
+//     async (dispatch: StoreDispatch, getState: StoreGetState) => {
+//         try {
+//             const queryParams = selectQueryParams4SceneInSelectedMode(
+//                 getState()
+//             );
 
-            if (!queryParams) {
-                return;
-            }
+//             if (!queryParams) {
+//                 return;
+//             }
 
-            const updatedQueryParams: QueryParams4ImageryScene = {
-                ...queryParams,
-                acquisitionYear,
-            };
+//             const updatedQueryParams: QueryParams4ImageryScene = {
+//                 ...queryParams,
+//                 acquisitionYear,
+//             };
 
-            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
-        } catch (err) {
-            console.error(err);
-        }
-    };
+//             dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
+//         } catch (err) {
+//             console.error(err);
+//         }
+//     };
 
 export const updateCloudCover =
     (cloudCover: number) =>

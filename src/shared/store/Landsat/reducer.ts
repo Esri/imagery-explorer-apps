@@ -21,10 +21,10 @@ export type Side4SwipeMode = 'left' | 'right';
  * Query Params and Rendering Options for a Imagery Scene (e.g. Landsat or Sentinel-2)
  */
 export type QueryParams4ImageryScene = {
-    /**
-     * the year that will be used to query available Imagery scenes
-     */
-    acquisitionYear?: number;
+    // /**
+    //  * the year that will be used to query available Imagery scenes
+    //  */
+    // acquisitionYear?: number;
     /**
      * User selected acquisition date in format of `YYYY-MM-DD`.
      * This acquisition date will be used to select a Imagery Scene from `availableScenes` array.
@@ -92,7 +92,7 @@ export type LandsatState = {
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
-    acquisitionYear: getCurrentYear(),
+    // acquisitionYear: getCurrentYear(),
     acquisitionDate: '',
     cloudCover: 0.5,
     rasterFunctionName: 'Natural Color',

@@ -16,10 +16,10 @@ import {
  * that were acquired within the selected year and intersect with the center of the map screen
  * @returns
  */
-const useAvailableScenes = () => {
+const useAvailableScenes = (acquisitionYear: number) => {
     const dispatch = useDispatch();
 
-    const { acquisitionYear, acquisitionDate } =
+    const { acquisitionDate } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     /**
@@ -34,7 +34,7 @@ const useAvailableScenes = () => {
 
     useEffect(() => {
         if (center && acquisitionYear) {
-            dispatch(queryAvailableScenes());
+            dispatch(queryAvailableScenes(acquisitionYear));
         }
     }, [center, acquisitionYear]);
 

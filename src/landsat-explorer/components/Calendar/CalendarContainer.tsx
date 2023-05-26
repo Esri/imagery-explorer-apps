@@ -12,7 +12,7 @@ import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
     // updateAcquisitionMonth,
-    updateAcquisitionYear,
+    // updateAcquisitionYear,
     updateCloudCover,
 } from '@shared/store/Landsat/thunks';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
@@ -29,19 +29,31 @@ const CalendarContainer = () => {
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
-    const acquisitionYear = queryParams?.acquisitionYear || getCurrentYear();
-
     const cloudCoverThreshold = queryParams?.cloudCover;
+
+    // const acquisitionYear = queryParams?.acquisitionYear || getCurrentYear();
+
+    const [acquisitionYear, setAcquisitionYear] = useState<number>(
+        getCurrentYear()
+    );
 
     /**
      * landsat scenes that intersect with the map center
      */
-    const { availableScenes } = useAvailableScenes();
+    const { availableScenes } = useAvailableScenes(acquisitionYear);
 
     /**
      * options that will be used to populate the Dropdown Menu for year
      */
-    const yearOptions = useYearOptions();
+    const yearOptions = useYearOptions(acquisitionYear);
+
+    useEffect(() => {
+        const year = acquisitionDate
+            ? +acquisitionDate.slice(0, 4)
+            : getCurrentYear();
+
+        setAcquisitionYear(year);
+    }, [acquisitionDate]);
 
     return (
         <div
@@ -59,7 +71,8 @@ const CalendarContainer = () => {
                         data={yearOptions}
                         onChange={(year) => {
                             // select year
-                            dispatch(updateAcquisitionYear(+year));
+                            // dispatch(updateAcquisitionYear(+year));
+                            setAcquisitionYear(+year);
                         }}
                     />
 
