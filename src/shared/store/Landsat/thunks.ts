@@ -20,6 +20,7 @@ import {
 } from './selectors';
 import { generate } from 'shortid';
 import { LandsatScene } from '@typing/imagery-service';
+import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 
 /**
  * Query Landsat Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
@@ -27,20 +28,38 @@ import { LandsatScene } from '@typing/imagery-service';
  * @returns
  */
 export const queryAvailableScenes =
-    (year: number) =>
+    (acquisitionYear: number) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            // const { acquisitionYear } = selectQueryParams4SceneInSelectedMode(
-            //     getState()
-            // );
+            const { acquisitionDate } =
+                selectQueryParams4SceneInSelectedMode(getState()) || {};
 
             const center = selectMapCenter(getState());
 
+            // get scenes that were acquired within the acquisition year
             const scenes = await getLandsatScenes({
-                year,
+                acquisitionYear,
                 mapPoint: center,
-                // cloudCover,
             });
+
+            // If the year of the acquisition date is different from the input acquisition year, we need to query Landsat scenes acquired on the acquisition date.
+            // Why are we doing this? Selecting a different year triggers this function to query available scenes for that year.
+            // However, we don't want the Landsat Scene on the map and its information to disappear before a new acquisition date is selected.
+            // By adding the scene acquired on the acquisition date, we ensure that the currently selected scene will remain visible until a new acquisition date is chosen.
+            if (
+                acquisitionDate &&
+                getYearFromFormattedDateString(acquisitionDate) !==
+                    acquisitionYear
+            ) {
+                const scenesByAcquisitionDate = await getLandsatScenes({
+                    formattedAcquisitionDate: acquisitionDate,
+                    mapPoint: center,
+                });
+
+                for (const scene of scenesByAcquisitionDate) {
+                    scenes.push(scene);
+                }
+            }
 
             const availableScenes: LandsatScene[] = [];
 

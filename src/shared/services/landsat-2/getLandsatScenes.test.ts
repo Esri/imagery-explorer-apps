@@ -42,7 +42,7 @@ describe('test getLandsatScenes', () => {
         });
 
         const response = await getLandsatScenes({
-            year: 2022,
+            acquisitionYear: 2022,
             // cloudCover: 0.1,
             mapPoint: [-105, 40],
         });

@@ -77,3 +77,14 @@ export const getFormatedDateString = ({
 
     return `${year}-${monthStr}-${dayStr}`;
 };
+
+/**
+ * Get full year from formated times string
+ *
+ * @param formattedDate string in format of `yyyy-MM-dd`
+ * @returns number of the year
+ */
+export const getYearFromFormattedDateString = (formattedDate: string) => {
+    const [YYYY] = formattedDate.split('-').map((d) => +d);
+    return YYYY;
+};

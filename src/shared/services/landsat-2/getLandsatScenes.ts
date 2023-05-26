@@ -8,21 +8,17 @@ import { LandsatScene } from '@typing/imagery-service';
 
 type GetLandsatScenesParams = {
     /**
-     * year of acquisition
-     */
-    year: number;
-    /**
      * longitude and latitude (e.g. [-105, 40])
      */
     mapPoint: number[];
-    // /**
-    //  * percent of cloud coverage that is ranged between 0 to 1
-    //  */
-    // cloudCover: number;
-    // /**
-    //  * month of acquisition
-    //  */
-    // month?: number;
+    /**
+     * acquisition year
+     */
+    acquisitionYear?: number;
+    /**
+     * acquisition date in formate of `YYYY-MM-DD` (e.g. `2023-05-26`)
+     */
+    formattedAcquisitionDate?: string;
 };
 
 const {
@@ -98,23 +94,29 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
  * intersect with the input map point or map extent and were acquired during the input year and month.
  *
  * @param {number} params.year - The year of the desired acquisition dates.
- * @param {number} [params.cloudCover=0.1] - The maximum cloud cover percentage of the desired Landsat data.
  * @param {Object} params.mapPoint - The point geometry to query.
- * @param {number} params.month - The month of the desired acquisition dates.
  *
  * @returns {Promise} A promise that resolves to an array of LandsatAcquisitionDate objects.
  *
  */
 export const getLandsatScenes = async ({
-    year,
     mapPoint,
-}: // cloudCover,
-// month,
-GetLandsatScenesParams): Promise<LandsatScene[]> => {
+    acquisitionYear,
+    formattedAcquisitionDate,
+}: GetLandsatScenesParams): Promise<LandsatScene[]> => {
+    if (!acquisitionYear && !formattedAcquisitionDate) {
+        throw new Error(
+            `acquisitionYear or acquisitionDate is required to query Landsat Scenes`
+        );
+    }
+
     const whereClauses = [
         `(${CATEGORY} = 1)`,
-        // `(${CLOUD_COVER} <= ${cloudCover})`,
-        `(${ACQUISITION_DATE} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 23:59:59')`,
+        // if acquisitionDate is provided, only query scenes that are acquired on this date,
+        // otherwise, query scenes that were acquired within the whole year
+        formattedAcquisitionDate
+            ? `(${ACQUISITION_DATE} BETWEEN timestamp '${formattedAcquisitionDate} 00:00:00' AND timestamp '${formattedAcquisitionDate} 23:59:59')`
+            : `(${ACQUISITION_DATE} BETWEEN timestamp '${acquisitionYear}-01-01 00:00:00' AND timestamp '${acquisitionYear}-12-31 23:59:59')`,
     ];
 
     const [longitude, latitude] = mapPoint;

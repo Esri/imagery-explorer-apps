@@ -19,6 +19,7 @@ import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
 import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
+import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const CalendarContainer = () => {
 
     useEffect(() => {
         const year = acquisitionDate
-            ? +acquisitionDate.slice(0, 4)
+            ? getYearFromFormattedDateString(acquisitionDate)
             : getCurrentYear();
 
         setAcquisitionYear(year);
