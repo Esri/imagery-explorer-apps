@@ -26,14 +26,14 @@ export type QueryParams4ImageryScene = {
      */
     acquisitionYear?: number;
     /**
-     * use selected cloud coverage threshold ranges from 0 to 1
-     */
-    cloudCover?: number;
-    /**
      * User selected acquisition date in format of `YYYY-MM-DD`.
      * This acquisition date will be used to select a Imagery Scene from `availableScenes` array.
      */
     acquisitionDate?: string;
+    /**
+     * use selected cloud coverage threshold ranges from 0 to 1
+     */
+    cloudCover?: number;
     /**
      * name of raster function that will be used to render the Imagery scene
      */

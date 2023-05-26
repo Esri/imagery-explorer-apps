@@ -115,10 +115,15 @@ const MonthGrid: FC<MonthGridProps> = ({
                         'border-custom-calendar-border':
                             formatedDateStr !== selectedAcquisitionDate,
                         'bg-custom-calendar-background-selected': isSelected,
-                        'border-custom-calendar-border-selected':
-                            isSelected ||
-                            (hasAvailableData &&
-                                acquisitionDateData?.isCloudy === true),
+                        'border-custom-calendar-border-selected': isSelected,
+                        // isSelected ||
+                        // (hasAvailableData &&
+                        //     acquisitionDateData?.isCloudy === true),
+                        'drop-shadow-custom-light-blue': isSelected,
+                        'border-custom-calendar-border-available':
+                            isSelected === false &&
+                            hasAvailableData &&
+                            acquisitionDateData?.isCloudy === true,
                         'bg-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&

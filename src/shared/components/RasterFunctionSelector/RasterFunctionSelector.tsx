@@ -62,7 +62,7 @@ const RasterFunctionSelector: FC<Props> = ({
                                     {
                                         'border-2': selected,
                                         'border-custom-light-blue': selected,
-                                        'drop-shadow-active-renderer-selector':
+                                        'drop-shadow-custom-light-blue':
                                             selected,
                                     }
                                 )}

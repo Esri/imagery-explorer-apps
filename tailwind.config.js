@@ -10,11 +10,11 @@ module.exports = {
       ...colors,
       custom: {
         'light-blue': {
-          DEFAULT: '#BFEEFF',
-          90: 'rgba(191,238,255, .9)',
-          80: 'rgba(191,238,255, .8)',
-          50: 'rgba(191,238,255, .5)',
-          0: 'rgba(191,238,255, .0)'
+          DEFAULT: '#C2EEFE',
+          90: 'rgba(191,238,254, .9)',
+          80: 'rgba(191,238,254, .8)',
+          50: 'rgba(191,238,254, .5)',
+          0: 'rgba(191,238,254, .0)'
         },
         'background': {
           DEFAULT: 'rgb(0,35,47)',
@@ -27,8 +27,8 @@ module.exports = {
           border: {
             DEFAULT: '#1C3D48',
             // 'cloudy': '#678A97',
-            // 'available': '#678A97',
-            'selected': '#678A97',
+            'available': '#678A97',
+            'selected': '#C2EEFE',
           },
           background: {
             DEFAULT: '#03232F',
@@ -51,9 +51,9 @@ module.exports = {
         'cloud-slider-height': '80px'
       },
       dropShadow: {
-        'active-renderer-selector': '1px 1px 4px #C2EEFE',
-        'custom-light-blue': '1px 1px 4px rgba(191,238,255, .5)',
-        'custom-light-blue-90': '0px 0px 3px rgba(191,238,255, .9)',
+        'custom-light-blue': '0px 0px 3px rgba(191,238,254, 1)',
+        'custom-light-blue-90': '0px 0px 3px rgba(191,238,254, .9)',
+        'custom-light-blue-50': '1px 1px 3px rgba(191,238,254, .5)',
       }
     },
   },

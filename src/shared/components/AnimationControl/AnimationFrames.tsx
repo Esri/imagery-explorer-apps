@@ -79,7 +79,8 @@ export const AnimationFrames: FC<Props> = ({
                                 {
                                     'bg-custom-light-blue': selected,
                                     'text-custom-background': selected,
-                                    'drop-shadow-custom-light-blue': selected,
+                                    'drop-shadow-custom-light-blue-50':
+                                        selected,
                                 }
                             )}
                         >

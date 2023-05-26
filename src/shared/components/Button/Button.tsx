@@ -33,7 +33,7 @@ export const Button: FC<Props> = ({
                 {
                     'bg-custom-light-blue': appearance === 'solid',
                     'text-custom-background': appearance === 'solid',
-                    'drop-shadow-custom-light-blue': appearance === 'solid',
+                    'drop-shadow-custom-light-blue-50': appearance === 'solid',
                     'bg-custom-background': appearance === 'transparent',
                     'text-custom-light-blue': appearance === 'transparent',
                     'h-full': fullHeight,
