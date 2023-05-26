@@ -60,10 +60,10 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
      */
     const activeFrameOnChange = useCallback(
         (indexOfActiveFrame: number) => {
-            console.log(
-                `query params for active frame`,
-                sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame]
-            );
+            // console.log(
+            //     `query params for active frame`,
+            //     sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame]
+            // );
 
             const queryParams4ActiveLandsatScene =
                 sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame];
