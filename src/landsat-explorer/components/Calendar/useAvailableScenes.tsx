@@ -10,6 +10,7 @@ import {
     queryAvailableScenes,
     updateObjectIdOfSelectedScene,
 } from '@shared/store/Landsat/thunks';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 /**
  * This custom hook queries the landsat service and find landsat scenes
@@ -22,6 +23,8 @@ const useAvailableScenes = (acquisitionYear: number) => {
     const { acquisitionDate } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+
     /**
      * current map center
      */
@@ -33,10 +36,16 @@ const useAvailableScenes = (acquisitionYear: number) => {
     const availableScenes = useSelector(selectAvailableScenes);
 
     useEffect(() => {
-        if (center && acquisitionYear) {
-            dispatch(queryAvailableScenes(acquisitionYear));
+        if (!center || !acquisitionYear) {
+            return;
         }
-    }, [center, acquisitionYear]);
+
+        if (isAnimationPlaying) {
+            return;
+        }
+
+        dispatch(queryAvailableScenes(acquisitionYear));
+    }, [center, acquisitionYear, isAnimationPlaying]);
 
     useEffect(() => {
         // we should try to find a scene that was acquired from the selected acquisition date

@@ -9,7 +9,7 @@ describe('test Calendar component', () => {
             <Calendar
                 year={2020}
                 selectedAcquisitionDate="2020-07-13"
-                acquisitionDates={[]}
+                datesWithAvailableScenes={[]}
                 onSelect={(val) => {
                     console.log(val);
                 }}

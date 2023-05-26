@@ -31,8 +31,6 @@ const CalendarContainer = () => {
 
     const cloudCoverThreshold = queryParams?.cloudCover;
 
-    // const acquisitionYear = queryParams?.acquisitionYear || getCurrentYear();
-
     const [acquisitionYear, setAcquisitionYear] = useState<number>(
         getCurrentYear()
     );
@@ -46,6 +44,28 @@ const CalendarContainer = () => {
      * options that will be used to populate the Dropdown Menu for year
      */
     const yearOptions = useYearOptions(acquisitionYear);
+
+    const getDatesWithAvailableScenes = () => {
+        if (isAnimationPlaying) {
+            return [];
+        }
+
+        return availableScenes.map((scene) => {
+            const {
+                formattedAcquisitionDate,
+                acquisitionDate,
+                // isCloudy,
+                cloudCover,
+            } = scene;
+
+            return {
+                formattedAcquisitionDate,
+                acquisitionDate,
+                isCloudy: cloudCover > cloudCoverThreshold,
+                cloudCover,
+            };
+        });
+    };
 
     useEffect(() => {
         const year = acquisitionDate
@@ -98,21 +118,7 @@ const CalendarContainer = () => {
             <Calendar
                 year={acquisitionYear}
                 selectedAcquisitionDate={acquisitionDate}
-                acquisitionDates={availableScenes.map((scene) => {
-                    const {
-                        formattedAcquisitionDate,
-                        acquisitionDate,
-                        // isCloudy,
-                        cloudCover,
-                    } = scene;
-
-                    return {
-                        formattedAcquisitionDate,
-                        acquisitionDate,
-                        isCloudy: cloudCover > cloudCoverThreshold,
-                        cloudCover,
-                    };
-                })}
+                datesWithAvailableScenes={getDatesWithAvailableScenes()}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
                     dispatch(updateAcquisitionDate(formattedAcquisitionDate));

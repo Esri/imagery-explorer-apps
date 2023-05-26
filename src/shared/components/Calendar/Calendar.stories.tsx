@@ -52,6 +52,6 @@ export const Primary: Story = {
         //     '2023-03-05',
         //     '2023-04-20',
         // ],
-        acquisitionDates: [],
+        datesWithAvailableScenes: [],
     },
 };

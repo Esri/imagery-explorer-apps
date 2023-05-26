@@ -4,9 +4,9 @@ import { MonthData, isLeapYear } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 
 /**
- * Data about the acquisition date of the selected Imagery Scene
+ * Acquisition date and cloud coverage info of a Imagery Scene
  */
-type AcquisitionDateData = {
+type AcquisitionDateOfImageryScenes = {
     /**
      * date as unix timestamp
      */
@@ -36,10 +36,10 @@ type CalendarProps = {
      */
     selectedAcquisitionDate: string;
     /**
-     * Array of dates with available imagery data, these dates will be rendered using different style on the Calendar
+     * Array of available imagery scenes, these dates will be rendered using different style on the Calendar
      * so that the user can know there are available data on these days
      */
-    acquisitionDates?: AcquisitionDateData[];
+    datesWithAvailableScenes?: AcquisitionDateOfImageryScenes[];
     /**
      * Fires when user select a new acquisition date
      * @param date date string in format of (YYYY-MM-DD)
@@ -69,23 +69,23 @@ const MonthGrid: FC<MonthGridProps> = ({
     abbrLabel,
     days,
     selectedAcquisitionDate,
-    acquisitionDates,
+    datesWithAvailableScenes,
     onSelect,
 }: MonthGridProps) => {
-    const acquisitionDateDataMap = useMemo(() => {
-        const map: Map<string, AcquisitionDateData> = new Map();
+    const dataOfImagerySceneByDate = useMemo(() => {
+        const map: Map<string, AcquisitionDateOfImageryScenes> = new Map();
 
-        if (!acquisitionDates || !acquisitionDates.length) {
+        if (!datesWithAvailableScenes || !datesWithAvailableScenes.length) {
             return map;
         }
 
-        for (const item of acquisitionDates) {
+        for (const item of datesWithAvailableScenes) {
             const { formattedAcquisitionDate } = item;
             map.set(formattedAcquisitionDate, item);
         }
 
         return map;
-    }, [acquisitionDates]);
+    }, [datesWithAvailableScenes]);
 
     const getGridCells = () => {
         return [...new Array(days)].map((_, index) => {
@@ -98,13 +98,13 @@ const MonthGrid: FC<MonthGridProps> = ({
                 day: index + 1,
             });
 
-            const acquisitionDateData =
-                acquisitionDateDataMap.get(formatedDateStr);
+            const dataOfImageryScene =
+                dataOfImagerySceneByDate.get(formatedDateStr);
 
             /**
              * if true, there is a available scene for this day
              */
-            const hasAvailableData = acquisitionDateData !== undefined;
+            const hasAvailableData = dataOfImageryScene !== undefined;
 
             const isSelected = formatedDateStr === selectedAcquisitionDate;
 
@@ -123,15 +123,15 @@ const MonthGrid: FC<MonthGridProps> = ({
                         'border-custom-calendar-border-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            acquisitionDateData?.isCloudy === true,
+                            dataOfImageryScene?.isCloudy === true,
                         'bg-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            acquisitionDateData?.isCloudy === false,
+                            dataOfImageryScene?.isCloudy === false,
                         'border-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            acquisitionDateData?.isCloudy === false,
+                            dataOfImageryScene?.isCloudy === false,
                     })}
                     key={index}
                     data-testid={formatedDateStr}
@@ -155,9 +155,9 @@ const MonthGrid: FC<MonthGridProps> = ({
                         <div className="absolute bottom-[-30px] left-5 w-[150px] bg-custom-background border border-custom-light-blue-50 py-[2px] text-xs z-10 hidden group-hover:block">
                             <span>
                                 {`${
-                                    acquisitionDateData.formattedAcquisitionDate
+                                    dataOfImageryScene.formattedAcquisitionDate
                                 } | ${Math.ceil(
-                                    acquisitionDateData.cloudCover * 100
+                                    dataOfImageryScene.cloudCover * 100
                                 )}% Cloudy`}
                             </span>
                         </div>
@@ -187,7 +187,7 @@ const MonthGrid: FC<MonthGridProps> = ({
 const Calendar: FC<CalendarProps> = ({
     year,
     selectedAcquisitionDate,
-    acquisitionDates,
+    datesWithAvailableScenes,
     onSelect,
 }: CalendarProps) => {
     return (
@@ -205,7 +205,7 @@ const Calendar: FC<CalendarProps> = ({
                         abbrLabel={d.abbrLabel}
                         days={days}
                         selectedAcquisitionDate={selectedAcquisitionDate}
-                        acquisitionDates={acquisitionDates}
+                        datesWithAvailableScenes={datesWithAvailableScenes}
                         onSelect={onSelect}
                     />
                 );
