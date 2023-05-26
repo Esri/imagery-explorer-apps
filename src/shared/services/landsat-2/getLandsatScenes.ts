@@ -3,7 +3,7 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 // import { format } from 'date-fns';
 import { parseLandsatInfo } from './helpers';
-import { getFormatedDateString } from '@shared/utils/snippets/formatDateString';
+import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 import { LandsatScene } from '@typing/imagery-service';
 
 type GetLandsatScenesParams = {

@@ -15,7 +15,7 @@ import {
     updateAcquisitionYear,
     updateCloudCover,
 } from '@shared/store/Landsat/thunks';
-import { getCurrentYear } from '@shared/utils/snippets/getCurrentYear';
+import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
 import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';

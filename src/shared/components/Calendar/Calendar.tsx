@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
 import { MonthData, isLeapYear } from './helpers';
-import { getFormatedDateString } from '@shared/utils/snippets/formatDateString';
+import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 
 /**
  * Data about the acquisition date of the selected Imagery Scene

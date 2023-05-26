@@ -1,4 +1,4 @@
-import { formattedDateString2Unixtimestamp } from '@shared/utils/snippets/formatDateString';
+import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import { format } from 'date-fns';
 import React, { FC, useMemo } from 'react';
 
