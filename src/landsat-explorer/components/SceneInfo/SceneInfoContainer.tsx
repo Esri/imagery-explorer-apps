@@ -1,28 +1,13 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import {
-    selectAvailableScenesByObjectId,
-    selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
 import { format } from 'date-fns';
 import {
     SceneInfoTable,
     SceneInfoTableData,
 } from '@shared/components/SceneInfoTable';
-import { LandsatScene } from '@typing/imagery-service';
+import { useDataFromSelectedLandsatScene } from './useDataFromSelectedLandsatScene';
 
 export const SceneInfoContainer = () => {
-    const queryParams4SelectedScene = useSelector(
-        selectQueryParams4SceneInSelectedMode
-    );
-
-    const availableScenesByObjectId = useSelector(
-        selectAvailableScenesByObjectId
-    );
-
-    const data = availableScenesByObjectId[
-        queryParams4SelectedScene?.objectIdOfSelectedScene
-    ] as LandsatScene;
+    const data = useDataFromSelectedLandsatScene();
 
     const tableData: SceneInfoTableData[] = useMemo(() => {
         if (!data) {
