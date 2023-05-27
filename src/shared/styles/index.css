@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --custom-light-blue: #C2EEFE;
+    --custom-background: rgb(0,35,47)
+}
+
 @layer utilities {
     .overflow-y-unset {
         overflow-y: unset;

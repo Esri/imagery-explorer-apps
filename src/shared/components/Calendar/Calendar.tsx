@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
 import { MonthData, isLeapYear } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
+import { format } from 'date-fns';
 
 /**
  * Acquisition date and cloud coverage info of a Imagery Scene
@@ -116,10 +117,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                             formatedDateStr !== selectedAcquisitionDate,
                         'bg-custom-calendar-background-selected': isSelected,
                         'border-custom-calendar-border-selected': isSelected,
-                        // isSelected ||
-                        // (hasAvailableData &&
-                        //     acquisitionDateData?.isCloudy === true),
-                        'drop-shadow-custom-light-blue': isSelected,
+                        // 'drop-shadow-custom-light-blue': isSelected,
                         'border-custom-calendar-border-available':
                             isSelected === false &&
                             hasAvailableData &&
@@ -133,6 +131,13 @@ const MonthGrid: FC<MonthGridProps> = ({
                             hasAvailableData &&
                             dataOfImageryScene?.isCloudy === false,
                     })}
+                    style={{
+                        // why do not use drop-shadow? It seems the drop shadow get applied to child elements,
+                        // which is not what we want, but box shadow doesn't.
+                        boxShadow: isSelected
+                            ? `0 0 4px var(--custom-light-blue)`
+                            : '',
+                    }}
                     key={index}
                     data-testid={formatedDateStr}
                     // title={formatedDateStr}
@@ -152,14 +157,23 @@ const MonthGrid: FC<MonthGridProps> = ({
                     }}
                 >
                     {hasAvailableData && (
-                        <div className="absolute bottom-[-30px] left-5 w-[150px] bg-custom-background border border-custom-light-blue-50 py-[2px] text-xs z-10 hidden group-hover:block">
+                        <div
+                            className={`
+                                absolute bottom-[-30px] left-5 w-[90px] py-[2px] text-xs z-10
+                                bg-custom-background border border-custom-light-blue-50  
+                                hidden group-hover:block
+                            `}
+                        >
                             <span>
-                                {`${
-                                    dataOfImageryScene.formattedAcquisitionDate
-                                } | ${Math.ceil(
-                                    dataOfImageryScene.cloudCover * 100
-                                )}% Cloudy`}
+                                {format(
+                                    dataOfImageryScene.acquisitionDate,
+                                    'dd MMM, yyyy'
+                                )}
                             </span>
+                            <br />
+                            <span>{`${Math.ceil(
+                                dataOfImageryScene.cloudCover * 100
+                            )}% Cloudy`}</span>
                         </div>
                     )}
                 </div>
