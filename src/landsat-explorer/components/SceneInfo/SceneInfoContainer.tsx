@@ -5,6 +5,7 @@ import {
     SceneInfoTableData,
 } from '@shared/components/SceneInfoTable';
 import { useDataFromSelectedLandsatScene } from './useDataFromSelectedLandsatScene';
+import { DATE_FORMAT } from '@shared/constants/UI';
 
 export const SceneInfoContainer = () => {
     const data = useDataFromSelectedLandsatScene();
@@ -50,11 +51,11 @@ export const SceneInfoContainer = () => {
             },
             {
                 name: 'Acquired',
-                value: format(acquisitionDate, 'MMM dd, yyyy'),
+                value: format(acquisitionDate, DATE_FORMAT),
             },
             {
                 name: 'Processed',
-                value: format(processingDate, 'MMM dd, yyyy'),
+                value: format(processingDate, DATE_FORMAT),
             },
             {
                 name: 'Collection',

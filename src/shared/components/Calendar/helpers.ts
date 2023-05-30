@@ -37,7 +37,7 @@ export const MonthData = [
         label: 'July',
     },
     {
-        abbrLabel: 'J',
+        abbrLabel: 'A',
         days: 31,
         label: 'August',
     },

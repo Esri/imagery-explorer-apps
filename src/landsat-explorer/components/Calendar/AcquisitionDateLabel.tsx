@@ -1,3 +1,4 @@
+import { DATE_FORMAT } from '@shared/constants/UI';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import { format } from 'date-fns';
 import React, { FC, useMemo } from 'react';
@@ -25,7 +26,7 @@ export const AcquisitionDateLabel: FC<Props> = ({
 
         const timestamp = formattedDateString2Unixtimestamp(acquisitionDate);
 
-        return format(timestamp, 'MMM dd, yyyy');
+        return format(timestamp, DATE_FORMAT);
     }, [acquisitionDate]);
 
     if (!acquisitionDate) {

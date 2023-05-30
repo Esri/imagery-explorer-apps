@@ -3,6 +3,7 @@ import React, { FC, useMemo } from 'react';
 import { MonthData, isLeapYear } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 import { format } from 'date-fns';
+import { DATE_FORMAT } from '@shared/constants/UI';
 
 /**
  * Acquisition date and cloud coverage info of a Imagery Scene
@@ -167,7 +168,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                             <span>
                                 {format(
                                     dataOfImageryScene.acquisitionDate,
-                                    'dd MMM, yyyy'
+                                    DATE_FORMAT
                                 )}
                             </span>
                             <br />

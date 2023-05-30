@@ -6,6 +6,9 @@ import {
     selectSelectedAnimationFrameId,
 } from '@shared/store/Landsat/selectors';
 import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
+import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
+import { format } from 'date-fns';
+import { DATE_FORMAT } from '@shared/constants/UI';
 
 export const useAnimationFramesInfo = () => {
     const selectedAnimationFrameId = useSelector(
@@ -29,7 +32,13 @@ export const useAnimationFramesInfo = () => {
 
             return {
                 frameId: animationFrameId,
-                acquisitionDate: acquisitionDate || 'No Date Selected',
+                // acquisitionDate: acquisitionDate || 'No Date Selected',
+                acquisitionDateLabel: acquisitionDate
+                    ? format(
+                          formattedDateString2Unixtimestamp(acquisitionDate),
+                          DATE_FORMAT
+                      )
+                    : 'No Date Selected',
                 rasterFunctionName,
                 selected: animationFrameId === selectedAnimationFrameId,
             } as AnimationFrameInfo;

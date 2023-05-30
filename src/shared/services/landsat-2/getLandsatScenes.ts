@@ -67,14 +67,14 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             sensor,
         } = parseLandsatInfo(productId);
 
-        return {
+        const landsatScene: LandsatScene = {
             objectId: attributes[OBJECTID],
             productId,
             acquisitionDate,
             formattedAcquisitionDate,
             // name: attributes[NAME],
             cloudCover: attributes[CLOUD_COVER],
-            best: attributes[BEST],
+            // best: attributes[BEST],
             // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
             satellite: attributes[SENSORNAME],
             row: attributes[WRS_ROW],
@@ -85,7 +85,9 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             correctionLevel,
             processingDate,
             sensor,
-        } as LandsatScene;
+        };
+
+        return landsatScene;
     });
 };
 

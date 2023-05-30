@@ -6,10 +6,15 @@ export type AnimationFrameInfo = {
      * unique identifier of this frame
      */
     frameId: string;
+    // /**
+    //  * acquisition date that will be used to query Imagery Scene for this frame
+    //  */
+    // acquisitionDate: string;
     /**
-     * acquisition date that will be used to query Imagery Scene for this frame
+     * label of acquisition date for the imagery scene of selected frame,
+     * it shuld be in format of `MMM dd, yyyy`, (e.g., `Feb-03, 2023`)
      */
-    acquisitionDate: string;
+    acquisitionDateLabel: string;
     /**
      * name of the raster function that will be used to render the Imagery Scene for this frame
      */
@@ -62,7 +67,8 @@ export const AnimationFrames: FC<Props> = ({
                 {data.map((d) => {
                     const {
                         frameId,
-                        acquisitionDate,
+                        // acquisitionDate,
+                        acquisitionDateLabel,
                         rasterFunctionName,
                         selected,
                     } = d;
@@ -88,7 +94,7 @@ export const AnimationFrames: FC<Props> = ({
                                 className="w-full text-xs mr-1 text-center leading-[.9rem]"
                                 onClick={frameOnSelect.bind(null, frameId)}
                             >
-                                <span>{acquisitionDate}</span>
+                                <span>{acquisitionDateLabel}</span>
                                 <br />
                                 <span>{rasterFunctionName}</span>
                             </div>
