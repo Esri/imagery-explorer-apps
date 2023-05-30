@@ -22,7 +22,7 @@ export const ModeSelectorContainer = () => {
         <ModeSelector
             selectedMode={selectedMode}
             disabled={isAnimationPlaying}
-            onChange={(value) => {
+            selectedModeOnChange={(value) => {
                 dispatch(modeChanged(value));
             }}
         />

@@ -15,6 +15,7 @@
     .theme-background {
         @apply bg-custom-background
     }
+
     .theme-background::before {
         content: ' ';
         position: absolute;
@@ -31,6 +32,14 @@
 
     .is-disabled {
         @apply opacity-50 pointer-events-none;
+    }
+
+    /*
+     * Container of controls right next to Mode Selector.
+     * It contains component like "Swipe Side Selector", "Animation Frame Control" and etc
+     */
+    .container-of-secondary-controls {
+        @apply w-40 shrink-0 mx-1;
     }
 }
 

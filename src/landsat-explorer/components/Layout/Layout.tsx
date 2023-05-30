@@ -19,14 +19,17 @@ const Layout = () => {
             <BottomPanel>
                 <ModeSelector />
 
-                {mode !== 'explore' && (
-                    <>
-                        <div className="flex w-40 shrink-0 mx-1">
-                            <SwipeLayerSelector />
-                            {/* <AnimationFrames /> */}
-                            <AnimationControl />
-                        </div>
+                {(mode === 'swipe' || mode === 'animate') && (
+                    <div className="container-of-secondary-controls">
+                        <SwipeLayerSelector />
+                        <AnimationControl />
+                    </div>
+                )}
 
+                {(mode === 'find a scene' ||
+                    mode === 'swipe' ||
+                    mode === 'animate') && (
+                    <>
                         <div className="flex flex-grow justify-between">
                             <div className="flex shrink-0 pl-4">
                                 <Calendar />

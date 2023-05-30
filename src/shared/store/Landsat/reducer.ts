@@ -8,9 +8,14 @@ import {
 import { LandsatScene } from '@typing/imagery-service';
 
 /**
- * the app support 4 different modes that the user can use to explore the landsat data
+ * the app support 5 different modes that the user can use to explore the imagery layer/scene
  */
-export type AppMode = 'explore' | 'find a scene' | 'swipe' | 'animate';
+export type AppMode =
+    | 'dynamic'
+    | 'find a scene'
+    | 'swipe'
+    | 'animate'
+    | 'analysis';
 
 /**
  * Swipe Mode allows user to compare Imagery scene the

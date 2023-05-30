@@ -1,13 +1,10 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button } from '../Button';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { selectAppMode } from '../../store/Landsat/selectors';
-import { AppMode, modeChanged } from '../../store/Landsat/reducer';
-import { selectIsAnimationPlaying } from '../../store/UI/selectors';
+import { AppMode } from '../../store/Landsat/reducer';
 import classNames from 'classnames';
 
-const modes: AppMode[] = ['explore', 'find a scene', 'swipe', 'animate'];
+const modes: AppMode[] = ['swipe', 'animate', 'analysis'];
+const exploreModes: AppMode[] = ['dynamic', 'find a scene'];
 
 type Props = {
     /**
@@ -23,35 +20,80 @@ type Props = {
      * @param value
      * @returns
      */
-    onChange: (value: AppMode) => void;
+    selectedModeOnChange: (value: AppMode) => void;
 };
+
+const ButtonWrapperClassnames = `mb-1 h-12`;
 
 export const ModeSelector: FC<Props> = ({
     selectedMode,
     disabled,
-    onChange,
+    selectedModeOnChange,
 }: Props) => {
     return (
-        <div
-            className={classNames('flex flex-col', {
-                'is-disabled': disabled,
-            })}
-        >
-            {modes.map((mode) => (
-                <div key={mode} className="mb-1 h-1/4">
+        <>
+            <div
+                className={classNames({
+                    'is-disabled': disabled,
+                })}
+            >
+                {/* this is button to enable selection of eith 'find a scene' or 'dynamic' mode */}
+                <div className={ButtonWrapperClassnames}>
                     <Button
                         fullHeight={true}
                         appearance={
-                            mode === selectedMode ? 'solid' : 'transparent'
+                            selectedMode === 'find a scene' ||
+                            selectedMode === 'dynamic'
+                                ? 'solid'
+                                : 'transparent'
                         }
                         onClickHandler={() => {
-                            onChange(mode);
+                            selectedModeOnChange('find a scene');
                         }}
                     >
-                        <span className="uppercase">{mode}</span>
+                        <span className="uppercase">Explore</span>
                     </Button>
                 </div>
-            ))}
-        </div>
+
+                {modes.map((mode) => (
+                    <div key={mode} className={ButtonWrapperClassnames}>
+                        <Button
+                            fullHeight={true}
+                            appearance={
+                                mode === selectedMode ? 'solid' : 'transparent'
+                            }
+                            onClickHandler={() => {
+                                selectedModeOnChange(mode);
+                            }}
+                        >
+                            <span className="uppercase">{mode}</span>
+                        </Button>
+                    </div>
+                ))}
+            </div>
+
+            {(selectedMode === 'dynamic' ||
+                selectedMode === 'find a scene') && (
+                <div className="container-of-secondary-controls px-1">
+                    {exploreModes.map((mode) => (
+                        <div key={mode} className={ButtonWrapperClassnames}>
+                            <Button
+                                fullHeight={true}
+                                appearance={
+                                    mode === selectedMode
+                                        ? 'solid'
+                                        : 'transparent'
+                                }
+                                onClickHandler={() => {
+                                    selectedModeOnChange(mode);
+                                }}
+                            >
+                                <span className="uppercase">{mode}</span>
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </>
     );
 };
