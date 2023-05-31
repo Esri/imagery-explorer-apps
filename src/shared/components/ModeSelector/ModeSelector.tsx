@@ -37,7 +37,7 @@ export const ModeSelector: FC<Props> = ({
                     'is-disabled': disabled,
                 })}
             >
-                {/* this is button to enable selection of eith 'find a scene' or 'dynamic' mode */}
+                {/* this is button to enable selection of either 'find a scene' or 'dynamic' mode */}
                 <div className={ButtonWrapperClassnames}>
                     <Button
                         fullHeight={true}
@@ -48,6 +48,13 @@ export const ModeSelector: FC<Props> = ({
                                 : 'transparent'
                         }
                         onClickHandler={() => {
+                            if (
+                                selectedMode === 'find a scene' ||
+                                selectedMode === 'dynamic'
+                            ) {
+                                return;
+                            }
+
                             selectedModeOnChange('find a scene');
                         }}
                     >
