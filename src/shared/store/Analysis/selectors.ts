@@ -6,7 +6,13 @@ export const selectActiveAnalysisTool = createSelector(
     (tool) => tool
 );
 
-export const selectMaskIndexMethod = createSelector(
+export const selectMaskMethod = createSelector(
     (state: RootState) => state.Analysis.maskMethod,
     (maskMethod) => maskMethod
+);
+
+export const selectMaskOptions = createSelector(
+    (state: RootState) => state.Analysis.maskMethod,
+    (state: RootState) => state.Analysis.maskOptionsByMethodName,
+    (maskMethod, maskOptionsByMethodName) => maskOptionsByMethodName[maskMethod]
 );

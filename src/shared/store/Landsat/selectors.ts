@@ -16,7 +16,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         selectedSide4SwipeMode,
         selectedAnimationFrameId
     ) => {
-        if (mode === 'find a scene') {
+        if (mode === 'find a scene' || mode === 'analysis') {
             return queryParams4MainScene;
         }
 

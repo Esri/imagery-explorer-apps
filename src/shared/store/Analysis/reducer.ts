@@ -4,13 +4,12 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import color from 'esri/smartMapping/renderers/color';
 
-type AnalysisTool = 'mask' | 'profile';
+export type AnalysisTool = 'mask' | 'profile';
 
-type MaskMethod = 'water' | 'vegetation' | 'moisture';
+export type MaskMethod = 'water' | 'vegetation' | 'moisture';
 
-type MaskOptions = {
+export type MaskOptions = {
     selectedRange: number[];
     /**
      * color array in RGB format
@@ -71,7 +70,7 @@ const slice = createSlice({
         ) => {
             state.tool = action.payload;
         },
-        maskIndexMethodChanged: (state, action: PayloadAction<MaskMethod>) => {
+        maskMethodChanged: (state, action: PayloadAction<MaskMethod>) => {
             state.maskMethod = action.payload;
         },
         maskOptionChanged: (state, action: PayloadAction<MaskOptions>) => {
@@ -85,7 +84,7 @@ const { reducer } = slice;
 
 export const {
     activeAnalysisToolChanged,
-    maskIndexMethodChanged,
+    maskMethodChanged,
     maskOptionChanged,
 } = slice.actions;
 

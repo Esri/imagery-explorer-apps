@@ -1,3 +1,3 @@
-export { MethodList } from './MethodList';
-export { PixelRangeSlider } from './PixelRangeSlider';
-export { RenderingControls } from './RenderingControls';
+export { MethodList as MaskMethodList } from './MethodList';
+export { PixelRangeSlider as MaskPixelRangeSlider } from './PixelRangeSlider';
+export { RenderingControls as MaskRenderingControls } from './RenderingControls';

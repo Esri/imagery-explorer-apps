@@ -25,8 +25,8 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
         //     return true;
         // }
 
-        if (mode === 'find a scene' && objectIdOfSelectedScene) {
-            return true;
+        if (mode === 'find a scene' || mode === 'analysis') {
+            return objectIdOfSelectedScene !== null;
         }
 
         // when in animate mode, only need to show landsat layer if animation is not playing

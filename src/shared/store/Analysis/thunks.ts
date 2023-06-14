@@ -1,13 +1,26 @@
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-// import { webmapIdChanged } from './reducer';
+import { maskOptionChanged } from './reducer';
+import { selectMaskOptions } from './selectors';
 
-// // Good resource about what "thunks" are, and why they're used for writing Redux logic: https://redux.js.org/usage/writing-logic-thunks
-// export const updateWebmap =
-//     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
-//         try {
-//             // do some async work (e.g. check if the new webmap id is an valid ArcGIS Online Item)
-//             // ...
-//         } catch (err) {
-//             console.error(err);
-//         }
-//     };
+/**
+ * update selected range for the active mask method
+ * @param index index of value, 0 indicates min value of the range and 1 indicates max value of the range
+ * @param value
+ * @returns void
+ */
+export const updateSelectedRange =
+    (index: number, value: number) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const maskOptions = selectMaskOptions(getState());
+
+        const selectedRange = [...maskOptions.selectedRange];
+
+        selectedRange[index] = value;
+
+        const updatedMaskOptions = {
+            ...maskOptions,
+            selectedRange,
+        };
+
+        dispatch(maskOptionChanged(updatedMaskOptions));
+    };

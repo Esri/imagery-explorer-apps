@@ -96,7 +96,7 @@ export const updateQueryParams4SceneInSelectedMode =
     (dispatch: StoreDispatch, getState: StoreGetState) => {
         const mode = selectAppMode(getState());
 
-        if (mode === 'find a scene') {
+        if (mode === 'find a scene' || mode === 'analysis') {
             dispatch(queryParams4MainSceneChanged(updatedQueryParams));
             return;
         }
