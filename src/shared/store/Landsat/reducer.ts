@@ -64,7 +64,7 @@ export type LandsatState = {
      */
     availableScenes?: {
         byObjectId?: {
-            [key: number]: Partial<LandsatScene>;
+            [key: number]: LandsatScene;
         };
         objectIds?: number[];
     };
