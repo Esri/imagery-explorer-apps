@@ -38,7 +38,7 @@ export const Slider: FC<Props> = ({ value, onChange }) => {
                 min: 0,
                 max: 1,
                 steps: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-                values: [0.5],
+                values: [value],
                 snapOnClickEnabled: false,
                 visibleElements: {
                     labels: false,

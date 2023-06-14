@@ -73,7 +73,7 @@ const slice = createSlice({
         maskMethodChanged: (state, action: PayloadAction<MaskMethod>) => {
             state.maskMethod = action.payload;
         },
-        maskOptionChanged: (state, action: PayloadAction<MaskOptions>) => {
+        maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
             const maskMethod = state.maskMethod;
             state.maskOptionsByMethodName[maskMethod] = action.payload;
         },
@@ -85,7 +85,7 @@ const { reducer } = slice;
 export const {
     activeAnalysisToolChanged,
     maskMethodChanged,
-    maskOptionChanged,
+    maskOptionsChanged,
 } = slice.actions;
 
 export default reducer;

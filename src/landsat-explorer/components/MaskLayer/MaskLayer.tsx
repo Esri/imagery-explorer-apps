@@ -31,6 +31,10 @@ type Props = {
      * color in format of [red, green, blue]
      */
     color: number[];
+    /**
+     * opacity of the mask layer
+     */
+    opacity: number;
 };
 
 type PixelData = {
@@ -113,6 +117,7 @@ export const MaskLayer: FC<Props> = ({
     visible,
     selectedRange,
     color,
+    opacity,
 }) => {
     const layerRef = useRef<IImageryLayer>();
 
@@ -246,6 +251,12 @@ export const MaskLayer: FC<Props> = ({
             layerRef.current.redraw();
         }
     }, [selectedRange, color]);
+
+    useEffect(() => {
+        if (layerRef.current) {
+            layerRef.current.opacity = opacity;
+        }
+    }, [opacity]);
 
     return null;
 };

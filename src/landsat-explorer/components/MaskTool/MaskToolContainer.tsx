@@ -1,13 +1,17 @@
 import {
     MaskMethodList,
     MaskPixelRangeSlider,
+    MaskRenderingControls,
 } from '@shared/components/MaskTool';
 import { maskMethodChanged } from '@shared/store/Analysis/reducer';
 import {
     selectMaskMethod,
     selectMaskOptions,
 } from '@shared/store/Analysis/selectors';
-import { updateSelectedRange } from '@shared/store/Analysis/thunks';
+import {
+    updateOpacityOfMaskLayer,
+    updateSelectedRange,
+} from '@shared/store/Analysis/thunks';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -32,6 +36,13 @@ export const MaskToolContainer = () => {
                 values={maskOptions.selectedRange}
                 valOnChange={(index, value) => {
                     dispatch(updateSelectedRange(index, value));
+                }}
+            />
+
+            <MaskRenderingControls
+                selectedOpacity={maskOptions.opacity}
+                opacityOnChange={(val) => {
+                    dispatch(updateOpacityOfMaskLayer(val));
                 }}
             />
         </div>

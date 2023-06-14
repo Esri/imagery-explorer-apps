@@ -21,7 +21,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView }) => {
 
     const maskMethod = useSelector(selectMaskMethod);
 
-    const { selectedRange, color } = useSelector(selectMaskOptions);
+    const { selectedRange, color, opacity } = useSelector(selectMaskOptions);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -48,6 +48,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView }) => {
             visible={isVisible}
             selectedRange={selectedRange}
             color={color}
+            opacity={opacity}
         />
     );
 };
