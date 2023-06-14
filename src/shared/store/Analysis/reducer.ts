@@ -35,7 +35,7 @@ export type AnalysisState = {
 };
 
 const MaskOptionsDefaultValues: MaskOptions = {
-    selectedRange: [-1, 1],
+    selectedRange: [0, 1],
     opacity: 1,
     shouldClip: false,
     color: [255, 255, 255],
@@ -47,15 +47,15 @@ export const initialAnalysisState: AnalysisState = {
     maskOptionsByMethodName: {
         moisture: {
             ...MaskOptionsDefaultValues,
-            color: [0, 255, 255],
+            color: [89, 255, 252],
         },
         vegetation: {
             ...MaskOptionsDefaultValues,
-            color: [0, 255, 0],
+            color: [115, 255, 132],
         },
         water: {
             ...MaskOptionsDefaultValues,
-            color: [0, 0, 255],
+            color: [89, 214, 255],
         },
     },
 };

@@ -3,7 +3,10 @@ import {
     MaskPixelRangeSlider,
 } from '@shared/components/MaskTool';
 import { maskMethodChanged } from '@shared/store/Analysis/reducer';
-import { selectMaskMethod } from '@shared/store/Analysis/selectors';
+import {
+    selectMaskMethod,
+    selectMaskOptions,
+} from '@shared/store/Analysis/selectors';
 import { updateSelectedRange } from '@shared/store/Analysis/thunks';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -13,6 +16,8 @@ export const MaskToolContainer = () => {
     const dispatch = useDispatch();
 
     const selectedMethod = useSelector(selectMaskMethod);
+
+    const maskOptions = useSelector(selectMaskOptions);
 
     return (
         <div className="w-[280px] h-full mx-2">
@@ -24,7 +29,7 @@ export const MaskToolContainer = () => {
             />
 
             <MaskPixelRangeSlider
-                values={[-1, 1]}
+                values={maskOptions.selectedRange}
                 valOnChange={(index, value) => {
                     dispatch(updateSelectedRange(index, value));
                 }}

@@ -26,7 +26,7 @@ type Props = {
  *
  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-MosaicRule.html
  */
-const getMosaicRule = async (objectId: number): Promise<IMosaicRule> => {
+export const getMosaicRule = async (objectId: number): Promise<IMosaicRule> => {
     if (!objectId) {
         return null;
     }
