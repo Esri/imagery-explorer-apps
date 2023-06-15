@@ -16,3 +16,13 @@ export const selectMaskOptions = createSelector(
     (state: RootState) => state.Analysis.maskOptionsByMethodName,
     (maskMethod, maskOptionsByMethodName) => maskOptionsByMethodName[maskMethod]
 );
+
+export const selectMaskLayerOpcity = createSelector(
+    (state: RootState) => state.Analysis.maskLayerOpacity,
+    (maskLayerOpacity) => maskLayerOpacity
+);
+
+export const selectShouldClipMaskLayer = createSelector(
+    (state: RootState) => state.Analysis.shouldClipMaskLayer,
+    (shouldClipMaskLayer) => shouldClipMaskLayer
+);

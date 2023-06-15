@@ -6,6 +6,8 @@ import {
     selectActiveAnalysisTool,
     selectMaskMethod,
     selectMaskOptions,
+    selectShouldClipMaskLayer,
+    selectMaskLayerOpcity,
 } from '@shared/store/Analysis/selectors';
 import {
     selectAppMode,
@@ -23,8 +25,11 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
 
     const maskMethod = useSelector(selectMaskMethod);
 
-    const { selectedRange, color, opacity, shouldClip } =
-        useSelector(selectMaskOptions);
+    const { selectedRange, color } = useSelector(selectMaskOptions);
+
+    const opacity = useSelector(selectMaskLayerOpcity);
+
+    const shouldClip = useSelector(selectShouldClipMaskLayer);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};

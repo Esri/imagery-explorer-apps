@@ -15,8 +15,6 @@ export type MaskOptions = {
      * color array in RGB format
      */
     color: number[];
-    opacity: number;
-    shouldClip: boolean;
 };
 
 export type AnalysisState = {
@@ -32,29 +30,32 @@ export type AnalysisState = {
      * maks tool options by method name
      */
     maskOptionsByMethodName: Record<MaskMethod, MaskOptions>;
-};
-
-const MaskOptionsDefaultValues: MaskOptions = {
-    selectedRange: [0, 1],
-    opacity: 1,
-    shouldClip: false,
-    color: [255, 255, 255],
+    /**
+     * opacity of the mask layer
+     */
+    maskLayerOpacity: number;
+    /**
+     * if true, mask layer should be used to clip the landsat scene
+     */
+    shouldClipMaskLayer: boolean;
 };
 
 export const initialAnalysisState: AnalysisState = {
     tool: 'mask',
     maskMethod: 'water',
+    maskLayerOpacity: 1,
+    shouldClipMaskLayer: false,
     maskOptionsByMethodName: {
         moisture: {
-            ...MaskOptionsDefaultValues,
+            selectedRange: [0, 1],
             color: [89, 255, 252],
         },
         vegetation: {
-            ...MaskOptionsDefaultValues,
+            selectedRange: [0, 1],
             color: [115, 255, 132],
         },
         water: {
-            ...MaskOptionsDefaultValues,
+            selectedRange: [0, 1],
             color: [89, 214, 255],
         },
     },
@@ -77,6 +78,12 @@ const slice = createSlice({
             const maskMethod = state.maskMethod;
             state.maskOptionsByMethodName[maskMethod] = action.payload;
         },
+        maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
+            state.maskLayerOpacity = action.payload;
+        },
+        shouldClipMaskLayerToggled: (state, action: PayloadAction<boolean>) => {
+            state.shouldClipMaskLayer = !state.shouldClipMaskLayer;
+        },
     },
 });
 
@@ -86,6 +93,8 @@ export const {
     activeAnalysisToolChanged,
     maskMethodChanged,
     maskOptionsChanged,
+    maskLayerOpacityChanged,
+    shouldClipMaskLayerToggled,
 } = slice.actions;
 
 export default reducer;

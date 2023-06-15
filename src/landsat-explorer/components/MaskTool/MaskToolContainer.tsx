@@ -3,16 +3,18 @@ import {
     MaskPixelRangeSlider,
     MaskRenderingControls,
 } from '@shared/components/MaskTool';
-import { maskMethodChanged } from '@shared/store/Analysis/reducer';
 import {
+    maskLayerOpacityChanged,
+    maskMethodChanged,
+    shouldClipMaskLayerToggled,
+} from '@shared/store/Analysis/reducer';
+import {
+    selectMaskLayerOpcity,
     selectMaskMethod,
     selectMaskOptions,
+    selectShouldClipMaskLayer,
 } from '@shared/store/Analysis/selectors';
-import {
-    updateOpacityOfMaskLayer,
-    updateSelectedRange,
-    toggleShouldClipOfMaskOptions,
-} from '@shared/store/Analysis/thunks';
+import { updateSelectedRange } from '@shared/store/Analysis/thunks';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -23,6 +25,10 @@ export const MaskToolContainer = () => {
     const selectedMethod = useSelector(selectMaskMethod);
 
     const maskOptions = useSelector(selectMaskOptions);
+
+    const opacity = useSelector(selectMaskLayerOpcity);
+
+    const shouldClip = useSelector(selectShouldClipMaskLayer);
 
     return (
         <div className="w-[280px] h-full mx-2">
@@ -41,13 +47,13 @@ export const MaskToolContainer = () => {
             />
 
             <MaskRenderingControls
-                selectedOpacity={maskOptions.opacity}
-                shouldClip={maskOptions.shouldClip}
+                selectedOpacity={opacity}
+                shouldClip={shouldClip}
                 shouldClipOnToggle={() => {
-                    dispatch(toggleShouldClipOfMaskOptions());
+                    dispatch(shouldClipMaskLayerToggled());
                 }}
                 opacityOnChange={(val) => {
-                    dispatch(updateOpacityOfMaskLayer(val));
+                    dispatch(maskLayerOpacityChanged(val));
                 }}
             />
         </div>
