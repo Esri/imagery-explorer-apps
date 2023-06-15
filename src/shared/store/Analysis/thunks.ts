@@ -24,3 +24,16 @@ export const updateSelectedRange =
 
         dispatch(maskOptionsChanged(updatedMaskOptions));
     };
+
+export const updateMaskColor =
+    (color: number[]) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const maskOptions = selectMaskOptions(getState());
+
+        const updatedMaskOptions = {
+            ...maskOptions,
+            color,
+        };
+
+        dispatch(maskOptionsChanged(updatedMaskOptions));
+    };

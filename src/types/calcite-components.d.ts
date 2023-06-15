@@ -30,5 +30,6 @@ declare namespace JSX {
         'calcite-option': any;
         'calcite-input-date-picker': any;
         'calcite-switch': any;
+        'calcite-color-picker': any;
     }
 }

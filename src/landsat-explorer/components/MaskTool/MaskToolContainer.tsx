@@ -14,7 +14,10 @@ import {
     selectMaskOptions,
     selectShouldClipMaskLayer,
 } from '@shared/store/Analysis/selectors';
-import { updateSelectedRange } from '@shared/store/Analysis/thunks';
+import {
+    updateMaskColor,
+    updateSelectedRange,
+} from '@shared/store/Analysis/thunks';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -49,6 +52,10 @@ export const MaskToolContainer = () => {
             <MaskRenderingControls
                 selectedOpacity={opacity}
                 shouldClip={shouldClip}
+                color={maskOptions.color}
+                colorOnChange={(color) => {
+                    dispatch(updateMaskColor(color));
+                }}
                 shouldClipOnToggle={() => {
                     dispatch(shouldClipMaskLayerToggled());
                 }}

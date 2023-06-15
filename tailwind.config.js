@@ -10,18 +10,18 @@ module.exports = {
       ...colors,
       custom: {
         'light-blue': {
-          DEFAULT: '#C2EEFE',
-          90: 'rgba(191,238,254, .9)',
-          80: 'rgba(191,238,254, .8)',
-          50: 'rgba(191,238,254, .5)',
-          0: 'rgba(191,238,254, .0)'
+          DEFAULT: 'rgb(191,238,254)',
+          90: 'var(--custom-light-blue-90)',
+          80: 'var(--custom-light-blue-80)',
+          50: 'var(--custom-light-blue-50)',
+          0: 'var(--custom-light-blue-0)'
         },
         'background': {
           DEFAULT: 'rgb(0,35,47)',
-          95: 'rgba(0,35,47, .95)',
-          90: 'rgba(0,35,47, .9)',
-          85: 'rgba(0,35,47, .85)',
-          70: 'rgba(0,35,47, .7)',
+          95: 'var(--custom-background-95)',
+          90: 'var(--custom-background-90)',
+          85: 'var(--custom-background-85)',
+          70: 'var(--custom-background-70)',
         },
         'calendar': {
           border: {

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Slider } from '../Slider';
+import { ColorPicker } from './ColorPicker';
 
 type Props = {
     /**
@@ -10,6 +11,11 @@ type Props = {
      * if true, uses the pixels as a clipping mask, showing the underlying landsat imagery using the “destination atop” blend mode
      */
     shouldClip: boolean;
+    /**
+     * color to render the mask layer
+     */
+    color: number[];
+    colorOnChange: (color: number[]) => void;
     shouldClipOnToggle: () => void;
     opacityOnChange: (val: number) => void;
 };
@@ -17,6 +23,8 @@ type Props = {
 export const RenderingControls: FC<Props> = ({
     selectedOpacity,
     shouldClip,
+    color,
+    colorOnChange,
     shouldClipOnToggle,
     opacityOnChange,
 }: Props) => {
@@ -30,10 +38,13 @@ export const RenderingControls: FC<Props> = ({
                         <calcite-icon icon="square" scale="s" />
                     )}
                 </div>
-                <span className="text-sm ml-2 max-w-[100px] leading-none">
+                <span className="text-xs ml-2 max-w-[90px] leading-none">
                     Show as clipping mask
                 </span>
             </div>
+
+            <ColorPicker color={color} onChange={colorOnChange} />
+
             <div className="flex-grow">
                 <Slider value={selectedOpacity} onChange={opacityOnChange} />
             </div>
