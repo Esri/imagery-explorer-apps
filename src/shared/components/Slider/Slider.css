@@ -24,3 +24,7 @@
     background-color: #00232f;
     border: 1px solid #193d49;
 }
+
+.esri-slider-custom-style .esri-slider__tick-label{
+    @apply text-xs text-custom-light-blue-80 mt-3;
+}

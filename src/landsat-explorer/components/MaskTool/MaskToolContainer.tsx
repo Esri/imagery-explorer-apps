@@ -34,7 +34,7 @@ export const MaskToolContainer = () => {
     const shouldClip = useSelector(selectShouldClipMaskLayer);
 
     return (
-        <div className="w-[280px] h-full mx-2">
+        <div className="w-[250px] h-full mx-4">
             <MaskMethodList
                 selectedMethod={selectedMethod}
                 onChange={(val) => {

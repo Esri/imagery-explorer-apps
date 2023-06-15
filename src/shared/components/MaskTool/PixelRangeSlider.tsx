@@ -43,6 +43,17 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
                     labels: false,
                     rangeLabels: false,
                 },
+                tickConfigs: [
+                    {
+                        mode: 'count',
+                        values: 19,
+                    },
+                    {
+                        mode: 'position',
+                        values: [-1, 0, 1],
+                        labelsVisible: true,
+                    },
+                ],
                 // layout: 'vertical',
             });
 
@@ -90,10 +101,11 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
     }, [values]);
 
     return (
-        <div
-            // id="cloud-filter-container"
-            className="esri-slider-custom-style w-full px-2 h-[50px]"
-            ref={containerRef}
-        ></div>
+        <div className="w-full h-[120px]">
+            <div
+                className="esri-slider-custom-style w-full"
+                ref={containerRef}
+            ></div>
+        </div>
     );
 };
