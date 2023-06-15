@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Slider } from '../Slider';
 import { ColorPicker } from './ColorPicker';
+import classNames from 'classnames';
 
 type Props = {
     /**
@@ -43,9 +44,19 @@ export const RenderingControls: FC<Props> = ({
                 </span>
             </div>
 
-            <ColorPicker color={color} onChange={colorOnChange} />
+            <div
+                className={classNames('mx-2', {
+                    'is-disabled': shouldClip,
+                })}
+            >
+                <ColorPicker color={color} onChange={colorOnChange} />
+            </div>
 
-            <div className="flex-grow">
+            <div
+                className={classNames('flex-grow', {
+                    'is-disabled': shouldClip,
+                })}
+            >
                 <Slider value={selectedOpacity} onChange={opacityOnChange} />
             </div>
         </div>
