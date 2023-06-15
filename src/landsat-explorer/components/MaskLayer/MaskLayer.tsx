@@ -193,15 +193,19 @@ export const MaskLayer: FC<Props> = ({
         const [min, max] = selectedRangeRef.current || [0, 0];
 
         for (let i = 0; i < numPixels; i++) {
-            if (p1[i] >= min && p1[i] <= max) {
-                mask[i] = 1;
-
-                pr[i] = color[0];
-                pg[i] = color[1];
-                pb[i] = color[2];
-            } else {
+            if (p1[i] < min || p1[i] > max || p1[i] === 0) {
+                // should exclude pixels that are outside of the user selected range and
+                // pixels with value of 0 since those are pixels
+                // outside of the mask layer's actual boundary
                 mask[i] = 0;
+                continue;
             }
+
+            mask[i] = 1;
+
+            pr[i] = color[0];
+            pg[i] = color[1];
+            pb[i] = color[2];
         }
 
         pixelBlock.pixels = [pr, pg, pb];
