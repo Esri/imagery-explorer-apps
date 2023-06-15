@@ -7,12 +7,14 @@ import {
     selectAppMode,
 } from '@shared/store/Landsat/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import GroupLayer from 'esri/layers/GroupLayer';
 
 type Props = {
     mapView?: MapView;
+    groupLayer?: GroupLayer;
 };
 
-const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
+const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
     const mode = useSelector(selectAppMode);
 
     const { rasterFunctionName, objectIdOfSelectedScene } =
@@ -48,10 +50,10 @@ const LandsatLayer: FC<Props> = ({ mapView }: Props) => {
     });
 
     useEffect(() => {
-        if (mapView && layer) {
-            mapView.map.add(layer);
+        if (groupLayer && layer) {
+            groupLayer.add(layer);
         }
-    }, [mapView, layer]);
+    }, [groupLayer, layer]);
 
     return null;
 };

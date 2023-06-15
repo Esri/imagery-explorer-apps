@@ -8,9 +8,11 @@ import { getMosaicRule } from '../LandsatLayer/useLandsatLayer';
 import { MaskMethod } from '@shared/store/Analysis/reducer';
 import IRasterFunction from 'esri/layers/support/RasterFunction';
 import PixelBlock from 'esri/layers/support/PixelBlock';
+import GroupLayer from 'esri/layers/GroupLayer';
 
 type Props = {
     mapView?: MapView;
+    groupLayer?: GroupLayer;
     /**
      * name of selected mask method that will be used to create raster function render the mask layer
      */
@@ -35,6 +37,10 @@ type Props = {
      * opacity of the mask layer
      */
     opacity: number;
+    /**
+     * if true, use the mask layer to clip the landsat scene via blend mode
+     */
+    shouldClip: boolean;
 };
 
 type PixelData = {
@@ -112,12 +118,14 @@ export const getRasterFunctionByMaskMethod = async (
 
 export const MaskLayer: FC<Props> = ({
     mapView,
+    groupLayer,
     method,
     objectId,
     visible,
     selectedRange,
     color,
     opacity,
+    shouldClip,
 }) => {
     const layerRef = useRef<IImageryLayer>();
 
@@ -147,9 +155,10 @@ export const MaskLayer: FC<Props> = ({
             renderingRule,
             visible,
             pixelFilter: maskPixels,
+            blendMode: shouldClip ? 'destination-atop' : null,
         });
 
-        mapView.map.add(layerRef.current);
+        groupLayer.add(layerRef.current);
     };
 
     const maskPixels = (pixelData: PixelData) => {
@@ -201,10 +210,10 @@ export const MaskLayer: FC<Props> = ({
     };
 
     useEffect(() => {
-        if (mapView && !layerRef.current) {
+        if (groupLayer && !layerRef.current) {
             init();
         }
-    }, [mapView]);
+    }, [groupLayer]);
 
     useEffect(() => {
         (async () => {
@@ -236,10 +245,7 @@ export const MaskLayer: FC<Props> = ({
 
         if (visible) {
             // reorder it to make sure it is the top most layer on the map
-            mapView.map.reorder(
-                layerRef.current,
-                mapView.map.layers.length - 1
-            );
+            groupLayer.reorder(layerRef.current, mapView.map.layers.length - 1);
         }
     }, [visible]);
 
@@ -257,6 +263,23 @@ export const MaskLayer: FC<Props> = ({
             layerRef.current.opacity = opacity;
         }
     }, [opacity]);
+
+    useEffect(() => {
+        if (layerRef.current) {
+            // layerRef.current.blendMode = shouldClip
+            //     ? 'destination-atop'
+            //     : null;
+
+            if (shouldClip) {
+                layerRef.current.blendMode = 'destination-atop';
+            } else {
+                // in order to reset the blend mode to null,
+                // we need to remove the exiting mask layer and create a new instance of the mask layer
+                groupLayer.remove(layerRef.current);
+                init();
+            }
+        }
+    }, [shouldClip]);
 
     return null;
 };

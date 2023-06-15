@@ -11,17 +11,20 @@ import {
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
+import GroupLayer from 'esri/layers/GroupLayer';
 
 type Props = {
     mapView?: MapView;
+    groupLayer?: GroupLayer;
 };
 
-export const MaskLayerContainer: FC<Props> = ({ mapView }) => {
+export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const mode = useSelector(selectAppMode);
 
     const maskMethod = useSelector(selectMaskMethod);
 
-    const { selectedRange, color, opacity } = useSelector(selectMaskOptions);
+    const { selectedRange, color, opacity, shouldClip } =
+        useSelector(selectMaskOptions);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -38,17 +41,19 @@ export const MaskLayerContainer: FC<Props> = ({ mapView }) => {
         }
 
         return true;
-    }, [anailysisTool, objectIdOfSelectedScene]);
+    }, [mode, anailysisTool, objectIdOfSelectedScene]);
 
     return (
         <MaskLayer
             mapView={mapView}
+            groupLayer={groupLayer}
             method={maskMethod}
             objectId={objectIdOfSelectedScene}
             visible={isVisible}
             selectedRange={selectedRange}
             color={color}
             opacity={opacity}
+            shouldClip={shouldClip}
         />
     );
 };

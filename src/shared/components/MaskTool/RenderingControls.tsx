@@ -25,9 +25,9 @@ export const RenderingControls: FC<Props> = ({
             <div className="flex items-center">
                 <div className="cursor-pointer" onClick={shouldClipOnToggle}>
                     {shouldClip ? (
-                        <calcite-icon icon="square" scale="s" />
-                    ) : (
                         <calcite-icon icon="check-square" scale="s" />
+                    ) : (
+                        <calcite-icon icon="square" scale="s" />
                     )}
                 </div>
                 <span className="text-sm ml-2 max-w-[100px] leading-none">
