@@ -11,6 +11,7 @@ import {
 import {
     updateOpacityOfMaskLayer,
     updateSelectedRange,
+    toggleShouldClipOfMaskOptions,
 } from '@shared/store/Analysis/thunks';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -41,6 +42,10 @@ export const MaskToolContainer = () => {
 
             <MaskRenderingControls
                 selectedOpacity={maskOptions.opacity}
+                shouldClip={maskOptions.shouldClip}
+                shouldClipOnToggle={() => {
+                    dispatch(toggleShouldClipOfMaskOptions());
+                }}
                 opacityOnChange={(val) => {
                     dispatch(updateOpacityOfMaskLayer(val));
                 }}

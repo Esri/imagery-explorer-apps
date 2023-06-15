@@ -1,5 +1,5 @@
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-import { maskOptionsChanged } from './reducer';
+import { MaskOptions, maskOptionsChanged } from './reducer';
 import { selectMaskOptions } from './selectors';
 
 /**
@@ -39,6 +39,18 @@ export const updateOpacityOfMaskLayer =
         const updatedMaskOptions = {
             ...maskOptions,
             opacity,
+        };
+
+        dispatch(maskOptionsChanged(updatedMaskOptions));
+    };
+
+export const toggleShouldClipOfMaskOptions =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const maskOptions = selectMaskOptions(getState());
+
+        const updatedMaskOptions: MaskOptions = {
+            ...maskOptions,
+            shouldClip: !maskOptions.shouldClip,
         };
 
         dispatch(maskOptionsChanged(updatedMaskOptions));
