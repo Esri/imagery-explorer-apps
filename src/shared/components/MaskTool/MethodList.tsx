@@ -7,18 +7,35 @@ type Props = {
     onChange: (val: SpectralIndex) => void;
 };
 
-const MaskMIndices: SpectralIndex[] = ['water', 'vegetation', 'moisture'];
+const MaskIndexOptions: {
+    value: SpectralIndex;
+    label?: string;
+}[] = [
+    {
+        value: 'water',
+        label: '',
+    },
+    {
+        value: 'vegetation',
+        label: '',
+    },
+    {
+        value: 'moisture',
+        label: '',
+    },
+];
 
 export const MethodList: FC<Props> = ({
     selectedSpectralIndex,
     onChange,
 }: Props) => {
     const data: DropdownData[] = useMemo(() => {
-        return MaskMIndices.map((spectralIndex) => {
+        return MaskIndexOptions.map((d) => {
+            const { value, label } = d;
             return {
-                value: spectralIndex,
-                label: spectralIndex.toUpperCase(),
-                selected: spectralIndex === selectedSpectralIndex,
+                value,
+                label: label || value.toUpperCase(),
+                selected: value === selectedSpectralIndex,
             };
         });
     }, [selectedSpectralIndex]);

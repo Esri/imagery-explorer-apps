@@ -9,6 +9,7 @@ import { SpectralIndex } from '@shared/store/Analysis/reducer';
 import IRasterFunction from 'esri/layers/support/RasterFunction';
 import PixelBlock from 'esri/layers/support/PixelBlock';
 import GroupLayer from 'esri/layers/GroupLayer';
+import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-2/helpers';
 
 type Props = {
     mapView?: MapView;
@@ -47,53 +48,6 @@ type PixelData = {
     pixelBlock: PixelBlock;
 };
 
-/**
- * Band Index by Mask Method
- *
- * - Band 1: Coastal aerosol (0.43 - 0.45 µm)
- * - Band 2: Blue (0.450 - 0.51 µm)
- * - Band 3: Green (0.53 - 0.59 µm)
- * - Band 4: Red (0.64 - 0.67 µm)
- * - Band 5: Near-Infrared (0.85 - 0.88 µm)
- * - Band 6: SWIR 1 (1.57 - 1.65 µm)
- * - Band 7: SWIR 2 (2.11 - 2.29 µm)
- * - Band 8: Panchromatic (15 meters)
- *
- * @see https://pro.arcgis.com/en/pro-app/3.0/help/analysis/raster-functions/band-arithmetic-function.htm
- * @see https://www.esri.com/about/newsroom/arcuser/spectral-library/
- */
-const BandIndexesLookup: Record<SpectralIndex, string> = {
-    /**
-     * The Normalized Difference Moisture Index (NDMI) is sensitive to the moisture levels in vegetation.
-     * It is used to monitor droughts as well as monitor fuel levels in fire-prone areas.
-     * It uses NIR and SWIR bands to create a ratio designed to mitigate illumination and atmospheric effects.
-     *
-     * NDMI = (NIR - SWIR1)/(NIR + SWIR1)
-     * - NIR = pixel values from the near-infrared band
-     * - SWIR1 = pixel values from the first shortwave infrared band
-     */
-    moisture: '(B5-B6)/(B5+B6)',
-    /**
-     * The Green Normalized Difference Vegetation Index (GNDVI) method is a vegetation index for estimating photo synthetic activity
-     * and is a commonly used vegetation index to determine water and nitrogen uptake into the plant canopy.
-     *
-     * GNDVI = (NIR-Green)/(NIR+Green)
-     * - NIR = pixel values from the near-infrared band
-     * - Green = pixel values from the green band
-     *
-     * This index outputs values between -1.0 and 1.0.
-     */
-    vegetation: '(B5-B4)/(B5+B4)',
-    /**
-     * The Modified Normalized Difference Water Index (MNDWI) uses green and SWIR bands for the enhancement of open water features.
-     *
-     * MNDWI = (Green - SWIR) / (Green + SWIR)
-     * - Green = pixel values from the green band
-     * - SWIR = pixel values from the shortwave infrared band
-     */
-    water: '(B3-B6)/(B3+B6)',
-};
-
 export const getRasterFunctionBySpectralIndex = async (
     spectralIndex: SpectralIndex
 ): Promise<IRasterFunction> => {
@@ -112,7 +66,7 @@ export const getRasterFunctionBySpectralIndex = async (
         outputPixelType: 'f32',
         functionArguments: {
             Method: 0,
-            BandIndexes: BandIndexesLookup[spectralIndex],
+            BandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
         },
     });
 };
