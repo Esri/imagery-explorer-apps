@@ -1,5 +1,6 @@
 import IExtent from 'esri/geometry/Extent';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
+import { getMosaicRuleByObjectId } from './helpers';
 
 type ExportImageParams = {
     /**
@@ -42,12 +43,7 @@ export const exportImage = async ({
         imageSR: '102100',
         format: 'jpgpng',
         size: `${width},${height}`,
-        mosaicRule: JSON.stringify({
-            ascending: false,
-            lockRasterIds: [objectId],
-            mosaicMethod: 'esriMosaicLockRaster',
-            where: `objectid in (${objectId})`,
-        }),
+        mosaicRule: JSON.stringify(getMosaicRuleByObjectId(objectId)),
         renderingRule: JSON.stringify({ rasterFunction: rasterFunctionName }),
     });
 

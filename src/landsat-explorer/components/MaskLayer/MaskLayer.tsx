@@ -5,7 +5,7 @@ import IMosaicRule from 'esri/layers/support/MosaicRule';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-2/config';
 import MapView from 'esri/views/MapView';
 import { getMosaicRule } from '../LandsatLayer/useLandsatLayer';
-import { MaskMethod } from '@shared/store/Analysis/reducer';
+import { SpectralIndex } from '@shared/store/Analysis/reducer';
 import IRasterFunction from 'esri/layers/support/RasterFunction';
 import PixelBlock from 'esri/layers/support/PixelBlock';
 import GroupLayer from 'esri/layers/GroupLayer';
@@ -14,9 +14,9 @@ type Props = {
     mapView?: MapView;
     groupLayer?: GroupLayer;
     /**
-     * name of selected mask method that will be used to create raster function render the mask layer
+     * name of selected spectral index that will be used to create raster function render the mask layer
      */
-    method: MaskMethod;
+    spectralIndex: SpectralIndex;
     /**
      * object id of the selected Landsat scene
      */
@@ -60,8 +60,9 @@ type PixelData = {
  * - Band 8: Panchromatic (15 meters)
  *
  * @see https://pro.arcgis.com/en/pro-app/3.0/help/analysis/raster-functions/band-arithmetic-function.htm
+ * @see https://www.esri.com/about/newsroom/arcuser/spectral-library/
  */
-const BandIndexesLookup: Record<MaskMethod, string> = {
+const BandIndexesLookup: Record<SpectralIndex, string> = {
     /**
      * The Normalized Difference Moisture Index (NDMI) is sensitive to the moisture levels in vegetation.
      * It is used to monitor droughts as well as monitor fuel levels in fire-prone areas.
@@ -93,10 +94,10 @@ const BandIndexesLookup: Record<MaskMethod, string> = {
     water: '(B3-B6)/(B3+B6)',
 };
 
-export const getRasterFunctionByMaskMethod = async (
-    method: MaskMethod
+export const getRasterFunctionBySpectralIndex = async (
+    spectralIndex: SpectralIndex
 ): Promise<IRasterFunction> => {
-    if (!method) {
+    if (!spectralIndex) {
         return null;
     }
 
@@ -111,7 +112,7 @@ export const getRasterFunctionByMaskMethod = async (
         outputPixelType: 'f32',
         functionArguments: {
             Method: 0,
-            BandIndexes: BandIndexesLookup[method],
+            BandIndexes: BandIndexesLookup[spectralIndex],
         },
     });
 };
@@ -119,7 +120,7 @@ export const getRasterFunctionByMaskMethod = async (
 export const MaskLayer: FC<Props> = ({
     mapView,
     groupLayer,
-    method,
+    spectralIndex,
     objectId,
     visible,
     selectedRange,
@@ -145,7 +146,9 @@ export const MaskLayer: FC<Props> = ({
 
         const mosaicRule = objectId ? await getMosaicRule(objectId) : null;
 
-        const renderingRule = await getRasterFunctionByMaskMethod(method);
+        const renderingRule = await getRasterFunctionBySpectralIndex(
+            spectralIndex
+        );
 
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
@@ -226,9 +229,9 @@ export const MaskLayer: FC<Props> = ({
             }
 
             layerRef.current.renderingRule =
-                (await getRasterFunctionByMaskMethod(method)) as any;
+                (await getRasterFunctionBySpectralIndex(spectralIndex)) as any;
         })();
-    }, [method]);
+    }, [spectralIndex]);
 
     useEffect(() => {
         (async () => {

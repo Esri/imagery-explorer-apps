@@ -1,3 +1,5 @@
+import { SpectralIndex } from '@shared/store/Analysis/reducer';
+
 type LandsatProductInfo = {
     /**
      * name of the sensor:
@@ -90,5 +92,25 @@ export const parseLandsatInfo = (productId: string): LandsatProductInfo => {
         collectionNumber: COLLECTION_NUMBER,
         correctionLevel: CORRECTION_LEVEL,
         processingDate: processingDate.getTime(),
+    };
+};
+
+export const getMosaicRuleByObjectId = (objectId: number) => {
+    return {
+        ascending: false,
+        lockRasterIds: [objectId],
+        mosaicMethod: 'esriMosaicLockRaster',
+        where: `objectid in (${objectId})`,
+    };
+};
+
+export const getRasterFunctionByMaskMethod = (spectralIndex: SpectralIndex) => {
+    return {
+        rasterFunction: 'BandArithmetic',
+        rasterFunctionArguments: {
+            Metho: 0,
+            BandIndexes: '0+(1*((B3-B6)/(B3+B6)))',
+        },
+        outputPixelType: 'F32',
     };
 };

@@ -4,10 +4,10 @@ import { MaskLayer } from './MaskLayer';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
-    selectMaskMethod,
     selectMaskOptions,
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
+    selectSpectralIndex,
 } from '@shared/store/Analysis/selectors';
 import {
     selectAppMode,
@@ -23,7 +23,7 @@ type Props = {
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const mode = useSelector(selectAppMode);
 
-    const maskMethod = useSelector(selectMaskMethod);
+    const spectralIndex = useSelector(selectSpectralIndex);
 
     const { selectedRange, color } = useSelector(selectMaskOptions);
 
@@ -52,7 +52,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         <MaskLayer
             mapView={mapView}
             groupLayer={groupLayer}
-            method={maskMethod}
+            spectralIndex={spectralIndex}
             objectId={objectIdOfSelectedScene}
             visible={isVisible}
             selectedRange={selectedRange}

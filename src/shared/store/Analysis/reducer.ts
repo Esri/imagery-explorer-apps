@@ -7,7 +7,11 @@ import {
 
 export type AnalysisTool = 'mask' | 'profile';
 
-export type MaskMethod = 'water' | 'vegetation' | 'moisture';
+/**
+ * Spectral indices are combinations of the pixel values from two or more spectral bands in a multispectral image.
+ * Spectral indices are designed to highlight pixels showing the relative abundance or lack of a land-cover type of interest in an image.
+ */
+export type SpectralIndex = 'water' | 'vegetation' | 'moisture';
 
 export type MaskOptions = {
     selectedRange: number[];
@@ -23,13 +27,13 @@ export type AnalysisState = {
      */
     tool: AnalysisTool;
     /**
-     * method to be used in the mask tool
+     * user selected spectral index to be used in the mask tool
      */
-    maskMethod: MaskMethod;
+    spectralIndex: SpectralIndex;
     /**
-     * maks tool options by method name
+     * maks tool options by spectral index name
      */
-    maskOptionsByMethodName: Record<MaskMethod, MaskOptions>;
+    maskOptionsBySpectralIndex: Record<SpectralIndex, MaskOptions>;
     /**
      * opacity of the mask layer
      */
@@ -42,10 +46,10 @@ export type AnalysisState = {
 
 export const initialAnalysisState: AnalysisState = {
     tool: 'mask',
-    maskMethod: 'water',
+    spectralIndex: 'water',
     maskLayerOpacity: 1,
     shouldClipMaskLayer: false,
-    maskOptionsByMethodName: {
+    maskOptionsBySpectralIndex: {
         moisture: {
             selectedRange: [0, 1],
             color: [89, 255, 252],
@@ -71,12 +75,12 @@ const slice = createSlice({
         ) => {
             state.tool = action.payload;
         },
-        maskMethodChanged: (state, action: PayloadAction<MaskMethod>) => {
-            state.maskMethod = action.payload;
+        spectralIndexChanged: (state, action: PayloadAction<SpectralIndex>) => {
+            state.spectralIndex = action.payload;
         },
         maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
-            const maskMethod = state.maskMethod;
-            state.maskOptionsByMethodName[maskMethod] = action.payload;
+            const spectralIndex = state.spectralIndex;
+            state.maskOptionsBySpectralIndex[spectralIndex] = action.payload;
         },
         maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
             state.maskLayerOpacity = action.payload;
@@ -91,7 +95,7 @@ const { reducer } = slice;
 
 export const {
     activeAnalysisToolChanged,
-    maskMethodChanged,
+    spectralIndexChanged,
     maskOptionsChanged,
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,

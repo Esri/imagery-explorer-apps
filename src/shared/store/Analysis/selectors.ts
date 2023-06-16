@@ -6,15 +6,16 @@ export const selectActiveAnalysisTool = createSelector(
     (tool) => tool
 );
 
-export const selectMaskMethod = createSelector(
-    (state: RootState) => state.Analysis.maskMethod,
-    (maskMethod) => maskMethod
+export const selectSpectralIndex = createSelector(
+    (state: RootState) => state.Analysis.spectralIndex,
+    (spectralIndex) => spectralIndex
 );
 
 export const selectMaskOptions = createSelector(
-    (state: RootState) => state.Analysis.maskMethod,
-    (state: RootState) => state.Analysis.maskOptionsByMethodName,
-    (maskMethod, maskOptionsByMethodName) => maskOptionsByMethodName[maskMethod]
+    (state: RootState) => state.Analysis.spectralIndex,
+    (state: RootState) => state.Analysis.maskOptionsBySpectralIndex,
+    (spectralIndex, maskOptionsBySpectralIndex) =>
+        maskOptionsBySpectralIndex[spectralIndex]
 );
 
 export const selectMaskLayerOpcity = createSelector(

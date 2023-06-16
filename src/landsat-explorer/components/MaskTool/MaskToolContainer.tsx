@@ -5,12 +5,12 @@ import {
 } from '@shared/components/MaskTool';
 import {
     maskLayerOpacityChanged,
-    maskMethodChanged,
     shouldClipMaskLayerToggled,
+    spectralIndexChanged,
 } from '@shared/store/Analysis/reducer';
 import {
     selectMaskLayerOpcity,
-    selectMaskMethod,
+    selectSpectralIndex,
     selectMaskOptions,
     selectShouldClipMaskLayer,
 } from '@shared/store/Analysis/selectors';
@@ -25,7 +25,7 @@ import { useSelector } from 'react-redux';
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
 
-    const selectedMethod = useSelector(selectMaskMethod);
+    const selectedSpectralIndex = useSelector(selectSpectralIndex);
 
     const maskOptions = useSelector(selectMaskOptions);
 
@@ -36,9 +36,9 @@ export const MaskToolContainer = () => {
     return (
         <div className="w-[250px] h-full mx-4">
             <MaskMethodList
-                selectedMethod={selectedMethod}
+                selectedSpectralIndex={selectedSpectralIndex}
                 onChange={(val) => {
-                    dispatch(maskMethodChanged(val));
+                    dispatch(spectralIndexChanged(val));
                 }}
             />
 

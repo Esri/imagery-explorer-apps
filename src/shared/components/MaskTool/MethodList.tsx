@@ -1,24 +1,27 @@
-import { MaskMethod } from '@shared/store/Analysis/reducer';
+import { SpectralIndex } from '@shared/store/Analysis/reducer';
 import React, { FC, useMemo } from 'react';
 import { Dropdown, DropdownData } from '../Dropdown';
 
 type Props = {
-    selectedMethod: MaskMethod;
-    onChange: (val: MaskMethod) => void;
+    selectedSpectralIndex: SpectralIndex;
+    onChange: (val: SpectralIndex) => void;
 };
 
-const MaskMethods: MaskMethod[] = ['water', 'vegetation', 'moisture'];
+const MaskMIndices: SpectralIndex[] = ['water', 'vegetation', 'moisture'];
 
-export const MethodList: FC<Props> = ({ selectedMethod, onChange }: Props) => {
+export const MethodList: FC<Props> = ({
+    selectedSpectralIndex,
+    onChange,
+}: Props) => {
     const data: DropdownData[] = useMemo(() => {
-        return MaskMethods.map((method) => {
+        return MaskMIndices.map((spectralIndex) => {
             return {
-                value: method,
-                label: method.toUpperCase(),
-                selected: method === selectedMethod,
+                value: spectralIndex,
+                label: spectralIndex.toUpperCase(),
+                selected: spectralIndex === selectedSpectralIndex,
             };
         });
-    }, [selectedMethod]);
+    }, [selectedSpectralIndex]);
 
     return (
         <div className="flex items-center w-full">
