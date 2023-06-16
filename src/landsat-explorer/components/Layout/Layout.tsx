@@ -49,6 +49,12 @@ const Layout = () => {
                         </div>
                     </>
                 )}
+
+                {mode === 'dynamic' && (
+                    <div className="flex flex-grow justify-end">
+                        <RasterFunctionSelector />
+                    </div>
+                )}
             </BottomPanel>
         </>
     );

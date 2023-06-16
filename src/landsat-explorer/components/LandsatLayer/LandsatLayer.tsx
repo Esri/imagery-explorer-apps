@@ -23,9 +23,9 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
     const animationStatus = useSelector(selectAnimationStatus);
 
     const getVisibility = () => {
-        // if (mode === 'explore') {
-        //     return true;
-        // }
+        if (mode === 'dynamic') {
+            return true;
+        }
 
         if (mode === 'find a scene' || mode === 'analysis') {
             return objectIdOfSelectedScene !== null;

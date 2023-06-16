@@ -127,7 +127,7 @@ export const MaskLayer: FC<Props> = ({
             return;
         }
 
-        const { pixels, width, height, mask } = pixelBlock;
+        const { pixels, width, height } = pixelBlock;
 
         if (!pixels) {
             return;
@@ -137,7 +137,7 @@ export const MaskLayer: FC<Props> = ({
 
         const n = pixels[0].length;
 
-        if (!mask) {
+        if (!pixelBlock.mask) {
             pixelBlock.mask = new Uint8Array(n);
         }
 
@@ -154,11 +154,11 @@ export const MaskLayer: FC<Props> = ({
                 // should exclude pixels that are outside of the user selected range and
                 // pixels with value of 0 since those are pixels
                 // outside of the mask layer's actual boundary
-                mask[i] = 0;
+                pixelBlock.mask[i] = 0;
                 continue;
             }
 
-            mask[i] = 1;
+            pixelBlock.mask[i] = 1;
 
             pr[i] = color[0];
             pg[i] = color[1];
