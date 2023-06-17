@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import MapView from './MapView';
 import { WEB_MAP_ID } from '../../constants/map';
 import { useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
 import { centerChanged, zoomChanged } from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
+import { MapLoadingIndicator } from './MapLoadingIndicator';
 
 type Props = {
     children?: React.ReactNode;
@@ -29,6 +30,8 @@ const MapViewContainer: FC<Props> = ({ children }) => {
     const zoom = useSelector(selectMapZoom);
 
     const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
+
+    const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
     useEffect(() => {
         // console.log('map view zoom and center has changed', center, zoom);
@@ -62,7 +65,10 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                     onClick={(point) => {
                         console.log('clicked on map', point);
                     }}
+                    mapViewUpdatingOnChange={setIsUpdating}
                 />
+
+                <MapLoadingIndicator active={isUpdating} />
             </MapView>
         </div>
     );

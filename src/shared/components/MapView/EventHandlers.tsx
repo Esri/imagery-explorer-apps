@@ -19,9 +19,18 @@ type Props = {
      * @returns
      */
     onClick?: (point: Point) => void;
+    /**
+     * Fires when Map View starts/stops updating
+     */
+    mapViewUpdatingOnChange: (isUpdating: boolean) => void;
 };
 
-const EventHandlers: FC<Props> = ({ mapView, onStationary, onClick }) => {
+const EventHandlers: FC<Props> = ({
+    mapView,
+    onStationary,
+    onClick,
+    mapViewUpdatingOnChange,
+}) => {
     const initEventHandlers = async () => {
         type Modules = [typeof IReactiveUtils];
 
@@ -51,6 +60,14 @@ const EventHandlers: FC<Props> = ({ mapView, onStationary, onClick }) => {
                 onClick(evt.mapPoint);
             });
         }
+
+        reactiveUtils.watch(
+            () => mapView.updating,
+            () => {
+                // console.log('mapview is updating')
+                mapViewUpdatingOnChange(mapView.updating);
+            }
+        );
     };
 
     useEffect(() => {
