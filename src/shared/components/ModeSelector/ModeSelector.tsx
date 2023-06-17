@@ -83,14 +83,15 @@ export const ModeSelector: FC<Props> = ({
                 selectedMode === 'find a scene') && (
                 <div className="container-of-secondary-controls px-1">
                     {exploreModes.map((mode) => (
-                        <div key={mode} className={ButtonWrapperClassnames}>
+                        <div key={mode} className={'mb-1'}>
                             <Button
-                                fullHeight={true}
+                                // fullHeight={true}
                                 appearance={
                                     mode === selectedMode
                                         ? 'solid'
                                         : 'transparent'
                                 }
+                                scale="s"
                                 onClickHandler={() => {
                                     selectedModeOnChange(mode);
                                 }}

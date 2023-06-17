@@ -15,7 +15,7 @@ type Props = {
 };
 
 /**
- * A slider component to select cloud coverage that will be used to find Landsat scenes
+ * A slider component to select fixel range of the mask layer for selected Landsat scene
  * @param param0
  * @returns
  */

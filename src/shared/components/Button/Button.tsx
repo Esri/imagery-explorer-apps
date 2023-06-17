@@ -18,6 +18,10 @@ type Props = {
      */
     onClickHandler: () => void;
     children?: React.ReactNode;
+    /**
+     * scale/size of the button
+     */
+    scale?: 's' | 'm';
 };
 
 export const Button: FC<Props> = ({
@@ -25,11 +29,12 @@ export const Button: FC<Props> = ({
     fullHeight = false,
     onClickHandler,
     children,
+    scale = 'm',
 }: Props) => {
     return (
         <div
             className={classNames(
-                'p-2 px-4 border min-w-[9rem] shrink-0 text-sm md:text-base border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
+                'p-2 px-4 border min-w-[9rem] shrink-0 text-sm border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
                 {
                     'bg-custom-light-blue': appearance === 'solid',
                     'text-custom-background': appearance === 'solid',
@@ -38,6 +43,8 @@ export const Button: FC<Props> = ({
                     'text-custom-light-blue': appearance === 'transparent',
                     'h-full': fullHeight,
                     'flex items-center': fullHeight,
+                    'md:text-base': scale === 'm',
+                    'min-w-[6rem]': scale === 's',
                 }
             )}
             onClick={onClickHandler}

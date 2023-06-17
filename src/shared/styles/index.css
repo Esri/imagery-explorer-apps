@@ -51,7 +51,7 @@
      * It contains component like "Swipe Side Selector", "Animation Frame Control" and etc
      */
     .container-of-secondary-controls {
-        @apply w-40 shrink-0 mx-1;
+        @apply w-36 shrink-0 mx-1;
     }
 }
 

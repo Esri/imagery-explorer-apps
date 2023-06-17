@@ -11,6 +11,7 @@ import { selectAppMode } from '@shared/store/Landsat/selectors';
 import { AnimationControl } from '../AnimationControl';
 import { MaskTool } from '../MaskTool';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
+import { AnalysisToolSelector } from '../AnalysisToolSelector';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -23,10 +24,13 @@ const Layout = () => {
             <BottomPanel>
                 <ModeSelector />
 
-                {(mode === 'swipe' || mode === 'animate') && (
+                {(mode === 'swipe' ||
+                    mode === 'animate' ||
+                    mode === 'analysis') && (
                     <div className="container-of-secondary-controls">
                         <SwipeLayerSelector />
                         <AnimationControl />
+                        <AnalysisToolSelector />
                     </div>
                 )}
 
