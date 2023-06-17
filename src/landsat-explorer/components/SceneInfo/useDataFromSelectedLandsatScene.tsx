@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
+    selectAppMode,
     selectAvailableScenesByObjectId,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
@@ -25,7 +26,14 @@ export const useDataFromSelectedLandsatScene = () => {
         selectAvailableScenesByObjectId
     );
 
+    const mode = useSelector(selectAppMode);
+
     const landsatScene = useMemo(() => {
+        // no need to show Scene Info in Analysis mode
+        if (mode === 'analysis') {
+            return null;
+        }
+
         const objectId = queryParams4SelectedScene?.objectIdOfSelectedScene;
 
         if (!objectId) {
@@ -41,7 +49,7 @@ export const useDataFromSelectedLandsatScene = () => {
         landsatSceneByObjectId.set(objectId, { ...data });
 
         return data;
-    }, [queryParams4SelectedScene, availableScenesByObjectId]);
+    }, [queryParams4SelectedScene, availableScenesByObjectId, mode]);
 
     return landsatScene;
 };
