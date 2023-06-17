@@ -43,10 +43,19 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
         return false;
     };
 
+    const getObjectId = () => {
+        // should ignore the object id of selected scene if in dynamic mode,
+        if (mode === 'dynamic') {
+            return null;
+        }
+
+        return objectIdOfSelectedScene;
+    };
+
     const layer = useLandsatLayer({
         visible: getVisibility(),
         rasterFunction: rasterFunctionName,
-        objectId: objectIdOfSelectedScene,
+        objectId: getObjectId(),
     });
 
     useEffect(() => {
