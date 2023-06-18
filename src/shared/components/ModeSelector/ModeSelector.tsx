@@ -23,35 +23,37 @@ type Props = {
     selectedModeOnChange: (value: AppMode) => void;
 };
 
-const ButtonWrapperClassnames = `mb-1 h-12`;
+const ButtonWrapperClassnames = `relative mb-1 h-12`;
 
 export const ModeSelector: FC<Props> = ({
     selectedMode,
     disabled,
     selectedModeOnChange,
 }: Props) => {
+    const isExploreButtonSelected =
+        selectedMode === 'find a scene' || selectedMode === 'dynamic';
+
     return (
         <>
             <div
-                className={classNames({
+                className={classNames('relative', {
                     'is-disabled': disabled,
                 })}
             >
                 {/* this is button to enable selection of either 'find a scene' or 'dynamic' mode */}
-                <div className={ButtonWrapperClassnames}>
+                <div
+                    className={classNames(ButtonWrapperClassnames, {
+                        'horizontal-indicator-on-right':
+                            isExploreButtonSelected,
+                    })}
+                >
                     <Button
                         fullHeight={true}
                         appearance={
-                            selectedMode === 'find a scene' ||
-                            selectedMode === 'dynamic'
-                                ? 'solid'
-                                : 'transparent'
+                            isExploreButtonSelected ? 'solid' : 'transparent'
                         }
                         onClickHandler={() => {
-                            if (
-                                selectedMode === 'find a scene' ||
-                                selectedMode === 'dynamic'
-                            ) {
+                            if (isExploreButtonSelected) {
                                 return;
                             }
 
@@ -63,7 +65,13 @@ export const ModeSelector: FC<Props> = ({
                 </div>
 
                 {modes.map((mode) => (
-                    <div key={mode} className={ButtonWrapperClassnames}>
+                    <div
+                        key={mode}
+                        className={classNames(ButtonWrapperClassnames, {
+                            'horizontal-indicator-on-right':
+                                mode === selectedMode,
+                        })}
+                    >
                         <Button
                             fullHeight={true}
                             appearance={
@@ -79,11 +87,16 @@ export const ModeSelector: FC<Props> = ({
                 ))}
             </div>
 
-            {(selectedMode === 'dynamic' ||
-                selectedMode === 'find a scene') && (
-                <div className="container-of-secondary-controls px-1">
+            {isExploreButtonSelected && (
+                <div className="container-of-secondary-controls">
                     {exploreModes.map((mode) => (
-                        <div key={mode} className={'mb-1'}>
+                        <div
+                            key={mode}
+                            className={classNames('relative mb-1', {
+                                'horizontal-indicator-on-left':
+                                    mode === selectedMode,
+                            })}
+                        >
                             <Button
                                 // fullHeight={true}
                                 appearance={

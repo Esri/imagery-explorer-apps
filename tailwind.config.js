@@ -48,7 +48,8 @@ module.exports = {
         'layer-toggle-top-position-mobile': '55px',
         'search-widget-top-position': '50px',
         'search-widget-top-position-mobile': '90px',
-        'cloud-slider-height': '80px'
+        'cloud-slider-height': '80px',
+        'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)'
       },
       dropShadow: {
         'custom-light-blue': '0px 0px 4px rgba(191,238,254, 1)',

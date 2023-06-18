@@ -43,7 +43,7 @@ export const AnimationControlContainer = () => {
     }
 
     return (
-        <div className="w-full px-1">
+        <div className="w-full">
             <AnimationFrames
                 data={animationFramesData}
                 disabled={isAnimationPlaying}

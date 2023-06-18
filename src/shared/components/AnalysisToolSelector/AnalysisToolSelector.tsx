@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { AnalysisTool } from '@shared/store/Analysis/reducer';
 import { Button } from '../Button';
+import classNames from 'classnames';
 
 const AnalysisTools: AnalysisTool[] = ['mask', 'profile'];
 
@@ -16,7 +17,12 @@ export const AnalysisToolSelector: FC<Props> = ({
     return (
         <>
             {AnalysisTools.map((tool) => (
-                <div key={tool} className={'mb-1'}>
+                <div
+                    key={tool}
+                    className={classNames('relative mb-1', {
+                        'horizontal-indicator-on-left': tool === selectedTool,
+                    })}
+                >
                     <Button
                         // fullHeight={true}
                         appearance={

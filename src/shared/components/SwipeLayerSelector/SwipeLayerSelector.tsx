@@ -4,6 +4,7 @@ import {
     QueryParams4ImageryScene,
     Side4SwipeMode,
 } from '../../store/Landsat/reducer';
+import classNames from 'classnames';
 
 type Props = {
     selectedSide: Side4SwipeMode;
@@ -50,9 +51,18 @@ export const SwipeLayerSelector: FC<Props> = ({
     };
 
     return (
-        <div className="flex flex-col h-full mx-2">
+        <div className="flex flex-col h-full w-full">
             {sides.map((side) => (
-                <div className="mb-1 h-1/2 flex items-center" key={side}>
+                <div
+                    className={classNames(
+                        'relative mb-1 h-1/2 flex items-center',
+                        {
+                            'horizontal-indicator-on-left':
+                                selectedSide === side,
+                        }
+                    )}
+                    key={side}
+                >
                     <Button
                         appearance={
                             selectedSide === side ? 'solid' : 'transparent'
