@@ -38,30 +38,27 @@ const Layout = () => {
                     )}
                 </div>
 
-                {dynamicModeOn === false && (
-                    <div className="flex flex-grow justify-center">
-                        <div className="flex shrink-0">
-                            <Calendar />
-                        </div>
+                <div className="flex flex-grow justify-center">
+                    {dynamicModeOn && <RasterFunctionSelector />}
 
-                        <div className="flex ml-3 3xl:ml-10">
-                            <RasterFunctionSelector />
-                            <SceneInfo />
-                        </div>
+                    {dynamicModeOn === false && (
+                        <>
+                            <div className="flex shrink-0">
+                                <Calendar />
+                            </div>
 
-                        <div className="ml-3 3xl:ml-10">
-                            {mode === 'analysis' && analysisTool === 'mask' && (
-                                <MaskTool />
-                            )}
-                        </div>
-                    </div>
-                )}
+                            <div className="flex ml-2 3xl:ml-12">
+                                <RasterFunctionSelector />
+                                <SceneInfo />
+                            </div>
 
-                {dynamicModeOn && (
-                    <div className="flex flex-grow justify-center">
-                        <RasterFunctionSelector />
-                    </div>
-                )}
+                            <div className="ml-2 3xl:ml-12">
+                                {mode === 'analysis' &&
+                                    analysisTool === 'mask' && <MaskTool />}
+                            </div>
+                        </>
+                    )}
+                </div>
             </BottomPanel>
         </>
     );

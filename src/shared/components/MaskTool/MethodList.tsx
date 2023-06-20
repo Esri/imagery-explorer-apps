@@ -51,9 +51,9 @@ export const MethodList: FC<Props> = ({
                 <Dropdown data={data} onChange={onChange} />
             </div>
 
-            <div className="ml-1 shrink-0 flex items-center cursor-pointer">
+            {/* <div className="ml-1 shrink-0 flex items-center cursor-pointer">
                 <calcite-icon scale="s" icon="download-to" />
-            </div>
+            </div> */}
         </div>
     );
 };
