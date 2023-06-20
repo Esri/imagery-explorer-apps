@@ -18,44 +18,47 @@ const Layout = () => {
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
+    const dynamicModeOn = mode === 'dynamic';
+
     return (
         <>
             <AppHeader title="Landsat Explorer" />
             <BottomPanel>
-                <ModeSelector />
+                <div className="flex flex-shrink-0">
+                    <ModeSelector />
 
-                {(mode === 'swipe' ||
-                    mode === 'animate' ||
-                    mode === 'analysis') && (
-                    <div className="container-of-secondary-controls">
-                        <SwipeLayerSelector />
-                        <AnimationControl />
-                        <AnalysisToolSelector />
+                    {(mode === 'swipe' ||
+                        mode === 'animate' ||
+                        mode === 'analysis') && (
+                        <div className="container-of-secondary-controls">
+                            <SwipeLayerSelector />
+                            <AnimationControl />
+                            <AnalysisToolSelector />
+                        </div>
+                    )}
+                </div>
+
+                {dynamicModeOn === false && (
+                    <div className="flex flex-grow justify-center">
+                        <div className="flex shrink-0">
+                            <Calendar />
+                        </div>
+
+                        <div className="flex ml-3 3xl:ml-10">
+                            <RasterFunctionSelector />
+                            <SceneInfo />
+                        </div>
+
+                        <div className="ml-3 3xl:ml-10">
+                            {mode === 'analysis' && analysisTool === 'mask' && (
+                                <MaskTool />
+                            )}
+                        </div>
                     </div>
                 )}
 
-                {mode === 'analysis' && analysisTool === 'mask' && <MaskTool />}
-
-                {(mode === 'find a scene' ||
-                    mode === 'swipe' ||
-                    mode === 'animate' ||
-                    mode === 'analysis') && (
-                    <>
-                        <div className="flex flex-grow justify-between">
-                            <div className="flex shrink-0 pl-4">
-                                <Calendar />
-                            </div>
-
-                            <div className="flex">
-                                <RasterFunctionSelector />
-                                <SceneInfo />
-                            </div>
-                        </div>
-                    </>
-                )}
-
-                {mode === 'dynamic' && (
-                    <div className="flex flex-grow justify-end">
+                {dynamicModeOn && (
+                    <div className="flex flex-grow justify-center">
                         <RasterFunctionSelector />
                     </div>
                 )}

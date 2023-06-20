@@ -6,6 +6,9 @@ module.exports = {
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
+    screens: {
+      '3xl': '1920px'
+    },
     colors: {
       ...colors,
       custom: {
