@@ -113,6 +113,7 @@ export const MaskLayer: FC<Props> = ({
             visible,
             pixelFilter: maskPixels,
             blendMode: shouldClip ? 'destination-atop' : null,
+            effect: 'drop-shadow(2px, 2px, 3px, #000)',
         });
 
         groupLayer.add(layerRef.current);
