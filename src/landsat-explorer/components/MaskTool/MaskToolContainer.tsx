@@ -60,7 +60,7 @@ export const MaskToolContainer = () => {
     // }, [objectIdOfSelectedScene, selectedSpectralIndex])
 
     return (
-        <div className="w-[250px] h-full mx-4">
+        <div className="w-[250px] h-full">
             <MaskMethodList
                 selectedSpectralIndex={selectedSpectralIndex}
                 onChange={(val) => {
