@@ -37,3 +37,11 @@ export const selectAcquisitionMonth4ProfileTool = createSelector(
     (state: RootState) => state.Analysis.acquisitionMonth4ProfileTool,
     (acquisitionMonth4ProfileTool) => acquisitionMonth4ProfileTool
 );
+
+export const selectProfileData = createSelector(
+    (state: RootState) => state.Analysis.profileData.objectIds,
+    (state: RootState) => state.Analysis.profileData.byObjectId,
+    (objectIds, byObjectId) => {
+        return objectIds.map((id) => byObjectId[id]);
+    }
+);

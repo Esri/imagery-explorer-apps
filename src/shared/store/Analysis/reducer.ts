@@ -5,6 +5,8 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { getCurrentMonth } from '@shared/utils/date-time/getCurrentDateTime';
+import { LandsatProfileData } from '@typing/imagery-service';
+import { Point } from 'esri/geometry';
 
 export type AnalysisTool = 'mask' | 'profile';
 
@@ -20,11 +22,6 @@ export type MaskOptions = {
      * color array in RGB format
      */
     color: number[];
-};
-
-export type QueryLocation = {
-    longitude: number;
-    latitude: number;
 };
 
 export type AnalysisState = {
@@ -51,11 +48,20 @@ export type AnalysisState = {
     /**
      * Query Location for Profile tool
      */
-    queryLocation4ProfileTool: QueryLocation;
+    queryLocation4ProfileTool: Point;
     /**
      * acquisition month to be used to fetch Profile data
      */
     acquisitionMonth4ProfileTool: number;
+    /**
+     * landsat profile data using object id as key
+     */
+    profileData: {
+        byObjectId: {
+            [key: number]: LandsatProfileData;
+        };
+        objectIds: number[];
+    };
 };
 
 export const initialAnalysisState: AnalysisState = {
@@ -79,6 +85,10 @@ export const initialAnalysisState: AnalysisState = {
     },
     queryLocation4ProfileTool: null,
     acquisitionMonth4ProfileTool: getCurrentMonth(),
+    profileData: {
+        byObjectId: {},
+        objectIds: [],
+    },
 };
 
 const slice = createSlice({
@@ -109,7 +119,7 @@ const slice = createSlice({
         },
         queryLocation4ProfileToolChanged: (
             state,
-            action: PayloadAction<QueryLocation>
+            action: PayloadAction<Point>
         ) => {
             state.queryLocation4ProfileTool = action.payload;
         },
@@ -118,6 +128,24 @@ const slice = createSlice({
             action: PayloadAction<number>
         ) => {
             state.acquisitionMonth4ProfileTool = action.payload;
+        },
+        profileDataUpdated: (
+            state,
+            action: PayloadAction<LandsatProfileData[]>
+        ) => {
+            const objectIds = [];
+            const byObjectId = {};
+
+            for (const item of action.payload) {
+                const { objectId } = item;
+                objectIds.push(objectId);
+                byObjectId[objectId] = item;
+            }
+
+            state.profileData = {
+                objectIds,
+                byObjectId,
+            };
         },
     },
 });
@@ -132,6 +160,7 @@ export const {
     shouldClipMaskLayerToggled,
     queryLocation4ProfileToolChanged,
     acquisitionMonth4ProfileToolChanged,
+    profileDataUpdated,
 } = slice.actions;
 
 export default reducer;

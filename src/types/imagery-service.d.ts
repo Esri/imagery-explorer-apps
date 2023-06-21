@@ -97,3 +97,10 @@ export type LandsatScene = {
     // name: string;
     // best: number;
 };
+
+export type LandsatProfileData = LandsatScene & {
+    /**
+     * sampled values of each band
+     */
+    values: number[];
+};

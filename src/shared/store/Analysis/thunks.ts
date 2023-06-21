@@ -3,6 +3,7 @@ import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
     MaskOptions,
     maskOptionsChanged,
+    profileDataUpdated,
     queryLocation4ProfileToolChanged,
 } from './reducer';
 import {
@@ -58,14 +59,7 @@ export const updateQueryLocation4ProfileMask =
             return;
         }
 
-        const { longitude, latitude } = point;
-
-        dispatch(
-            queryLocation4ProfileToolChanged({
-                longitude,
-                latitude,
-            })
-        );
+        dispatch(queryLocation4ProfileToolChanged(point));
     };
 
 export const updateProfileData =
@@ -75,11 +69,14 @@ export const updateProfileData =
         const acquisitionMonth = selectAcquisitionMonth4ProfileTool(getState());
 
         if (!queryLocation) {
+            dispatch(profileDataUpdated([]));
             return;
         }
 
-        await getProfileData({
+        const data = await getProfileData({
             queryLocation,
             acquisitionMonth,
         });
+
+        dispatch(profileDataUpdated(data));
     };

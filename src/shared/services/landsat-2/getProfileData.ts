@@ -1,8 +1,7 @@
 import { Point } from 'esri/geometry';
 import { getLandsatScenes } from './getLandsatScenes';
-import { LandsatScene } from '@typing/imagery-service';
+import { LandsatProfileData, LandsatScene } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
-import { QueryLocation } from '@shared/store/Analysis/reducer';
 
 type SampleData = {
     locationId: number;
@@ -12,17 +11,14 @@ type SampleData = {
 };
 
 type GetProfileDataOptions = {
-    queryLocation: {
-        longitude: number;
-        latitude: number;
-    };
+    queryLocation: Point;
     acquisitionMonth: number;
 };
 
 export const getProfileData = async ({
     queryLocation,
     acquisitionMonth,
-}: GetProfileDataOptions) => {
+}: GetProfileDataOptions): Promise<LandsatProfileData[]> => {
     const { longitude, latitude } = queryLocation;
 
     try {
@@ -34,30 +30,54 @@ export const getProfileData = async ({
         const landsatScenesToSample = getLandsatScenesToSample(landsatScenes);
         // console.log(landsatScenesToSample);
 
-        const objectIds = landsatScenesToSample
-            .map((d) => d.objectId)
-            .slice(0, 5);
+        const objectIds = landsatScenesToSample.map((d) => d.objectId);
 
         const samplesData = await getSamples(queryLocation, objectIds);
+        // console.log(samplesData);
 
-        console.log(samplesData);
+        return formatSamplesData(samplesData, landsatScenesToSample);
     } catch (err) {
         console.log(err);
     }
 };
 
-export const getSamples = async (
-    queryLocation: QueryLocation,
+/**
+ * combine samples data and scenes data to Profiles Data
+ * @param samples
+ * @param scenes
+ * @returns
+ */
+const formatSamplesData = (
+    samples: SampleData[],
+    scenes: LandsatScene[]
+): LandsatProfileData[] => {
+    const output: LandsatProfileData[] = [];
+
+    for (let i = 0; i < samples.length; i++) {
+        const sampleData = samples[i];
+        const scene = scenes[i];
+
+        output.push({
+            ...scene,
+            values: sampleData.value.split(' ').map((d) => +d),
+        });
+    }
+
+    return output;
+};
+
+const getSamples = async (
+    queryLocation: Point,
     objectIds: number[]
 ): Promise<SampleData[]> => {
+    const { x, y, spatialReference } = queryLocation;
+
     const params = new URLSearchParams({
         f: 'json',
         geometry: JSON.stringify({
-            x: queryLocation.longitude,
-            y: queryLocation.latitude,
-            spatialReference: {
-                wkid: 4326,
-            },
+            x,
+            y,
+            spatialReference,
         }),
         geometryType: 'esriGeometryPoint',
         mosaicRule: JSON.stringify({

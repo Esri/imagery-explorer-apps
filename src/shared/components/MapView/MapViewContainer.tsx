@@ -66,7 +66,14 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                     }}
                     onClickHandler={(point) => {
                         // console.log('clicked on map', point);
-                        dispatch(updateQueryLocation4ProfileMask(point));
+                        const { latitude, longitude } = point;
+                        dispatch(
+                            updateQueryLocation4ProfileMask({
+                                ...point.toJSON(),
+                                latitude,
+                                longitude,
+                            })
+                        );
                     }}
                     mapViewUpdatingOnChange={setIsUpdating}
                 />
