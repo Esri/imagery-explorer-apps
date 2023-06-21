@@ -18,7 +18,7 @@ type Props = {
      * @param point
      * @returns
      */
-    onClick?: (point: Point) => void;
+    onClickHandler?: (point: Point) => void;
     /**
      * Fires when Map View starts/stops updating
      */
@@ -28,7 +28,7 @@ type Props = {
 const EventHandlers: FC<Props> = ({
     mapView,
     onStationary,
-    onClick,
+    onClickHandler,
     mapViewUpdatingOnChange,
 }) => {
     const initEventHandlers = async () => {
@@ -55,9 +55,10 @@ const EventHandlers: FC<Props> = ({
             );
         }
 
-        if (onclick) {
+        if (onClickHandler) {
             mapView.on('click', (evt) => {
-                onClick(evt.mapPoint);
+                // console.log(evt.mapPoint)
+                onClickHandler(evt.mapPoint);
             });
         }
 

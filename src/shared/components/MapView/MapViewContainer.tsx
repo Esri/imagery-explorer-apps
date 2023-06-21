@@ -15,6 +15,7 @@ import { batch } from 'react-redux';
 import { centerChanged, zoomChanged } from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
+import { queryLocation4ProfileToolChanged } from '@shared/store/Analysis/reducer';
 
 type Props = {
     children?: React.ReactNode;
@@ -62,8 +63,15 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                             dispatch(zoomChanged(zoom));
                         });
                     }}
-                    onClick={(point) => {
-                        console.log('clicked on map', point);
+                    onClickHandler={(point) => {
+                        // console.log('clicked on map', point);
+                        const { longitude, latitude } = point;
+                        dispatch(
+                            queryLocation4ProfileToolChanged({
+                                longitude,
+                                latitude,
+                            })
+                        );
                     }}
                     mapViewUpdatingOnChange={setIsUpdating}
                 />

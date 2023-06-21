@@ -21,6 +21,11 @@ export type MaskOptions = {
     color: number[];
 };
 
+type QueryLocation = {
+    longitude: number;
+    latitude: number;
+};
+
 export type AnalysisState = {
     /**
      * active analysis tool
@@ -42,6 +47,10 @@ export type AnalysisState = {
      * if true, mask layer should be used to clip the landsat scene
      */
     shouldClipMaskLayer: boolean;
+    /**
+     * Query Location for Profile tool
+     */
+    queryLocation4ProfileTool: QueryLocation;
 };
 
 export const initialAnalysisState: AnalysisState = {
@@ -63,6 +72,7 @@ export const initialAnalysisState: AnalysisState = {
             color: [89, 214, 255],
         },
     },
+    queryLocation4ProfileTool: null,
 };
 
 const slice = createSlice({
@@ -88,6 +98,12 @@ const slice = createSlice({
         shouldClipMaskLayerToggled: (state, action: PayloadAction<boolean>) => {
             state.shouldClipMaskLayer = !state.shouldClipMaskLayer;
         },
+        queryLocation4ProfileToolChanged: (
+            state,
+            action: PayloadAction<QueryLocation>
+        ) => {
+            state.queryLocation4ProfileTool = action.payload;
+        },
     },
 });
 
@@ -99,6 +115,7 @@ export const {
     maskOptionsChanged,
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
+    queryLocation4ProfileToolChanged,
 } = slice.actions;
 
 export default reducer;

@@ -12,11 +12,11 @@ export type MapState = {
     /**
      * item id of the web map
      */
-    webmapId?: string;
+    webmapId: string;
     /**
      * center of map [longitude, latitude]
      */
-    center?: number[];
+    center: number[];
     /**
      * zoom level
      */

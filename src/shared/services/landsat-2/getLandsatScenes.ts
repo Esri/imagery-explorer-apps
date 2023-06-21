@@ -16,6 +16,10 @@ type GetLandsatScenesParams = {
      */
     acquisitionYear?: number;
     /**
+     * acquisition month
+     */
+    acquisitionMonth?: number;
+    /**
      * acquisition date in formate of `YYYY-MM-DD` (e.g. `2023-05-26`)
      */
     formattedAcquisitionDate?: string;
@@ -32,6 +36,7 @@ const {
     WRS_PATH,
     WRS_ROW,
     LANDSAT_PRODUCT_ID,
+    MONTH,
 } = FIELD_NAMES;
 
 /**
@@ -104,6 +109,7 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
 export const getLandsatScenes = async ({
     mapPoint,
     acquisitionYear,
+    acquisitionMonth,
     formattedAcquisitionDate,
 }: GetLandsatScenesParams): Promise<LandsatScene[]> => {
     if (!acquisitionYear && !formattedAcquisitionDate) {
@@ -112,14 +118,21 @@ export const getLandsatScenes = async ({
         );
     }
 
-    const whereClauses = [
-        `(${CATEGORY} = 1)`,
+    const whereClauses = [`(${CATEGORY} = 1)`];
+
+    if (acquisitionYear || formattedAcquisitionDate) {
         // if acquisitionDate is provided, only query scenes that are acquired on this date,
-        // otherwise, query scenes that were acquired within the whole year
-        formattedAcquisitionDate
-            ? `(${ACQUISITION_DATE} BETWEEN timestamp '${formattedAcquisitionDate} 00:00:00' AND timestamp '${formattedAcquisitionDate} 23:59:59')`
-            : `(${ACQUISITION_DATE} BETWEEN timestamp '${acquisitionYear}-01-01 00:00:00' AND timestamp '${acquisitionYear}-12-31 23:59:59')`,
-    ];
+        // otherwise, query scenes that were acquired within the acquisitionYear year
+        whereClauses.push(
+            formattedAcquisitionDate
+                ? `(${ACQUISITION_DATE} BETWEEN timestamp '${formattedAcquisitionDate} 00:00:00' AND timestamp '${formattedAcquisitionDate} 23:59:59')`
+                : `(${ACQUISITION_DATE} BETWEEN timestamp '${acquisitionYear}-01-01 00:00:00' AND timestamp '${acquisitionYear}-12-31 23:59:59')`
+        );
+    }
+
+    if (acquisitionMonth) {
+        whereClauses.push(`(${MONTH} = ${acquisitionMonth})`);
+    }
 
     const [longitude, latitude] = mapPoint;
 
