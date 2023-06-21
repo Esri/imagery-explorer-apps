@@ -37,6 +37,14 @@ export type LandsatScene = {
      */
     acquisitionDate: number;
     /**
+     * year when this scene was acquired
+     */
+    acquisitionYear: number;
+    /**
+     * month when this scene was acquired
+     */
+    acquisitionMonth: number;
+    /**
      * percent of cloud cover
      */
     cloudCover: number;

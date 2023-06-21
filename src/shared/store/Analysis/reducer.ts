@@ -22,7 +22,7 @@ export type MaskOptions = {
     color: number[];
 };
 
-type QueryLocation = {
+export type QueryLocation = {
     longitude: number;
     latitude: number;
 };

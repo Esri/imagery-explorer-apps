@@ -64,6 +64,10 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             date: +acquisitionDate,
         }); //format(acquisitionDate, 'yyyy-MM-dd');
 
+        const [acquisitionYear, acquisitionMonth] = formattedAcquisitionDate
+            .split('-')
+            .map((d) => +d);
+
         const {
             collectionCategory,
             collectionNumber,
@@ -90,6 +94,8 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             correctionLevel,
             processingDate,
             sensor,
+            acquisitionYear,
+            acquisitionMonth,
         };
 
         return landsatScene;
