@@ -12,6 +12,7 @@ import { AnimationControl } from '../AnimationControl';
 import { MaskTool } from '../MaskTool';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { AnalysisToolSelector } from '../AnalysisToolSelector';
+import { ProfileTool } from '../ProfileTool';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -52,10 +53,12 @@ const Layout = () => {
                                 <SceneInfo />
                             </div>
 
-                            <div className="ml-6 3xl:ml-16">
-                                {mode === 'analysis' &&
-                                    analysisTool === 'mask' && <MaskTool />}
-                            </div>
+                            {mode === 'analysis' && (
+                                <div className="ml-6 3xl:ml-16">
+                                    <MaskTool />
+                                    <ProfileTool />
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

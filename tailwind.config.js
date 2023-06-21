@@ -49,7 +49,8 @@ module.exports = {
         'search-widget-top-position': '50px',
         'search-widget-top-position-mobile': '90px',
         'cloud-slider-height': '80px',
-        'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)'
+        'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)',
+        'analysis-tool-container-width': '250px'
       },
       dropShadow: {
         'custom-light-blue': '0px 0px 4px rgba(191,238,254, 1)',

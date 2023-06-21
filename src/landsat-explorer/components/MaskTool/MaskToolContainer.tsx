@@ -14,6 +14,7 @@ import {
     selectSpectralIndex4MaskTool,
     selectMaskOptions,
     selectShouldClipMaskLayer,
+    selectActiveAnalysisTool,
 } from '@shared/store/Analysis/selectors';
 import {
     updateMaskColor,
@@ -27,6 +28,8 @@ import { useSelector } from 'react-redux';
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
 
+    const tool = useSelector(selectActiveAnalysisTool);
+
     const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
 
     const maskOptions = useSelector(selectMaskOptions);
@@ -35,8 +38,8 @@ export const MaskToolContainer = () => {
 
     const shouldClip = useSelector(selectShouldClipMaskLayer);
 
-    const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    // const { objectIdOfSelectedScene } =
+    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     // useEffect(()=>{
     //     (async()=>{
@@ -59,8 +62,12 @@ export const MaskToolContainer = () => {
     //     })()
     // }, [objectIdOfSelectedScene, selectedSpectralIndex])
 
+    if (tool !== 'mask') {
+        return null;
+    }
+
     return (
-        <div className="w-[250px] h-full">
+        <div className="w-analysis-tool-container-width h-full">
             <MaskMethodList
                 selectedSpectralIndex={selectedSpectralIndex}
                 onChange={(val) => {
