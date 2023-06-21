@@ -7,7 +7,7 @@ import {
     selectMaskOptions,
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
-    selectSpectralIndex,
+    selectSpectralIndex4MaskTool,
 } from '@shared/store/Analysis/selectors';
 import {
     selectAppMode,
@@ -23,7 +23,7 @@ type Props = {
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const mode = useSelector(selectAppMode);
 
-    const spectralIndex = useSelector(selectSpectralIndex);
+    const spectralIndex = useSelector(selectSpectralIndex4MaskTool);
 
     const { selectedRange, color } = useSelector(selectMaskOptions);
 

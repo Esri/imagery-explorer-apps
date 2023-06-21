@@ -34,7 +34,7 @@ export type AnalysisState = {
     /**
      * user selected spectral index to be used in the mask tool
      */
-    spectralIndex: SpectralIndex;
+    spectralIndex4MaskTool: SpectralIndex;
     /**
      * maks tool options by spectral index name
      */
@@ -55,7 +55,7 @@ export type AnalysisState = {
 
 export const initialAnalysisState: AnalysisState = {
     tool: 'mask',
-    spectralIndex: 'water',
+    spectralIndex4MaskTool: 'water',
     maskLayerOpacity: 1,
     shouldClipMaskLayer: false,
     maskOptionsBySpectralIndex: {
@@ -85,11 +85,14 @@ const slice = createSlice({
         ) => {
             state.tool = action.payload;
         },
-        spectralIndexChanged: (state, action: PayloadAction<SpectralIndex>) => {
-            state.spectralIndex = action.payload;
+        spectralIndex4MaskToolChanged: (
+            state,
+            action: PayloadAction<SpectralIndex>
+        ) => {
+            state.spectralIndex4MaskTool = action.payload;
         },
         maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
-            const spectralIndex = state.spectralIndex;
+            const spectralIndex = state.spectralIndex4MaskTool;
             state.maskOptionsBySpectralIndex[spectralIndex] = action.payload;
         },
         maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
@@ -111,7 +114,7 @@ const { reducer } = slice;
 
 export const {
     activeAnalysisToolChanged,
-    spectralIndexChanged,
+    spectralIndex4MaskToolChanged,
     maskOptionsChanged,
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,

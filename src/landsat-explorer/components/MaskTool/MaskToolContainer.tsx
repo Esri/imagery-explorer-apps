@@ -7,11 +7,11 @@ import { computeHistogram } from '@shared/services/landsat-2/computeHistogram';
 import {
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
-    spectralIndexChanged,
+    spectralIndex4MaskToolChanged,
 } from '@shared/store/Analysis/reducer';
 import {
     selectMaskLayerOpcity,
-    selectSpectralIndex,
+    selectSpectralIndex4MaskTool,
     selectMaskOptions,
     selectShouldClipMaskLayer,
 } from '@shared/store/Analysis/selectors';
@@ -27,7 +27,7 @@ import { useSelector } from 'react-redux';
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
 
-    const selectedSpectralIndex = useSelector(selectSpectralIndex);
+    const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
 
     const maskOptions = useSelector(selectMaskOptions);
 
@@ -64,7 +64,7 @@ export const MaskToolContainer = () => {
             <MaskMethodList
                 selectedSpectralIndex={selectedSpectralIndex}
                 onChange={(val) => {
-                    dispatch(spectralIndexChanged(val));
+                    dispatch(spectralIndex4MaskToolChanged(val));
                 }}
             />
 
