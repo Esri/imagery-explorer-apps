@@ -1,3 +1,4 @@
+import { BarLineCombined } from '@shared/components/QuickD3Chart';
 import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
     selectAcquisitionMonth4ProfileTool,
@@ -22,6 +23,33 @@ export const ProfileToolContainer = () => {
     const profileData = useSelector(selectProfileData);
 
     const [isLoading, setIsLoading] = useState<boolean>();
+
+    const getLineChart = () => {
+        if (!profileData.length) {
+            return null;
+        }
+
+        const data = profileData.map((d) => {
+            const [B1, B2, B3, B4, B5] = d.values;
+
+            return {
+                key: d.acquisitionYear.toString(),
+                value: (B5 - B4) / (B5 + B4),
+            };
+        });
+
+        console.log(data);
+
+        return (
+            <div className="relative w-full h-[120px]">
+                <BarLineCombined
+                    data4Line={data}
+                    yDomain={[-1, 1]}
+                    numOfTicksOnXAxisToHide={2}
+                />
+            </div>
+        );
+    };
 
     useEffect(() => {
         (async () => {
@@ -48,7 +76,7 @@ export const ProfileToolContainer = () => {
     return (
         <div className="w-analysis-tool-container-width h-full">
             {isLoading && <span>loading data...</span>}
-            {/* { profileData.map(pr)} */}
+            {getLineChart()}
         </div>
     );
 };
