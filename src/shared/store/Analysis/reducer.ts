@@ -4,6 +4,7 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
+import { getCurrentMonth } from '@shared/utils/date-time/getCurrentDateTime';
 
 export type AnalysisTool = 'mask' | 'profile';
 
@@ -51,6 +52,10 @@ export type AnalysisState = {
      * Query Location for Profile tool
      */
     queryLocation4ProfileTool: QueryLocation;
+    /**
+     * acquisition month to be used to fetch Profile data
+     */
+    acquisitionMonth4ProfileTool: number;
 };
 
 export const initialAnalysisState: AnalysisState = {
@@ -73,6 +78,7 @@ export const initialAnalysisState: AnalysisState = {
         },
     },
     queryLocation4ProfileTool: null,
+    acquisitionMonth4ProfileTool: getCurrentMonth(),
 };
 
 const slice = createSlice({
@@ -107,6 +113,12 @@ const slice = createSlice({
         ) => {
             state.queryLocation4ProfileTool = action.payload;
         },
+        acquisitionMonth4ProfileToolChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.acquisitionMonth4ProfileTool = action.payload;
+        },
     },
 });
 
@@ -119,6 +131,7 @@ export const {
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
     queryLocation4ProfileToolChanged,
+    acquisitionMonth4ProfileToolChanged,
 } = slice.actions;
 
 export default reducer;

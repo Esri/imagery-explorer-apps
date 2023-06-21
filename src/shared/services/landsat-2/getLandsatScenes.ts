@@ -112,11 +112,11 @@ export const getLandsatScenes = async ({
     acquisitionMonth,
     formattedAcquisitionDate,
 }: GetLandsatScenesParams): Promise<LandsatScene[]> => {
-    if (!acquisitionYear && !formattedAcquisitionDate) {
-        throw new Error(
-            `acquisitionYear or acquisitionDate is required to query Landsat Scenes`
-        );
-    }
+    // if (!acquisitionYear && !formattedAcquisitionDate) {
+    //     throw new Error(
+    //         `acquisitionYear or acquisitionDate is required to query Landsat Scenes`
+    //     );
+    // }
 
     const whereClauses = [`(${CATEGORY} = 1)`];
 

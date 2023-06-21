@@ -1,6 +1,17 @@
+import { Point } from 'esri/geometry';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-import { MaskOptions, maskOptionsChanged } from './reducer';
-import { selectMaskOptions } from './selectors';
+import {
+    MaskOptions,
+    maskOptionsChanged,
+    queryLocation4ProfileToolChanged,
+} from './reducer';
+import {
+    selectAcquisitionMonth4ProfileTool,
+    selectActiveAnalysisTool,
+    selectMaskOptions,
+    selectQueryLocation4ProfileTool,
+} from './selectors';
+import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 
 /**
  * update selected range for the active mask method
@@ -36,4 +47,39 @@ export const updateMaskColor =
         };
 
         dispatch(maskOptionsChanged(updatedMaskOptions));
+    };
+
+export const updateQueryLocation4ProfileMask =
+    (point: Point) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const tool = selectActiveAnalysisTool(getState());
+
+        if (tool !== 'profile') {
+            return;
+        }
+
+        const { longitude, latitude } = point;
+
+        dispatch(
+            queryLocation4ProfileToolChanged({
+                longitude,
+                latitude,
+            })
+        );
+    };
+
+export const updateProfileData =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const queryLocation = selectQueryLocation4ProfileTool(getState());
+
+        const acquisitionMonth = selectAcquisitionMonth4ProfileTool(getState());
+
+        if (!queryLocation) {
+            return;
+        }
+
+        await getProfileData({
+            queryLocation,
+            acquisitionMonth,
+        });
     };

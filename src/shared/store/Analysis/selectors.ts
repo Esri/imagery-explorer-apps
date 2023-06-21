@@ -27,3 +27,13 @@ export const selectShouldClipMaskLayer = createSelector(
     (state: RootState) => state.Analysis.shouldClipMaskLayer,
     (shouldClipMaskLayer) => shouldClipMaskLayer
 );
+
+export const selectQueryLocation4ProfileTool = createSelector(
+    (state: RootState) => state.Analysis.queryLocation4ProfileTool,
+    (queryLocation4ProfileTool) => queryLocation4ProfileTool
+);
+
+export const selectAcquisitionMonth4ProfileTool = createSelector(
+    (state: RootState) => state.Analysis.acquisitionMonth4ProfileTool,
+    (acquisitionMonth4ProfileTool) => acquisitionMonth4ProfileTool
+);
