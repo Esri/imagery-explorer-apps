@@ -55,11 +55,21 @@ export const ProfileToolContainer = () => {
         }
 
         const data = profileData.map((d) => {
-            const [B1, B2, B3, B4, B5] = d.values;
+            const [B1, B2, B3, B4, B5, B6] = d.values;
+
+            let value = 0;
+
+            if (spectralIndex === 'moisture') {
+                value = (B5 - B6) / (B5 + B6);
+            } else if (spectralIndex === 'vegetation') {
+                value = (B5 - B4) / (B5 + B4);
+            } else if (spectralIndex === 'urban') {
+                value = (B6 - B5) / (B6 + B5);
+            }
 
             return {
                 key: d.acquisitionYear.toString(),
-                value: (B5 - B4) / (B5 + B4),
+                value,
             };
         });
 
