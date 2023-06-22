@@ -14,7 +14,12 @@ export type AnalysisTool = 'mask' | 'profile';
  * Spectral indices are combinations of the pixel values from two or more spectral bands in a multispectral image.
  * Spectral indices are designed to highlight pixels showing the relative abundance or lack of a land-cover type of interest in an image.
  */
-export type SpectralIndex = 'water' | 'vegetation' | 'moisture';
+export type SpectralIndex =
+    | 'water'
+    | 'vegetation'
+    | 'moisture'
+    | 'urban'
+    | 'temperature';
 
 export type MaskOptions = {
     selectedRange: number[];
@@ -23,6 +28,8 @@ export type MaskOptions = {
      */
     color: number[];
 };
+
+type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
 
 export type AnalysisState = {
     /**
@@ -36,7 +43,7 @@ export type AnalysisState = {
     /**
      * maks tool options by spectral index name
      */
-    maskOptionsBySpectralIndex: Record<SpectralIndex, MaskOptions>;
+    maskOptionsBySpectralIndex: MaskOptionsBySpectralIndex;
     /**
      * opacity of the mask layer
      */
@@ -53,6 +60,10 @@ export type AnalysisState = {
      * acquisition month to be used to fetch Profile data
      */
     acquisitionMonth4ProfileTool: number;
+    /**
+     * user selected spectral index to be used in the profile tool
+     */
+    spectralIndex4ProfileTool: SpectralIndex;
     /**
      * landsat profile data using object id as key
      */
@@ -85,6 +96,7 @@ export const initialAnalysisState: AnalysisState = {
     },
     queryLocation4ProfileTool: null,
     acquisitionMonth4ProfileTool: getCurrentMonth(),
+    spectralIndex4ProfileTool: 'moisture',
     profileData: {
         byObjectId: {},
         objectIds: [],
@@ -147,6 +159,12 @@ const slice = createSlice({
                 byObjectId,
             };
         },
+        spectralIndex4ProfileToolChanged: (
+            state,
+            action: PayloadAction<SpectralIndex>
+        ) => {
+            state.spectralIndex4ProfileTool = action.payload;
+        },
     },
 });
 
@@ -161,6 +179,7 @@ export const {
     queryLocation4ProfileToolChanged,
     acquisitionMonth4ProfileToolChanged,
     profileDataUpdated,
+    spectralIndex4ProfileToolChanged,
 } = slice.actions;
 
 export default reducer;

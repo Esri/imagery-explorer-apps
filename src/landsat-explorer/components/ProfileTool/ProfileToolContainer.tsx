@@ -1,10 +1,13 @@
+import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import { BarLineCombined } from '@shared/components/QuickD3Chart';
 import { getProfileData } from '@shared/services/landsat-2/getProfileData';
+import { spectralIndex4ProfileToolChanged } from '@shared/store/Analysis/reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
     selectActiveAnalysisTool,
     selectProfileData,
     selectQueryLocation4ProfileTool,
+    selectSpectralIndex4ProfileTool,
 } from '@shared/store/Analysis/selectors';
 import { updateProfileData } from '@shared/store/Analysis/thunks';
 import React, { useEffect, useState } from 'react';
@@ -21,6 +24,8 @@ export const ProfileToolContainer = () => {
     const acquisitionMonth = useSelector(selectAcquisitionMonth4ProfileTool);
 
     const profileData = useSelector(selectProfileData);
+
+    const spectralIndex = useSelector(selectSpectralIndex4ProfileTool);
 
     const [isLoading, setIsLoading] = useState<boolean>();
 
@@ -75,8 +80,29 @@ export const ProfileToolContainer = () => {
 
     return (
         <div className="w-analysis-tool-container-width h-full">
-            {isLoading && <span>loading data...</span>}
-            {getLineChart()}
+            <AnalysisToolHeader
+                title="Profile Index"
+                data={[
+                    {
+                        value: 'moisture',
+                        label: '',
+                    },
+                    {
+                        value: 'urban',
+                        label: '',
+                    },
+                    {
+                        value: 'vegetation',
+                        label: '',
+                    },
+                ]}
+                selectedSpectralIndex={spectralIndex}
+                selectedSpectralIndexOnChange={(val) => {
+                    dispacth(spectralIndex4ProfileToolChanged(val));
+                }}
+            />
+            {/* {isLoading && <span>loading data...</span>}
+            {getLineChart()} */}
         </div>
     );
 };

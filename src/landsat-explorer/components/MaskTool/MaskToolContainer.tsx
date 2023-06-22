@@ -1,5 +1,5 @@
+import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import {
-    MaskMethodList,
     MaskPixelRangeSlider,
     MaskRenderingControls,
 } from '@shared/components/MaskTool';
@@ -68,9 +68,24 @@ export const MaskToolContainer = () => {
 
     return (
         <div className="w-analysis-tool-container-width h-full">
-            <MaskMethodList
+            <AnalysisToolHeader
+                title="Mask Index"
+                data={[
+                    {
+                        value: 'water',
+                        label: '',
+                    },
+                    {
+                        value: 'vegetation',
+                        label: '',
+                    },
+                    {
+                        value: 'moisture',
+                        label: '',
+                    },
+                ]}
                 selectedSpectralIndex={selectedSpectralIndex}
-                onChange={(val) => {
+                selectedSpectralIndexOnChange={(val) => {
                     dispatch(spectralIndex4MaskToolChanged(val));
                 }}
             />

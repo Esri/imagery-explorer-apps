@@ -45,3 +45,8 @@ export const selectProfileData = createSelector(
         return objectIds.map((id) => byObjectId[id]);
     }
 );
+
+export const selectSpectralIndex4ProfileTool = createSelector(
+    (state: RootState) => state.Analysis.spectralIndex4ProfileTool,
+    (spectralIndex4ProfileTool) => spectralIndex4ProfileTool
+);
