@@ -1,12 +1,13 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import { ProfileToolControls } from '@shared/components/ProfileTool';
 import { BarLineCombined } from '@shared/components/QuickD3Chart';
-import { getProfileData } from '@shared/services/landsat-2/getProfileData';
+// import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
     acquisitionMonth4ProfileToolChanged,
     samplingTemporalResolutionChanged,
     profileDataUpdated,
     spectralIndex4ProfileToolChanged,
+    queryLocation4ProfileToolChanged,
 } from '@shared/store/Analysis/reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
@@ -22,7 +23,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 export const ProfileToolContainer = () => {
-    const dispacth = useDispatch();
+    const dispatch = useDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 
@@ -87,7 +88,7 @@ export const ProfileToolContainer = () => {
             try {
                 setIsLoading(true);
 
-                await dispacth(updateProfileData());
+                await dispatch(updateProfileData());
 
                 setIsLoading(false);
             } catch (err) {
@@ -120,7 +121,7 @@ export const ProfileToolContainer = () => {
                 ]}
                 selectedSpectralIndex={spectralIndex}
                 selectedSpectralIndexOnChange={(val) => {
-                    dispacth(spectralIndex4ProfileToolChanged(val));
+                    dispatch(spectralIndex4ProfileToolChanged(val));
                 }}
             />
 
@@ -133,13 +134,14 @@ export const ProfileToolContainer = () => {
                 shouldShowCloseButton={profileData.length > 0 ? true : false}
                 annualSamplingResolution={samplingTemporalResolution}
                 annualSamplingResolutionOnChange={(resolution) => {
-                    dispacth(samplingTemporalResolutionChanged(resolution));
+                    dispatch(samplingTemporalResolutionChanged(resolution));
                 }}
                 acquisitionMonthOnChange={(month) => {
-                    dispacth(acquisitionMonth4ProfileToolChanged(month));
+                    dispatch(acquisitionMonth4ProfileToolChanged(month));
                 }}
                 closeButtonOnClick={() => {
-                    dispacth(profileDataUpdated([]));
+                    dispatch(profileDataUpdated([]));
+                    dispatch(queryLocation4ProfileToolChanged(null));
                 }}
             />
         </div>

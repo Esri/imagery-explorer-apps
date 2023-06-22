@@ -42,34 +42,40 @@ export const ProfileToolControls = ({
     );
 
     return (
-        <div className="flex items-center justify-center">
-            <div className="w-1/2 mx-1">
-                <Dropdown
-                    data={annualResolutionsMenuData}
-                    onChange={(val) => {
-                        // console.log(val)
-                        annualSamplingResolutionOnChange(+val);
-                    }}
-                />
-            </div>
-
-            <div className="w-1/2 mx-1">
-                <Dropdown
-                    data={monthDropdownMenuData}
-                    onChange={(val) => {
-                        acquisitionMonthOnChange(+val);
-                    }}
-                />
-            </div>
-
-            {shouldShowCloseButton && (
+        <div className="prfile-control-tools">
+            <div className="flex items-center justify-center">
                 <div
-                    className="shrink-0 flex items-center cursor-pointer"
-                    onClick={closeButtonOnClick}
+                    className="w-1/2 mx-1"
+                    title="Choose an annual sampling resolution"
                 >
-                    <calcite-icon icon="x-circle" scale="s" />
+                    <Dropdown
+                        data={annualResolutionsMenuData}
+                        onChange={(val) => {
+                            // console.log(val)
+                            annualSamplingResolutionOnChange(+val);
+                        }}
+                    />
                 </div>
-            )}
+
+                <div className="w-1/2 mx-1" title="Choose a season">
+                    <Dropdown
+                        data={monthDropdownMenuData}
+                        onChange={(val) => {
+                            acquisitionMonthOnChange(+val);
+                        }}
+                    />
+                </div>
+
+                {shouldShowCloseButton && (
+                    <div
+                        className="shrink-0 flex items-center cursor-pointer"
+                        onClick={closeButtonOnClick}
+                        title="Clear map selection"
+                    >
+                        <calcite-icon icon="x-circle" scale="s" />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

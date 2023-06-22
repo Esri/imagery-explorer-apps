@@ -38,12 +38,14 @@ const YAxis: React.FC<Props> = ({
             xAxisGenerator.tickValues(tickValues);
         }
 
-        if (formatTime) {
-            xAxisGenerator.tickFormat((d: number) => {
-                const date = new Date(+d);
-                return formatTime(date);
-            });
-        }
+        xAxisGenerator.tickFormat((d) => d.toString());
+
+        // if (formatTime) {
+        //     xAxisGenerator.tickFormat((d: number) => {
+        //         const date = new Date(+d);
+        //         return formatTime(date);
+        //     });
+        // }
 
         const xAxisLabel = select(rootGroup).selectAll('.x.axis');
 
