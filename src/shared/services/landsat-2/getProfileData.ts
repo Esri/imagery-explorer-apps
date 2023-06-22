@@ -13,11 +13,13 @@ type SampleData = {
 type GetProfileDataOptions = {
     queryLocation: Point;
     acquisitionMonth: number;
+    samplingTemporalResolution: number;
 };
 
 export const getProfileData = async ({
     queryLocation,
     acquisitionMonth,
+    samplingTemporalResolution,
 }: GetProfileDataOptions): Promise<LandsatProfileData[]> => {
     const { longitude, latitude } = queryLocation;
 
@@ -27,8 +29,11 @@ export const getProfileData = async ({
             acquisitionMonth,
         });
 
-        const landsatScenesToSample = getLandsatScenesToSample(landsatScenes);
-        // console.log(landsatScenesToSample);
+        const landsatScenesToSample = getLandsatScenesToSample(
+            landsatScenes,
+            samplingTemporalResolution
+        );
+        console.log(landsatScenesToSample);
 
         const objectIds = landsatScenesToSample.map((d) => d.objectId);
 
@@ -118,15 +123,26 @@ const getSamples = async (
  * the selected scenes for a specific month is the one that with least cloud coverage for that month
  *
  * @param scenes landsat scenes
+ * @param samplingTemporalResolution landsat scenes
  * @returns LandsatScene[]
  */
-const getLandsatScenesToSample = (scenes: LandsatScene[]): LandsatScene[] => {
+const getLandsatScenesToSample = (
+    scenes: LandsatScene[],
+    samplingTemporalResolution: number
+): LandsatScene[] => {
     const candidates: LandsatScene[] = [scenes[0]];
 
     for (let i = 1; i < scenes.length; i++) {
         const prevScene = candidates[candidates.length - 1];
 
         const currentScene = scenes[i];
+
+        if (
+            currentScene.acquisitionYear - prevScene.acquisitionYear <
+            samplingTemporalResolution
+        ) {
+            continue;
+        }
 
         // add current scene to candidates if it was acquired from a different year or month
         if (

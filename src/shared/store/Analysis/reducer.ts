@@ -65,6 +65,13 @@ export type AnalysisState = {
      */
     spectralIndex4ProfileTool: SpectralIndex;
     /**
+     * Determines the frequency of collecting samples for the annual resolution.
+     * The minimum value is 1, indicating that Landsat scenes acquired in the user-selected month
+     * will be sampled for each year. The maximum value is 5, indicating that Landsat scenes will be sampled
+     * every 5 years.
+     */
+    samplingTemporalResolution: number;
+    /**
      * landsat profile data using object id as key
      */
     profileData: {
@@ -101,6 +108,7 @@ export const initialAnalysisState: AnalysisState = {
         byObjectId: {},
         objectIds: [],
     },
+    samplingTemporalResolution: 1,
 };
 
 const slice = createSlice({
@@ -165,6 +173,12 @@ const slice = createSlice({
         ) => {
             state.spectralIndex4ProfileTool = action.payload;
         },
+        samplingTemporalResolutionChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.samplingTemporalResolution = action.payload;
+        },
     },
 });
 
@@ -180,6 +194,7 @@ export const {
     acquisitionMonth4ProfileToolChanged,
     profileDataUpdated,
     spectralIndex4ProfileToolChanged,
+    samplingTemporalResolutionChanged,
 } = slice.actions;
 
 export default reducer;

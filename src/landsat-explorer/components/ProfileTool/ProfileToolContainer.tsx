@@ -1,10 +1,17 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
+import { ProfileToolControls } from '@shared/components/ProfileTool';
 import { BarLineCombined } from '@shared/components/QuickD3Chart';
 import { getProfileData } from '@shared/services/landsat-2/getProfileData';
-import { spectralIndex4ProfileToolChanged } from '@shared/store/Analysis/reducer';
+import {
+    acquisitionMonth4ProfileToolChanged,
+    samplingTemporalResolutionChanged,
+    profileDataUpdated,
+    spectralIndex4ProfileToolChanged,
+} from '@shared/store/Analysis/reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
     selectActiveAnalysisTool,
+    selectSamplingTemporalResolution,
     selectProfileData,
     selectQueryLocation4ProfileTool,
     selectSpectralIndex4ProfileTool,
@@ -27,11 +34,24 @@ export const ProfileToolContainer = () => {
 
     const spectralIndex = useSelector(selectSpectralIndex4ProfileTool);
 
+    const samplingTemporalResolution = useSelector(
+        selectSamplingTemporalResolution
+    );
+
     const [isLoading, setIsLoading] = useState<boolean>();
 
     const getLineChart = () => {
-        if (!profileData.length) {
-            return null;
+        if (!profileData.length || isLoading) {
+            return (
+                <div className="h-full w-full flex items-center justify-center text-center">
+                    {isLoading && <calcite-loader inline />}
+                    <p className="text-sm">
+                        {isLoading
+                            ? 'fetching temporal profile data'
+                            : 'Click on map to get the temporal profile'}
+                    </p>
+                </div>
+            );
         }
 
         const data = profileData.map((d) => {
@@ -43,17 +63,9 @@ export const ProfileToolContainer = () => {
             };
         });
 
-        console.log(data);
+        // console.log(data);
 
-        return (
-            <div className="relative w-full h-[120px]">
-                <BarLineCombined
-                    data4Line={data}
-                    yDomain={[-1, 1]}
-                    numOfTicksOnXAxisToHide={2}
-                />
-            </div>
-        );
+        return <BarLineCombined data4Line={data} yDomain={[-1, 1]} />;
     };
 
     useEffect(() => {
@@ -72,7 +84,7 @@ export const ProfileToolContainer = () => {
                 console.log(err);
             }
         })();
-    }, [queryLocation, tool, acquisitionMonth]);
+    }, [queryLocation, tool, acquisitionMonth, samplingTemporalResolution]);
 
     if (tool !== 'profile') {
         return null;
@@ -101,8 +113,25 @@ export const ProfileToolContainer = () => {
                     dispacth(spectralIndex4ProfileToolChanged(val));
                 }}
             />
-            {/* {isLoading && <span>loading data...</span>}
-            {getLineChart()} */}
+
+            <div className="relative w-full h-[120px] my-2">
+                {getLineChart()}
+            </div>
+
+            <ProfileToolControls
+                acquisitionMonth={acquisitionMonth}
+                shouldShowCloseButton={profileData.length > 0 ? true : false}
+                annualSamplingResolution={samplingTemporalResolution}
+                annualSamplingResolutionOnChange={(resolution) => {
+                    dispacth(samplingTemporalResolutionChanged(resolution));
+                }}
+                acquisitionMonthOnChange={(month) => {
+                    dispacth(acquisitionMonth4ProfileToolChanged(month));
+                }}
+                closeButtonOnClick={() => {
+                    dispacth(profileDataUpdated([]));
+                }}
+            />
         </div>
     );
 };

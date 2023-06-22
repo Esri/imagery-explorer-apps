@@ -144,16 +144,20 @@ const BarLineCombined: React.FC<Props> = ({
     }, [dimension, data4Bars, data4Line]);
 
     const xScaleTickValues = useMemo(() => {
-        if (!numOfTicksOnXAxisToHide || numOfTicksOnXAxisToHide <= 1) {
-            return undefined;
+        const data = data4Line;
+
+        const maxNumOfTicks = 5;
+
+        if (data.length <= maxNumOfTicks) {
+            return data.map((d) => d.key);
         }
 
-        const data = data4Line;
+        const numOfTicksPerGroup = Math.ceil(data.length / maxNumOfTicks);
 
         return data
             .map((d) => d.key)
             .filter((d, i) => {
-                return i % 2 !== 0;
+                return i % numOfTicksPerGroup === 0;
             });
     }, [data4Line]);
 
