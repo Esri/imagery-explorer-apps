@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { AnimationFrameInfo } from '@shared/components/AnimationControl';
+import { AnimationFrameInfo } from './AnimationFramesList';
 import { useSelector } from 'react-redux';
 import {
     selectQueryParams4ScenesInAnimateMode,

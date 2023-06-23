@@ -16,8 +16,9 @@ import {
 } from '@shared/store/UI/selectors';
 import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/Landsat/selectors';
 import { CloseButton } from '@shared/components/CloseButton';
-import { sortQueryParams4ScenesByAcquisitionDate } from '../AnimationControl/helpers';
+// import { sortQueryParams4ScenesByAcquisitionDate } from './AnimationControl/helpers';
 import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
+import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
 
 type Props = {
     mapView?: IMapView;

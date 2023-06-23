@@ -50,7 +50,7 @@ type Props = {
     removeButtonOnClick: (frameId: string) => void;
 };
 
-export const AnimationFrames: FC<Props> = ({
+export const AnimationFramesList: FC<Props> = ({
     data,
     disabled,
     frameOnSelect,

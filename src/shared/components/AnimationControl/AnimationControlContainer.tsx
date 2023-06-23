@@ -5,11 +5,12 @@ import {
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
 import { useDispatch } from 'react-redux';
+import { AnimationControl } from './AnimationControl';
 import {
-    AnimationControl,
-    AnimationFrames,
-    AnimationFrameInfo,
-} from '@shared/components/AnimationControl';
+    AnimationFramesList,
+    // AnimationFrameInfo
+} from './AnimationFramesList';
+
 import {
     animationSpeedChanged,
     animationStatusChanged,
@@ -44,7 +45,7 @@ export const AnimationControlContainer = () => {
 
     return (
         <div className="w-full">
-            <AnimationFrames
+            <AnimationFramesList
                 data={animationFramesData}
                 disabled={isAnimationPlaying}
                 frameOnSelect={(frameId: string) => {
