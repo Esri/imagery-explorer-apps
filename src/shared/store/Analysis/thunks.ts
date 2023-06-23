@@ -3,7 +3,7 @@ import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
     MaskOptions,
     maskOptionsChanged,
-    profileDataUpdated,
+    temporalProfileDataUpdated,
     queryLocation4ProfileToolChanged,
 } from './reducer';
 import {
@@ -13,7 +13,7 @@ import {
     selectQueryLocation4ProfileTool,
     selectSamplingTemporalResolution,
 } from './selectors';
-import { getProfileData } from '@shared/services/landsat-2/getProfileData';
+import { getTemporalProfileData } from '@shared/services/landsat-2/getTemporalProfileData';
 
 /**
  * update selected range for the active mask method
@@ -63,7 +63,7 @@ export const updateQueryLocation4ProfileMask =
         dispatch(queryLocation4ProfileToolChanged(point));
     };
 
-export const updateProfileData =
+export const updateTemporalProfileData =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const rootState = getState();
 
@@ -75,15 +75,15 @@ export const updateProfileData =
             selectSamplingTemporalResolution(rootState);
 
         if (!queryLocation) {
-            dispatch(profileDataUpdated([]));
+            dispatch(temporalProfileDataUpdated([]));
             return;
         }
 
-        const data = await getProfileData({
+        const data = await getTemporalProfileData({
             queryLocation,
             acquisitionMonth,
             samplingTemporalResolution,
         });
 
-        dispatch(profileDataUpdated(data));
+        dispatch(temporalProfileDataUpdated(data));
     };

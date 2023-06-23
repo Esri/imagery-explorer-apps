@@ -1,6 +1,6 @@
 import { Point } from 'esri/geometry';
 import { getLandsatScenes } from './getLandsatScenes';
-import { LandsatProfileData, LandsatScene } from '@typing/imagery-service';
+import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 
 type SampleData = {
@@ -16,11 +16,11 @@ type GetProfileDataOptions = {
     samplingTemporalResolution: number;
 };
 
-export const getProfileData = async ({
+export const getTemporalProfileData = async ({
     queryLocation,
     acquisitionMonth,
     samplingTemporalResolution,
-}: GetProfileDataOptions): Promise<LandsatProfileData[]> => {
+}: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
     const { longitude, latitude } = queryLocation;
 
     try {
@@ -33,37 +33,43 @@ export const getProfileData = async ({
             landsatScenes,
             samplingTemporalResolution
         );
-        console.log(landsatScenesToSample);
+        // console.log(landsatScenesToSample);
 
         const objectIds = landsatScenesToSample.map((d) => d.objectId);
 
         const samplesData = await getSamples(queryLocation, objectIds);
         // console.log(samplesData);
 
-        return formatSamplesData(samplesData, landsatScenesToSample);
+        return formatAsTemporalProfileData(samplesData, landsatScenesToSample);
     } catch (err) {
         console.log(err);
+        throw err;
     }
 };
 
 /**
- * combine samples data and scenes data to Profiles Data
+ * Create Temporal Profiles Data by combining samples data and imagery scene data
  * @param samples
  * @param scenes
  * @returns
  */
-const formatSamplesData = (
+const formatAsTemporalProfileData = (
     samples: SampleData[],
     scenes: LandsatScene[]
-): LandsatProfileData[] => {
-    const output: LandsatProfileData[] = [];
+): TemporalProfileData[] => {
+    const output: TemporalProfileData[] = [];
 
     for (let i = 0; i < samples.length; i++) {
         const sampleData = samples[i];
-        const scene = scenes[i];
+        // const scene = scenes[i];
+        const { objectId, acquisitionDate, acquisitionMonth, acquisitionYear } =
+            scenes[i];
 
         output.push({
-            ...scene,
+            objectId,
+            acquisitionDate,
+            acquisitionMonth,
+            acquisitionYear,
             values: sampleData.value.split(' ').map((d) => +d),
         });
     }

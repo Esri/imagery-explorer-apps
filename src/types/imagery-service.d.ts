@@ -98,9 +98,28 @@ export type LandsatScene = {
     // best: number;
 };
 
-export type LandsatProfileData = LandsatScene & {
+/**
+ * Temporal Profile Data sampled at user selected location
+ */
+export type TemporalProfileData = {
     /**
-     * sampled values of each band
+     * object id of imagery scene gets sampled
+     */
+    objectId: number;
+    /**
+     * acquisitionDate of imagery scene in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * acquisition year of imagery scene
+     */
+    acquisitionYear: number;
+    /**
+     * acquisition month of imagery scene
+     */
+    acquisitionMonth: number;
+    /**
+     * sampled values for each band
      */
     values: number[];
 };

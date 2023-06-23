@@ -5,7 +5,7 @@ import { BarLineCombined } from '@shared/components/QuickD3Chart';
 import {
     acquisitionMonth4ProfileToolChanged,
     samplingTemporalResolutionChanged,
-    profileDataUpdated,
+    temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
     queryLocation4ProfileToolChanged,
 } from '@shared/store/Analysis/reducer';
@@ -17,7 +17,7 @@ import {
     selectQueryLocation4ProfileTool,
     selectSpectralIndex4ProfileTool,
 } from '@shared/store/Analysis/selectors';
-import { updateProfileData } from '@shared/store/Analysis/thunks';
+import { updateTemporalProfileData } from '@shared/store/Analysis/thunks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -88,7 +88,7 @@ export const ProfileToolContainer = () => {
             try {
                 setIsLoading(true);
 
-                await dispatch(updateProfileData());
+                await dispatch(updateTemporalProfileData());
 
                 setIsLoading(false);
             } catch (err) {
@@ -140,7 +140,7 @@ export const ProfileToolContainer = () => {
                     dispatch(acquisitionMonth4ProfileToolChanged(month));
                 }}
                 closeButtonOnClick={() => {
-                    dispatch(profileDataUpdated([]));
+                    dispatch(temporalProfileDataUpdated([]));
                     dispatch(queryLocation4ProfileToolChanged(null));
                 }}
             />

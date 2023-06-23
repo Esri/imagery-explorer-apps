@@ -5,7 +5,7 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { getCurrentMonth } from '@shared/utils/date-time/getCurrentDateTime';
-import { LandsatProfileData } from '@typing/imagery-service';
+import { TemporalProfileData } from '@typing/imagery-service';
 import { Point } from 'esri/geometry';
 
 export type AnalysisTool = 'mask' | 'profile';
@@ -49,34 +49,34 @@ export type AnalysisState = {
      */
     maskLayerOpacity: number;
     /**
-     * if true, mask layer should be used to clip the landsat scene
+     * if true, mask layer should be used to clip the imagery scene
      */
     shouldClipMaskLayer: boolean;
     /**
-     * Query Location for Profile tool
+     * Query Location for Temporal Profile tool
      */
     queryLocation4ProfileTool: Point;
     /**
-     * acquisition month to be used to fetch Profile data
+     * acquisition month to be used to fetch Temporal Profile data
      */
     acquisitionMonth4ProfileTool: number;
     /**
-     * user selected spectral index to be used in the profile tool
+     * user selected spectral index to be used in the Temporal profile tool
      */
     spectralIndex4ProfileTool: SpectralIndex;
     /**
      * Determines the frequency of collecting samples for the annual resolution.
-     * The minimum value is 1, indicating that Landsat scenes acquired in the user-selected month
-     * will be sampled for each year. The maximum value is 5, indicating that Landsat scenes will be sampled
+     * The minimum value is 1, indicating that imagery scenes acquired in the user-selected month
+     * will be sampled for each year. The maximum value is 5, indicating that imagery scenes will be sampled
      * every 5 years.
      */
     samplingTemporalResolution: number;
     /**
-     * landsat profile data using object id as key
+     * imagery temporal profile data using object id as key
      */
-    profileData: {
+    temporalProfileData: {
         byObjectId: {
-            [key: number]: LandsatProfileData;
+            [key: number]: TemporalProfileData;
         };
         objectIds: number[];
     };
@@ -104,7 +104,7 @@ export const initialAnalysisState: AnalysisState = {
     queryLocation4ProfileTool: null,
     acquisitionMonth4ProfileTool: getCurrentMonth(),
     spectralIndex4ProfileTool: 'moisture',
-    profileData: {
+    temporalProfileData: {
         byObjectId: {},
         objectIds: [],
     },
@@ -149,9 +149,9 @@ const slice = createSlice({
         ) => {
             state.acquisitionMonth4ProfileTool = action.payload;
         },
-        profileDataUpdated: (
+        temporalProfileDataUpdated: (
             state,
-            action: PayloadAction<LandsatProfileData[]>
+            action: PayloadAction<TemporalProfileData[]>
         ) => {
             const objectIds = [];
             const byObjectId = {};
@@ -162,7 +162,7 @@ const slice = createSlice({
                 byObjectId[objectId] = item;
             }
 
-            state.profileData = {
+            state.temporalProfileData = {
                 objectIds,
                 byObjectId,
             };
@@ -192,7 +192,7 @@ export const {
     shouldClipMaskLayerToggled,
     queryLocation4ProfileToolChanged,
     acquisitionMonth4ProfileToolChanged,
-    profileDataUpdated,
+    temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
     samplingTemporalResolutionChanged,
 } = slice.actions;
