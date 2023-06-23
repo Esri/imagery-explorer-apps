@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 
 type Props = {
     /**
@@ -103,7 +103,7 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
     return (
         <div className="w-full h-[120px]">
             <div
-                className="esri-slider-custom-style w-full"
+                className="esri-slider-custom-style show-segment-between-handlers w-full"
                 ref={containerRef}
             ></div>
         </div>
