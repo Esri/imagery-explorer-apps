@@ -86,6 +86,10 @@ export type AnalysisState = {
     };
 };
 
+export type MaskToolData = AnalysisState['maskTool'];
+
+export type TemporalProfileToolData = AnalysisState['profileTool'];
+
 export const initialAnalysisState: AnalysisState = {
     tool: 'mask',
     maskTool: {

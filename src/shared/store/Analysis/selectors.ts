@@ -57,3 +57,13 @@ export const selectSamplingTemporalResolution = createSelector(
     (state: RootState) => state.Analysis.profileTool.samplingTemporalResolution,
     (samplingTemporalResolution) => samplingTemporalResolution
 );
+
+export const selectMaskToolState = createSelector(
+    (state: RootState) => state.Analysis.maskTool,
+    (maskTool) => maskTool
+);
+
+export const selectProfileToolState = createSelector(
+    (state: RootState) => state.Analysis.profileTool,
+    (profileTool) => profileTool
+);

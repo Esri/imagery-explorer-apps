@@ -1,16 +1,17 @@
 import {
     selectActiveAnalysisTool,
-    selectMaskOptions,
-    selectShouldClipMaskLayer,
-    selectSpectralIndex4MaskTool,
+    selectMaskToolState,
+    selectProfileToolState,
 } from '@shared/store/Analysis/selectors';
 import {
     selectAppMode,
     selectQueryParams4MainScene,
-    selectQueryParams4SceneInSelectedMode,
+    // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
 import {
+    saveMaskToolToHashParams,
+    saveTemporalProfileToolToHashParams,
     saveQueryParams4MainSceneToHashParams,
     saveQueryParams4SecondarySceneToHashParams,
     updateHashParams,
@@ -29,23 +30,35 @@ export const useSaveAppState2HashParams = () => {
         selectQueryParams4SecondaryScene
     );
 
+    const maskToolState = useSelector(selectMaskToolState);
+
+    const profileToolState = useSelector(selectProfileToolState);
+
     useEffect(() => {
         updateHashParams('mode', mode);
 
         saveQueryParams4MainSceneToHashParams(queryParams4MainScene);
+    }, [mode, queryParams4MainScene]);
 
+    useEffect(() => {
         saveQueryParams4SecondarySceneToHashParams(
             mode === 'swipe' ? queryParams4SecondaryScene : null
         );
-    }, [mode, queryParams4MainScene, queryParams4SecondaryScene]);
+    }, [mode, queryParams4SecondaryScene]);
 
     useEffect(() => {
-        if (mode !== 'analysis') {
-            // remove analysis tool from hash params
-            updateHashParams('tool', null);
-            return;
-        }
+        saveMaskToolToHashParams(
+            mode === 'analysis' && analysisTool === 'mask'
+                ? maskToolState
+                : null
+        );
+    }, [mode, analysisTool, maskToolState]);
 
-        updateHashParams('tool', analysisTool);
-    }, [mode, analysisTool]);
+    useEffect(() => {
+        saveTemporalProfileToolToHashParams(
+            mode === 'analysis' && analysisTool === 'profile'
+                ? profileToolState
+                : null
+        );
+    }, [mode, analysisTool, profileToolState]);
 };

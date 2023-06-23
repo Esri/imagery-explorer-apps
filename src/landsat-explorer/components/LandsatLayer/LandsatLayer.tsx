@@ -61,6 +61,7 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
     useEffect(() => {
         if (groupLayer && layer) {
             groupLayer.add(layer);
+            groupLayer.reorder(layer, 0);
         }
     }, [groupLayer, layer]);
 

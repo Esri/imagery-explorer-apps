@@ -39,7 +39,7 @@ export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
     return (
         <div className="relative color-picker-custom-style" ref={containerRef}>
             <div
-                className={classNames('absolute left-0 bottom-6 z-50', {
+                className={classNames('absolute right-0 bottom-6 z-50', {
                     hidden: showColorPicker === false,
                 })}
             >

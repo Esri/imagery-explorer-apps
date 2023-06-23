@@ -1,3 +1,9 @@
+import {
+    MaskToolData,
+    SpectralIndex,
+    TemporalProfileToolData,
+    initialAnalysisState,
+} from '@shared/store/Analysis/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 
 export const encodeQueryParams4ImageryScene = (
@@ -31,4 +37,84 @@ export const decodeQueryParams4ImageryScene = (
         cloudCover: 0.5,
         animationFrameId: null,
     };
+};
+
+export const encodeMaskToolData = (data: MaskToolData): string => {
+    if (!data) {
+        return null;
+    }
+
+    const {
+        spectralIndex,
+        shouldClipMaskLayer,
+        maskLayerOpacity,
+        maskOptionsBySpectralIndex,
+    } = data;
+
+    const maskOptions = maskOptionsBySpectralIndex[spectralIndex];
+
+    return [
+        spectralIndex,
+        shouldClipMaskLayer,
+        maskLayerOpacity,
+        maskOptions?.color,
+        maskOptions?.selectedRange,
+    ].join('|');
+};
+
+export const decodeMaskToolData = (val: string): MaskToolData => {
+    if (!val) {
+        return null;
+    }
+
+    const [
+        spectralIndex,
+        shouldClipMaskLayer,
+        maskLayerOpacity,
+        color,
+        selectedRange,
+    ] = val.split('|');
+
+    const maskOptionForSelectedSpectralIndex =
+        color && selectedRange
+            ? {
+                  color: color.split(',').map((d) => +d),
+                  selectedRange: selectedRange.split(',').map((d) => +d),
+              }
+            : initialAnalysisState.maskTool.maskOptionsBySpectralIndex[
+                  spectralIndex
+              ];
+
+    return {
+        spectralIndex: spectralIndex as SpectralIndex,
+        shouldClipMaskLayer: shouldClipMaskLayer === 'true',
+        maskLayerOpacity: +maskLayerOpacity,
+        maskOptionsBySpectralIndex: {
+            ...initialAnalysisState.maskTool.maskOptionsBySpectralIndex,
+            [spectralIndex]: maskOptionForSelectedSpectralIndex,
+        },
+    };
+};
+
+export const encodeTemporalProfileToolData = (
+    data: TemporalProfileToolData
+): string => {
+    if (!data) {
+        return null;
+    }
+
+    const {
+        spectralIndex,
+        acquisitionMonth,
+        samplingTemporalResolution,
+        queryLocation,
+    } = data;
+
+    if (!queryLocation) {
+        return null;
+    }
+
+    return [spectralIndex, acquisitionMonth, samplingTemporalResolution].join(
+        '|'
+    );
 };

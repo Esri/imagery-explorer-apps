@@ -1,8 +1,16 @@
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import {
+    decodeMaskToolData,
     decodeQueryParams4ImageryScene,
+    encodeMaskToolData,
     encodeQueryParams4ImageryScene,
+    encodeTemporalProfileToolData,
 } from './helpers';
+import {
+    MaskToolData,
+    TemporalProfileToolData,
+} from '@shared/store/Analysis/reducer';
+import { debounce } from '../snippets/debounce';
 
 type UrlHashParamKey =
     | 'mapCenter'
@@ -10,7 +18,8 @@ type UrlHashParamKey =
     | 'mainScene'
     | 'secondaryScene'
     | 'animationScenes'
-    | 'tool';
+    | 'mask'
+    | 'profile';
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
@@ -86,3 +95,24 @@ export const getQueryParams4SecondarySceneFromHashParams = () => {
     const value = getHashParamValueByKey('secondaryScene');
     return decodeQueryParams4ImageryScene(value);
 };
+
+export const saveMaskToolToHashParams = debounce((data: MaskToolData) => {
+    updateHashParams('mask', encodeMaskToolData(data));
+}, 500);
+
+export const saveTemporalProfileToolToHashParams = debounce(
+    (data: TemporalProfileToolData) => {
+        updateHashParams('profile', encodeTemporalProfileToolData(data));
+    },
+    500
+);
+
+export const getMaskToolDataFromHashParams = (): MaskToolData => {
+    const value = getHashParamValueByKey('mask');
+    return decodeMaskToolData(value);
+};
+
+export const getTemporalProfileToolDataFromHashParams =
+    (): TemporalProfileToolData => {
+        return null;
+    };

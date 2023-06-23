@@ -4,8 +4,10 @@ import { initialMapState, MapState } from '../store/Map/reducer';
 import {
     getHashParamValueByKey,
     getMapCenterFromHashParams,
+    getMaskToolDataFromHashParams,
     getQueryParams4MainSceneFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
+    getTemporalProfileToolDataFromHashParams,
 } from '../utils/url-hash-params';
 import { MAP_CENTER, MAP_ZOOM } from '../constants/map';
 // import { initialUIState, UIState } from './UI/reducer';
@@ -49,11 +51,13 @@ const getPreloadedLandsatState = (): LandsatState => {
 };
 
 const getPreloadedAnalysisState = (): AnalysisState => {
-    const tool = getHashParamValueByKey('tool') as AnalysisTool | 'mask';
+    const maskToolData = getMaskToolDataFromHashParams();
+    const profileToolData = getTemporalProfileToolDataFromHashParams();
 
     return {
         ...initialAnalysisState,
-        tool,
+        tool: profileToolData !== null ? 'profile' : 'mask',
+        maskTool: maskToolData || initialAnalysisState.maskTool,
     };
 };
 
