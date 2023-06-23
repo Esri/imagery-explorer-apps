@@ -13,7 +13,7 @@ import {
     selectAcquisitionMonth4ProfileTool,
     selectActiveAnalysisTool,
     selectSamplingTemporalResolution,
-    selectProfileData,
+    selectTemporalProfileData,
     selectQueryLocation4ProfileTool,
     selectSpectralIndex4ProfileTool,
 } from '@shared/store/Analysis/selectors';
@@ -21,6 +21,7 @@ import { updateTemporalProfileData } from '@shared/store/Analysis/thunks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { convertLandsatTemporalProfileData2ChartData } from './helper';
 
 export const ProfileToolContainer = () => {
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export const ProfileToolContainer = () => {
 
     const acquisitionMonth = useSelector(selectAcquisitionMonth4ProfileTool);
 
-    const profileData = useSelector(selectProfileData);
+    const temporalProfileData = useSelector(selectTemporalProfileData);
 
     const spectralIndex = useSelector(selectSpectralIndex4ProfileTool);
 
@@ -42,7 +43,7 @@ export const ProfileToolContainer = () => {
     const [isLoading, setIsLoading] = useState<boolean>();
 
     const getLineChart = () => {
-        if (!profileData.length || isLoading) {
+        if (!temporalProfileData.length || isLoading) {
             return (
                 <div className="h-full w-full flex items-center justify-center text-center">
                     {isLoading && <calcite-loader inline />}
@@ -55,24 +56,10 @@ export const ProfileToolContainer = () => {
             );
         }
 
-        const data = profileData.map((d) => {
-            const [B1, B2, B3, B4, B5, B6] = d.values;
-
-            let value = 0;
-
-            if (spectralIndex === 'moisture') {
-                value = (B5 - B6) / (B5 + B6);
-            } else if (spectralIndex === 'vegetation') {
-                value = (B5 - B4) / (B5 + B4);
-            } else if (spectralIndex === 'urban') {
-                value = (B6 - B5) / (B6 + B5);
-            }
-
-            return {
-                key: d.acquisitionYear.toString(),
-                value,
-            };
-        });
+        const data = convertLandsatTemporalProfileData2ChartData(
+            temporalProfileData,
+            spectralIndex
+        );
 
         // console.log(data);
 
@@ -131,7 +118,9 @@ export const ProfileToolContainer = () => {
 
             <ProfileToolControls
                 acquisitionMonth={acquisitionMonth}
-                shouldShowCloseButton={profileData.length > 0 ? true : false}
+                shouldShowCloseButton={
+                    temporalProfileData.length > 0 ? true : false
+                }
                 annualSamplingResolution={samplingTemporalResolution}
                 annualSamplingResolutionOnChange={(resolution) => {
                     dispatch(samplingTemporalResolutionChanged(resolution));

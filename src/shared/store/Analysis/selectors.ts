@@ -38,7 +38,7 @@ export const selectAcquisitionMonth4ProfileTool = createSelector(
     (acquisitionMonth4ProfileTool) => acquisitionMonth4ProfileTool
 );
 
-export const selectProfileData = createSelector(
+export const selectTemporalProfileData = createSelector(
     (state: RootState) => state.Analysis.temporalProfileData.objectIds,
     (state: RootState) => state.Analysis.temporalProfileData.byObjectId,
     (objectIds, byObjectId) => {
