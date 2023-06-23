@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
-    selectQueryParams4SceneOnLeftSideOfSwipeMode,
-    selectQueryParams4SceneOnRightSideOfSwipeMode,
+    selectQueryParams4MainScene,
+    selectQueryParams4SecondaryScene,
     selectSelectedSideOfSwipeMode,
 } from '@shared/store/Landsat/selectors';
 import { useDispatch } from 'react-redux';
@@ -17,13 +17,9 @@ export const SwipeLayerSelectorContainer = () => {
 
     const selectedSideOfSwipeMode = useSelector(selectSelectedSideOfSwipeMode);
 
-    const queryParams4LeftSide = useSelector(
-        selectQueryParams4SceneOnLeftSideOfSwipeMode
-    );
+    const queryParams4LeftSide = useSelector(selectQueryParams4MainScene);
 
-    const queryParams4RightSide = useSelector(
-        selectQueryParams4SceneOnRightSideOfSwipeMode
-    );
+    const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
 
     if (appMode !== 'swipe') {
         return null;

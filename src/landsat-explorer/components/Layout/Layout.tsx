@@ -12,11 +12,14 @@ import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { ProfileTool } from '../ProfileTool';
 import { MaskTool } from '@shared/components/MaskTool';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
+import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
 
     const dynamicModeOn = mode === 'dynamic';
+
+    useSaveAppState2HashParams();
 
     return (
         <>

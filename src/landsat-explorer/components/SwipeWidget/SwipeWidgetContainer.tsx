@@ -4,8 +4,8 @@ import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
-    selectQueryParams4SceneOnLeftSideOfSwipeMode,
-    selectQueryParams4SceneOnRightSideOfSwipeMode,
+    selectQueryParams4MainScene,
+    selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
 import { useLandsatLayer } from '../LandsatLayer';
 
@@ -16,13 +16,9 @@ type Props = {
 export const SwipeWidgetContainer: FC<Props> = ({ mapView }: Props) => {
     const appMode = useSelector(selectAppMode);
 
-    const queryParams4LeftSide = useSelector(
-        selectQueryParams4SceneOnLeftSideOfSwipeMode
-    );
+    const queryParams4LeftSide = useSelector(selectQueryParams4MainScene);
 
-    const queryParams4RightSide = useSelector(
-        selectQueryParams4SceneOnRightSideOfSwipeMode
-    );
+    const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
 
     const isSwipeWidgetVisible = appMode === 'swipe';
 

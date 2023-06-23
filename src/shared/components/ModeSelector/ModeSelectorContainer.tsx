@@ -5,7 +5,6 @@ import { selectAppMode } from '@shared/store/Landsat/selectors';
 import { modeChanged } from '@shared/store/Landsat/reducer';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { ModeSelector } from './ModeSelector';
-import { updateHashParams } from '@shared/utils/url-hash-params';
 
 export const ModeSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -13,10 +12,6 @@ export const ModeSelectorContainer = () => {
     const selectedMode = useSelector(selectAppMode);
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
-
-    useEffect(() => {
-        updateHashParams('mode', selectedMode);
-    }, [selectedMode]);
 
     return (
         <ModeSelector

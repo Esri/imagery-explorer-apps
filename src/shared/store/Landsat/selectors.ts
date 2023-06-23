@@ -42,12 +42,12 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     }
 );
 
-export const selectQueryParams4SceneOnLeftSideOfSwipeMode = createSelector(
+export const selectQueryParams4MainScene = createSelector(
     (state: RootState) => state.Landsat.queryParams4MainScene,
     (queryParams4MainScene) => queryParams4MainScene
 );
 
-export const selectQueryParams4SceneOnRightSideOfSwipeMode = createSelector(
+export const selectQueryParams4SecondaryScene = createSelector(
     (state: RootState) => state.Landsat.queryParams4SecondaryScene,
     (queryParams4SecondaryScene) => queryParams4SecondaryScene
 );

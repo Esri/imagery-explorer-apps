@@ -36,7 +36,7 @@ export const useDataFromSelectedLandsatScene = () => {
 
         const objectId = queryParams4SelectedScene?.objectIdOfSelectedScene;
 
-        if (!objectId) {
+        if (!objectId || !availableScenesByObjectId[objectId]) {
             return null;
         }
 

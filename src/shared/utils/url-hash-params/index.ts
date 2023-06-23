@@ -1,9 +1,16 @@
+import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import {
+    decodeQueryParams4ImageryScene,
+    encodeQueryParams4ImageryScene,
+} from './helpers';
+
 type UrlHashParamKey =
     | 'mapCenter'
     | 'mode'
     | 'mainScene'
     | 'secondaryScene'
-    | 'animationScenes';
+    | 'animationScenes'
+    | 'tool';
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
@@ -58,18 +65,24 @@ export const getMapCenterFromHashParams = () => {
     };
 };
 
-// export const saveQueryParams4MainSceneToHashParams = ()=>{
+export const saveQueryParams4MainSceneToHashParams = (
+    data?: QueryParams4ImageryScene
+) => {
+    updateHashParams('mainScene', encodeQueryParams4ImageryScene(data));
+};
 
-// }
+export const saveQueryParams4SecondarySceneToHashParams = (
+    data: QueryParams4ImageryScene
+) => {
+    updateHashParams('secondaryScene', encodeQueryParams4ImageryScene(data));
+};
 
-// export const getQueryParams4MainSceneFromHashParams = ()=>{
+export const getQueryParams4MainSceneFromHashParams = () => {
+    const value = getHashParamValueByKey('mainScene');
+    return decodeQueryParams4ImageryScene(value);
+};
 
-// }
-
-// export const saveQueryParams4SecondarySceneToHashParams = ()=>{
-
-// }
-
-// export const getQueryParams4SecondarySceneFromHashParams = ()=>{
-
-// }
+export const getQueryParams4SecondarySceneFromHashParams = () => {
+    const value = getHashParamValueByKey('secondaryScene');
+    return decodeQueryParams4ImageryScene(value);
+};
