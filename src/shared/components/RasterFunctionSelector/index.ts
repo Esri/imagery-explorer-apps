@@ -1,1 +1,1 @@
-export { default as RasterFunctionSelector } from './RasterFunctionSelector';
+export { RasterFunctionSelectorContainer as RasterFunctionSelector } from './RasterFunctionSelectorContainer';

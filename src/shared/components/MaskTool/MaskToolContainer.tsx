@@ -1,9 +1,7 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import {
-    MaskPixelRangeSlider,
-    MaskRenderingControls,
-} from '@shared/components/MaskTool';
-import { computeHistogram } from '@shared/services/landsat-2/computeHistogram';
+import { PixelRangeSlider as MaskPixelRangeSlider } from './PixelRangeSlider';
+
+import { RenderingControls as MaskRenderingControls } from './RenderingControls';
 import {
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
@@ -20,7 +18,6 @@ import {
     updateMaskColor,
     updateSelectedRange,
 } from '@shared/store/Analysis/thunks';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -37,30 +34,6 @@ export const MaskToolContainer = () => {
     const opacity = useSelector(selectMaskLayerOpcity);
 
     const shouldClip = useSelector(selectShouldClipMaskLayer);
-
-    // const { objectIdOfSelectedScene } =
-    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
-
-    // useEffect(()=>{
-    //     (async()=>{
-    //         try {
-    //             if(!objectIdOfSelectedScene){
-    //                 return
-    //             }
-
-    //             const res = await computeHistogram({
-    //                 resolution: 76.43702828507347,
-    //                 objectId: objectIdOfSelectedScene,
-    //                 spectralIndex: selectedSpectralIndex
-    //             })
-
-    //             console.log(res)
-
-    //         } catch(err){
-    //             console.log(err)
-    //         }
-    //     })()
-    // }, [objectIdOfSelectedScene, selectedSpectralIndex])
 
     if (tool !== 'mask') {
         return null;

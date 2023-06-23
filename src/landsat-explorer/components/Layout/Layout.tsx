@@ -1,23 +1,20 @@
 import React from 'react';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
-import { RasterFunctionSelector } from '../RasterFunctionSelector';
-import { Calendar } from '../Calendar';
+import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
+import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
-import { ModeSelector } from '../ModeSelector';
-import { SwipeLayerSelector } from '../SwipeLayerSelector';
+import { ModeSelector } from '@shared/components/ModeSelector';
 import { SceneInfo } from '../SceneInfo';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
 import { AnimationControl } from '../AnimationControl';
-import { MaskTool } from '../MaskTool';
-import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
-import { AnalysisToolSelector } from '../AnalysisToolSelector';
+import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { ProfileTool } from '../ProfileTool';
+import { MaskTool } from '@shared/components/MaskTool';
+import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
-
-    const analysisTool = useSelector(selectActiveAnalysisTool);
 
     const dynamicModeOn = mode === 'dynamic';
 

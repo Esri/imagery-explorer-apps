@@ -7,7 +7,7 @@ import {
     selectSelectedSideOfSwipeMode,
 } from '@shared/store/Landsat/selectors';
 import { useDispatch } from 'react-redux';
-import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
+import { SwipeLayerSelector } from './SwipeLayerSelector';
 import { selectedSide4SwipeModeChanged } from '@shared/store/Landsat/reducer';
 
 export const SwipeLayerSelectorContainer = () => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Calendar from '@shared/components/Calendar/Calendar';
+import Calendar from './Calendar';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@shared/components/Dropdown';
@@ -11,8 +11,6 @@ import useAvailableScenes from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
-    // updateAcquisitionMonth,
-    // updateAcquisitionYear,
     updateCloudCover,
 } from '@shared/store/Landsat/thunks';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';

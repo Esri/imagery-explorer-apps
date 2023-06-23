@@ -23,7 +23,7 @@ type Props = {
     onChange: (name: string) => void;
 };
 
-const RasterFunctionSelector: FC<Props> = ({
+export const RasterFunctionSelector: FC<Props> = ({
     nameOfSelectedRasterFunction,
     rasterFunctionInfos,
     disabled,
@@ -81,5 +81,3 @@ const RasterFunctionSelector: FC<Props> = ({
         </div>
     );
 };
-
-export default RasterFunctionSelector;

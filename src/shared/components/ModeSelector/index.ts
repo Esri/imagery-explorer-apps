@@ -1,1 +1,1 @@
-export { ModeSelector } from './ModeSelector';
+export { ModeSelectorContainer as ModeSelector } from './ModeSelectorContainer';

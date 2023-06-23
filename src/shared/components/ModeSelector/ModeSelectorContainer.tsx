@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
-import { AppMode, modeChanged } from '@shared/store/Landsat/reducer';
+import { modeChanged } from '@shared/store/Landsat/reducer';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { ModeSelector } from '@shared/components/ModeSelector';
+import { ModeSelector } from './ModeSelector';
 import { updateHashParams } from '@shared/utils/url-hash-params';
 
 export const ModeSelectorContainer = () => {
