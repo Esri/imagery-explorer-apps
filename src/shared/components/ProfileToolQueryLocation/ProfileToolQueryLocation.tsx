@@ -24,7 +24,9 @@ export const ProfileToolQueryLocation: FC<Props> = ({
                 'esri/layers/GraphicsLayer',
             ]) as Promise<Modules>);
 
-            graphicLayerRef.current = new GraphicsLayer();
+            graphicLayerRef.current = new GraphicsLayer({
+                effect: 'drop-shadow(2px, 2px, 3px, #000)',
+            });
 
             mapView.map.add(graphicLayerRef.current);
         } catch (err) {
@@ -37,18 +39,23 @@ export const ProfileToolQueryLocation: FC<Props> = ({
 
         try {
             const [Graphic] = await (loadModules([
-                'esri/layers/Graphic',
+                'esri/Graphic',
             ]) as Promise<Modules>);
 
+            graphicLayerRef.current.removeAll();
+
             const point = new Graphic({
-                geometry: queryLocation,
+                geometry: {
+                    type: 'point',
+                    ...queryLocation,
+                },
                 symbol: {
                     type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-                    color: [226, 119, 40],
+                    color: [0, 35, 47, 0.9],
                     outline: {
                         // autocasts as new SimpleLineSymbol()
-                        color: [255, 255, 255],
-                        width: 2,
+                        color: [191, 238, 254],
+                        width: 1,
                     },
                 } as any,
             });
