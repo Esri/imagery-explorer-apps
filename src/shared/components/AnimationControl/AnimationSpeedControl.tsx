@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
-import ISlider from 'esri/widgets/Slider';
-import { loadModules } from 'esri-loader';
-import classNames from 'classnames';
+// import ISlider from 'esri/widgets/Slider';
+// import { loadModules } from 'esri-loader';
+// import classNames from 'classnames';
 import { Slider } from '../Slider';
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 /**
  * Maximum Animation Speed in Milliseconds
  */
-const MAX_SPEED = 2000;
+const MAX_SPEED_IN_MILLISECONDS = 2000;
 
 /**
  * A slider component to control the speed of animation
@@ -32,9 +32,15 @@ export const AnimationSpeedControl: FC<Props> = ({ onChange }) => {
             <Slider
                 value={0.5} // 0.5 as the mid point of the slider, which is equivelant to 1 second per frame
                 onChange={(newVal) => {
-                    // speed cannot be zero, therefore we just use 0.1, which will be 20 milisecond per frame
-                    newVal = newVal || 0.01;
-                    onChange(newVal * MAX_SPEED);
+                    // The slider range is set between 0 and 1. In this UI, a value of 0 indicates the slowest speed,
+                    // while a value of 1 indicates the fastest speed. To achieve this, we calculate a speed ratio
+                    // that determines the animation speed.
+                    let speedRatio = 1 - newVal;
+
+                    // Ensure speedRatio is not zero, so we set it to a minimum of 0.01, which corresponds to 20 milliseconds per frame.
+                    speedRatio = speedRatio || 0.01;
+
+                    onChange(MAX_SPEED_IN_MILLISECONDS * speedRatio);
                 }}
             />
 
