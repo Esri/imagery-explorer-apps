@@ -21,13 +21,17 @@ export const getTemporalProfileData = async ({
     acquisitionMonth,
     samplingTemporalResolution,
 }: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
-    const { longitude, latitude } = queryLocation;
+    const { x, y } = queryLocation;
 
     try {
         const landsatScenes = await getLandsatScenes({
-            mapPoint: [longitude, latitude],
+            mapPoint: [x, y],
             acquisitionMonth,
         });
+
+        if (!landsatScenes.length) {
+            return [];
+        }
 
         const landsatScenesToSample = getLandsatScenesToSample(
             landsatScenes,
@@ -81,15 +85,11 @@ const getSamples = async (
     queryLocation: Point,
     objectIds: number[]
 ): Promise<SampleData[]> => {
-    const { x, y, spatialReference } = queryLocation;
+    // const { x, y, spatialReference } = queryLocation;
 
     const params = new URLSearchParams({
         f: 'json',
-        geometry: JSON.stringify({
-            x,
-            y,
-            spatialReference,
-        }),
+        geometry: JSON.stringify(queryLocation),
         geometryType: 'esriGeometryPoint',
         mosaicRule: JSON.stringify({
             mosaicMethod: 'esriMosaicLockRaster',
@@ -136,6 +136,10 @@ const getLandsatScenesToSample = (
     scenes: LandsatScene[],
     samplingTemporalResolution: number
 ): LandsatScene[] => {
+    if (!scenes.length) {
+        return [];
+    }
+
     const candidates: LandsatScene[] = [scenes[0]];
 
     for (let i = 1; i < scenes.length; i++) {

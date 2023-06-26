@@ -17,6 +17,7 @@ import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
 import { queryLocation4ProfileToolChanged } from '@shared/store/Analysis/reducer';
 import { updateQueryLocation4ProfileMask } from '@shared/store/Analysis/thunks';
+import { Point } from 'esri/geometry';
 
 type Props = {
     children?: React.ReactNode;
@@ -67,12 +68,17 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                     onClickHandler={(point) => {
                         // console.log('clicked on map', point);
                         const { latitude, longitude } = point;
+
+                        const queryLocation = {
+                            x: longitude,
+                            y: latitude,
+                            spatialReference: {
+                                wkid: 4326,
+                            },
+                        } as Point;
+
                         dispatch(
-                            updateQueryLocation4ProfileMask({
-                                ...point.toJSON(),
-                                latitude,
-                                longitude,
-                            })
+                            queryLocation4ProfileToolChanged(queryLocation)
                         );
                     }}
                     mapViewUpdatingOnChange={setIsUpdating}
