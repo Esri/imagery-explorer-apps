@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { Button } from '../Button';
 import { AppMode } from '../../store/Landsat/reducer';
 import classNames from 'classnames';
+import { ContainerOfSecondaryControls } from './ContainerOfSecondaryControls';
 
 const modes: AppMode[] = ['swipe', 'animate', 'analysis'];
 const exploreModes: AppMode[] = ['dynamic', 'find a scene'];
@@ -41,12 +42,7 @@ export const ModeSelector: FC<Props> = ({
                 })}
             >
                 {/* this is button to enable selection of either 'find a scene' or 'dynamic' mode */}
-                <div
-                    className={classNames(ButtonWrapperClassnames, {
-                        'horizontal-indicator-on-right':
-                            isExploreButtonSelected,
-                    })}
-                >
+                <div className={classNames(ButtonWrapperClassnames)}>
                     <Button
                         fullHeight={true}
                         appearance={
@@ -59,6 +55,9 @@ export const ModeSelector: FC<Props> = ({
 
                             selectedModeOnChange('find a scene');
                         }}
+                        decorativeIndicator={
+                            isExploreButtonSelected ? 'right' : null
+                        }
                     >
                         <span className="uppercase">Explore</span>
                     </Button>
@@ -67,15 +66,15 @@ export const ModeSelector: FC<Props> = ({
                 {modes.map((mode) => (
                     <div
                         key={mode}
-                        className={classNames(ButtonWrapperClassnames, {
-                            'horizontal-indicator-on-right':
-                                mode === selectedMode,
-                        })}
+                        className={classNames(ButtonWrapperClassnames)}
                     >
                         <Button
                             fullHeight={true}
                             appearance={
                                 mode === selectedMode ? 'solid' : 'transparent'
+                            }
+                            decorativeIndicator={
+                                mode === selectedMode ? 'right' : null
                             }
                             onClickHandler={() => {
                                 selectedModeOnChange(mode);
@@ -88,15 +87,9 @@ export const ModeSelector: FC<Props> = ({
             </div>
 
             {isExploreButtonSelected && (
-                <div className="container-of-secondary-controls">
+                <ContainerOfSecondaryControls>
                     {exploreModes.map((mode) => (
-                        <div
-                            key={mode}
-                            className={classNames('relative mb-1', {
-                                'horizontal-indicator-on-left':
-                                    mode === selectedMode,
-                            })}
-                        >
+                        <div key={mode} className={classNames('relative mb-1')}>
                             <Button
                                 // fullHeight={true}
                                 appearance={
@@ -105,6 +98,9 @@ export const ModeSelector: FC<Props> = ({
                                         : 'transparent'
                                 }
                                 scale="s"
+                                decorativeIndicator={
+                                    mode === selectedMode ? 'left' : null
+                                }
                                 onClickHandler={() => {
                                     selectedModeOnChange(mode);
                                 }}
@@ -113,7 +109,7 @@ export const ModeSelector: FC<Props> = ({
                             </Button>
                         </div>
                     ))}
-                </div>
+                </ContainerOfSecondaryControls>
             )}
         </>
     );

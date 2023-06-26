@@ -23,4 +23,8 @@
     .overflow-y-unset {
         overflow-y: unset;
     }
+
+    .is-disabled {
+        @apply opacity-50 pointer-events-none;
+    }
 }

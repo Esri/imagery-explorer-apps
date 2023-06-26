@@ -1,0 +1,9 @@
+.horizontal-indicator-on-right::after {
+    content: '';
+    @apply absolute left-full w-space-between-main-secondary-selectors top-[50%] h-[1px] bg-custom-light-blue-50;
+}
+
+.horizontal-indicator-on-left::after {
+    content: '';
+    @apply absolute right-full w-space-between-main-secondary-selectors top-[50%] h-[1px] bg-custom-light-blue-50;
+}

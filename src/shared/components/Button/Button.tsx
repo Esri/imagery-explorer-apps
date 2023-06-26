@@ -1,3 +1,4 @@
+import './Button.css';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
@@ -12,16 +13,21 @@ type Props = {
      * If true, the button should occupy the full height of the parent container
      */
     fullHeight?: boolean;
-    /**
-     * fire when user clicks the button
-     * @returns
-     */
-    onClickHandler: () => void;
+
     children?: React.ReactNode;
     /**
      * scale/size of the button
      */
     scale?: 's' | 'm';
+    /**
+     * indicate the side that a decorative indicator should be added to
+     */
+    decorativeIndicator?: 'left' | 'right';
+    /**
+     * fire when user clicks the button
+     * @returns
+     */
+    onClickHandler: () => void;
 };
 
 export const Button: FC<Props> = ({
@@ -30,11 +36,12 @@ export const Button: FC<Props> = ({
     onClickHandler,
     children,
     scale = 'm',
+    decorativeIndicator,
 }: Props) => {
     return (
         <div
             className={classNames(
-                'p-2 px-4 border min-w-[9rem] shrink-0 text-sm border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
+                'relative p-2 px-4 border min-w-[9rem] shrink-0 text-sm border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
                 {
                     'bg-custom-light-blue': appearance === 'solid',
                     'text-custom-background': appearance === 'solid',
@@ -45,6 +52,10 @@ export const Button: FC<Props> = ({
                     'flex items-center': fullHeight,
                     'md:text-base': scale === 'm',
                     'min-w-[6rem]': scale === 's',
+                    'horizontal-indicator-on-right':
+                        decorativeIndicator === 'right',
+                    'horizontal-indicator-on-left':
+                        decorativeIndicator === 'left',
                 }
             )}
             onClick={onClickHandler}

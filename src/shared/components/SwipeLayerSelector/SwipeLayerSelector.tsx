@@ -55,11 +55,7 @@ export const SwipeLayerSelector: FC<Props> = ({
             {sides.map((side) => (
                 <div
                     className={classNames(
-                        'relative mb-1 h-1/2 flex items-center',
-                        {
-                            'horizontal-indicator-on-left':
-                                selectedSide === side,
-                        }
+                        'relative mb-1 h-1/2 flex items-center'
                     )}
                     key={side}
                 >
@@ -71,6 +67,9 @@ export const SwipeLayerSelector: FC<Props> = ({
                         onClickHandler={() => {
                             onChange(side);
                         }}
+                        decorativeIndicator={
+                            selectedSide === side ? 'left' : null
+                        }
                     >
                         {getButtonContent(side)}
                     </Button>

@@ -17,12 +17,7 @@ export const AnalysisToolSelector: FC<Props> = ({
     return (
         <>
             {AnalysisTools.map((tool) => (
-                <div
-                    key={tool}
-                    className={classNames('relative mb-1', {
-                        'horizontal-indicator-on-left': tool === selectedTool,
-                    })}
-                >
+                <div key={tool} className={classNames('relative mb-1')}>
                     <Button
                         // fullHeight={true}
                         appearance={
@@ -32,6 +27,9 @@ export const AnalysisToolSelector: FC<Props> = ({
                         onClickHandler={() => {
                             onChange(tool);
                         }}
+                        decorativeIndicator={
+                            tool === selectedTool ? 'left' : null
+                        }
                     >
                         <span className="uppercase">{tool}</span>
                     </Button>

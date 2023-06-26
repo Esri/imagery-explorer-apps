@@ -3,7 +3,10 @@ import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
 import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
-import { ModeSelector } from '@shared/components/ModeSelector';
+import {
+    ContainerOfSecondaryControls,
+    ModeSelector,
+} from '@shared/components/ModeSelector';
 import { SceneInfo } from '../SceneInfo';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
@@ -31,11 +34,11 @@ const Layout = () => {
                     {(mode === 'swipe' ||
                         mode === 'animate' ||
                         mode === 'analysis') && (
-                        <div className="container-of-secondary-controls">
+                        <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
                             <AnimationControl />
                             <AnalysisToolSelector />
-                        </div>
+                        </ContainerOfSecondaryControls>
                     )}
                 </div>
 
