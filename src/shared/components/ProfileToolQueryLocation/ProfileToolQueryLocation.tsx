@@ -7,11 +7,13 @@ import React, { FC, useEffect, useRef } from 'react';
 
 type Props = {
     queryLocation: Point;
+    visible: boolean;
     mapView?: MapView;
 };
 
 export const ProfileToolQueryLocation: FC<Props> = ({
     queryLocation,
+    visible,
     mapView,
 }) => {
     const graphicLayerRef = useRef<IGraphicsLayer>();
@@ -26,6 +28,7 @@ export const ProfileToolQueryLocation: FC<Props> = ({
 
             graphicLayerRef.current = new GraphicsLayer({
                 effect: 'drop-shadow(2px, 2px, 3px, #000)',
+                visible,
             });
 
             mapView.map.add(graphicLayerRef.current);
@@ -66,27 +69,41 @@ export const ProfileToolQueryLocation: FC<Props> = ({
         }
     };
 
-    useEffect(() => {
-        if (!mapView) {
-            return;
-        }
+    // useEffect(() => {
+    //     if (!mapView) {
+    //         return;
+    //     }
 
+    //     if (!graphicLayerRef.current) {
+    //         init();
+    //     }
+    // }, [mapView]);
+
+    useEffect(() => {
+        (async () => {
+            if (!mapView) {
+                return;
+            }
+
+            if (!graphicLayerRef.current) {
+                await init();
+            }
+
+            if (!queryLocation) {
+                graphicLayerRef.current.removeAll();
+            } else {
+                showQueryLocation();
+            }
+        })();
+    }, [queryLocation, mapView]);
+
+    useEffect(() => {
         if (!graphicLayerRef.current) {
-            init();
-        }
-    }, [mapView]);
-
-    useEffect(() => {
-        if (!mapView || !graphicLayerRef.current) {
             return;
         }
 
-        if (!queryLocation) {
-            graphicLayerRef.current.removeAll();
-        } else {
-            showQueryLocation();
-        }
-    }, [queryLocation]);
+        graphicLayerRef.current.visible = visible;
+    }, [visible]);
 
     return null;
 };
