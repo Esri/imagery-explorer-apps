@@ -1,6 +1,7 @@
 import { SpectralIndex } from '@shared/store/Analysis/reducer';
 import React, { FC, useMemo } from 'react';
 import { Dropdown, DropdownData } from '../Dropdown';
+import { Tooltip } from '../Tooltip';
 
 type SpectralIndexOption = {
     value: SpectralIndex;
@@ -17,6 +18,7 @@ type Props = {
      * user selected spectral index
      */
     selectedSpectralIndex: SpectralIndex;
+    tooltipText?: string;
     /**
      * fires when user selects a new spectral index
      * @param val
@@ -25,28 +27,11 @@ type Props = {
     selectedSpectralIndexOnChange: (val: SpectralIndex) => void;
 };
 
-// const SpectralIndexOptions: {
-//     value: SpectralIndex;
-//     label?: string;
-// }[] = [
-//     {
-//         value: 'water',
-//         label: '',
-//     },
-//     {
-//         value: 'vegetation',
-//         label: '',
-//     },
-//     {
-//         value: 'moisture',
-//         label: '',
-//     },
-// ];
-
 export const AnalysisToolHeader: FC<Props> = ({
     title,
     data,
     selectedSpectralIndex,
+    tooltipText,
     selectedSpectralIndexOnChange,
 }: Props) => {
     const dropdownData: DropdownData[] = useMemo(() => {
@@ -63,7 +48,12 @@ export const AnalysisToolHeader: FC<Props> = ({
     return (
         <div className="flex items-center w-full">
             <div className="flex items-center mr-4">
-                <calcite-icon scale="s" icon="information" />
+                {tooltipText && (
+                    <Tooltip content={tooltipText} width={280}>
+                        <calcite-icon scale="s" icon="information" />
+                    </Tooltip>
+                )}
+
                 <span className="uppercase text-sm ml-1">{title}</span>
             </div>
 

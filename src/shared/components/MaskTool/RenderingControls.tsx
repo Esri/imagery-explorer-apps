@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Slider } from '../Slider';
 import { ColorPicker } from './ColorPicker';
 import classNames from 'classnames';
+import { Tooltip } from '../Tooltip';
 
 type Props = {
     /**
@@ -33,11 +34,16 @@ export const RenderingControls: FC<Props> = ({
         <div className="flex items-center calcite-mode-dark">
             <div className="flex items-center">
                 <div className="cursor-pointer" onClick={shouldClipOnToggle}>
-                    {shouldClip ? (
-                        <calcite-icon icon="check-square" scale="s" />
-                    ) : (
-                        <calcite-icon icon="square" scale="s" />
-                    )}
+                    <Tooltip
+                        content="Show selected index pixels as a clipping mask, rather than as a solid color."
+                        width={200}
+                    >
+                        {shouldClip ? (
+                            <calcite-icon icon="check-square" scale="s" />
+                        ) : (
+                            <calcite-icon icon="square" scale="s" />
+                        )}
+                    </Tooltip>
                 </div>
                 <span className="text-xs ml-2 max-w-[90px] leading-none">
                     Show as clipping mask

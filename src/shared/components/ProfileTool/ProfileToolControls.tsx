@@ -2,6 +2,7 @@ import React from 'react';
 import { Dropdown } from '../Dropdown';
 import { useMonthOptions } from './useMonthOptions';
 import { useAnnualResolutionOptions } from './useAnnualResolutionOptions';
+import { Tooltip } from '../Tooltip';
 
 type Props = {
     /**
@@ -44,35 +45,37 @@ export const ProfileToolControls = ({
     return (
         <div className="prfile-control-tools">
             <div className="flex items-center justify-center">
-                <div
-                    className="w-1/2 mx-1"
-                    title="Choose an annual sampling resolution"
-                >
-                    <Dropdown
-                        data={annualResolutionsMenuData}
-                        onChange={(val) => {
-                            // console.log(val)
-                            annualSamplingResolutionOnChange(+val);
-                        }}
-                    />
+                <div className="w-1/2 mx-1">
+                    <Tooltip content="Choose an annual sampling resolution">
+                        <Dropdown
+                            data={annualResolutionsMenuData}
+                            onChange={(val) => {
+                                // console.log(val)
+                                annualSamplingResolutionOnChange(+val);
+                            }}
+                        />
+                    </Tooltip>
                 </div>
 
-                <div className="w-1/2 mx-1" title="Choose a season">
-                    <Dropdown
-                        data={monthDropdownMenuData}
-                        onChange={(val) => {
-                            acquisitionMonthOnChange(+val);
-                        }}
-                    />
+                <div className="w-1/2 mx-1">
+                    <Tooltip content="Choose a season">
+                        <Dropdown
+                            data={monthDropdownMenuData}
+                            onChange={(val) => {
+                                acquisitionMonthOnChange(+val);
+                            }}
+                        />
+                    </Tooltip>
                 </div>
 
                 {shouldShowCloseButton && (
                     <div
                         className="shrink-0 flex items-center cursor-pointer"
                         onClick={closeButtonOnClick}
-                        title="Clear map selection"
                     >
-                        <calcite-icon icon="x-circle" scale="s" />
+                        <Tooltip content="Clear map selection">
+                            <calcite-icon icon="x-circle" scale="s" />
+                        </Tooltip>
                     </div>
                 )}
             </div>
