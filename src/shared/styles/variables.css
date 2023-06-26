@@ -1,0 +1,19 @@
+:root {
+    --custom-light-blue: rgb(191,238,254);
+    --custom-light-blue-90: rgba(191,238,254, .9);
+    --custom-light-blue-80: rgba(191,238,254, .8);
+    --custom-light-blue-70: rgba(191,238,254, .7);
+    --custom-light-blue-60: rgba(191,238,254, .6);
+    --custom-light-blue-50: rgba(191,238,254, .5);
+    --custom-light-blue-25: rgba(191,238,254, .25);
+    --custom-light-blue-0: rgba(191,238,254, .0);
+
+    --custom-background: rgba(0,35,47, 1);
+    --custom-background-95: rgba(0,35,47,.95);
+    --custom-background-90: rgba(0,35,47,.90);
+    --custom-background-85: rgba(0,35,47,.85);
+    --custom-background-80: rgba(0,35,47,.80);
+    --custom-background-70: rgba(0,35,47,.70);
+
+    --space-between-main-secondary-selectors: 10px;
+}

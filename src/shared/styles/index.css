@@ -1,30 +1,16 @@
+@import './variables.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --custom-light-blue: rgb(191,238,254);
-    --custom-light-blue-90: rgba(191,238,254, .9);
-    --custom-light-blue-80: rgba(191,238,254, .8);
-    --custom-light-blue-70: rgba(191,238,254, .7);
-    --custom-light-blue-60: rgba(191,238,254, .6);
-    --custom-light-blue-50: rgba(191,238,254, .5);
-    --custom-light-blue-25: rgba(191,238,254, .25);
-    --custom-light-blue-0: rgba(191,238,254, .0);
-
-    --custom-background: rgba(0,35,47, 1);
-    --custom-background-95: rgba(0,35,47,.95);
-    --custom-background-90: rgba(0,35,47,.90);
-    --custom-background-85: rgba(0,35,47,.85);
-    --custom-background-80: rgba(0,35,47,.80);
-    --custom-background-70: rgba(0,35,47,.70);
-
-    --space-between-main-secondary-selectors: 10px;
-}
-
 @layer utilities {
     .overflow-y-unset {
         overflow-y: unset;
+    }
+
+    .is-disabled {
+        @apply opacity-50 pointer-events-none;
     }
 }
 
@@ -50,14 +36,6 @@ body {
     background-size: 6px 6px;
 }
 
-.is-disabled {
-    @apply opacity-50 pointer-events-none;
-}
-
-/*
- * Container of controls right next to Mode Selector.
- * It contains component like "Swipe Side Selector", "Animation Frame Control" and etc
- */
 .container-of-secondary-controls {
     @apply w-36 shrink-0 ml-space-between-main-secondary-selectors pl-space-between-main-secondary-selectors border-l border-custom-light-blue-50;
 }
@@ -72,8 +50,8 @@ body {
     @apply absolute right-full w-space-between-main-secondary-selectors top-[50%] h-[1px] bg-custom-light-blue-50;
 }
 
-.esri-input, 
+/* .esri-input, 
 .esri-widget--button, 
 .esri-menu {
     @apply bg-custom-background text-custom-light-blue;
-}
+} */

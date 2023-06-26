@@ -1,3 +1,4 @@
+import './CustomMapViewStyle.css';
 import React, { useEffect, useState, useRef } from 'react';
 
 import { loadModules } from 'esri-loader';
