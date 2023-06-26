@@ -5,6 +5,7 @@ import {
     initialAnalysisState,
 } from '@shared/store/Analysis/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { Point } from 'esri/geometry';
 
 export const encodeQueryParams4ImageryScene = (
     data: QueryParams4ImageryScene
@@ -96,6 +97,26 @@ export const decodeMaskToolData = (val: string): MaskToolData => {
     };
 };
 
+export const encodeProfileToolQueryLocation = (point: Point): string => {
+    if (!point) {
+        return '';
+    }
+
+    const { x, y } = point;
+    return [x, y].join(',');
+};
+
+export const decodeProfileToolQueryLocation = (val: string): Point => {
+    const [x, y] = val.split(',').map((d) => +d);
+    return {
+        x,
+        y,
+        spatialReference: {
+            wkid: 4326,
+        },
+    } as Point;
+};
+
 export const encodeTemporalProfileToolData = (
     data: TemporalProfileToolData
 ): string => {
@@ -114,7 +135,33 @@ export const encodeTemporalProfileToolData = (
         return null;
     }
 
-    return [spectralIndex, acquisitionMonth, samplingTemporalResolution].join(
-        '|'
-    );
+    return [
+        spectralIndex,
+        acquisitionMonth,
+        samplingTemporalResolution,
+        encodeProfileToolQueryLocation(queryLocation),
+    ].join('|');
+};
+
+export const decodeTemporalProfileToolData = (
+    val: string
+): TemporalProfileToolData => {
+    if (!val) {
+        return null;
+    }
+
+    const [
+        spectralIndex,
+        acquisitionMonth,
+        samplingTemporalResolution,
+        queryLocation,
+    ] = val.split('|');
+
+    return {
+        ...initialAnalysisState.profileTool,
+        spectralIndex: spectralIndex as SpectralIndex,
+        acquisitionMonth: +acquisitionMonth,
+        samplingTemporalResolution: +samplingTemporalResolution,
+        queryLocation: decodeProfileToolQueryLocation(queryLocation),
+    };
 };

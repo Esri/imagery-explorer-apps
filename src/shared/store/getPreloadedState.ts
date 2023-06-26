@@ -58,6 +58,7 @@ const getPreloadedAnalysisState = (): AnalysisState => {
         ...initialAnalysisState,
         tool: profileToolData !== null ? 'profile' : 'mask',
         maskTool: maskToolData || initialAnalysisState.maskTool,
+        profileTool: profileToolData || initialAnalysisState.profileTool,
     };
 };
 

@@ -70,15 +70,15 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                         const { latitude, longitude } = point;
 
                         const queryLocation = {
-                            x: longitude,
-                            y: latitude,
+                            x: +longitude.toFixed(3),
+                            y: +latitude.toFixed(3),
                             spatialReference: {
                                 wkid: 4326,
                             },
                         } as Point;
 
                         dispatch(
-                            queryLocation4ProfileToolChanged(queryLocation)
+                            updateQueryLocation4ProfileMask(queryLocation)
                         );
                     }}
                     mapViewUpdatingOnChange={setIsUpdating}

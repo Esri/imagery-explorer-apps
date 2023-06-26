@@ -2,6 +2,7 @@ import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import {
     decodeMaskToolData,
     decodeQueryParams4ImageryScene,
+    decodeTemporalProfileToolData,
     encodeMaskToolData,
     encodeQueryParams4ImageryScene,
     encodeTemporalProfileToolData,
@@ -114,5 +115,6 @@ export const getMaskToolDataFromHashParams = (): MaskToolData => {
 
 export const getTemporalProfileToolDataFromHashParams =
     (): TemporalProfileToolData => {
-        return null;
+        const value = getHashParamValueByKey('profile');
+        return decodeTemporalProfileToolData(value);
     };
