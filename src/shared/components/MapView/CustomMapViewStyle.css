@@ -1,5 +1,6 @@
 .esri-input, 
 .esri-widget--button, 
 .esri-menu {
-    @apply bg-custom-background text-custom-light-blue;
+    background: var(--custom-background);
+    color: var(--custom-light-blue);
 }

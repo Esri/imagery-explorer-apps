@@ -3,18 +3,19 @@
 }
 
 .esri-slider-custom-style.esri-widget .esri-slider__label {
-    @apply text-custom-light-blue-90;
+    color: var(--custom-light-blue-90);
     background: rgba(0,0,0,.7);
     min-width: 40px;
     font-size: .8rem;
 }
 
 .esri-slider-custom-style.esri-widget .esri-slider__thumb {
-    @apply border-custom-light-blue-80 bg-custom-light-blue-90;
+    background-color: var(--custom-light-blue-90);
+    border-color: var(--custom-light-blue-80);
 }
 
 .esri-slider-custom-style .esri-slider__segment-1 {
-    @apply bg-custom-light-blue;
+    background-color: var(--custom-light-blue);
 }
   
 .esri-slider-custom-style .esri-slider__segment-0,
