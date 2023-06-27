@@ -22,6 +22,7 @@ import {
     AnalysisTool,
     initialAnalysisState,
 } from './Analysis/reducer';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 const getPreloadedMapState = (): MapState => {
     const mapCenterInfo = getMapCenterFromHashParams();
@@ -34,7 +35,7 @@ const getPreloadedMapState = (): MapState => {
 };
 
 const getPreloadedLandsatState = (): LandsatState => {
-    const mode = getHashParamValueByKey('mode') as AppMode;
+    const modeFromHashParams = getHashParamValueByKey('mode') as AppMode;
     const queryParams4MainScene =
         getQueryParams4MainSceneFromHashParams() ||
         DefaultQueryParams4ImageryScene;
@@ -42,9 +43,15 @@ const getPreloadedLandsatState = (): LandsatState => {
         getQueryParams4SecondarySceneFromHashParams() ||
         DefaultQueryParams4ImageryScene;
 
+    let mode = modeFromHashParams || 'find a scene';
+
+    if (IS_MOBILE_DEVICE) {
+        mode = 'dynamic';
+    }
+
     return {
         ...initialLandsatState,
-        mode: mode || 'find a scene',
+        mode,
         queryParams4MainScene,
         queryParams4SecondaryScene,
     };

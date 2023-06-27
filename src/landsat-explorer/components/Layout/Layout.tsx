@@ -16,6 +16,7 @@ import { ProfileTool } from '../ProfileTool';
 import { MaskTool } from '@shared/components/MaskTool';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -23,6 +24,30 @@ const Layout = () => {
     const dynamicModeOn = mode === 'dynamic';
 
     useSaveAppState2HashParams();
+
+    if (IS_MOBILE_DEVICE) {
+        return (
+            <>
+                <AppHeader title="Landsat Explorer" />
+                <BottomPanel>
+                    <div className="mx-auto">
+                        <div className="mb-4">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Nulla bibendum lectus at
+                                fringilla aliquam. Mauris vel nulla tristique,
+                                tincidunt dui ac, facilisis est. Integer
+                                faucibus dignissim tempor. Sed hendrerit, libero
+                                id commodo dapibus, erat mi pretium dolor, vel
+                                lacinia nulla enim id lorem.
+                            </p>
+                        </div>
+                        <RasterFunctionSelector />
+                    </div>
+                </BottomPanel>
+            </>
+        );
+    }
 
     return (
         <>

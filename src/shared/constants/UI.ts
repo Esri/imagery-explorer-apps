@@ -1,3 +1,5 @@
+import { isMobileDevice } from 'helper-toolkit-ts/dist/misc';
+
 /**
  * default format that will be used to format datetime info in the app.
  *
@@ -6,3 +8,8 @@
  * `Feb 03, 2023`
  */
 export const DATE_FORMAT = `MMM dd, yyyy`;
+
+/**
+ * if true, user is using this app via a mobile device
+ */
+export const IS_MOBILE_DEVICE = isMobileDevice();
