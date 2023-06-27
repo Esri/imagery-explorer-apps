@@ -34,6 +34,10 @@ module.exports =  (env, options)=> {
         console.log(`starting imagery explorer app for ${imageryService}\n`);
     }
 
+    const title = imageryService === 'landsat'
+        ? 'Esri | Landsat Explorer'
+        : 'Esri | Sentinel-2 Explorer'
+
     return {
         mode: options.mode,
         entry: path.resolve(__dirname, './src/index.tsx'),
@@ -119,15 +123,15 @@ module.exports =  (env, options)=> {
             new HtmlWebpackPlugin({
                 template: './public/index.html',
                 filename: 'index.html',
-                title: package.name,
+                title: title,
                 meta: {
-                    title: package.name,
+                    title: title,
                     description: package.description,
                     author: package.author,
                     keywords: Array.isArray(package.keywords) 
                         ? package.keywords.join(',') 
                         : undefined,
-                    'og:title': package.name,
+                    'og:title': title,
                     'og:description': package.description,
                     'og:url': package.homepage,
                 },
