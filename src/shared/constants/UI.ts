@@ -1,4 +1,4 @@
-import { isMobileDevice } from 'helper-toolkit-ts/dist/misc';
+import { isMobileDevice } from 'helper-toolkit-ts';
 
 /**
  * default format that will be used to format datetime info in the app.
