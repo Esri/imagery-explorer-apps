@@ -1,6 +1,7 @@
 body {
     color: var(--custom-light-blue);
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .theme-background {

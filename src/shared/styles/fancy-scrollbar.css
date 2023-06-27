@@ -1,0 +1,16 @@
+.fancy-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.fancy-scrollbar::-webkit-scrollbar-track {
+    background: var(--custom-light-blue-10); 
+}
+
+.fancy-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--custom-light-blue-25); 
+}
+
+.fancy-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--custom-light-blue-50);
+}
