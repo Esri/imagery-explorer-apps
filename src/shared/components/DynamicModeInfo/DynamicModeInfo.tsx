@@ -3,11 +3,11 @@ import React from 'react';
 export const DynamicModeInfo = () => {
     return (
         <div className="max-w-xl mx-auto lg:mx-20">
-            <div className="text-center mb-12">
+            <div className="text-center mb-3">
                 <span className="uppercase text-sm">Dynamic View</span>
             </div>
 
-            <p className="text-sm italic opacity-50">
+            <p className="text-sm opacity-80">
                 In the current map display, the most recent and most cloud free
                 scenes from the Landsat archive are prioritized and dynamically
                 fused into a single mosaicked image layer. As you explore, the

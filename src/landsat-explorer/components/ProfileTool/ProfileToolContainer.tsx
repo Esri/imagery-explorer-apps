@@ -47,7 +47,7 @@ export const ProfileToolContainer = () => {
             return (
                 <div className="h-full w-full flex items-center justify-center text-center">
                     {isLoading && <calcite-loader inline />}
-                    <p className="text-sm">
+                    <p className="text-sm opacity-80">
                         {isLoading
                             ? 'fetching temporal profile data'
                             : 'Click on map to get the temporal profile'}
