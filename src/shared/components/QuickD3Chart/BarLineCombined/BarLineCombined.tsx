@@ -210,11 +210,11 @@ const BarLineCombined: React.FC<Props> = ({
 
                 {showAxis ? <YAxis scale={yScale} /> : <></>}
 
-                {/* <PointerEventsOverlay 
+                <PointerEventsOverlay
                     xDomain={xDomain}
                     xScale={xScale}
                     onHover={setPointerPositionOnHover}
-                /> */}
+                />
             </SvgContainer>
 
             <Tooltip

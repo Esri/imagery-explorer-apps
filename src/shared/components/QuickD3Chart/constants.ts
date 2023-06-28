@@ -13,7 +13,7 @@ export const BAR_COLOR = 'steelblue';
 export const LINE_COLOR = 'var(--custom-light-blue)';
 export const LINE_WIDTH = 1.5;
 
-export const REF_LINE_COLOR = '#000';
+export const REF_LINE_COLOR = `var(--custom-light-blue-50)`;
 export const REF_LINE_STROKE = 0.5;
 
 export const TOOLTIP_BACKGROUND_COLOR = '#000';

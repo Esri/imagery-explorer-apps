@@ -19,18 +19,8 @@ const TooltipContent: React.FC<Props> = ({
     lineDataOnHover,
 }) => {
     return (
-        <div
-            style={{
-                padding: TOOLTIP_PADDING,
-                background: TOOLTIP_BACKGROUND_COLOR,
-                color: TOOLTIP_TEXT_COLOR,
-            }}
-        >
-            <div>bar data: {barDataOnHover ? barDataOnHover.value : 'n/a'}</div>
-
-            <div>
-                line data: {lineDataOnHover ? lineDataOnHover.value : 'n/a'}
-            </div>
+        <div className="text-xs p-1 bg-custom-background text-custom-light-blue-90 border border-custom-light-blue-50 opacity-75">
+            <span>{lineDataOnHover ? lineDataOnHover.tooltip : 'n/a'}</span>
         </div>
     );
 };
