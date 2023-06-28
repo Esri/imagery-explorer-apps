@@ -76,7 +76,6 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
      * - SWIR = pixel values from the shortwave infrared band
      */
     water: '(B3-B6)/(B3+B6)',
-    urban: '',
     temperature: '',
 };
 

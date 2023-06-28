@@ -43,7 +43,7 @@ const getPreloadedLandsatState = (): LandsatState => {
         getQueryParams4SecondarySceneFromHashParams() ||
         DefaultQueryParams4ImageryScene;
 
-    let mode = modeFromHashParams || 'find a scene';
+    let mode = modeFromHashParams || 'dynamic';
 
     if (IS_MOBILE_DEVICE) {
         mode = 'dynamic';

@@ -98,7 +98,7 @@ export const ProfileToolContainer = () => {
                         label: '',
                     },
                     {
-                        value: 'urban',
+                        value: 'water',
                         label: '',
                     },
                     {
@@ -110,6 +110,7 @@ export const ProfileToolContainer = () => {
                 selectedSpectralIndexOnChange={(val) => {
                     dispatch(spectralIndex4ProfileToolChanged(val));
                 }}
+                tooltipText={`Select an index to see its values over time. The currently selected scene's time is marked, as a reference.`}
             />
 
             <div className="relative w-full h-[120px] my-2">

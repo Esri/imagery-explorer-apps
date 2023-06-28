@@ -23,8 +23,8 @@ export const convertLandsatTemporalProfileData2ChartData = (
             value = (B5 - B6) / (B5 + B6);
         } else if (spectralIndex === 'vegetation') {
             value = (B5 - B4) / (B5 + B4);
-        } else if (spectralIndex === 'urban') {
-            value = (B6 - B5) / (B6 + B5);
+        } else if (spectralIndex === 'water') {
+            value = (B3 - B6) / (B3 + B6);
         }
 
         return {
