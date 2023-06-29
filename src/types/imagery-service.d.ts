@@ -74,17 +74,17 @@ export type LandsatScene = {
      * - MSS
      */
     sensor: string;
-    /**
-     * Collection category:
-     * - Real-Time
-     * - Tier 1
-     * - Tier 2
-     */
-    collectionCategory: string;
-    /**
-     * Collection number (01, 02, …)
-     */
-    collectionNumber: string;
+    // /**
+    //  * Collection category:
+    //  * - Real-Time
+    //  * - Tier 1
+    //  * - Tier 2
+    //  */
+    // collectionCategory: string;
+    // /**
+    //  * Collection number (01, 02, …)
+    //  */
+    // collectionNumber: string;
     /**
      * Processing correction level (L1TP/L1GT/L1GS)
      */
@@ -96,6 +96,8 @@ export type LandsatScene = {
     // category: number;
     // name: string;
     // best: number;
+    sunElevation: number;
+    sunAzimuth: number;
 };
 
 /**

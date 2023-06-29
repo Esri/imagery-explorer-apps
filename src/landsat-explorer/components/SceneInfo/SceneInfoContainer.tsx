@@ -22,13 +22,20 @@ export const SceneInfoContainer = () => {
             acquisitionDate,
             sensor,
             cloudCover,
-            collectionCategory,
-            collectionNumber,
+            // collectionCategory,
+            // collectionNumber,
             correctionLevel,
-            processingDate,
+            // processingDate,
+            productId,
+            sunAzimuth,
+            sunElevation,
         } = data;
 
         return [
+            // {
+            //     name: 'Scene ID',
+            //     value: productId,
+            // },
             {
                 name: 'Satellite',
                 value: satellite,
@@ -42,28 +49,24 @@ export const SceneInfoContainer = () => {
                 value: correctionLevel,
             },
             {
-                name: 'Row',
-                value: row.toString(),
-            },
-            {
                 name: 'Path',
                 value: path.toString(),
+            },
+            {
+                name: 'Row',
+                value: row.toString(),
             },
             {
                 name: 'Acquired',
                 value: format(acquisitionDate, DATE_FORMAT),
             },
             {
-                name: 'Processed',
-                value: format(processingDate, DATE_FORMAT),
+                name: 'Sun Elevation',
+                value: sunElevation.toFixed(3),
             },
             {
-                name: 'Collection',
-                value: collectionNumber,
-            },
-            {
-                name: 'Category',
-                value: collectionCategory,
+                name: 'Sun Azimuth',
+                value: sunAzimuth.toFixed(3),
             },
             {
                 name: 'Cloud Cover',

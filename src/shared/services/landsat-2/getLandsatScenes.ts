@@ -37,6 +37,8 @@ const {
     WRS_ROW,
     LANDSAT_PRODUCT_ID,
     MONTH,
+    SUNAZIMUTH,
+    SUNELEVATION,
 } = FIELD_NAMES;
 
 /**
@@ -69,8 +71,8 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             .map((d) => +d);
 
         const {
-            collectionCategory,
-            collectionNumber,
+            // collectionCategory,
+            // collectionNumber,
             correctionLevel,
             processingDate,
             sensor,
@@ -89,13 +91,15 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             row: attributes[WRS_ROW],
             path: attributes[WRS_PATH],
             // category: attributes[CATEGORY],
-            collectionCategory,
-            collectionNumber,
+            // collectionCategory,
+            // collectionNumber,
             correctionLevel,
             processingDate,
             sensor,
             acquisitionYear,
             acquisitionMonth,
+            sunAzimuth: attributes[SUNAZIMUTH],
+            sunElevation: attributes[SUNELEVATION],
         };
 
         return landsatScene;
@@ -166,6 +170,8 @@ export const getLandsatScenes = async ({
             WRS_ROW,
             CATEGORY,
             LANDSAT_PRODUCT_ID,
+            SUNAZIMUTH,
+            SUNELEVATION,
         ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',
