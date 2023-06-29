@@ -32,11 +32,11 @@ const YAxis: React.FC<Props> = ({
 
         let xAxisGenerator = null;
 
-        xAxisGenerator = axisBottom(scale);
+        xAxisGenerator = axisBottom(scale).ticks(5);
 
-        if (tickValues) {
-            xAxisGenerator.tickValues(tickValues);
-        }
+        // if (tickValues) {
+        //     xAxisGenerator.tickValues(tickValues);
+        // }
 
         xAxisGenerator.tickFormat((d) => d.toString());
 

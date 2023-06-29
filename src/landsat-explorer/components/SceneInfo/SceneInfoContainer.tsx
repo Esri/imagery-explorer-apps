@@ -72,9 +72,9 @@ export const SceneInfoContainer = () => {
         ];
     }, [data]);
 
-    if (!tableData || !tableData.length) {
-        return null;
-    }
+    // if (!tableData || !tableData.length) {
+    //     return null;
+    // }
 
     return <SceneInfoTable data={tableData} />;
 };

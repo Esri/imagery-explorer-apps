@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { FC } from 'react';
 
 /**
@@ -33,12 +34,18 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value }) => {
 };
 
 export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
-    return (
-        <div>
-            <div className="text-center mb-3">
-                <h4 className="uppercase text-sm">Scene Information</h4>
-            </div>
+    const getContent = () => {
+        if (!data || !data.length) {
+            return (
+                <div className="text-xs opacity-80 text-center">
+                    <p className="mt-6 mx-3">
+                        Select an acquisition date in Calendar to find a scene.
+                    </p>
+                </div>
+            );
+        }
 
+        return (
             <div className="grid grid-cols-2 text-xs">
                 {data.map((d: SceneInfoTableData) => {
                     return (
@@ -50,6 +57,18 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
                     );
                 })}
             </div>
+        );
+    };
+    return (
+        <div
+            className={classNames('w-56', {
+                'is-disabled': data.length === 0,
+            })}
+        >
+            <div className="text-center mb-3 mt-1">
+                <h4 className="uppercase text-sm">Scene Information</h4>
+            </div>
+            {getContent()}
         </div>
     );
 };
