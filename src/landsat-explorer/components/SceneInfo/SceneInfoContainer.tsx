@@ -6,8 +6,12 @@ import {
 } from '@shared/components/SceneInfoTable';
 import { useDataFromSelectedLandsatScene } from './useDataFromSelectedLandsatScene';
 import { DATE_FORMAT } from '@shared/constants/UI';
+import { useSelector } from 'react-redux';
+import { selectAppMode } from '@shared/store/Landsat/selectors';
 
 export const SceneInfoContainer = () => {
+    const mode = useSelector(selectAppMode);
+
     const data = useDataFromSelectedLandsatScene();
 
     const tableData: SceneInfoTableData[] = useMemo(() => {
@@ -74,6 +78,10 @@ export const SceneInfoContainer = () => {
             },
         ];
     }, [data]);
+
+    if (mode === 'dynamic' || mode === 'analysis') {
+        return null;
+    }
 
     // if (!tableData || !tableData.length) {
     //     return null;
