@@ -37,7 +37,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
     const getContent = () => {
         if (!data || !data.length) {
             return (
-                <div className="text-xs opacity-80 text-center">
+                <div className="text-xs opacity-80 text-center mx-auto max-w-[240px]">
                     <p className="mt-3 mx-3">
                         Select an acquisition date in Calendar to find a scene.
                     </p>
@@ -61,7 +61,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
     };
     return (
         <div
-            className={classNames('w-56', {
+            className={classNames('w-[320px]', {
                 'is-disabled': data.length === 0,
             })}
         >

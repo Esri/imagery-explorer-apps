@@ -36,10 +36,16 @@ export const SceneInfoContainer = () => {
         } = data;
 
         return [
-            // {
-            //     name: 'Scene ID',
-            //     value: productId,
-            // },
+            // the produt id is too long to be displayed in one row,
+            // therefore we need to split it into two separate rows
+            {
+                name: 'Scene ID',
+                value: productId.slice(0, 17),
+            },
+            {
+                name: '',
+                value: productId.slice(17),
+            },
             {
                 name: 'Satellite',
                 value: satellite,
@@ -53,13 +59,13 @@ export const SceneInfoContainer = () => {
                 value: correctionLevel,
             },
             {
-                name: 'Path',
-                value: path.toString(),
+                name: 'Path, Row',
+                value: path.toString() + ', ' + row.toString(),
             },
-            {
-                name: 'Row',
-                value: row.toString(),
-            },
+            // {
+            //     name: 'Row',
+            //     value: row.toString(),
+            // },
             {
                 name: 'Acquired',
                 value: format(acquisitionDate, DATE_FORMAT),
