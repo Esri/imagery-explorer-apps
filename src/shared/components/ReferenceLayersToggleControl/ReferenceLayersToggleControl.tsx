@@ -64,10 +64,12 @@ const ToggleButton: FC<ToggleButtonProps> = ({
     );
 };
 
-export const ReferenceLayersToggleControl = () => {
-    const dispatch = useDispatch();
+type Props = {
+    shoudHide: boolean;
+};
 
-    const animationStatus = useSelector(selectAnimationStatus);
+export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
+    const dispatch = useDispatch();
 
     const showMapLabel = useSelector(selectShowMapLabel);
 
@@ -78,7 +80,7 @@ export const ReferenceLayersToggleControl = () => {
             className={classNames(
                 'absolute w-search-widget-width bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-layer-toggle-top-position-mobile md:top-layer-toggle-top-position',
                 {
-                    hidden: animationStatus !== null,
+                    hidden: shoudHide,
                 }
             )}
             style={{

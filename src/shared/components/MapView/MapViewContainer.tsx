@@ -8,7 +8,10 @@ import {
     selectMapZoom,
     selectWebmapId,
 } from '../../store/Map/selectors';
-import { selectHideBottomPanel } from '../../store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectHideBottomPanel,
+} from '../../store/UI/selectors';
 import EventHandlers from './EventHandlers';
 import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
@@ -20,6 +23,7 @@ import { updateQueryLocation4ProfileMask } from '@shared/store/Analysis/thunks';
 import { Point } from 'esri/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
+import SearchWidget from './SearchWidget';
 
 type Props = {
     children?: React.ReactNode;
@@ -35,6 +39,8 @@ const MapViewContainer: FC<Props> = ({ children }) => {
     const zoom = useSelector(selectMapZoom);
 
     const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
+
+    const animationStatus = useSelector(selectAnimationStatus);
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
@@ -88,10 +94,14 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
                 <MapLoadingIndicator active={isUpdating} />
 
+                <SearchWidget hide={animationStatus !== null} />
+
                 <ReferenceLayers />
             </MapView>
 
-            <ReferenceLayersToggleControl />
+            <ReferenceLayersToggleControl
+                shoudHide={animationStatus !== null}
+            />
         </div>
     );
 };
