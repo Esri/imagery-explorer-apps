@@ -20,13 +20,23 @@ export type MapState = {
     /**
      * zoom level
      */
-    zoom?: number;
+    zoom: number;
+    /**
+     * If true, Map Reference Labels layer will be on
+     */
+    showMapLabel: boolean;
+    /**
+     * If true, Terrain Layer will be on
+     */
+    showTerrain: boolean;
 };
 
 export const initialMapState: MapState = {
     webmapId: WEB_MAP_ID, // Topographic
     center: MAP_CENTER,
     zoom: MAP_ZOOM,
+    showMapLabel: true,
+    showTerrain: true,
 };
 
 const slice = createSlice({
@@ -42,11 +52,23 @@ const slice = createSlice({
         zoomChanged: (state, action: PayloadAction<number>) => {
             state.zoom = action.payload;
         },
+        showMapLabelToggled: (state) => {
+            state.showMapLabel = !state.showMapLabel;
+        },
+        showTerrainToggled: (state) => {
+            state.showTerrain = !state.showTerrain;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { webmapIdChanged, centerChanged, zoomChanged } = slice.actions;
+export const {
+    webmapIdChanged,
+    centerChanged,
+    zoomChanged,
+    showMapLabelToggled,
+    showTerrainToggled,
+} = slice.actions;
 
 export default reducer;

@@ -18,6 +18,8 @@ import { MapLoadingIndicator } from './MapLoadingIndicator';
 import { queryLocation4ProfileToolChanged } from '@shared/store/Analysis/reducer';
 import { updateQueryLocation4ProfileMask } from '@shared/store/Analysis/thunks';
 import { Point } from 'esri/geometry';
+import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
+import ReferenceLayers from './ReferenceLayers';
 
 type Props = {
     children?: React.ReactNode;
@@ -85,7 +87,11 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 />
 
                 <MapLoadingIndicator active={isUpdating} />
+
+                <ReferenceLayers />
             </MapView>
+
+            <ReferenceLayersToggleControl />
         </div>
     );
 };

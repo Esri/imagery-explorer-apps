@@ -15,3 +15,13 @@ export const selectMapZoom = createSelector(
     (state: RootState) => state.Map.zoom,
     (zoom) => zoom
 );
+
+export const selectShowMapLabel = createSelector(
+    (state: RootState) => state.Map.showMapLabel,
+    (showMapLabel) => showMapLabel
+);
+
+export const selectShowTerrain = createSelector(
+    (state: RootState) => state.Map.showTerrain,
+    (showTerrain) => showTerrain
+);
