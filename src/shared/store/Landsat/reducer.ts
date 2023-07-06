@@ -100,7 +100,7 @@ export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     // acquisitionYear: getCurrentYear(),
     acquisitionDate: '',
     cloudCover: 0.5,
-    rasterFunctionName: 'Natural Color',
+    rasterFunctionName: 'Natural Color with DRA',
     objectIdOfSelectedScene: null,
     animationFrameId: null,
 };

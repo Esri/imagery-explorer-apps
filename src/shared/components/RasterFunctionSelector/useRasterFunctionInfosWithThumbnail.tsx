@@ -10,13 +10,13 @@ import NDVI from './thumbnails/Render_NDVI.jpg';
 import ShortWaveIR from './thumbnails/Render_ShortwaveIR.jpg';
 
 const thumbnailByRasterFunctionName = {
-    Agriculture: Agriculture,
-    Bathymetric: Bathymetric,
-    'Color Infrared': ColorIR,
-    'Natural Color': NaturalColor,
-    Geology: Geology,
+    'Agriculture with DRA': Agriculture,
+    'Bathymetric with DRA': Bathymetric,
+    'Color Infrared with DRA': ColorIR,
+    'Natural Color with DRA': NaturalColor,
+    'Geology with DRA': Geology,
     'NDVI Colorized': NDVI,
-    'Short-wave Infrared': ShortWaveIR,
+    'Short-wave Infrared with DRA': ShortWaveIR,
 };
 
 export const useRasterFunctionInfosWithThumbnail = () => {

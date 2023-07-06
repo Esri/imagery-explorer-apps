@@ -66,15 +66,15 @@ export const FIELD_NAMES = {
  */
 export const RasterFunctionInfos = [
     {
-        name: 'Natural Color',
+        name: 'Natural Color with DRA',
         description:
-            'Natural Color bands red, green, blue(4, 3, 2) displayed with fixed stretch applied on apparent reflectance.',
-        label: '',
+            'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied on apparent reflectance.',
+        label: 'Natural Color',
     },
     {
-        name: 'Color Infrared',
+        name: 'Color Infrared with DRA',
         description:
-            'Bands near-IR, red, green (5, 4, 3) with fixed stretch applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
+            'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
         label: 'Color IR',
     },
     {
@@ -84,27 +84,27 @@ export const RasterFunctionInfos = [
         label: 'NDVI Colorized',
     },
     {
-        name: 'Agriculture',
+        name: 'Agriculture with DRA',
         description:
-            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with fixed stretch applied on apparent reflectance. Vigorous vegetation is bright green, stressed vegetation dull green and bare areas as brown.',
-        label: '',
+            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied on apparent reflectance. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
+        label: 'Agriculture',
     },
     {
-        name: 'Bathymetric',
+        name: 'Bathymetric with DRA',
         description:
-            'Bands red, green, coastal/aerosol (4, 3, 1) with fixed stretch applied on apparent reflectance. Useful in bathymetric mapping applications.',
-        label: '',
+            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied on apparent reflectance. Useful in bathymetric mapping applications.',
+        label: 'Bathymetric',
     },
     {
-        name: 'Geology',
+        name: 'Geology with DRA',
         description:
             'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
-        label: '',
+        label: 'Geology',
     },
     {
-        name: 'Short-wave Infrared',
+        name: 'Short-wave Infrared with DRA',
         description:
-            'Bands shortwave infrared2, shortwave infrared1, red (7, 6, 4) with fixed stretched applied on apparent reflectance.',
+            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied on apparent reflectance.',
         label: 'Short-wave IR',
     },
     {
@@ -118,46 +118,46 @@ export const RasterFunctionInfos = [
         label: 'Temp Farhenheit',
     },
     {
-        name: 'Short-wave Infrared with DRA',
+        name: 'Short-wave Infrared',
         description:
-            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied on apparent reflectance.',
-        label: 'Short-wave IR DRA',
+            'Bands shortwave infrared2, shortwave infrared1, red (7, 6, 4) with fixed stretched applied on apparent reflectance.',
+        label: 'Short-wave IR',
     },
     {
-        name: 'Color Infrared with DRA',
+        name: 'Color Infrared',
         description:
-            'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
-        label: '',
-    },
-    {
-        name: 'Geology with DRA',
-        description:
-            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
-        label: '',
-    },
-    {
-        name: 'Natural Color with DRA',
-        description:
-            'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied on apparent reflectance.',
-        label: 'Natural Color',
+            'Bands near-IR, red, green (5, 4, 3) with fixed stretch applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
+        label: 'Color IR',
     },
     {
         name: 'Geology with DRA',
         description:
             'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
-        label: 'Geology',
+        label: '',
     },
     {
-        name: 'Bathymetric with DRA',
+        name: 'Natural Color',
         description:
-            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied on apparent reflectance. Useful in bathymetric mapping applications.',
-        label: 'Bathymetric',
+            'Natural Color bands red, green, blue(4, 3, 2) displayed with fixed stretch applied on apparent reflectance.',
+        label: '',
     },
     {
-        name: 'Agriculture with DRA',
+        name: 'Geology',
         description:
-            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied on apparent reflectance. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
-        label: 'Agriculture DRA',
+            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
+        label: '',
+    },
+    {
+        name: 'Bathymetric',
+        description:
+            'Bands red, green, coastal/aerosol (4, 3, 1) with fixed stretch applied on apparent reflectance. Useful in bathymetric mapping applications.',
+        label: '',
+    },
+    {
+        name: 'Agriculture',
+        description:
+            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with fixed stretch applied on apparent reflectance. Vigorous vegetation is bright green, stressed vegetation dull green and bare areas as brown.',
+        label: '',
     },
     {
         name: 'NDVI Raw',

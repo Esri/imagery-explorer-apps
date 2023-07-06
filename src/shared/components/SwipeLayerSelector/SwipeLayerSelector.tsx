@@ -21,6 +21,14 @@ export const SwipeLayerSelector: FC<Props> = ({
     queryParams4SceneOnRight,
     onChange,
 }) => {
+    const getFormatedRasterFunctionName = (name: string) => {
+        if (!name) {
+            return '';
+        }
+
+        return name.toLowerCase().replace('with dra', '');
+    };
+
     const getButtonContent = (side: Side4SwipeMode) => {
         const queryParams =
             side === 'left'
@@ -40,7 +48,11 @@ export const SwipeLayerSelector: FC<Props> = ({
 
                             <br />
 
-                            <span>{queryParams?.rasterFunctionName}</span>
+                            <span>
+                                {getFormatedRasterFunctionName(
+                                    queryParams?.rasterFunctionName
+                                )}
+                            </span>
                         </>
                     ) : (
                         <span>No Scene Selected</span>
