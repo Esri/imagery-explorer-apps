@@ -5,6 +5,7 @@ import {
     Side4SwipeMode,
 } from '../../store/Landsat/reducer';
 import classNames from 'classnames';
+import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
 type Props = {
     selectedSide: Side4SwipeMode;
@@ -21,14 +22,6 @@ export const SwipeLayerSelector: FC<Props> = ({
     queryParams4SceneOnRight,
     onChange,
 }) => {
-    const getFormatedRasterFunctionName = (name: string) => {
-        if (!name) {
-            return '';
-        }
-
-        return name.toLowerCase().replace('with dra', '');
-    };
-
     const getButtonContent = (side: Side4SwipeMode) => {
         const queryParams =
             side === 'left'
@@ -48,8 +41,8 @@ export const SwipeLayerSelector: FC<Props> = ({
 
                             <br />
 
-                            <span>
-                                {getFormatedRasterFunctionName(
+                            <span className="normal-case">
+                                {getRasterFunctionLabelText(
                                     queryParams?.rasterFunctionName
                                 )}
                             </span>

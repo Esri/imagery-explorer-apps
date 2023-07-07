@@ -64,7 +64,7 @@ export const FIELD_NAMES = {
  * Landsat-2 Raster Function Infos
  * @see https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer/rasterFunctionInfos
  */
-export const RasterFunctionInfos = [
+export const LANDSAT_RASTER_FUNCTION_INFOS = [
     {
         name: 'Natural Color with DRA',
         description:

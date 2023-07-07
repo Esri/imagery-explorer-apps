@@ -9,6 +9,7 @@ import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from '@shared/constants/UI';
+import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
 export const useAnimationFramesInfo = () => {
     const selectedAnimationFrameId = useSelector(
@@ -39,7 +40,8 @@ export const useAnimationFramesInfo = () => {
                           DATE_FORMAT
                       )
                     : 'No Date Selected',
-                rasterFunctionName,
+                rasterFunctionName:
+                    getRasterFunctionLabelText(rasterFunctionName),
                 selected: animationFrameId === selectedAnimationFrameId,
             } as AnimationFrameInfo;
         });

@@ -57,14 +57,6 @@ export const AnimationFramesList: FC<Props> = ({
     // addButtonOnClick,
     removeButtonOnClick,
 }) => {
-    const getFormatedRasterFunctionName = (name: string) => {
-        if (!name) {
-            return '';
-        }
-
-        return name.toLowerCase().replace('with dra', '');
-    };
-
     return (
         <div
             className={classNames({
@@ -104,11 +96,7 @@ export const AnimationFramesList: FC<Props> = ({
                             >
                                 <span>{acquisitionDateLabel}</span>
                                 <br />
-                                <span>
-                                    {getFormatedRasterFunctionName(
-                                        rasterFunctionName
-                                    )}
-                                </span>
+                                <span>{rasterFunctionName}</span>
                             </div>
 
                             <div

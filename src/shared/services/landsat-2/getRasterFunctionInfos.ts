@@ -1,11 +1,11 @@
 import { RasterFunctionInfo } from '@typing/imagery-service';
-import { RasterFunctionInfos } from './config';
+import { LANDSAT_RASTER_FUNCTION_INFOS } from './config';
 
 /**
  * Get raster function infos of the Landsat-2 Imagery Service
  * @returns
  */
 export const getRasterFunctionInfos = (): RasterFunctionInfo[] => {
-    const data = RasterFunctionInfos.slice(0, 7);
+    const data = LANDSAT_RASTER_FUNCTION_INFOS.slice(0, 7);
     return data;
 };
