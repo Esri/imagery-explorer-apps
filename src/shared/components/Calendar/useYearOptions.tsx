@@ -15,14 +15,16 @@ export const useYearOptions = (acquisitionYear: number): DropdownData[] => {
             return [];
         }
 
-        return years.map((year) => {
-            const value = year.toString();
+        return years
+            .map((year) => {
+                const value = year.toString();
 
-            return {
-                value,
-                selected: year === acquisitionYear,
-            };
-        });
+                return {
+                    value,
+                    selected: year === acquisitionYear,
+                };
+            })
+            .reverse();
     }, [years, acquisitionYear]);
 
     useEffect(() => {

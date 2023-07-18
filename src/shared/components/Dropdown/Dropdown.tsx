@@ -68,7 +68,7 @@ export const Dropdown: FC<Props> = ({ data, disabled, onChange }: Props) => {
             </div>
 
             {shouldShowOptions && (
-                <div className="absolute bottom-0 left-0 right-0 bg-custom-background border border-custom-light-blue-50 border-b-0 text-xs z-50">
+                <div className="absolute bottom-0 left-0 right-0 bg-custom-background border border-custom-light-blue-50 border-b-0 text-xs z-50 max-h-[351px] overflow-y-auto fancy-scrollbar">
                     {data.map((d, index) => {
                         const { value, label } = d;
 
