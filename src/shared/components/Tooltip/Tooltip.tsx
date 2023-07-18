@@ -13,7 +13,7 @@ export const Tooltip: FC<Props> = ({ content, width = 130, children }) => {
 
     const toggleTooltipVisibility = debounce((val: boolean) => {
         setIsVisible(val);
-    }, 250);
+    }, 150);
 
     return (
         <div

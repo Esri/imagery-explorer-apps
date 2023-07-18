@@ -1,6 +1,6 @@
-import { QuickD3ChartDataItem } from '@shared/components/QuickD3Chart/types';
 import { SpectralIndex } from '@shared/store/Analysis/reducer';
 import { TemporalProfileData } from '@typing/imagery-service';
+import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { format } from 'date-fns';
 
 /**
@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 export const convertLandsatTemporalProfileData2ChartData = (
     temporalProfileData: TemporalProfileData[],
     spectralIndex: SpectralIndex
-): QuickD3ChartDataItem[] => {
+): LineChartDataItem[] => {
     const data = temporalProfileData.map((d) => {
         const { acquisitionYear, acquisitionMonth, acquisitionDate } = d;
 
@@ -36,8 +36,8 @@ export const convertLandsatTemporalProfileData2ChartData = (
         )}: ${value.toFixed(2)}`;
 
         return {
-            key: d.acquisitionYear.toString(),
-            value,
+            x: d.acquisitionDate,
+            y: value,
             tooltip,
         };
     });

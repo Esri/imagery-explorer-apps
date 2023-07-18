@@ -1,6 +1,5 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import { ProfileToolControls } from '@shared/components/ProfileTool';
-import { BarLineCombined } from '@shared/components/QuickD3Chart';
 // import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
     acquisitionMonth4ProfileToolChanged,
@@ -22,6 +21,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { convertLandsatTemporalProfileData2ChartData } from './helper';
+import { LineChartBasic } from '@vannizhang/react-d3-charts';
 
 export const ProfileToolContainer = () => {
     const dispatch = useDispatch();
@@ -61,9 +61,43 @@ export const ProfileToolContainer = () => {
             spectralIndex
         );
 
-        // console.log(data);
-
-        return <BarLineCombined data4Line={data} yDomain={[-1, 1]} />;
+        return (
+            <div
+                className="relative w-full h-full"
+                style={
+                    {
+                        '--axis-tick-line-color': 'var(--custom-light-blue-50)',
+                        '--axis-tick-text-color': 'var(--custom-light-blue-50)',
+                        '--crosshair-reference-line-color':
+                            'var(--custom-light-blue-50)',
+                        '--tooltip-text-font-size': '.725rem',
+                        '--tooltip-text-color': 'var(--custom-light-blue-70)',
+                        '--tooltip-background-color':
+                            'var(--custom-background-95)',
+                        '--tooltip-border-color': 'var(--custom-light-blue-50)',
+                    } as React.CSSProperties
+                }
+            >
+                <LineChartBasic
+                    data={data}
+                    showTooltip
+                    stroke="var(--custom-light-blue)"
+                    strokeWidth={1.5}
+                    yScaleOptions={{
+                        domain: [-1, 1],
+                    }}
+                    xScaleOptions={{
+                        useTimeScale: true,
+                    }}
+                    bottomAxisOptions={{
+                        /*
+                         * Indicate number of ticks that should be renderd on x axis
+                         */
+                        numberOfTicks: 5,
+                    }}
+                />
+            </div>
+        );
     };
 
     useEffect(() => {
@@ -113,9 +147,7 @@ export const ProfileToolContainer = () => {
                 tooltipText={`Select an index to see its values over time. The currently selected scene's time is marked, as a reference.`}
             />
 
-            <div className="relative w-full h-[120px] my-2">
-                {getLineChart()}
-            </div>
+            <div className="w-full h-[120px] my-2">{getLineChart()}</div>
 
             <ProfileToolControls
                 acquisitionMonth={acquisitionMonth}
