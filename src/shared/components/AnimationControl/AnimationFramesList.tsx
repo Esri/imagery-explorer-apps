@@ -63,7 +63,7 @@ export const AnimationFramesList: FC<Props> = ({
                 'is-disabled': disabled,
             })}
         >
-            <div className="">
+            <div className="overflow-y-auto max-h-[175px] fancy-scrollbar">
                 {data.map((d) => {
                     const {
                         frameId,

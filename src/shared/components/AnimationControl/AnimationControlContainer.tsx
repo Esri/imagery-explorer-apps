@@ -24,7 +24,7 @@ import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 import { useAnimationFramesInfo } from './useAnimationFramesInfo';
 import { useShouldDisablePlayPauseButton } from './useShouldDisablePlayPauseButton';
 
-const ANIMATION_FRAMES_UPPER_LIMIT = 5;
+const ANIMATION_FRAMES_UPPER_LIMIT = 30;
 
 export const AnimationControlContainer = () => {
     const dispatch = useDispatch();
