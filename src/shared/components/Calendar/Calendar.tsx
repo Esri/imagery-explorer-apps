@@ -6,9 +6,9 @@ import { format } from 'date-fns';
 import { DATE_FORMAT } from '@shared/constants/UI';
 
 /**
- * Acquisition date and cloud coverage info of a Imagery Scene
+ * Formatted data of Imagery Scene
  */
-type AcquisitionDateOfImageryScenes = {
+type DataOfImageryScene = {
     /**
      * date as unix timestamp
      */
@@ -25,6 +25,10 @@ type AcquisitionDateOfImageryScenes = {
      * percent of cloud coverage of the selected Imagery Scene acquired on this day
      */
     cloudCover: number;
+    /**
+     * name of the satellite (e.g., `Landsat-7`)
+     */
+    satellite: string;
 };
 
 type CalendarProps = {
@@ -38,10 +42,10 @@ type CalendarProps = {
      */
     selectedAcquisitionDate: string;
     /**
-     * Array of available imagery scenes, these dates will be rendered using different style on the Calendar
+     * Array of available imagery scenes, the dates from these scenes will be rendered using different style on the Calendar
      * so that the user can know there are available data on these days
      */
-    datesWithAvailableScenes?: AcquisitionDateOfImageryScenes[];
+    availableScenes?: DataOfImageryScene[];
     /**
      * Fires when user select a new acquisition date
      * @param date date string in format of (YYYY-MM-DD)
@@ -71,23 +75,23 @@ const MonthGrid: FC<MonthGridProps> = ({
     abbrLabel,
     days,
     selectedAcquisitionDate,
-    datesWithAvailableScenes,
+    availableScenes,
     onSelect,
 }: MonthGridProps) => {
-    const dataOfImagerySceneByDate = useMemo(() => {
-        const map: Map<string, AcquisitionDateOfImageryScenes> = new Map();
+    const dataOfImagerySceneByAcquisitionDate = useMemo(() => {
+        const map: Map<string, DataOfImageryScene> = new Map();
 
-        if (!datesWithAvailableScenes || !datesWithAvailableScenes.length) {
+        if (!availableScenes || !availableScenes.length) {
             return map;
         }
 
-        for (const item of datesWithAvailableScenes) {
+        for (const item of availableScenes) {
             const { formattedAcquisitionDate } = item;
             map.set(formattedAcquisitionDate, item);
         }
 
         return map;
-    }, [datesWithAvailableScenes]);
+    }, [availableScenes]);
 
     const getGridCells = () => {
         return [...new Array(days)].map((_, index) => {
@@ -101,7 +105,7 @@ const MonthGrid: FC<MonthGridProps> = ({
             });
 
             const dataOfImageryScene =
-                dataOfImagerySceneByDate.get(formatedDateStr);
+                dataOfImagerySceneByAcquisitionDate.get(formatedDateStr);
 
             /**
              * if true, there is a available scene for this day
@@ -160,11 +164,13 @@ const MonthGrid: FC<MonthGridProps> = ({
                     {hasAvailableData && (
                         <div
                             className={`
-                                absolute bottom-[-30px] left-5 w-[90px] py-[2px] text-xs z-10
+                                absolute bottom-[-30px] left-5 w-[90px] py-[2px] text-xs z-50
                                 bg-custom-background border border-custom-light-blue-50  
                                 hidden group-hover:block
                             `}
                         >
+                            <span>{dataOfImageryScene.satellite}</span>
+                            <br />
                             <span>
                                 {format(
                                     dataOfImageryScene.acquisitionDate,
@@ -202,7 +208,7 @@ const MonthGrid: FC<MonthGridProps> = ({
 const Calendar: FC<CalendarProps> = ({
     year,
     selectedAcquisitionDate,
-    datesWithAvailableScenes,
+    availableScenes,
     onSelect,
 }: CalendarProps) => {
     return (
@@ -220,7 +226,7 @@ const Calendar: FC<CalendarProps> = ({
                         abbrLabel={d.abbrLabel}
                         days={days}
                         selectedAcquisitionDate={selectedAcquisitionDate}
-                        datesWithAvailableScenes={datesWithAvailableScenes}
+                        availableScenes={availableScenes}
                         onSelect={onSelect}
                     />
                 );

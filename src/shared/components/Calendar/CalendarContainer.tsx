@@ -44,7 +44,7 @@ const CalendarContainer = () => {
      */
     const yearOptions = useYearOptions(acquisitionYear);
 
-    const getDatesWithAvailableScenes = () => {
+    const getFormattedAvailableScenes = () => {
         if (isAnimationPlaying) {
             return [];
         }
@@ -55,13 +55,17 @@ const CalendarContainer = () => {
                 acquisitionDate,
                 // isCloudy,
                 cloudCover,
+                productId,
             } = scene;
+
+            const satellite = productId.slice(2, 4);
 
             return {
                 formattedAcquisitionDate,
                 acquisitionDate,
                 isCloudy: cloudCover > cloudCoverThreshold,
                 cloudCover,
+                satellite: `Landsat ${parseInt(satellite)}`,
             };
         });
     };
@@ -117,7 +121,7 @@ const CalendarContainer = () => {
             <Calendar
                 year={acquisitionYear}
                 selectedAcquisitionDate={acquisitionDate}
-                datesWithAvailableScenes={getDatesWithAvailableScenes()}
+                availableScenes={getFormattedAvailableScenes()}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
                     dispatch(updateAcquisitionDate(formattedAcquisitionDate));
