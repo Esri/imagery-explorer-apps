@@ -28,7 +28,7 @@ export const Tooltip: FC<Props> = ({ content, width = 130, children }) => {
             {children}
             <div
                 className={classNames(
-                    'absolute inline-block left-1/2 bottom-[125%] translate-x-[-50%] bg-custom-background text-custom-light-blue-90 p-1 px-2 border border-custom-light-blue-50 text-xs z-10',
+                    'absolute inline-block left-1/2 bottom-[125%] translate-x-[-50%] bg-custom-background text-custom-light-blue-90 p-1 px-2 border border-custom-light-blue-50 text-xs z-10 pointer-events-none',
                     {
                         hidden: visible === false,
                     }
