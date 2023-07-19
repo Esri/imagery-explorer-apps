@@ -87,7 +87,7 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             cloudCover: attributes[CLOUD_COVER],
             // best: attributes[BEST],
             // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
-            satellite: attributes[SENSORNAME],
+            satellite: `Landsat ${parseInt(productId.slice(2, 4))}`,
             row: attributes[WRS_ROW],
             path: attributes[WRS_PATH],
             // category: attributes[CATEGORY],

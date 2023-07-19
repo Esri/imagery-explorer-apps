@@ -55,17 +55,15 @@ const CalendarContainer = () => {
                 acquisitionDate,
                 // isCloudy,
                 cloudCover,
-                productId,
+                satellite,
             } = scene;
-
-            const satellite = productId.slice(2, 4);
 
             return {
                 formattedAcquisitionDate,
                 acquisitionDate,
                 isCloudy: cloudCover > cloudCoverThreshold,
                 cloudCover,
-                satellite: `Landsat ${parseInt(satellite)}`,
+                satellite,
             };
         });
     };
