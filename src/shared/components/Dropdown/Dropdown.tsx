@@ -74,14 +74,26 @@ export const Dropdown: FC<Props> = ({
                     </svg>
                 </div>
                 {tooltip && (
-                    <div className="absolute bottom-[115%] hidden group-hover:block pointer-events-none text-xs bg-custom-background opacity-90 border border-custom-light-blue-50 p-1">
+                    <div
+                        className={classNames(
+                            'absolute bottom-[115%] hidden group-hover:block p-1',
+                            'text-xs bg-custom-background opacity-90 border border-custom-light-blue-50',
+                            'pointer-events-none'
+                        )}
+                    >
                         {tooltip}
                     </div>
                 )}
             </div>
 
             {shouldShowOptions && (
-                <div className="absolute bottom-0 left-0 right-0 bg-custom-background border border-custom-light-blue-50 border-b-0 text-xs z-50 max-h-[351px] overflow-y-auto fancy-scrollbar">
+                <div
+                    className={classNames(
+                        'absolute bottom-0 left-0 right-0 max-h-[351px] overflow-y-auto z-50',
+                        'text-xs bg-custom-background border border-custom-light-blue-50 border-b-0',
+                        'fancy-scrollbar'
+                    )}
+                >
                     {data.map((d, index) => {
                         const { value, label } = d;
 
