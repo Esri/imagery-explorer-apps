@@ -46,26 +46,30 @@ export const ProfileToolControls = ({
         <div className="prfile-control-tools">
             <div className="flex items-center justify-center">
                 <div className="w-1/2 mx-1">
-                    <Tooltip content="Choose an annual sampling resolution">
-                        <Dropdown
-                            data={annualResolutionsMenuData}
-                            onChange={(val) => {
-                                // console.log(val)
-                                annualSamplingResolutionOnChange(+val);
-                            }}
-                        />
-                    </Tooltip>
+                    {/* <Tooltip content="Choose an annual sampling resolution">
+                    </Tooltip> */}
+
+                    <Dropdown
+                        data={annualResolutionsMenuData}
+                        tooltip="Choose an annual sampling resolution"
+                        onChange={(val) => {
+                            // console.log(val)
+                            annualSamplingResolutionOnChange(+val);
+                        }}
+                    />
                 </div>
 
                 <div className="w-1/2 mx-1">
-                    <Tooltip content="Choose a season">
-                        <Dropdown
-                            data={monthDropdownMenuData}
-                            onChange={(val) => {
-                                acquisitionMonthOnChange(+val);
-                            }}
-                        />
-                    </Tooltip>
+                    {/* <Tooltip content="Choose a season">
+                    </Tooltip> */}
+
+                    <Dropdown
+                        data={monthDropdownMenuData}
+                        tooltip="Choose a season"
+                        onChange={(val) => {
+                            acquisitionMonthOnChange(+val);
+                        }}
+                    />
                 </div>
 
                 {shouldShowCloseButton && (

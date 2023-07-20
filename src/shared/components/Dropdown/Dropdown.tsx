@@ -20,10 +20,16 @@ export type DropdownData = {
 type Props = {
     data: DropdownData[];
     disabled?: boolean;
+    tooltip?: string;
     onChange: (val: string) => void;
 };
 
-export const Dropdown: FC<Props> = ({ data, disabled, onChange }: Props) => {
+export const Dropdown: FC<Props> = ({
+    data,
+    disabled,
+    tooltip,
+    onChange,
+}: Props) => {
     const [shouldShowOptions, setShouldShowOptions] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>();
@@ -48,23 +54,30 @@ export const Dropdown: FC<Props> = ({ data, disabled, onChange }: Props) => {
 
     return (
         <div ref={containerRef} className={classNames('relative')}>
-            <div
-                className="border border-custom-light-blue-50 opacity-80 p-1 text-xs cursor-pointer flex items-center justify-between"
-                onClick={() => {
-                    setShouldShowOptions(true);
-                }}
-            >
-                <span className="mr-1">{getLabel()}</span>
-
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 16 16"
-                    height="16"
-                    width="16"
+            <div className="relative group">
+                <div
+                    className="border border-custom-light-blue-50 opacity-80 p-1 text-xs cursor-pointer flex items-center justify-between"
+                    onClick={() => {
+                        setShouldShowOptions(true);
+                    }}
                 >
-                    <path fill="currentColor" d="M13.1 6L8 11.1 2.9 6z" />
-                    <path fill="none" d="M0 0h16v16H0z" />
-                </svg>
+                    <span className="mr-1">{getLabel()}</span>
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        height="16"
+                        width="16"
+                    >
+                        <path fill="currentColor" d="M13.1 6L8 11.1 2.9 6z" />
+                        <path fill="none" d="M0 0h16v16H0z" />
+                    </svg>
+                </div>
+                {tooltip && (
+                    <div className="absolute bottom-[115%] hidden group-hover:block pointer-events-none text-xs bg-custom-background opacity-90 border border-custom-light-blue-50 p-1">
+                        {tooltip}
+                    </div>
+                )}
             </div>
 
             {shouldShowOptions && (
