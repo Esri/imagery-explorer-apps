@@ -57,7 +57,9 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
 
         const acquisitionDate = attributes[ACQUISITION_DATE];
 
-        const productId = attributes[LANDSAT_PRODUCT_ID];
+        // const productId = attributes[LANDSAT_PRODUCT_ID];
+
+        const name = attributes[NAME];
 
         /**
          * formatted aquisition date should be like `2023-05-01`
@@ -76,18 +78,18 @@ const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
             correctionLevel,
             processingDate,
             sensor,
-        } = parseLandsatInfo(productId);
+        } = parseLandsatInfo(name);
 
         const landsatScene: LandsatScene = {
             objectId: attributes[OBJECTID],
-            productId,
+            // productId,
             acquisitionDate,
             formattedAcquisitionDate,
-            // name: attributes[NAME],
+            name: attributes[NAME],
             cloudCover: attributes[CLOUD_COVER],
             // best: attributes[BEST],
             // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
-            satellite: `Landsat ${parseInt(productId.slice(2, 4))}`,
+            satellite: `Landsat ${parseInt(name.slice(2, 4))}`,
             row: attributes[WRS_ROW],
             path: attributes[WRS_PATH],
             // category: attributes[CATEGORY],

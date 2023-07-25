@@ -30,7 +30,7 @@ export const SceneInfoContainer = () => {
             // collectionNumber,
             correctionLevel,
             // processingDate,
-            productId,
+            name,
             sunAzimuth,
             sunElevation,
         } = data;
@@ -40,11 +40,11 @@ export const SceneInfoContainer = () => {
             // therefore we need to split it into two separate rows
             {
                 name: 'Scene ID',
-                value: productId.slice(0, 17),
+                value: name.slice(0, 17),
             },
             {
                 name: '',
-                value: productId.slice(17),
+                value: name.slice(17),
             },
             {
                 name: 'Satellite',

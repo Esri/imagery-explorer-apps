@@ -80,7 +80,7 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
 };
 
 /**
- * Parse Info of a Landsat Scene using its Product ID.
+ * Parse Info of a Landsat Scene using its Product ID/Name.
  *
  * The Landsat product identifier includes the Collection processing levels, processing date,
  * collection number, and collection tier category: `LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX`:

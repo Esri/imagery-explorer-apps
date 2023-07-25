@@ -24,10 +24,10 @@ export type RasterFunctionInfo = {
 export type LandsatScene = {
     objectId: number;
     /**
-     * Landsat product identifier
+     * Landsat product name
      * @example LC08_L1GT_029030_20151209_20160131_01_RT
      */
-    productId: string;
+    name: string;
     /**
      * acquisitionDate as a string in ISO format (YYYY-MM-DD).
      */
