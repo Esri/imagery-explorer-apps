@@ -2,6 +2,7 @@ import { loadModules } from 'esri-loader';
 import IGraphic from 'esri/Graphic';
 import { Point } from 'esri/geometry';
 import IGraphicsLayer from 'esri/layers/GraphicsLayer';
+import GroupLayer from 'esri/layers/GroupLayer';
 import MapView from 'esri/views/MapView';
 import React, { FC, useEffect, useRef } from 'react';
 
@@ -9,12 +10,14 @@ type Props = {
     queryLocation: Point;
     visible: boolean;
     mapView?: MapView;
+    groupLayer?: GroupLayer;
 };
 
 export const ProfileToolQueryLocation: FC<Props> = ({
     queryLocation,
     visible,
     mapView,
+    groupLayer,
 }) => {
     const graphicLayerRef = useRef<IGraphicsLayer>();
 
@@ -31,7 +34,7 @@ export const ProfileToolQueryLocation: FC<Props> = ({
                 visible,
             });
 
-            mapView.map.add(graphicLayerRef.current);
+            groupLayer.add(graphicLayerRef.current);
         } catch (err) {
             console.error(err);
         }
@@ -81,7 +84,7 @@ export const ProfileToolQueryLocation: FC<Props> = ({
 
     useEffect(() => {
         (async () => {
-            if (!mapView) {
+            if (!groupLayer) {
                 return;
             }
 
@@ -95,7 +98,7 @@ export const ProfileToolQueryLocation: FC<Props> = ({
                 showQueryLocation();
             }
         })();
-    }, [queryLocation, mapView]);
+    }, [queryLocation, groupLayer]);
 
     useEffect(() => {
         if (!graphicLayerRef.current) {

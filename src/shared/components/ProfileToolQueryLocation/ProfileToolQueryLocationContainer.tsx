@@ -7,12 +7,17 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { ProfileToolQueryLocation } from './ProfileToolQueryLocation';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
+import GroupLayer from 'esri/layers/GroupLayer';
 
 type Props = {
     mapView?: MapView;
+    groupLayer?: GroupLayer;
 };
 
-export const ProfileToolQueryLocationContainer: FC<Props> = ({ mapView }) => {
+export const ProfileToolQueryLocationContainer: FC<Props> = ({
+    mapView,
+    groupLayer,
+}) => {
     const queryLocation = useSelector(selectQueryLocation4ProfileTool);
 
     const mode = useSelector(selectAppMode);
@@ -24,6 +29,7 @@ export const ProfileToolQueryLocationContainer: FC<Props> = ({ mapView }) => {
             queryLocation={queryLocation}
             visible={mode === 'analysis' && analysisTool === 'profile'}
             mapView={mapView}
+            groupLayer={groupLayer}
         />
     );
 };

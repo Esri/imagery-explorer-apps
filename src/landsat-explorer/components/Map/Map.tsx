@@ -13,8 +13,8 @@ const Map = () => {
             <GroupLayer>
                 <LandsatLayer />
                 <MaskLayer />
+                <ProfileToolQueryLocation />
             </GroupLayer>
-            <ProfileToolQueryLocation />
             <SwipeWidget />
             <AnimationLayer />
         </MapViewContainer>
