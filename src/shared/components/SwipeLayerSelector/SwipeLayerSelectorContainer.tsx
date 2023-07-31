@@ -9,6 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { SwipeLayerSelector } from './SwipeLayerSelector';
 import { selectedSide4SwipeModeChanged } from '@shared/store/Landsat/reducer';
+import { swapMainAndSecondaryScenes } from '@shared/store/Landsat/thunks';
 
 export const SwipeLayerSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -32,6 +33,9 @@ export const SwipeLayerSelectorContainer = () => {
             queryParams4SceneOnRight={queryParams4RightSide}
             onChange={(value) => {
                 dispatch(selectedSide4SwipeModeChanged(value));
+            }}
+            swapButtonOnClick={() => {
+                dispatch(swapMainAndSecondaryScenes());
             }}
         />
     );

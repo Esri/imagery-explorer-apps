@@ -10,12 +10,15 @@ import {
     queryParams4SceneInSwipeModeChanged,
     queryParams4SceneInSelectedAnimationFrameChanged,
     selectedAnimationFrameIdChanged,
+    queryParams4SecondarySceneChanged,
 } from './reducer';
 import {
     selectAppMode,
+    selectQueryParams4MainScene,
     selectQueryParams4SceneInNewAnimationFrame,
     selectQueryParams4SceneInSelectedMode,
     selectQueryParams4ScenesInAnimateMode,
+    selectQueryParams4SecondaryScene,
     selectSelectedAnimationFrameId,
 } from './selectors';
 import { generate } from 'shortid';
@@ -311,5 +314,34 @@ export const removeAnimationFrame =
             dispatch(
                 selectedAnimationFrameIdChanged(newSelectedAnimationFrameId)
             );
+        }
+    };
+
+export const swapMainAndSecondaryScenes =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        try {
+            const queryParams4MainScene = selectQueryParams4MainScene(
+                getState()
+            );
+
+            const queryParams4SecondaryScene = selectQueryParams4SecondaryScene(
+                getState()
+            );
+
+            batch(() => {
+                dispatch(
+                    queryParams4MainSceneChanged({
+                        ...queryParams4SecondaryScene,
+                    })
+                );
+
+                dispatch(
+                    queryParams4SecondarySceneChanged({
+                        ...queryParams4MainScene,
+                    })
+                );
+            });
+        } catch (err) {
+            console.error(err);
         }
     };

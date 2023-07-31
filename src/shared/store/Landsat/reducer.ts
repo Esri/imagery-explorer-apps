@@ -155,6 +155,12 @@ const slice = createSlice({
         ) => {
             state.queryParams4MainScene = action.payload;
         },
+        queryParams4SecondarySceneChanged: (
+            state,
+            action: PayloadAction<QueryParams4ImageryScene>
+        ) => {
+            state.queryParams4SecondaryScene = action.payload;
+        },
         queryParams4SceneInSwipeModeChanged: (
             state,
             action: PayloadAction<QueryParams4ImageryScene>
@@ -221,6 +227,7 @@ const { reducer } = slice;
 export const {
     availableScenesUpdated,
     queryParams4MainSceneChanged,
+    queryParams4SecondarySceneChanged,
     queryParams4SceneInSwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,

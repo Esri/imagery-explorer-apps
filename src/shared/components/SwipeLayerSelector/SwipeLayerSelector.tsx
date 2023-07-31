@@ -12,6 +12,7 @@ type Props = {
     queryParams4SceneOnLeft: QueryParams4ImageryScene;
     queryParams4SceneOnRight: QueryParams4ImageryScene;
     onChange: (side: Side4SwipeMode) => void;
+    swapButtonOnClick: () => void;
 };
 
 const sides: Side4SwipeMode[] = ['left', 'right'];
@@ -21,6 +22,7 @@ export const SwipeLayerSelector: FC<Props> = ({
     queryParams4SceneOnLeft,
     queryParams4SceneOnRight,
     onChange,
+    swapButtonOnClick,
 }) => {
     const getButtonContent = (side: Side4SwipeMode) => {
         const queryParams =
@@ -57,7 +59,7 @@ export const SwipeLayerSelector: FC<Props> = ({
 
     return (
         <div className="flex flex-col h-full w-full">
-            {sides.map((side) => (
+            {/* {sides.map((side) => (
                 <div
                     className={classNames(
                         'relative mb-1 h-1/2 flex items-center'
@@ -79,7 +81,55 @@ export const SwipeLayerSelector: FC<Props> = ({
                         {getButtonContent(side)}
                     </Button>
                 </div>
-            ))}
+            ))} */}
+
+            <div
+                className={classNames('relative mb-1 h-1/2 flex items-center')}
+                key={'left'}
+            >
+                <Button
+                    appearance={
+                        selectedSide === 'left' ? 'solid' : 'transparent'
+                    }
+                    fullHeight={true}
+                    onClickHandler={() => {
+                        onChange('left');
+                    }}
+                    decorativeIndicator={
+                        selectedSide === 'left' ? 'left' : null
+                    }
+                >
+                    {getButtonContent('left')}
+                </Button>
+            </div>
+
+            <div
+                className="flex justify-center cursor-pointer w-full my-1"
+                title="swap left and right side"
+                onClick={swapButtonOnClick}
+            >
+                <calcite-icon icon="arrow-up-down" scale="s" />
+            </div>
+
+            <div
+                className={classNames('relative mb-1 h-1/2 flex items-center')}
+                key={'right'}
+            >
+                <Button
+                    appearance={
+                        selectedSide === 'right' ? 'solid' : 'transparent'
+                    }
+                    fullHeight={true}
+                    onClickHandler={() => {
+                        onChange('right');
+                    }}
+                    decorativeIndicator={
+                        selectedSide === 'right' ? 'left' : null
+                    }
+                >
+                    {getButtonContent('right')}
+                </Button>
+            </div>
         </div>
     );
 };
