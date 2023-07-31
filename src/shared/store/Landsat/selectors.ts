@@ -62,6 +62,11 @@ export const selectAppMode = createSelector(
     (mode) => mode
 );
 
+export const selectIsSwipeModeOn = createSelector(
+    (state: RootState) => state.Landsat.mode,
+    (mode) => mode === 'swipe'
+);
+
 export const selectAvailableScenes = createSelector(
     (state: RootState) => state.Landsat.availableScenes,
     (availableScenes) => {

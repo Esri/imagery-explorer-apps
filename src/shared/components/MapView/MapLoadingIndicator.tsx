@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { FC } from 'react';
 
 type Props = {
@@ -5,16 +6,47 @@ type Props = {
      * if true, show map loading indicator
      */
     active: boolean;
+    /**
+     * position of swipe widget handler on x axis
+     */
+    swipeWidgetHandlerPosition?: number;
 };
 
-export const MapLoadingIndicator: FC<Props> = ({ active }: Props) => {
+export const MapLoadingIndicator: FC<Props> = ({
+    active,
+    swipeWidgetHandlerPosition,
+}: Props) => {
     if (!active) {
         return null;
     }
 
     return (
-        <div className="flex items-center w-full h-full absolute top-0 left-0 pointer-events-none">
-            <calcite-loader />
-        </div>
+        <>
+            <div
+                className={classNames(
+                    'flex items-center h-full absolute top-0 left-0 pointer-events-none'
+                )}
+                style={{
+                    width: swipeWidgetHandlerPosition
+                        ? `${swipeWidgetHandlerPosition}%`
+                        : '100%',
+                }}
+            >
+                <calcite-loader />
+            </div>
+
+            {swipeWidgetHandlerPosition && (
+                <div
+                    className={classNames(
+                        'flex items-center h-full absolute top-0 right-0 pointer-events-none'
+                    )}
+                    style={{
+                        width: `${100 - swipeWidgetHandlerPosition}%`,
+                    }}
+                >
+                    <calcite-loader />
+                </div>
+            )}
+        </>
     );
 };

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import {
     selectMapCenter,
     selectMapZoom,
+    selectSwipeWidgetHandlerPosition,
     selectWebmapId,
 } from '../../store/Map/selectors';
 import {
@@ -24,6 +25,7 @@ import { Point } from 'esri/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
 import SearchWidget from './SearchWidget';
+import { selectIsSwipeModeOn } from '@shared/store/Landsat/selectors';
 
 type Props = {
     children?: React.ReactNode;
@@ -41,6 +43,12 @@ const MapViewContainer: FC<Props> = ({ children }) => {
     const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
 
     const animationStatus = useSelector(selectAnimationStatus);
+
+    const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
+
+    const swipeWidgetHandlerPosition = useSelector(
+        selectSwipeWidgetHandlerPosition
+    );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
@@ -92,7 +100,12 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                     mapViewUpdatingOnChange={setIsUpdating}
                 />
 
-                <MapLoadingIndicator active={isUpdating} />
+                <MapLoadingIndicator
+                    active={isUpdating}
+                    swipeWidgetHandlerPosition={
+                        isSwipeWidgetVisible ? swipeWidgetHandlerPosition : null
+                    }
+                />
 
                 <SearchWidget hide={animationStatus !== null} />
 

@@ -4,23 +4,28 @@ import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
+    selectIsSwipeModeOn,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
 import { useLandsatLayer } from '../LandsatLayer';
+import { useDispatch } from 'react-redux';
+import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 
 type Props = {
     mapView?: MapView;
 };
 
 export const SwipeWidgetContainer: FC<Props> = ({ mapView }: Props) => {
-    const appMode = useSelector(selectAppMode);
+    const dispatch = useDispatch();
+
+    const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
 
     const queryParams4LeftSide = useSelector(selectQueryParams4MainScene);
 
     const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
 
-    const isSwipeWidgetVisible = appMode === 'swipe';
+    // const isSwipeWidgetVisible = appMode === 'swipe';
 
     const leadingLayer = useLandsatLayer({
         visible:
@@ -46,6 +51,7 @@ export const SwipeWidgetContainer: FC<Props> = ({ mapView }: Props) => {
             mapView={mapView}
             positionOnChange={(pos) => {
                 // console.log(pos)
+                dispatch(swipeWidgetHanlderPositionChanged(Math.trunc(pos)));
             }}
             referenceInfoOnToggle={() => {
                 //

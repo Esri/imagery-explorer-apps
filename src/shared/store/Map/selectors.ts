@@ -25,3 +25,8 @@ export const selectShowTerrain = createSelector(
     (state: RootState) => state.Map.showTerrain,
     (showTerrain) => showTerrain
 );
+
+export const selectSwipeWidgetHandlerPosition = createSelector(
+    (state: RootState) => state.Map.swipeWidgetHanlderPosition,
+    (swipeWidgetHanlderPosition) => swipeWidgetHanlderPosition
+);

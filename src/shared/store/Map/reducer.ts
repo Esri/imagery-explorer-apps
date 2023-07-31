@@ -29,6 +29,10 @@ export type MapState = {
      * If true, Terrain Layer will be on
      */
     showTerrain: boolean;
+    /**
+     * handler position of swipe widget ranged from 0 - 100
+     */
+    swipeWidgetHanlderPosition: number;
 };
 
 export const initialMapState: MapState = {
@@ -37,6 +41,7 @@ export const initialMapState: MapState = {
     zoom: MAP_ZOOM,
     showMapLabel: true,
     showTerrain: true,
+    swipeWidgetHanlderPosition: 50,
 };
 
 const slice = createSlice({
@@ -58,6 +63,12 @@ const slice = createSlice({
         showTerrainToggled: (state) => {
             state.showTerrain = !state.showTerrain;
         },
+        swipeWidgetHanlderPositionChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.swipeWidgetHanlderPosition = action.payload;
+        },
     },
 });
 
@@ -69,6 +80,7 @@ export const {
     zoomChanged,
     showMapLabelToggled,
     showTerrainToggled,
+    swipeWidgetHanlderPositionChanged,
 } = slice.actions;
 
 export default reducer;
