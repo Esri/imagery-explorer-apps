@@ -50,20 +50,16 @@ export const RenderingControls: FC<Props> = ({
                 </span>
             </div>
 
+            <div className={classNames('flex-grow pr-4')}>
+                <Slider value={selectedOpacity} onChange={opacityOnChange} />
+            </div>
+
             <div
-                className={classNames('mx-2', {
+                className={classNames({
                     'is-disabled': shouldClip,
                 })}
             >
                 <ColorPicker color={color} onChange={colorOnChange} />
-            </div>
-
-            <div
-                className={classNames('flex-grow', {
-                    'is-disabled': shouldClip,
-                })}
-            >
-                <Slider value={selectedOpacity} onChange={opacityOnChange} />
             </div>
         </div>
     );
