@@ -25,7 +25,11 @@ import { Point } from 'esri/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
 import SearchWidget from './SearchWidget';
-import { selectIsSwipeModeOn } from '@shared/store/Landsat/selectors';
+import {
+    selectAppMode,
+    selectIsSwipeModeOn,
+} from '@shared/store/Landsat/selectors';
+import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 
 type Props = {
     children?: React.ReactNode;
@@ -52,6 +56,12 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
+    const mode = useSelector(selectAppMode);
+
+    const analysisTool = useSelector(selectActiveAnalysisTool);
+
+    const showMagnifier = mode === 'analysis' && analysisTool === 'profile';
+
     useEffect(() => {
         // console.log('map view zoom and center has changed', center, zoom);
         saveMapCenterToHashParams(center, zoom);
@@ -64,7 +74,12 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 'bottom-bottom-panel-height': shouldHideBottomPanel === false,
             })}
         >
-            <MapView webmapId={webmapId} center={center} zoom={zoom}>
+            <MapView
+                webmapId={webmapId}
+                center={center}
+                zoom={zoom}
+                showMagnifier={showMagnifier}
+            >
                 {children}
 
                 <EventHandlers
