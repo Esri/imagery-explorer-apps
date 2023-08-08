@@ -6,6 +6,7 @@ import { AnimationLayer } from '../AnimationLayer';
 import { MaskLayer } from '../MaskLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { ProfileToolQueryLocation } from '@shared/components/ProfileToolQueryLocation';
+import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 
 const Map = () => {
     return (
@@ -17,6 +18,7 @@ const Map = () => {
             </GroupLayer>
             <SwipeWidget />
             <AnimationLayer />
+            <Zoom2NativeScale tooltip={"Zoom to Landsat's native resolution"} />
         </MapViewContainer>
     );
 };

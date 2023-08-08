@@ -59,6 +59,7 @@ const MapView: React.FC<Props> = ({
                 }),
                 constraints: {
                     lods: TileInfo.create().lods,
+                    snapToZoom: false,
                 },
                 popup: {
                     autoOpenEnabled: false,
