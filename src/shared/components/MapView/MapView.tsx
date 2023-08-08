@@ -101,12 +101,6 @@ const MapView: React.FC<Props> = ({
         };
     }, []);
 
-    // useEffect(() => {
-    //     if (mapView) {
-    //         updateWebmap();
-    //     }
-    // }, [webmapId]);
-
     return (
         <>
             <div

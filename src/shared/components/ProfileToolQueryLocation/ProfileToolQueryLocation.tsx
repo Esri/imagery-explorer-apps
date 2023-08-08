@@ -5,6 +5,7 @@ import IGraphicsLayer from 'esri/layers/GraphicsLayer';
 import GroupLayer from 'esri/layers/GroupLayer';
 import MapView from 'esri/views/MapView';
 import React, { FC, useEffect, useRef } from 'react';
+import IconImage from './icon.png';
 
 type Props = {
     queryLocation: Point;
@@ -30,7 +31,7 @@ export const ProfileToolQueryLocation: FC<Props> = ({
             ]) as Promise<Modules>);
 
             graphicLayerRef.current = new GraphicsLayer({
-                effect: 'drop-shadow(2px, 2px, 3px, #000)',
+                // effect: 'drop-shadow(2px, 2px, 3px, #000)',
                 visible,
             });
 
@@ -56,13 +57,17 @@ export const ProfileToolQueryLocation: FC<Props> = ({
                     ...queryLocation,
                 },
                 symbol: {
-                    type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-                    color: [0, 35, 47, 0.9],
-                    outline: {
-                        // autocasts as new SimpleLineSymbol()
-                        color: [191, 238, 254],
-                        width: 1,
-                    },
+                    // type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
+                    // color: [0, 35, 47, 0.9],
+                    // outline: {
+                    //     // autocasts as new SimpleLineSymbol()
+                    //     color: [191, 238, 254],
+                    //     width: 1,
+                    // },
+                    type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
+                    url: IconImage,
+                    width: '150px',
+                    height: '150px',
                 } as any,
             });
 
