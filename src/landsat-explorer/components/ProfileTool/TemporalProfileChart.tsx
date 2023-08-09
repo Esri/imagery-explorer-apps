@@ -29,7 +29,8 @@ export const convertLandsatTemporalProfileData2ChartData = (
     const data = temporalProfileData.map((d) => {
         const { acquisitionDate } = d;
 
-        const [B1, B2, B3, B4, B5, B6] = d.values;
+        // Per discussion with Rob Waterman, we should use B9 to get surface temprate data
+        const [B1, B2, B3, B4, B5, B6, B7, B8, B9] = d.values;
 
         let value = 0;
 

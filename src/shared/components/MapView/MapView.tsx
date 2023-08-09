@@ -119,6 +119,7 @@ const MapView: React.FC<Props> = ({
             return;
         }
 
+        mapView.magnifier.factor = 2;
         mapView.magnifier.visible = showMagnifier;
     }, [showMagnifier, mapView]);
 

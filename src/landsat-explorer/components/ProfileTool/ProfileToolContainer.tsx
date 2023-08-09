@@ -66,19 +66,19 @@ export const ProfileToolContainer = () => {
     return (
         <div className="w-analysis-tool-container-width h-full">
             <AnalysisToolHeader
-                title="Profile Index"
+                title="Profile"
                 data={[
                     {
                         value: 'moisture',
-                        label: '',
+                        label: 'moisture index',
                     },
                     {
                         value: 'water',
-                        label: '',
+                        label: 'water index',
                     },
                     {
                         value: 'vegetation',
-                        label: '',
+                        label: 'vegetation index',
                     },
                 ]}
                 selectedSpectralIndex={spectralIndex}
