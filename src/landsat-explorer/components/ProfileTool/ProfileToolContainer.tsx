@@ -80,6 +80,14 @@ export const ProfileToolContainer = () => {
                         value: 'vegetation',
                         label: 'vegetation index',
                     },
+                    {
+                        value: 'temperature farhenheit',
+                        label: 'surface temp ℉',
+                    },
+                    {
+                        value: 'temperature celcius',
+                        label: 'surface temp °C',
+                    },
                 ]}
                 selectedSpectralIndex={spectralIndex}
                 selectedSpectralIndexOnChange={(val) => {

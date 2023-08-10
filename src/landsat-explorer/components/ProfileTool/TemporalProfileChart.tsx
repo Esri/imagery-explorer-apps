@@ -9,11 +9,32 @@ import { TemporalProfileData } from '@typing/imagery-service';
 import { SpectralIndex } from '@shared/store/Analysis/reducer';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { format } from 'date-fns';
+import {
+    celsius2fahrenheit,
+    kelvin2celsius,
+    kelvin2fahrenheit,
+} from '@shared/utils/temperature-conversion';
 
 type Props = {
     data: TemporalProfileData[];
     spectralIndex: SpectralIndex;
 };
+
+/**
+ * min value in celcius degree (-30) of the y scale domain for surface temp chart
+ */
+const SURFACE_TEMP_MIN_CELSIUS = -30;
+/**
+ * max value in celcius degree (100) of the y scale domain for surface temp chart
+ */
+const SURFACE_TEMP_MAX_CELSIUS = 100;
+
+const SURFACE_TEMP_MIN_FAHRENHEIT = celsius2fahrenheit(
+    SURFACE_TEMP_MIN_CELSIUS
+);
+const SURFACE_TEMP_MAX_FAHRENHEIT = celsius2fahrenheit(
+    SURFACE_TEMP_MAX_CELSIUS
+);
 
 /**
  * Converts Landsat temporal profile data to chart data.
@@ -41,6 +62,13 @@ export const convertLandsatTemporalProfileData2ChartData = (
             value = (B5 - B4) / (B5 + B4);
         } else if (spectralIndex === 'water') {
             value = (B3 - B6) / (B3 + B6);
+        } else if (spectralIndex === 'temperature farhenheit') {
+            value = Math.max(
+                kelvin2fahrenheit(B9),
+                SURFACE_TEMP_MIN_FAHRENHEIT
+            );
+        } else if (spectralIndex === 'temperature celcius') {
+            value = Math.max(kelvin2celsius(B9), SURFACE_TEMP_MIN_CELSIUS);
         }
 
         const tooltip = `${format(
@@ -87,6 +115,18 @@ export const TemporalProfileChart: FC<Props> = ({
         );
 
         return [xMin, xMax];
+    };
+
+    const getCustomDomain4YScale = (): number[] => {
+        if (spectralIndex === 'temperature farhenheit') {
+            return [SURFACE_TEMP_MIN_FAHRENHEIT, SURFACE_TEMP_MAX_FAHRENHEIT];
+        }
+
+        if (spectralIndex === 'temperature celcius') {
+            return [SURFACE_TEMP_MIN_CELSIUS, SURFACE_TEMP_MAX_CELSIUS];
+        }
+
+        return [-1, 1];
     };
 
     const getData4VerticalReferenceLine = (): VerticalReferenceLineData[] => {
@@ -136,7 +176,7 @@ export const TemporalProfileChart: FC<Props> = ({
                 stroke="var(--custom-light-blue)"
                 strokeWidth={1.5}
                 yScaleOptions={{
-                    domain: [-1, 1],
+                    domain: getCustomDomain4YScale(),
                 }}
                 xScaleOptions={{
                     useTimeScale: true,
