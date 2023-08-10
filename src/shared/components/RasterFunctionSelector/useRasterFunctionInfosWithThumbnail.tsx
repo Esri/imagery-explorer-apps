@@ -8,6 +8,7 @@ import NaturalColor from './thumbnails/Render_NaturalColor.jpg';
 import Geology from './thumbnails/Render_Geology.jpg';
 import NDVI from './thumbnails/Render_NDVI.jpg';
 import ShortWaveIR from './thumbnails/Render_ShortwaveIR.jpg';
+import Thermal from './thumbnails/Render_Thermal.png';
 
 const thumbnailByRasterFunctionName = {
     'Agriculture with DRA': Agriculture,
@@ -17,6 +18,7 @@ const thumbnailByRasterFunctionName = {
     'Geology with DRA': Geology,
     'NDVI Colorized': NDVI,
     'Short-wave Infrared with DRA': ShortWaveIR,
+    Landsat_TIRS1_Temperature_Farhenheit_Colorized: Thermal,
 };
 
 export const useRasterFunctionInfosWithThumbnail = () => {

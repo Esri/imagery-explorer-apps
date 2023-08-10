@@ -118,14 +118,14 @@ export const LANDSAT_RASTER_FUNCTION_INFOS = [
         label: 'Short-wave IR',
     },
     {
-        name: 'Landsat8_TIRS1_Temperature_Celcius',
-        description: 'Landsat8 TIRS1 temperature values in Celcius',
-        label: 'Temp Celcius',
+        name: 'Landsat_TIRS1_Temperature_Farhenheit_Colorized',
+        description: 'Landsat8 TIRS1 temperature values in Farhenheit',
+        label: 'Temp ℉',
     },
     {
-        name: 'Landsat8_TIRS1_Temperature_Farhenheit',
-        description: 'Landsat8 TIRS1 temperature values in Farhenheit',
-        label: 'Temp Farhenheit',
+        name: 'Landsat_TIRS1_Temperature_Celcius_Colorized',
+        description: 'Landsat8 TIRS1 temperature values in Celcius',
+        label: 'Temp Celcius',
     },
     {
         name: 'Short-wave Infrared',
