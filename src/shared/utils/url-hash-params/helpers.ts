@@ -103,7 +103,7 @@ export const encodeProfileToolQueryLocation = (point: Point): string => {
     }
 
     const { x, y } = point;
-    return [x, y].join(',');
+    return [x.toFixed(5), y.toFixed(5)].join(',');
 };
 
 export const decodeProfileToolQueryLocation = (val: string): Point => {
