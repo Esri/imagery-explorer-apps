@@ -16,6 +16,35 @@ type GetProfileDataOptions = {
     samplingTemporalResolution: number;
 };
 
+/**
+ * Splits an array of object IDs into separate groups, each containing a maximum of 20 object IDs.
+ * This is useful when making requests with an upper limit on the number of object IDs.
+ *
+ * @param {number[]} objectIds - An array of object IDs to be split into groups.
+ * @returns {number[][]} An array of arrays, each representing a separate group of object IDs.
+ */
+const splitObjectIdsToSeparateGroups = (objectIds: number[]): number[][] => {
+    // Define the maximum number of items per group
+    const ItemsPerGroup = 20;
+
+    // number of groups needed based on the total number of object IDs
+    const numOfGroups = Math.ceil(objectIds.length / ItemsPerGroup);
+
+    // Initialize an array of empty arrays to hold the separate groups of object IDs
+    const objectsIdsInSeparateGroups: number[][] = [
+        ...new Array(numOfGroups),
+    ].map(() => []);
+
+    for (let i = 0; i < numOfGroups; i++) {
+        // Calculate the start and end indices for the current group
+        const startIdx = i * ItemsPerGroup;
+        const endIdx = Math.min(startIdx + ItemsPerGroup, objectIds.length);
+        objectsIdsInSeparateGroups[i] = objectIds.slice(startIdx, endIdx);
+    }
+
+    return objectsIdsInSeparateGroups;
+};
+
 export const getTemporalProfileData = async ({
     queryLocation,
     acquisitionMonth,
@@ -41,7 +70,23 @@ export const getTemporalProfileData = async ({
 
         const objectIds = landsatScenesToSample.map((d) => d.objectId);
 
-        const samplesData = await getSamples(queryLocation, objectIds);
+        const objectsIdsInSeparateGroups =
+            splitObjectIdsToSeparateGroups(objectIds);
+        // console.log(objectsIdsInSeparateGroups)
+
+        const samplesDataInSeparateGroups: SampleData[][] = await Promise.all(
+            objectsIdsInSeparateGroups.map((oids) =>
+                getSamples(queryLocation, oids)
+            )
+        );
+
+        // combine samples data from different groups into a single array
+        const samplesData: SampleData[] = samplesDataInSeparateGroups.reduce(
+            (combined, subsetOfSamplesData) => {
+                return [...combined, ...subsetOfSamplesData];
+            },
+            []
+        );
         // console.log(samplesData);
 
         return formatAsTemporalProfileData(samplesData, landsatScenesToSample);
@@ -63,11 +108,23 @@ const formatAsTemporalProfileData = (
 ): TemporalProfileData[] => {
     const output: TemporalProfileData[] = [];
 
+    const sceneByObjectId = new Map<number, LandsatScene>();
+
+    for (const scene of scenes) {
+        sceneByObjectId.set(scene.objectId, scene);
+    }
+
     for (let i = 0; i < samples.length; i++) {
         const sampleData = samples[i];
+        const { rasterId } = sampleData;
+
+        if (sceneByObjectId.has(rasterId) === false) {
+            continue;
+        }
+
         // const scene = scenes[i];
         const { objectId, acquisitionDate, acquisitionMonth, acquisitionYear } =
-            scenes[i];
+            sceneByObjectId.get(rasterId);
 
         output.push({
             objectId,
