@@ -30,9 +30,7 @@ const CalendarContainer = () => {
 
     const cloudCoverThreshold = queryParams?.cloudCover;
 
-    const [acquisitionYear, setAcquisitionYear] = useState<number>(
-        getCurrentYear()
-    );
+    const [acquisitionYear, setAcquisitionYear] = useState<number>();
 
     /**
      * landsat scenes that intersect with the map center

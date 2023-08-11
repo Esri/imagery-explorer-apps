@@ -33,6 +33,10 @@ import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDa
 export const queryAvailableScenes =
     (acquisitionYear: number) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        if (!acquisitionYear) {
+            return;
+        }
+
         try {
             const { acquisitionDate } =
                 selectQueryParams4SceneInSelectedMode(getState()) || {};
