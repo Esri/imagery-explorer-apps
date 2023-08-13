@@ -113,6 +113,10 @@ export type TemporalProfileData = {
      */
     acquisitionDate: number;
     /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
      * acquisition year of imagery scene
      */
     acquisitionYear: number;

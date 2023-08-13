@@ -18,6 +18,7 @@ import {
 type Props = {
     data: TemporalProfileData[];
     spectralIndex: SpectralIndex;
+    onClickHandler: (index: number) => void;
 };
 
 /**
@@ -89,6 +90,7 @@ export const convertLandsatTemporalProfileData2ChartData = (
 export const TemporalProfileChart: FC<Props> = ({
     data,
     spectralIndex,
+    onClickHandler,
 }: Props) => {
     const queryParams4SelectedScene =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -162,7 +164,8 @@ export const TemporalProfileChart: FC<Props> = ({
                     '--axis-tick-text-color': 'var(--custom-light-blue-50)',
                     '--crosshair-reference-line-color':
                         'var(--custom-light-blue-50)',
-                    '--reference-line-color': 'var(--custom-light-blue-70)',
+                    '--vertical-reference-line-color':
+                        'var(--custom-light-blue-70)',
                     '--tooltip-text-font-size': '.725rem',
                     '--tooltip-text-color': 'var(--custom-light-blue-70)',
                     '--tooltip-background-color': 'var(--custom-background-95)',
@@ -189,6 +192,7 @@ export const TemporalProfileChart: FC<Props> = ({
                     numberOfTicks: 5,
                 }}
                 verticalReferenceLines={getData4VerticalReferenceLine()}
+                onClick={onClickHandler}
             />
         </div>
     );

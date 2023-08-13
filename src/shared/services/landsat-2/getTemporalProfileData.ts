@@ -66,7 +66,6 @@ export const getTemporalProfileData = async ({
             landsatScenes,
             samplingTemporalResolution
         );
-        // console.log(landsatScenesToSample);
 
         const objectIds = landsatScenesToSample.map((d) => d.objectId);
 
@@ -123,14 +122,20 @@ const formatAsTemporalProfileData = (
         }
 
         // const scene = scenes[i];
-        const { objectId, acquisitionDate, acquisitionMonth, acquisitionYear } =
-            sceneByObjectId.get(rasterId);
+        const {
+            objectId,
+            acquisitionDate,
+            acquisitionMonth,
+            acquisitionYear,
+            formattedAcquisitionDate,
+        } = sceneByObjectId.get(rasterId);
 
         output.push({
             objectId,
             acquisitionDate,
             acquisitionMonth,
             acquisitionYear,
+            formattedAcquisitionDate,
             values: sampleData.value.split(' ').map((d) => +d),
         });
     }

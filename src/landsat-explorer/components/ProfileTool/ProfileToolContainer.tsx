@@ -21,6 +21,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TemporalProfileChart';
+import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
+import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 
 export const ProfileToolContainer = () => {
     const dispatch = useDispatch();
@@ -110,6 +112,20 @@ export const ProfileToolContainer = () => {
                     <TemporalProfileChart
                         data={temporalProfileData}
                         spectralIndex={spectralIndex}
+                        onClickHandler={(index) => {
+                            // select user clicked temporal profile chart data element
+                            const clickedDataItem = temporalProfileData[index];
+
+                            if (!clickedDataItem) {
+                                return;
+                            }
+
+                            dispatch(
+                                updateAcquisitionDate(
+                                    clickedDataItem.formattedAcquisitionDate
+                                )
+                            );
+                        }}
                     />
                 )}
             </div>
