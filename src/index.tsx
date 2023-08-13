@@ -5,8 +5,13 @@ import { Provider as ReduxProvider } from 'react-redux';
 import configureAppStore, {
     getPreloadedState,
 } from './shared/store/configureStore';
+import { setDefaultOptions } from 'esri-loader';
 
 (async () => {
+    setDefaultOptions({
+        version: '4.26',
+    });
+
     const preloadedState = await getPreloadedState();
 
     const root = createRoot(document.getElementById('root'));

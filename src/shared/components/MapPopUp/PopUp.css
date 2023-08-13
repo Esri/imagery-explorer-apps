@@ -1,0 +1,34 @@
+.esri-view-width-xlarge .esri-popup__main-container {
+    width: 260px;
+}
+
+.esri-popup__header-title {
+    font-size: 12px !important;
+    @apply text-custom-light-blue;
+}
+
+.esri-popup__inline-actions-container,
+.esri-popup__footer.esri-popup__footer--has-actions,
+.esri-popup__button.esri-popup__button--dock,
+.esri-popup__pointer {
+    display: none;
+}
+
+/* .esri-popup__header-container.esri-popup__header-container--button{
+    pointer-events: none;
+} */
+
+.esri-popup__main-container,
+.esri-popup__header {
+    /* background: rgba(0,35,47, .85); */
+    @apply bg-custom-background;
+}
+
+.esri-popup__main-container .esri-popup__content {
+    --calcite-ui-background: var(--custom-background);
+}
+
+.esri-popup__header-container--button:hover,
+.esri-popup__button:hover {
+    @apply bg-custom-background-95;
+}

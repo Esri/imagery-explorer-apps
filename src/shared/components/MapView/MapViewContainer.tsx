@@ -30,6 +30,7 @@ import {
     selectIsSwipeModeOn,
 } from '@shared/store/Landsat/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
+import Popup from '../MapPopUp/PopUp';
 
 type Props = {
     children?: React.ReactNode;
@@ -125,6 +126,8 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 <SearchWidget hide={animationStatus !== null} />
 
                 <ReferenceLayers />
+
+                {/* <Popup /> */}
             </MapView>
 
             <ReferenceLayersToggleControl
