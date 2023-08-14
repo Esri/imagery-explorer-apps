@@ -5,21 +5,10 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { getCurrentMonth } from '@shared/utils/date-time/getCurrentDateTime';
-import { TemporalProfileData } from '@typing/imagery-service';
+import { TemporalProfileData, SpectralIndex } from '@typing/imagery-service';
 import { Point } from 'esri/geometry';
 
 export type AnalysisTool = 'mask' | 'profile';
-
-/**
- * Spectral indices are combinations of the pixel values from two or more spectral bands in a multispectral image.
- * Spectral indices are designed to highlight pixels showing the relative abundance or lack of a land-cover type of interest in an image.
- */
-export type SpectralIndex =
-    | 'water'
-    | 'vegetation'
-    | 'moisture'
-    | 'temperature farhenheit'
-    | 'temperature celcius';
 
 export type MaskOptions = {
     selectedRange: number[];

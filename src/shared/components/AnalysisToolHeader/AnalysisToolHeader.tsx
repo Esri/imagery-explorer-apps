@@ -1,4 +1,4 @@
-import { SpectralIndex } from '@shared/store/Analysis/reducer';
+import { SpectralIndex } from '@typing/imagery-service';
 import React, { FC, useMemo } from 'react';
 import { Dropdown, DropdownData } from '../Dropdown';
 import { Tooltip } from '../Tooltip';

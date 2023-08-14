@@ -3,9 +3,19 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 
 export type LandsatSampleData = {
     locationId: number;
+    /**
+     * object id of the landsat imagery scene
+     */
     rasterId: number;
     resolution: number;
+    /**
+     * comma separated band values returned by the server
+     */
     value: string;
+    /**
+     * array of band values
+     */
+    values: number[];
 };
 
 export const getSamples = async (
@@ -46,6 +56,13 @@ export const getSamples = async (
     }
 
     const samples: LandsatSampleData[] = data?.samples || [];
+
+    samples.map((d) => {
+        return {
+            ...d,
+            values: d.value.split(' ').map((d) => +d),
+        };
+    });
 
     return samples;
 };

@@ -1,9 +1,9 @@
 import {
     MaskToolData,
-    SpectralIndex,
     TemporalProfileToolData,
     initialAnalysisState,
 } from '@shared/store/Analysis/reducer';
+import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { Point } from 'esri/geometry';
 

@@ -6,7 +6,7 @@ import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/forma
 import { VerticalReferenceLineData } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { TemporalProfileData } from '@typing/imagery-service';
-import { SpectralIndex } from '@shared/store/Analysis/reducer';
+import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { format } from 'date-fns';
 import {

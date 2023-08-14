@@ -111,7 +111,7 @@ const formatAsTemporalProfileData = (
 
     for (let i = 0; i < samples.length; i++) {
         const sampleData = samples[i];
-        const { rasterId } = sampleData;
+        const { rasterId, values } = sampleData;
 
         if (sceneByObjectId.has(rasterId) === false) {
             continue;
@@ -132,7 +132,8 @@ const formatAsTemporalProfileData = (
             acquisitionMonth,
             acquisitionYear,
             formattedAcquisitionDate,
-            values: sampleData.value.split(' ').map((d) => +d),
+            values,
+            // values: sampleData.value.split(' ').map((d) => +d),
         });
     }
 

@@ -1,4 +1,4 @@
-import { SpectralIndex } from '@shared/store/Analysis/reducer';
+import { SpectralIndex } from '@typing/imagery-service';
 
 type LandsatProductInfo = {
     /**

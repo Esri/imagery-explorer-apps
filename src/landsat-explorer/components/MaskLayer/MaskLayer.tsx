@@ -5,11 +5,11 @@ import IMosaicRule from 'esri/layers/support/MosaicRule';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-2/config';
 import MapView from 'esri/views/MapView';
 import { getMosaicRule } from '../LandsatLayer/useLandsatLayer';
-import { SpectralIndex } from '@shared/store/Analysis/reducer';
 import IRasterFunction from 'esri/layers/support/RasterFunction';
 import PixelBlock from 'esri/layers/support/PixelBlock';
 import GroupLayer from 'esri/layers/GroupLayer';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-2/helpers';
+import { SpectralIndex } from '@typing/imagery-service';
 
 type Props = {
     mapView?: MapView;
