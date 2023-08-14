@@ -52,7 +52,9 @@ export const getHashParamValueByKey = (key: UrlHashParamKey): string => {
  */
 export const saveMapCenterToHashParams = (center: number[], zoom: number) => {
     const [longitude, latitude] = center;
-    const value = `${longitude.toFixed(3)},${latitude.toFixed(3)},${zoom}`;
+    const value = `${longitude.toFixed(3)},${latitude.toFixed(
+        3
+    )},${zoom.toFixed(3)}`;
     updateHashParams('mapCenter', value);
 };
 
