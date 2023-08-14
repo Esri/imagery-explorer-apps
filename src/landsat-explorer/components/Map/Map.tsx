@@ -8,6 +8,7 @@ import { GroupLayer } from '@shared/components/GroupLayer';
 import { ProfileToolQueryLocation } from '@shared/components/ProfileToolQueryLocation';
 import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { Popup } from '../PopUp/PopUp';
+import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 
 const Map = () => {
     return (
@@ -16,6 +17,7 @@ const Map = () => {
                 <LandsatLayer />
                 <MaskLayer />
                 <ProfileToolQueryLocation />
+                <MapPopUpAnchorPoint />
             </GroupLayer>
             <SwipeWidget />
             <AnimationLayer />

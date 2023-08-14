@@ -30,3 +30,8 @@ export const selectSwipeWidgetHandlerPosition = createSelector(
     (state: RootState) => state.Map.swipeWidgetHanlderPosition,
     (swipeWidgetHanlderPosition) => swipeWidgetHanlderPosition
 );
+
+export const selectMapPopupAnchorLocation = createSelector(
+    (state: RootState) => state.Map.popupAnchorLocation,
+    (popupAnchorLocation) => popupAnchorLocation
+);

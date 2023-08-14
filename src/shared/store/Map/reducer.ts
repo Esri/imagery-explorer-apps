@@ -5,6 +5,7 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { MAP_CENTER, MAP_ZOOM, WEB_MAP_ID } from '../../constants/map';
+import Point from 'esri/geometry/Point';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
@@ -33,6 +34,10 @@ export type MapState = {
      * handler position of swipe widget ranged from 0 - 100
      */
     swipeWidgetHanlderPosition: number;
+    /**
+     * anchor location of the map popup windown
+     */
+    popupAnchorLocation: Point;
 };
 
 export const initialMapState: MapState = {
@@ -42,6 +47,7 @@ export const initialMapState: MapState = {
     showMapLabel: true,
     showTerrain: true,
     swipeWidgetHanlderPosition: 50,
+    popupAnchorLocation: null,
 };
 
 const slice = createSlice({
@@ -69,6 +75,9 @@ const slice = createSlice({
         ) => {
             state.swipeWidgetHanlderPosition = action.payload;
         },
+        popupAnchorLocationChanged: (state, action: PayloadAction<Point>) => {
+            state.popupAnchorLocation = action.payload;
+        },
     },
 });
 
@@ -81,6 +90,7 @@ export const {
     showMapLabelToggled,
     showTerrainToggled,
     swipeWidgetHanlderPositionChanged,
+    popupAnchorLocationChanged,
 } = slice.actions;
 
 export default reducer;

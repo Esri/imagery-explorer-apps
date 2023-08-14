@@ -13,7 +13,11 @@ import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 import { getSamples } from '@shared/services/landsat-2/getSamples';
 import { format } from 'date-fns';
-import { calcSpectralIndex } from '@shared/services/landsat-2/helpers';
+import { useDispatch } from 'react-redux';
+import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
+import { getLoadingIndicator, getMainContent } from './helper';
+import IReactiveUtils from 'esri/core/reactiveUtils';
+import { loadModules } from 'esri-loader';
 
 type Props = {
     mapView?: IMapView;
@@ -38,6 +42,8 @@ const didClickOnLeftSideOfSwipeWidget = (
 };
 
 export const Popup: FC<Props> = ({ mapView }: Props) => {
+    const dispatch = useDispatch();
+
     const mode = useSelector(selectAppMode);
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
@@ -54,58 +60,9 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
     const openPopupRef = useRef<MapViewOnClickHandler>();
 
-    const getLoadingIndicator = () => {
-        const popupDiv = document.createElement('div');
-        popupDiv.innerHTML = `<calcite-loader scale="s"></calcite-loader>`;
-        return popupDiv;
-    };
-
-    const getMainContent = (values: number[], mapPoint: IPoint) => {
-        const lat = Math.round(mapPoint.latitude * 1000) / 1000;
-        const lon = Math.round(mapPoint.longitude * 1000) / 1000;
-
-        const popupDiv = document.createElement('div');
-
-        /**
-         * Degree Symbol for Farhenheit: ℉
-         */
-        const farhenheitSign = `&#176;F`;
-
-        /**
-         * Degree Symbol for Celcius: C
-         */
-        const celciusSign = `&#176;C`;
-
-        const surfaceTempFarhenheit =
-            calcSpectralIndex('temperature farhenheit', values).toFixed(0) +
-            farhenheitSign;
-
-        const surfaceTempCelcius =
-            calcSpectralIndex('temperature celcius', values).toFixed(0) +
-            celciusSign;
-
-        const vegetationIndex = calcSpectralIndex('vegetation', values).toFixed(
-            3
-        );
-
-        const waterIndex = calcSpectralIndex('water', values).toFixed(3);
-
-        popupDiv.innerHTML = `
-            <div class='text-custom-light-blue text-xs'>
-                <div class='mb-2'>
-                    <span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${surfaceTempFarhenheit} / ${surfaceTempCelcius}</span>
-                    <br />
-                    <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span>
-                    <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
-                </div>
-                <div class='flex'>
-                    <p><span class='text-custom-light-blue-50'>x</span> ${lon}</p>
-                    <p class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</p>
-                </div>
-            </div>
-        `;
-
-        return popupDiv;
+    const closePopUp = () => {
+        mapView.popup.close();
+        dispatch(popupAnchorLocationChanged(null));
     };
 
     openPopupRef.current = async (mapPoint: IPoint, mousePointX: number) => {
@@ -117,6 +74,8 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         ) {
             return;
         }
+
+        dispatch(popupAnchorLocationChanged(mapPoint.toJSON()));
 
         mapView.popup.open({
             title: null,
@@ -171,7 +130,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
             });
         } catch (err) {
             console.error('failed to open popup for landsat scene', err);
-            mapView.popup.close();
+            closePopUp();
         }
     };
 
@@ -181,10 +140,29 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         mapView.popup.autoOpenEnabled = false;
         mapView.popup.dockEnabled = false;
         mapView.popup.collapseEnabled = false;
+        mapView.popup.alignment = 'bottom-right';
 
         mapView.on('click', (evt) => {
             openPopupRef.current(evt.mapPoint, evt.x);
         });
+
+        type Modules = [typeof IReactiveUtils];
+
+        const [reactiveUtils] = await (loadModules([
+            'esri/core/reactiveUtils',
+        ]) as Promise<Modules>);
+
+        reactiveUtils.watch(
+            () => mapView.popup.visible,
+            (visible) => {
+                // console.log('mapview popup updated', visible)
+                if (!visible) {
+                    // need to call closePopup whne popup becomes invisible
+                    // so the Popup anchor location can also be removed from the map
+                    closePopUp();
+                }
+            }
+        );
     };
 
     useEffect(() => {
@@ -195,13 +173,13 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
     useEffect(() => {
         if (mapView) {
-            mapView.popup.close();
+            closePopUp();
         }
     }, [
         mode,
         analysisTool,
-        queryParams4MainScene,
-        queryParams4SecondaryScene,
+        queryParams4MainScene?.objectIdOfSelectedScene,
+        queryParams4SecondaryScene?.objectIdOfSelectedScene,
         swipePosition,
     ]);
 
