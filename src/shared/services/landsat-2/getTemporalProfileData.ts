@@ -2,13 +2,7 @@ import { Point } from 'esri/geometry';
 import { getLandsatScenes } from './getLandsatScenes';
 import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
-
-type SampleData = {
-    locationId: number;
-    rasterId: number;
-    resolution: number;
-    value: string;
-};
+import { getSamples, LandsatSampleData } from './getSamples';
 
 type GetProfileDataOptions = {
     queryLocation: Point;
@@ -73,19 +67,21 @@ export const getTemporalProfileData = async ({
             splitObjectIdsToSeparateGroups(objectIds);
         // console.log(objectsIdsInSeparateGroups)
 
-        const samplesDataInSeparateGroups: SampleData[][] = await Promise.all(
-            objectsIdsInSeparateGroups.map((oids) =>
-                getSamples(queryLocation, oids)
-            )
-        );
+        const samplesDataInSeparateGroups: LandsatSampleData[][] =
+            await Promise.all(
+                objectsIdsInSeparateGroups.map((oids) =>
+                    getSamples(queryLocation, oids)
+                )
+            );
 
         // combine samples data from different groups into a single array
-        const samplesData: SampleData[] = samplesDataInSeparateGroups.reduce(
-            (combined, subsetOfSamplesData) => {
-                return [...combined, ...subsetOfSamplesData];
-            },
-            []
-        );
+        const samplesData: LandsatSampleData[] =
+            samplesDataInSeparateGroups.reduce(
+                (combined, subsetOfSamplesData) => {
+                    return [...combined, ...subsetOfSamplesData];
+                },
+                []
+            );
         // console.log(samplesData);
 
         return formatAsTemporalProfileData(samplesData, landsatScenesToSample);
@@ -102,7 +98,7 @@ export const getTemporalProfileData = async ({
  * @returns
  */
 const formatAsTemporalProfileData = (
-    samples: SampleData[],
+    samples: LandsatSampleData[],
     scenes: LandsatScene[]
 ): TemporalProfileData[] => {
     const output: TemporalProfileData[] = [];
@@ -141,48 +137,6 @@ const formatAsTemporalProfileData = (
     }
 
     return output;
-};
-
-export const getSamples = async (
-    queryLocation: Point,
-    objectIds: number[]
-): Promise<SampleData[]> => {
-    // const { x, y, spatialReference } = queryLocation;
-
-    const params = new URLSearchParams({
-        f: 'json',
-        geometry: JSON.stringify(queryLocation),
-        geometryType: 'esriGeometryPoint',
-        mosaicRule: JSON.stringify({
-            mosaicMethod: 'esriMosaicLockRaster',
-            ascending: true,
-            mosaicOperation: 'MT_FIRST',
-            lockRasterIds: objectIds,
-            method: 'esriMosaicLockRaster',
-            operation: 'MT_FIRST',
-            multidimensionalDefinition: [],
-        }),
-        returnFirstValueOnly: 'false',
-        returnGeometry: 'false',
-    });
-
-    const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/getSamples?${params.toString()}`
-    );
-
-    if (!res.ok) {
-        throw new Error('failed to get samples');
-    }
-
-    const data = await res.json();
-
-    if (data.error) {
-        throw data.error;
-    }
-
-    const samples: SampleData[] = data?.samples || [];
-
-    return samples;
 };
 
 /**

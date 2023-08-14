@@ -10,7 +10,7 @@ import {
 } from '@shared/store/Landsat/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
-import { getSamples } from '@shared/services/landsat-2/getTemporalProfileData';
+import { getSamples } from '@shared/services/landsat-2/getSamples';
 
 type Props = {
     mapView?: IMapView;
