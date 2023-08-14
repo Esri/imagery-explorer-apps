@@ -66,25 +66,37 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
         const popupDiv = document.createElement('div');
 
+        /**
+         * Degree Symbol for Farhenheit: ℉
+         */
+        const farhenheitSign = `&#176;F`;
+
+        /**
+         * Degree Symbol for Celcius: C
+         */
+        const celciusSign = `&#176;C`;
+
+        const surfaceTempFarhenheit =
+            calcSpectralIndex('temperature farhenheit', values).toFixed(0) +
+            farhenheitSign;
+
+        const surfaceTempCelcius =
+            calcSpectralIndex('temperature celcius', values).toFixed(0) +
+            celciusSign;
+
+        const vegetationIndex = calcSpectralIndex('vegetation', values).toFixed(
+            3
+        );
+
+        const waterIndex = calcSpectralIndex('water', values).toFixed(3);
+
         popupDiv.innerHTML = `
             <div class='text-custom-light-blue text-xs'>
                 <div class='mb-2'>
-                    <span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${calcSpectralIndex(
-                        'temperature farhenheit',
-                        values
-                    ).toFixed(0)}&#176;F / ${calcSpectralIndex(
-            'temperature celcius',
-            values
-        ).toFixed(0)}&#176;C</span>
+                    <span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${surfaceTempFarhenheit} / ${surfaceTempCelcius}</span>
                     <br />
-                    <span><span class='text-custom-light-blue-50'>NDVI:</span> ${calcSpectralIndex(
-                        'vegetation',
-                        values
-                    ).toFixed(3)}</span>
-                    <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI</span> ${calcSpectralIndex(
-                        'water',
-                        values
-                    ).toFixed(3)}</span>
+                    <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span>
+                    <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
                 </div>
                 <div class='flex'>
                     <p><span class='text-custom-light-blue-50'>x</span> ${lon}</p>
