@@ -5,12 +5,15 @@ import IPoint from 'esri/geometry/Point';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
+    selectAvailableScenesByObjectId,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 import { getSamples } from '@shared/services/landsat-2/getSamples';
+import { format } from 'date-fns';
+import { calcSpectralIndex } from '@shared/services/landsat-2/helpers';
 
 type Props = {
     mapView?: IMapView;
@@ -45,32 +48,55 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         selectQueryParams4SecondaryScene
     );
 
+    const availableScenes = useSelector(selectAvailableScenesByObjectId);
+
     const swipePosition = useSelector(selectSwipeWidgetHandlerPosition);
 
-    const mapViewOnClickHandlerRef = useRef<MapViewOnClickHandler>();
+    const openPopupRef = useRef<MapViewOnClickHandler>();
 
     const getLoadingIndicator = () => {
         const popupDiv = document.createElement('div');
-        popupDiv.innerHTML = `<calcite-loader active scale="s"></calcite-loader>`;
+        popupDiv.innerHTML = `<calcite-loader scale="s"></calcite-loader>`;
         return popupDiv;
     };
 
-    const getMainContent = () => {
+    const getMainContent = (values: number[], mapPoint: IPoint) => {
+        const lat = Math.round(mapPoint.latitude * 1000) / 1000;
+        const lon = Math.round(mapPoint.longitude * 1000) / 1000;
+
         const popupDiv = document.createElement('div');
 
         popupDiv.innerHTML = `
-            <div class='text-custom-light-blue'>
-                this is the custom popup
+            <div class='text-custom-light-blue text-xs'>
+                <div class='mb-2'>
+                    <span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${calcSpectralIndex(
+                        'temperature farhenheit',
+                        values
+                    ).toFixed(0)}&#176;F / ${calcSpectralIndex(
+            'temperature celcius',
+            values
+        ).toFixed(0)}&#176;C</span>
+                    <br />
+                    <span><span class='text-custom-light-blue-50'>NDVI:</span> ${calcSpectralIndex(
+                        'vegetation',
+                        values
+                    ).toFixed(3)}</span>
+                    <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI</span> ${calcSpectralIndex(
+                        'water',
+                        values
+                    ).toFixed(3)}</span>
+                </div>
+                <div class='flex'>
+                    <p><span class='text-custom-light-blue-50'>x</span> ${lon}</p>
+                    <p class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</p>
+                </div>
             </div>
         `;
 
         return popupDiv;
     };
 
-    mapViewOnClickHandlerRef.current = async (
-        mapPoint: IPoint,
-        mousePointX: number
-    ) => {
+    openPopupRef.current = async (mapPoint: IPoint, mousePointX: number) => {
         // no need to show pop-up if in Animation Mode
         // or it is using Profile Tool
         if (
@@ -100,28 +126,39 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
                     : queryParams4SecondaryScene;
             }
 
-            // cannot display if not is dynamic mode and there is no queryParams for landsat scene
-            if (mode !== 'dynamic' && !queryParams) {
-                return;
+            const objectId = queryParams?.objectIdOfSelectedScene;
+
+            // cannot display popup if there is no objectId in queryParams for selected landsat scene
+            if (!objectId || !availableScenes[objectId]) {
+                throw new Error(
+                    'objectIdOfSelectedScene is required to fetch popup data'
+                );
             }
+
+            const sceneData = availableScenes[objectId];
 
             const res = await getSamples(mapPoint, [
                 queryParams.objectIdOfSelectedScene,
             ]);
-            console.log(res);
+            // console.log(res);
 
-            const lat = Math.round(mapPoint.latitude * 1000) / 1000;
-            const lon = Math.round(mapPoint.longitude * 1000) / 1000;
-            const title = `Landsat 9 | AUG 01, 2023`;
+            if (!res.length || !res[0].values) {
+                throw new Error('invalid getSampes response');
+            }
+
+            const title = `${sceneData.satellite} | ${format(
+                sceneData.acquisitionDate,
+                'MMM dd, yyyy'
+            )}`;
 
             mapView.popup.open({
                 // Set the popup's title to the coordinates of the location
                 title: title,
                 location: mapPoint, // Set the location of the popup to the clicked location
-                content: getMainContent(),
+                content: getMainContent(res[0].values, mapPoint),
             });
         } catch (err) {
-            console.log(err);
+            console.error('failed to open popup for landsat scene', err);
             mapView.popup.close();
         }
     };
@@ -134,7 +171,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         mapView.popup.collapseEnabled = false;
 
         mapView.on('click', (evt) => {
-            mapViewOnClickHandlerRef.current(evt.mapPoint, evt.x);
+            openPopupRef.current(evt.mapPoint, evt.x);
         });
     };
 
