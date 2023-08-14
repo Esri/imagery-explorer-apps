@@ -14,6 +14,7 @@ import {
     kelvin2celsius,
     kelvin2fahrenheit,
 } from '@shared/utils/temperature-conversion';
+import { calcSpectralIndex } from '@shared/services/landsat-2/helpers';
 
 type Props = {
     data: TemporalProfileData[];
@@ -49,37 +50,31 @@ export const convertLandsatTemporalProfileData2ChartData = (
     spectralIndex: SpectralIndex
 ): LineChartDataItem[] => {
     const data = temporalProfileData.map((d) => {
-        const { acquisitionDate } = d;
+        const { acquisitionDate, values } = d;
 
-        // Per discussion with Rob Waterman, we should use B9 to get surface temprate data
-        const [B1, B2, B3, B4, B5, B6, B7, B8, B9] = d.values;
+        // calculate the spectral index that will be used as the y value for each chart vertex
+        let y = calcSpectralIndex(spectralIndex, values);
 
-        let value = 0;
+        // justify the y value for surface temperature index to make it not go below the hardcoded y min
+        if (
+            spectralIndex === 'temperature farhenheit' ||
+            spectralIndex === 'temperature celcius'
+        ) {
+            const yMin =
+                spectralIndex === 'temperature farhenheit'
+                    ? SURFACE_TEMP_MIN_FAHRENHEIT
+                    : SURFACE_TEMP_MIN_CELSIUS;
 
-        // Calculate the value based on the specified spectral index
-        if (spectralIndex === 'moisture') {
-            value = (B5 - B6) / (B5 + B6);
-        } else if (spectralIndex === 'vegetation') {
-            value = (B5 - B4) / (B5 + B4);
-        } else if (spectralIndex === 'water') {
-            value = (B3 - B6) / (B3 + B6);
-        } else if (spectralIndex === 'temperature farhenheit') {
-            value = Math.max(
-                kelvin2fahrenheit(B9),
-                SURFACE_TEMP_MIN_FAHRENHEIT
-            );
-        } else if (spectralIndex === 'temperature celcius') {
-            value = Math.max(kelvin2celsius(B9), SURFACE_TEMP_MIN_CELSIUS);
+            y = Math.max(y, yMin);
         }
 
-        const tooltip = `${format(
-            acquisitionDate,
-            'LLL yyyy'
-        )}: ${value.toFixed(2)}`;
+        const tooltip = `${format(acquisitionDate, 'LLL yyyy')}: ${y.toFixed(
+            2
+        )}`;
 
         return {
             x: d.acquisitionDate,
-            y: value,
+            y,
             tooltip,
         };
     });

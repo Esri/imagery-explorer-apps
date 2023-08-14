@@ -26,6 +26,8 @@ export default class ErrorBoundary extends PureComponent<Props, State> {
         // Catch errors in any components below and re-render with error message
         this.setState({ error, errorInfo });
 
+        console.log(error, errorInfo);
+
         // You can also log error messages to an error reporting service here
     }
 
@@ -38,9 +40,11 @@ export default class ErrorBoundary extends PureComponent<Props, State> {
         }
 
         return (
-            <div>
-                <h1>Something went wrong</h1>
-                {error ? <p>{error.toString()}</p> : null}
+            <div className=" bg-custom-background w-full h-screen flex justify-center items-center">
+                <div>
+                    <h1>Something went wrong and the app has crashed.</h1>
+                    {error ? <p>{error.toString()}</p> : null}
+                </div>
             </div>
         );
     }

@@ -1,3 +1,7 @@
+import {
+    kelvin2fahrenheit,
+    kelvin2celsius,
+} from '@shared/utils/temperature-conversion';
 import { SpectralIndex } from '@typing/imagery-service';
 
 type LandsatProductInfo = {
@@ -78,6 +82,31 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
     water: '(B3-B6)/(B3+B6)',
     'temperature farhenheit': '',
     'temperature celcius': '',
+};
+
+export const calcSpectralIndex = (
+    spectralIndex: SpectralIndex,
+    values: number[]
+): number => {
+    // Per discussion with Rob Waterman, we should use B9 to get surface temprate data
+    const [B1, B2, B3, B4, B5, B6, B7, B8, B9] = values;
+
+    let value = 0;
+
+    // Calculate the value based on the input spectral index
+    if (spectralIndex === 'moisture') {
+        value = (B5 - B6) / (B5 + B6);
+    } else if (spectralIndex === 'vegetation') {
+        value = (B5 - B4) / (B5 + B4);
+    } else if (spectralIndex === 'water') {
+        value = (B3 - B6) / (B3 + B6);
+    } else if (spectralIndex === 'temperature farhenheit') {
+        value = kelvin2fahrenheit(B9);
+    } else if (spectralIndex === 'temperature celcius') {
+        value = kelvin2celsius(B9);
+    }
+
+    return value;
 };
 
 /**

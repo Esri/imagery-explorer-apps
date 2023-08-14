@@ -9,11 +9,11 @@ export type LandsatSampleData = {
     rasterId: number;
     resolution: number;
     /**
-     * comma separated band values returned by the server
+     * space separated band values returned by the server
      */
     value: string;
     /**
-     * array of band values
+     * array of band values as numerical values
      */
     values: number[];
 };
@@ -55,14 +55,14 @@ export const getSamples = async (
         throw data.error;
     }
 
-    const samples: LandsatSampleData[] = data?.samples || [];
-
-    samples.map((d) => {
-        return {
-            ...d,
-            values: d.value.split(' ').map((d) => +d),
-        };
-    });
+    const samples: LandsatSampleData[] = data?.samples
+        ? data.samples.map((d: LandsatSampleData) => {
+              return {
+                  ...d,
+                  values: d.value.split(' ').map((d) => +d),
+              };
+          })
+        : [];
 
     return samples;
 };
