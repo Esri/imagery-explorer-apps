@@ -3,8 +3,14 @@ import React, { FC, useCallback, useEffect, useRef } from 'react';
 import IMapView from 'esri/views/MapView';
 import IPoint from 'esri/geometry/Point';
 import { useSelector } from 'react-redux';
-import { selectAppMode } from '@shared/store/Landsat/selectors';
+import {
+    selectAppMode,
+    selectQueryParams4MainScene,
+    selectQueryParams4SecondaryScene,
+} from '@shared/store/Landsat/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
+import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
+import { getSamples } from '@shared/services/landsat-2/getTemporalProfileData';
 
 type Props = {
     mapView?: IMapView;
@@ -24,14 +30,22 @@ const didClickOnLeftSideOfSwipeWidget = (
     mapViewWidth: number,
     mouseX: number
 ) => {
-    const wdithOfLeftHalf = mapViewWidth * (swipePosition / 100);
-    return mouseX <= wdithOfLeftHalf;
+    const widthOfLeftHalf = mapViewWidth * (swipePosition / 100);
+    return mouseX <= widthOfLeftHalf;
 };
 
 export const Popup: FC<Props> = ({ mapView }: Props) => {
     const mode = useSelector(selectAppMode);
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
+
+    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+
+    const queryParams4SecondaryScene = useSelector(
+        selectQueryParams4SecondaryScene
+    );
+
+    const swipePosition = useSelector(selectSwipeWidgetHandlerPosition);
 
     const mapViewOnClickHandlerRef = useRef<MapViewOnClickHandler>();
 
@@ -73,6 +87,29 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         });
 
         try {
+            let queryParams = queryParams4MainScene;
+
+            // in swipe mode, we need to use the query Params based on position of mouse click event
+            if (mode === 'swipe') {
+                queryParams = didClickOnLeftSideOfSwipeWidget(
+                    swipePosition,
+                    mapView.width,
+                    mousePointX
+                )
+                    ? queryParams4MainScene
+                    : queryParams4SecondaryScene;
+            }
+
+            // cannot display if not is dynamic mode and there is no queryParams for landsat scene
+            if (mode !== 'dynamic' && !queryParams) {
+                return;
+            }
+
+            const res = await getSamples(mapPoint, [
+                queryParams.objectIdOfSelectedScene,
+            ]);
+            console.log(res);
+
             const lat = Math.round(mapPoint.latitude * 1000) / 1000;
             const lon = Math.round(mapPoint.longitude * 1000) / 1000;
             const title = `Landsat 9 | AUG 01, 2023`;
@@ -111,7 +148,13 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         if (mapView) {
             mapView.popup.close();
         }
-    }, [mode, analysisTool]);
+    }, [
+        mode,
+        analysisTool,
+        queryParams4MainScene,
+        queryParams4SecondaryScene,
+        swipePosition,
+    ]);
 
     return null;
 };

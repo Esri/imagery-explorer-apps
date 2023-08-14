@@ -143,7 +143,7 @@ const formatAsTemporalProfileData = (
     return output;
 };
 
-const getSamples = async (
+export const getSamples = async (
     queryLocation: Point,
     objectIds: number[]
 ): Promise<SampleData[]> => {
