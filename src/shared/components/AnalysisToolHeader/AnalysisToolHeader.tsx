@@ -39,7 +39,7 @@ export const AnalysisToolHeader: FC<Props> = ({
             const { value, label } = d;
             return {
                 value,
-                label: label || value.toUpperCase(),
+                label: label ? label.toUpperCase() : value.toUpperCase(),
                 selected: value === selectedSpectralIndex,
             };
         });

@@ -1,5 +1,5 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { ProfileToolControls } from '@shared/components/ProfileTool';
+import { ProfileToolControls } from '@shared/components/ProfileToolControls';
 // import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
     acquisitionMonth4ProfileToolChanged,
@@ -86,7 +86,7 @@ export const ProfileToolContainer = () => {
                     },
                     {
                         value: 'temperature farhenheit',
-                        label: 'surface temp ℉',
+                        label: 'surface temp °F',
                     },
                     {
                         value: 'temperature celcius',
