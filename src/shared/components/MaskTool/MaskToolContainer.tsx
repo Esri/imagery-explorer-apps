@@ -58,16 +58,24 @@ export const MaskToolContainer = () => {
                 data={[
                     {
                         value: 'water',
-                        label: '',
+                        label: 'WATER',
                     },
                     {
                         value: 'vegetation',
-                        label: '',
+                        label: 'VEGETATION',
                     },
                     {
                         value: 'moisture',
-                        label: '',
+                        label: 'MOISTURE',
                     },
+                    // {
+                    //     value: 'temperature farhenheit',
+                    //     label: 'SURFACE TEMP f',
+                    // },
+                    // {
+                    //     value: 'temperature celcius',
+                    //     label: 'SURFACE TEMP c',
+                    // },
                 ]}
                 selectedSpectralIndex={selectedSpectralIndex}
                 tooltipText={`

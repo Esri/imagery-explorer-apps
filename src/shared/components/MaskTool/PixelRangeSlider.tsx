@@ -59,9 +59,6 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
 
             sliderRef.current.on('thumb-drag', (evt) => {
                 const { value, index } = evt;
-                // console.log(value)
-                // onChange(index, value);
-
                 valOnChange(index, value);
             });
         } catch (err) {

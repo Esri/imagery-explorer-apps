@@ -98,6 +98,14 @@ export const initialAnalysisState: AnalysisState = {
                 selectedRange: [0, 1],
                 color: [89, 214, 255],
             },
+            // 'temperature farhenheit': {
+            //     selectedRange: [0, 200],
+            //     color: [251, 182, 100],
+            // },
+            'temperature celcius': {
+                selectedRange: [-30, 100],
+                color: [251, 182, 100],
+            },
         },
     },
     profileTool: {
