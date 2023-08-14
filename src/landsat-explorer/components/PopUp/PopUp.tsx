@@ -3,6 +3,8 @@ import React, { FC, useCallback, useEffect, useRef } from 'react';
 import IMapView from 'esri/views/MapView';
 import IPoint from 'esri/geometry/Point';
 import { useSelector } from 'react-redux';
+import { selectAppMode } from '@shared/store/Landsat/selectors';
+import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 
 type Props = {
     mapView?: IMapView;
@@ -26,7 +28,11 @@ const didClickOnLeftSideOfSwipeWidget = (
     return mouseX <= wdithOfLeftHalf;
 };
 
-const Popup: FC<Props> = ({ mapView }: Props) => {
+export const Popup: FC<Props> = ({ mapView }: Props) => {
+    const mode = useSelector(selectAppMode);
+
+    const analysisTool = useSelector(selectActiveAnalysisTool);
+
     const mapViewOnClickHandlerRef = useRef<MapViewOnClickHandler>();
 
     const getLoadingIndicator = () => {
@@ -51,30 +57,36 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         mapPoint: IPoint,
         mousePointX: number
     ) => {
-        // // no need to show pop-up for sentinel-2 imagery layer until imagery is visible
-        // if (
-        //     shouldShowSentinel2Layer &&
-        //     isSentinel2LayerOutOfVisibleRange === true
-        // ) {
-        //     return;
-        // }
-
-        const lat = Math.round(mapPoint.latitude * 1000) / 1000;
-        const lon = Math.round(mapPoint.longitude * 1000) / 1000;
-        const title = `Landsat 9 | AUG 01, 2023`;
+        // no need to show pop-up if in Animation Mode
+        // or it is using Profile Tool
+        if (
+            mode === 'animate' ||
+            (mode === 'analysis' && analysisTool === 'profile')
+        ) {
+            return;
+        }
 
         mapView.popup.open({
-            title: title,
+            title: null,
             location: mapPoint,
             content: getLoadingIndicator(),
         });
 
-        mapView.popup.open({
-            // Set the popup's title to the coordinates of the location
-            title: title,
-            location: mapPoint, // Set the location of the popup to the clicked location
-            content: getMainContent(),
-        });
+        try {
+            const lat = Math.round(mapPoint.latitude * 1000) / 1000;
+            const lon = Math.round(mapPoint.longitude * 1000) / 1000;
+            const title = `Landsat 9 | AUG 01, 2023`;
+
+            mapView.popup.open({
+                // Set the popup's title to the coordinates of the location
+                title: title,
+                location: mapPoint, // Set the location of the popup to the clicked location
+                content: getMainContent(),
+            });
+        } catch (err) {
+            console.log(err);
+            mapView.popup.close();
+        }
     };
 
     const init = async () => {
@@ -95,22 +107,11 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         }
     }, [mapView]);
 
-    // useEffect(() => {
-    //     if (mapView) {
-    //         mapView.popup.close();
-    //     }
-    // }, [
-    //     aquisitionYear,
-    //     aquisitionMonth,
-    //     shouldShowSentinel2Layer,
-    //     isSentinel2LayerOutOfVisibleRange,
-    //     swipePosition,
-    //     year4LeadingLayer,
-    //     year4TrailingLayer,
-    //     mode,
-    // ]);
+    useEffect(() => {
+        if (mapView) {
+            mapView.popup.close();
+        }
+    }, [mode, analysisTool]);
 
     return null;
 };
-
-export default Popup;
