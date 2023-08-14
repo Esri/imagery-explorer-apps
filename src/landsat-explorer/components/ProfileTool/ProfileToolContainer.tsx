@@ -23,6 +23,8 @@ import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TemporalProfileChart';
 import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
+import { centerChanged } from '@shared/store/Map/reducer';
+import { batch } from 'react-redux';
 
 export const ProfileToolContainer = () => {
     const dispatch = useDispatch();
@@ -120,11 +122,23 @@ export const ProfileToolContainer = () => {
                                 return;
                             }
 
-                            dispatch(
-                                updateAcquisitionDate(
-                                    clickedDataItem.formattedAcquisitionDate
-                                )
-                            );
+                            // use has selected a acquisition date from the temporal profile chart,
+                            // to find and display the landsat scene that was acquired on use selected date
+                            // at the query location, we will need to update both of them
+                            batch(() => {
+                                dispatch(
+                                    centerChanged([
+                                        queryLocation.x,
+                                        queryLocation.y,
+                                    ])
+                                );
+
+                                dispatch(
+                                    updateAcquisitionDate(
+                                        clickedDataItem.formattedAcquisitionDate
+                                    )
+                                );
+                            });
                         }}
                     />
                 )}

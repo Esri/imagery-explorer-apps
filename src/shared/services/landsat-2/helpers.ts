@@ -80,7 +80,13 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
      * - SWIR = pixel values from the shortwave infrared band
      */
     water: '(B3-B6)/(B3+B6)',
+    /**
+     * convert Kelvin to Farhenheit
+     */
     'temperature farhenheit': '(B9 − 273.15) × (9/5) + 32',
+    /**
+     * convert Kelvin to Celcius
+     */
     'temperature celcius': '(B9 - 273.15)',
 };
 

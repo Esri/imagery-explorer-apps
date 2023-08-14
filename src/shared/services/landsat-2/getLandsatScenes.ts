@@ -23,7 +23,13 @@ type GetLandsatScenesParams = {
      * acquisition date in formate of `YYYY-MM-DD` (e.g. `2023-05-26`)
      */
     formattedAcquisitionDate?: string;
+    /**
+     * abortController that will be used to cancel the unfinished requests
+     */
+    abortController: AbortController;
 };
+
+// let controller:AbortController = null;
 
 const {
     OBJECTID,
@@ -123,6 +129,7 @@ export const getLandsatScenes = async ({
     acquisitionYear,
     acquisitionMonth,
     formattedAcquisitionDate,
+    abortController,
 }: GetLandsatScenesParams): Promise<LandsatScene[]> => {
     // if (!acquisitionYear && !formattedAcquisitionDate) {
     //     throw new Error(
@@ -183,8 +190,17 @@ export const getLandsatScenes = async ({
         where: whereClauses.join(` AND `),
     });
 
+    // if(controller){
+    //     controller.abort();
+    // }
+
+    // controller = new AbortController()
+
     const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${params.toString()}`
+        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${params.toString()}`,
+        {
+            signal: abortController.signal,
+        }
     );
 
     if (!res.ok) {

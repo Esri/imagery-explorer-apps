@@ -45,6 +45,7 @@ describe('test getLandsatScenes', () => {
             acquisitionYear: 2022,
             // cloudCover: 0.1,
             mapPoint: [-105, 40],
+            abortController: new AbortController(),
         });
 
         expect(response.length).toBe(3);

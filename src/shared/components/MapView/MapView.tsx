@@ -123,6 +123,25 @@ const MapView: React.FC<Props> = ({
         mapView.magnifier.visible = showMagnifier;
     }, [showMagnifier, mapView]);
 
+    useEffect(() => {
+        if (!mapView) {
+            return;
+        }
+
+        const [longitude, latitude] = center;
+
+        if (
+            mapView.center.longitude.toFixed(6) === longitude.toFixed(6) &&
+            mapView.center.latitude.toFixed(6) === latitude.toFixed(6)
+        ) {
+            return;
+        }
+
+        mapView.goTo({
+            center,
+        });
+    }, [center]);
+
     return (
         <>
             <div

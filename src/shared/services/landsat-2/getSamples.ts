@@ -20,7 +20,8 @@ export type LandsatSampleData = {
 
 export const getSamples = async (
     queryLocation: Point,
-    objectIds: number[]
+    objectIds: number[],
+    controller: AbortController
 ): Promise<LandsatSampleData[]> => {
     // const { x, y, spatialReference } = queryLocation;
 
@@ -42,7 +43,10 @@ export const getSamples = async (
     });
 
     const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/getSamples?${params.toString()}`
+        `${LANDSAT_LEVEL_2_SERVICE_URL}/getSamples?${params.toString()}`,
+        {
+            signal: controller.signal,
+        }
     );
 
     if (!res.ok) {

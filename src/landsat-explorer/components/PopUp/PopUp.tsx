@@ -25,6 +25,8 @@ type Props = {
 
 type MapViewOnClickHandler = (mapPoint: IPoint, mousePointX: number) => void;
 
+let controller: AbortController = null;
+
 /**
  * Check and see if user clicked on the left side of the swipe widget
  * @param swipePosition position of the swipe handler, value should be bewteen 0 - 100
@@ -108,9 +110,17 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
             const sceneData = availableScenes[objectId];
 
-            const res = await getSamples(mapPoint, [
-                queryParams.objectIdOfSelectedScene,
-            ]);
+            if (controller) {
+                controller.abort();
+            }
+
+            controller = new AbortController();
+
+            const res = await getSamples(
+                mapPoint,
+                [queryParams.objectIdOfSelectedScene],
+                controller
+            );
             // console.log(res);
 
             if (!res.length || !res[0].values) {

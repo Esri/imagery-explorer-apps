@@ -25,6 +25,8 @@ import { generate } from 'shortid';
 import { LandsatScene } from '@typing/imagery-service';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 
+let abortController: AbortController = null;
+
 /**
  * Query Landsat Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
  * @param year use selected acquisition year
@@ -37,6 +39,12 @@ export const queryAvailableScenes =
             return;
         }
 
+        if (abortController) {
+            abortController.abort();
+        }
+
+        abortController = new AbortController();
+
         try {
             const { acquisitionDate } =
                 selectQueryParams4SceneInSelectedMode(getState()) || {};
@@ -47,6 +55,7 @@ export const queryAvailableScenes =
             const scenes = await getLandsatScenes({
                 acquisitionYear,
                 mapPoint: center,
+                abortController,
             });
 
             // If the year of the acquisition date is different from the input acquisition year, we need to query Landsat scenes acquired on the acquisition date.
@@ -61,6 +70,7 @@ export const queryAvailableScenes =
                 const scenesByAcquisitionDate = await getLandsatScenes({
                     formattedAcquisitionDate: acquisitionDate,
                     mapPoint: center,
+                    abortController,
                 });
 
                 for (const scene of scenesByAcquisitionDate) {

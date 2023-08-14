@@ -29,7 +29,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title="Landsat Explorer" />
+                <AppHeader title="Landsat Explorer (beta)" />
                 <BottomPanel>
                     <div className="mx-auto">
                         <DynamicModeInfo />
@@ -42,7 +42,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title="Landsat Explorer" />
+            <AppHeader title="Landsat Explorer (beta)" />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />

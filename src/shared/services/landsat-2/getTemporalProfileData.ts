@@ -10,6 +10,8 @@ type GetProfileDataOptions = {
     samplingTemporalResolution: number;
 };
 
+let controller: AbortController = null;
+
 /**
  * Splits an array of object IDs into separate groups, each containing a maximum of 20 object IDs.
  * This is useful when making requests with an upper limit on the number of object IDs.
@@ -47,9 +49,16 @@ export const getTemporalProfileData = async ({
     const { x, y } = queryLocation;
 
     try {
+        if (controller) {
+            controller.abort();
+        }
+
+        controller = new AbortController();
+
         const landsatScenes = await getLandsatScenes({
             mapPoint: [x, y],
             acquisitionMonth,
+            abortController: controller,
         });
 
         if (!landsatScenes.length) {
@@ -70,7 +79,7 @@ export const getTemporalProfileData = async ({
         const samplesDataInSeparateGroups: LandsatSampleData[][] =
             await Promise.all(
                 objectsIdsInSeparateGroups.map((oids) =>
-                    getSamples(queryLocation, oids)
+                    getSamples(queryLocation, oids, controller)
                 )
             );
 
