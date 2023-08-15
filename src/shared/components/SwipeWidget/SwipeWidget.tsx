@@ -49,7 +49,7 @@ const SwipeWidget: FC<Props> = ({
             'esri/core/reactiveUtils',
         ]) as Promise<Modules>);
 
-        mapView.map.addMany([leadingLayer, trailingLayer]);
+        mapView.map.addMany([leadingLayer, trailingLayer], 0);
 
         swipeWidgetRef.current = new Swipe({
             view: mapView,
