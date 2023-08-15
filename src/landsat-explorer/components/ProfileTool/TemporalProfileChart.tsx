@@ -40,18 +40,20 @@ export const convertLandsatTemporalProfileData2ChartData = (
         // calculate the spectral index that will be used as the y value for each chart vertex
         let y = calcSpectralIndex(spectralIndex, values);
 
+        let yMin = -1;
+
         // justify the y value for surface temperature index to make it not go below the hardcoded y min
         if (
             spectralIndex === 'temperature farhenheit' ||
             spectralIndex === 'temperature celcius'
         ) {
-            const yMin =
+            yMin =
                 spectralIndex === 'temperature farhenheit'
                     ? LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT
                     : LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
-
-            y = Math.max(y, yMin);
         }
+
+        y = Math.max(y, yMin);
 
         const tooltip = `${format(acquisitionDate, 'LLL yyyy')}: ${y.toFixed(
             2
