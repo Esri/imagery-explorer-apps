@@ -27,6 +27,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
 import classNames from 'classnames';
+import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -43,6 +44,17 @@ export const MaskToolContainer = () => {
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
+
+    const getValues4SurfaceTempSlider = () => {
+        if (selectedSpectralIndex === 'temperature celcius') {
+            return [...maskOptions.selectedRange];
+        }
+
+        return [
+            celsius2fahrenheit(maskOptions.selectedRange[0]),
+            celsius2fahrenheit(maskOptions.selectedRange[1]),
+        ];
+    };
 
     if (tool !== 'mask') {
         return null;
@@ -69,10 +81,10 @@ export const MaskToolContainer = () => {
                         value: 'moisture',
                         label: 'MOISTURE',
                     },
-                    // {
-                    //     value: 'temperature farhenheit',
-                    //     label: 'SURFACE TEMP °F',
-                    // },
+                    {
+                        value: 'temperature farhenheit',
+                        label: 'SURFACE TEMP °F',
+                    },
                     {
                         value: 'temperature celcius',
                         label: 'SURFACE TEMP °C',
@@ -91,8 +103,19 @@ export const MaskToolContainer = () => {
             {selectedSpectralIndex === 'temperature celcius' ||
             selectedSpectralIndex === 'temperature farhenheit' ? (
                 <MaskPixelRangeSlider4SurfaceTemp
-                    values={maskOptions.selectedRange}
+                    values={getValues4SurfaceTempSlider()}
+                    unit={
+                        selectedSpectralIndex === 'temperature celcius'
+                            ? 'celsius'
+                            : 'farhenheit'
+                    }
                     valOnChange={(index, value) => {
+                        if (
+                            selectedSpectralIndex === 'temperature farhenheit'
+                        ) {
+                            value = Math.trunc(((value - 32) * 5) / 9);
+                        }
+
                         dispatch(updateSelectedRange(index, value));
                     }}
                 />

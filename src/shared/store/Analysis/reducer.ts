@@ -98,10 +98,13 @@ export const initialAnalysisState: AnalysisState = {
                 selectedRange: [0, 1],
                 color: [89, 214, 255],
             },
-            // 'temperature farhenheit': {
-            //     selectedRange: [0, 200],
-            //     color: [251, 182, 100],
-            // },
+            'temperature farhenheit': {
+                // selectedRange: [30, 140],
+                // the mask layer throws error when using farhenheit as input unit,
+                // therefore we will just use celsius degrees in the selectedRange
+                selectedRange: [0, 60],
+                color: [251, 182, 100],
+            },
             'temperature celcius': {
                 selectedRange: [0, 60], // default range should be between 0-60 celcius degrees
                 color: [251, 182, 100],

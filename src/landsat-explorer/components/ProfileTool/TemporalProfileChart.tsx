@@ -10,10 +10,11 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { format } from 'date-fns';
 import {
-    celsius2fahrenheit,
-    kelvin2celsius,
-    kelvin2fahrenheit,
-} from '@shared/utils/temperature-conversion';
+    SURFACE_TEMP_MIN_CELSIUS,
+    SURFACE_TEMP_MIN_FAHRENHEIT,
+    SURFACE_TEMP_MAX_CELSIUS,
+    SURFACE_TEMP_MAX_FAHRENHEIT,
+} from '@shared/constants/landsat';
 import { calcSpectralIndex } from '@shared/services/landsat-2/helpers';
 
 type Props = {
@@ -21,22 +22,6 @@ type Props = {
     spectralIndex: SpectralIndex;
     onClickHandler: (index: number) => void;
 };
-
-/**
- * min value in celcius degree (-30) of the y scale domain for surface temp chart
- */
-const SURFACE_TEMP_MIN_CELSIUS = -30;
-/**
- * max value in celcius degree (100) of the y scale domain for surface temp chart
- */
-const SURFACE_TEMP_MAX_CELSIUS = 90;
-
-const SURFACE_TEMP_MIN_FAHRENHEIT = celsius2fahrenheit(
-    SURFACE_TEMP_MIN_CELSIUS
-);
-const SURFACE_TEMP_MAX_FAHRENHEIT = celsius2fahrenheit(
-    SURFACE_TEMP_MAX_CELSIUS
-);
 
 /**
  * Converts Landsat temporal profile data to chart data.

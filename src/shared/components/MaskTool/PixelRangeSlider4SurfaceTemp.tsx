@@ -1,6 +1,12 @@
 import React, { FC, useEffect, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
+import {
+    SURFACE_TEMP_MIN_CELSIUS,
+    SURFACE_TEMP_MIN_FAHRENHEIT,
+    SURFACE_TEMP_MAX_CELSIUS,
+    SURFACE_TEMP_MAX_FAHRENHEIT,
+} from '@shared/constants/landsat';
 // import classNames from 'classnames';
 
 type Props = {
@@ -8,6 +14,7 @@ type Props = {
      * value of the slider thumb
      */
     values: number[];
+    unit: 'celsius' | 'farhenheit';
     /**
      * fires when user selects a new min or max value using the slider
      */
@@ -19,7 +26,7 @@ type Props = {
  * @param param0
  * @returns
  */
-export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
+export const PixelRangeSlider: FC<Props> = ({ values, unit, valOnChange }) => {
     const containerRef = useRef<HTMLDivElement>();
 
     const sliderRef = useRef<ISlider>();
@@ -32,10 +39,27 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
                 'esri/widgets/Slider',
             ]) as Promise<Modules>);
 
+            const tickValuesCelsius = [-30, -15, 0, 15, 30, 45, 60, 75, 90];
+            const tickValuesFarhenheit = [-20, 0, 30, 60, 90, 120, 150, 180];
+
+            containerRef.current.innerHTML = `
+                <div class="esri-slider-custom-style show-segment-between-handlers w-full"></div>
+            `;
+
+            const container = containerRef.current.querySelector(
+                '.esri-slider-custom-style'
+            ) as HTMLDivElement;
+
             sliderRef.current = new Slider({
-                container: containerRef.current,
-                min: -30,
-                max: 90,
+                container,
+                min:
+                    unit === 'celsius'
+                        ? SURFACE_TEMP_MIN_CELSIUS
+                        : SURFACE_TEMP_MIN_FAHRENHEIT,
+                max:
+                    unit === 'celsius'
+                        ? SURFACE_TEMP_MAX_CELSIUS
+                        : SURFACE_TEMP_MAX_FAHRENHEIT,
                 steps: 1,
                 values,
                 snapOnClickEnabled: false,
@@ -46,7 +70,10 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
                 tickConfigs: [
                     {
                         mode: 'position',
-                        values: [-30, 0, 30, 60, 90],
+                        values:
+                            unit === 'celsius'
+                                ? tickValuesCelsius
+                                : tickValuesFarhenheit,
                         labelsVisible: true,
                     },
                 ],
@@ -63,8 +90,6 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
     };
 
     useEffect(() => {
-        init();
-
         return () => {
             sliderRef.current.destroy();
         };
@@ -93,12 +118,22 @@ export const PixelRangeSlider: FC<Props> = ({ values, valOnChange }) => {
         }
     }, [values]);
 
+    useEffect(() => {
+        (async () => {
+            if (sliderRef.current) {
+                sliderRef.current.destroy();
+            }
+
+            init();
+        })();
+    }, [unit]);
+
     return (
-        <div className="w-full h-[120px]">
-            <div
+        <div className="w-full h-[120px]" ref={containerRef}>
+            {/* <div
                 className="esri-slider-custom-style show-segment-between-handlers w-full"
                 ref={containerRef}
-            ></div>
+            ></div> */}
         </div>
     );
 };

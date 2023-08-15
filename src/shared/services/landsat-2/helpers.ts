@@ -81,9 +81,10 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
      */
     water: '(B3-B6)/(B3+B6)',
     /**
-     * convert Kelvin to Farhenheit
+     * When convert Kelvin to Farhenheit, the server returns `Invalid or missing input parameters.` error.
+     * Therefore we will just use temperature in farhenheit for now
      */
-    'temperature farhenheit': '(B9 − 273.15) × (9/5) + 32',
+    'temperature farhenheit': '(B9 - 273.15)', //'((B9 − 273.15) × 1.8) + 32',
     /**
      * convert Kelvin to Celcius
      */
