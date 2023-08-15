@@ -48,16 +48,13 @@ const {
 } = FIELD_NAMES;
 
 /**
- * any scene with cloud coverage beyond this will be considered as cloudy day
- */
-const CLOUDY_THRESHOLD = 0.25;
-
-/**
  * Formats the features from Landsat-level-2 service and returns an array of LandsatScene objects.
  * @param features - An array of IFeature objects from Landsat-level-2 service.
  * @returns An array of LandsatScene objects containing the acquisition date, formatted acquisition date, name, cloud cover, and best attributes.
  */
-const getFormattedLandsatScenes = (features: IFeature[]): LandsatScene[] => {
+export const getFormattedLandsatScenes = (
+    features: IFeature[]
+): LandsatScene[] => {
     return features.map((feature) => {
         const { attributes } = feature;
 

@@ -18,6 +18,8 @@ import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getLoadingIndicator, getMainContent } from './helper';
 import IReactiveUtils from 'esri/core/reactiveUtils';
 import { loadModules } from 'esri-loader';
+import { identify } from '@shared/services/landsat-2/identify';
+import { getFormattedLandsatScenes } from '@shared/services/landsat-2/getLandsatScenes';
 
 type Props = {
     mapView?: IMapView;
@@ -99,16 +101,9 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
                     : queryParams4SecondaryScene;
             }
 
-            const objectId = queryParams?.objectIdOfSelectedScene;
+            let objectId = queryParams?.objectIdOfSelectedScene;
 
-            // cannot display popup if there is no objectId in queryParams for selected landsat scene
-            if (!objectId || !availableScenes[objectId]) {
-                throw new Error(
-                    'objectIdOfSelectedScene is required to fetch popup data'
-                );
-            }
-
-            const sceneData = availableScenes[objectId];
+            let sceneData = availableScenes[objectId];
 
             if (controller) {
                 controller.abort();
@@ -116,11 +111,34 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
             controller = new AbortController();
 
-            const res = await getSamples(
-                mapPoint,
-                [queryParams.objectIdOfSelectedScene],
-                controller
-            );
+            // in dynamic mode, we will need to do the identify task first to find the landsat scene that is being displayed on the map
+            if (mode === 'dynamic') {
+                const res = await identify({
+                    point: mapPoint,
+                    abortController: controller,
+                });
+
+                // console.log(res)
+
+                const features = res?.catalogItems?.features;
+
+                if (!features.length) {
+                    throw new Error('cannot find scene for dynamic mode');
+                }
+
+                sceneData = getFormattedLandsatScenes(features)[0];
+
+                objectId = sceneData.objectId;
+            }
+
+            // cannot display popup if there is no objectId in queryParams for selected landsat scene
+            if (!objectId || !sceneData) {
+                throw new Error(
+                    'objectIdOfSelectedScene is required to fetch popup data'
+                );
+            }
+
+            const res = await getSamples(mapPoint, [objectId], controller);
             // console.log(res);
 
             if (!res.length || !res[0].values) {
