@@ -119,13 +119,13 @@ export const PixelRangeSlider: FC<Props> = ({ values, unit, valOnChange }) => {
     }, [values]);
 
     useEffect(() => {
-        (async () => {
-            if (sliderRef.current) {
-                sliderRef.current.destroy();
-            }
+        if (sliderRef.current) {
+            sliderRef.current.destroy();
+        }
 
-            init();
-        })();
+        console.log(unit);
+
+        init();
     }, [unit]);
 
     return (

@@ -13,7 +13,7 @@ import { selectAppMode } from '@shared/store/Landsat/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
 import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { ProfileTool } from '../ProfileTool';
-import { MaskTool } from '@shared/components/MaskTool';
+import { MaskTool } from '../MaskTool';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';

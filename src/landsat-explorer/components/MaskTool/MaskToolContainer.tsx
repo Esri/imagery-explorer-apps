@@ -1,8 +1,8 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { PixelRangeSlider as MaskPixelRangeSlider4SpectralIndex } from './PixelRangeSlider';
-import { PixelRangeSlider as MaskPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
+import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@shared/components/MaskTool/PixelRangeSlider';
+import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
 
-import { RenderingControls as MaskRenderingControls } from './RenderingControls';
+import { RenderingControls as MaskRenderingControls } from '@shared/components/MaskTool/RenderingControls';
 import {
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
@@ -22,10 +22,7 @@ import {
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import {
-    selectQueryParams4MainScene,
-    selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
 import classNames from 'classnames';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
@@ -100,9 +97,10 @@ export const MaskToolContainer = () => {
                     dispatch(spectralIndex4MaskToolChanged(val));
                 }}
             />
+
             {selectedSpectralIndex === 'temperature celcius' ||
             selectedSpectralIndex === 'temperature farhenheit' ? (
-                <MaskPixelRangeSlider4SurfaceTemp
+                <MaskLayerPixelRangeSlider4SurfaceTemp
                     values={getValues4SurfaceTempSlider()}
                     unit={
                         selectedSpectralIndex === 'temperature celcius'
@@ -120,7 +118,7 @@ export const MaskToolContainer = () => {
                     }}
                 />
             ) : (
-                <MaskPixelRangeSlider4SpectralIndex
+                <MaskLayerPixelRangeSlider4SpectralIndex
                     values={maskOptions.selectedRange}
                     valOnChange={(index, value) => {
                         dispatch(updateSelectedRange(index, value));

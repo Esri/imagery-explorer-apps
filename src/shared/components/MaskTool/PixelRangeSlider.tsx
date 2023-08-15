@@ -15,7 +15,7 @@ type Props = {
 };
 
 /**
- * A slider component to select fixel range of the mask layer for selected Landsat scene
+ * A slider component to select fixel range of the mask layer for selected Imagery scene
  * @param param0
  * @returns
  */
