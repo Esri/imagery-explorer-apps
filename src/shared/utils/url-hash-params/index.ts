@@ -120,3 +120,9 @@ export const getTemporalProfileToolDataFromHashParams =
         const value = getHashParamValueByKey('profile');
         return decodeTemporalProfileToolData(value);
     };
+
+export const saveQueryParams4ScenesInAnimationToHashParams = (
+    data: QueryParams4ImageryScene[]
+) => {
+    console.log(data);
+};

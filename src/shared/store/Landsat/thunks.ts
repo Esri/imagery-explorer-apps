@@ -21,7 +21,7 @@ import {
     selectQueryParams4SecondaryScene,
     selectSelectedAnimationFrameId,
 } from './selectors';
-import { generate } from 'shortid';
+import { nanoid } from 'nanoid';
 import { LandsatScene } from '@typing/imagery-service';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 
@@ -280,7 +280,7 @@ export const addAnimationFrame =
         const queryParams4SceneInNewFrame =
             selectQueryParams4SceneInNewAnimationFrame(getState());
 
-        const idOfFrame2BeAdded = generate();
+        const idOfFrame2BeAdded = nanoid(3);
 
         batch(() => {
             dispatch(

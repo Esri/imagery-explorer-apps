@@ -109,11 +109,11 @@
     "date-fns": "^2.30.0",
     "esri-loader": "3.7",
     "helper-toolkit-ts": "^1.2.1",
+    "nanoid": "^4.0.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",
-    "redux": "^4.1.0",
-    "shortid": "^2.2.16"
+    "redux": "^4.1.0"
   },
   "browserslist": [
     "defaults"
