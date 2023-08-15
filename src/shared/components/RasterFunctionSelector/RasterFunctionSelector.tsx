@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { RasterFunctionInfo } from '@typing/imagery-service';
-import { ListCard } from '../ListCard/ListCard';
+import { GirdCard } from '../GirdCard/GirdCard';
 
 type Props = {
     /**
@@ -76,7 +76,7 @@ export const RasterFunctionSelector: FC<Props> = ({
                         //         <span className="text-xs">{label || name}</span>
                         //     </div>
                         // </div>
-                        <ListCard
+                        <GirdCard
                             key={name}
                             label={label || name}
                             thumbnail={thumbnail}

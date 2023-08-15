@@ -22,11 +22,11 @@ type Props = {
 };
 
 /**
- * This is a tiny rectangle card that will be used to populate the "Renderer" and "Interesting Places" list
+ * This is a tiny rectangle card that will be used to populate the "Renderer" and "Interesting Places" grid list
  * @param param0
  * @returns
  */
-export const ListCard: FC<Props> = ({
+export const GirdCard: FC<Props> = ({
     label,
     thumbnail,
     selected,
