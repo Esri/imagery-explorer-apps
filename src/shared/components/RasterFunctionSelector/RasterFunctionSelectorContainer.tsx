@@ -10,6 +10,7 @@ import { updateRasterFunctionName } from '@shared/store/Landsat/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { useRasterFunctionInfosWithThumbnail } from './useRasterFunctionInfosWithThumbnail';
 import { tooltipDataChanged } from '@shared/store/UI/reducer';
+import { updateTooltipData } from '@shared/store/UI/thunks';
 
 export const RasterFunctionSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -59,7 +60,7 @@ export const RasterFunctionSelectorContainer = () => {
                       }
                     : null;
 
-                dispatch(tooltipDataChanged(data));
+                dispatch(updateTooltipData(data));
             }}
         />
     );

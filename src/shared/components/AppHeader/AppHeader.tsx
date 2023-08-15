@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { shouldShowAboutThisAppToggled } from '../../store/UI/reducer';
+import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 
 type Props = {
     /**
@@ -12,10 +13,27 @@ type Props = {
     title: string;
 };
 
+const IMAGERY_EXPLORER_APPS = [
+    {
+        title: 'Sentinel-2 Land Cover Explorer',
+        url: '/landcoverexplorer',
+    },
+];
+
 const AppHeader: FC<Props> = ({ title }) => {
     const dispatch = useDispatch();
 
     const shouldHide = false; //useSelector(selectAnimationMode);
+
+    const [showImageryExplorerAppsList, setShowImageryExplorerAppsList] =
+        useState<boolean>(false);
+
+    const containerRef = useRef<HTMLDivElement>();
+
+    useOnClickOutside(
+        containerRef,
+        setShowImageryExplorerAppsList.bind(null, false)
+    );
 
     return (
         <div
@@ -25,6 +43,7 @@ const AppHeader: FC<Props> = ({ title }) => {
                     hidden: shouldHide,
                 }
             )}
+            ref={containerRef}
         >
             <div
                 className="theme-background p-1 h-app-header-size w-app-header-size flex items-center justify-center border-r border-custom-light-blue-50"
@@ -49,10 +68,50 @@ const AppHeader: FC<Props> = ({ title }) => {
 
             <div
                 className={classNames(
-                    'theme-background p-1 px-2 text-lg font-light flex items-center h-app-header-size flex-grow md:flex-grow-0'
+                    'relative theme-background p-1 px-2 text-lg font-light items-center h-app-header-size flex-grow md:flex-grow-0'
                 )}
             >
-                <span>Esri | {title}</span>
+                <div className="flex h-full items-center">
+                    <span>Esri | {title}</span>
+
+                    <div
+                        className="cursor-pointer ml-2 flex items-center"
+                        onClick={setShowImageryExplorerAppsList.bind(
+                            null,
+                            !showImageryExplorerAppsList
+                        )}
+                    >
+                        {showImageryExplorerAppsList ? (
+                            <calcite-icon icon="chevron-up" />
+                        ) : (
+                            <calcite-icon icon="chevron-down" />
+                        )}
+                    </div>
+                </div>
+
+                {showImageryExplorerAppsList && (
+                    <div
+                        className={classNames(
+                            'absolute left-0 top-app-header-size theme-background w-full border-t border-custom-light-blue-50'
+                        )}
+                    >
+                        {IMAGERY_EXPLORER_APPS.map((d) => {
+                            return (
+                                <a
+                                    href={d.url}
+                                    target="_blank"
+                                    key={d.title}
+                                    rel="noreferrer"
+                                >
+                                    <div className="w-full p-2 text-sm cursor-pointer flex items-center">
+                                        <span className="mr-2">{d.title}</span>
+                                        <calcite-icon icon="launch" scale="s" />
+                                    </div>
+                                </a>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );
