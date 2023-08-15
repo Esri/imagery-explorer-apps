@@ -21,6 +21,11 @@ type Props = {
     onClick: () => void;
 };
 
+/**
+ * This is a tiny rectangle card that will be used to populate the "Renderer" and "Interesting Places" list
+ * @param param0
+ * @returns
+ */
 export const ListCard: FC<Props> = ({
     label,
     thumbnail,
