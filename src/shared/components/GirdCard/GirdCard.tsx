@@ -19,6 +19,8 @@ type Props = {
      * @returns
      */
     onClick: () => void;
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
 };
 
 /**
@@ -31,6 +33,8 @@ export const GirdCard: FC<Props> = ({
     thumbnail,
     selected,
     onClick,
+    onMouseEnter,
+    onMouseLeave,
 }) => {
     return (
         <div
@@ -39,6 +43,8 @@ export const GirdCard: FC<Props> = ({
                 background: `url(${thumbnail})`,
             }}
             onClick={onClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
         >
             <div
                 className={classNames('absolute top-0 left-0 w-full h-full', {

@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import classNames from 'classnames';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 import { GirdCard } from '../GirdCard/GirdCard';
+import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 
 type Props = {
     /**
@@ -22,6 +23,10 @@ type Props = {
      * @returns
      */
     onChange: (name: string) => void;
+    /**
+     * Emits when users hovers a grid item in th list
+     */
+    itemOnHover: (data?: RasterFunctionInfo) => void;
 };
 
 export const RasterFunctionSelector: FC<Props> = ({
@@ -29,12 +34,17 @@ export const RasterFunctionSelector: FC<Props> = ({
     rasterFunctionInfos,
     disabled,
     onChange,
+    itemOnHover,
 }) => {
+    const containerRef = useRef<HTMLDivElement>();
+    useGetTooltipPositionOnHover(containerRef);
+
     return (
         <div
             className={classNames('h-full w-auto', {
                 'is-disabled': disabled,
             })}
+            ref={containerRef}
         >
             <div className="text-center mb-3">
                 <span className="uppercase text-sm">Renderer</span>
@@ -42,7 +52,7 @@ export const RasterFunctionSelector: FC<Props> = ({
 
             <div className="grid grid-cols-3 gap-[5px]">
                 {rasterFunctionInfos.slice(0, 9).map((d) => {
-                    const { name, thumbnail, label } = d;
+                    const { name, thumbnail, label, description } = d;
 
                     const selected = nameOfSelectedRasterFunction === name;
 
@@ -84,6 +94,8 @@ export const RasterFunctionSelector: FC<Props> = ({
                             onClick={() => {
                                 onChange(name);
                             }}
+                            onMouseEnter={itemOnHover.bind(null, d)}
+                            onMouseLeave={itemOnHover.bind(null, null)}
                         />
                     );
                 })}

@@ -9,6 +9,11 @@ import {
 
 export type AnimationStatus = 'loading' | 'playing' | 'pausing';
 
+export type TooltipData = {
+    title?: string;
+    content?: string;
+};
+
 export type UIState = {
     /**
      * if true, hide bottom panel
@@ -26,6 +31,14 @@ export type UIState = {
      * speed of Animation in milliseconds
      */
     animationSpeed?: number;
+    /**
+     * The X Position (relative to page) of Tooltip for Control Panel
+     */
+    tooltipXPosition?: number;
+    /**
+     * The data that will be shown in the Tooltip
+     */
+    tooltipData?: TooltipData;
 };
 
 export const initialUIState: UIState = {
@@ -33,6 +46,8 @@ export const initialUIState: UIState = {
     shouldShowAboutThisApp: false,
     animationStatus: null,
     animationSpeed: 1000,
+    tooltipXPosition: 0,
+    tooltipData: null,
 };
 
 const slice = createSlice({
@@ -54,6 +69,12 @@ const slice = createSlice({
         animationSpeedChanged: (state, action: PayloadAction<number>) => {
             state.animationSpeed = action.payload;
         },
+        tooltipXPositionChanged: (state, action: PayloadAction<number>) => {
+            state.tooltipXPosition = action.payload;
+        },
+        tooltipDataChanged: (state, action: PayloadAction<TooltipData>) => {
+            state.tooltipData = action.payload;
+        },
     },
 });
 
@@ -64,6 +85,8 @@ export const {
     shouldShowAboutThisAppToggled,
     animationStatusChanged,
     animationSpeedChanged,
+    tooltipDataChanged,
+    tooltipXPositionChanged,
 } = slice.actions;
 
 export default reducer;

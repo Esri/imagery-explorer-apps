@@ -25,3 +25,13 @@ export const selectAnimationSpeed = createSelector(
     (state: RootState) => state.UI.animationSpeed,
     (animationSpeed) => animationSpeed
 );
+
+export const selectTooltipXPosition = createSelector(
+    (state: RootState) => state.UI.tooltipXPosition,
+    (tooltipXPosition) => tooltipXPosition
+);
+
+export const selectTooltipData = createSelector(
+    (state: RootState) => state.UI.tooltipData,
+    (tooltipData) => tooltipData
+);
