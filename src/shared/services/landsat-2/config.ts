@@ -1,4 +1,5 @@
 import { TIER } from '@shared/constants';
+import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
 /**
  * Landsat 8 and 9 multispectral and multitemporal atmospherically corrected imagery with on-the-fly renderings and indices for visualization and analysis.
@@ -186,3 +187,36 @@ export const LANDSAT_RASTER_FUNCTION_INFOS = [
         label: '',
     },
 ];
+
+/**
+ * This section defines constants for Landsat surface temperature measurements in various units.
+ *
+ * The application's UI/UX need to exclude the outliers, requiring the use of custom
+ * minimum and maximum values for Landsat Surface temperature within the app.
+ *
+ * The custom temperature range is applied in the following contexts:
+ * - Y Scale of Surface Temperature Line in the Temporal Profile Chart
+ * - Pixel range of the Mask Layer for Surface Temperature
+ *
+ * The minimum value of Landsat surface temperature is -30 degrees Celsius.
+ */
+export const LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS = -30;
+
+/**
+ * The maximum value of the Landsat surface temperature in celcius degree (100)
+ */
+export const LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS = 90;
+
+/**
+ * the minimum value converted to Farhenheit
+ */
+export const LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT = celsius2fahrenheit(
+    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS
+);
+
+/**
+ * the maximum value converted to Farhenheit
+ */
+export const LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT = celsius2fahrenheit(
+    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS
+);

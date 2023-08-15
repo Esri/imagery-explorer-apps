@@ -2,11 +2,11 @@ import React, { FC, useEffect, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
 import {
-    SURFACE_TEMP_MIN_CELSIUS,
-    SURFACE_TEMP_MIN_FAHRENHEIT,
-    SURFACE_TEMP_MAX_CELSIUS,
-    SURFACE_TEMP_MAX_FAHRENHEIT,
-} from '@shared/constants/landsat';
+    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+} from '@shared/services/landsat-2/config';
 // import classNames from 'classnames';
 
 type Props = {
@@ -54,12 +54,12 @@ export const PixelRangeSlider: FC<Props> = ({ values, unit, valOnChange }) => {
                 container,
                 min:
                     unit === 'celsius'
-                        ? SURFACE_TEMP_MIN_CELSIUS
-                        : SURFACE_TEMP_MIN_FAHRENHEIT,
+                        ? LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS
+                        : LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
                 max:
                     unit === 'celsius'
-                        ? SURFACE_TEMP_MAX_CELSIUS
-                        : SURFACE_TEMP_MAX_FAHRENHEIT,
+                        ? LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS
+                        : LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
                 steps: 1,
                 values,
                 snapOnClickEnabled: false,

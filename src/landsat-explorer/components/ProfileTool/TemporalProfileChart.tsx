@@ -10,11 +10,11 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { format } from 'date-fns';
 import {
-    SURFACE_TEMP_MIN_CELSIUS,
-    SURFACE_TEMP_MIN_FAHRENHEIT,
-    SURFACE_TEMP_MAX_CELSIUS,
-    SURFACE_TEMP_MAX_FAHRENHEIT,
-} from '@shared/constants/landsat';
+    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+} from '@shared/services/landsat-2/config';
 import { calcSpectralIndex } from '@shared/services/landsat-2/helpers';
 
 type Props = {
@@ -47,8 +47,8 @@ export const convertLandsatTemporalProfileData2ChartData = (
         ) {
             const yMin =
                 spectralIndex === 'temperature farhenheit'
-                    ? SURFACE_TEMP_MIN_FAHRENHEIT
-                    : SURFACE_TEMP_MIN_CELSIUS;
+                    ? LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT
+                    : LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
 
             y = Math.max(y, yMin);
         }
@@ -101,11 +101,17 @@ export const TemporalProfileChart: FC<Props> = ({
 
     const getCustomDomain4YScale = (): number[] => {
         if (spectralIndex === 'temperature farhenheit') {
-            return [SURFACE_TEMP_MIN_FAHRENHEIT, SURFACE_TEMP_MAX_FAHRENHEIT];
+            return [
+                LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+                LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+            ];
         }
 
         if (spectralIndex === 'temperature celcius') {
-            return [SURFACE_TEMP_MIN_CELSIUS, SURFACE_TEMP_MAX_CELSIUS];
+            return [
+                LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+                LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+            ];
         }
 
         return [-1, 1];
