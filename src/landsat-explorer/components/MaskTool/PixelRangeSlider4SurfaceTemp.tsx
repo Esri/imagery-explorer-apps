@@ -123,8 +123,6 @@ export const PixelRangeSlider: FC<Props> = ({ values, unit, valOnChange }) => {
             sliderRef.current.destroy();
         }
 
-        console.log(unit);
-
         init();
     }, [unit]);
 

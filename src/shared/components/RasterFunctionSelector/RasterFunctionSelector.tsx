@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { RasterFunctionInfo } from '@typing/imagery-service';
+import { ListCard } from '../ListCard/ListCard';
 
 type Props = {
     /**
@@ -46,35 +47,44 @@ export const RasterFunctionSelector: FC<Props> = ({
                     const selected = nameOfSelectedRasterFunction === name;
 
                     return (
-                        <div
-                            className={classNames(
-                                'relative w-24 h-12 bg-cover cursor-pointer'
-                            )}
-                            style={{
-                                background: `url(${thumbnail})`,
-                            }}
-                            key={name}
-                            onClick={onChange.bind(null, name)}
-                        >
-                            <div
-                                className={classNames(
-                                    'absolute top-0 left-0 w-full h-full',
-                                    {
-                                        'border-2': selected,
-                                        'border-custom-light-blue': selected,
-                                        'drop-shadow-custom-light-blue':
-                                            selected,
-                                    }
-                                )}
-                                style={{
-                                    background: `linear-gradient(0deg, rgba(2,28,36,1) 0%, rgba(2,28,36,0.6) 30%, rgba(2,28,36,0) 50%, rgba(2,28,36,0) 100%)`,
-                                }}
-                            ></div>
+                        // <div
+                        //     className={classNames(
+                        //         'relative w-24 h-12 bg-cover cursor-pointer'
+                        //     )}
+                        //     style={{
+                        //         background: `url(${thumbnail})`,
+                        //     }}
+                        //     key={name}
+                        //     onClick={onChange.bind(null, name)}
+                        // >
+                        //     <div
+                        //         className={classNames(
+                        //             'absolute top-0 left-0 w-full h-full',
+                        //             {
+                        //                 'border-2': selected,
+                        //                 'border-custom-light-blue': selected,
+                        //                 'drop-shadow-custom-light-blue':
+                        //                     selected,
+                        //             }
+                        //         )}
+                        //         style={{
+                        //             background: `linear-gradient(0deg, rgba(2,28,36,1) 0%, rgba(2,28,36,0.6) 30%, rgba(2,28,36,0) 50%, rgba(2,28,36,0) 100%)`,
+                        //         }}
+                        //     ></div>
 
-                            <div className="absolute bottom-0 left-0 right-0 text-center text-ellipsis whitespace-nowrap overflow-hidden z-10">
-                                <span className="text-xs">{label || name}</span>
-                            </div>
-                        </div>
+                        //     <div className="absolute bottom-0 left-0 right-0 text-center text-ellipsis whitespace-nowrap overflow-hidden z-10">
+                        //         <span className="text-xs">{label || name}</span>
+                        //     </div>
+                        // </div>
+                        <ListCard
+                            key={name}
+                            label={label || name}
+                            thumbnail={thumbnail}
+                            selected={selected}
+                            onClick={() => {
+                                onChange(name);
+                            }}
+                        />
                     );
                 })}
             </div>
