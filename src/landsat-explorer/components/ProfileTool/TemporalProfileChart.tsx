@@ -29,7 +29,7 @@ const SURFACE_TEMP_MIN_CELSIUS = -30;
 /**
  * max value in celcius degree (100) of the y scale domain for surface temp chart
  */
-const SURFACE_TEMP_MAX_CELSIUS = 100;
+const SURFACE_TEMP_MAX_CELSIUS = 90;
 
 const SURFACE_TEMP_MIN_FAHRENHEIT = celsius2fahrenheit(
     SURFACE_TEMP_MIN_CELSIUS

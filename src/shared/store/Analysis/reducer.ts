@@ -103,7 +103,7 @@ export const initialAnalysisState: AnalysisState = {
             //     color: [251, 182, 100],
             // },
             'temperature celcius': {
-                selectedRange: [-30, 100],
+                selectedRange: [0, 60], // default range should be between 0-60 celcius degrees
                 color: [251, 182, 100],
             },
         },
