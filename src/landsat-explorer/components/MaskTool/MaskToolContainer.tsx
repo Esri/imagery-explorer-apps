@@ -52,19 +52,19 @@ export const MaskToolContainer = () => {
             })}
         >
             <AnalysisToolHeader
-                title="Mask Index"
+                title="Mask"
                 data={[
                     {
                         value: 'water',
-                        label: 'WATER',
+                        label: 'WATER INDEX',
                     },
                     {
                         value: 'vegetation',
-                        label: 'VEGETATION',
+                        label: 'VEGETATION INDEX',
                     },
                     {
                         value: 'moisture',
-                        label: 'MOISTURE',
+                        label: 'MOISTURE INDEX',
                     },
                     {
                         value: 'temperature farhenheit',
