@@ -2,29 +2,21 @@ import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@shared/components/MaskTool/PixelRangeSlider';
 import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
 
-import { RenderingControls as MaskRenderingControls } from '@shared/components/MaskTool/RenderingControls';
+import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
+import { spectralIndex4MaskToolChanged } from '@shared/store/Analysis/reducer';
 import {
-    maskLayerOpacityChanged,
-    shouldClipMaskLayerToggled,
-    spectralIndex4MaskToolChanged,
-} from '@shared/store/Analysis/reducer';
-import {
-    selectMaskLayerOpcity,
     selectSpectralIndex4MaskTool,
     selectMaskOptions,
-    selectShouldClipMaskLayer,
     selectActiveAnalysisTool,
 } from '@shared/store/Analysis/selectors';
-import {
-    updateMaskColor,
-    updateSelectedRange,
-} from '@shared/store/Analysis/thunks';
+import { updateSelectedRange } from '@shared/store/Analysis/thunks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
 import classNames from 'classnames';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
+import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -34,10 +26,6 @@ export const MaskToolContainer = () => {
     const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
 
     const maskOptions = useSelector(selectMaskOptions);
-
-    const opacity = useSelector(selectMaskLayerOpcity);
-
-    const shouldClip = useSelector(selectShouldClipMaskLayer);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -88,11 +76,7 @@ export const MaskToolContainer = () => {
                     },
                 ]}
                 selectedSpectralIndex={selectedSpectralIndex}
-                tooltipText={`
-                    A mask index calculates the likeliness that a pixel belongs to a certain land cover category.</br> 
-                    An index value of +1 is 100% confident match.</br>
-                    An index of 0 is completely neutral.</br>
-                    An index value of -1 is 100% confidence of a non-macth.`}
+                tooltipText={MASK_TOOL_HEADER_TOOLTIP}
                 selectedSpectralIndexOnChange={(val) => {
                     dispatch(spectralIndex4MaskToolChanged(val));
                 }}
@@ -126,20 +110,7 @@ export const MaskToolContainer = () => {
                 />
             )}
 
-            <MaskRenderingControls
-                selectedOpacity={opacity}
-                shouldClip={shouldClip}
-                color={maskOptions.color}
-                colorOnChange={(color) => {
-                    dispatch(updateMaskColor(color));
-                }}
-                shouldClipOnToggle={() => {
-                    dispatch(shouldClipMaskLayerToggled());
-                }}
-                opacityOnChange={(val) => {
-                    dispatch(maskLayerOpacityChanged(val));
-                }}
-            />
+            <MaskLayerRenderingControls />
         </div>
     );
 };
