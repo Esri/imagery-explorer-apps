@@ -69,10 +69,8 @@ export const useSaveAppState2HashParams = () => {
     }, [mode, analysisTool, profileToolState]);
 
     useEffect(() => {
-        // saveQueryParams4ScenesInAnimationToHashParams(
-        //     mode === 'animate'
-        //         ? queryParams4ScenesInAnimationMode
-        //         : null
-        // );
+        saveQueryParams4ScenesInAnimationToHashParams(
+            mode === 'animate' ? queryParams4ScenesInAnimationMode : null
+        );
     }, [mode, queryParams4ScenesInAnimationMode]);
 };

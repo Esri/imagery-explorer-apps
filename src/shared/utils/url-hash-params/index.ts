@@ -12,6 +12,7 @@ import {
     TemporalProfileToolData,
 } from '@shared/store/Analysis/reducer';
 import { debounce } from '../snippets/debounce';
+import { nanoid } from 'nanoid';
 
 type UrlHashParamKey =
     | 'mapCenter'
@@ -124,5 +125,22 @@ export const getTemporalProfileToolDataFromHashParams =
 export const saveQueryParams4ScenesInAnimationToHashParams = (
     data: QueryParams4ImageryScene[]
 ) => {
-    console.log(data);
+    const encodedData = data.map((d) => encodeQueryParams4ImageryScene(d));
+    updateHashParams('animationScenes', encodedData.join(','));
 };
+
+export const getQueryParams4ScenesInAnimationFromHashParams =
+    (): QueryParams4ImageryScene[] => {
+        const value = getHashParamValueByKey('animationScenes');
+
+        if (!value) {
+            return null;
+        }
+
+        return value.split(',').map((d) => {
+            return {
+                ...decodeQueryParams4ImageryScene(d),
+                animationFrameId: nanoid(3),
+            } as QueryParams4ImageryScene;
+        });
+    };

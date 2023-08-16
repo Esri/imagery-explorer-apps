@@ -6,6 +6,7 @@ import {
     getMapCenterFromHashParams,
     getMaskToolDataFromHashParams,
     getQueryParams4MainSceneFromHashParams,
+    getQueryParams4ScenesInAnimationFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
     getTemporalProfileToolDataFromHashParams,
 } from '../utils/url-hash-params';
@@ -36,12 +37,6 @@ const getPreloadedMapState = (): MapState => {
 
 const getPreloadedLandsatState = (): LandsatState => {
     const modeFromHashParams = getHashParamValueByKey('mode') as AppMode;
-    const queryParams4MainScene =
-        getQueryParams4MainSceneFromHashParams() ||
-        DefaultQueryParams4ImageryScene;
-    const queryParams4SecondaryScene =
-        getQueryParams4SecondarySceneFromHashParams() ||
-        DefaultQueryParams4ImageryScene;
 
     let mode = modeFromHashParams || 'dynamic';
 
@@ -49,11 +44,38 @@ const getPreloadedLandsatState = (): LandsatState => {
         mode = 'dynamic';
     }
 
+    const queryParams4MainScene =
+        getQueryParams4MainSceneFromHashParams() ||
+        DefaultQueryParams4ImageryScene;
+
+    const queryParams4SecondaryScene =
+        getQueryParams4SecondarySceneFromHashParams() ||
+        DefaultQueryParams4ImageryScene;
+
+    const queryParams4ScenesInAnimation =
+        getQueryParams4ScenesInAnimationFromHashParams() || [];
+
+    const queryParams4ScenesInAnimationByFrameId = {};
+
+    for (const queryParams of queryParams4ScenesInAnimation) {
+        queryParams4ScenesInAnimationByFrameId[queryParams.animationFrameId] =
+            queryParams;
+    }
+
     return {
         ...initialLandsatState,
         mode,
         queryParams4MainScene,
         queryParams4SecondaryScene,
+        queryParams4ScenesInAnimateMode: {
+            byFrameId: queryParams4ScenesInAnimationByFrameId,
+            frameIds: queryParams4ScenesInAnimation.map(
+                (d) => d.animationFrameId
+            ),
+        },
+        selectedAnimationFrameId: queryParams4ScenesInAnimation[0]
+            ? queryParams4ScenesInAnimation[0].animationFrameId
+            : null,
     };
 };
 
