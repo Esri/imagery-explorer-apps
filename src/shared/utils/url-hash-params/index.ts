@@ -13,6 +13,7 @@ import {
 } from '@shared/store/Analysis/reducer';
 import { debounce } from '../snippets/debounce';
 import { nanoid } from 'nanoid';
+import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
     | 'mapCenter'
@@ -20,6 +21,7 @@ type UrlHashParamKey =
     | 'mainScene'
     | 'secondaryScene'
     | 'animationScenes'
+    | 'animation'
     | 'mask'
     | 'profile';
 
@@ -125,8 +127,11 @@ export const getTemporalProfileToolDataFromHashParams =
 export const saveQueryParams4ScenesInAnimationToHashParams = (
     data: QueryParams4ImageryScene[]
 ) => {
-    const encodedData = data.map((d) => encodeQueryParams4ImageryScene(d));
-    updateHashParams('animationScenes', encodedData.join(','));
+    const encodedData =
+        data && data.length
+            ? data.map((d) => encodeQueryParams4ImageryScene(d)).join(',')
+            : null;
+    updateHashParams('animationScenes', encodedData);
 };
 
 export const getQueryParams4ScenesInAnimationFromHashParams =
@@ -144,3 +149,20 @@ export const getQueryParams4ScenesInAnimationFromHashParams =
             } as QueryParams4ImageryScene;
         });
     };
+
+/**
+ * Save animation speed to hash params whenever the animation is being played.
+ * The app would restore the animation if it sees the animation speed in the hash params
+ * @param animationSpeed
+ */
+export const saveAnimationSpeedToHashParams = (animationSpeed?: number) => {
+    updateHashParams(
+        'animation',
+        animationSpeed ? animationSpeed.toString() : null
+    );
+};
+
+export const getAnimationSpeedFromHashParams = (animationSpeed?: number) => {
+    const val = getHashParamValueByKey('animation');
+    return val ? +val : null;
+};

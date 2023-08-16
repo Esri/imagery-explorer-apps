@@ -6,8 +6,6 @@ import {
 
 import rootReducer from './rootReducer';
 
-import getPreloadedState from './getPreloadedState';
-
 export type RootState = ReturnType<typeof rootReducer>;
 
 export type PartialRootState = DeepPartial<RootState>;
@@ -25,7 +23,5 @@ const configureAppStore = (preloadedState: PartialRootState = {}) => {
 export type StoreDispatch = ReturnType<typeof configureAppStore>['dispatch'];
 
 export type StoreGetState = ReturnType<typeof configureAppStore>['getState'];
-
-export { getPreloadedState };
 
 export default configureAppStore;

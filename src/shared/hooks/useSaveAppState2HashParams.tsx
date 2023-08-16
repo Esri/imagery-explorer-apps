@@ -11,12 +11,17 @@ import {
     selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
 import {
+    selectAnimationSpeed,
+    selectAnimationStatus,
+} from '@shared/store/UI/selectors';
+import {
     saveMaskToolToHashParams,
     saveTemporalProfileToolToHashParams,
     saveQueryParams4MainSceneToHashParams,
     saveQueryParams4SecondarySceneToHashParams,
     updateHashParams,
     saveQueryParams4ScenesInAnimationToHashParams,
+    saveAnimationSpeedToHashParams,
 } from '@shared/utils/url-hash-params';
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -39,6 +44,10 @@ export const useSaveAppState2HashParams = () => {
     const queryParams4ScenesInAnimationMode = useSelector(
         selectQueryParams4ScenesInAnimateMode
     );
+
+    const animationStatus = useSelector(selectAnimationStatus);
+
+    const animationSpeed = useSelector(selectAnimationSpeed);
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -73,4 +82,12 @@ export const useSaveAppState2HashParams = () => {
             mode === 'animate' ? queryParams4ScenesInAnimationMode : null
         );
     }, [mode, queryParams4ScenesInAnimationMode]);
+
+    useEffect(() => {
+        saveAnimationSpeedToHashParams(
+            mode === 'animate' && animationStatus === 'playing'
+                ? animationSpeed
+                : null
+        );
+    }, [mode, animationStatus, animationSpeed]);
 };

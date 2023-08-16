@@ -2,6 +2,7 @@ import { PartialRootState } from './configureStore';
 
 import { initialMapState, MapState } from '../store/Map/reducer';
 import {
+    getAnimationSpeedFromHashParams,
     getHashParamValueByKey,
     getMapCenterFromHashParams,
     getMaskToolDataFromHashParams,
@@ -24,6 +25,7 @@ import {
     initialAnalysisState,
 } from './Analysis/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { initialUIState, UIState } from './UI/reducer';
 
 const getPreloadedMapState = (): MapState => {
     const mapCenterInfo = getMapCenterFromHashParams();
@@ -91,12 +93,21 @@ const getPreloadedAnalysisState = (): AnalysisState => {
     };
 };
 
-const getPreloadedState = async (): Promise<PartialRootState> => {
+const getPreloadedUIState = (): UIState => {
+    const animationSpeed = getAnimationSpeedFromHashParams();
+
+    return {
+        ...initialUIState,
+        animationSpeed: animationSpeed || 1000,
+        animationStatus: animationSpeed ? 'loading' : null,
+    };
+};
+
+export const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         Map: getPreloadedMapState(),
         Landsat: getPreloadedLandsatState(),
         Analysis: getPreloadedAnalysisState(),
+        UI: getPreloadedUIState(),
     };
 };
-
-export default getPreloadedState;
