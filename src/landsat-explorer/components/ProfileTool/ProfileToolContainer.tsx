@@ -25,6 +25,8 @@ import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
+import { selectQueryParams4MainScene } from '@shared/store/Landsat/selectors';
+import { SpectralIndex } from '@typing/imagery-service';
 
 export const ProfileToolContainer = () => {
     const dispatch = useDispatch();
@@ -43,11 +45,34 @@ export const ProfileToolContainer = () => {
         selectSamplingTemporalResolution
     );
 
+    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+
     const [isLoading, setIsLoading] = useState<boolean>();
 
     useEffect(() => {
+        if (!queryParams4MainScene?.rasterFunctionName) {
+            return;
+        }
+
+        // when user selects a different renderer for the selected landsat scene,
+        // we want to try to sync the selected spectral index for the profile tool because
+        // that is probably what the user is interested in seeing
+        let spectralIndex: SpectralIndex = null;
+
+        if (/Temperature/i.test(queryParams4MainScene?.rasterFunctionName)) {
+            spectralIndex = 'temperature farhenheit';
+        } else if (/NDVI/.test(queryParams4MainScene?.rasterFunctionName)) {
+            spectralIndex = 'vegetation';
+        }
+
+        if (spectralIndex) {
+            dispatch(spectralIndex4ProfileToolChanged(spectralIndex));
+        }
+    }, [queryParams4MainScene?.rasterFunctionName]);
+
+    useEffect(() => {
         (async () => {
-            if (tool !== 'profile') {
+            if (tool !== 'profile' || !acquisitionMonth) {
                 return;
             }
 
