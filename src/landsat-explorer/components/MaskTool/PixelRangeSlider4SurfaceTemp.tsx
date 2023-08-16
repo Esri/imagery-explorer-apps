@@ -16,9 +16,11 @@ type Props = {
     values: number[];
     unit: 'celsius' | 'farhenheit';
     /**
-     * fires when user selects a new min or max value using the slider
+     * emits when user changes the values of the slider either by dragging the thumb or the segment line
+     * @param vals
+     * @returns
      */
-    valOnChange: (index: number, val: number) => void;
+    valuesOnChange: (vals: number[]) => void;
 };
 
 /**
@@ -26,7 +28,11 @@ type Props = {
  * @param param0
  * @returns
  */
-export const PixelRangeSlider: FC<Props> = ({ values, unit, valOnChange }) => {
+export const PixelRangeSlider: FC<Props> = ({
+    values,
+    unit,
+    valuesOnChange,
+}) => {
     const containerRef = useRef<HTMLDivElement>();
 
     const sliderRef = useRef<ISlider>();
@@ -80,9 +86,19 @@ export const PixelRangeSlider: FC<Props> = ({ values, unit, valOnChange }) => {
                 // layout: 'vertical',
             });
 
+            // sliderRef.current.on('thumb-drag', (evt) => {
+            //     const { value, index } = evt;
+            //     valOnChange(index, value);
+            // });
+
             sliderRef.current.on('thumb-drag', (evt) => {
-                const { value, index } = evt;
-                valOnChange(index, value);
+                // const { value, index } = evt;
+                // valOnChange(index, value);
+                valuesOnChange(sliderRef.current.values);
+            });
+
+            sliderRef.current.on('segment-drag', (evt) => {
+                valuesOnChange(sliderRef.current.values);
             });
         } catch (err) {
             console.error(err);

@@ -17,6 +17,7 @@ import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/sel
 import classNames from 'classnames';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
+import { values } from 'd3';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -91,21 +92,23 @@ export const MaskToolContainer = () => {
                             ? 'celsius'
                             : 'farhenheit'
                     }
-                    valOnChange={(index, value) => {
+                    valuesOnChange={(values) => {
                         if (
                             selectedSpectralIndex === 'temperature farhenheit'
                         ) {
-                            value = Math.trunc(((value - 32) * 5) / 9);
+                            values = values.map((value) =>
+                                Math.trunc(((value - 32) * 5) / 9)
+                            );
                         }
 
-                        dispatch(updateSelectedRange(index, value));
+                        dispatch(updateSelectedRange(values));
                     }}
                 />
             ) : (
                 <MaskLayerPixelRangeSlider4SpectralIndex
                     values={maskOptions.selectedRange}
-                    valOnChange={(index, value) => {
-                        dispatch(updateSelectedRange(index, value));
+                    valuesOnChange={(values) => {
+                        dispatch(updateSelectedRange(values));
                     }}
                 />
             )}

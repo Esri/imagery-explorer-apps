@@ -17,18 +17,15 @@ import { getTemporalProfileData } from '@shared/services/landsat-2/getTemporalPr
 
 /**
  * update selected range for the active mask method
- * @param index index of value, 0 indicates min value of the range and 1 indicates max value of the range
- * @param value
+ * @param values updated range of the mask layer
  * @returns void
  */
 export const updateSelectedRange =
-    (index: number, value: number) =>
+    (values: number[]) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const maskOptions = selectMaskOptions(getState());
 
-        const selectedRange = [...maskOptions.selectedRange];
-
-        selectedRange[index] = value;
+        const selectedRange = [...values];
 
         const updatedMaskOptions = {
             ...maskOptions,
