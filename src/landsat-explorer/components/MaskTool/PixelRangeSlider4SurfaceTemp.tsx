@@ -107,7 +107,9 @@ export const PixelRangeSlider: FC<Props> = ({
 
     useEffect(() => {
         return () => {
-            sliderRef.current.destroy();
+            if (sliderRef.current) {
+                sliderRef.current.destroy();
+            }
         };
     }, []);
 

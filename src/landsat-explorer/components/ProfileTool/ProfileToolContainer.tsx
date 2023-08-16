@@ -22,7 +22,10 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TemporalProfileChart';
 import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
-import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
+import {
+    getFormatedDateString,
+    getMonthFromFormattedDateString,
+} from '@shared/utils/date-time/formatDateString';
 import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
 import { selectQueryParams4MainScene } from '@shared/store/Landsat/selectors';
@@ -69,6 +72,20 @@ export const ProfileToolContainer = () => {
             dispatch(spectralIndex4ProfileToolChanged(spectralIndex));
         }
     }, [queryParams4MainScene?.rasterFunctionName]);
+
+    useEffect(() => {
+        if (!queryParams4MainScene?.acquisitionDate) {
+            return;
+        }
+
+        const month = getMonthFromFormattedDateString(
+            queryParams4MainScene?.acquisitionDate
+        );
+
+        acquisitionMonth4ProfileToolChanged(month);
+
+        dispatch(acquisitionMonth4ProfileToolChanged(month));
+    }, [queryParams4MainScene?.acquisitionDate]);
 
     useEffect(() => {
         (async () => {

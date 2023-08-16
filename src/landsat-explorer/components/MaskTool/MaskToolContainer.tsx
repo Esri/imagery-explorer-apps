@@ -13,11 +13,15 @@ import { updateSelectedRange } from '@shared/store/Analysis/thunks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
+import {
+    selectQueryParams4MainScene,
+    selectQueryParams4SceneInSelectedMode,
+} from '@shared/store/Landsat/selectors';
 import classNames from 'classnames';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { values } from 'd3';
+import { SpectralIndex } from '@typing/imagery-service';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -41,6 +45,29 @@ export const MaskToolContainer = () => {
             celsius2fahrenheit(maskOptions.selectedRange[1]),
         ];
     };
+
+    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+
+    useEffect(() => {
+        if (!queryParams4MainScene?.rasterFunctionName) {
+            return;
+        }
+
+        // when user selects a different renderer for the selected landsat scene,
+        // we want to try to sync the selected spectral index for the mask tool because
+        // that is probably what the user is interested in seeing
+        let spectralIndex: SpectralIndex = null;
+
+        if (/Temperature/i.test(queryParams4MainScene?.rasterFunctionName)) {
+            spectralIndex = 'temperature farhenheit';
+        } else if (/NDVI/.test(queryParams4MainScene?.rasterFunctionName)) {
+            spectralIndex = 'vegetation';
+        }
+
+        if (spectralIndex) {
+            dispatch(spectralIndex4MaskToolChanged(spectralIndex));
+        }
+    }, [queryParams4MainScene?.rasterFunctionName]);
 
     if (tool !== 'mask') {
         return null;

@@ -8,9 +8,10 @@ type GetProfileDataOptions = {
     queryLocation: Point;
     acquisitionMonth: number;
     samplingTemporalResolution: number;
+    abortController: AbortController;
 };
 
-let controller: AbortController = null;
+// let controller: AbortController = null;
 
 /**
  * Splits an array of object IDs into separate groups, each containing a maximum of 20 object IDs.
@@ -45,20 +46,15 @@ export const getTemporalProfileData = async ({
     queryLocation,
     acquisitionMonth,
     samplingTemporalResolution,
+    abortController,
 }: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
     const { x, y } = queryLocation;
 
     try {
-        if (controller) {
-            controller.abort();
-        }
-
-        controller = new AbortController();
-
         const landsatScenes = await getLandsatScenes({
             mapPoint: [x, y],
             acquisitionMonth,
-            abortController: controller,
+            abortController,
         });
 
         if (!landsatScenes.length) {
@@ -79,7 +75,7 @@ export const getTemporalProfileData = async ({
         const samplesDataInSeparateGroups: LandsatSampleData[][] =
             await Promise.all(
                 objectsIdsInSeparateGroups.map((oids) =>
-                    getSamples(queryLocation, oids, controller)
+                    getSamples(queryLocation, oids, abortController)
                 )
             );
 

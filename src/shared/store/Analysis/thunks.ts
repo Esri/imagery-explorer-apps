@@ -60,6 +60,8 @@ export const updateQueryLocation4ProfileMask =
         dispatch(queryLocation4ProfileToolChanged(point));
     };
 
+let abortController: AbortController = null;
+
 export const updateTemporalProfileData =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const rootState = getState();
@@ -76,10 +78,17 @@ export const updateTemporalProfileData =
             return;
         }
 
+        if (abortController) {
+            abortController.abort();
+        }
+
+        abortController = new AbortController();
+
         const data = await getTemporalProfileData({
             queryLocation,
             acquisitionMonth,
             samplingTemporalResolution,
+            abortController,
         });
 
         dispatch(temporalProfileDataUpdated(data));
