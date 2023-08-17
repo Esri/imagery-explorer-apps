@@ -2,7 +2,7 @@ import React from 'react';
 
 export const DynamicModeInfo = () => {
     return (
-        <div className="max-w-xl mx-auto lg:mx-20">
+        <div className="max-w-xl mx-auto lg:mx-10">
             <div className="text-center mb-3">
                 <span className="uppercase text-sm">Dynamic View</span>
             </div>

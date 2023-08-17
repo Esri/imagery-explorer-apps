@@ -1,5 +1,6 @@
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import {
+    decodeMapCenter,
     decodeMaskToolData,
     decodeQueryParams4ImageryScene,
     decodeTemporalProfileToolData,
@@ -64,20 +65,7 @@ export const saveMapCenterToHashParams = (center: number[], zoom: number) => {
 export const getMapCenterFromHashParams = () => {
     const value = getHashParamValueByKey('mapCenter');
 
-    if (!value) {
-        return null;
-    }
-
-    const [longitude, latitude, zoom] = value.split(',');
-
-    if (!longitude || !latitude || !zoom) {
-        return null;
-    }
-
-    return {
-        center: [+longitude, +latitude],
-        zoom: +zoom,
-    };
+    return decodeMapCenter(value);
 };
 
 export const saveQueryParams4MainSceneToHashParams = (

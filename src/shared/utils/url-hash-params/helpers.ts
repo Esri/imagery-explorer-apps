@@ -7,6 +7,23 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { Point } from 'esri/geometry';
 
+export const decodeMapCenter = (value: string) => {
+    if (!value) {
+        return null;
+    }
+
+    const [longitude, latitude, zoom] = value.split(',');
+
+    if (!longitude || !latitude || !zoom) {
+        return null;
+    }
+
+    return {
+        center: [+longitude, +latitude],
+        zoom: +zoom,
+    };
+};
+
 export const encodeQueryParams4ImageryScene = (
     data: QueryParams4ImageryScene
 ): string => {

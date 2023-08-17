@@ -18,7 +18,7 @@ import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
-import { InterestingPlaces } from '@shared/components/InterestingPlaces';
+import { InterestingPlaces } from '../InterestingPLaces';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -63,7 +63,7 @@ const Layout = () => {
                     {dynamicModeOn && (
                         <>
                             <DynamicModeInfo />
-                            {/* <InterestingPlaces /> */}
+                            <InterestingPlaces />
                             <RasterFunctionSelector />
                         </>
                     )}
