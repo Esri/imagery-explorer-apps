@@ -20,9 +20,9 @@ type InterestingPlace = {
 export const InterestingPlacesContainer = () => {
     const dispatch = useDispatch();
 
-    const [selectedPlace, setSelectedPlace] = useState<InterestingPlace>(
-        data[0]
-    );
+    // const [selectedPlace, setSelectedPlace] = useState<InterestingPlace>(
+    //     data[0]
+    // );
 
     const getData = () => {
         return data.map((d) => {
@@ -36,24 +36,34 @@ export const InterestingPlacesContainer = () => {
         });
     };
 
-    useEffect(() => {
-        batch(() => {
-            dispatch(centerChanged([...selectedPlace.location.center]));
-            dispatch(zoomChanged(selectedPlace.location.zoom));
-            dispatch(updateRasterFunctionName(selectedPlace.renderer));
-        });
-    }, [selectedPlace]);
+    // useEffect(() => {
+    //     batch(() => {
+    //         dispatch(centerChanged([...selectedPlace.location.center]));
+    //         dispatch(zoomChanged(selectedPlace.location.zoom));
+    //         dispatch(updateRasterFunctionName(selectedPlace.renderer));
+    //     });
+    // }, [selectedPlace]);
 
     return (
         <div className="mx-10">
             <InterestingPlaces
                 data={getData()}
-                nameOfSelectedPlace={selectedPlace.name}
+                nameOfSelectedPlace={''}
                 onChange={(name) => {
                     const dataItem = data.find((d) => d.name === name);
 
                     if (dataItem) {
-                        setSelectedPlace(dataItem);
+                        // setSelectedPlace(dataItem);
+
+                        batch(() => {
+                            dispatch(
+                                centerChanged([...dataItem.location.center])
+                            );
+                            dispatch(zoomChanged(dataItem.location.zoom));
+                            dispatch(
+                                updateRasterFunctionName(dataItem.renderer)
+                            );
+                        });
                     }
                 }}
             />

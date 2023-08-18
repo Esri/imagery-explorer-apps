@@ -1,7 +1,9 @@
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import { map } from 'd3';
 import MapView from 'esri/views/MapView';
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 
 type Props = {
     mapView?: MapView;
@@ -9,6 +11,8 @@ type Props = {
 };
 
 export const Zoom2NativeScale: FC<Props> = ({ tooltip, mapView }) => {
+    const animationStatus = useSelector(selectAnimationStatus);
+
     const onClickHandler = () => {
         // mapView.scale = 113386;
 
@@ -21,7 +25,10 @@ export const Zoom2NativeScale: FC<Props> = ({ tooltip, mapView }) => {
         <div
             className={classNames(
                 'absolute left-[16px] top-[130px]  p-1 z-10',
-                'bg-custom-background text-custom-light-blue-90 cursor-pointer'
+                'bg-custom-background text-custom-light-blue-90 cursor-pointer',
+                {
+                    hidden: animationStatus !== null,
+                }
             )}
             title={tooltip}
             onClick={onClickHandler}

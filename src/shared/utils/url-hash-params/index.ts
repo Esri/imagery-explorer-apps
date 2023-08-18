@@ -146,7 +146,7 @@ export const getQueryParams4ScenesInAnimationFromHashParams =
 export const saveAnimationSpeedToHashParams = (animationSpeed?: number) => {
     updateHashParams(
         'animation',
-        animationSpeed ? animationSpeed.toString() : null
+        animationSpeed ? animationSpeed.toFixed(0).toString() : null
     );
 };
 
