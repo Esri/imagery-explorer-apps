@@ -18,7 +18,7 @@ import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
-import { InterestingPlaces } from '../InterestingPLaces';
+import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);

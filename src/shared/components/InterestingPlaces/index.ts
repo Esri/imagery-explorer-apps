@@ -1,1 +1,1 @@
-export { InterestingPlaces } from './InterestingPlaces';
+export { InterestingPlacesContainer as InterestingPlaces } from './InterestingPlacesContainer';

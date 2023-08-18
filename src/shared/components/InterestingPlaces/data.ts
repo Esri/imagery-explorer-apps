@@ -11,7 +11,17 @@ import Irrigation from './thumbnails/Irrigation.jpg';
 import KeyWest from './thumbnails/KeyWest.jpg';
 import Kilimanjaro from './thumbnails/Kilimanjaro.jpg';
 
-export const data = [
+type InterestingPlaceData = {
+    name: string;
+    location: {
+        center: number[];
+        zoom: number;
+    };
+    renderer: string;
+    thumbnail: any;
+};
+
+const LandsatInterestingPlaces: InterestingPlaceData[] = [
     {
         name: 'Aral Sea',
         location: {
@@ -121,3 +131,11 @@ export const data = [
         thumbnail: Singapore,
     },
 ];
+
+let data: InterestingPlaceData[] = [];
+
+if (IMAGERY_SERVICE === 'landsat') {
+    data = LandsatInterestingPlaces;
+}
+
+export { data };

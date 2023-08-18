@@ -18,6 +18,7 @@ import {
     DefaultQueryParams4ImageryScene,
     initialLandsatState,
     LandsatState,
+    QueryParams4ImageryScene,
 } from './Landsat/reducer';
 import {
     AnalysisState,
@@ -26,14 +27,21 @@ import {
 } from './Analysis/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { initialUIState, UIState } from './UI/reducer';
+import { getRandomInterestingPlace } from '@shared/components/InterestingPlaces/helper';
+
+const randomInterestingPlace = getRandomInterestingPlace();
 
 const getPreloadedMapState = (): MapState => {
-    const mapCenterInfo = getMapCenterFromHashParams();
+    let mapLocation = getMapCenterFromHashParams();
+
+    if (!mapLocation) {
+        mapLocation = randomInterestingPlace.location;
+    }
 
     return {
         ...initialMapState,
-        center: mapCenterInfo?.center || MAP_CENTER,
-        zoom: mapCenterInfo?.zoom || MAP_ZOOM,
+        center: mapLocation?.center || MAP_CENTER,
+        zoom: mapLocation?.zoom || MAP_ZOOM,
     };
 };
 
@@ -46,9 +54,13 @@ const getPreloadedLandsatState = (): LandsatState => {
         mode = 'dynamic';
     }
 
-    const queryParams4MainScene =
-        getQueryParams4MainSceneFromHashParams() ||
-        DefaultQueryParams4ImageryScene;
+    // Attempt to extract query parameters from the URL hash.
+    // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
+    // which will serve as the map center.
+    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
+        ...DefaultQueryParams4ImageryScene,
+        rasterFunctionName: randomInterestingPlace.renderer,
+    };
 
     const queryParams4SecondaryScene =
         getQueryParams4SecondarySceneFromHashParams() ||
