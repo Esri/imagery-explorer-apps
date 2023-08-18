@@ -13,7 +13,7 @@ import Kilimanjaro from './thumbnails/Kilimanjaro.jpg';
 
 export const data = [
     {
-        place: 'Aral Sea',
+        name: 'Aral Sea',
         location: {
             center: [59.311, 45.091],
             zoom: 9.493,
@@ -22,7 +22,7 @@ export const data = [
         thumbnail: AralSea,
     },
     {
-        place: 'Everest',
+        name: 'Everest',
         location: {
             center: [86.983, 27.952],
             zoom: 11.557,
@@ -31,7 +31,7 @@ export const data = [
         thumbnail: Everest,
     },
     {
-        place: 'Ganges Delta',
+        name: 'Ganges Delta',
         location: {
             center: [89.08, 21.909],
             zoom: 11.557,
@@ -40,7 +40,7 @@ export const data = [
         thumbnail: Ganges,
     },
     {
-        place: 'Giza Pyramids',
+        name: 'Giza Pyramids',
         location: {
             center: [31.13, 29.977],
             zoom: 14.497,
@@ -49,7 +49,7 @@ export const data = [
         thumbnail: Giza,
     },
     {
-        place: 'Grand Canyon',
+        name: 'Grand Canyon',
         location: {
             center: [-112.913, 36.242],
             zoom: 12.43,
@@ -58,7 +58,7 @@ export const data = [
         thumbnail: GrandCanyon,
     },
     {
-        place: 'Irrigation',
+        name: 'Irrigation',
         location: {
             center: [-99.383, 37.616],
             zoom: 12,
@@ -67,7 +67,7 @@ export const data = [
         thumbnail: Irrigation,
     },
     {
-        place: 'Key West',
+        name: 'Key West',
         location: {
             center: [-81.694, 24.615],
             zoom: 12,
@@ -76,7 +76,7 @@ export const data = [
         thumbnail: KeyWest,
     },
     {
-        place: 'Kilimanjaro',
+        name: 'Kilimanjaro',
         location: {
             center: [37.356, -3.066],
             zoom: 12,
@@ -85,7 +85,7 @@ export const data = [
         thumbnail: Kilimanjaro,
     },
     {
-        place: 'Manicouagan',
+        name: 'Manicouagan',
         location: {
             center: [-68.631, 51.389],
             zoom: 10,
@@ -94,7 +94,7 @@ export const data = [
         thumbnail: Manicouagan,
     },
     {
-        place: 'Mt. Fuji',
+        name: 'Mt. Fuji',
         location: {
             center: [138.731, 35.367],
             zoom: 12.958,
@@ -103,7 +103,7 @@ export const data = [
         thumbnail: Fuji,
     },
     {
-        place: 'Richat',
+        name: 'Richat',
         location: {
             center: [-11.398, 21.124],
             zoom: 12.43,
@@ -112,7 +112,7 @@ export const data = [
         thumbnail: Richat,
     },
     {
-        place: 'Singapore',
+        name: 'Singapore',
         location: {
             center: [103.775, 1.235],
             zoom: 11.557,
