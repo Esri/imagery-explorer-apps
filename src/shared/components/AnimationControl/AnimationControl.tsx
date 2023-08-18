@@ -50,6 +50,7 @@ const CloseButton = (
 
 type Props = {
     status: AnimationStatus;
+    animationSpeed: number;
     /**
      * if ture, the Animation Status Control Button (Play/Pause/Close) should be disabled.
      * This happenes when there is no frames in the Animation Layer
@@ -81,6 +82,7 @@ type Props = {
 
 export const AnimationControl: FC<Props> = ({
     status,
+    animationSpeed,
     shouldDisablePlayPauseButton,
     shouldDisableAddFrameButton,
     addButtonOnClick,
@@ -110,6 +112,7 @@ export const AnimationControl: FC<Props> = ({
 
                 {shouldShowSpeedControl && (
                     <AnimationSpeedControl
+                        speed={animationSpeed}
                         onChange={(speed) => {
                             speedOnChange(speed);
                         }}

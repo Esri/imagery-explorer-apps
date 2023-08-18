@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
+    selectAnimationSpeed,
     selectAnimationStatus,
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
@@ -39,6 +40,8 @@ export const AnimationControlContainer = () => {
 
     const shouldDisablePlayPauseButton = useShouldDisablePlayPauseButton();
 
+    const animationSpeed = useSelector(selectAnimationSpeed);
+
     if (mode !== 'animate') {
         return null;
     }
@@ -57,6 +60,7 @@ export const AnimationControlContainer = () => {
             />
 
             <AnimationControl
+                animationSpeed={animationSpeed}
                 status={animationStatus}
                 shouldDisablePlayPauseButton={shouldDisablePlayPauseButton}
                 shouldDisableAddFrameButton={
