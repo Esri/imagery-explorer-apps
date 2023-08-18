@@ -2,6 +2,7 @@ import '../../styles/index.css';
 import React, { lazy, Suspense } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import LoadingIndicator from './LoadingIndicator';
+import { About } from '../About';
 
 const LandsatLayout = lazy(
     () =>
@@ -43,6 +44,7 @@ const AppLayout = () => {
                 {IMAGERY_SERVICE === 'landsat' && <LandsatLayout />}
                 {IMAGERY_SERVICE === 'sentinel-2' && <Sentinel2Map />}
                 {IMAGERY_SERVICE === 'sentinel-2' && <Sentinel2Layout />}
+                <About />
             </Suspense>
         </ErrorBoundary>
     );

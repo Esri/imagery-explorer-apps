@@ -19,6 +19,7 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
+import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -30,7 +31,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title="Landsat Explorer (beta)" />
+                <AppHeader title={LANDSAT_EXPLORER_APP_TITLE} />
                 <BottomPanel>
                     <div className="mx-auto">
                         <DynamicModeInfo />
@@ -43,7 +44,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title="Landsat Explorer (beta)" />
+            <AppHeader title={LANDSAT_EXPLORER_APP_TITLE} />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />
