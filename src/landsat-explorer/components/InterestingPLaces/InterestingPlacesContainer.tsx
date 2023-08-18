@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import PlaceHolder from './thumbnails/placeholder.jpg';
-
 import { data } from './data';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 
@@ -12,10 +10,10 @@ export const InterestingPlacesContainer = () => {
 
     const getData = () => {
         return data.map((d) => {
-            const { place } = d;
+            const { place, thumbnail } = d;
 
             return {
-                thumbnail: PlaceHolder,
+                thumbnail,
                 name: place,
                 label: '',
             };

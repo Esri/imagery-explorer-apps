@@ -23,7 +23,7 @@ export const InterestingPlaces: FC<Props> = ({
                 <span className="uppercase text-sm">Interesting Places</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-[5px] max-h-[155px] pr-1 overflow-y-auto overflow-x-hidden fancy-scrollbar">
+            <div className="grid grid-cols-4 gap-[5px] pr-1">
                 {data.map((d) => {
                     const { name, thumbnail, label } = d;
 
