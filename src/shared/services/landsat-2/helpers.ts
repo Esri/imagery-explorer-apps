@@ -45,7 +45,8 @@ type LandsatProductInfo = {
  * - Band 5: Near-Infrared (0.85 - 0.88 µm)
  * - Band 6: SWIR 1 (1.57 - 1.65 µm)
  * - Band 7: SWIR 2 (2.11 - 2.29 µm)
- * - Band 8: Panchromatic (15 meters)
+ * - Band 8: QA Band
+ * - Band 8: Surface Temp
  *
  * @see https://pro.arcgis.com/en/pro-app/3.0/help/analysis/raster-functions/band-arithmetic-function.htm
  * @see https://www.esri.com/about/newsroom/arcuser/spectral-library/

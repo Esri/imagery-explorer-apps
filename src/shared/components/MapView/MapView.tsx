@@ -132,15 +132,17 @@ const MapView: React.FC<Props> = ({
 
         if (
             mapView.center.longitude.toFixed(6) === longitude.toFixed(6) &&
-            mapView.center.latitude.toFixed(6) === latitude.toFixed(6)
+            mapView.center.latitude.toFixed(6) === latitude.toFixed(6) &&
+            mapView.zoom.toFixed(3) === zoom.toFixed(3)
         ) {
             return;
         }
 
         mapView.goTo({
             center,
+            zoom,
         });
-    }, [center]);
+    }, [center, zoom]);
 
     return (
         <>
