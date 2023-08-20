@@ -3,6 +3,7 @@ import { getLandsatScenes } from './getLandsatScenes';
 import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import { getSamples, LandsatSampleData } from './getSamples';
+import { checkClearFlagInQABand } from './helpers';
 
 type GetProfileDataOptions = {
     queryLocation: Point;
@@ -42,6 +43,17 @@ const splitObjectIdsToSeparateGroups = (objectIds: number[]): number[][] => {
     return objectsIdsInSeparateGroups;
 };
 
+/**
+ * Retrieves data for the Temporal Profile Tool based on specific criteria.
+ *
+ * This function queries Landsat scenes at the provided query location that were acquired during the given acquisition month.
+ * It refines the scenes to retain only the one with the least cloud coverage within a specified month.
+ * Subsequently, it sends requests to fetch pixel values at the input location for each selected Landsat scene.
+ * Finally, it returns an array of TemporalProfileData formatted from the fetched samples.
+ *
+ * @param param0
+ * @returns An array of TemporalProfileData representing pixel values sampled at input query location over time.
+ */
 export const getTemporalProfileData = async ({
     queryLocation,
     acquisitionMonth,
@@ -50,50 +62,62 @@ export const getTemporalProfileData = async ({
 }: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
     const { x, y } = queryLocation;
 
-    try {
-        const landsatScenes = await getLandsatScenes({
-            mapPoint: [x, y],
-            acquisitionMonth,
-            abortController,
-        });
+    // query Landsat scenes based on input location and acquisition month.
+    const landsatScenes = await getLandsatScenes({
+        mapPoint: [x, y],
+        acquisitionMonth,
+        abortController,
+    });
 
-        if (!landsatScenes.length) {
-            return [];
-        }
+    if (!landsatScenes.length) {
+        return [];
+    }
 
-        const landsatScenesToSample = getLandsatScenesToSample(
-            landsatScenes,
-            samplingTemporalResolution
+    // refine Landsat scenes based on cloud coverage and temporal resolution.
+    const landsatScenesToSample = getLandsatScenesToSample(
+        landsatScenes,
+        samplingTemporalResolution
+    );
+
+    // extract object IDs from refined Landsat scenes.
+    const objectIds = landsatScenesToSample.map((d) => d.objectId);
+
+    // divide object IDs into separate groups for parallel fetching.
+    const objectsIdsInSeparateGroups =
+        splitObjectIdsToSeparateGroups(objectIds);
+    // console.log(objectsIdsInSeparateGroups)
+
+    // fetch samples data in parallel for each group of object IDs.
+    const samplesDataInSeparateGroups: LandsatSampleData[][] =
+        await Promise.all(
+            objectsIdsInSeparateGroups.map((oids) =>
+                getSamples(queryLocation, oids, abortController)
+            )
         );
 
-        const objectIds = landsatScenesToSample.map((d) => d.objectId);
+    // combine samples data from different groups into a single array.
+    const samplesData: LandsatSampleData[] = samplesDataInSeparateGroups.reduce(
+        (combined, subsetOfSamplesData) => {
+            return [...combined, ...subsetOfSamplesData];
+        },
+        []
+    );
+    // console.log(samplesData);
 
-        const objectsIdsInSeparateGroups =
-            splitObjectIdsToSeparateGroups(objectIds);
-        // console.log(objectsIdsInSeparateGroups)
+    const temporalProfileData = formatAsTemporalProfileData(
+        samplesData,
+        landsatScenesToSample
+    );
 
-        const samplesDataInSeparateGroups: LandsatSampleData[][] =
-            await Promise.all(
-                objectsIdsInSeparateGroups.map((oids) =>
-                    getSamples(queryLocation, oids, abortController)
-                )
-            );
+    // exclude pixels with poor quality using the QA Band.
+    const temporalProfileDataWithBadPixelsExcluded = temporalProfileData.filter(
+        (d) => {
+            const { values } = d;
+            return checkClearFlagInQABand(values);
+        }
+    );
 
-        // combine samples data from different groups into a single array
-        const samplesData: LandsatSampleData[] =
-            samplesDataInSeparateGroups.reduce(
-                (combined, subsetOfSamplesData) => {
-                    return [...combined, ...subsetOfSamplesData];
-                },
-                []
-            );
-        // console.log(samplesData);
-
-        return formatAsTemporalProfileData(samplesData, landsatScenesToSample);
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
+    return temporalProfileDataWithBadPixelsExcluded;
 };
 
 /**

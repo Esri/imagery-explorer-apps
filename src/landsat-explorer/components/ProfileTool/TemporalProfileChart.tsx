@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LineChartBasic } from '@vannizhang/react-d3-charts';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
@@ -82,7 +82,7 @@ export const TemporalProfileChart: FC<Props> = ({
         spectralIndex
     );
 
-    const getCustomDomain4XScale = (): number[] => {
+    const customDomain4XScale = useMemo(() => {
         if (!queryParams4SelectedScene?.acquisitionDate || !chartData.length) {
             return null;
         }
@@ -99,9 +99,9 @@ export const TemporalProfileChart: FC<Props> = ({
         );
 
         return [xMin, xMax];
-    };
+    }, [chartData, queryParams4SelectedScene]);
 
-    const getCustomDomain4YScale = (): number[] => {
+    const customDomain4YScale = useMemo(() => {
         if (spectralIndex === 'temperature farhenheit') {
             return [
                 LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
@@ -117,7 +117,7 @@ export const TemporalProfileChart: FC<Props> = ({
         }
 
         return [-1, 1];
-    };
+    }, [spectralIndex]);
 
     const getData4VerticalReferenceLine = (): VerticalReferenceLineData[] => {
         if (!queryParams4SelectedScene?.acquisitionDate || !chartData.length) {
@@ -167,11 +167,11 @@ export const TemporalProfileChart: FC<Props> = ({
                 stroke="var(--custom-light-blue)"
                 strokeWidth={1.5}
                 yScaleOptions={{
-                    domain: getCustomDomain4YScale(),
+                    domain: customDomain4YScale,
                 }}
                 xScaleOptions={{
                     useTimeScale: true,
-                    domain: getCustomDomain4XScale(),
+                    domain: customDomain4XScale,
                 }}
                 bottomAxisOptions={{
                     /*

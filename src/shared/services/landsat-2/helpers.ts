@@ -1,3 +1,4 @@
+import { decimal2binary } from '@shared/utils/snippets/decimal2binary';
 import {
     kelvin2fahrenheit,
     kelvin2celsius,
@@ -38,6 +39,7 @@ type LandsatProductInfo = {
 /**
  * Landsat Band Index by Spectral Index
  *
+ * Here is the list of Landsat Bands:
  * - Band 1: Coastal aerosol (0.43 - 0.45 µm)
  * - Band 2: Blue (0.450 - 0.51 µm)
  * - Band 3: Green (0.53 - 0.59 µm)
@@ -94,9 +96,9 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
 
 export const calcSpectralIndex = (
     spectralIndex: SpectralIndex,
-    values: number[]
+    bandValues: number[]
 ): number => {
-    const [B1, B2, B3, B4, B5, B6, B7, B8, B9] = values;
+    const [B1, B2, B3, B4, B5, B6, B7, B8, B9] = bandValues;
 
     let value = 0;
 
@@ -114,6 +116,35 @@ export const calcSpectralIndex = (
     }
 
     return value;
+};
+
+/**
+ * Check if a pixel is clear via the QA Band
+ *
+ * The Pixel QA Band contains decimal values that represent bit-packed combinations of surface, atmosphere,
+ * and sensor conditions that can affect the usefulness of a pixel.
+ *
+ * The QA band is coded in 16-bit, so a pixel lies within the range between 0-65,535. The QA band lets the end user identify "bad" pixels more easily.
+ *
+ * @param bandValues
+ * @returns true if this pixel is clear without cloud
+ */
+export const checkClearFlagInQABand = (bandValues: number[]): boolean => {
+    const [B1, B2, B3, B4, B5, B6, B7, PixelQABand, B9] = bandValues;
+
+    // convert the decimal number to binary number to get bits
+    const bits = decimal2binary(PixelQABand);
+
+    /**
+     * The Clear Flag:
+     * - 0 if Cloud or Dilated Cloud bits are set
+     * - 1 if Cloud and Dilated Cloud bits are not set
+     *
+     * @see https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/LSDS-1619_Landsat-8-9-C2-L2-ScienceProductGuide-v4.pdf
+     */
+    const clearFlag = bits[6];
+
+    return clearFlag === '1';
 };
 
 /**
