@@ -31,7 +31,7 @@ export const RenderingControls: FC<Props> = ({
     opacityOnChange,
 }: Props) => {
     return (
-        <div className="flex items-center calcite-mode-dark">
+        <div className="flex items-center calcite-mode-dark select-none">
             <div className="flex items-center">
                 <div className="cursor-pointer" onClick={shouldClipOnToggle}>
                     <Tooltip

@@ -76,7 +76,7 @@ const CalendarContainer = () => {
 
     return (
         <div
-            className={classNames({
+            className={classNames('select-none', {
                 'is-disabled': !queryParams || isAnimationPlaying,
             })}
         >

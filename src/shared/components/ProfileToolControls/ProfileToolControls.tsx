@@ -44,7 +44,7 @@ export const ProfileToolControls = ({
 
     return (
         <div className="prfile-control-tools">
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center select-none">
                 <div className="w-1/2 mx-1">
                     {/* <Tooltip content="Choose an annual sampling resolution">
                     </Tooltip> */}

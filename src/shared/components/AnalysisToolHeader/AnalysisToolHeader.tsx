@@ -46,7 +46,7 @@ export const AnalysisToolHeader: FC<Props> = ({
     }, [data]);
 
     return (
-        <div className="flex items-center w-full">
+        <div className="flex items-center w-full select-none">
             <div className="flex items-center mr-4">
                 {tooltipText && (
                     <Tooltip content={tooltipText} width={280}>

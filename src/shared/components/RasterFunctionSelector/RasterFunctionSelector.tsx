@@ -41,7 +41,7 @@ export const RasterFunctionSelector: FC<Props> = ({
 
     return (
         <div
-            className={classNames('h-full w-auto', {
+            className={classNames('h-full w-auto select-none', {
                 'is-disabled': disabled,
             })}
             ref={containerRef}
