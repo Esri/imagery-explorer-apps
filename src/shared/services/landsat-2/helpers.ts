@@ -133,16 +133,17 @@ export const checkClearFlagInQABand = (bandValues: number[]): boolean => {
     const [B1, B2, B3, B4, B5, B6, B7, PixelQABand, B9] = bandValues;
 
     // convert the decimal number to binary number to get bits
-    const bits = decimal2binary(PixelQABand);
+    const bits: string[] = decimal2binary(PixelQABand).split('');
 
     /**
-     * The Clear Flag:
+     * get the value of Clear Flag, which is the seventh bit from the right
      * - 0 if Cloud or Dilated Cloud bits are set
      * - 1 if Cloud and Dilated Cloud bits are not set
      *
+     * For detailed bit assignments, check page 13 of the doc below:
      * @see https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/LSDS-1619_Landsat-8-9-C2-L2-ScienceProductGuide-v4.pdf
      */
-    const clearFlag = bits[6];
+    const clearFlag = bits[bits.length - 7];
 
     return clearFlag === '1';
 };

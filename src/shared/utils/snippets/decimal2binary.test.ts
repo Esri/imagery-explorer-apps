@@ -7,4 +7,5 @@ test('test decimal2binary', () => {
     expect(decimal2binary(100)).toBe('1100100');
     expect(decimal2binary(521)).toBe('1000001001');
     expect(decimal2binary(5000)).toBe('1001110001000');
+    expect(decimal2binary(55052)).toBe('1101011100001100');
 });
