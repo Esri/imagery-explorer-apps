@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useMemo, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
 import classNames from 'classnames';
@@ -60,9 +60,9 @@ export const CloudFilter: FC<Props> = ({
         let newVal = cloudCoverage * 100;
 
         if (shouldDecrement) {
-            newVal -= 10;
+            newVal -= 5;
         } else {
-            newVal += 10;
+            newVal += 5;
         }
 
         if (newVal > 100) {
@@ -102,7 +102,15 @@ export const CloudFilter: FC<Props> = ({
                     // id="cloud-filter-container"
                     className="w-20 h-4 mx-3"
                 >
-                    <Slider value={cloudCoverage} onChange={onChange} />
+                    <Slider
+                        steps={[
+                            0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4,
+                            0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85,
+                            0.9, 0.95, 1.0,
+                        ]}
+                        value={cloudCoverage}
+                        onChange={onChange}
+                    />
                 </div>
 
                 {/* use online icon to indicate high cloud tolerance */}

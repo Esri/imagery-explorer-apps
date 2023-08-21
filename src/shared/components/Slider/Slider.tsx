@@ -9,6 +9,7 @@ type Props = {
      * value of the slider thumb
      */
     value: number;
+    steps?: number[];
     /**
      * fires when user selects a new value using the slider
      */
@@ -20,7 +21,7 @@ type Props = {
  * @param param0
  * @returns
  */
-export const Slider: FC<Props> = ({ value, onChange }) => {
+export const Slider: FC<Props> = ({ value, steps, onChange }) => {
     const containerRef = useRef<HTMLDivElement>();
 
     const sliderRef = useRef<ISlider>();
@@ -37,7 +38,9 @@ export const Slider: FC<Props> = ({ value, onChange }) => {
                 container: containerRef.current,
                 min: 0,
                 max: 1,
-                steps: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+                steps: steps || [
+                    0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
+                ],
                 values: [value],
                 snapOnClickEnabled: false,
                 visibleElements: {
