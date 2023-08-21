@@ -9,11 +9,16 @@ import { ProfileToolQueryLocation } from '@shared/components/ProfileToolQueryLoc
 import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { Popup } from '../PopUp/PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
+import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 
 const Map = () => {
     return (
         <MapViewContainer>
-            <GroupLayer>
+            <GroupLayer
+                // this group layer should be added at index of one so that the
+                // hillsahde/terrain layer can be added on top of it with blend mode applied
+                index={1}
+            >
                 <LandsatLayer />
                 <MaskLayer />
                 <ProfileToolQueryLocation />
@@ -21,6 +26,7 @@ const Map = () => {
             </GroupLayer>
             <SwipeWidget />
             <AnimationLayer />
+            <HillshadeLayer />
             <Zoom2NativeScale tooltip={"Zoom to Landsat's native resolution"} />
             <Popup />
         </MapViewContainer>

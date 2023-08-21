@@ -1,7 +1,7 @@
 /**
  * Default web map to be used
  */
-export const WEB_MAP_ID = 'f8770e0adc5c41038026494b871ceb99';
+export const WEB_MAP_ID = '81609bbe235942919ad27c77e42c600e';
 
 /**
  * Default Map Center
@@ -19,3 +19,5 @@ export const HUMAN_GEO_LIGHT_WATER_LAYER_TITLE =
 export const HUMAN_GEO_DARK_DRY_LAYER_TITLE = 'Human Geography Dark Detail Dry';
 
 export const TERRAIN_LAYER_TITLE = 'World Hillshade';
+
+export const TERRAIN_LAYER_ITEM_ID = '1b243539f4514b6ba35e7d995890db1d';

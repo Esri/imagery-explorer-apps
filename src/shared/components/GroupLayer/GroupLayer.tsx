@@ -4,6 +4,7 @@ import IGroupLayer from 'esri/layers/GroupLayer';
 import { loadModules } from 'esri-loader';
 
 type Props = {
+    index?: number;
     mapView?: MapView;
     /**
      * Children Elements that will receive Map View and Group  as prop
@@ -11,7 +12,11 @@ type Props = {
     children?: React.ReactNode;
 };
 
-export const GroupLayerWrapper: FC<Props> = ({ mapView, children }: Props) => {
+export const GroupLayerWrapper: FC<Props> = ({
+    index,
+    mapView,
+    children,
+}: Props) => {
     const [groupLayer, setGroupLayer] = useState<IGroupLayer>();
 
     const initGroupLayer = async () => {
@@ -23,7 +28,7 @@ export const GroupLayerWrapper: FC<Props> = ({ mapView, children }: Props) => {
 
         const groupLayer = new GroupLayer();
 
-        mapView.map.add(groupLayer);
+        mapView.map.add(groupLayer, index);
 
         setGroupLayer(groupLayer);
     };

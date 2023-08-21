@@ -49,7 +49,9 @@ const SwipeWidget: FC<Props> = ({
             'esri/core/reactiveUtils',
         ]) as Promise<Modules>);
 
-        mapView.map.addMany([leadingLayer, trailingLayer], 0);
+        // this swipe widget layers should be added at index of one so that the
+        // hillsahde/terrain layer can be added on top of it with blend mode applied
+        mapView.map.addMany([leadingLayer, trailingLayer], 1);
 
         swipeWidgetRef.current = new Swipe({
             view: mapView,

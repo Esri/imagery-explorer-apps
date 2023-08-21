@@ -20,7 +20,7 @@ type Props = {
 
 const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     const mapLabelLayersRef = useRef<__esri.Collection<__esri.Layer>>();
-    const terrainLayerRef = useRef<__esri.Layer>();
+    // const terrainLayerRef = useRef<__esri.Layer>();
 
     const showMapLabel = useSelector(selectShowMapLabel);
     const showTerrain = useSelector(selectShowTerrain);
@@ -34,9 +34,9 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
             );
         });
 
-        terrainLayerRef.current = mapView.map.allLayers.find(
-            (layer) => layer.title === TERRAIN_LAYER_TITLE
-        );
+        // terrainLayerRef.current = mapView.map.allLayers.find(
+        //     (layer) => layer.title === TERRAIN_LAYER_TITLE
+        // );
     };
 
     useEffect(() => {
@@ -53,11 +53,11 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
         }
     }, [showMapLabel]);
 
-    useEffect(() => {
-        if (terrainLayerRef.current) {
-            terrainLayerRef.current.visible = showTerrain;
-        }
-    }, [showTerrain]);
+    // useEffect(() => {
+    //     if (terrainLayerRef.current) {
+    //         terrainLayerRef.current.visible = showTerrain;
+    //     }
+    // }, [showTerrain]);
 
     return null;
 };
