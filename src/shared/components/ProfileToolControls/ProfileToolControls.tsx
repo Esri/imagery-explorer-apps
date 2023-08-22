@@ -57,7 +57,9 @@ export const ProfileToolControls = ({
                     />
                 </div> */}
 
-                <span className="ml-2 text-xs uppercase">Month:</span>
+                <span className="ml-2 text-custom-light-blue-50 text-xs uppercase">
+                    Month:
+                </span>
 
                 <div className="mx-1">
                     <Dropdown
