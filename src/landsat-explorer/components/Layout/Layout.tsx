@@ -75,17 +75,17 @@ const Layout = () => {
                                 <Calendar />
                             </div>
 
-                            <div className="flex shrink-0 ml-6 3xl:ml-16">
-                                <RasterFunctionSelector />
-                                <SceneInfo />
-                            </div>
-
                             {mode === 'analysis' && (
                                 <div className="ml-6 3xl:ml-16">
                                     <MaskTool />
                                     <ProfileTool />
                                 </div>
                             )}
+
+                            <div className="flex shrink-0 ml-6 3xl:ml-16">
+                                <SceneInfo />
+                                <RasterFunctionSelector />
+                            </div>
                         </>
                     )}
                 </div>

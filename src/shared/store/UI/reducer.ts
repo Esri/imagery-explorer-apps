@@ -45,7 +45,7 @@ export const initialUIState: UIState = {
     hideBottomPanel: false,
     shouldShowAboutThisApp: false,
     animationStatus: null,
-    animationSpeed: 1000,
+    animationSpeed: 400,
     tooltipXPosition: 0,
     tooltipData: null,
 };

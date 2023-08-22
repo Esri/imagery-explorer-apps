@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useMemo, useRef } from 'react';
 // import ISlider from 'esri/widgets/Slider';
 // import { loadModules } from 'esri-loader';
 // import classNames from 'classnames';
@@ -17,10 +17,15 @@ type Props = {
     onChange: (speed: number) => void;
 };
 
+// /**
+//  * Maximum Animation Speed in Milliseconds
+//  */
+// const MAX_SPEED_IN_MILLISECONDS = 2000;
+
 /**
- * Maximum Animation Speed in Milliseconds
+ * list of animation speed options
  */
-const MAX_SPEED_IN_MILLISECONDS = 2000;
+const SPEEDS = [2000, 1000, 800, 500, 400, 200, 100, 20, 0];
 
 /**
  * Calculates the position of a slider thumb based on the given animation speed.
@@ -29,21 +34,42 @@ const MAX_SPEED_IN_MILLISECONDS = 2000;
  * @returns {number} - The position of the slider thumb, ranging from 0 (slowest) to 1 (fastest).
  */
 const getSliderThumbPositionByAnimationSpeed = (speed: number): number => {
-    /**
-     * Calculate the speed ratio relative to the maximum speed in milliseconds.
-     * A value of 1 indicates the slowest speed, while 0.1 indicates the fastest speed.
-     */
-    const speedRatio = speed / MAX_SPEED_IN_MILLISECONDS;
+    const idx = SPEEDS.indexOf(speed);
+    return idx / (SPEEDS.length - 1);
+};
 
-    /**
-     * Calculate the position of the slider thumb.
-     * The left end of the slider corresponds to a value of 0,
-     * and the right end of the slider corresponds to a value of 1.
-     * To represent slow-to-fast animation, the slider thumb position is reversed.
-     */
-    const position = 1 - speedRatio;
+/**
+ * Find the corresponding animation speed using the slider thumb position.
+ * This function takes a slider thumb position and maps it to an animation speed
+ * based on predefined speed values. It uses a binary search algorithm to efficiently
+ * locate the speed that matches or is closest to the provided position.
+ *
+ * @param position
+ * @returns
+ */
+const getAnimationSpeedBySliderThumbPosition = (position: number): number => {
+    // Initialize the left and right pointers for binary search.
+    let left = 0;
+    let right = SPEEDS.length - 1;
 
-    return +position.toFixed(1);
+    while (left < right) {
+        const midIdx = Math.floor((right - left) / 2) + left;
+
+        // Calculate the normalized position for the speed at the middle index.
+        const pos = midIdx / (SPEEDS.length - 1);
+
+        if (pos == position) {
+            return SPEEDS[midIdx];
+        }
+
+        if (pos > position) {
+            right = midIdx - 1;
+        } else {
+            left = midIdx + 1;
+        }
+    }
+
+    return SPEEDS[left];
 };
 
 /**
@@ -52,23 +78,42 @@ const getSliderThumbPositionByAnimationSpeed = (speed: number): number => {
  * @returns
  */
 export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
+    /**
+     * setps that will be used by the animation slider
+     *
+     * @eample `[0, 1/8, 2/8, 3/8, 4/8, 5/8, 6/8, 7/8, 1]`
+     */
+    const steps = useMemo(() => {
+        let step = 0;
+        const interval = 1 / (SPEEDS.length - 1);
+
+        const output: number[] = [];
+
+        while (step <= 1) {
+            output.push(step);
+            step += interval;
+        }
+
+        return output;
+    }, []);
+
     return (
         <div
             // id="cloud-filter-container"
             className="flex-grow px-2 pt-2"
         >
             <Slider
+                steps={steps}
                 value={getSliderThumbPositionByAnimationSpeed(speed)} // 0.5 as the mid point of the slider, which is equivelant to 1 second per frame
-                onChange={(newVal) => {
-                    // The slider range is set between 0 and 1. In this UI, a value of 0 indicates the slowest speed,
-                    // while a value of 1 indicates the fastest speed. To achieve this, we calculate a speed ratio
-                    // that determines the animation speed.
-                    let speedRatio = 1 - newVal;
+                onChange={(newThumbPosition) => {
+                    // console.log(newThumbPosition, getAnimationSpeedBySliderThumbPosition(newThumbPosition));
 
-                    // Ensure speedRatio is not zero, so we set it to a minimum of 0.01, which corresponds to 20 milliseconds per frame.
-                    speedRatio = speedRatio || 0.01;
+                    const newAnimationSpeed =
+                        getAnimationSpeedBySliderThumbPosition(
+                            newThumbPosition
+                        );
 
-                    onChange(MAX_SPEED_IN_MILLISECONDS * speedRatio);
+                    onChange(newAnimationSpeed);
                 }}
             />
 
