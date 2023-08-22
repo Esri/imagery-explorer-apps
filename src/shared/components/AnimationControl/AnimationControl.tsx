@@ -111,7 +111,7 @@ export const AnimationControl: FC<Props> = ({
                                 fontSize: `.7rem`,
                             }}
                         >
-                            Add A Frame
+                            Add A Scene
                         </span>
                     </div>
                 )}
