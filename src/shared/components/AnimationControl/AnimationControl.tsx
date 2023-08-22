@@ -97,14 +97,20 @@ export const AnimationControl: FC<Props> = ({
                 {status === null && (
                     <div
                         className={classNames(
-                            'w-full border border-custom-light-blue-80 cursor-pointer px-1 text-center',
+                            'w-full cursor-pointer text-center flex items-center',
                             {
                                 'is-disabled': shouldDisableAddFrameButton,
                             }
                         )}
                         onClick={addButtonOnClick}
                     >
-                        <span className="text-xs text-custom-light-blue uppercase">
+                        <calcite-icon icon="plus" scale="s" />
+                        <span
+                            className=" text-custom-light-blue uppercase ml-1"
+                            style={{
+                                fontSize: `.7rem`,
+                            }}
+                        >
                             Add A Frame
                         </span>
                     </div>

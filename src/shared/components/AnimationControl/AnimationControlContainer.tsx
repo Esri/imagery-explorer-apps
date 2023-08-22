@@ -47,7 +47,7 @@ export const AnimationControlContainer = () => {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full h-full relative">
             <AnimationFramesList
                 data={animationFramesData}
                 disabled={isAnimationPlaying}
@@ -77,6 +77,15 @@ export const AnimationControlContainer = () => {
                     dispatch(animationSpeedChanged(speed));
                 }}
             />
+
+            {animationFramesData && animationFramesData.length <= 1 ? (
+                <div className="absolute w-full left-0 bottom-0">
+                    <p className="text-xs opacity-50">
+                        Add scenes to this list to create a chronological
+                        animation.
+                    </p>
+                </div>
+            ) : null}
         </div>
     );
 };
