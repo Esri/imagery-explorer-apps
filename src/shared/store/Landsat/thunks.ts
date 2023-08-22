@@ -207,28 +207,28 @@ export const updateObjectIdOfSelectedScene =
 //         }
 //     };
 
-export const updateCloudCover =
-    (cloudCover: number) =>
-    async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        try {
-            const queryParams = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+// export const updateCloudCover =
+//     (cloudCover: number) =>
+//     async (dispatch: StoreDispatch, getState: StoreGetState) => {
+//         try {
+//             const queryParams = selectQueryParams4SceneInSelectedMode(
+//                 getState()
+//             );
 
-            if (!queryParams) {
-                return;
-            }
+//             if (!queryParams) {
+//                 return;
+//             }
 
-            const updatedQueryParams: QueryParams4ImageryScene = {
-                ...queryParams,
-                cloudCover,
-            };
+//             const updatedQueryParams: QueryParams4ImageryScene = {
+//                 ...queryParams,
+//                 cloudCover,
+//             };
 
-            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
-        } catch (err) {
-            console.error(err);
-        }
-    };
+//             dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
+//         } catch (err) {
+//             console.error(err);
+//         }
+//     };
 
 // export const updateAcquisitionMonth =
 //     (acquisitionMonth: number) =>

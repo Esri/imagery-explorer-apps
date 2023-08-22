@@ -35,10 +35,10 @@ export type QueryParams4ImageryScene = {
      * This acquisition date will be used to select a Imagery Scene from `availableScenes` array.
      */
     acquisitionDate?: string;
-    /**
-     * use selected cloud coverage threshold ranges from 0 to 1
-     */
-    cloudCover?: number;
+    // /**
+    //  * use selected cloud coverage threshold ranges from 0 to 1
+    //  */
+    // cloudCover?: number;
     /**
      * name of raster function that will be used to render the Imagery scene
      */
@@ -94,12 +94,16 @@ export type LandsatState = {
      * Id of the selected frame of the Animation Mode. This Id helps identify which item in `queryParams4ScenesInAnimateMode` should be updated.
      */
     selectedAnimationFrameId?: string;
+    /**
+     * user selected cloud coverage threshold, the value ranges from 0 to 1
+     */
+    cloudCover: number;
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     // acquisitionYear: getCurrentYear(),
     acquisitionDate: '',
-    cloudCover: 0.5,
+    // cloudCover: 0.5,
     rasterFunctionName: 'Natural Color with DRA',
     objectIdOfSelectedScene: null,
     animationFrameId: null,
@@ -123,6 +127,7 @@ export const initialLandsatState: LandsatState = {
         frameIds: [],
     },
     selectedAnimationFrameId: null,
+    cloudCover: 0.5,
 };
 
 const slice = createSlice({
@@ -219,6 +224,9 @@ const slice = createSlice({
             state.queryParams4ScenesInAnimateMode.byFrameId[frameId] =
                 action.payload;
         },
+        cloudCoverChanged: (state, action: PayloadAction<number>) => {
+            state.cloudCover = action.payload;
+        },
     },
 });
 
@@ -234,6 +242,7 @@ export const {
     selectedAnimationFrameIdChanged,
     queryParams4ScenesInAnimationModeChanged,
     queryParams4SceneInSelectedAnimationFrameChanged,
+    cloudCoverChanged,
 } = slice.actions;
 
 export default reducer;

@@ -6,18 +6,22 @@ import { Dropdown } from '@shared/components/Dropdown';
 // import { useMonthOptions } from './useMonthOptions';
 import { useYearOptions } from './useYearOptions';
 import { useDispatch } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
+import {
+    selectCloudCover,
+    selectQueryParams4SceneInSelectedMode,
+} from '@shared/store/Landsat/selectors';
 import useAvailableScenes from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
-    updateCloudCover,
+    // updateCloudCover,
 } from '@shared/store/Landsat/thunks';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
+import { cloudCoverChanged } from '@shared/store/Landsat/reducer';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -28,7 +32,7 @@ const CalendarContainer = () => {
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
-    const cloudCoverThreshold = queryParams?.cloudCover;
+    const cloudCoverThreshold = useSelector(selectCloudCover); //queryParams?.cloudCover;
 
     const [acquisitionYear, setAcquisitionYear] = useState<number>();
 
@@ -109,7 +113,7 @@ const CalendarContainer = () => {
                         cloudCoverThreshold === undefined || isAnimationPlaying
                     }
                     onChange={(newValue) => {
-                        dispatch(updateCloudCover(newValue));
+                        dispatch(cloudCoverChanged(newValue));
                     }}
                 />
             </div>

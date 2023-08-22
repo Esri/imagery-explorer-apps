@@ -109,3 +109,8 @@ export const selectSelectedAnimationFrameId = createSelector(
     (state: RootState) => state.Landsat.selectedAnimationFrameId,
     (selectedAnimationFrameId) => selectedAnimationFrameId
 );
+
+export const selectCloudCover = createSelector(
+    (state: RootState) => state.Landsat.cloudCover,
+    (cloudCover) => cloudCover
+);
