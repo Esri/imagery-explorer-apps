@@ -18,7 +18,11 @@ export const InterestingPlaces: FC<Props> = ({
     onChange,
 }) => {
     return (
-        <div className={classNames('h-full w-auto')}>
+        <div
+            className={classNames(
+                'h-full w-auto mx-8 pr-8 border-r border-custom-light-blue-50'
+            )}
+        >
             <div className="text-center mb-3">
                 <span className="uppercase text-sm">Interesting Places</span>
             </div>

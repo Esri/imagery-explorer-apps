@@ -14,6 +14,7 @@ module.exports = {
           90: 'var(--custom-light-blue-90)',
           80: 'var(--custom-light-blue-80)',
           50: 'var(--custom-light-blue-50)',
+          25: 'var(--custom-light-blue-25)',
           0: 'var(--custom-light-blue-0)'
         },
         'background': {

@@ -36,8 +36,8 @@ export const AcquisitionDateLabel: FC<Props> = ({
     return (
         <div className="text-xs mx-2 flex items-center">
             <div className="mr-1">
-                <span className="opacity-50 mr-2">Date</span>
-                <span className="uppercase">{formattedAcquisitionDate}</span>
+                <span className="opacity-50 mr-2 uppercase">Date</span>
+                <span className="">{formattedAcquisitionDate}</span>
             </div>
 
             <div className="cursor-pointer" onClick={closeBtnOnClick}>

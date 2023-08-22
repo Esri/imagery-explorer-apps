@@ -23,28 +23,22 @@ export const InterestingPlacesContainer = () => {
     };
 
     return (
-        <div className="mx-10">
-            <InterestingPlaces
-                data={getData()}
-                nameOfSelectedPlace={''}
-                onChange={(name) => {
-                    const dataItem = data.find((d) => d.name === name);
+        <InterestingPlaces
+            data={getData()}
+            nameOfSelectedPlace={''}
+            onChange={(name) => {
+                const dataItem = data.find((d) => d.name === name);
 
-                    if (dataItem) {
-                        // setSelectedPlace(dataItem);
+                if (dataItem) {
+                    // setSelectedPlace(dataItem);
 
-                        batch(() => {
-                            dispatch(
-                                centerChanged([...dataItem.location.center])
-                            );
-                            dispatch(zoomChanged(dataItem.location.zoom));
-                            dispatch(
-                                updateRasterFunctionName(dataItem.renderer)
-                            );
-                        });
-                    }
-                }}
-            />
-        </div>
+                    batch(() => {
+                        dispatch(centerChanged([...dataItem.location.center]));
+                        dispatch(zoomChanged(dataItem.location.zoom));
+                        dispatch(updateRasterFunctionName(dataItem.renderer));
+                    });
+                }
+            }}
+        />
     );
 };

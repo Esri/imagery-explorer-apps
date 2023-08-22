@@ -139,7 +139,7 @@ export const ProfileToolContainer = () => {
                 selectedSpectralIndexOnChange={(val) => {
                     dispatch(spectralIndex4ProfileToolChanged(val));
                 }}
-                tooltipText={`Select an index to see its values over time. The currently selected scene's time is marked, as a reference.`}
+                tooltipText={`The least-cloudy scene from the selected month will be sampled across all years of the imagery archive.`}
             />
 
             <div className="w-full h-[120px] my-2">
