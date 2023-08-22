@@ -13,8 +13,8 @@ type Props = {
      * if true, show close button
      */
     shouldShowCloseButton: boolean;
-    annualSamplingResolution: number;
-    annualSamplingResolutionOnChange: (resolution: number) => void;
+    // annualSamplingResolution: number;
+    // annualSamplingResolutionOnChange: (resolution: number) => void;
     /**
      * fires when user selects a new acquisition month
      * @param month
@@ -31,23 +31,21 @@ type Props = {
 export const ProfileToolControls = ({
     acquisitionMonth,
     shouldShowCloseButton,
-    annualSamplingResolution,
-    annualSamplingResolutionOnChange,
+    // annualSamplingResolution,
+    // annualSamplingResolutionOnChange,
     acquisitionMonthOnChange,
     closeButtonOnClick,
 }: Props) => {
     const monthDropdownMenuData = useMonthOptions(acquisitionMonth);
 
-    const annualResolutionsMenuData = useAnnualResolutionOptions(
-        annualSamplingResolution
-    );
+    // const annualResolutionsMenuData = useAnnualResolutionOptions(
+    //     annualSamplingResolution
+    // );
 
     return (
         <div className="prfile-control-tools">
-            <div className="flex items-center justify-center select-none">
-                <div className="w-1/2 mx-1">
-                    {/* <Tooltip content="Choose an annual sampling resolution">
-                    </Tooltip> */}
+            <div className="flex items-center select-none">
+                {/* <div className="w-1/2 mx-1">
 
                     <Dropdown
                         data={annualResolutionsMenuData}
@@ -57,15 +55,14 @@ export const ProfileToolControls = ({
                             annualSamplingResolutionOnChange(+val);
                         }}
                     />
-                </div>
+                </div> */}
 
-                <div className="w-1/2 mx-1">
-                    {/* <Tooltip content="Choose a season">
-                    </Tooltip> */}
+                <span className="ml-2 text-xs uppercase">Month:</span>
 
+                <div className="mx-1">
                     <Dropdown
                         data={monthDropdownMenuData}
-                        tooltip="Choose a season"
+                        // tooltip="Choose a season"
                         onChange={(val) => {
                             acquisitionMonthOnChange(+val);
                         }}

@@ -11,7 +11,7 @@ import {
     selectActiveAnalysisTool,
     selectMaskOptions,
     selectQueryLocation4ProfileTool,
-    selectSamplingTemporalResolution,
+    // selectSamplingTemporalResolution,
 } from './selectors';
 import { getTemporalProfileData } from '@shared/services/landsat-2/getTemporalProfileData';
 
@@ -70,8 +70,8 @@ export const updateTemporalProfileData =
 
         const acquisitionMonth = selectAcquisitionMonth4ProfileTool(rootState);
 
-        const samplingTemporalResolution =
-            selectSamplingTemporalResolution(rootState);
+        // const samplingTemporalResolution =
+        //     selectSamplingTemporalResolution(rootState);
 
         if (!queryLocation) {
             dispatch(temporalProfileDataUpdated([]));
@@ -87,7 +87,7 @@ export const updateTemporalProfileData =
         const data = await getTemporalProfileData({
             queryLocation,
             acquisitionMonth,
-            samplingTemporalResolution,
+            // samplingTemporalResolution,
             abortController,
         });
 

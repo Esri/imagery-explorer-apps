@@ -144,7 +144,7 @@ export const encodeTemporalProfileToolData = (
     const {
         spectralIndex,
         acquisitionMonth,
-        samplingTemporalResolution,
+        // samplingTemporalResolution,
         queryLocation,
     } = data;
 
@@ -155,7 +155,7 @@ export const encodeTemporalProfileToolData = (
     return [
         spectralIndex,
         acquisitionMonth,
-        samplingTemporalResolution,
+        // samplingTemporalResolution,
         encodeProfileToolQueryLocation(queryLocation),
     ].join('|');
 };
@@ -170,7 +170,7 @@ export const decodeTemporalProfileToolData = (
     const [
         spectralIndex,
         acquisitionMonth,
-        samplingTemporalResolution,
+        // samplingTemporalResolution,
         queryLocation,
     ] = val.split('|');
 
@@ -178,7 +178,7 @@ export const decodeTemporalProfileToolData = (
         ...initialAnalysisState.profileTool,
         spectralIndex: spectralIndex as SpectralIndex,
         acquisitionMonth: +acquisitionMonth,
-        samplingTemporalResolution: +samplingTemporalResolution,
+        // samplingTemporalResolution: +samplingTemporalResolution,
         queryLocation: decodeProfileToolQueryLocation(queryLocation),
     };
 };

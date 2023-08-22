@@ -8,7 +8,7 @@ import { checkClearFlagInQABand } from './helpers';
 type GetProfileDataOptions = {
     queryLocation: Point;
     acquisitionMonth: number;
-    samplingTemporalResolution: number;
+    // samplingTemporalResolution: number;
     abortController: AbortController;
 };
 
@@ -57,7 +57,7 @@ const splitObjectIdsToSeparateGroups = (objectIds: number[]): number[][] => {
 export const getTemporalProfileData = async ({
     queryLocation,
     acquisitionMonth,
-    samplingTemporalResolution,
+    // samplingTemporalResolution,
     abortController,
 }: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
     const { x, y } = queryLocation;
@@ -73,10 +73,10 @@ export const getTemporalProfileData = async ({
         return [];
     }
 
-    // refine Landsat scenes based on cloud coverage and temporal resolution.
+    // refine Landsat scenes based on cloud coverage.
     const landsatScenesToSample = getLandsatScenesToSample(
-        landsatScenes,
-        samplingTemporalResolution
+        landsatScenes
+        // samplingTemporalResolution
     );
 
     // extract object IDs from refined Landsat scenes.
@@ -179,8 +179,8 @@ const formatAsTemporalProfileData = (
  * @returns LandsatScene[]
  */
 const getLandsatScenesToSample = (
-    scenes: LandsatScene[],
-    samplingTemporalResolution: number
+    scenes: LandsatScene[]
+    // samplingTemporalResolution: number
 ): LandsatScene[] => {
     if (!scenes.length) {
         return [];
@@ -193,12 +193,12 @@ const getLandsatScenesToSample = (
 
         const currentScene = scenes[i];
 
-        if (
-            currentScene.acquisitionYear - prevScene.acquisitionYear <
-            samplingTemporalResolution
-        ) {
-            continue;
-        }
+        // if (
+        //     currentScene.acquisitionYear - prevScene.acquisitionYear <
+        //     samplingTemporalResolution
+        // ) {
+        //     continue;
+        // }
 
         // add current scene to candidates if it was acquired from a different year or month
         if (

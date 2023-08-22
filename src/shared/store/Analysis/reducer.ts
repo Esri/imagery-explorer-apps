@@ -56,13 +56,13 @@ export type AnalysisState = {
          * user selected spectral index to be used in the Temporal profile tool
          */
         spectralIndex: SpectralIndex;
-        /**
-         * Determines the frequency of collecting samples for the annual resolution.
-         * The minimum value is 1, indicating that imagery scenes acquired in the user-selected month
-         * will be sampled for each year. The maximum value is 5, indicating that imagery scenes will be sampled
-         * every 5 years.
-         */
-        samplingTemporalResolution: number;
+        // /**
+        //  * Determines the frequency of collecting samples for the annual resolution.
+        //  * The minimum value is 1, indicating that imagery scenes acquired in the user-selected month
+        //  * will be sampled for each year. The maximum value is 5, indicating that imagery scenes will be sampled
+        //  * every 5 years.
+        //  */
+        // samplingTemporalResolution: number;
         /**
          * imagery temporal profile data using object id as key
          */
@@ -119,7 +119,7 @@ export const initialAnalysisState: AnalysisState = {
             byObjectId: {},
             objectIds: [],
         },
-        samplingTemporalResolution: 1,
+        // samplingTemporalResolution: 1,
     },
 };
 
@@ -187,12 +187,12 @@ const slice = createSlice({
         ) => {
             state.profileTool.spectralIndex = action.payload;
         },
-        samplingTemporalResolutionChanged: (
-            state,
-            action: PayloadAction<number>
-        ) => {
-            state.profileTool.samplingTemporalResolution = action.payload;
-        },
+        // samplingTemporalResolutionChanged: (
+        //     state,
+        //     action: PayloadAction<number>
+        // ) => {
+        //     state.profileTool.samplingTemporalResolution = action.payload;
+        // },
     },
 });
 
@@ -208,7 +208,7 @@ export const {
     acquisitionMonth4ProfileToolChanged,
     temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
-    samplingTemporalResolutionChanged,
+    // samplingTemporalResolutionChanged,
 } = slice.actions;
 
 export default reducer;

@@ -3,7 +3,7 @@ import { ProfileToolControls } from '@shared/components/ProfileToolControls';
 // import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
     acquisitionMonth4ProfileToolChanged,
-    samplingTemporalResolutionChanged,
+    // samplingTemporalResolutionChanged,
     temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
     queryLocation4ProfileToolChanged,
@@ -11,7 +11,7 @@ import {
 import {
     selectAcquisitionMonth4ProfileTool,
     selectActiveAnalysisTool,
-    selectSamplingTemporalResolution,
+    // selectSamplingTemporalResolution,
     selectTemporalProfileData,
     selectQueryLocation4ProfileTool,
     selectSpectralIndex4ProfileTool,
@@ -44,9 +44,9 @@ export const ProfileToolContainer = () => {
 
     const spectralIndex = useSelector(selectSpectralIndex4ProfileTool);
 
-    const samplingTemporalResolution = useSelector(
-        selectSamplingTemporalResolution
-    );
+    // const samplingTemporalResolution = useSelector(
+    //     selectSamplingTemporalResolution
+    // );
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
@@ -103,7 +103,7 @@ export const ProfileToolContainer = () => {
                 console.log(err);
             }
         })();
-    }, [queryLocation, tool, acquisitionMonth, samplingTemporalResolution]);
+    }, [queryLocation, tool, acquisitionMonth]);
 
     if (tool !== 'profile') {
         return null;
@@ -191,10 +191,10 @@ export const ProfileToolContainer = () => {
                 shouldShowCloseButton={
                     temporalProfileData.length > 0 ? true : false
                 }
-                annualSamplingResolution={samplingTemporalResolution}
-                annualSamplingResolutionOnChange={(resolution) => {
-                    dispatch(samplingTemporalResolutionChanged(resolution));
-                }}
+                // annualSamplingResolution={samplingTemporalResolution}
+                // annualSamplingResolutionOnChange={(resolution) => {
+                //     dispatch(samplingTemporalResolutionChanged(resolution));
+                // }}
                 acquisitionMonthOnChange={(month) => {
                     dispatch(acquisitionMonth4ProfileToolChanged(month));
                 }}

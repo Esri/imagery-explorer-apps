@@ -53,10 +53,10 @@ export const selectSpectralIndex4ProfileTool = createSelector(
     (spectralIndex) => spectralIndex
 );
 
-export const selectSamplingTemporalResolution = createSelector(
-    (state: RootState) => state.Analysis.profileTool.samplingTemporalResolution,
-    (samplingTemporalResolution) => samplingTemporalResolution
-);
+// export const selectSamplingTemporalResolution = createSelector(
+//     (state: RootState) => state.Analysis.profileTool.samplingTemporalResolution,
+//     (samplingTemporalResolution) => samplingTemporalResolution
+// );
 
 export const selectMaskToolState = createSelector(
     (state: RootState) => state.Analysis.maskTool,
