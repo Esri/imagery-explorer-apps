@@ -33,7 +33,7 @@ export const HillshadeLayer: FC<Props> = ({ mapView }) => {
                 id: TERRAIN_LAYER_ITEM_ID,
             },
             blendMode: 'multiply',
-            opacity: 0.75,
+            opacity: 0.8,
             visible,
         });
 

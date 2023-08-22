@@ -52,9 +52,11 @@ export const RasterFunctionSelector: FC<Props> = ({
 
             <div className="grid grid-cols-3 gap-[5px]">
                 {rasterFunctionInfos.slice(0, 9).map((d) => {
-                    const { name, thumbnail, label, description } = d;
+                    const { name, thumbnail, label } = d;
 
-                    const selected = nameOfSelectedRasterFunction === name;
+                    const selected =
+                        disabled === false &&
+                        nameOfSelectedRasterFunction === name;
 
                     return (
                         // <div

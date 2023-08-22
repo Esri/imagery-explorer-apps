@@ -35,12 +35,14 @@ const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
     };
 
     return (
-        <div className="text-xs">
+        <div className="text-xs flex items-center">
             <span className="uppercase text-custom-light-blue-50 mr-1">
                 Cloud Tolerance
             </span>
 
-            <span>{getFormattedCouldCoverageInPercent()}</span>
+            <div className="w-[31px] text-right">
+                <span>{getFormattedCouldCoverageInPercent()}</span>
+            </div>
         </div>
     );
 };
