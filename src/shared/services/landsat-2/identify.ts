@@ -1,10 +1,12 @@
 import { Geometry, Point } from 'esri/geometry';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
+import { getMosaicRuleByObjectId } from './helpers';
 
 type IdentifyTaskParams = {
     point: Point;
     abortController: AbortController;
+    objectId?: number;
 };
 
 type IdentifyTaskResponse = {
@@ -32,8 +34,19 @@ type IdentifyTaskResponse = {
  */
 export const identify = async ({
     point,
+    objectId,
     abortController,
 }: IdentifyTaskParams): Promise<IdentifyTaskResponse> => {
+    const mosaicRule = objectId
+        ? getMosaicRuleByObjectId(objectId)
+        : {
+              ascending: true,
+              mosaicMethod: 'esriMosaicAttribute',
+              mosaicOperation: 'MT_FIRST',
+              sortField: 'best',
+              sortValue: '0',
+          };
+
     const params = new URLSearchParams({
         f: 'json',
         maxItemCount: '1',
@@ -41,13 +54,7 @@ export const identify = async ({
         returnCatalogItems: 'true',
         geometryType: 'esriGeometryPoint',
         geometry: JSON.stringify(point),
-        mosaicRule: JSON.stringify({
-            ascending: true,
-            mosaicMethod: 'esriMosaicAttribute',
-            mosaicOperation: 'MT_FIRST',
-            sortField: 'best',
-            sortValue: '0',
-        }),
+        mosaicRule: JSON.stringify(mosaicRule),
     });
 
     const requestURL = `${LANDSAT_LEVEL_2_SERVICE_URL}/identify?${params.toString()}`;

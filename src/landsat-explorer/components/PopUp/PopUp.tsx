@@ -58,7 +58,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         selectQueryParams4SecondaryScene
     );
 
-    const availableScenes = useSelector(selectAvailableScenesByObjectId);
+    // const availableScenes = useSelector(selectAvailableScenesByObjectId);
 
     const swipePosition = useSelector(selectSwipeWidgetHandlerPosition);
 
@@ -101,9 +101,8 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
                     : queryParams4SecondaryScene;
             }
 
-            let objectId = queryParams?.objectIdOfSelectedScene;
-
-            let sceneData = availableScenes[objectId];
+            // let objectId = queryParams?.objectIdOfSelectedScene;
+            // let sceneData = availableScenes[objectId];
 
             if (controller) {
                 controller.abort();
@@ -111,39 +110,65 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
             controller = new AbortController();
 
-            // in dynamic mode, we will need to do the identify task first to find the landsat scene that is being displayed on the map
-            if (mode === 'dynamic') {
-                const res = await identify({
-                    point: mapPoint,
-                    abortController: controller,
-                });
+            const res = await identify({
+                point: mapPoint,
+                objectId:
+                    mode !== 'dynamic'
+                        ? queryParams?.objectIdOfSelectedScene
+                        : null,
+                abortController: controller,
+            });
 
-                // console.log(res)
+            // console.log(res)
 
-                const features = res?.catalogItems?.features;
+            const features = res?.catalogItems?.features;
 
-                if (!features.length) {
-                    throw new Error('cannot find scene for dynamic mode');
-                }
-
-                sceneData = getFormattedLandsatScenes(features)[0];
-
-                objectId = sceneData.objectId;
+            if (!features.length) {
+                throw new Error('cannot find landsat scene');
             }
 
-            // cannot display popup if there is no objectId in queryParams for selected landsat scene
-            if (!objectId || !sceneData) {
-                throw new Error(
-                    'objectIdOfSelectedScene is required to fetch popup data'
-                );
+            const sceneData = getFormattedLandsatScenes(features)[0];
+
+            if (!res?.value || res?.value === 'NoData') {
+                throw new Error('identify task does not return band values');
             }
 
-            const res = await getSamples(mapPoint, [objectId], controller);
-            // console.log(res);
+            const bandValues = res?.value.split(', ').map((d) => +d);
+            // console.log(bandValues)
 
-            if (!res.length || !res[0].values) {
-                throw new Error('invalid getSampes response');
-            }
+            // // in dynamic mode, we will need to do the identify task first to find the landsat scene that is being displayed on the map
+            // if (mode === 'dynamic') {
+            //     const res = await identify({
+            //         point: mapPoint,
+            //         abortController: controller,
+            //     });
+
+            //     // console.log(res)
+
+            //     const features = res?.catalogItems?.features;
+
+            //     if (!features.length) {
+            //         throw new Error('cannot find scene for dynamic mode');
+            //     }
+
+            //     sceneData = getFormattedLandsatScenes(features)[0];
+
+            //     objectId = sceneData.objectId;
+            // }
+
+            // // cannot display popup if there is no objectId in queryParams for selected landsat scene
+            // if (!objectId || !sceneData) {
+            //     throw new Error(
+            //         'objectIdOfSelectedScene is required to fetch popup data'
+            //     );
+            // }
+
+            // const res = await getSamples(mapPoint, [objectId], controller);
+            // // console.log(res);
+
+            // if (!res.length || !res[0].values) {
+            //     throw new Error('invalid getSampes response');
+            // }
 
             const title = `${sceneData.satellite} | ${format(
                 sceneData.acquisitionDate,
@@ -154,10 +179,20 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
                 // Set the popup's title to the coordinates of the location
                 title: title,
                 location: mapPoint, // Set the location of the popup to the clicked location
-                content: getMainContent(res[0].values, mapPoint),
+                content: getMainContent(bandValues, mapPoint),
             });
-        } catch (err) {
-            console.error('failed to open popup for landsat scene', err);
+        } catch (err: any) {
+            console.error(
+                'failed to open popup for landsat scene',
+                err.message
+            );
+
+            // no need to close popup if the user just clicked on a different location before
+            // the popup data is returned
+            if (err.message.includes('aborted')) {
+                return;
+            }
+
             closePopUp();
         }
     };
