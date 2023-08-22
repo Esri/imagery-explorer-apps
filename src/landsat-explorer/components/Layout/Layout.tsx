@@ -76,13 +76,13 @@ const Layout = () => {
                             </div>
 
                             {mode === 'analysis' && (
-                                <div className="ml-6 3xl:ml-16">
+                                <div className="mx-6 3xl:mx-16">
                                     <MaskTool />
                                     <ProfileTool />
                                 </div>
                             )}
 
-                            <div className="flex shrink-0 ml-6 3xl:ml-16">
+                            <div className="flex shrink-0">
                                 <SceneInfo />
                                 <RasterFunctionSelector />
                             </div>
