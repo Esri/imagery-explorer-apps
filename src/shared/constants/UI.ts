@@ -13,3 +13,8 @@ export const DATE_FORMAT = `MMM dd, yyyy`;
  * if true, user is using this app via a mobile device
  */
 export const IS_MOBILE_DEVICE = isMobileDevice();
+
+/**
+ * size of Map Anchor Icon Image used by Pop Up and Map Center indicator
+ */
+export const SizeOfMapAnchorImage = 44;

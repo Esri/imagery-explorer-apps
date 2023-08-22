@@ -79,6 +79,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 center={center}
                 zoom={zoom}
                 showMagnifier={showMagnifier}
+                showCenterPoint={mode === 'find a scene'}
             >
                 {children}
 

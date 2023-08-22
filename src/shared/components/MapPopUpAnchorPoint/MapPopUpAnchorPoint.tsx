@@ -5,7 +5,8 @@ import IGraphicsLayer from 'esri/layers/GraphicsLayer';
 import GroupLayer from 'esri/layers/GroupLayer';
 import MapView from 'esri/views/MapView';
 import React, { FC, useEffect, useRef } from 'react';
-import IconImage from './icon.png';
+import MapAnchorImage from '../../statics/img/map-anchor.png';
+import { SizeOfMapAnchorImage } from '@shared/constants/UI';
 
 type Props = {
     anchorLocation: Point;
@@ -53,9 +54,9 @@ export const MapPopUpAnchorPoint: FC<Props> = ({
                 },
                 symbol: {
                     type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
-                    url: IconImage,
-                    width: '44px',
-                    height: '44px',
+                    url: MapAnchorImage,
+                    width: `${SizeOfMapAnchorImage}px`,
+                    height: `${SizeOfMapAnchorImage}px`,
                 } as any,
             });
 

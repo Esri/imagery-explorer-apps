@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { CSSProperties, FC } from 'react';
 
 type Props = {
     /**
@@ -26,11 +26,16 @@ export const MapLoadingIndicator: FC<Props> = ({
                 className={classNames(
                     'flex items-center h-full absolute top-0 left-0 pointer-events-none'
                 )}
-                style={{
-                    width: swipeWidgetHandlerPosition
-                        ? `${swipeWidgetHandlerPosition}%`
-                        : '100%',
-                }}
+                style={
+                    {
+                        width: swipeWidgetHandlerPosition
+                            ? `${swipeWidgetHandlerPosition}%`
+                            : '100%',
+                        // '--calcite-ui-brand': 'var(--custom-light-blue)',
+                        // '--calcite-ui-brand-hover': 'var(--custom-light-blue-70)',
+                        // '--calcite-ui-brand-press': 'var(--custom-light-blue-50)'
+                    } as CSSProperties
+                }
             >
                 <calcite-loader />
             </div>
@@ -40,9 +45,14 @@ export const MapLoadingIndicator: FC<Props> = ({
                     className={classNames(
                         'flex items-center h-full absolute top-0 right-0 pointer-events-none'
                     )}
-                    style={{
-                        width: `${100 - swipeWidgetHandlerPosition}%`,
-                    }}
+                    style={
+                        {
+                            width: `${100 - swipeWidgetHandlerPosition}%`,
+                            // '--calcite-ui-brand': 'var(--custom-light-blue)',
+                            // '--calcite-ui-brand-hover': 'var(--custom-light-blue-70)',
+                            // '--calcite-ui-brand-press': 'var(--custom-light-blue-50)'
+                        } as CSSProperties
+                    }
                 >
                     <calcite-loader />
                 </div>
