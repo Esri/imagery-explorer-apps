@@ -48,11 +48,11 @@ export const PixelRangeSlider: FC<Props> = ({ values, valuesOnChange }) => {
                 tickConfigs: [
                     {
                         mode: 'count',
-                        values: 19,
+                        values: 17,
                     },
                     {
                         mode: 'position',
-                        values: [-1, 0, 1],
+                        values: [-1, -0.5, 0, 0.5, 1],
                         labelsVisible: true,
                     },
                 ],
