@@ -106,7 +106,7 @@ export const AnimationControl: FC<Props> = ({
                     >
                         <calcite-icon icon="plus" scale="s" />
                         <span
-                            className=" text-custom-light-blue uppercase ml-1"
+                            className=" text-custom-light-blue uppercase ml-1 underline"
                             style={{
                                 fontSize: `.7rem`,
                             }}

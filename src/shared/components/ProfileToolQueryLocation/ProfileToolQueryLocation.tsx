@@ -5,7 +5,8 @@ import IGraphicsLayer from 'esri/layers/GraphicsLayer';
 import GroupLayer from 'esri/layers/GroupLayer';
 import MapView from 'esri/views/MapView';
 import React, { FC, useEffect, useRef } from 'react';
-import IconImage from './icon.png';
+import IconImage from '../../statics/img/map-anchor.png';
+import { SizeOfMapAnchorImage } from '@shared/constants/UI';
 
 type Props = {
     queryLocation: Point;
@@ -66,8 +67,8 @@ export const ProfileToolQueryLocation: FC<Props> = ({
                     // },
                     type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
                     url: IconImage,
-                    width: '150px',
-                    height: '150px',
+                    width: SizeOfMapAnchorImage,
+                    height: SizeOfMapAnchorImage,
                 } as any,
             });
 

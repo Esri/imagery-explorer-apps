@@ -288,6 +288,7 @@ export const addAnimationFrame =
                     ...queryParams4ExistingScenes,
                     {
                         ...queryParams4SceneInNewFrame,
+                        acquisitionDate: '', // acquisition date should not be cloned over to the new animation frame
                         animationFrameId: idOfFrame2BeAdded,
                     },
                 ])

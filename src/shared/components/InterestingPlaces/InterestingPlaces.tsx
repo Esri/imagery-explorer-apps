@@ -20,7 +20,7 @@ export const InterestingPlaces: FC<Props> = ({
     return (
         <div
             className={classNames(
-                'h-full w-auto mx-8 pr-8 border-r border-custom-light-blue-50'
+                'h-full w-auto mx-8 pr-8 border-r border-custom-light-blue-25'
             )}
         >
             <div className="text-center mb-3">

@@ -33,15 +33,15 @@ export const useAnimationFramesInfo = () => {
 
             return {
                 frameId: animationFrameId,
-                // acquisitionDate: acquisitionDate || 'No Date Selected',
                 acquisitionDateLabel: acquisitionDate
                     ? format(
                           formattedDateString2Unixtimestamp(acquisitionDate),
                           DATE_FORMAT
                       )
-                    : 'No Date Selected',
-                rasterFunctionName:
-                    getRasterFunctionLabelText(rasterFunctionName),
+                    : 'Select a date',
+                rasterFunctionName: acquisitionDate
+                    ? getRasterFunctionLabelText(rasterFunctionName)
+                    : '',
                 selected: animationFrameId === selectedAnimationFrameId,
             } as AnimationFrameInfo;
         });

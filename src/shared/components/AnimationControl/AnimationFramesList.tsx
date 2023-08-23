@@ -65,7 +65,7 @@ export const AnimationFramesList: FC<Props> = ({
         >
             <div
                 className={classNames(
-                    'overflow-y-auto max-h-[174px] fancy-scrollbar',
+                    'overflow-y-auto max-h-[177px] fancy-scrollbar',
                     {
                         'pr-1': data && data.length > 5,
                     }
@@ -88,7 +88,8 @@ export const AnimationFramesList: FC<Props> = ({
                                  * add `group` class name to this element, so the close button can be displayed when hover over this element
                                  * @see https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-parent-state
                                  */
-                                'relative px-1 border border-custom-light-blue-80 mb-1 flex items-center cursor-pointer group horizontal-indicator-on-left',
+                                'relative flex items-center px-1 h-[30px] mb-1',
+                                'border border-custom-light-blue-80 cursor-pointer group horizontal-indicator-on-left',
                                 {
                                     'bg-custom-light-blue': selected,
                                     'text-custom-background': selected,
