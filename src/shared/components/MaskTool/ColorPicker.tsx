@@ -47,6 +47,8 @@ export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
                     ref={calciteColorPickerRef}
                     format="rgb"
                     saved-disabled
+                    channels-disabled
+                    scale="s"
                 />
             </div>
 
