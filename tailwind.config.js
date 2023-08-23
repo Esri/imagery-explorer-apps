@@ -60,6 +60,7 @@ module.exports = {
         'custom-light-blue-50': '1px 1px 4px rgba(191,238,254, .5)',
       },
       screens: {
+        'bottom-panel-content-min-width': '1540px',
         '2xl': '1620px',
         '3xl': '1920px'
       },
