@@ -3,7 +3,18 @@ import { AnalysisTool } from '@shared/store/Analysis/reducer';
 import { Button } from '../Button';
 import classNames from 'classnames';
 
-const AnalysisTools: AnalysisTool[] = ['mask', 'profile'];
+const AnalysisTools: {
+    tool: AnalysisTool;
+    label?: string;
+}[] = [
+    {
+        tool: 'mask',
+    },
+    {
+        tool: 'profile',
+        label: 'trend', // temporal profile tool should be called to 'trend'
+    },
+];
 
 type Props = {
     selectedTool: AnalysisTool;
@@ -16,7 +27,7 @@ export const AnalysisToolSelector: FC<Props> = ({
 }: Props) => {
     return (
         <>
-            {AnalysisTools.map((tool) => (
+            {AnalysisTools.map(({ tool, label }) => (
                 <div key={tool} className={classNames('relative mb-1')}>
                     <Button
                         // fullHeight={true}
@@ -31,7 +42,7 @@ export const AnalysisToolSelector: FC<Props> = ({
                             tool === selectedTool ? 'left' : null
                         }
                     >
-                        <span className="uppercase">{tool}</span>
+                        <span className="uppercase">{label || tool}</span>
                     </Button>
                 </div>
             ))}

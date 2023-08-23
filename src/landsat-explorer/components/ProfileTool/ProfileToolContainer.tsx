@@ -112,7 +112,7 @@ export const ProfileToolContainer = () => {
     return (
         <div className="w-analysis-tool-container-width h-full">
             <AnalysisToolHeader
-                title="Profile"
+                title="Trend"
                 data={[
                     {
                         value: 'moisture',
