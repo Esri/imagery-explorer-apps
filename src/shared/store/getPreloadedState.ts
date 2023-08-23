@@ -108,11 +108,16 @@ const getPreloadedAnalysisState = (): AnalysisState => {
 const getPreloadedUIState = (): UIState => {
     const animationSpeed = getAnimationSpeedFromHashParams();
 
-    return {
+    const proloadedUIState = {
         ...initialUIState,
-        animationSpeed: animationSpeed || 1000,
-        animationStatus: animationSpeed ? 'loading' : null,
     };
+
+    if (animationSpeed) {
+        proloadedUIState.animationSpeed = animationSpeed;
+        proloadedUIState.animationStatus = 'loading';
+    }
+
+    return proloadedUIState;
 };
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
