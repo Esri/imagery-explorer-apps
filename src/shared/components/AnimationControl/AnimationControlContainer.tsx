@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
     selectAnimationSpeed,
@@ -41,6 +41,14 @@ export const AnimationControlContainer = () => {
     const shouldDisablePlayPauseButton = useShouldDisablePlayPauseButton();
 
     const animationSpeed = useSelector(selectAnimationSpeed);
+
+    useEffect(() => {
+        // we should add a animation frame using query params from the main scene
+        // if there is no animation scene. Only need to do this when the Animation Controls is mounted.
+        if (animationFramesData.length === 0) {
+            dispatch(addAnimationFrame());
+        }
+    }, []);
 
     if (mode !== 'animate') {
         return null;
