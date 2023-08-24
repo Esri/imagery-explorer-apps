@@ -6,7 +6,7 @@ import Bathymetric from './thumbnails/Render_Bathymetric.jpg';
 import ColorIR from './thumbnails/Render_ColorIR.jpg';
 import NaturalColor from './thumbnails/Render_NaturalColor.jpg';
 import Geology from './thumbnails/Render_Geology.jpg';
-import NDVI from './thumbnails/Render_NDVI.jpg';
+import NDVI from './thumbnails/Render_NDVI.png';
 import ShortWaveIR from './thumbnails/Render_ShortwaveIR.jpg';
 import Thermal from './thumbnails/Render_Thermal.png';
 
