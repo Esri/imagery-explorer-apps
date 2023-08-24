@@ -6,8 +6,6 @@ import IMapView from 'esri/views/MapView';
 import IWebMap from 'esri/WebMap';
 import ITileInfo from 'esri/layers/support/TileInfo';
 import classNames from 'classnames';
-import MapAnchorImage from '../../statics/img/map-anchor.png';
-import { SizeOfMapAnchorImage } from '@shared/constants/UI';
 
 interface Props {
     /**
@@ -26,7 +24,6 @@ interface Props {
      * if true, show magnifier of map view
      */
     showMagnifier?: boolean;
-    showCenterPoint?: boolean;
     /**
      * Children Elements that will receive Map View as prop
      */
@@ -38,7 +35,6 @@ const MapView: React.FC<Props> = ({
     center,
     zoom,
     showMagnifier,
-    showCenterPoint = false,
     children,
 }: Props) => {
     const mapDivRef = useRef<HTMLDivElement>();
@@ -156,23 +152,6 @@ const MapView: React.FC<Props> = ({
                 })}
                 ref={mapDivRef}
             ></div>
-            {
-                <div
-                    className={classNames(
-                        'absolute top-[50%] left-[50%] pointer-events-none z-10',
-                        {
-                            hidden: showCenterPoint === false,
-                        }
-                    )}
-                    style={{
-                        transform: `translate(-${
-                            SizeOfMapAnchorImage / 2
-                        }px, -${SizeOfMapAnchorImage / 2}px)`,
-                    }}
-                >
-                    <img src={MapAnchorImage} />
-                </div>
-            }
             {mapView
                 ? React.Children.map(children, (child) => {
                       return React.cloneElement(

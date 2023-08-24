@@ -5,6 +5,7 @@ import { WEB_MAP_ID } from '../../constants/map';
 import { useSelector } from 'react-redux';
 import {
     selectMapCenter,
+    selectMapPopupAnchorLocation,
     selectMapZoom,
     selectSwipeWidgetHandlerPosition,
     selectWebmapId,
@@ -30,6 +31,7 @@ import {
     selectIsSwipeModeOn,
 } from '@shared/store/Landsat/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
+import { MapCenterIndicator } from './MapCenterIndicator';
 
 type Props = {
     children?: React.ReactNode;
@@ -62,6 +64,8 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     const showMagnifier = mode === 'analysis' && analysisTool === 'profile';
 
+    const anchorLocation = useSelector(selectMapPopupAnchorLocation);
+
     useEffect(() => {
         // console.log('map view zoom and center has changed', center, zoom);
         saveMapCenterToHashParams(center, zoom);
@@ -79,7 +83,6 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 center={center}
                 zoom={zoom}
                 showMagnifier={showMagnifier}
-                showCenterPoint={mode === 'find a scene'}
             >
                 {children}
 
@@ -120,6 +123,12 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                     active={isUpdating}
                     swipeWidgetHandlerPosition={
                         isSwipeWidgetVisible ? swipeWidgetHandlerPosition : null
+                    }
+                />
+
+                <MapCenterIndicator
+                    shouldShow={
+                        mode === 'find a scene' && anchorLocation === null
                     }
                 />
 
