@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 import { GirdCard } from '../GirdCard/GirdCard';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
+import { Tooltip } from '../Tooltip';
 
 type Props = {
     /**
@@ -46,8 +47,15 @@ export const RasterFunctionSelector: FC<Props> = ({
             })}
             ref={containerRef}
         >
-            <div className="text-center mb-3">
-                <span className="uppercase text-sm">Renderer</span>
+            <div className="text-center mb-3 flex items-center justify-center">
+                <Tooltip
+                    content={`Landsat sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.`}
+                    width={240}
+                >
+                    <calcite-icon scale="s" icon="information" />
+                </Tooltip>
+
+                <span className="uppercase ml-2 text-sm">Renderer</span>
             </div>
 
             <div className="grid grid-cols-3 gap-[5px]">

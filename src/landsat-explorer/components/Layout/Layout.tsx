@@ -36,6 +36,9 @@ const Layout = () => {
 
     const dynamicModeOn = mode === 'dynamic';
 
+    const shouldShowSecondaryControls =
+        mode === 'swipe' || mode === 'animate' || mode === 'analysis';
+
     useSaveAppState2HashParams();
 
     if (IS_MOBILE_DEVICE) {
@@ -58,9 +61,7 @@ const Layout = () => {
                 <div className="flex flex-shrink-0">
                     <ModeSelector />
 
-                    {(mode === 'swipe' ||
-                        mode === 'animate' ||
-                        mode === 'analysis') && (
+                    {shouldShowSecondaryControls && (
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
                             <AnimationControl />
