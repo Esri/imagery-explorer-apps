@@ -65,7 +65,12 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
     const openPopupRef = useRef<MapViewOnClickHandler>();
 
     const closePopUp = () => {
+        if (controller) {
+            controller.abort();
+        }
+
         mapView.popup.close();
+
         dispatch(popupAnchorLocationChanged(null));
     };
 
