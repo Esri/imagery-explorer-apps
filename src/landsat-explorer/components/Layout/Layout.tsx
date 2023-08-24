@@ -21,6 +21,16 @@ import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
 
+const DynamicModeContent = () => {
+    return (
+        <>
+            <DynamicModeInfo />
+            <InterestingPlaces />
+            <RasterFunctionSelector />
+        </>
+    );
+};
+
 const Layout = () => {
     const mode = useSelector(selectAppMode);
 
@@ -34,8 +44,7 @@ const Layout = () => {
                 <AppHeader title={LANDSAT_EXPLORER_APP_TITLE} />
                 <BottomPanel>
                     <div className="mx-auto">
-                        <DynamicModeInfo />
-                        <RasterFunctionSelector />
+                        <DynamicModeContent />
                     </div>
                 </BottomPanel>
             </>
@@ -61,15 +70,9 @@ const Layout = () => {
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">
-                    {dynamicModeOn && (
-                        <>
-                            <DynamicModeInfo />
-                            <InterestingPlaces />
-                            <RasterFunctionSelector />
-                        </>
-                    )}
-
-                    {dynamicModeOn === false && (
+                    {dynamicModeOn ? (
+                        <DynamicModeContent />
+                    ) : (
                         <>
                             <div className="ml-2 3xl:ml-0">
                                 <Calendar />

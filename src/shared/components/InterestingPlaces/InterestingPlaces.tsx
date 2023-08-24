@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { GirdCard } from '../GirdCard/GirdCard';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 type Props = {
     data: {
@@ -19,15 +20,22 @@ export const InterestingPlaces: FC<Props> = ({
 }) => {
     return (
         <div
-            className={classNames(
-                'h-full w-auto mx-8 pr-8 border-r border-custom-light-blue-25'
-            )}
+            className={classNames({
+                'h-full w-auto mx-8 pr-8 border-r border-custom-light-blue-25':
+                    IS_MOBILE_DEVICE === false,
+                'h-auto w-auto my-4 mx-4': IS_MOBILE_DEVICE === true,
+            })}
         >
             <div className="text-center mb-3">
                 <span className="uppercase text-sm">Interesting Places</span>
             </div>
 
-            <div className="grid grid-cols-4 gap-[5px] pr-1">
+            <div
+                className={classNames('grid gap-[5px] pr-1', {
+                    'grid-cols-4': IS_MOBILE_DEVICE === false,
+                    'grid-cols-3': IS_MOBILE_DEVICE === true,
+                })}
+            >
                 {data.map((d) => {
                     const { name, thumbnail, label } = d;
 
