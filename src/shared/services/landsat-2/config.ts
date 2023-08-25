@@ -73,11 +73,40 @@ export const FIELD_NAMES = {
     LANDSAT_SCENE_ID: 'landsat_scene_id',
 };
 
+const LANDSAT_RASTER_FUNCTIONS = [
+    'Natural Color with DRA',
+    'Color Infrared with DRA',
+    'NDVI Colorized',
+    'Agriculture with DRA',
+    'Bathymetric with DRA',
+    'Geology with DRA',
+    'Short-wave Infrared with DRA',
+    'Surface Temperature Colorized (Fahrenheit)',
+    'Surface Temperature Colorized (Celsius)',
+    'Short-wave Infrared',
+    'Color Infrared',
+    'Geology with DRA',
+    'Natural Color',
+    'Geology',
+    'Bathymetric',
+    'Agriculture',
+    'NDVI Raw',
+    'QABand',
+    'None',
+] as const;
+
+export type LandsatRasterFunctionName =
+    (typeof LANDSAT_RASTER_FUNCTIONS)[number];
+
 /**
  * Landsat-2 Raster Function Infos
  * @see https://utility.arcgis.com/usrsvcs/servers/fef56b39300841aaaf35ead6244b8bf7/rest/services/LandsatC2L2/ImageServer/rasterFunctionInfos/?f=json
  */
-export const LANDSAT_RASTER_FUNCTION_INFOS = [
+export const LANDSAT_RASTER_FUNCTION_INFOS: {
+    name: LandsatRasterFunctionName;
+    description: string;
+    label: string;
+}[] = [
     {
         name: 'Natural Color with DRA',
         description:
