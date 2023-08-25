@@ -118,8 +118,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                 <div
                     className={classNames('relative h-2 w-2 border group', {
                         'cursor-pointer': isSelected || hasAvailableData,
-                        'border-custom-calendar-border':
-                            formatedDateStr !== selectedAcquisitionDate,
+                        'border-custom-calendar-border': isSelected === false,
                         'bg-custom-calendar-background-selected': isSelected,
                         'border-custom-calendar-border-selected': isSelected,
                         // 'drop-shadow-custom-light-blue': isSelected,

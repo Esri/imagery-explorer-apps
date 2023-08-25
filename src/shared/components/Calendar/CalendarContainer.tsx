@@ -46,6 +46,25 @@ const CalendarContainer = () => {
      */
     const yearOptions = useYearOptions(acquisitionYear);
 
+    const selectedAcquisitionDate = useMemo(() => {
+        // If the user has not selected a date or there are no available scenes for the query location,
+        // then the selected acquisition date should be empty.
+        if (!acquisitionDate || !availableScenes.length) {
+            return '';
+        }
+
+        // Find the scene from the available scenes list that has the acquisition date matching the user-selected acquisition date.
+        const sceneAcquiredOnSelectedDate = availableScenes.find(
+            (scene) => scene.formattedAcquisitionDate === acquisitionDate
+        );
+
+        // Use the acquisition date of the scene that is found to highlight on the calendar.
+        // If no scene is found in the available scenes list, the user-selected date won't be highlighted,
+        // indicating that they need to select another date to choose a scene.
+        // If a scene is found, its acquisition date is returned for highlighting.
+        return sceneAcquiredOnSelectedDate?.formattedAcquisitionDate;
+    }, [acquisitionDate, availableScenes]);
+
     const getFormattedAvailableScenes = () => {
         if (isAnimationPlaying) {
             return [];
@@ -120,7 +139,8 @@ const CalendarContainer = () => {
 
             <Calendar
                 year={acquisitionYear}
-                selectedAcquisitionDate={acquisitionDate}
+                // selectedAcquisitionDate={acquisitionDate}
+                selectedAcquisitionDate={selectedAcquisitionDate}
                 availableScenes={getFormattedAvailableScenes()}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)

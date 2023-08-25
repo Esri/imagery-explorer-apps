@@ -18,7 +18,7 @@ const thumbnailByRasterFunctionName = {
     'Geology with DRA': Geology,
     'NDVI Colorized': NDVI,
     'Short-wave Infrared with DRA': ShortWaveIR,
-    Landsat_TIRS1_Temperature_Farhenheit_Colorized: Thermal,
+    'Surface Temperature Colorized (Fahrenheit)': Thermal,
 };
 
 export const useRasterFunctionInfosWithThumbnail = () => {

@@ -121,12 +121,12 @@ export const LANDSAT_RASTER_FUNCTION_INFOS = [
         label: 'Short-wave IR',
     },
     {
-        name: 'Landsat_TIRS1_Temperature_Farhenheit_Colorized',
+        name: 'Surface Temperature Colorized (Fahrenheit)',
         description: 'Landsat8 TIRS1 temperature values in Farhenheit',
         label: 'Surface Temp',
     },
     {
-        name: 'Landsat_TIRS1_Temperature_Celcius_Colorized',
+        name: 'Surface Temperature Colorized (Celsius)',
         description: 'Landsat8 TIRS1 temperature values in Celcius',
         label: 'Surface Temp Celcius',
     },
