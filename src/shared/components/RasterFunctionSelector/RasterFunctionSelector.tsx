@@ -4,6 +4,7 @@ import { RasterFunctionInfo } from '@typing/imagery-service';
 import { GirdCard } from '../GirdCard/GirdCard';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 import { Tooltip } from '../Tooltip';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 type Props = {
     /**
@@ -44,6 +45,7 @@ export const RasterFunctionSelector: FC<Props> = ({
         <div
             className={classNames('h-full w-auto select-none', {
                 'is-disabled': disabled,
+                'mx-4': IS_MOBILE_DEVICE,
             })}
             ref={containerRef}
         >
