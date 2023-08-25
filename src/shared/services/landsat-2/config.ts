@@ -73,6 +73,9 @@ export const FIELD_NAMES = {
     LANDSAT_SCENE_ID: 'landsat_scene_id',
 };
 
+/**
+ * List of Raster Functions for the Landsat Level-2 service
+ */
 const LANDSAT_RASTER_FUNCTIONS = [
     'Natural Color with DRA',
     'Color Infrared with DRA',
