@@ -85,6 +85,10 @@ export const getFormatedDateString = ({
  * @returns number of the year
  */
 export const getYearFromFormattedDateString = (formattedDate: string) => {
+    if (!formattedDate) {
+        return null;
+    }
+
     const [YYYY] = formattedDate.split('-').map((d) => +d);
     return YYYY;
 };

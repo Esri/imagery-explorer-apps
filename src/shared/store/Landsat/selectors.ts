@@ -91,7 +91,7 @@ export const selectQueryParams4ScenesInAnimateMode = createSelector(
     }
 );
 
-export const selectQueryParams4SceneInNewAnimationFrame = createSelector(
+export const selectQueryParamsOfPreviousAnimationFrame = createSelector(
     (state: RootState) => state.Landsat.queryParams4MainScene,
     (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
     (state: RootState) => state.Landsat.selectedAnimationFrameId,

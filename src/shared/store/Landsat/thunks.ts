@@ -15,7 +15,7 @@ import {
 import {
     selectAppMode,
     selectQueryParams4MainScene,
-    selectQueryParams4SceneInNewAnimationFrame,
+    selectQueryParamsOfPreviousAnimationFrame,
     selectQueryParams4SceneInSelectedMode,
     selectQueryParams4ScenesInAnimateMode,
     selectQueryParams4SecondaryScene,
@@ -277,24 +277,28 @@ export const addAnimationFrame =
         const queryParams4ExistingScenes =
             selectQueryParams4ScenesInAnimateMode(getState());
 
-        const queryParams4SceneInNewFrame =
-            selectQueryParams4SceneInNewAnimationFrame(getState());
+        const queryParamsOfPreviousFrame =
+            selectQueryParamsOfPreviousAnimationFrame(getState());
 
-        const idOfFrame2BeAdded = nanoid(3);
+        const queryParamsOfNewFrame: QueryParams4ImageryScene = {
+            ...queryParamsOfPreviousFrame,
+            acquisitionDate: '', // acquisition date should not be cloned over to the new animation frame
+            animationFrameId: nanoid(3),
+        };
 
         batch(() => {
             dispatch(
                 queryParams4ScenesInAnimationModeChanged([
                     ...queryParams4ExistingScenes,
-                    {
-                        ...queryParams4SceneInNewFrame,
-                        acquisitionDate: '', // acquisition date should not be cloned over to the new animation frame
-                        animationFrameId: idOfFrame2BeAdded,
-                    },
+                    queryParamsOfNewFrame,
                 ])
             );
 
-            dispatch(selectedAnimationFrameIdChanged(idOfFrame2BeAdded));
+            dispatch(
+                selectedAnimationFrameIdChanged(
+                    queryParamsOfNewFrame.animationFrameId
+                )
+            );
         });
     };
 
