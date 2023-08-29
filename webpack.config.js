@@ -9,6 +9,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const appConfig = require('./app.config.json')
+
 module.exports =  (env, options)=> {
 
     const devMode = options.mode === 'development' ? true : false;
@@ -16,27 +18,36 @@ module.exports =  (env, options)=> {
     process.env.NODE_ENV = options.mode;
 
     /**
-     * imagery service the explorer app to support:
+     * Imagery service that the explorer app currently supports:
      * - landsat
      * - sentinel-2
      */
     const imageryService = env['imagery-service']
 
     if(
-        !imageryService || 
-        (imageryService !== 'landsat' && imageryService !== 'sentinel-2')
+        !imageryService
     ){
         throw new Error(
             'A valid `imagery-service` is not found in environment variables, '+
             'try `npm run start-landsat` or `npm run start-sentinel2` instead.\n'
         )
-    } else {
-        console.log(`starting imagery explorer app for ${imageryService}\n`);
     }
 
-    const title = imageryService === 'landsat'
-        ? 'Esri | Landsat Explorer'
-        : 'Esri | Sentinel-2 Explorer'
+    if(!appConfig[imageryService]){
+        throw new Error(
+            `config data for ${imageryService} is not found, `+
+            'please update `app.config.json` to make sure it includes config data for this imagery service'
+        )
+    }
+
+    console.log(`starting imagery explorer app for ${imageryService}\n`);
+
+    const {
+        title,
+        description,
+        thumbnail_url,
+        url
+    } = appConfig[imageryService];
 
     return {
         mode: options.mode,
@@ -101,6 +112,9 @@ module.exports =  (env, options)=> {
                  * node running environment
                  */
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                /**
+                 * name of the imagery service to support
+                 */
                 IMAGERY_SERVICE: JSON.stringify(imageryService),
             }),
             new MiniCssExtractPlugin({
@@ -123,17 +137,18 @@ module.exports =  (env, options)=> {
             new HtmlWebpackPlugin({
                 template: './public/index.html',
                 filename: 'index.html',
-                title: title,
+                title,
                 meta: {
-                    title: title,
-                    description: package.description,
+                    title,
+                    description,
                     author: package.author,
                     keywords: Array.isArray(package.keywords) 
                         ? package.keywords.join(',') 
                         : undefined,
                     'og:title': title,
-                    'og:description': package.description,
-                    'og:url': package.homepage,
+                    'og:description': description,
+                    'og:url': url,
+                    'og:image': thumbnail_url,
                 },
                 minify: {
                     html5                          : true,

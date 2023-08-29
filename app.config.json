@@ -1,0 +1,14 @@
+{
+    "landsat": {
+        "title": "Esri | Landsat Explorer",
+        "url": "https://livingatlas.arcgis.com/landsatexplorer/",
+        "description": "Landsat multispectral imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.",
+        "thumbnail_url": "https://livingatlas.arcgis.com/landsatexplorer/public/thumbnails/landsatexplorer.png"
+    },
+    "sentinel-2": {
+        "title": "Esri | Sentinel-2 Explorer",
+        "url": "",
+        "description": "",
+        "thumbnail_url": ""
+    }
+}
