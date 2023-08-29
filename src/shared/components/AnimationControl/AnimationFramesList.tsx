@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
 
 export type AnimationFrameInfo = {
     /**
@@ -57,6 +57,16 @@ export const AnimationFramesList: FC<Props> = ({
     // addButtonOnClick,
     removeButtonOnClick,
 }) => {
+    const containerRef = useRef<HTMLDivElement>();
+
+    useEffect(() => {
+        if (!containerRef.current) {
+            return;
+        }
+
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }, [data]);
+
     return (
         <div
             className={classNames({
@@ -64,6 +74,7 @@ export const AnimationFramesList: FC<Props> = ({
             })}
         >
             <div
+                ref={containerRef}
                 className={classNames(
                     'overflow-y-auto max-h-[177px] fancy-scrollbar',
                     {
