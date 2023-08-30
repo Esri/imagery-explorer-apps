@@ -23,13 +23,20 @@ export const getMainContent = (values: number[], mapPoint: Point) => {
      */
     const celciusSign = `&#176;C`;
 
-    const surfaceTempFarhenheit =
-        calcSpectralIndex('temperature farhenheit', values).toFixed(0) +
-        farhenheitSign;
+    let surfaceTempInfo = '';
 
-    const surfaceTempCelcius =
-        calcSpectralIndex('temperature celcius', values).toFixed(0) +
-        celciusSign;
+    // only add surface temp to popup if the thermal band does not contain bad data
+    if (values[8] !== null) {
+        const surfaceTempFarhenheit =
+            calcSpectralIndex('temperature farhenheit', values).toFixed(0) +
+            farhenheitSign;
+
+        const surfaceTempCelcius =
+            calcSpectralIndex('temperature celcius', values).toFixed(0) +
+            celciusSign;
+
+        surfaceTempInfo = `<span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${surfaceTempFarhenheit} / ${surfaceTempCelcius}</span><br />`;
+    }
 
     const vegetationIndex = calcSpectralIndex('vegetation', values).toFixed(3);
 
@@ -38,8 +45,7 @@ export const getMainContent = (values: number[], mapPoint: Point) => {
     popupDiv.innerHTML = `
         <div class='text-custom-light-blue text-xs'>
             <div class='mb-2'>
-                <span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${surfaceTempFarhenheit} / ${surfaceTempCelcius}</span>
-                <br />
+                ${surfaceTempInfo}
                 <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span>
                 <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
             </div>

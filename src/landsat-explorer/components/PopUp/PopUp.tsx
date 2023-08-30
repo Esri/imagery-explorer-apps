@@ -20,6 +20,7 @@ import IReactiveUtils from 'esri/core/reactiveUtils';
 import { loadModules } from 'esri-loader';
 import { identify } from '@shared/services/landsat-2/identify';
 import { getFormattedLandsatScenes } from '@shared/services/landsat-2/getLandsatScenes';
+import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {
     mapView?: IMapView;
@@ -134,11 +135,24 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
             const sceneData = getFormattedLandsatScenes(features)[0];
 
-            if (!res?.value || res?.value === 'NoData') {
-                throw new Error('identify task does not return band values');
+            let bandValues: number[] = null;
+
+            if (res?.value && res?.value !== 'NoData') {
+                // get pixel values from the value property first
+                bandValues = res?.value.split(', ').map((d) => +d);
+            } else if (res?.properties?.Values[0]) {
+                bandValues = res?.properties?.Values[0].split(' ').map((d) => {
+                    if (canBeConvertedToNumber(d) === false) {
+                        return null;
+                    }
+
+                    return +d;
+                });
             }
 
-            const bandValues = res?.value.split(', ').map((d) => +d);
+            if (!bandValues) {
+                throw new Error('identify task does not return band values');
+            }
             // console.log(bandValues)
 
             // // in dynamic mode, we will need to do the identify task first to find the landsat scene that is being displayed on the map
