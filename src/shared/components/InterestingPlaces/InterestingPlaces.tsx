@@ -1,23 +1,31 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { GirdCard } from '../GirdCard/GirdCard';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
+import { InterestingPlaceData } from './data';
 
 type Props = {
-    data: {
-        name: string;
-        thumbnail: string;
-        label: string;
-    }[];
+    data: InterestingPlaceData[];
     nameOfSelectedPlace: string;
     onChange: (name: string) => void;
+    /**
+     * Emits when user move mouse over/out an interesting place card
+     * @param data
+     * @returns
+     */
+    onHover: (data: InterestingPlaceData) => void;
 };
 
 export const InterestingPlaces: FC<Props> = ({
     data,
     nameOfSelectedPlace,
     onChange,
+    onHover,
 }) => {
+    const containerRef = useRef<HTMLDivElement>();
+    useGetTooltipPositionOnHover(containerRef);
+
     return (
         <div
             className={classNames({
@@ -25,6 +33,7 @@ export const InterestingPlaces: FC<Props> = ({
                     IS_MOBILE_DEVICE === false,
                 'h-auto w-auto my-4 mx-4': IS_MOBILE_DEVICE === true,
             })}
+            ref={containerRef}
         >
             <div className="text-center mb-3">
                 <span className="uppercase text-sm">Interesting Places</span>
@@ -37,20 +46,26 @@ export const InterestingPlaces: FC<Props> = ({
                 })}
             >
                 {data.map((d) => {
-                    const { name, thumbnail, label } = d;
+                    const { name, thumbnail } = d;
 
                     const selected = nameOfSelectedPlace === name;
 
                     return (
-                        <GirdCard
+                        <div
                             key={name}
-                            label={label || name}
-                            thumbnail={thumbnail}
-                            selected={selected}
-                            onClick={() => {
-                                onChange(name);
-                            }}
-                        />
+                            className="w-full he-full"
+                            onMouseEnter={onHover.bind(null, d)}
+                            onMouseLeave={onHover.bind(null, null)}
+                        >
+                            <GirdCard
+                                label={name}
+                                thumbnail={thumbnail}
+                                selected={selected}
+                                onClick={() => {
+                                    onChange(name);
+                                }}
+                            />
+                        </div>
                     );
                 })}
             </div>

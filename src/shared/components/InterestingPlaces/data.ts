@@ -21,14 +21,25 @@ import Ouarkziz from './thumbnails/landsat/Ouarkziz.jpg';
 import EtoshaPan from './thumbnails/landsat/EtoshaPan.jpg';
 import LakeMackay from './thumbnails/landsat/LakeMackay.jpg';
 
-type InterestingPlaceData = {
+export type InterestingPlaceData = {
     name: string;
     location: {
         center: number[];
         zoom: number;
     };
     renderer: string;
-    thumbnail: any;
+    /**
+     * url of thumbnail image
+     */
+    thumbnail: string;
+    /**
+     * longer name that can be used in tooltip title
+     */
+    label?: string;
+    /**
+     * description of this place
+     */
+    description?: string;
 };
 
 const LandsatInterestingPlaces: InterestingPlaceData[] = [
@@ -40,6 +51,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'NDVI Colorized',
         thumbnail: Ganges,
+        description:
+            "The Ganges Delta is a river delta in Eastern South Asia. It is the world's largest river delta and it empties into the Bay of Bengal with the combined waters of several river systems.",
     },
     {
         name: 'Grand Canyon',
@@ -49,6 +62,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Short-wave Infrared with DRA',
         thumbnail: GrandCanyon,
+        description:
+            'The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, United States. The Grand Canyon is 277 miles (446 km) long, up to 18 miles (29 km) wide and attains a depth of more than one mile (1,857 meters).',
     },
     {
         name: 'Lake Mackay',
@@ -58,6 +73,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Agriculture with DRA',
         thumbnail: LakeMackay,
+        description:
+            'Lake Mackay, known as Wilkinkarra to the Indigenous Pintupi people. With a surface area of 3,494 sq km (1,349 sq mi), it is the largest of hundreds of ephemeral salt lakes scattered throughout Western Australia and the Northern Territory.',
     },
     {
         name: 'Richat',
@@ -67,6 +84,9 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Geology with DRA',
         thumbnail: Richat,
+        label: 'Richat Structure',
+        description:
+            'The Richat Structure is a prominent circular geological feature in the Sahara Desert. It is an eroded geological dome, 40 km (25 mi) in diameter, exposing sedimentary rock in layers that appear as concentric rings.',
     },
     {
         name: 'Kalahari Dunes',
@@ -76,6 +96,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Geology with DRA',
         thumbnail: KalahariDunes,
+        description:
+            'The Kalahari Desert is a large semi-arid sandy savanna in Southern Africa. Linear dunes, such as these, typically form in arid environments with consistent wind patterns.',
     },
     {
         name: 'Kuiseb Canyon',
@@ -85,6 +107,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Color Infrared with DRA',
         thumbnail: KuisebCanyon,
+        description:
+            'The Kuiseb Canyon has been carved out over millions of years by the ephemeral Kuiseb River in this barren and inaccessible area. It is characterized by its rock formations, steep cliffs, and unique ecosystems.',
     },
     {
         name: 'Quelccaya',
@@ -94,6 +118,9 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Short-wave Infrared with DRA',
         thumbnail: Quelccaya,
+        label: 'Quelccaya Ice Cap',
+        description:
+            'The Quelccaya Ice Cap is the second largest glaciated area in the tropics. Located in tropical highlands of the Andes mountains in southern Peru, the cap covers an area of 42.8 sq km (16.5 sq mi) with ice up to 200 meters (660 ft) thick.',
     },
     {
         name: 'Rupert Bay',
@@ -103,6 +130,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Color Infrared with DRA',
         thumbnail: RupertBay,
+        description:
+            'Rupert Bay is a large bay located on the south-east shore of James Bay, in Canada. This view shows fresh river water colliding with the ocean. Sediment and dissolved organic matter from nearby peatlands give the water its unique characteristics.',
     },
     {
         name: 'Three Gorges',
@@ -112,6 +141,9 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Agriculture with DRA',
         thumbnail: ThreeGorges,
+        label: 'Three Gorges Dam',
+        description:
+            "The Three Gorges Dam is a hydroelectric gravity dam that spans the Yangtze River in central China, downstream of the Three Gorges. It is the world's largest power station in terms of installed capacity, but it also serves to reduce the potential for flooding downstream, which historically plagued the Yangtze Plain.",
     },
     {
         name: 'Dasht-e Kevir',
@@ -121,6 +153,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Short-wave Infrared with DRA',
         thumbnail: DashteKevir,
+        description:
+            'Dasht-e Kavir, also known as the Great Salt Desert, is a large desert lying in the middle of the Iranian Plateau. The unique landscape here is comprised of sinuous valleys, shallow lakes, mudflats, and salt marshes.',
     },
     {
         name: 'Ouarkziz',
@@ -130,6 +164,9 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Agriculture with DRA',
         thumbnail: Ouarkziz,
+        label: 'Ouarkziz Crater',
+        description:
+            'Ouarkziz is a meteorite impact crater in Algeria. It is 3.5 kilometers in diameter and the age is estimated to be less than 70 million years. Originally called Tindouf, the crater has been heavily eroded since its formation. Its circular morphology is highlighted by exposures of older sedimentary rock layers.',
     },
     {
         name: 'Etosha Pan',
@@ -139,6 +176,8 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
         },
         renderer: 'Short-wave Infrared with DRA',
         thumbnail: EtoshaPan,
+        description:
+            'The Etosha Pan is a large endorheic salt pan in the north of Namibia. Measuring 120 km (75 mi) long, this vast lakebed is periodically flooded with a thin layer of water, which is heavily salted by the mineral deposits on the surface.',
     },
 ];
 
