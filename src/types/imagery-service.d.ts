@@ -8,7 +8,7 @@ export type RasterFunctionInfo = {
      */
     name: string;
     /**
-     * description of raster function (e.g. `Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied on apparent reflectance...`)
+     * description of raster function (e.g. `Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied dynamic range adjustment applied...`)
      */
     description: string;
     /**

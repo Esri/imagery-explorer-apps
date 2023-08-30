@@ -113,13 +113,13 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'Natural Color with DRA',
         description:
-            'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied on apparent reflectance.',
+            'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied dynamic range adjustment applied.',
         label: 'Natural Color',
     },
     {
         name: 'Color Infrared with DRA',
         description:
-            'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
+            'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
         label: 'Color IR',
     },
     {
@@ -131,13 +131,13 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'Agriculture with DRA',
         description:
-            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied on apparent reflectance. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
+            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
         label: 'Agriculture',
     },
     {
         name: 'Bathymetric with DRA',
         description:
-            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied on apparent reflectance. Useful in bathymetric mapping applications.',
+            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied dynamic range adjustment applied. Useful in bathymetric mapping applications.',
         label: 'Bathymetric',
     },
     {
@@ -149,12 +149,12 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'Short-wave Infrared with DRA',
         description:
-            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied on apparent reflectance.',
+            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied dynamic range adjustment applied.',
         label: 'Short-wave IR',
     },
     {
         name: 'Surface Temperature Colorized (Fahrenheit)',
-        description: 'Landsat8 TIRS1 temperature values in Farhenheit',
+        description: 'Colorized surface temperature',
         label: 'Surface Temp',
     },
     {
@@ -165,13 +165,13 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'Short-wave Infrared',
         description:
-            'Bands shortwave infrared2, shortwave infrared1, red (7, 6, 4) with fixed stretched applied on apparent reflectance.',
+            'Bands shortwave infrared2, shortwave infrared1, red (7, 6, 4) with fixed stretched applied dynamic range adjustment applied.',
         label: 'Short-wave IR',
     },
     {
         name: 'Color Infrared',
         description:
-            'Bands near-IR, red, green (5, 4, 3) with fixed stretch applied on apparent reflectance. Healthy vegetation is bright red while stressed vegetation is dull red.',
+            'Bands near-IR, red, green (5, 4, 3) with fixed stretch applied dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
         label: 'Color IR',
     },
     {
@@ -183,7 +183,7 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'Natural Color',
         description:
-            'Natural Color bands red, green, blue(4, 3, 2) displayed with fixed stretch applied on apparent reflectance.',
+            'Natural Color bands red, green, blue(4, 3, 2) displayed with fixed stretch applied dynamic range adjustment applied.',
         label: '',
     },
     {
@@ -195,19 +195,19 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'Bathymetric',
         description:
-            'Bands red, green, coastal/aerosol (4, 3, 1) with fixed stretch applied on apparent reflectance. Useful in bathymetric mapping applications.',
+            'Bands red, green, coastal/aerosol (4, 3, 1) with fixed stretch applied dynamic range adjustment applied. Useful in bathymetric mapping applications.',
         label: '',
     },
     {
         name: 'Agriculture',
         description:
-            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with fixed stretch applied on apparent reflectance. Vigorous vegetation is bright green, stressed vegetation dull green and bare areas as brown.',
+            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with fixed stretch applied dynamic range adjustment applied. Vigorous vegetation is bright green, stressed vegetation dull green and bare areas as brown.',
         label: '',
     },
     {
         name: 'NDVI Raw',
         description:
-            'Normalized difference vegetation index (NDVI) computed as (b5 - b4) / (b5 + b4) on apparent reflectance.',
+            'Normalized difference vegetation index (NDVI) computed as (b5 - b4) / (b5 + b4) dynamic range adjustment applied.',
         label: 'NDVI',
     },
     {
