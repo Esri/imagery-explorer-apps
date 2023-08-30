@@ -194,6 +194,13 @@ const AboutLandsatExplorer = () => {
                     </p>
                 </div>
             </div>
+
+            <div className="mb-4 font-light">
+                <p>
+                    Information contained in the Interesting Places descriptions
+                    was sourced from Wikipedia.
+                </p>
+            </div>
         </div>
     );
 };
