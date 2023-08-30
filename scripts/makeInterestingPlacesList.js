@@ -2,53 +2,37 @@ const fs = require('fs');
 
 const data = [
     {
-        "Place": "Singapore",
-        "URL": "#mapCenter=103.775%2C1.235%2C11.557&mode=dynamic&mainScene=2023-05-02%7CNatural+Color+with+DRA%7C8722521"
+        "Place": "Kalahari Dunes",
+        "URL": "#mapCenter=18.476%2C-23.914%2C11.692&mode=dynamic&mainScene=%7CGeology+with+DRA%7C"
     },
     {
-        "Place": "Everest",
-        "URL": "#mapCenter=86.983%2C27.952%2C11.557&mode=dynamic&mainScene=2023-05-02%7CNatural+Color+with+DRA%7C8722521"
+        "Place": "Kuiseb Canyon",
+        "URL": "#mapCenter=15.398%2C-23.680%2C12.430&mode=dynamic&mainScene=%7CColor+Infrared+with+DRA%7C"
     },
     {
-        "Place": "Manicouagan",
-        "URL": "#mapCenter=-68.631%2C51.389%2C10.000&mode=dynamic&mainScene=2023-05-02%7CShort-wave+Infrared+with+DRA%7C8722521"
+        "Place": "Quelccaya",
+        "URL": "#mapCenter=-70.819%2C-13.943%2C12.430&mode=dynamic&mainScene=%7CShort-wave+Infrared+with+DRA%7C"
     },
     {
-        "Place": "Giza Pyramids",
-        "URL": "#mapCenter=31.130%2C29.977%2C14.497&mode=dynamic&mainScene=2023-05-02%7CNatural+Color+with+DRA%7C8722521"
+        "Place": "Rupert Bay",
+        "URL": "#mapCenter=-78.993%2C51.730%2C11.000&mode=dynamic&mainScene=2022-10-18%7CColor+Infrared+with+DRA%7C6986657"
     },
     {
-        "Place": "Ganges Delta",
-        "URL": "#mapCenter=89.080%2C21.909%2C11.557&mode=dynamic&mainScene=2023-05-02%7CNDVI+Colorized%7C8722521"
+        "Place": "Three Gorges",
+        "URL": "#mapCenter=110.947%2C30.862%2C12.430&mode=dynamic&mainScene=2022-12-02%7CAgriculture+with+DRA%7C"
     },
     {
-        "Place": "Mt. Fuji",
-        "URL": "#mapCenter=138.731%2C35.367%2C12.958&mode=dynamic&mainScene=2023-05-02%7CColor+Infrared+with+DRA%7C8722521"
+        "Place": "Dasht-e Kevir",
+        "URL": "#mapCenter=54.557%2C34.570%2C11.000&mode=dynamic&mainScene=%7CShort-wave+Infrared+with+DRA%7C"
     },
     {
-        "Place": "Grand Canyon",
-        "URL": "#mapCenter=-112.913%2C36.242%2C12.430&mode=dynamic&mainScene=2023-05-02%7CShort-wave+Infrared+with+DRA%7C8722521"
+        "Place": "Ouarkziz",
+        "URL": "#mapCenter=-7.531%2C29.021%2C12.000&mode=dynamic&mainScene=%7CAgriculture+with+DRA%7C"
     },
     {
-        "Place": "Richat",
-        "URL": "#mapCenter=-11.398%2C21.124%2C12.430&mode=dynamic&mainScene=2023-05-02%7CGeology+with+DRA%7C8722521"
+        "Place": "Etosha Pan",
+        "URL": "#mapCenter=16.400%2C-18.746%2C10.000&mode=dynamic&mainScene=%7CShort-wave+Infrared+with+DRA%7C"
     },
-    {
-        "Place": "Aral Sea",
-        "URL": "#mapCenter=59.311%2C45.091%2C9.493&mode=dynamic&mainScene=2023-05-02%7CNatural+Color+with+DRA%7C8722521"
-    },
-    {
-        "Place": "Irrigation",
-        "URL": "#mapCenter=-99.383%2C37.616%2C12.000&mode=dynamic&mainScene=2023-05-02%7CAgriculture+with+DRA%7C"
-    },
-    {
-        "Place": "Key West",
-        "URL": "#mapCenter=-81.694%2C24.615%2C12.000&mode=dynamic&mainScene=2023-05-02%7CBathymetric+with+DRA%7C"
-    },
-    {
-        "Place": "Kilimanjaro",
-        "URL": "#mapCenter=37.356%2C-3.066%2C12.000&mode=dynamic&mainScene=2023-05-02%7CLandsat_TIRS1_Temperature_Farhenheit_Colorized%7C8715559"
-    }
 ]
 
 const decodeMapCenter = (value)=>{
@@ -98,7 +82,7 @@ for(const item of data){
     const queryParams = decodeQueryParams4ImageryScene(params.get('mainScene'))
 
     output.push({
-        place: Place,
+        name: Place,
         location: center,
         renderer: queryParams.rasterFunctionName
     })
