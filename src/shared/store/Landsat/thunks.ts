@@ -264,6 +264,7 @@ export const updateAcquisitionDate =
             const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 acquisitionDate,
+                acquisitionYearFromPreviousAnimationFrame: null, // reset this value whenever user makes an update to the acquisition date
             };
 
             dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
@@ -282,8 +283,16 @@ export const addAnimationFrame =
 
         const queryParamsOfNewFrame: QueryParams4ImageryScene = {
             ...queryParamsOfPreviousFrame,
-            acquisitionDate: '', // acquisition date should not be cloned over to the new animation frame
-            animationFrameId: nanoid(3),
+            animationFrameId: nanoid(5),
+            // acquisition date should not be cloned over to the new animation frame
+            acquisitionDate: '',
+            // try to save the acquistion year from the previous animation frame if the previous frame has a acquistion date selected
+            acquisitionYearFromPreviousAnimationFrame:
+                queryParamsOfPreviousFrame.acquisitionDate
+                    ? getYearFromFormattedDateString(
+                          queryParamsOfPreviousFrame.acquisitionDate
+                      )
+                    : null,
         };
 
         batch(() => {

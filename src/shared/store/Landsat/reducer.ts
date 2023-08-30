@@ -55,6 +55,14 @@ export type QueryParams4ImageryScene = {
      * unique id of the animation frame that is associated with this Imagery Scene
      */
     animationFrameId?: string;
+    /**
+     * This property represents the acquisition year inherited from the previously selected animation frame.
+     *
+     * Normally, the current year is used as the default acquisition year for new query parameters.
+     * However, to enhance the user experience in animation mode, we retain the acquisition year from the previous frame.
+     * This ensures a seamless workflow, allowing users to seamlessly continue their work on the same year as the prior animation frame.
+     */
+    acquisitionYearFromPreviousAnimationFrame?: number;
 };
 
 export type LandsatState = {

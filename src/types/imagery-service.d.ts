@@ -56,9 +56,13 @@ export type LandsatScene = {
      */
     acquisitionMonth: number;
     /**
-     * percent of cloud cover
+     * percent of cloud cover, the value ranges from 0 - 1
      */
     cloudCover: number;
+    /**
+     * percent of cloud cover ranges rounded to integers that ranges from 0 - 100
+     */
+    formattedCloudCover: number;
     // /**
     //  * if true, this scene was acquired during a cloudy day
     //  */

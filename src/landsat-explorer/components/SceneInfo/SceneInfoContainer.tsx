@@ -25,7 +25,7 @@ export const SceneInfoContainer = () => {
             path,
             acquisitionDate,
             sensor,
-            cloudCover,
+            formattedCloudCover,
             // collectionCategory,
             // collectionNumber,
             correctionLevel,
@@ -80,7 +80,7 @@ export const SceneInfoContainer = () => {
             },
             {
                 name: 'Cloud Cover',
-                value: `${Math.floor(cloudCover * 100)}%`,
+                value: `${formattedCloudCover}%`,
             },
         ];
     }, [data]);

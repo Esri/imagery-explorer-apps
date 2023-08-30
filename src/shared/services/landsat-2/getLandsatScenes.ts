@@ -90,6 +90,9 @@ export const getFormattedLandsatScenes = (
             formattedAcquisitionDate,
             name: attributes[NAME],
             cloudCover: attributes[CLOUD_COVER],
+            formattedCloudCover: attributes[CLOUD_COVER]
+                ? Math.ceil(attributes[CLOUD_COVER] * 100)
+                : 0,
             // best: attributes[BEST],
             // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
             satellite: `Landsat ${parseInt(name.slice(2, 4))}`,

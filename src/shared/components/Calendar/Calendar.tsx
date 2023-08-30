@@ -177,9 +177,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                                 )}
                             </span>
                             <br />
-                            <span>{`${Math.ceil(
-                                dataOfImageryScene.cloudCover * 100
-                            )}% Cloudy`}</span>
+                            <span>{dataOfImageryScene.cloudCover}% Cloudy</span>
                         </div>
                     )}
                 </div>

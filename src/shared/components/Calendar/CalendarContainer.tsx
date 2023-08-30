@@ -7,6 +7,7 @@ import { Dropdown } from '@shared/components/Dropdown';
 import { useYearOptions } from './useYearOptions';
 import { useDispatch } from 'react-redux';
 import {
+    selectAppMode,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
@@ -25,6 +26,8 @@ import { cloudCoverChanged } from '@shared/store/Landsat/reducer';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
+
+    const mode = useSelector(selectAppMode);
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
 
@@ -77,22 +80,39 @@ const CalendarContainer = () => {
                 // isCloudy,
                 cloudCover,
                 satellite,
+                formattedCloudCover,
             } = scene;
 
             return {
                 formattedAcquisitionDate,
                 acquisitionDate,
                 isCloudy: cloudCover > cloudCoverThreshold,
-                cloudCover,
+                cloudCover: formattedCloudCover,
                 satellite,
             };
         });
     };
 
     useEffect(() => {
-        const year = acquisitionDate
-            ? getYearFromFormattedDateString(acquisitionDate)
-            : getCurrentYear();
+        // const year = acquisitionDate
+        //     ? getYearFromFormattedDateString(acquisitionDate)
+        //     : getCurrentYear();
+
+        // setAcquisitionYear(year);
+
+        let year = getCurrentYear();
+
+        if (acquisitionDate) {
+            // try to use the year from acquisition date first
+            year = getYearFromFormattedDateString(acquisitionDate);
+        } else if (
+            mode === 'animate' &&
+            queryParams?.acquisitionYearFromPreviousAnimationFrame
+        ) {
+            // if animation mode, when a new frame is added it won't have acquisition date by default,
+            // however, we will want use the acquistion year from the previous frame
+            year = queryParams.acquisitionYearFromPreviousAnimationFrame;
+        }
 
         setAcquisitionYear(year);
     }, [acquisitionDate]);
