@@ -94,6 +94,12 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
     'temperature celcius': '(B9 - 273.15)',
 };
 
+// get value from thermal band, which is the the Band 9
+export const getValFromThermalBand = (bandValues: number[]) => {
+    const [B1, B2, B3, B4, B5, B6, B7, B8, B9] = bandValues;
+    return B9;
+};
+
 export const calcSpectralIndex = (
     spectralIndex: SpectralIndex,
     bandValues: number[]
