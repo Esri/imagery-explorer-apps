@@ -24,15 +24,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vannizhang/react-redux-boilerplate.git"
+    "url": "git+https://github.com/vannizhang/imagery-explorer-apps.git"
   },
   "keywords": [],
-  "author": "Jinnan Zhang",
+  "author": "ArcGIS Living Atlas of the World",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vannizhang/react-redux-boilerplate/issues"
+    "url": "https://github.com/vannizhang/imagery-explorer-apps/issues"
   },
-  "homepage": "https://github.com/vannizhang/react-redux-boilerplate",
+  "homepage": "https://github.com/vannizhang/imagery-explorer-apps",
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -100,7 +100,7 @@
   "dependencies": {
     "@esri/arcgis-rest-feature-service": "^4.0.4",
     "@reduxjs/toolkit": "1.8",
-    "@types/arcgis-js-api": "4.25",
+    "@types/arcgis-js-api": "4.26",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "@vannizhang/react-d3-charts": "^1.0.17",

@@ -111,12 +111,17 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
             return;
         }
 
+        // why doing this? It seems there is some bug in @types/arcgis-js-api@4.26 and the `elements`
+        // property is no longer defined for `layer.source`, but according to the JSAPI doc (https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LocalMediaElementSource.html#elements),
+        // it is still there, therefore we just use this temporary solution so TypeScript won't throw error
+        const source = mediaLayerRef.current.source as any;
+
         if (!mediaLayerElements) {
             // animation is not started or just stopped
             // just clear all elements in media layer
-            mediaLayerRef.current.source.elements.removeAll();
+            source.elements.removeAll();
         } else {
-            mediaLayerRef.current.source.elements.addMany(mediaLayerElements);
+            source.elements.addMany(mediaLayerElements);
             // media layer elements are ready, change animation mode to playing to start the animation
             dispatch(animationStatusChanged('playing'));
         }
