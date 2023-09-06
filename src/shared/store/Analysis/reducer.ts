@@ -4,7 +4,10 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { getCurrentMonth } from '@shared/utils/date-time/getCurrentDateTime';
+import {
+    getCurrentMonth,
+    getCurrentYear,
+} from '@shared/utils/date-time/getCurrentDateTime';
 import { TemporalProfileData, SpectralIndex } from '@typing/imagery-service';
 import { Point } from 'esri/geometry';
 
@@ -17,6 +20,11 @@ export type MaskOptions = {
      */
     color: number[];
 };
+
+/**
+ * The trend (temporal profile) tool has two options
+ */
+export type TrendToolOption = 'year-to-year' | 'month-to-month';
 
 type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
 
@@ -45,26 +53,28 @@ export type AnalysisState = {
     };
     profileTool: {
         /**
-         * Query Location for Temporal Profile tool
+         * user selected option for trend tool.
+         * The default value should be `year-to-year` as that is the only option that we had in the beta release.
+         */
+        option: TrendToolOption;
+        /**
+         * Query Location for Temporal trend tool
          */
         queryLocation: Point;
         /**
-         * acquisition month to be used to fetch Temporal Profile data
+         * acquisition month to be used to fetch temporal trend data for a given month (Year to Year)
          */
         acquisitionMonth: number;
         /**
-         * user selected spectral index to be used in the Temporal profile tool
+         * acquisition year to be used to fetch temporal trend data for a given year (Month to Month)
+         */
+        acquisitionYear: number;
+        /**
+         * user selected spectral index to be used in the Temporal trend tool
          */
         spectralIndex: SpectralIndex;
-        // /**
-        //  * Determines the frequency of collecting samples for the annual resolution.
-        //  * The minimum value is 1, indicating that imagery scenes acquired in the user-selected month
-        //  * will be sampled for each year. The maximum value is 5, indicating that imagery scenes will be sampled
-        //  * every 5 years.
-        //  */
-        // samplingTemporalResolution: number;
         /**
-         * imagery temporal profile data using object id as key
+         * imagery temporal trend data
          */
         temporalProfileData: {
             byObjectId: {
@@ -112,8 +122,10 @@ export const initialAnalysisState: AnalysisState = {
         },
     },
     profileTool: {
+        option: 'year-to-year',
         queryLocation: null,
         acquisitionMonth: getCurrentMonth(),
+        acquisitionYear: getCurrentYear(),
         spectralIndex: 'moisture',
         temporalProfileData: {
             byObjectId: {},
@@ -187,12 +199,12 @@ const slice = createSlice({
         ) => {
             state.profileTool.spectralIndex = action.payload;
         },
-        // samplingTemporalResolutionChanged: (
-        //     state,
-        //     action: PayloadAction<number>
-        // ) => {
-        //     state.profileTool.samplingTemporalResolution = action.payload;
-        // },
+        trendToolOptionChanged: (
+            state,
+            action: PayloadAction<TrendToolOption>
+        ) => {
+            state.profileTool.option = action.payload;
+        },
     },
 });
 
@@ -208,6 +220,7 @@ export const {
     acquisitionMonth4ProfileToolChanged,
     temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
+    trendToolOptionChanged,
     // samplingTemporalResolutionChanged,
 } = slice.actions;
 
