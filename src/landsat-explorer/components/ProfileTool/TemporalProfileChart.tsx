@@ -16,6 +16,7 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/landsat-2/config';
 import { calcSpectralIndex } from '@shared/services/landsat-2/helpers';
+import { selectTrendToolOption } from '@shared/store/Analysis/selectors';
 
 type Props = {
     data: TemporalProfileData[];
@@ -74,6 +75,8 @@ export const TemporalProfileChart: FC<Props> = ({
     spectralIndex,
     onClickHandler,
 }: Props) => {
+    const trendToolOption = useSelector(selectTrendToolOption);
+
     const queryParams4SelectedScene =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
@@ -178,6 +181,15 @@ export const TemporalProfileChart: FC<Props> = ({
                      * Indicate number of ticks that should be renderd on x axis
                      */
                     numberOfTicks: 5,
+                    tickFormatFunction: (val: any) => {
+                        if (!val) {
+                            return '';
+                        }
+
+                        return trendToolOption === 'year-to-year'
+                            ? format(val, 'yyyy')
+                            : format(val, 'MMM');
+                    },
                 }}
                 verticalReferenceLines={getData4VerticalReferenceLine()}
                 onClick={onClickHandler}

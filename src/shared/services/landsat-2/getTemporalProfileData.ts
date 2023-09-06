@@ -7,8 +7,17 @@ import { checkClearFlagInQABand } from './helpers';
 
 type GetProfileDataOptions = {
     queryLocation: Point;
+    /**
+     * acquisition month to be used to fetch temporal trend data for a given month (Year to Year)
+     */
     acquisitionMonth: number;
-    // samplingTemporalResolution: number;
+    /**
+     * acquisition year to be used to fetch temporal trend data for a given year (Month to Month)
+     */
+    acquisitionYear: number;
+    /**
+     * abortController that will be used to cancel the pending requests
+     */
     abortController: AbortController;
 };
 
@@ -57,27 +66,35 @@ const splitObjectIdsToSeparateGroups = (objectIds: number[]): number[][] => {
 export const getTemporalProfileData = async ({
     queryLocation,
     acquisitionMonth,
-    // samplingTemporalResolution,
+    acquisitionYear,
     abortController,
 }: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
     const { x, y } = queryLocation;
 
-    // query Landsat scenes based on input location and acquisition month.
-    const landsatScenes = await getLandsatScenes({
-        mapPoint: [x, y],
-        acquisitionMonth,
-        abortController,
-    });
+    let landsatScenes: LandsatScene[] = [];
+
+    if (acquisitionMonth) {
+        // query Landsat scenes based on input location and acquisition month to show "year-to-year" trend
+        landsatScenes = await getLandsatScenes({
+            mapPoint: [x, y],
+            acquisitionMonth,
+            abortController,
+        });
+    } else if (acquisitionYear) {
+        // query Landsat scenes based on input location and acquisition year to show "month-to-month" trend
+        landsatScenes = await getLandsatScenes({
+            mapPoint: [x, y],
+            acquisitionYear,
+            abortController,
+        });
+    }
 
     if (!landsatScenes.length) {
         return [];
     }
 
     // refine Landsat scenes based on cloud coverage.
-    const landsatScenesToSample = getLandsatScenesToSample(
-        landsatScenes
-        // samplingTemporalResolution
-    );
+    const landsatScenesToSample = getLandsatScenesToSample(landsatScenes);
 
     // extract object IDs from refined Landsat scenes.
     const objectIds = landsatScenesToSample.map((d) => d.objectId);

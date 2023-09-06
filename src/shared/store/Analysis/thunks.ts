@@ -8,9 +8,11 @@ import {
 } from './reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
+    selectAcquisitionYear4ProfileTool,
     selectActiveAnalysisTool,
     selectMaskOptions,
     selectQueryLocation4ProfileTool,
+    selectTrendToolOption,
     // selectSamplingTemporalResolution,
 } from './selectors';
 import { getTemporalProfileData } from '@shared/services/landsat-2/getTemporalProfileData';
@@ -70,6 +72,10 @@ export const updateTemporalProfileData =
 
         const acquisitionMonth = selectAcquisitionMonth4ProfileTool(rootState);
 
+        const acquisitionYear = selectAcquisitionYear4ProfileTool(rootState);
+
+        const trendToolOption = selectTrendToolOption(rootState);
+
         // const samplingTemporalResolution =
         //     selectSamplingTemporalResolution(rootState);
 
@@ -86,7 +92,10 @@ export const updateTemporalProfileData =
 
         const data = await getTemporalProfileData({
             queryLocation,
-            acquisitionMonth,
+            acquisitionMonth:
+                trendToolOption === 'year-to-year' ? acquisitionMonth : null,
+            acquisitionYear:
+                trendToolOption === 'month-to-month' ? acquisitionYear : null,
             // samplingTemporalResolution,
             abortController,
         });

@@ -97,7 +97,7 @@ export const ProfileToolContainer = () => {
 
     useEffect(() => {
         (async () => {
-            if (tool !== 'profile' || !acquisitionMonth) {
+            if (tool !== 'profile') {
                 return;
             }
 
@@ -111,7 +111,13 @@ export const ProfileToolContainer = () => {
                 console.log(err);
             }
         })();
-    }, [queryLocation, tool, acquisitionMonth]);
+    }, [
+        queryLocation,
+        tool,
+        acquisitionMonth,
+        acquisitionYear,
+        selectedTrendToolOption,
+    ]);
 
     if (tool !== 'profile') {
         return null;
