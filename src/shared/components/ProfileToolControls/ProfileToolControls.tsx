@@ -1,74 +1,109 @@
 import React from 'react';
 import { Dropdown } from '../Dropdown';
 import { useMonthOptions } from './useMonthOptions';
-import { useAnnualResolutionOptions } from './useAnnualResolutionOptions';
 import { Tooltip } from '../Tooltip';
+import { useTrendOptions } from './useTrendOptions';
+import { TrendToolOption } from '@shared/store/Analysis/reducer';
+import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 
 type Props = {
     /**
-     * acquisition month selected by the user to query profile data
+     * acquisition month to be used to fetch temporal trend data for a given month (Year to Year)
      */
     acquisitionMonth: number;
+    /**
+     * acquisition year to be used to fetch temporal trend data for a given year (Month to Month)
+     */
+    acquisitionYear: number;
+    /**
+     * user selected option for trend tool.
+     */
+    selectedTrendOption: TrendToolOption;
     /**
      * if true, show close button
      */
     shouldShowCloseButton: boolean;
-    // annualSamplingResolution: number;
-    // annualSamplingResolutionOnChange: (resolution: number) => void;
     /**
-     * fires when user selects a new acquisition month
+     * fires when user selects a new acquisition month that will be used in 'year-to-year' trend
      * @param month
      * @returns
      */
     acquisitionMonthOnChange: (month: number) => void;
     /**
+     * fires when user selects a new acquisition year that will be used in 'month-to-month' trend
+     * @param year
+     * @returns
+     */
+    acquisitionYearOnChange: (year: number) => void;
+    /**
      * fires when user clicks on the close button
      * @returns
      */
     closeButtonOnClick: () => void;
+    /**
+     * emits when user selects a new option for trend tool
+     * @param option
+     * @returns
+     */
+    trendOptionOnChange: (option: TrendToolOption) => void;
 };
 
 export const ProfileToolControls = ({
     acquisitionMonth,
+    acquisitionYear,
+    selectedTrendOption,
     shouldShowCloseButton,
-    // annualSamplingResolution,
-    // annualSamplingResolutionOnChange,
     acquisitionMonthOnChange,
+    acquisitionYearOnChange,
     closeButtonOnClick,
+    trendOptionOnChange,
 }: Props) => {
     const monthDropdownMenuData = useMonthOptions(acquisitionMonth);
 
-    // const annualResolutionsMenuData = useAnnualResolutionOptions(
-    //     annualSamplingResolution
-    // );
+    const trendOptionsDropdownMenuData = useTrendOptions(selectedTrendOption);
+
+    /**
+     * options that will be used to populate the Dropdown Menu for year
+     */
+    const yearDropdownMenuData =
+        useAcquisitionYearsAsDropdownMenuOptions(acquisitionYear);
 
     return (
         <div className="prfile-control-tools">
-            <div className="flex items-center justify-center select-none">
-                {/* <div className="w-1/2 mx-1">
-
-                    <Dropdown
-                        data={annualResolutionsMenuData}
-                        tooltip="Choose an annual sampling resolution"
-                        onChange={(val) => {
-                            // console.log(val)
-                            annualSamplingResolutionOnChange(+val);
-                        }}
-                    />
-                </div> */}
-
+            <div className="flex items-center select-none">
                 <span className="ml-2 text-custom-light-blue-50 text-xs uppercase">
-                    Month:
+                    Time:
                 </span>
 
-                <div className="mx-1">
+                <div className="mx-1 w-1/3">
                     <Dropdown
-                        data={monthDropdownMenuData}
-                        // tooltip="Choose a season"
+                        data={trendOptionsDropdownMenuData}
                         onChange={(val) => {
-                            acquisitionMonthOnChange(+val);
+                            // console.log(val)
+                            trendOptionOnChange(val as TrendToolOption);
                         }}
                     />
+                </div>
+
+                <div className="mx-1 w-1/3">
+                    {selectedTrendOption === 'year-to-year' && (
+                        <Dropdown
+                            data={monthDropdownMenuData}
+                            // tooltip="Choose a season"
+                            onChange={(val) => {
+                                acquisitionMonthOnChange(+val);
+                            }}
+                        />
+                    )}
+
+                    {selectedTrendOption === 'month-to-month' && (
+                        <Dropdown
+                            data={yearDropdownMenuData}
+                            onChange={(val) => {
+                                acquisitionYearOnChange(+val);
+                            }}
+                        />
+                    )}
                 </div>
 
                 {shouldShowCloseButton && (

@@ -144,3 +144,8 @@ export type TemporalProfileData = {
      */
     values: number[];
 };
+
+type ImageryServiceTimeExtentData = {
+    start: number;
+    end: number;
+};

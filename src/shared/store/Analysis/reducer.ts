@@ -175,6 +175,12 @@ const slice = createSlice({
         ) => {
             state.profileTool.acquisitionMonth = action.payload;
         },
+        acquisitionYear4ProfileToolChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.profileTool.acquisitionYear = action.payload;
+        },
         temporalProfileDataUpdated: (
             state,
             action: PayloadAction<TemporalProfileData[]>
@@ -218,6 +224,7 @@ export const {
     shouldClipMaskLayerToggled,
     queryLocation4ProfileToolChanged,
     acquisitionMonth4ProfileToolChanged,
+    acquisitionYear4ProfileToolChanged,
     temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
     trendToolOptionChanged,

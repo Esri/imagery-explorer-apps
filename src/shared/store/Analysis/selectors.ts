@@ -38,6 +38,11 @@ export const selectAcquisitionMonth4ProfileTool = createSelector(
     (acquisitionMonth) => acquisitionMonth
 );
 
+export const selectAcquisitionYear4ProfileTool = createSelector(
+    (state: RootState) => state.Analysis.profileTool.acquisitionYear,
+    (acquisitionYear) => acquisitionYear
+);
+
 export const selectTemporalProfileData = createSelector(
     (state: RootState) =>
         state.Analysis.profileTool.temporalProfileData.objectIds,

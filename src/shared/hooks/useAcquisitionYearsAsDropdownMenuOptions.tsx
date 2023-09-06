@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DropdownData } from '@shared/components/Dropdown';
-import { getTimeExtent } from '@shared/services/landsat-2/getTimeExtent';
-import { useSelector } from 'react-redux';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
+import { getTimeExtent as getTimeExtentOfLandsatService } from '@shared/services/landsat-2/getTimeExtent';
+import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
 
-export const useYearOptions = (acquisitionYear: number): DropdownData[] => {
+export const useAcquisitionYearsAsDropdownMenuOptions = (
+    acquisitionYear: number
+): DropdownData[] => {
     // const { acquisitionYear } =
     //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
@@ -30,7 +31,19 @@ export const useYearOptions = (acquisitionYear: number): DropdownData[] => {
     useEffect(() => {
         (async () => {
             try {
-                const { start, end } = await getTimeExtent();
+                let timeExtentData: ImageryServiceTimeExtentData = null;
+
+                if (IMAGERY_SERVICE === 'landsat') {
+                    timeExtentData = await getTimeExtentOfLandsatService();
+                }
+
+                if (!timeExtentData) {
+                    throw new Error(
+                        'no time extent is found for the imagery service'
+                    );
+                }
+
+                const { start, end } = timeExtentData;
 
                 const years: number[] = [];
 

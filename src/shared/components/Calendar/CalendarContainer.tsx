@@ -4,7 +4,7 @@ import Calendar from './Calendar';
 import { useSelector } from 'react-redux';
 import { Dropdown } from '@shared/components/Dropdown';
 // import { useMonthOptions } from './useMonthOptions';
-import { useYearOptions } from './useYearOptions';
+import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 import { useDispatch } from 'react-redux';
 import {
     selectAppMode,
@@ -47,7 +47,8 @@ const CalendarContainer = () => {
     /**
      * options that will be used to populate the Dropdown Menu for year
      */
-    const yearOptions = useYearOptions(acquisitionYear);
+    const yearOptions =
+        useAcquisitionYearsAsDropdownMenuOptions(acquisitionYear);
 
     const selectedAcquisitionDate = useMemo(() => {
         // If the user has not selected a date or there are no available scenes for the query location,

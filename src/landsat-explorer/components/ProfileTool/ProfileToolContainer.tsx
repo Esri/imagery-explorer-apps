@@ -7,6 +7,8 @@ import {
     temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
     queryLocation4ProfileToolChanged,
+    trendToolOptionChanged,
+    acquisitionYear4ProfileToolChanged,
 } from '@shared/store/Analysis/reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
@@ -15,6 +17,8 @@ import {
     selectTemporalProfileData,
     selectQueryLocation4ProfileTool,
     selectSpectralIndex4ProfileTool,
+    selectAcquisitionYear4ProfileTool,
+    selectTrendToolOption,
 } from '@shared/store/Analysis/selectors';
 import { updateTemporalProfileData } from '@shared/store/Analysis/thunks';
 import React, { useEffect, useState } from 'react';
@@ -39,6 +43,10 @@ export const ProfileToolContainer = () => {
     const queryLocation = useSelector(selectQueryLocation4ProfileTool);
 
     const acquisitionMonth = useSelector(selectAcquisitionMonth4ProfileTool);
+
+    const acquisitionYear = useSelector(selectAcquisitionYear4ProfileTool);
+
+    const selectedTrendToolOption = useSelector(selectTrendToolOption);
 
     const temporalProfileData = useSelector(selectTemporalProfileData);
 
@@ -188,15 +196,19 @@ export const ProfileToolContainer = () => {
 
             <ProfileToolControls
                 acquisitionMonth={acquisitionMonth}
+                acquisitionYear={acquisitionYear}
+                selectedTrendOption={selectedTrendToolOption}
                 shouldShowCloseButton={
                     temporalProfileData.length > 0 ? true : false
                 }
-                // annualSamplingResolution={samplingTemporalResolution}
-                // annualSamplingResolutionOnChange={(resolution) => {
-                //     dispatch(samplingTemporalResolutionChanged(resolution));
-                // }}
+                trendOptionOnChange={(data) => {
+                    dispatch(trendToolOptionChanged(data));
+                }}
                 acquisitionMonthOnChange={(month) => {
                     dispatch(acquisitionMonth4ProfileToolChanged(month));
+                }}
+                acquisitionYearOnChange={(year) => {
+                    dispatch(acquisitionYear4ProfileToolChanged(year));
                 }}
                 closeButtonOnClick={() => {
                     dispatch(temporalProfileDataUpdated([]));
