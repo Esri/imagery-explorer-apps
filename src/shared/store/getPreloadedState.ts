@@ -37,11 +37,18 @@ const getPreloadedMapState = (): MapState => {
     if (!mapLocation) {
         mapLocation = randomInterestingPlace.location;
     }
+    // show map labels if there is no `hideMapLabels` in hash params
+    const showMapLabel = getHashParamValueByKey('hideMapLabels') === null;
+
+    // show terrain if there is no `hideTerrain` in hash params
+    const showTerrain = getHashParamValueByKey('hideTerrain') === null;
 
     return {
         ...initialMapState,
         center: mapLocation?.center || MAP_CENTER,
         zoom: mapLocation?.zoom || MAP_ZOOM,
+        showMapLabel,
+        showTerrain,
     };
 };
 

@@ -14,7 +14,7 @@ import {
 } from '@shared/store/Analysis/reducer';
 import { debounce } from '../snippets/debounce';
 import { nanoid } from 'nanoid';
-import { AnimationStatus } from '@shared/store/UI/reducer';
+// import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
     | 'mapCenter'
@@ -24,7 +24,9 @@ type UrlHashParamKey =
     | 'animationScenes'
     | 'animation'
     | 'mask'
-    | 'profile';
+    | 'profile'
+    | 'hideTerrain'
+    | 'hideMapLabels';
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
 

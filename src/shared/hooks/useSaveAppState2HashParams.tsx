@@ -11,6 +11,10 @@ import {
     selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
 import {
+    selectShowMapLabel,
+    selectShowTerrain,
+} from '@shared/store/Map/selectors';
+import {
     selectAnimationSpeed,
     selectAnimationStatus,
 } from '@shared/store/UI/selectors';
@@ -48,6 +52,10 @@ export const useSaveAppState2HashParams = () => {
     const animationStatus = useSelector(selectAnimationStatus);
 
     const animationSpeed = useSelector(selectAnimationSpeed);
+
+    const showMapLabel = useSelector(selectShowMapLabel);
+
+    const showTerrain = useSelector(selectShowTerrain);
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -90,4 +98,15 @@ export const useSaveAppState2HashParams = () => {
                 : null
         );
     }, [mode, animationStatus, animationSpeed]);
+
+    useEffect(() => {
+        updateHashParams(
+            'hideMapLabels',
+            showMapLabel === false ? 'true' : null
+        );
+    }, [showMapLabel]);
+
+    useEffect(() => {
+        updateHashParams('hideTerrain', showTerrain === false ? 'true' : null);
+    }, [showTerrain]);
 };

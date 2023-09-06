@@ -4,14 +4,14 @@ import IMapView from 'esri/views/MapView';
 import { useSelector } from 'react-redux';
 import {
     selectShowMapLabel,
-    selectShowTerrain,
+    // selectShowTerrain,
 } from '@shared/store/Map/selectors';
 
 import {
     HUMAN_GEO_DARK_LABEL_LAYER_TITLE,
     HUMAN_GEO_LIGHT_WATER_LAYER_TITLE,
     HUMAN_GEO_DARK_DRY_LAYER_TITLE,
-    TERRAIN_LAYER_TITLE,
+    // TERRAIN_LAYER_TITLE,
 } from '@shared/constants/map';
 
 type Props = {
@@ -23,7 +23,17 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     // const terrainLayerRef = useRef<__esri.Layer>();
 
     const showMapLabel = useSelector(selectShowMapLabel);
-    const showTerrain = useSelector(selectShowTerrain);
+    // const showTerrain = useSelector(selectShowTerrain);
+
+    const updateLabelLayersVisibility = () => {
+        if (!mapLabelLayersRef.current) {
+            return;
+        }
+
+        for (const layer of mapLabelLayersRef.current) {
+            layer.visible = showMapLabel;
+        }
+    };
 
     const init = () => {
         mapLabelLayersRef.current = mapView.map.allLayers.filter((layer) => {
@@ -33,6 +43,9 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
                 layer.title === HUMAN_GEO_DARK_DRY_LAYER_TITLE
             );
         });
+
+        // update visibiliy in case user want these layers to be turned off by default
+        updateLabelLayersVisibility();
 
         // terrainLayerRef.current = mapView.map.allLayers.find(
         //     (layer) => layer.title === TERRAIN_LAYER_TITLE
@@ -46,11 +59,7 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     }, [mapView]);
 
     useEffect(() => {
-        if (mapLabelLayersRef.current) {
-            for (const layer of mapLabelLayersRef.current) {
-                layer.visible = showMapLabel;
-            }
-        }
+        updateLabelLayersVisibility();
     }, [showMapLabel]);
 
     // useEffect(() => {
