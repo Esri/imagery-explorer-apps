@@ -78,6 +78,8 @@ export const queryAvailableScenes =
                 }
             }
 
+            // sort scenes uing acquisition date in an ascending order
+            // which is necessary for us to select between two overlapping scenes in step below
             scenes.sort((a, b) => a.acquisitionDate - b.acquisitionDate);
 
             const availableScenes: LandsatScene[] = [];
