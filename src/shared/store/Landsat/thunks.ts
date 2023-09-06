@@ -78,18 +78,23 @@ export const queryAvailableScenes =
                 }
             }
 
+            scenes.sort((a, b) => a.acquisitionDate - b.acquisitionDate);
+
             const availableScenes: LandsatScene[] = [];
 
             for (const scene of scenes) {
                 const { formattedAcquisitionDate } = scene;
 
                 // Only need to keep the one Landsat Scene for each day
+                // therefore if there is aleady a scene in the `availableScenes` that was acquired on the same date,
+                // we should just remove that scene and use the current scene instead as the current scene has later
+                // acquisition date
                 if (
                     availableScenes.length &&
                     availableScenes[availableScenes.length - 1]
                         .formattedAcquisitionDate == formattedAcquisitionDate
                 ) {
-                    continue;
+                    availableScenes.pop();
                 }
 
                 availableScenes.push(scene);
