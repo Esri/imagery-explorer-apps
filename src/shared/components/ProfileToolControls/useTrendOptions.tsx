@@ -8,11 +8,11 @@ const TrendOptions: {
 }[] = [
     {
         value: 'year-to-year',
-        label: 'Yearly',
+        label: 'Yearly'.toUpperCase(),
     },
     {
         value: 'month-to-month',
-        label: 'Monthly',
+        label: 'Monthly'.toUpperCase(),
     },
 ];
 
