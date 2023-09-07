@@ -96,13 +96,19 @@ export const TemporalProfileChart: FC<Props> = ({
 
         const xMin = chartData[0].x;
 
-        const xMax = Math.max(
-            timestampOfAcquisitionDate,
-            chartData[chartData.length - 1].x
-        );
+        // In the "year-to-year" option, we aim to display the indicator line for the selected acquisition date on the chart.
+        // To achieve this, we adjust the xMax value to ensure it fits within the chart's boundaries.
+        // In the "month-to-month" option, we only display the indicator line for the selected acquisition date if it falls within the user-selected acquisition year.
+        const xMax =
+            trendToolOption === 'year-to-year'
+                ? Math.max(
+                      timestampOfAcquisitionDate, // user selected acquisition date in Calendar component
+                      chartData[chartData.length - 1].x // acquisition date of the last item in the chart data
+                  )
+                : chartData[chartData.length - 1].x;
 
         return [xMin, xMax];
-    }, [chartData, queryParams4SelectedScene]);
+    }, [chartData, queryParams4SelectedScene, trendToolOption]);
 
     const customDomain4YScale = useMemo(() => {
         if (spectralIndex === 'temperature farhenheit') {
