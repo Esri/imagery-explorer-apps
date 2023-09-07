@@ -27,8 +27,9 @@ import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TemporalProfileChart';
 import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
 import {
-    getFormatedDateString,
+    // getFormatedDateString,
     getMonthFromFormattedDateString,
+    getYearFromFormattedDateString,
 } from '@shared/utils/date-time/formatDateString';
 import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
@@ -90,9 +91,13 @@ export const ProfileToolContainer = () => {
             queryParams4MainScene?.acquisitionDate
         );
 
-        acquisitionMonth4ProfileToolChanged(month);
+        const year = getYearFromFormattedDateString(
+            queryParams4MainScene?.acquisitionDate
+        );
 
         dispatch(acquisitionMonth4ProfileToolChanged(month));
+
+        dispatch(acquisitionYear4ProfileToolChanged(year));
     }, [queryParams4MainScene?.acquisitionDate]);
 
     useEffect(() => {
