@@ -97,9 +97,14 @@ export const ProfileToolContainer = () => {
         dispatch(acquisitionYear4ProfileToolChanged(year));
     }, [queryParams4MainScene?.acquisitionDate]);
 
+    // triggered when user selects a new acquisition month that will be used to draw the "year-to-year" trend data
     useEffect(() => {
         (async () => {
             if (tool !== 'profile') {
+                return;
+            }
+
+            if (selectedTrendToolOption !== 'year-to-year') {
                 return;
             }
 
@@ -109,13 +114,26 @@ export const ProfileToolContainer = () => {
                 console.log(err);
             }
         })();
-    }, [
-        queryLocation,
-        tool,
-        acquisitionMonth,
-        acquisitionYear,
-        selectedTrendToolOption,
-    ]);
+    }, [queryLocation, tool, acquisitionMonth, selectedTrendToolOption]);
+
+    // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
+    useEffect(() => {
+        (async () => {
+            if (tool !== 'profile') {
+                return;
+            }
+
+            if (selectedTrendToolOption !== 'month-to-month') {
+                return;
+            }
+
+            try {
+                await dispatch(updateTemporalProfileData());
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, [queryLocation, tool, acquisitionYear, selectedTrendToolOption]);
 
     if (tool !== 'profile') {
         return null;
