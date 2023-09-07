@@ -5,7 +5,7 @@ import IExtentAndRotationGeoreference from 'esri/layers/support/ExtentAndRotatio
 import { loadModules } from 'esri-loader';
 import { AnimationStatus } from '@shared/store/UI/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
-import { exportImage as exportLandsatImage } from '@shared/services/landsat-2/exportImage';
+import { exportImage as exportLandsatImage } from '@shared/services/landsat/exportImage';
 
 type Props = {
     mapView?: IMapView;

@@ -1,7 +1,7 @@
 import {
     calcSpectralIndex,
     getValFromThermalBand,
-} from '@shared/services/landsat-2/helpers';
+} from '@shared/services/landsat/helpers';
 import Point from 'esri/geometry/Point';
 
 export const getLoadingIndicator = () => {

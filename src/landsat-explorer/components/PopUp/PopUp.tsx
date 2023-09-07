@@ -11,15 +11,15 @@ import {
 } from '@shared/store/Landsat/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
-import { getSamples } from '@shared/services/landsat-2/getSamples';
+import { getSamples } from '@shared/services/landsat/getSamples';
 import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getLoadingIndicator, getMainContent } from './helper';
 import IReactiveUtils from 'esri/core/reactiveUtils';
 import { loadModules } from 'esri-loader';
-import { identify } from '@shared/services/landsat-2/identify';
-import { getFormattedLandsatScenes } from '@shared/services/landsat-2/getLandsatScenes';
+import { identify } from '@shared/services/landsat/identify';
+import { getFormattedLandsatScenes } from '@shared/services/landsat/getLandsatScenes';
 import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {

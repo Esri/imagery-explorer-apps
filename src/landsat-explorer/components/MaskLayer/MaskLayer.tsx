@@ -2,13 +2,13 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import IImageryLayer from 'esri/layers/ImageryLayer';
 import { loadModules } from 'esri-loader';
 import IMosaicRule from 'esri/layers/support/MosaicRule';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-2/config';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat/config';
 import MapView from 'esri/views/MapView';
 import { getMosaicRule } from '../LandsatLayer/useLandsatLayer';
 import IRasterFunction from 'esri/layers/support/RasterFunction';
 import PixelBlock from 'esri/layers/support/PixelBlock';
 import GroupLayer from 'esri/layers/GroupLayer';
-import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-2/helpers';
+import { getBandIndexesBySpectralIndex } from '@shared/services/landsat/helpers';
 import { SpectralIndex } from '@typing/imagery-service';
 
 type Props = {

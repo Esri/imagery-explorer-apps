@@ -14,8 +14,8 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-2/config';
-import { calcSpectralIndex } from '@shared/services/landsat-2/helpers';
+} from '@shared/services/landsat/config';
+import { calcSpectralIndex } from '@shared/services/landsat/helpers';
 import { selectTrendToolOption } from '@shared/store/Analysis/selectors';
 
 type Props = {

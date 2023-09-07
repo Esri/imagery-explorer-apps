@@ -16,7 +16,7 @@ import {
     selectTrendToolOption,
     // selectSamplingTemporalResolution,
 } from './selectors';
-import { getTemporalProfileData } from '@shared/services/landsat-2/getTemporalProfileData';
+import { getTemporalProfileData } from '@shared/services/landsat/getTemporalProfileData';
 
 /**
  * update selected range for the active mask method

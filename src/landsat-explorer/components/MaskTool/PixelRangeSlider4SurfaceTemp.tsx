@@ -6,7 +6,7 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-2/config';
+} from '@shared/services/landsat/config';
 // import classNames from 'classnames';
 
 type Props = {
