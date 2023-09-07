@@ -82,6 +82,10 @@ export type AnalysisState = {
             };
             objectIds: number[];
         };
+        /**
+         * if ture, it is in process of loading data to render trend tool
+         */
+        loading: boolean;
     };
 };
 
@@ -131,6 +135,7 @@ export const initialAnalysisState: AnalysisState = {
             byObjectId: {},
             objectIds: [],
         },
+        loading: false,
         // samplingTemporalResolution: 1,
     },
 };
@@ -211,6 +216,12 @@ const slice = createSlice({
         ) => {
             state.profileTool.option = action.payload;
         },
+        trendingToolIsLoadingChanged: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.profileTool.loading = action.payload;
+        },
     },
 });
 
@@ -228,6 +239,7 @@ export const {
     temporalProfileDataUpdated,
     spectralIndex4ProfileToolChanged,
     trendToolOptionChanged,
+    trendingToolIsLoadingChanged,
     // samplingTemporalResolutionChanged,
 } = slice.actions;
 

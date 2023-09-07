@@ -5,6 +5,7 @@ import {
     maskOptionsChanged,
     temporalProfileDataUpdated,
     queryLocation4ProfileToolChanged,
+    trendingToolIsLoadingChanged,
 } from './reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
@@ -76,8 +77,7 @@ export const updateTemporalProfileData =
 
         const trendToolOption = selectTrendToolOption(rootState);
 
-        // const samplingTemporalResolution =
-        //     selectSamplingTemporalResolution(rootState);
+        dispatch(trendingToolIsLoadingChanged(true));
 
         if (!queryLocation) {
             dispatch(temporalProfileDataUpdated([]));
@@ -101,4 +101,6 @@ export const updateTemporalProfileData =
         });
 
         dispatch(temporalProfileDataUpdated(data));
+
+        dispatch(trendingToolIsLoadingChanged(false));
     };

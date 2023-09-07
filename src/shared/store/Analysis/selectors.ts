@@ -72,3 +72,8 @@ export const selectProfileToolState = createSelector(
     (state: RootState) => state.Analysis.profileTool,
     (profileTool) => profileTool
 );
+
+export const selectIsLoadingData4TrendingTool = createSelector(
+    (state: RootState) => state.Analysis.profileTool.loading,
+    (loading) => loading
+);

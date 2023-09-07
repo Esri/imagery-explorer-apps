@@ -19,6 +19,7 @@ import {
     selectSpectralIndex4ProfileTool,
     selectAcquisitionYear4ProfileTool,
     selectTrendToolOption,
+    selectIsLoadingData4TrendingTool,
 } from '@shared/store/Analysis/selectors';
 import { updateTemporalProfileData } from '@shared/store/Analysis/thunks';
 import React, { useEffect, useState } from 'react';
@@ -53,13 +54,9 @@ export const ProfileToolContainer = () => {
 
     const spectralIndex = useSelector(selectSpectralIndex4ProfileTool);
 
-    // const samplingTemporalResolution = useSelector(
-    //     selectSamplingTemporalResolution
-    // );
-
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
-    const [isLoading, setIsLoading] = useState<boolean>();
+    const isLoading = useSelector(selectIsLoadingData4TrendingTool);
 
     useEffect(() => {
         if (!queryParams4MainScene?.rasterFunctionName) {
@@ -107,11 +104,7 @@ export const ProfileToolContainer = () => {
             }
 
             try {
-                setIsLoading(true);
-
                 await dispatch(updateTemporalProfileData());
-
-                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
