@@ -42,6 +42,7 @@ export const convertLandsatTemporalProfileData2ChartData = (
         let y = calcSpectralIndex(spectralIndex, values);
 
         let yMin = -1;
+        let yMax = 1;
 
         // justify the y value for surface temperature index to make it not go below the hardcoded y min
         if (
@@ -52,9 +53,18 @@ export const convertLandsatTemporalProfileData2ChartData = (
                 spectralIndex === 'temperature farhenheit'
                     ? LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT
                     : LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
+
+            yMax =
+                spectralIndex === 'temperature farhenheit'
+                    ? LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT
+                    : LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS;
         }
 
+        // y should not go below y min
         y = Math.max(y, yMin);
+
+        // y should not go beyond y max
+        y = Math.min(y, yMax);
 
         const tooltip = `${format(acquisitionDate, 'LLL yyyy')}: ${y.toFixed(
             2
