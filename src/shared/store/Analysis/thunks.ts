@@ -77,8 +77,6 @@ export const updateTemporalProfileData =
 
         const trendToolOption = selectTrendToolOption(rootState);
 
-        dispatch(trendingToolIsLoadingChanged(true));
-
         if (!queryLocation) {
             dispatch(temporalProfileDataUpdated([]));
             return;
@@ -89,6 +87,8 @@ export const updateTemporalProfileData =
         }
 
         abortController = new AbortController();
+
+        dispatch(trendingToolIsLoadingChanged(true));
 
         const data = await getTemporalProfileData({
             queryLocation,
