@@ -1,11 +1,13 @@
 import {
     MaskToolData,
     TemporalProfileToolData,
+    TrendToolOption,
     initialAnalysisState,
 } from '@shared/store/Analysis/reducer';
 import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { Point } from 'esri/geometry';
+import { getCurrentYear } from '../date-time/getCurrentDateTime';
 
 export const decodeMapCenter = (value: string) => {
     if (!value) {
@@ -144,8 +146,9 @@ export const encodeTemporalProfileToolData = (
     const {
         spectralIndex,
         acquisitionMonth,
-        // samplingTemporalResolution,
         queryLocation,
+        acquisitionYear,
+        option,
     } = data;
 
     if (!queryLocation) {
@@ -157,6 +160,8 @@ export const encodeTemporalProfileToolData = (
         acquisitionMonth,
         // samplingTemporalResolution,
         encodeProfileToolQueryLocation(queryLocation),
+        acquisitionYear,
+        option,
     ].join('|');
 };
 
@@ -172,13 +177,16 @@ export const decodeTemporalProfileToolData = (
         acquisitionMonth,
         // samplingTemporalResolution,
         queryLocation,
+        acquisitionYear,
+        option,
     ] = val.split('|');
 
     return {
         ...initialAnalysisState.profileTool,
         spectralIndex: spectralIndex as SpectralIndex,
         acquisitionMonth: +acquisitionMonth,
-        // samplingTemporalResolution: +samplingTemporalResolution,
+        acquisitionYear: acquisitionYear ? +acquisitionYear : getCurrentYear(),
+        option: option ? (option as TrendToolOption) : 'year-to-year',
         queryLocation: decodeProfileToolQueryLocation(queryLocation),
     };
 };
