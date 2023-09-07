@@ -191,7 +191,7 @@ const formatAsTemporalProfileData = (
  * This helper function filters the input Landsat Scenes and only keep one Landsat Scene for each month,
  * the selected scenes for a specific month is the one that with least cloud coverage for that month
  *
- * @param scenes landsat scenes
+ * @param scenes input landsat scenes
  * @param samplingTemporalResolution landsat scenes
  * @returns LandsatScene[]
  */
@@ -203,12 +203,19 @@ const getLandsatScenesToSample = (
         return [];
     }
 
-    const candidates: LandsatScene[] = [scenes[0]];
+    // landsat 7 had Scan Line Corrector failure which caused
+    // missing pixel values in a lot of scenes, therefore it's better to have those scenes excluded
+    // before selecting candidate scenes with least cloud coverage
+    const scenesWithLandsat7Removed = scenes.filter(
+        (scene) => scene.satellite !== 'Landsat 7'
+    );
 
-    for (let i = 1; i < scenes.length; i++) {
+    const candidates: LandsatScene[] = [scenesWithLandsat7Removed[0]];
+
+    for (let i = 1; i < scenesWithLandsat7Removed.length; i++) {
         const prevScene = candidates[candidates.length - 1];
 
-        const currentScene = scenes[i];
+        const currentScene = scenesWithLandsat7Removed[i];
 
         // if (
         //     currentScene.acquisitionYear - prevScene.acquisitionYear <
