@@ -16,7 +16,7 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/landsat/config';
 import { calcSpectralIndex } from '@shared/services/landsat/helpers';
-import { selectTrendToolOption } from '@shared/store/Analysis/selectors';
+import { selectTrendToolOption } from '@shared/store/TrendTool/selectors';
 
 type Props = {
     data: TemporalProfileData[];

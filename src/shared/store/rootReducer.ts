@@ -3,7 +3,7 @@ import Map from './Map/reducer';
 import Landsat from './Landsat/reducer';
 import Sentinel2 from './Sentinel2/reducer';
 import UI from './UI/reducer';
-import Analysis from './Analysis/reducer';
+import TrendTool from './TrendTool/reducer';
 import MaskTool from './MaskTool/reducer';
 
 const reducers = combineReducers({
@@ -11,7 +11,7 @@ const reducers = combineReducers({
     Landsat,
     Sentinel2,
     UI,
-    Analysis,
+    TrendTool,
     MaskTool,
 });
 

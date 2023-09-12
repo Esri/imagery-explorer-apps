@@ -9,7 +9,7 @@ import {
     queryLocation4ProfileToolChanged,
     trendToolOptionChanged,
     acquisitionYear4ProfileToolChanged,
-} from '@shared/store/Analysis/reducer';
+} from '@shared/store/TrendTool/reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
     // selectActiveAnalysisTool,
@@ -20,8 +20,8 @@ import {
     selectAcquisitionYear4ProfileTool,
     selectTrendToolOption,
     selectIsLoadingData4TrendingTool,
-} from '@shared/store/Analysis/selectors';
-import { updateTemporalProfileData } from '@shared/store/Analysis/thunks';
+} from '@shared/store/TrendTool/selectors';
+import { updateTemporalProfileData } from '@shared/store/TrendTool/thunks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';

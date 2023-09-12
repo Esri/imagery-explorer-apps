@@ -3,7 +3,7 @@ import { Dropdown } from '../Dropdown';
 import { useMonthOptions } from './useMonthOptions';
 import { Tooltip } from '../Tooltip';
 import { useTrendOptions } from './useTrendOptions';
-import { TrendToolOption } from '@shared/store/Analysis/reducer';
+import { TrendToolOption } from '@shared/store/TrendTool/reducer';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 
 type Props = {

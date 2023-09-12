@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { DropdownData } from '@shared/components/Dropdown';
-import { TrendToolOption } from '@shared/store/Analysis/reducer';
+import { TrendToolOption } from '@shared/store/TrendTool/reducer';
 
 const TrendOptions: {
     value: TrendToolOption;

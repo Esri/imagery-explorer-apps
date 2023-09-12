@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { FC, useEffect, useState } from 'react';
 import MapView from './MapView';
-import { WEB_MAP_ID } from '../../constants/map';
+// import { WEB_MAP_ID } from '../../constants/map';
 import { useSelector } from 'react-redux';
 import {
     selectMapCenter,
@@ -20,8 +20,8 @@ import { batch } from 'react-redux';
 import { centerChanged, zoomChanged } from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
-import { queryLocation4ProfileToolChanged } from '@shared/store/Analysis/reducer';
-import { updateQueryLocation4ProfileMask } from '@shared/store/Analysis/thunks';
+// import { queryLocation4ProfileToolChanged } from '@shared/store/TrendTool/reducer';
+import { updateQueryLocation4ProfileMask } from '@shared/store/TrendTool/thunks';
 import { Point } from 'esri/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';

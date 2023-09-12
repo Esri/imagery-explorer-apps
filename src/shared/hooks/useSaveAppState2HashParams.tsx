@@ -1,4 +1,4 @@
-import { selectProfileToolState } from '@shared/store/Analysis/selectors';
+import { selectProfileToolState } from '@shared/store/TrendTool/selectors';
 import {
     selectAppMode,
     selectQueryParams4MainScene,

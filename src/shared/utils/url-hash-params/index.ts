@@ -8,13 +8,14 @@ import {
     encodeQueryParams4ImageryScene,
     encodeTemporalProfileToolData,
 } from './helpers';
-import {
-    // MaskToolData,
-    TemporalProfileToolData,
-} from '@shared/store/Analysis/reducer';
+// import {
+//     // MaskToolData,
+//     TemporalProfileToolData,
+// } from '@shared/store/Analysis/reducer';
 import { debounce } from '../snippets/debounce';
 import { nanoid } from 'nanoid';
 import { MaskToolState } from '@shared/store/MaskTool/reducer';
+import { TrendToolState } from '@shared/store/TrendTool/reducer';
 // import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
@@ -98,7 +99,7 @@ export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
 }, 500);
 
 export const saveTemporalProfileToolToHashParams = debounce(
-    (data: TemporalProfileToolData) => {
+    (data: TrendToolState) => {
         updateHashParams('profile', encodeTemporalProfileToolData(data));
     },
     500
@@ -109,11 +110,10 @@ export const getMaskToolDataFromHashParams = (): MaskToolState => {
     return decodeMaskToolData(value);
 };
 
-export const getTemporalProfileToolDataFromHashParams =
-    (): TemporalProfileToolData => {
-        const value = getHashParamValueByKey('profile');
-        return decodeTemporalProfileToolData(value);
-    };
+export const getTemporalProfileToolDataFromHashParams = (): TrendToolState => {
+    const value = getHashParamValueByKey('profile');
+    return decodeTemporalProfileToolData(value);
+};
 
 export const saveQueryParams4ScenesInAnimationToHashParams = (
     data: QueryParams4ImageryScene[]

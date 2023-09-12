@@ -1,4 +1,4 @@
-import { selectQueryLocation4ProfileTool } from '@shared/store/Analysis/selectors';
+import { selectQueryLocation4ProfileTool } from '@shared/store/TrendTool/selectors';
 import MapView from 'esri/views/MapView';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';

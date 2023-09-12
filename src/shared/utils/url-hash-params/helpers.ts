@@ -1,8 +1,8 @@
 import {
-    TemporalProfileToolData,
     TrendToolOption,
-    initialAnalysisState,
-} from '@shared/store/Analysis/reducer';
+    TrendToolState,
+    initialTrendToolState,
+} from '@shared/store/TrendTool/reducer';
 import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { Point } from 'esri/geometry';
@@ -137,9 +137,7 @@ export const decodeProfileToolQueryLocation = (val: string): Point => {
     } as Point;
 };
 
-export const encodeTemporalProfileToolData = (
-    data: TemporalProfileToolData
-): string => {
+export const encodeTemporalProfileToolData = (data: TrendToolState): string => {
     if (!data) {
         return null;
     }
@@ -166,9 +164,7 @@ export const encodeTemporalProfileToolData = (
     ].join('|');
 };
 
-export const decodeTemporalProfileToolData = (
-    val: string
-): TemporalProfileToolData => {
+export const decodeTemporalProfileToolData = (val: string): TrendToolState => {
     if (!val) {
         return null;
     }
@@ -183,7 +179,7 @@ export const decodeTemporalProfileToolData = (
     ] = val.split('|');
 
     return {
-        ...initialAnalysisState.profileTool,
+        ...initialTrendToolState,
         spectralIndex: spectralIndex as SpectralIndex,
         acquisitionMonth: +acquisitionMonth,
         acquisitionYear: acquisitionYear ? +acquisitionYear : getCurrentYear(),
