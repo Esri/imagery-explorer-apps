@@ -3,13 +3,13 @@ import React, { FC, useMemo } from 'react';
 import { MaskLayer } from './MaskLayer';
 import { useSelector } from 'react-redux';
 import {
-    selectActiveAnalysisTool,
     selectMaskOptions,
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
     selectSpectralIndex4MaskTool,
 } from '@shared/store/Analysis/selectors';
 import {
+    selectActiveAnalysisTool,
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';

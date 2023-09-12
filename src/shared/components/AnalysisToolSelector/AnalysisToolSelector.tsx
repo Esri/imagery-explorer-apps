@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { AnalysisTool } from '@shared/store/Analysis/reducer';
 import { Button } from '../Button';
 import classNames from 'classnames';
+import { AnalysisTool } from '@shared/store/Landsat/reducer';
 
 const AnalysisTools: {
     tool: AnalysisTool;

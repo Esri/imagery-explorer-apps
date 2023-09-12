@@ -18,13 +18,9 @@ import {
     DefaultQueryParams4ImageryScene,
     initialLandsatState,
     LandsatState,
-    QueryParams4ImageryScene,
+    // QueryParams4ImageryScene,
 } from './Landsat/reducer';
-import {
-    AnalysisState,
-    AnalysisTool,
-    initialAnalysisState,
-} from './Analysis/reducer';
+import { AnalysisState, initialAnalysisState } from './Analysis/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { initialUIState, UIState } from './UI/reducer';
 import { getRandomInterestingPlace } from '@shared/components/InterestingPlaces/helper';
@@ -78,6 +74,8 @@ const getPreloadedLandsatState = (): LandsatState => {
 
     const queryParams4ScenesInAnimationByFrameId = {};
 
+    const profileToolData = getTemporalProfileToolDataFromHashParams();
+
     for (const queryParams of queryParams4ScenesInAnimation) {
         queryParams4ScenesInAnimationByFrameId[queryParams.animationFrameId] =
             queryParams;
@@ -86,6 +84,7 @@ const getPreloadedLandsatState = (): LandsatState => {
     return {
         ...initialLandsatState,
         mode,
+        tool: profileToolData !== null ? 'profile' : 'mask',
         queryParams4MainScene,
         queryParams4SecondaryScene,
         queryParams4ScenesInAnimateMode: {
@@ -106,7 +105,7 @@ const getPreloadedAnalysisState = (): AnalysisState => {
 
     return {
         ...initialAnalysisState,
-        tool: profileToolData !== null ? 'profile' : 'mask',
+        // tool: profileToolData !== null ? 'profile' : 'mask',
         maskTool: maskToolData || initialAnalysisState.maskTool,
         profileTool: profileToolData || initialAnalysisState.profileTool,
     };

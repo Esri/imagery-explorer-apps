@@ -12,7 +12,7 @@ import {
 } from '@shared/store/Analysis/reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
-    selectActiveAnalysisTool,
+    // selectActiveAnalysisTool,
     // selectSamplingTemporalResolution,
     selectTemporalProfileData,
     selectQueryLocation4ProfileTool,
@@ -34,7 +34,10 @@ import {
 } from '@shared/utils/date-time/formatDateString';
 import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
-import { selectQueryParams4MainScene } from '@shared/store/Landsat/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectQueryParams4MainScene,
+} from '@shared/store/Landsat/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 
 export const ProfileToolContainer = () => {

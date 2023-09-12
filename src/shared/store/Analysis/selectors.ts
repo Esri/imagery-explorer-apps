@@ -1,10 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectActiveAnalysisTool = createSelector(
-    (state: RootState) => state.Analysis.tool,
-    (tool) => tool
-);
+// export const selectActiveAnalysisTool = createSelector(
+//     (state: RootState) => state.Analysis.tool,
+//     (tool) => tool
+// );
 
 export const selectSpectralIndex4MaskTool = createSelector(
     (state: RootState) => state.Analysis.maskTool.spectralIndex,

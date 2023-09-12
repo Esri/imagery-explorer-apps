@@ -7,13 +7,14 @@ import { spectralIndex4MaskToolChanged } from '@shared/store/Analysis/reducer';
 import {
     selectSpectralIndex4MaskTool,
     selectMaskOptions,
-    selectActiveAnalysisTool,
+    // selectActiveAnalysisTool,
 } from '@shared/store/Analysis/selectors';
 import { updateSelectedRange } from '@shared/store/Analysis/thunks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
+    selectActiveAnalysisTool,
     selectQueryParams4MainScene,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';

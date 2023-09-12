@@ -1,6 +1,8 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectQueryParams4SceneInSelectedMode,
+} from '@shared/store/Landsat/selectors';
 import classNames from 'classnames';
 import React from 'react';
 import { useDispatch } from 'react-redux';

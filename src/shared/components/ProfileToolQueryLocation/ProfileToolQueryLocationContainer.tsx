@@ -1,12 +1,12 @@
-import {
-    selectActiveAnalysisTool,
-    selectQueryLocation4ProfileTool,
-} from '@shared/store/Analysis/selectors';
+import { selectQueryLocation4ProfileTool } from '@shared/store/Analysis/selectors';
 import MapView from 'esri/views/MapView';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { ProfileToolQueryLocation } from './ProfileToolQueryLocation';
-import { selectAppMode } from '@shared/store/Landsat/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectAppMode,
+} from '@shared/store/Landsat/selectors';
 import GroupLayer from 'esri/layers/GroupLayer';
 
 type Props = {

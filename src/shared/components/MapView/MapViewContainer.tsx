@@ -27,10 +27,11 @@ import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
 import SearchWidget from './SearchWidget';
 import {
+    selectActiveAnalysisTool,
     selectAppMode,
     selectIsSwipeModeOn,
 } from '@shared/store/Landsat/selectors';
-import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
+// import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { MapCenterIndicator } from './MapCenterIndicator';
 
 type Props = {

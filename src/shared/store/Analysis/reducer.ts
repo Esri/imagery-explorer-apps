@@ -11,7 +11,7 @@ import {
 import { TemporalProfileData, SpectralIndex } from '@typing/imagery-service';
 import { Point } from 'esri/geometry';
 
-export type AnalysisTool = 'mask' | 'profile' | 'spectral';
+// export type AnalysisTool = 'mask' | 'profile' | 'spectral';
 
 export type MaskOptions = {
     selectedRange: number[];
@@ -29,10 +29,10 @@ export type TrendToolOption = 'year-to-year' | 'month-to-month';
 type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
 
 export type AnalysisState = {
-    /**
-     * active analysis tool
-     */
-    tool: AnalysisTool;
+    // /**
+    //  * active analysis tool
+    //  */
+    // tool: AnalysisTool;
     maskTool: {
         /**
          * user selected spectral index to be used in the mask tool
@@ -94,7 +94,7 @@ export type MaskToolData = AnalysisState['maskTool'];
 export type TemporalProfileToolData = AnalysisState['profileTool'];
 
 export const initialAnalysisState: AnalysisState = {
-    tool: 'mask',
+    // tool: 'mask',
     maskTool: {
         spectralIndex: 'water',
         maskLayerOpacity: 1,
@@ -144,12 +144,6 @@ const slice = createSlice({
     name: 'Analysis',
     initialState: initialAnalysisState,
     reducers: {
-        activeAnalysisToolChanged: (
-            state,
-            action: PayloadAction<AnalysisTool>
-        ) => {
-            state.tool = action.payload;
-        },
         spectralIndex4MaskToolChanged: (
             state,
             action: PayloadAction<SpectralIndex>
@@ -228,7 +222,7 @@ const slice = createSlice({
 const { reducer } = slice;
 
 export const {
-    activeAnalysisToolChanged,
+    // activeAnalysisToolChanged,
     spectralIndex4MaskToolChanged,
     maskOptionsChanged,
     maskLayerOpacityChanged,

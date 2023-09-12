@@ -18,6 +18,11 @@ export type AppMode =
     | 'analysis';
 
 /**
+ * the analysis tool that the app supports
+ */
+export type AnalysisTool = 'mask' | 'profile' | 'spectral';
+
+/**
  * Swipe Mode allows user to compare Imagery scene the
  */
 export type Side4SwipeMode = 'left' | 'right';
@@ -67,6 +72,10 @@ export type QueryParams4ImageryScene = {
 
 export type LandsatState = {
     mode?: AppMode;
+    /**
+     * active analysis tool
+     */
+    tool: AnalysisTool;
     /**
      * Imagery scenes that intersect with center point of map view and were acquired during the input year.
      */
@@ -119,6 +128,7 @@ export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
 
 export const initialLandsatState: LandsatState = {
     mode: 'find a scene',
+    tool: 'mask',
     availableScenes: {
         byObjectId: {},
         objectIds: [],
@@ -235,6 +245,12 @@ const slice = createSlice({
         cloudCoverChanged: (state, action: PayloadAction<number>) => {
             state.cloudCover = action.payload;
         },
+        activeAnalysisToolChanged: (
+            state,
+            action: PayloadAction<AnalysisTool>
+        ) => {
+            state.tool = action.payload;
+        },
     },
 });
 
@@ -251,6 +267,7 @@ export const {
     queryParams4ScenesInAnimationModeChanged,
     queryParams4SceneInSelectedAnimationFrameChanged,
     cloudCoverChanged,
+    activeAnalysisToolChanged,
 } = slice.actions;
 
 export default reducer;

@@ -1,5 +1,4 @@
 import {
-    selectActiveAnalysisTool,
     selectMaskToolState,
     selectProfileToolState,
 } from '@shared/store/Analysis/selectors';
@@ -9,6 +8,7 @@ import {
     selectQueryParams4ScenesInAnimateMode,
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
+    selectActiveAnalysisTool,
 } from '@shared/store/Landsat/selectors';
 import {
     selectShowMapLabel,

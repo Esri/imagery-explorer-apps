@@ -114,3 +114,8 @@ export const selectCloudCover = createSelector(
     (state: RootState) => state.Landsat.cloudCover,
     (cloudCover) => cloudCover
 );
+
+export const selectActiveAnalysisTool = createSelector(
+    (state: RootState) => state.Landsat.tool,
+    (tool) => tool
+);

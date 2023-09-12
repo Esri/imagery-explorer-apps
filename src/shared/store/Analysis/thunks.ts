@@ -10,13 +10,14 @@ import {
 import {
     selectAcquisitionMonth4ProfileTool,
     selectAcquisitionYear4ProfileTool,
-    selectActiveAnalysisTool,
+    // selectActiveAnalysisTool,
     selectMaskOptions,
     selectQueryLocation4ProfileTool,
     selectTrendToolOption,
     // selectSamplingTemporalResolution,
 } from './selectors';
 import { getTemporalProfileData } from '@shared/services/landsat/getTemporalProfileData';
+import { selectActiveAnalysisTool } from '../Landsat/selectors';
 
 /**
  * update selected range for the active mask method

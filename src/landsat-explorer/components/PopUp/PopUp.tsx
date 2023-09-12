@@ -4,14 +4,12 @@ import IMapView from 'esri/views/MapView';
 import IPoint from 'esri/geometry/Point';
 import { useSelector } from 'react-redux';
 import {
+    selectActiveAnalysisTool,
     selectAppMode,
-    selectAvailableScenesByObjectId,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
-import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
-import { getSamples } from '@shared/services/landsat/getSamples';
 import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
