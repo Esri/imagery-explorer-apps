@@ -5,6 +5,7 @@ import Sentinel2 from './Sentinel2/reducer';
 import UI from './UI/reducer';
 import TrendTool from './TrendTool/reducer';
 import MaskTool from './MaskTool/reducer';
+import SpectralProfileTool from './SpectralProfileTool/reducer';
 
 const reducers = combineReducers({
     Map,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
     UI,
     TrendTool,
     MaskTool,
+    SpectralProfileTool,
 });
 
 export default reducers;
