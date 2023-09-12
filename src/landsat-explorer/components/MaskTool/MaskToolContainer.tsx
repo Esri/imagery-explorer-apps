@@ -81,32 +81,34 @@ export const MaskToolContainer = () => {
         >
             <AnalysisToolHeader
                 title="Mask"
-                spectralIndices={[
+                dropdownListOptions={[
                     {
-                        value: 'water',
+                        value: 'water' as SpectralIndex,
                         label: 'WATER INDEX',
                     },
                     {
-                        value: 'vegetation',
+                        value: 'vegetation' as SpectralIndex,
                         label: 'VEGETATION INDEX',
                     },
                     {
-                        value: 'moisture',
+                        value: 'moisture' as SpectralIndex,
                         label: 'MOISTURE INDEX',
                     },
                     {
-                        value: 'temperature farhenheit',
+                        value: 'temperature farhenheit' as SpectralIndex,
                         label: 'SURFACE TEMP °F',
                     },
                     {
-                        value: 'temperature celcius',
+                        value: 'temperature celcius' as SpectralIndex,
                         label: 'SURFACE TEMP °C',
                     },
                 ]}
-                selectedSpectralIndex={selectedSpectralIndex}
+                selectedValue={selectedSpectralIndex}
                 tooltipText={MASK_TOOL_HEADER_TOOLTIP}
-                selectedSpectralIndexOnChange={(val) => {
-                    dispatch(spectralIndex4MaskToolChanged(val));
+                dropdownMenuSelectedItemOnChange={(val) => {
+                    dispatch(
+                        spectralIndex4MaskToolChanged(val as SpectralIndex)
+                    );
                 }}
             />
 

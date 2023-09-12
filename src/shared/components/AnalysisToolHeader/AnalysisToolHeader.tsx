@@ -1,49 +1,49 @@
-import { SpectralIndex } from '@typing/imagery-service';
 import React, { FC, useMemo } from 'react';
 import { Dropdown, DropdownData } from '../Dropdown';
 import { Tooltip } from '../Tooltip';
 
-type SpectralIndexOption = {
-    value: SpectralIndex;
-    label?: string;
-};
-
 type Props = {
     title: string;
     /**
-     * list of spectral index to be included in the dropdown menu
+     * list of options in the dropdown menu
      */
-    spectralIndices: SpectralIndexOption[];
+    dropdownListOptions: {
+        value: string;
+        label?: string;
+    }[];
     /**
-     * user selected spectral index
+     * value of selected item in dropdown list
      */
-    selectedSpectralIndex: SpectralIndex;
+    selectedValue: string;
+    /**
+     * tooltip for info icon next to title text
+     */
     tooltipText?: string;
     /**
-     * fires when user selects a new spectral index
+     * fires when user selects a new item in dropdown list
      * @param val
      * @returns
      */
-    selectedSpectralIndexOnChange: (val: SpectralIndex) => void;
+    dropdownMenuSelectedItemOnChange: (val: string) => void;
 };
 
 export const AnalysisToolHeader: FC<Props> = ({
     title,
-    spectralIndices,
-    selectedSpectralIndex,
+    dropdownListOptions,
+    selectedValue,
     tooltipText,
-    selectedSpectralIndexOnChange,
-}: Props) => {
+    dropdownMenuSelectedItemOnChange,
+}) => {
     const dropdownData: DropdownData[] = useMemo(() => {
-        return spectralIndices.map((d) => {
+        return dropdownListOptions.map((d) => {
             const { value, label } = d;
             return {
                 value,
                 label: label ? label.toUpperCase() : value.toUpperCase(),
-                selected: value === selectedSpectralIndex,
+                selected: value === selectedValue,
             };
         });
-    }, [spectralIndices]);
+    }, [dropdownListOptions, selectedValue]);
 
     return (
         <div className="flex items-center w-full select-none">
@@ -60,13 +60,9 @@ export const AnalysisToolHeader: FC<Props> = ({
             <div className="flex-grow">
                 <Dropdown
                     data={dropdownData}
-                    onChange={selectedSpectralIndexOnChange}
+                    onChange={dropdownMenuSelectedItemOnChange}
                 />
             </div>
-
-            {/* <div className="ml-1 shrink-0 flex items-center cursor-pointer">
-                <calcite-icon scale="s" icon="download-to" />
-            </div> */}
         </div>
     );
 };

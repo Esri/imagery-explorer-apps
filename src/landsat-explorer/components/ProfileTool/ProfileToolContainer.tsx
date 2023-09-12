@@ -143,31 +143,33 @@ export const ProfileToolContainer = () => {
         <div className="w-analysis-tool-container-width h-full">
             <AnalysisToolHeader
                 title="Trend"
-                spectralIndices={[
+                dropdownListOptions={[
                     {
-                        value: 'moisture',
+                        value: 'moisture' as SpectralIndex,
                         label: 'moisture index',
                     },
                     {
-                        value: 'water',
+                        value: 'water' as SpectralIndex,
                         label: 'water index',
                     },
                     {
-                        value: 'vegetation',
+                        value: 'vegetation' as SpectralIndex,
                         label: 'vegetation index',
                     },
                     {
-                        value: 'temperature farhenheit',
+                        value: 'temperature farhenheit' as SpectralIndex,
                         label: 'surface temp °F',
                     },
                     {
-                        value: 'temperature celcius',
+                        value: 'temperature celcius' as SpectralIndex,
                         label: 'surface temp °C',
                     },
                 ]}
-                selectedSpectralIndex={spectralIndex}
-                selectedSpectralIndexOnChange={(val) => {
-                    dispatch(spectralIndex4ProfileToolChanged(val));
+                selectedValue={spectralIndex}
+                dropdownMenuSelectedItemOnChange={(val) => {
+                    dispatch(
+                        spectralIndex4ProfileToolChanged(val as SpectralIndex)
+                    );
                 }}
                 tooltipText={`The least-cloudy scene from the selected month will be sampled across all years of the imagery archive.`}
             />

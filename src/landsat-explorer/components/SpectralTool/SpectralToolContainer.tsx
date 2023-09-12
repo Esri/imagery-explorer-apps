@@ -26,15 +26,15 @@ export const SpectralToolContainer = () => {
         >
             <AnalysisToolHeader
                 title="Spectral"
-                spectralIndices={[
+                dropdownListOptions={[
                     {
                         value: 'water',
                         label: 'WATER INDEX',
                     },
                 ]}
-                selectedSpectralIndex={null}
+                selectedValue={null}
                 tooltipText={''}
-                selectedSpectralIndexOnChange={(val) => {
+                dropdownMenuSelectedItemOnChange={(val) => {
                     // dispatch(spectralIndex4MaskToolChanged(val));
                 }}
             />
