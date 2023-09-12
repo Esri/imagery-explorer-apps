@@ -25,7 +25,7 @@ import { updateTemporalProfileData } from '@shared/store/TrendTool/thunks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { TemporalProfileChart } from './TemporalProfileChart';
+import { TemporalProfileChart } from './TrendChart';
 import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
 import {
     // getFormatedDateString,
@@ -40,7 +40,7 @@ import {
 } from '@shared/store/Landsat/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 
-export const ProfileToolContainer = () => {
+export const TrendToolContainer = () => {
     const dispatch = useDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);

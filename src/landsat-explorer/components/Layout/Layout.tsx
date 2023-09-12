@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
 import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
-import { ProfileTool } from '../ProfileTool';
+import { TrendTool } from '../TrendTool';
 import { MaskTool } from '../MaskTool';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
@@ -83,7 +83,7 @@ const Layout = () => {
                             {mode === 'analysis' && (
                                 <div className="mx-6 3xl:mx-16">
                                     <MaskTool />
-                                    <ProfileTool />
+                                    <TrendTool />
                                     <SpectralTool />
                                 </div>
                             )}
