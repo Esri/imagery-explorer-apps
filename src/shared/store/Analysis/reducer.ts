@@ -11,7 +11,7 @@ import {
 import { TemporalProfileData, SpectralIndex } from '@typing/imagery-service';
 import { Point } from 'esri/geometry';
 
-export type AnalysisTool = 'mask' | 'profile';
+export type AnalysisTool = 'mask' | 'profile' | 'spectral';
 
 export type MaskOptions = {
     selectedRange: number[];

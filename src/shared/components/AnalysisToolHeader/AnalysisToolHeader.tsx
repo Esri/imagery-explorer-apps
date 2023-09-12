@@ -13,7 +13,7 @@ type Props = {
     /**
      * list of spectral index to be included in the dropdown menu
      */
-    data: SpectralIndexOption[];
+    spectralIndices: SpectralIndexOption[];
     /**
      * user selected spectral index
      */
@@ -29,13 +29,13 @@ type Props = {
 
 export const AnalysisToolHeader: FC<Props> = ({
     title,
-    data,
+    spectralIndices,
     selectedSpectralIndex,
     tooltipText,
     selectedSpectralIndexOnChange,
 }: Props) => {
     const dropdownData: DropdownData[] = useMemo(() => {
-        return data.map((d) => {
+        return spectralIndices.map((d) => {
             const { value, label } = d;
             return {
                 value,
@@ -43,7 +43,7 @@ export const AnalysisToolHeader: FC<Props> = ({
                 selected: value === selectedSpectralIndex,
             };
         });
-    }, [data]);
+    }, [spectralIndices]);
 
     return (
         <div className="flex items-center w-full select-none">

@@ -81,7 +81,7 @@ export const MaskToolContainer = () => {
         >
             <AnalysisToolHeader
                 title="Mask"
-                data={[
+                spectralIndices={[
                     {
                         value: 'water',
                         label: 'WATER INDEX',

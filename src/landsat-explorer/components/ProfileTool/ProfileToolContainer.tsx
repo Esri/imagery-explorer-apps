@@ -143,7 +143,7 @@ export const ProfileToolContainer = () => {
         <div className="w-analysis-tool-container-width h-full">
             <AnalysisToolHeader
                 title="Trend"
-                data={[
+                spectralIndices={[
                     {
                         value: 'moisture',
                         label: 'moisture index',

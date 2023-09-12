@@ -20,6 +20,7 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
+import { SpectralTool } from '../SpectralTool';
 
 const DynamicModeContent = () => {
     return (
@@ -83,6 +84,7 @@ const Layout = () => {
                                 <div className="mx-6 3xl:mx-16">
                                     <MaskTool />
                                     <ProfileTool />
+                                    <SpectralTool />
                                 </div>
                             )}
 

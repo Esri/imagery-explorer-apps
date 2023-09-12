@@ -14,6 +14,9 @@ const AnalysisTools: {
         tool: 'profile',
         label: 'trend', // temporal profile tool should be called to 'trend'
     },
+    {
+        tool: 'spectral',
+    },
 ];
 
 type Props = {
