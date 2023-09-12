@@ -1,7 +1,4 @@
-import {
-    selectMaskToolState,
-    selectProfileToolState,
-} from '@shared/store/Analysis/selectors';
+import { selectProfileToolState } from '@shared/store/Analysis/selectors';
 import {
     selectAppMode,
     selectQueryParams4MainScene,
@@ -14,6 +11,7 @@ import {
     selectShowMapLabel,
     selectShowTerrain,
 } from '@shared/store/Map/selectors';
+import { selectMaskToolState } from '@shared/store/MaskTool/selectors';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,

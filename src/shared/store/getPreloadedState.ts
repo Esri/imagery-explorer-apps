@@ -24,6 +24,7 @@ import { AnalysisState, initialAnalysisState } from './Analysis/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { initialUIState, UIState } from './UI/reducer';
 import { getRandomInterestingPlace } from '@shared/components/InterestingPlaces/helper';
+import { MaskToolState, initialMaskToolState } from './MaskTool/reducer';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 
@@ -100,14 +101,23 @@ const getPreloadedLandsatState = (): LandsatState => {
 };
 
 const getPreloadedAnalysisState = (): AnalysisState => {
-    const maskToolData = getMaskToolDataFromHashParams();
+    // const maskToolData = getMaskToolDataFromHashParams();
     const profileToolData = getTemporalProfileToolDataFromHashParams();
 
     return {
         ...initialAnalysisState,
         // tool: profileToolData !== null ? 'profile' : 'mask',
-        maskTool: maskToolData || initialAnalysisState.maskTool,
+        // maskTool: maskToolData || initialAnalysisState.maskTool,
         profileTool: profileToolData || initialAnalysisState.profileTool,
+    };
+};
+
+const getPreloadedMaskToolState = (): MaskToolState => {
+    const maskToolData = getMaskToolDataFromHashParams();
+
+    return {
+        ...initialMaskToolState,
+        ...maskToolData,
     };
 };
 
@@ -132,5 +142,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         Landsat: getPreloadedLandsatState(),
         Analysis: getPreloadedAnalysisState(),
         UI: getPreloadedUIState(),
+        MaskTool: getPreloadedMaskToolState(),
     };
 };

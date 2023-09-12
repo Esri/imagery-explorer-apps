@@ -6,27 +6,27 @@ import { RootState } from '../configureStore';
 //     (tool) => tool
 // );
 
-export const selectSpectralIndex4MaskTool = createSelector(
-    (state: RootState) => state.Analysis.maskTool.spectralIndex,
-    (spectralIndex) => spectralIndex
-);
+// export const selectSpectralIndex4MaskTool = createSelector(
+//     (state: RootState) => state.Analysis.maskTool.spectralIndex,
+//     (spectralIndex) => spectralIndex
+// );
 
-export const selectMaskOptions = createSelector(
-    (state: RootState) => state.Analysis.maskTool.spectralIndex,
-    (state: RootState) => state.Analysis.maskTool.maskOptionsBySpectralIndex,
-    (spectralIndex, maskOptionsBySpectralIndex) =>
-        maskOptionsBySpectralIndex[spectralIndex]
-);
+// export const selectMaskOptions = createSelector(
+//     (state: RootState) => state.Analysis.maskTool.spectralIndex,
+//     (state: RootState) => state.Analysis.maskTool.maskOptionsBySpectralIndex,
+//     (spectralIndex, maskOptionsBySpectralIndex) =>
+//         maskOptionsBySpectralIndex[spectralIndex]
+// );
 
-export const selectMaskLayerOpcity = createSelector(
-    (state: RootState) => state.Analysis.maskTool.maskLayerOpacity,
-    (maskLayerOpacity) => maskLayerOpacity
-);
+// export const selectMaskLayerOpcity = createSelector(
+//     (state: RootState) => state.Analysis.maskTool.maskLayerOpacity,
+//     (maskLayerOpacity) => maskLayerOpacity
+// );
 
-export const selectShouldClipMaskLayer = createSelector(
-    (state: RootState) => state.Analysis.maskTool.shouldClipMaskLayer,
-    (shouldClipMaskLayer) => shouldClipMaskLayer
-);
+// export const selectShouldClipMaskLayer = createSelector(
+//     (state: RootState) => state.Analysis.maskTool.shouldClipMaskLayer,
+//     (shouldClipMaskLayer) => shouldClipMaskLayer
+// );
 
 export const selectQueryLocation4ProfileTool = createSelector(
     (state: RootState) => state.Analysis.profileTool.queryLocation,
@@ -63,10 +63,10 @@ export const selectTrendToolOption = createSelector(
     (trendToolOption) => trendToolOption
 );
 
-export const selectMaskToolState = createSelector(
-    (state: RootState) => state.Analysis.maskTool,
-    (maskTool) => maskTool
-);
+// export const selectMaskToolState = createSelector(
+//     (state: RootState) => state.Analysis.maskTool,
+//     (maskTool) => maskTool
+// );
 
 export const selectProfileToolState = createSelector(
     (state: RootState) => state.Analysis.profileTool,

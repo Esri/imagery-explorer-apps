@@ -13,44 +13,44 @@ import { Point } from 'esri/geometry';
 
 // export type AnalysisTool = 'mask' | 'profile' | 'spectral';
 
-export type MaskOptions = {
-    selectedRange: number[];
-    /**
-     * color array in RGB format
-     */
-    color: number[];
-};
+// export type MaskOptions = {
+//     selectedRange: number[];
+//     /**
+//      * color array in RGB format
+//      */
+//     color: number[];
+// };
 
 /**
  * The trend (temporal profile) tool has two options
  */
 export type TrendToolOption = 'year-to-year' | 'month-to-month';
 
-type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
+// type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
 
 export type AnalysisState = {
     // /**
     //  * active analysis tool
     //  */
     // tool: AnalysisTool;
-    maskTool: {
-        /**
-         * user selected spectral index to be used in the mask tool
-         */
-        spectralIndex: SpectralIndex;
-        /**
-         * maks tool options by spectral index name
-         */
-        maskOptionsBySpectralIndex: MaskOptionsBySpectralIndex;
-        /**
-         * opacity of the mask layer
-         */
-        maskLayerOpacity: number;
-        /**
-         * if true, mask layer should be used to clip the imagery scene
-         */
-        shouldClipMaskLayer: boolean;
-    };
+    // maskTool: {
+    //     /**
+    //      * user selected spectral index to be used in the mask tool
+    //      */
+    //     spectralIndex: SpectralIndex;
+    //     /**
+    //      * maks tool options by spectral index name
+    //      */
+    //     maskOptionsBySpectralIndex: MaskOptionsBySpectralIndex;
+    //     /**
+    //      * opacity of the mask layer
+    //      */
+    //     maskLayerOpacity: number;
+    //     /**
+    //      * if true, mask layer should be used to clip the imagery scene
+    //      */
+    //     shouldClipMaskLayer: boolean;
+    // };
     profileTool: {
         /**
          * user selected option for trend tool.
@@ -89,42 +89,42 @@ export type AnalysisState = {
     };
 };
 
-export type MaskToolData = AnalysisState['maskTool'];
+// export type MaskToolData = AnalysisState['maskTool'];
 
 export type TemporalProfileToolData = AnalysisState['profileTool'];
 
 export const initialAnalysisState: AnalysisState = {
     // tool: 'mask',
-    maskTool: {
-        spectralIndex: 'water',
-        maskLayerOpacity: 1,
-        shouldClipMaskLayer: false,
-        maskOptionsBySpectralIndex: {
-            moisture: {
-                selectedRange: [0, 1],
-                color: [89, 255, 252],
-            },
-            vegetation: {
-                selectedRange: [0, 1],
-                color: [115, 255, 132],
-            },
-            water: {
-                selectedRange: [0, 1],
-                color: [89, 214, 255],
-            },
-            'temperature farhenheit': {
-                // selectedRange: [30, 140],
-                // the mask layer throws error when using farhenheit as input unit,
-                // therefore we will just use celsius degrees in the selectedRange
-                selectedRange: [0, 60],
-                color: [251, 182, 100],
-            },
-            'temperature celcius': {
-                selectedRange: [0, 60], // default range should be between 0-60 celcius degrees
-                color: [251, 182, 100],
-            },
-        },
-    },
+    // maskTool: {
+    //     spectralIndex: 'water',
+    //     maskLayerOpacity: 1,
+    //     shouldClipMaskLayer: false,
+    //     maskOptionsBySpectralIndex: {
+    //         moisture: {
+    //             selectedRange: [0, 1],
+    //             color: [89, 255, 252],
+    //         },
+    //         vegetation: {
+    //             selectedRange: [0, 1],
+    //             color: [115, 255, 132],
+    //         },
+    //         water: {
+    //             selectedRange: [0, 1],
+    //             color: [89, 214, 255],
+    //         },
+    //         'temperature farhenheit': {
+    //             // selectedRange: [30, 140],
+    //             // the mask layer throws error when using farhenheit as input unit,
+    //             // therefore we will just use celsius degrees in the selectedRange
+    //             selectedRange: [0, 60],
+    //             color: [251, 182, 100],
+    //         },
+    //         'temperature celcius': {
+    //             selectedRange: [0, 60], // default range should be between 0-60 celcius degrees
+    //             color: [251, 182, 100],
+    //         },
+    //     },
+    // },
     profileTool: {
         option: 'year-to-year',
         queryLocation: null,
@@ -144,24 +144,24 @@ const slice = createSlice({
     name: 'Analysis',
     initialState: initialAnalysisState,
     reducers: {
-        spectralIndex4MaskToolChanged: (
-            state,
-            action: PayloadAction<SpectralIndex>
-        ) => {
-            state.maskTool.spectralIndex = action.payload;
-        },
-        maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
-            const spectralIndex = state.maskTool.spectralIndex;
-            state.maskTool.maskOptionsBySpectralIndex[spectralIndex] =
-                action.payload;
-        },
-        maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
-            state.maskTool.maskLayerOpacity = action.payload;
-        },
-        shouldClipMaskLayerToggled: (state, action: PayloadAction<boolean>) => {
-            state.maskTool.shouldClipMaskLayer =
-                !state.maskTool.shouldClipMaskLayer;
-        },
+        // spectralIndex4MaskToolChanged: (
+        //     state,
+        //     action: PayloadAction<SpectralIndex>
+        // ) => {
+        //     state.maskTool.spectralIndex = action.payload;
+        // },
+        // maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
+        //     const spectralIndex = state.maskTool.spectralIndex;
+        //     state.maskTool.maskOptionsBySpectralIndex[spectralIndex] =
+        //         action.payload;
+        // },
+        // maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
+        //     state.maskTool.maskLayerOpacity = action.payload;
+        // },
+        // shouldClipMaskLayerToggled: (state, action: PayloadAction<boolean>) => {
+        //     state.maskTool.shouldClipMaskLayer =
+        //         !state.maskTool.shouldClipMaskLayer;
+        // },
         queryLocation4ProfileToolChanged: (
             state,
             action: PayloadAction<Point>
@@ -223,10 +223,10 @@ const { reducer } = slice;
 
 export const {
     // activeAnalysisToolChanged,
-    spectralIndex4MaskToolChanged,
-    maskOptionsChanged,
-    maskLayerOpacityChanged,
-    shouldClipMaskLayerToggled,
+    // spectralIndex4MaskToolChanged,
+    // maskOptionsChanged,
+    // maskLayerOpacityChanged,
+    // shouldClipMaskLayerToggled,
     queryLocation4ProfileToolChanged,
     acquisitionMonth4ProfileToolChanged,
     acquisitionYear4ProfileToolChanged,

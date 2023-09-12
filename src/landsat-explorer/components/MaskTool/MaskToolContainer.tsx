@@ -3,13 +3,13 @@ import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@sh
 import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
 
 import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
-import { spectralIndex4MaskToolChanged } from '@shared/store/Analysis/reducer';
+import { spectralIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
     selectSpectralIndex4MaskTool,
     selectMaskOptions,
     // selectActiveAnalysisTool,
-} from '@shared/store/Analysis/selectors';
-import { updateSelectedRange } from '@shared/store/Analysis/thunks';
+} from '@shared/store/MaskTool/selectors';
+import { updateSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';

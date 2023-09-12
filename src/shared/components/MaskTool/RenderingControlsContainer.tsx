@@ -3,13 +3,13 @@ import { RenderingControls } from './RenderingControls';
 import {
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
-} from '@shared/store/Analysis/reducer';
+} from '@shared/store/MaskTool/reducer';
 import {
     selectMaskLayerOpcity,
     selectMaskOptions,
     selectShouldClipMaskLayer,
-} from '@shared/store/Analysis/selectors';
-import { updateMaskColor } from '@shared/store/Analysis/thunks';
+} from '@shared/store/MaskTool/selectors';
+import { updateMaskColor } from '@shared/store/MaskTool/thunks';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 

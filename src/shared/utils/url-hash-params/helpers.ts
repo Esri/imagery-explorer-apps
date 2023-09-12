@@ -1,5 +1,4 @@
 import {
-    MaskToolData,
     TemporalProfileToolData,
     TrendToolOption,
     initialAnalysisState,
@@ -8,6 +7,10 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { Point } from 'esri/geometry';
 import { getCurrentYear } from '../date-time/getCurrentDateTime';
+import {
+    MaskToolState,
+    initialMaskToolState,
+} from '@shared/store/MaskTool/reducer';
 
 export const decodeMapCenter = (value: string) => {
     if (!value) {
@@ -59,7 +62,7 @@ export const decodeQueryParams4ImageryScene = (
     };
 };
 
-export const encodeMaskToolData = (data: MaskToolData): string => {
+export const encodeMaskToolData = (data: MaskToolState): string => {
     if (!data) {
         return null;
     }
@@ -82,7 +85,7 @@ export const encodeMaskToolData = (data: MaskToolData): string => {
     ].join('|');
 };
 
-export const decodeMaskToolData = (val: string): MaskToolData => {
+export const decodeMaskToolData = (val: string): MaskToolState => {
     if (!val) {
         return null;
     }
@@ -101,16 +104,14 @@ export const decodeMaskToolData = (val: string): MaskToolData => {
                   color: color.split(',').map((d) => +d),
                   selectedRange: selectedRange.split(',').map((d) => +d),
               }
-            : initialAnalysisState.maskTool.maskOptionsBySpectralIndex[
-                  spectralIndex
-              ];
+            : initialMaskToolState.maskOptionsBySpectralIndex[spectralIndex];
 
     return {
         spectralIndex: spectralIndex as SpectralIndex,
         shouldClipMaskLayer: shouldClipMaskLayer === 'true',
         maskLayerOpacity: +maskLayerOpacity,
         maskOptionsBySpectralIndex: {
-            ...initialAnalysisState.maskTool.maskOptionsBySpectralIndex,
+            ...initialMaskToolState.maskOptionsBySpectralIndex,
             [spectralIndex]: maskOptionForSelectedSpectralIndex,
         },
     };

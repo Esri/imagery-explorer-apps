@@ -9,11 +9,12 @@ import {
     encodeTemporalProfileToolData,
 } from './helpers';
 import {
-    MaskToolData,
+    // MaskToolData,
     TemporalProfileToolData,
 } from '@shared/store/Analysis/reducer';
 import { debounce } from '../snippets/debounce';
 import { nanoid } from 'nanoid';
+import { MaskToolState } from '@shared/store/MaskTool/reducer';
 // import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
@@ -92,7 +93,7 @@ export const getQueryParams4SecondarySceneFromHashParams = () => {
     return decodeQueryParams4ImageryScene(value);
 };
 
-export const saveMaskToolToHashParams = debounce((data: MaskToolData) => {
+export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
     updateHashParams('mask', encodeMaskToolData(data));
 }, 500);
 
@@ -103,7 +104,7 @@ export const saveTemporalProfileToolToHashParams = debounce(
     500
 );
 
-export const getMaskToolDataFromHashParams = (): MaskToolData => {
+export const getMaskToolDataFromHashParams = (): MaskToolState => {
     const value = getHashParamValueByKey('mask');
     return decodeMaskToolData(value);
 };

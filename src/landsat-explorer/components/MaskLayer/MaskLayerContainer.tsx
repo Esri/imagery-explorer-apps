@@ -7,7 +7,7 @@ import {
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
     selectSpectralIndex4MaskTool,
-} from '@shared/store/Analysis/selectors';
+} from '@shared/store/MaskTool/selectors';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
