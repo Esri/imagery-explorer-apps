@@ -75,10 +75,14 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
     openPopupRef.current = async (mapPoint: IPoint, mousePointX: number) => {
         // no need to show pop-up if in Animation Mode
-        // or it is using Profile Tool
+        if (mode === 'animate') {
+            return;
+        }
+
+        // no need to show pop-up when using Trend or Spectral Profile Tool
         if (
-            mode === 'animate' ||
-            (mode === 'analysis' && analysisTool === 'profile')
+            mode === 'analysis' &&
+            (analysisTool === 'profile' || analysisTool === 'spectral')
         ) {
             return;
         }
