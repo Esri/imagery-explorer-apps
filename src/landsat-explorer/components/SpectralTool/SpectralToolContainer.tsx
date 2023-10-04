@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { SpectralProfileChart } from './SpectralProfileChart';
 
 export const SpectralToolContainer = () => {
     const dispatch = useDispatch();
@@ -98,7 +99,7 @@ export const SpectralToolContainer = () => {
                         </p>
                     </div>
                 ) : (
-                    <p>chart should be rendered here</p>
+                    <SpectralProfileChart data={spectralProfileData} />
                 )}
             </div>
         </div>
