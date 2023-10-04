@@ -36,6 +36,10 @@ export type SpectralProfileToolState = {
      * if true, it is in process of fetching spectral profile data
      */
     isLoading: boolean;
+    /**
+     * error message that was caught while fetch the spectral profile data
+     */
+    error: string;
 };
 
 export const initialSpectralProfileToolState: SpectralProfileToolState = {
@@ -43,6 +47,7 @@ export const initialSpectralProfileToolState: SpectralProfileToolState = {
     featureOfInterest: '',
     spectralProfileData: [],
     isLoading: false,
+    error: null,
 };
 
 const slice = createSlice({
@@ -66,6 +71,10 @@ const slice = createSlice({
             action: PayloadAction<number[]>
         ) => {
             state.spectralProfileData = action.payload;
+            state.error = null;
+        },
+        errorChanged: (state, action: PayloadAction<string>) => {
+            state.error = action.payload;
         },
     },
 });
@@ -77,6 +86,7 @@ export const {
     featureOfInterestChanged,
     isLoadingToggled,
     spectralProfileDataUpdated,
+    errorChanged,
 } = slice.actions;
 
 export default reducer;

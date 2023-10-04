@@ -1,6 +1,7 @@
 import Point from 'esri/geometry/Point';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
+    errorChanged,
     queryLocationChanged,
     spectralProfileDataUpdated,
     isLoadingToggled as spectralProfileToolIsLoadingToggled,
@@ -64,21 +65,26 @@ export const updateSpectralProfileData =
                 res?.catalogItems?.features.length === 0
             ) {
                 throw new Error(
-                    'cannot query spectral profile outside of the geometry of selected landsat scene'
+                    'Failed to fetch spectral profile data. Please select a location inside of the selected landsat scene.'
                 );
             }
 
             const bandValues = getPixelValuesFromIdentifyTaskResponse(res);
 
             if (!bandValues) {
-                throw new Error('identify task does not return band values');
+                throw new Error('Identify task does not return band values');
             }
 
             dispatch(spectralProfileDataUpdated(bandValues));
 
-            console.log(res);
+            // console.log(res);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
+            dispatch(
+                errorChanged(
+                    err.message || 'failed to fetch spectral profile data'
+                )
+            );
         }
 
         dispatch(spectralProfileToolIsLoadingToggled(false));

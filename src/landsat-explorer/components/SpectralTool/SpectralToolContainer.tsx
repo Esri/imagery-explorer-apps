@@ -5,12 +5,13 @@ import {
 } from '@shared/store/Landsat/selectors';
 import {
     selectData4SpectralProfileTool,
+    selectError4SpectralProfileTool,
     selectIsLoadingData4SpectralProfileTool,
     selectQueryLocation4SpectralProfileTool,
 } from '@shared/store/SpectralProfileTool/selectors';
 import { updateSpectralProfileData } from '@shared/store/SpectralProfileTool/thunks';
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -28,6 +29,26 @@ export const SpectralToolContainer = () => {
 
     const spectralProfileData = useSelector(selectData4SpectralProfileTool);
 
+    const error4SpectralProfileTool = useSelector(
+        selectError4SpectralProfileTool
+    );
+
+    const spectralProfileToolMessage = useMemo(() => {
+        if (isLoading) {
+            return 'fetching spectral profile data';
+        }
+
+        if (error4SpectralProfileTool) {
+            return error4SpectralProfileTool;
+        }
+
+        if (!spectralProfileData.length) {
+            return 'Select an acquisition date in Calendar and click on map to get the spectral profile';
+        }
+
+        return '';
+    }, [isLoading, error4SpectralProfileTool, spectralProfileData]);
+
     // triggers when user selects a new query location
     useEffect(() => {
         (async () => {
@@ -41,7 +62,7 @@ export const SpectralToolContainer = () => {
                 console.log(err);
             }
         })();
-    }, [queryLocation]);
+    }, [queryLocation, objectIdOfSelectedScene]);
 
     if (tool !== 'spectral') {
         return null;
@@ -69,13 +90,11 @@ export const SpectralToolContainer = () => {
             />
 
             <div className="w-full h-[120px] my-2">
-                {!spectralProfileData.length || isLoading ? (
+                {spectralProfileToolMessage ? (
                     <div className="h-full w-full flex items-center justify-center text-center">
                         {isLoading && <calcite-loader inline />}
                         <p className="text-sm opacity-80">
-                            {isLoading
-                                ? 'fetching spectral profile data'
-                                : 'Select an acquisition date in Calendar and click on map to get the spectral profile'}
+                            {spectralProfileToolMessage}
                         </p>
                     </div>
                 ) : (
