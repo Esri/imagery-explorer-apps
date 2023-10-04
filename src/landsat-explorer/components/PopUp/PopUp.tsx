@@ -16,7 +16,10 @@ import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getLoadingIndicator, getMainContent } from './helper';
 import IReactiveUtils from 'esri/core/reactiveUtils';
 import { loadModules } from 'esri-loader';
-import { identify } from '@shared/services/landsat/identify';
+import {
+    getPixelValuesFromIdentifyTaskResponse,
+    identify,
+} from '@shared/services/landsat/identify';
 import { getFormattedLandsatScenes } from '@shared/services/landsat/getLandsatScenes';
 import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
@@ -137,20 +140,21 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
             const sceneData = getFormattedLandsatScenes(features)[0];
 
-            let bandValues: number[] = null;
+            const bandValues: number[] =
+                getPixelValuesFromIdentifyTaskResponse(res);
 
-            if (res?.value && res?.value !== 'NoData') {
-                // get pixel values from the value property first
-                bandValues = res?.value.split(', ').map((d) => +d);
-            } else if (res?.properties?.Values[0]) {
-                bandValues = res?.properties?.Values[0].split(' ').map((d) => {
-                    if (canBeConvertedToNumber(d) === false) {
-                        return null;
-                    }
+            // if (res?.value && res?.value !== 'NoData') {
+            //     // get pixel values from the value property first
+            //     bandValues = res?.value.split(', ').map((d) => +d);
+            // } else if (res?.properties?.Values[0]) {
+            //     bandValues = res?.properties?.Values[0].split(' ').map((d) => {
+            //         if (canBeConvertedToNumber(d) === false) {
+            //             return null;
+            //         }
 
-                    return +d;
-                });
-            }
+            //         return +d;
+            //     });
+            // }
 
             if (!bandValues) {
                 throw new Error('identify task does not return band values');

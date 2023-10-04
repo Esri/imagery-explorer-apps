@@ -29,7 +29,7 @@ export type SpectralProfileToolState = {
      */
     featureOfInterest: SpectralProfileFeatureOfInterest;
     /**
-     * spectral prfile data of the query location
+     * spectral prfile data/band values from the pixel of the query location
      */
     spectralProfileData: number[];
     /**

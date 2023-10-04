@@ -6,7 +6,14 @@ import {
     isLoadingToggled as spectralProfileToolIsLoadingToggled,
 } from './reducer';
 import { selectQueryLocation4SpectralProfileTool } from './selectors';
-import { selectActiveAnalysisTool } from '../Landsat/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectQueryParams4MainScene,
+} from '../Landsat/selectors';
+import {
+    getPixelValuesFromIdentifyTaskResponse,
+    identify,
+} from '@shared/services/landsat/identify';
 
 let abortController: AbortController = null;
 
@@ -29,7 +36,10 @@ export const updateSpectralProfileData =
         const queryLocation =
             selectQueryLocation4SpectralProfileTool(rootState);
 
-        if (!queryLocation) {
+        const { objectIdOfSelectedScene } =
+            selectQueryParams4MainScene(rootState) || {};
+
+        if (!queryLocation || !objectIdOfSelectedScene) {
             dispatch(spectralProfileDataUpdated([]));
             return;
         }
@@ -41,4 +51,35 @@ export const updateSpectralProfileData =
         abortController = new AbortController();
 
         dispatch(spectralProfileToolIsLoadingToggled(true));
+
+        try {
+            const res = await identify({
+                point: queryLocation,
+                objectId: objectIdOfSelectedScene,
+                abortController,
+            });
+
+            if (
+                res?.catalogItems?.features &&
+                res?.catalogItems?.features.length === 0
+            ) {
+                throw new Error(
+                    'cannot query spectral profile outside of the geometry of selected landsat scene'
+                );
+            }
+
+            const bandValues = getPixelValuesFromIdentifyTaskResponse(res);
+
+            if (!bandValues) {
+                throw new Error('identify task does not return band values');
+            }
+
+            dispatch(spectralProfileDataUpdated(bandValues));
+
+            console.log(res);
+        } catch (err) {
+            console.log(err);
+        }
+
+        dispatch(spectralProfileToolIsLoadingToggled(false));
     };

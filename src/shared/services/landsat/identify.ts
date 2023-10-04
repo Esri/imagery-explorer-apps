@@ -2,6 +2,7 @@ import { Geometry, Point } from 'esri/geometry';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { getMosaicRuleByObjectId } from './helpers';
+import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type IdentifyTaskParams = {
     point: Point;
@@ -68,4 +69,30 @@ export const identify = async ({
     }
 
     return data as IdentifyTaskResponse;
+};
+
+/**
+ * Get pixel values from Identify Task Response
+ * @param res
+ * @returns
+ */
+export const getPixelValuesFromIdentifyTaskResponse = (
+    res: IdentifyTaskResponse
+): number[] => {
+    let bandValues: number[] = null;
+
+    if (res?.value && res?.value !== 'NoData') {
+        // get pixel values from the value property first
+        bandValues = res?.value.split(', ').map((d) => +d);
+    } else if (res?.properties?.Values[0]) {
+        bandValues = res?.properties?.Values[0].split(' ').map((d) => {
+            if (canBeConvertedToNumber(d) === false) {
+                return null;
+            }
+
+            return +d;
+        });
+    }
+
+    return bandValues;
 };
