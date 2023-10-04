@@ -15,7 +15,7 @@ type Props = {
     groupLayer?: GroupLayer;
 };
 
-export const ProfileToolQueryLocation: FC<Props> = ({
+export const AnalysisToolQueryLocation: FC<Props> = ({
     queryLocation,
     visible,
     mapView,

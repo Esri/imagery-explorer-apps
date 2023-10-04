@@ -5,7 +5,7 @@ import { SwipeWidget } from '../SwipeWidget';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { MaskLayer } from '../MaskLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
-import { ProfileToolQueryLocation } from '@shared/components/ProfileToolQueryLocation';
+import { AnalysisToolQueryLocation } from '@shared/components/AnalysisToolQueryLocation';
 import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { Popup } from '../PopUp/PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
@@ -21,7 +21,7 @@ const Map = () => {
             >
                 <LandsatLayer />
                 <MaskLayer />
-                <ProfileToolQueryLocation />
+                <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
             </GroupLayer>
             <SwipeWidget />
