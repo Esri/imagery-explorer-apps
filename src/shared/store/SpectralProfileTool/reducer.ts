@@ -6,27 +6,11 @@ import {
 } from '@reduxjs/toolkit';
 import Point from 'esri/geometry/Point';
 
-export type SpectralProfileFeatureOfInterest =
-    | 'Cloud'
-    | 'Snow/Ice'
-    | 'Desert'
-    | 'Dry Grass'
-    | 'Concrete'
-    | 'Lush Grass'
-    | 'Urban'
-    | 'Rock'
-    | 'Forest'
-    | 'Water';
-
 export type SpectralProfileToolState = {
     /**
      * point of interest that will be used to query the pixel values that will be used in spectral profile comparison
      */
     queryLocation: Point;
-    /**
-     * user selected feature of interest that will be used in spectral profile comparison
-     */
-    featureOfInterest: SpectralProfileFeatureOfInterest;
     /**
      * spectral prfile data/band values from the pixel of the query location
      */
@@ -43,7 +27,6 @@ export type SpectralProfileToolState = {
 
 export const initialSpectralProfileToolState: SpectralProfileToolState = {
     queryLocation: null,
-    featureOfInterest: 'Cloud',
     spectralProfileData: [],
     isLoading: false,
     error: null,
@@ -55,12 +38,6 @@ const slice = createSlice({
     reducers: {
         queryLocationChanged: (state, action: PayloadAction<Point>) => {
             state.queryLocation = action.payload;
-        },
-        spectralProfileFeatureOfInterestChanged: (
-            state,
-            action: PayloadAction<SpectralProfileFeatureOfInterest>
-        ) => {
-            state.featureOfInterest = action.payload;
         },
         isLoadingToggled: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
@@ -82,7 +59,6 @@ const { reducer } = slice;
 
 export const {
     queryLocationChanged,
-    spectralProfileFeatureOfInterestChanged,
     isLoadingToggled,
     spectralProfileDataUpdated,
     errorChanged,

@@ -6,20 +6,28 @@ import {
 import {
     selectData4SpectralProfileTool,
     selectError4SpectralProfileTool,
-    selectFeatureOfInterest4SpectralProfileTool,
     selectIsLoadingData4SpectralProfileTool,
     selectQueryLocation4SpectralProfileTool,
 } from '@shared/store/SpectralProfileTool/selectors';
 import { updateSpectralProfileData } from '@shared/store/SpectralProfileTool/thunks';
 import classNames from 'classnames';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { SpectralProfileChart } from './SpectralProfileChart';
-import {
-    SpectralProfileFeatureOfInterest,
-    spectralProfileFeatureOfInterestChanged,
-} from '@shared/store/SpectralProfileTool/reducer';
+import { findMostSimilarFeatureOfInterest } from './helper';
+
+export type SpectralProfileFeatureOfInterest =
+    | 'Cloud'
+    | 'Snow/Ice'
+    | 'Desert'
+    | 'Dry Grass'
+    | 'Concrete'
+    | 'Lush Grass'
+    | 'Urban'
+    | 'Rock'
+    | 'Forest'
+    | 'Water';
 
 const FeatureOfInterest: SpectralProfileFeatureOfInterest[] = [
     'Cloud',
@@ -52,9 +60,8 @@ export const SpectralToolContainer = () => {
         selectError4SpectralProfileTool
     );
 
-    const selectedFeatureOfInterest = useSelector(
-        selectFeatureOfInterest4SpectralProfileTool
-    );
+    const [selectedFeatureOfInterest, setSelectedFeatureOfInterest] =
+        useState<SpectralProfileFeatureOfInterest>();
 
     const spectralProfileToolMessage = useMemo(() => {
         if (isLoading) {
@@ -87,6 +94,18 @@ export const SpectralToolContainer = () => {
         })();
     }, [queryLocation, objectIdOfSelectedScene]);
 
+    useEffect(() => {
+        if (!spectralProfileData || !spectralProfileData.length) {
+            return;
+        }
+
+        const mostSimilarFeatureOfInterest =
+            findMostSimilarFeatureOfInterest(spectralProfileData);
+        console.log(mostSimilarFeatureOfInterest);
+
+        setSelectedFeatureOfInterest(mostSimilarFeatureOfInterest);
+    }, [spectralProfileData]);
+
     if (tool !== 'spectral') {
         return null;
     }
@@ -109,10 +128,8 @@ export const SpectralToolContainer = () => {
                 selectedValue={selectedFeatureOfInterest}
                 tooltipText={''}
                 dropdownMenuSelectedItemOnChange={(val) => {
-                    dispatch(
-                        spectralProfileFeatureOfInterestChanged(
-                            val as SpectralProfileFeatureOfInterest
-                        )
+                    setSelectedFeatureOfInterest(
+                        val as SpectralProfileFeatureOfInterest
                     );
                 }}
             />
