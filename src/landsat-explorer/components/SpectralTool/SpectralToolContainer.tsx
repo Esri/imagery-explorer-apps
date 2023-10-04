@@ -6,6 +6,7 @@ import {
 import {
     selectData4SpectralProfileTool,
     selectError4SpectralProfileTool,
+    selectFeatureOfInterest4SpectralProfileTool,
     selectIsLoadingData4SpectralProfileTool,
     selectQueryLocation4SpectralProfileTool,
 } from '@shared/store/SpectralProfileTool/selectors';
@@ -15,6 +16,23 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { SpectralProfileChart } from './SpectralProfileChart';
+import {
+    SpectralProfileFeatureOfInterest,
+    spectralProfileFeatureOfInterestChanged,
+} from '@shared/store/SpectralProfileTool/reducer';
+
+const FeatureOfInterest: SpectralProfileFeatureOfInterest[] = [
+    'Cloud',
+    'Snow/Ice',
+    'Desert',
+    'Dry Grass',
+    'Concrete',
+    'Lush Grass',
+    'Urban',
+    'Rock',
+    'Forest',
+    'Water',
+];
 
 export const SpectralToolContainer = () => {
     const dispatch = useDispatch();
@@ -32,6 +50,10 @@ export const SpectralToolContainer = () => {
 
     const error4SpectralProfileTool = useSelector(
         selectError4SpectralProfileTool
+    );
+
+    const selectedFeatureOfInterest = useSelector(
+        selectFeatureOfInterest4SpectralProfileTool
     );
 
     const spectralProfileToolMessage = useMemo(() => {
@@ -77,16 +99,21 @@ export const SpectralToolContainer = () => {
         >
             <AnalysisToolHeader
                 title="Spectral"
-                dropdownListOptions={[
-                    {
-                        value: 'water',
-                        label: 'WATER INDEX',
-                    },
-                ]}
-                selectedValue={null}
+                dropdownListOptions={FeatureOfInterest.map(
+                    (featureOfInterest) => {
+                        return {
+                            value: featureOfInterest,
+                        };
+                    }
+                )}
+                selectedValue={selectedFeatureOfInterest}
                 tooltipText={''}
                 dropdownMenuSelectedItemOnChange={(val) => {
-                    // dispatch(spectralIndex4MaskToolChanged(val));
+                    dispatch(
+                        spectralProfileFeatureOfInterestChanged(
+                            val as SpectralProfileFeatureOfInterest
+                        )
+                    );
                 }}
             />
 
@@ -99,7 +126,10 @@ export const SpectralToolContainer = () => {
                         </p>
                     </div>
                 ) : (
-                    <SpectralProfileChart data={spectralProfileData} />
+                    <SpectralProfileChart
+                        featureOfInterest={selectedFeatureOfInterest}
+                        data={spectralProfileData}
+                    />
                 )}
             </div>
         </div>

@@ -16,8 +16,7 @@ export type SpectralProfileFeatureOfInterest =
     | 'Urban'
     | 'Rock'
     | 'Forest'
-    | 'Water'
-    | '';
+    | 'Water';
 
 export type SpectralProfileToolState = {
     /**
@@ -44,7 +43,7 @@ export type SpectralProfileToolState = {
 
 export const initialSpectralProfileToolState: SpectralProfileToolState = {
     queryLocation: null,
-    featureOfInterest: '',
+    featureOfInterest: 'Cloud',
     spectralProfileData: [],
     isLoading: false,
     error: null,
@@ -57,7 +56,7 @@ const slice = createSlice({
         queryLocationChanged: (state, action: PayloadAction<Point>) => {
             state.queryLocation = action.payload;
         },
-        featureOfInterestChanged: (
+        spectralProfileFeatureOfInterestChanged: (
             state,
             action: PayloadAction<SpectralProfileFeatureOfInterest>
         ) => {
@@ -83,7 +82,7 @@ const { reducer } = slice;
 
 export const {
     queryLocationChanged,
-    featureOfInterestChanged,
+    spectralProfileFeatureOfInterestChanged,
     isLoadingToggled,
     spectralProfileDataUpdated,
     errorChanged,
