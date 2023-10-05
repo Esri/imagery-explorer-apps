@@ -20,7 +20,7 @@ const LegendItem: FC<LegendItemProps> = ({ label, fill }) => {
                     background: fill,
                 }}
             ></div>
-            <span className="ml-2 text-xs mx-3 uppercase text-custom-light-blue-80">
+            <span className="ml-2 text-xs text-custom-light-blue-80">
                 {label}
             </span>
         </div>
@@ -30,15 +30,19 @@ const LegendItem: FC<LegendItemProps> = ({ label, fill }) => {
 export const SpectralProfileChartLegend: FC<Props> = ({
     featureOfInterest,
 }) => {
+    if (!featureOfInterest) {
+        return null;
+    }
+
     return (
-        <div className="w-full flex items-center justify-center mt-3">
+        <div className="w-full mt-3">
             <LegendItem
-                label="selected point"
+                label="Spectral signature of selected location"
                 fill="var(--custom-light-blue-90)"
             />
 
             <LegendItem
-                label={featureOfInterest}
+                label={'Spectral signature of ' + featureOfInterest}
                 fill={FillColorByFeatureOfInterest[featureOfInterest]}
             />
         </div>
