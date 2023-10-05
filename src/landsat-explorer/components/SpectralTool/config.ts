@@ -20,3 +20,19 @@ export const SpectralProfileDataByFeatureOfInterest: Record<
     Rock: [0.13328, 0.11964, 0.11348, 0.12786, 0.15856, 0.20198, 0.16054],
     Forest: [0.09838, 0.0769, 0.06862, 0.03962, 0.31248, 0.12792, 0.0514],
 };
+
+export const FillColorByFeatureOfInterest: Record<
+    SpectralProfileFeatureOfInterest,
+    string
+> = {
+    Cloud: 'rgb(30, 36, 87)',
+    'Snow/Ice': 'rgb(165, 242, 243)',
+    Desert: 'rgb(236, 197, 168)',
+    'Dry Grass': 'rgb(218, 165, 32)',
+    Concrete: 'rgb(128, 128, 128)',
+    'Lush Grass': 'rgb(124, 252, 0)',
+    Urban: 'rgb(0, 128, 128)',
+    Rock: 'rgb(90, 77, 65)',
+    Forest: 'rgb(34, 139, 34)',
+    Water: 'rgb(64, 164, 223)',
+};

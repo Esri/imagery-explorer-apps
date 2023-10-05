@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { SpectralProfileChart } from './SpectralProfileChart';
 import { findMostSimilarFeatureOfInterest } from './helper';
+import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
 
 export type SpectralProfileFeatureOfInterest =
     | 'Cloud'
@@ -133,21 +134,27 @@ export const SpectralToolContainer = () => {
                 }}
             />
 
-            <div className="w-full h-[120px] my-2">
-                {spectralProfileToolMessage ? (
-                    <div className="h-full w-full flex items-center justify-center text-center">
-                        {isLoading && <calcite-loader inline />}
-                        <p className="text-sm opacity-80">
-                            {spectralProfileToolMessage}
-                        </p>
+            {spectralProfileData && spectralProfileData.length ? (
+                <>
+                    <div className="w-full h-[120px] my-2">
+                        <SpectralProfileChart
+                            featureOfInterest={selectedFeatureOfInterest}
+                            data={spectralProfileData}
+                        />
                     </div>
-                ) : (
-                    <SpectralProfileChart
+
+                    <SpectralProfileChartLegend
                         featureOfInterest={selectedFeatureOfInterest}
-                        data={spectralProfileData}
                     />
-                )}
-            </div>
+                </>
+            ) : (
+                <div className="w-full mt-10 flex justify-center text-center">
+                    {isLoading && <calcite-loader inline />}
+                    <p className="text-sm opacity-80">
+                        {spectralProfileToolMessage}
+                    </p>
+                </div>
+            )}
         </div>
     );
 };
