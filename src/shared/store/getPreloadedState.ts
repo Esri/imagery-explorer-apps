@@ -85,7 +85,7 @@ const getPreloadedLandsatState = (): LandsatState => {
     return {
         ...initialLandsatState,
         mode,
-        tool: profileToolData !== null ? 'profile' : 'mask',
+        tool: profileToolData !== null ? 'trend' : 'mask',
         queryParams4MainScene,
         queryParams4SecondaryScene,
         queryParams4ScenesInAnimateMode: {

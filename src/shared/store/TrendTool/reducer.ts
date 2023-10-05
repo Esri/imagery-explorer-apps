@@ -72,25 +72,25 @@ const slice = createSlice({
     name: 'TrendTool',
     initialState: initialTrendToolState,
     reducers: {
-        queryLocation4ProfileToolChanged: (
+        queryLocation4TrendToolChanged: (
             state,
             action: PayloadAction<Point>
         ) => {
             state.queryLocation = action.payload;
         },
-        acquisitionMonth4ProfileToolChanged: (
+        acquisitionMonth4TrendToolChanged: (
             state,
             action: PayloadAction<number>
         ) => {
             state.acquisitionMonth = action.payload;
         },
-        acquisitionYear4ProfileToolChanged: (
+        acquisitionYear4TrendToolChanged: (
             state,
             action: PayloadAction<number>
         ) => {
             state.acquisitionYear = action.payload;
         },
-        temporalProfileDataUpdated: (
+        trendToolDataUpdated: (
             state,
             action: PayloadAction<TemporalProfileData[]>
         ) => {
@@ -108,7 +108,7 @@ const slice = createSlice({
                 byObjectId,
             };
         },
-        spectralIndex4ProfileToolChanged: (
+        spectralIndex4TrendToolChanged: (
             state,
             action: PayloadAction<SpectralIndex>
         ) => {
@@ -120,10 +120,7 @@ const slice = createSlice({
         ) => {
             state.option = action.payload;
         },
-        trendingToolIsLoadingChanged: (
-            state,
-            action: PayloadAction<boolean>
-        ) => {
+        trendToolIsLoadingChanged: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
     },
@@ -132,13 +129,13 @@ const slice = createSlice({
 const { reducer } = slice;
 
 export const {
-    queryLocation4ProfileToolChanged,
-    acquisitionMonth4ProfileToolChanged,
-    acquisitionYear4ProfileToolChanged,
-    temporalProfileDataUpdated,
-    spectralIndex4ProfileToolChanged,
+    queryLocation4TrendToolChanged,
+    acquisitionMonth4TrendToolChanged,
+    acquisitionYear4TrendToolChanged,
+    trendToolDataUpdated,
+    spectralIndex4TrendToolChanged,
     trendToolOptionChanged,
-    trendingToolIsLoadingChanged,
+    trendToolIsLoadingChanged,
 } = slice.actions;
 
 export default reducer;

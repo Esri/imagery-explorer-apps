@@ -2,13 +2,13 @@ import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import { ProfileToolControls } from '@shared/components/ProfileToolControls';
 // import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
-    acquisitionMonth4ProfileToolChanged,
+    acquisitionMonth4TrendToolChanged,
     // samplingTemporalResolutionChanged,
-    temporalProfileDataUpdated,
-    spectralIndex4ProfileToolChanged,
-    queryLocation4ProfileToolChanged,
+    trendToolDataUpdated,
+    spectralIndex4TrendToolChanged,
+    queryLocation4TrendToolChanged,
     trendToolOptionChanged,
-    acquisitionYear4ProfileToolChanged,
+    acquisitionYear4TrendToolChanged,
 } from '@shared/store/TrendTool/reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
@@ -21,7 +21,7 @@ import {
     selectTrendToolOption,
     selectIsLoadingData4TrendingTool,
 } from '@shared/store/TrendTool/selectors';
-import { updateTemporalProfileData } from '@shared/store/TrendTool/thunks';
+import { updateTrendToolData } from '@shared/store/TrendTool/thunks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -78,7 +78,7 @@ export const TrendToolContainer = () => {
         }
 
         if (spectralIndex) {
-            dispatch(spectralIndex4ProfileToolChanged(spectralIndex));
+            dispatch(spectralIndex4TrendToolChanged(spectralIndex));
         }
     }, [queryParams4MainScene?.rasterFunctionName]);
 
@@ -95,15 +95,15 @@ export const TrendToolContainer = () => {
             queryParams4MainScene?.acquisitionDate
         );
 
-        dispatch(acquisitionMonth4ProfileToolChanged(month));
+        dispatch(acquisitionMonth4TrendToolChanged(month));
 
-        dispatch(acquisitionYear4ProfileToolChanged(year));
+        dispatch(acquisitionYear4TrendToolChanged(year));
     }, [queryParams4MainScene?.acquisitionDate]);
 
     // triggered when user selects a new acquisition month that will be used to draw the "year-to-year" trend data
     useEffect(() => {
         (async () => {
-            if (tool !== 'profile') {
+            if (tool !== 'trend') {
                 return;
             }
 
@@ -112,7 +112,7 @@ export const TrendToolContainer = () => {
             }
 
             try {
-                await dispatch(updateTemporalProfileData());
+                await dispatch(updateTrendToolData());
             } catch (err) {
                 console.log(err);
             }
@@ -122,7 +122,7 @@ export const TrendToolContainer = () => {
     // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
     useEffect(() => {
         (async () => {
-            if (tool !== 'profile') {
+            if (tool !== 'trend') {
                 return;
             }
 
@@ -131,14 +131,14 @@ export const TrendToolContainer = () => {
             }
 
             try {
-                await dispatch(updateTemporalProfileData());
+                await dispatch(updateTrendToolData());
             } catch (err) {
                 console.log(err);
             }
         })();
     }, [queryLocation, tool, acquisitionYear, selectedTrendToolOption]);
 
-    if (tool !== 'profile') {
+    if (tool !== 'trend') {
         return null;
     }
 
@@ -171,7 +171,7 @@ export const TrendToolContainer = () => {
                 selectedValue={spectralIndex}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
-                        spectralIndex4ProfileToolChanged(val as SpectralIndex)
+                        spectralIndex4TrendToolChanged(val as SpectralIndex)
                     );
                 }}
                 tooltipText={`The least-cloudy scene from the selected month will be sampled across all years of the imagery archive.`}
@@ -232,14 +232,14 @@ export const TrendToolContainer = () => {
                     dispatch(trendToolOptionChanged(data));
                 }}
                 acquisitionMonthOnChange={(month) => {
-                    dispatch(acquisitionMonth4ProfileToolChanged(month));
+                    dispatch(acquisitionMonth4TrendToolChanged(month));
                 }}
                 acquisitionYearOnChange={(year) => {
-                    dispatch(acquisitionYear4ProfileToolChanged(year));
+                    dispatch(acquisitionYear4TrendToolChanged(year));
                 }}
                 closeButtonOnClick={() => {
-                    dispatch(temporalProfileDataUpdated([]));
-                    dispatch(queryLocation4ProfileToolChanged(null));
+                    dispatch(trendToolDataUpdated([]));
+                    dispatch(queryLocation4TrendToolChanged(null));
                 }}
             />
         </div>

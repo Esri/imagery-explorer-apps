@@ -19,7 +19,7 @@ export const AnalysisToolQueryLocationContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const queryLocation4ProfileTool = useSelector(
+    const queryLocation4TrendTool = useSelector(
         selectQueryLocation4ProfileTool
     );
 
@@ -36,13 +36,15 @@ export const AnalysisToolQueryLocationContainer: FC<Props> = ({
             return false;
         }
 
-        return analysisTool === 'profile' || analysisTool === 'spectral';
+        return analysisTool === 'trend' || analysisTool === 'spectral';
     }, [mode, analysisTool]);
 
     return (
         <AnalysisToolQueryLocation
             queryLocation={
-                queryLocation4ProfileTool || queryLocation4SpectralProfileTool
+                analysisTool === 'trend'
+                    ? queryLocation4TrendTool
+                    : queryLocation4SpectralProfileTool
             }
             visible={visible}
             mapView={mapView}

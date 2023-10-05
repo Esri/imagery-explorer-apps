@@ -85,7 +85,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         // no need to show pop-up when using Trend or Spectral Profile Tool
         if (
             mode === 'analysis' &&
-            (analysisTool === 'profile' || analysisTool === 'spectral')
+            (analysisTool === 'trend' || analysisTool === 'spectral')
         ) {
             return;
         }

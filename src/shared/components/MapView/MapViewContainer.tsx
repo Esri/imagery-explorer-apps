@@ -20,8 +20,8 @@ import { batch } from 'react-redux';
 import { centerChanged, zoomChanged } from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
-// import { queryLocation4ProfileToolChanged } from '@shared/store/TrendTool/reducer';
-import { updateQueryLocation4ProfileMask } from '@shared/store/TrendTool/thunks';
+// import { queryLocation4TrendToolChanged } from '@shared/store/TrendTool/reducer';
+import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { Point } from 'esri/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
@@ -64,7 +64,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
-    const showMagnifier = mode === 'analysis' && analysisTool === 'profile';
+    const showMagnifier = mode === 'analysis' && analysisTool === 'trend';
 
     const anchorLocation = useSelector(selectMapPopupAnchorLocation);
 
@@ -114,9 +114,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                             },
                         } as Point;
 
-                        dispatch(
-                            updateQueryLocation4ProfileMask(queryLocation)
-                        );
+                        dispatch(updateQueryLocation4TrendTool(queryLocation));
 
                         dispatch(
                             updateQueryLocation4SpectralProfileTool(

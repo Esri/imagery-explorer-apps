@@ -1,9 +1,9 @@
 import { Point } from 'esri/geometry';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
-    temporalProfileDataUpdated,
-    queryLocation4ProfileToolChanged,
-    trendingToolIsLoadingChanged,
+    trendToolDataUpdated,
+    queryLocation4TrendToolChanged,
+    trendToolIsLoadingChanged,
 } from './reducer';
 import {
     selectAcquisitionMonth4ProfileTool,
@@ -14,21 +14,21 @@ import {
 import { getTemporalProfileData } from '@shared/services/landsat/getTemporalProfileData';
 import { selectActiveAnalysisTool } from '../Landsat/selectors';
 
-export const updateQueryLocation4ProfileMask =
+export const updateQueryLocation4TrendTool =
     (point: Point) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const tool = selectActiveAnalysisTool(getState());
 
-        if (tool !== 'profile') {
+        if (tool !== 'trend') {
             return;
         }
 
-        dispatch(queryLocation4ProfileToolChanged(point));
+        dispatch(queryLocation4TrendToolChanged(point));
     };
 
 let abortController: AbortController = null;
 
-export const updateTemporalProfileData =
+export const updateTrendToolData =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const rootState = getState();
 
@@ -41,7 +41,7 @@ export const updateTemporalProfileData =
         const trendToolOption = selectTrendToolOption(rootState);
 
         if (!queryLocation) {
-            dispatch(temporalProfileDataUpdated([]));
+            dispatch(trendToolDataUpdated([]));
             return;
         }
 
@@ -51,7 +51,7 @@ export const updateTemporalProfileData =
 
         abortController = new AbortController();
 
-        dispatch(trendingToolIsLoadingChanged(true));
+        dispatch(trendToolIsLoadingChanged(true));
 
         const data = await getTemporalProfileData({
             queryLocation,
@@ -63,7 +63,7 @@ export const updateTemporalProfileData =
             abortController,
         });
 
-        dispatch(temporalProfileDataUpdated(data));
+        dispatch(trendToolDataUpdated(data));
 
-        dispatch(trendingToolIsLoadingChanged(false));
+        dispatch(trendToolIsLoadingChanged(false));
     };

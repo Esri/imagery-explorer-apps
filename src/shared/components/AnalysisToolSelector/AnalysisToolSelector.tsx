@@ -11,8 +11,7 @@ const AnalysisTools: {
         tool: 'mask',
     },
     {
-        tool: 'profile',
-        label: 'trend', // temporal profile tool should be called to 'trend'
+        tool: 'trend',
     },
     {
         tool: 'spectral',

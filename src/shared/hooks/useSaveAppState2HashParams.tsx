@@ -77,7 +77,7 @@ export const useSaveAppState2HashParams = () => {
 
     useEffect(() => {
         saveTemporalProfileToolToHashParams(
-            mode === 'analysis' && analysisTool === 'profile'
+            mode === 'analysis' && analysisTool === 'trend'
                 ? profileToolState
                 : null
         );

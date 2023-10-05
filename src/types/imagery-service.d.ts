@@ -116,7 +116,7 @@ export type LandsatScene = {
 };
 
 /**
- * Temporal Profile Data sampled at user selected location
+ * Temporal Profile/Trend Data sampled at user selected location
  */
 export type TemporalProfileData = {
     /**
