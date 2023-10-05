@@ -211,6 +211,10 @@ export const encodeSpectralProfileToolData = (
 export const decodeSpectralProfileToolData = (
     val: string
 ): SpectralProfileToolState => {
+    if (!val) {
+        return null;
+    }
+
     const [queryLocation] = val.split('|');
 
     return {
