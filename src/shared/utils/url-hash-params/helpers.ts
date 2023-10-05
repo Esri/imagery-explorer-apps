@@ -11,6 +11,10 @@ import {
     MaskToolState,
     initialMaskToolState,
 } from '@shared/store/MaskTool/reducer';
+import {
+    SpectralProfileToolState,
+    initialSpectralProfileToolState,
+} from '@shared/store/SpectralProfileTool/reducer';
 
 export const decodeMapCenter = (value: string) => {
     if (!value) {
@@ -117,7 +121,7 @@ export const decodeMaskToolData = (val: string): MaskToolState => {
     };
 };
 
-export const encodeProfileToolQueryLocation = (point: Point): string => {
+export const encodeQueryLocation = (point: Point): string => {
     if (!point) {
         return '';
     }
@@ -126,7 +130,7 @@ export const encodeProfileToolQueryLocation = (point: Point): string => {
     return [x.toFixed(5), y.toFixed(5)].join(',');
 };
 
-export const decodeProfileToolQueryLocation = (val: string): Point => {
+export const decodeQueryLocation = (val: string): Point => {
     const [x, y] = val.split(',').map((d) => +d);
     return {
         x,
@@ -158,7 +162,7 @@ export const encodeTemporalProfileToolData = (data: TrendToolState): string => {
         spectralIndex,
         acquisitionMonth,
         // samplingTemporalResolution,
-        encodeProfileToolQueryLocation(queryLocation),
+        encodeQueryLocation(queryLocation),
         acquisitionYear,
         option,
     ].join('|');
@@ -184,6 +188,33 @@ export const decodeTemporalProfileToolData = (val: string): TrendToolState => {
         acquisitionMonth: +acquisitionMonth,
         acquisitionYear: acquisitionYear ? +acquisitionYear : getCurrentYear(),
         option: option ? (option as TrendToolOption) : 'year-to-year',
-        queryLocation: decodeProfileToolQueryLocation(queryLocation),
+        queryLocation: decodeQueryLocation(queryLocation),
+    };
+};
+
+export const encodeSpectralProfileToolData = (
+    data: SpectralProfileToolState
+): string => {
+    if (!data) {
+        return null;
+    }
+
+    const { queryLocation } = data;
+
+    if (!queryLocation) {
+        return null;
+    }
+
+    return [encodeQueryLocation(queryLocation)].join('|');
+};
+
+export const decodeSpectralProfileToolData = (
+    val: string
+): SpectralProfileToolState => {
+    const [queryLocation] = val.split('|');
+
+    return {
+        ...initialSpectralProfileToolState,
+        queryLocation: decodeQueryLocation(queryLocation),
     };
 };

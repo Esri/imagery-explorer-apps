@@ -3,9 +3,11 @@ import {
     decodeMapCenter,
     decodeMaskToolData,
     decodeQueryParams4ImageryScene,
+    decodeSpectralProfileToolData,
     decodeTemporalProfileToolData,
     encodeMaskToolData,
     encodeQueryParams4ImageryScene,
+    encodeSpectralProfileToolData,
     encodeTemporalProfileToolData,
 } from './helpers';
 // import {
@@ -16,20 +18,23 @@ import { debounce } from '../snippets/debounce';
 import { nanoid } from 'nanoid';
 import { MaskToolState } from '@shared/store/MaskTool/reducer';
 import { TrendToolState } from '@shared/store/TrendTool/reducer';
+import { SpectralProfileToolState } from '@shared/store/SpectralProfileTool/reducer';
 // import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
-    | 'mapCenter'
-    | 'mode'
-    | 'mainScene'
-    | 'secondaryScene'
-    | 'animationScenes'
-    | 'animation'
-    | 'mask'
-    | 'profile'
-    | 'hideTerrain'
-    | 'hideMapLabels'
-    | 'tool';
+    | 'mapCenter' // hash params for map center
+    | 'mode' // hash params for app mode
+    | 'mainScene' // hash params for query params of the main scene
+    | 'secondaryScene' // hash params for query params of the secondary scene
+    | 'animationScenes' // hash params for query params of scenes in the animation mode
+    | 'animation' // hash params for animation mode
+    | 'mask' // hash params for mask tool
+    | 'profile' // key for 'trend' used to be 'profile'
+    | 'trend' // hash params for trend tool
+    | 'spectral' // hash params for spectral profile tool
+    | 'hideTerrain' // hash params for terrain layer
+    | 'hideMapLabels' // hash params for map labels layer
+    | 'tool'; // hash params for active analysis tool
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
@@ -101,7 +106,14 @@ export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
 
 export const saveTrendToolStateToHashParams = debounce(
     (data: TrendToolState) => {
-        updateHashParams('profile', encodeTemporalProfileToolData(data));
+        updateHashParams('trend', encodeTemporalProfileToolData(data));
+    },
+    500
+);
+
+export const saveSpectralProfileToolStateToHashParams = debounce(
+    (data: SpectralProfileToolState) => {
+        updateHashParams('spectral', encodeSpectralProfileToolData(data));
     },
     500
 );
@@ -112,9 +124,16 @@ export const getMaskToolDataFromHashParams = (): MaskToolState => {
 };
 
 export const getTemporalProfileToolDataFromHashParams = (): TrendToolState => {
-    const value = getHashParamValueByKey('profile');
+    const value =
+        getHashParamValueByKey('trend') || getHashParamValueByKey('profile');
     return decodeTemporalProfileToolData(value);
 };
+
+export const getSpectralProfileToolDataFromHashParams =
+    (): SpectralProfileToolState => {
+        const value = getHashParamValueByKey('spectral');
+        return decodeSpectralProfileToolData(value);
+    };
 
 export const saveQueryParams4ScenesInAnimationToHashParams = (
     data: QueryParams4ImageryScene[]

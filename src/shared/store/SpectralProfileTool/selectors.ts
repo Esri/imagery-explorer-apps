@@ -20,3 +20,8 @@ export const selectError4SpectralProfileTool = createSelector(
     (state: RootState) => state.SpectralProfileTool.error,
     (error) => error
 );
+
+export const selectSpectralProfileToolState = createSelector(
+    (state: RootState) => state.SpectralProfileTool,
+    (SpectralProfileTool) => SpectralProfileTool
+);

@@ -24,9 +24,11 @@ import {
     updateHashParams,
     saveQueryParams4ScenesInAnimationToHashParams,
     saveAnimationSpeedToHashParams,
+    saveSpectralProfileToolStateToHashParams,
 } from '@shared/utils/url-hash-params';
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { selectSpectralProfileToolState } from '@shared/store/SpectralProfileTool/selectors';
 
 export const useSaveAppState2HashParams = () => {
     const mode = useSelector(selectAppMode);
@@ -42,6 +44,8 @@ export const useSaveAppState2HashParams = () => {
     const maskToolState = useSelector(selectMaskToolState);
 
     const trendToolState = useSelector(selectTrendToolState);
+
+    const spectralToolState = useSelector(selectSpectralProfileToolState);
 
     const queryParams4ScenesInAnimationMode = useSelector(
         selectQueryParams4ScenesInAnimateMode
@@ -82,6 +86,14 @@ export const useSaveAppState2HashParams = () => {
                 : null
         );
     }, [mode, analysisTool, trendToolState]);
+
+    useEffect(() => {
+        saveSpectralProfileToolStateToHashParams(
+            mode === 'analysis' && analysisTool === 'spectral'
+                ? spectralToolState
+                : null
+        );
+    }, [mode, analysisTool, spectralToolState]);
 
     useEffect(() => {
         updateHashParams('tool', mode === 'analysis' ? analysisTool : null);

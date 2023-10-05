@@ -9,6 +9,7 @@ import {
     getQueryParams4MainSceneFromHashParams,
     getQueryParams4ScenesInAnimationFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
+    getSpectralProfileToolDataFromHashParams,
     getTemporalProfileToolDataFromHashParams,
 } from '../utils/url-hash-params';
 import { MAP_CENTER, MAP_ZOOM } from '../constants/map';
@@ -26,6 +27,10 @@ import { initialUIState, UIState } from './UI/reducer';
 import { getRandomInterestingPlace } from '@shared/components/InterestingPlaces/helper';
 import { MaskToolState, initialMaskToolState } from './MaskTool/reducer';
 import { TrendToolState, initialTrendToolState } from './TrendTool/reducer';
+import {
+    initialSpectralProfileToolState,
+    SpectralProfileToolState,
+} from './SpectralProfileTool/reducer';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 
@@ -120,6 +125,15 @@ const getPreloadedMaskToolState = (): MaskToolState => {
     };
 };
 
+const getPreloadedSpectralProfileToolState = (): SpectralProfileToolState => {
+    const spectralProfileToolData = getSpectralProfileToolDataFromHashParams();
+
+    return {
+        ...initialSpectralProfileToolState,
+        ...spectralProfileToolData,
+    };
+};
+
 const getPreloadedUIState = (): UIState => {
     const animationSpeed = getAnimationSpeedFromHashParams();
 
@@ -142,5 +156,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         TrendTool: getPreloadedTrendToolState(),
         UI: getPreloadedUIState(),
         MaskTool: getPreloadedMaskToolState(),
+        SpectralProfileTool: getPreloadedSpectralProfileToolState(),
     };
 };
