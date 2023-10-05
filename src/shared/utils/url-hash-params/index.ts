@@ -28,7 +28,8 @@ type UrlHashParamKey =
     | 'mask'
     | 'profile'
     | 'hideTerrain'
-    | 'hideMapLabels';
+    | 'hideMapLabels'
+    | 'tool';
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
@@ -98,7 +99,7 @@ export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
     updateHashParams('mask', encodeMaskToolData(data));
 }, 500);
 
-export const saveTemporalProfileToolToHashParams = debounce(
+export const saveTrendToolStateToHashParams = debounce(
     (data: TrendToolState) => {
         updateHashParams('profile', encodeTemporalProfileToolData(data));
     },

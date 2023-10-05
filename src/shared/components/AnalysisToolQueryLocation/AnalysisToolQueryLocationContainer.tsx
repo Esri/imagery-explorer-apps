@@ -1,4 +1,4 @@
-import { selectQueryLocation4ProfileTool } from '@shared/store/TrendTool/selectors';
+import { selectQueryLocation4TrendTool } from '@shared/store/TrendTool/selectors';
 import MapView from 'esri/views/MapView';
 import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -19,9 +19,7 @@ export const AnalysisToolQueryLocationContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const queryLocation4TrendTool = useSelector(
-        selectQueryLocation4ProfileTool
-    );
+    const queryLocation4TrendTool = useSelector(selectQueryLocation4TrendTool);
 
     const queryLocation4SpectralProfileTool = useSelector(
         selectQueryLocation4SpectralProfileTool

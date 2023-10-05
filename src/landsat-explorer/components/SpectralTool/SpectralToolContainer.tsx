@@ -101,7 +101,6 @@ export const SpectralToolContainer = () => {
 
         const mostSimilarFeatureOfInterest =
             findMostSimilarFeatureOfInterest(spectralProfileData);
-        console.log(mostSimilarFeatureOfInterest);
 
         setSelectedFeatureOfInterest(mostSimilarFeatureOfInterest);
     }, [spectralProfileData]);

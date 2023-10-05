@@ -11,13 +11,13 @@ import {
     acquisitionYear4TrendToolChanged,
 } from '@shared/store/TrendTool/reducer';
 import {
-    selectAcquisitionMonth4ProfileTool,
+    selectAcquisitionMonth4TrendTool,
     // selectActiveAnalysisTool,
     // selectSamplingTemporalResolution,
-    selectTemporalProfileData,
-    selectQueryLocation4ProfileTool,
-    selectSpectralIndex4ProfileTool,
-    selectAcquisitionYear4ProfileTool,
+    selectTrendToolData,
+    selectQueryLocation4TrendTool,
+    selectSpectralIndex4TrendTool,
+    selectAcquisitionYear4TrendTool,
     selectTrendToolOption,
     selectIsLoadingData4TrendingTool,
 } from '@shared/store/TrendTool/selectors';
@@ -45,17 +45,17 @@ export const TrendToolContainer = () => {
 
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const queryLocation = useSelector(selectQueryLocation4ProfileTool);
+    const queryLocation = useSelector(selectQueryLocation4TrendTool);
 
-    const acquisitionMonth = useSelector(selectAcquisitionMonth4ProfileTool);
+    const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear4ProfileTool);
+    const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
 
     const selectedTrendToolOption = useSelector(selectTrendToolOption);
 
-    const temporalProfileData = useSelector(selectTemporalProfileData);
+    const temporalProfileData = useSelector(selectTrendToolData);
 
-    const spectralIndex = useSelector(selectSpectralIndex4ProfileTool);
+    const spectralIndex = useSelector(selectSpectralIndex4TrendTool);
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 

@@ -14,6 +14,7 @@ import {
 import { MAP_CENTER, MAP_ZOOM } from '../constants/map';
 // import { initialUIState, UIState } from './UI/reducer';
 import {
+    AnalysisTool,
     AppMode,
     DefaultQueryParams4ImageryScene,
     initialLandsatState,
@@ -75,7 +76,7 @@ const getPreloadedLandsatState = (): LandsatState => {
 
     const queryParams4ScenesInAnimationByFrameId = {};
 
-    const profileToolData = getTemporalProfileToolDataFromHashParams();
+    const tool = getHashParamValueByKey('tool') as AnalysisTool;
 
     for (const queryParams of queryParams4ScenesInAnimation) {
         queryParams4ScenesInAnimationByFrameId[queryParams.animationFrameId] =
@@ -85,7 +86,7 @@ const getPreloadedLandsatState = (): LandsatState => {
     return {
         ...initialLandsatState,
         mode,
-        tool: profileToolData !== null ? 'trend' : 'mask',
+        tool: tool || 'mask',
         queryParams4MainScene,
         queryParams4SecondaryScene,
         queryParams4ScenesInAnimateMode: {

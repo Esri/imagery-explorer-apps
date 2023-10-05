@@ -1,4 +1,4 @@
-import { selectProfileToolState } from '@shared/store/TrendTool/selectors';
+import { selectTrendToolState } from '@shared/store/TrendTool/selectors';
 import {
     selectAppMode,
     selectQueryParams4MainScene,
@@ -18,7 +18,7 @@ import {
 } from '@shared/store/UI/selectors';
 import {
     saveMaskToolToHashParams,
-    saveTemporalProfileToolToHashParams,
+    saveTrendToolStateToHashParams,
     saveQueryParams4MainSceneToHashParams,
     saveQueryParams4SecondarySceneToHashParams,
     updateHashParams,
@@ -41,7 +41,7 @@ export const useSaveAppState2HashParams = () => {
 
     const maskToolState = useSelector(selectMaskToolState);
 
-    const profileToolState = useSelector(selectProfileToolState);
+    const trendToolState = useSelector(selectTrendToolState);
 
     const queryParams4ScenesInAnimationMode = useSelector(
         selectQueryParams4ScenesInAnimateMode
@@ -76,12 +76,16 @@ export const useSaveAppState2HashParams = () => {
     }, [mode, analysisTool, maskToolState]);
 
     useEffect(() => {
-        saveTemporalProfileToolToHashParams(
+        saveTrendToolStateToHashParams(
             mode === 'analysis' && analysisTool === 'trend'
-                ? profileToolState
+                ? trendToolState
                 : null
         );
-    }, [mode, analysisTool, profileToolState]);
+    }, [mode, analysisTool, trendToolState]);
+
+    useEffect(() => {
+        updateHashParams('tool', mode === 'analysis' ? analysisTool : null);
+    }, [mode, analysisTool]);
 
     useEffect(() => {
         saveQueryParams4ScenesInAnimationToHashParams(

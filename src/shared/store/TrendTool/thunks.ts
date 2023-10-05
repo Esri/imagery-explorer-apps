@@ -6,9 +6,9 @@ import {
     trendToolIsLoadingChanged,
 } from './reducer';
 import {
-    selectAcquisitionMonth4ProfileTool,
-    selectAcquisitionYear4ProfileTool,
-    selectQueryLocation4ProfileTool,
+    selectAcquisitionMonth4TrendTool,
+    selectAcquisitionYear4TrendTool,
+    selectQueryLocation4TrendTool,
     selectTrendToolOption,
 } from './selectors';
 import { getTemporalProfileData } from '@shared/services/landsat/getTemporalProfileData';
@@ -32,11 +32,11 @@ export const updateTrendToolData =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const rootState = getState();
 
-        const queryLocation = selectQueryLocation4ProfileTool(rootState);
+        const queryLocation = selectQueryLocation4TrendTool(rootState);
 
-        const acquisitionMonth = selectAcquisitionMonth4ProfileTool(rootState);
+        const acquisitionMonth = selectAcquisitionMonth4TrendTool(rootState);
 
-        const acquisitionYear = selectAcquisitionYear4ProfileTool(rootState);
+        const acquisitionYear = selectAcquisitionYear4TrendTool(rootState);
 
         const trendToolOption = selectTrendToolOption(rootState);
 
