@@ -80,6 +80,18 @@ export const SpectralToolContainer = () => {
         return '';
     }, [isLoading, error4SpectralProfileTool, spectralProfileData]);
 
+    const shouldShowChart = useMemo(() => {
+        if (isLoading || error4SpectralProfileTool) {
+            return false;
+        }
+
+        if (!spectralProfileData || !spectralProfileData.length) {
+            return false;
+        }
+
+        return true;
+    }, [isLoading, error4SpectralProfileTool, spectralProfileData]);
+
     // triggers when user selects a new query location
     useEffect(() => {
         (async () => {
@@ -134,7 +146,7 @@ export const SpectralToolContainer = () => {
                 }}
             />
 
-            {spectralProfileData && spectralProfileData.length ? (
+            {shouldShowChart && (
                 <>
                     <div className="w-full h-[120px] my-2">
                         <SpectralProfileChart
@@ -147,7 +159,9 @@ export const SpectralToolContainer = () => {
                         featureOfInterest={selectedFeatureOfInterest}
                     />
                 </>
-            ) : (
+            )}
+
+            {spectralProfileToolMessage && (
                 <div className="w-full mt-10 flex justify-center text-center">
                     {isLoading && <calcite-loader inline />}
                     <p className="text-sm opacity-80">

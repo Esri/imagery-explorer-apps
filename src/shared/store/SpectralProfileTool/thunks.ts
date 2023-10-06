@@ -53,6 +53,8 @@ export const updateSpectralProfileData =
 
         dispatch(spectralProfileToolIsLoadingToggled(true));
 
+        dispatch(errorChanged(null));
+
         try {
             const res = await identify({
                 point: queryLocation,
