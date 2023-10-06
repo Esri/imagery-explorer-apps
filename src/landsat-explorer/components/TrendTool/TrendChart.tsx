@@ -120,23 +120,56 @@ export const TemporalProfileChart: FC<Props> = ({
         return [xMin, xMax];
     }, [chartData, queryParams4SelectedScene, trendToolOption]);
 
+    // const customDomain4YScale = useMemo(() => {
+    //     if (spectralIndex === 'temperature farhenheit') {
+    //         return [
+    //             LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    //             LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    //         ];
+    //     }
+
+    //     if (spectralIndex === 'temperature celcius') {
+    //         return [
+    //             LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    //             LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    //         ];
+    //     }
+
+    //     return [-1, 1];
+    // }, [spectralIndex]);
+
     const customDomain4YScale = useMemo(() => {
+        const yValues = chartData.map((d) => d.y);
+
+        // boundary of y axis, for spectral index, the boundary should be -1 and 1
+        let yUpperLimit = 1;
+        let yLowerLimit = -1;
+
+        // temperature is handled differently as we display the actual values in the chart
         if (spectralIndex === 'temperature farhenheit') {
-            return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-            ];
+            yLowerLimit = LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT;
+            yUpperLimit = LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT;
         }
 
         if (spectralIndex === 'temperature celcius') {
-            return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-            ];
+            yLowerLimit = LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
+            yUpperLimit = LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS;
         }
 
-        return [-1, 1];
-    }, [spectralIndex]);
+        // get min and max from the data
+        let ymin = Math.min(...yValues);
+        let ymax = Math.max(...yValues);
+
+        // get range between min and max from the data
+        const yRange = ymax - ymin;
+
+        // adjust ymin and ymax to add 10% buffer to it, but also need to make sure
+        ymin = Math.max(yLowerLimit, ymin - yRange * 0.1);
+
+        ymax = Math.min(yUpperLimit, ymax + yRange * 0.1);
+
+        return [ymin, ymax];
+    }, [chartData]);
 
     const getData4VerticalReferenceLine = (): VerticalReferenceLineData[] => {
         if (!queryParams4SelectedScene?.acquisitionDate || !chartData.length) {
