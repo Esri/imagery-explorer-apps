@@ -163,9 +163,8 @@ export const TemporalProfileChart: FC<Props> = ({
         // get range between min and max from the data
         const yRange = ymax - ymin;
 
-        // adjust ymin and ymax to add 10% buffer to it, but also need to make sure
+        // adjust ymin and ymax to add 10% buffer to it, but also need to make sure it fits in the upper and lower limit
         ymin = Math.max(yLowerLimit, ymin - yRange * 0.1);
-
         ymax = Math.min(yUpperLimit, ymax + yRange * 0.1);
 
         return [ymin, ymax];
