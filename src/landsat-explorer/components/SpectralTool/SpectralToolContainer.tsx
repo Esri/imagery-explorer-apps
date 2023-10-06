@@ -33,12 +33,12 @@ export type SpectralProfileFeatureOfInterest =
 const FeatureOfInterest: SpectralProfileFeatureOfInterest[] = [
     'Cloud',
     'Snow/Ice',
-    'Desert',
-    'Dry Vegetation',
-    'Concrete',
-    'Lush Vegetation',
-    'Urban',
     'Rock',
+    'Desert',
+    'Concrete',
+    'Urban',
+    'Dry Vegetation',
+    'Lush Vegetation',
     'Forest',
     'Water',
 ];
