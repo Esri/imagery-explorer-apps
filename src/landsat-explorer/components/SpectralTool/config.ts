@@ -33,7 +33,7 @@ export const FillColorByFeatureOfInterest: Record<
     'Snow/Ice': '#71A6E8',
     Rock: '#EDC692',
     Desert: '#EE9720',
-    Concrete: '#EE9720',
+    Concrete: '#EB7EE0',
     Urban: '#9D54E0',
     'Dry Vegetation': '#CAD728',
     'Lush Vegetation': '#1BE43E',
