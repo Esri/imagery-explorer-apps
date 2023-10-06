@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import MapView from './MapView';
 // import { WEB_MAP_ID } from '../../constants/map';
 import { useSelector } from 'react-redux';
@@ -64,9 +64,15 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
-    const showMagnifier = mode === 'analysis' && analysisTool === 'trend';
-
     const anchorLocation = useSelector(selectMapPopupAnchorLocation);
+
+    const showMagnifier = useMemo(() => {
+        if (mode !== 'analysis') {
+            return false;
+        }
+
+        return analysisTool === 'trend' || analysisTool === 'spectral';
+    }, [analysisTool, mode]);
 
     useEffect(() => {
         // console.log('map view zoom and center has changed', center, zoom);
