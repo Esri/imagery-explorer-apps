@@ -196,7 +196,7 @@ export const TemporalProfileChart: FC<Props> = ({
                     /*
                      * Indicate number of ticks that should be renderd on x axis
                      */
-                    numberOfTicks: 5,
+                    numberOfTicks: trendToolOption === 'year-to-year' ? 5 : 8,
                     tickFormatFunction: (val: any) => {
                         if (!val) {
                             return '';
