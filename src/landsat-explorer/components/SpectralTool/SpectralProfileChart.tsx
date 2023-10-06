@@ -20,6 +20,14 @@ type Props = {
     featureOfInterest: SpectralProfileFeatureOfInterest;
 };
 
+const normalizeBandValue = (value: number): number => {
+    // band value should never go above 1
+    value = Math.min(value, 1);
+    // band value should never go below 0
+    value = Math.max(value, 0);
+    return value;
+};
+
 export const SpectralProfileChart: FC<Props> = ({
     data,
     featureOfInterest,
@@ -46,7 +54,7 @@ export const SpectralProfileChart: FC<Props> = ({
             bandValues4UserSelectedLocation.map((val, index) => {
                 return {
                     x: index,
-                    y: val,
+                    y: normalizeBandValue(val),
                 } as LineChartDataItem;
             });
 
@@ -54,7 +62,7 @@ export const SpectralProfileChart: FC<Props> = ({
             bandValues4SelectedFeatureOfInterest.map((val, index) => {
                 return {
                     x: index,
-                    y: val,
+                    y: normalizeBandValue(val),
                 } as LineChartDataItem;
             });
 
