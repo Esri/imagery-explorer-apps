@@ -73,7 +73,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     //     selectedSide === 'left' ? 'left' : null
                     // }
                 >
-                    <div className="tex-xs normal-case">
+                    <div className="text-xs normal-case">
                         <span>choose</span>
                         <br />
                         <span className="uppercase">scene a</span>
@@ -100,7 +100,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     //     selectedSide === 'left' ? 'left' : null
                     // }
                 >
-                    <div className="tex-xs normal-case">
+                    <div className="text-xs normal-case">
                         <span>choose</span>
                         <br />
                         <span className="uppercase">scene b</span>
