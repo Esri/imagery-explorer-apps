@@ -6,6 +6,7 @@ import UI from './UI/reducer';
 import TrendTool from './TrendTool/reducer';
 import MaskTool from './MaskTool/reducer';
 import SpectralProfileTool from './SpectralProfileTool/reducer';
+import ChangeCompareTool from './ChangeCompareTool/reducer';
 
 const reducers = combineReducers({
     Map,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
     TrendTool,
     MaskTool,
     SpectralProfileTool,
+    ChangeCompareTool,
 });
 
 export default reducers;
