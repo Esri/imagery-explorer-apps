@@ -20,7 +20,7 @@ export type AppMode =
 /**
  * the analysis tool that the app supports
  */
-export type AnalysisTool = 'mask' | 'trend' | 'spectral';
+export type AnalysisTool = 'mask' | 'trend' | 'spectral' | 'change';
 
 /**
  * Swipe Mode allows user to compare Imagery scene the

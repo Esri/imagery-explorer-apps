@@ -16,6 +16,9 @@ const AnalysisTools: {
     {
         tool: 'spectral',
     },
+    {
+        tool: 'change',
+    },
 ];
 
 type Props = {

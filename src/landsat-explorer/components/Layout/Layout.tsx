@@ -9,7 +9,10 @@ import {
 } from '@shared/components/ModeSelector';
 import { SceneInfo } from '../SceneInfo';
 import { useSelector } from 'react-redux';
-import { selectAppMode } from '@shared/store/Landsat/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectAppMode,
+} from '@shared/store/Landsat/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
 import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { TrendTool } from '../TrendTool';
@@ -21,6 +24,7 @@ import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
 import { SpectralTool } from '../SpectralTool';
+import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 
 const DynamicModeContent = () => {
     return (
@@ -34,6 +38,8 @@ const DynamicModeContent = () => {
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
+
+    const analysisTool = useSelector(selectActiveAnalysisTool);
 
     const dynamicModeOn = mode === 'dynamic';
 
@@ -67,6 +73,12 @@ const Layout = () => {
                             <SwipeLayerSelector />
                             <AnimationControl />
                             <AnalysisToolSelector />
+                        </ContainerOfSecondaryControls>
+                    )}
+
+                    {mode === 'analysis' && analysisTool === 'change' && (
+                        <ContainerOfSecondaryControls>
+                            <ChangeCompareLayerSelector />
                         </ContainerOfSecondaryControls>
                     )}
                 </div>
