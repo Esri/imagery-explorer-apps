@@ -5,9 +5,11 @@ import { useSelector } from 'react-redux';
 import {
     selectQueryParams4SceneInSelectedMode,
     selectAppMode,
+    selectActiveAnalysisTool,
 } from '@shared/store/Landsat/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import GroupLayer from 'esri/layers/GroupLayer';
+import { selectIsViewingChangeInChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
 
 type Props = {
     mapView?: MapView;
@@ -22,12 +24,30 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
 
     const animationStatus = useSelector(selectAnimationStatus);
 
+    const analysisTool = useSelector(selectActiveAnalysisTool);
+
+    const isViewingChangeInChangeCompareTool = useSelector(
+        selectIsViewingChangeInChangeCompareTool
+    );
+
     const getVisibility = () => {
         if (mode === 'dynamic') {
             return true;
         }
 
-        if (mode === 'find a scene' || mode === 'analysis') {
+        if (mode === 'find a scene') {
+            return objectIdOfSelectedScene !== null;
+        }
+
+        if (mode === 'analysis') {
+            // no need to show landsat layer when user is viewing change in the change compare tool
+            if (
+                analysisTool === 'change' &&
+                isViewingChangeInChangeCompareTool === true
+            ) {
+                return false;
+            }
+
             return objectIdOfSelectedScene !== null;
         }
 

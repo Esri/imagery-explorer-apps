@@ -10,6 +10,7 @@ import { getBandIndexesBySpectralIndex } from '@shared/services/landsat/helpers'
 import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat/getLandsatScenes';
+import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 
 type Props = {
     mapView?: MapView;
@@ -40,6 +41,16 @@ type PixelData = {
     pixelBlock: PixelBlock;
 };
 
+/**
+ * This function retrieves a raster function that can be used to visualize changes between two input Landsat scenes.
+ * The output raster function applies an `Arithmetic` operation to calculate the difference of a selected spectral index
+ * between two input rasters.
+ *
+ * @param spectralIndex - The user-selected spectral index to analyze changes.
+ * @param queryParams4SceneA - Query parameters for the first selected Landsat scene.
+ * @param queryParams4SceneB - Query parameters for the second selected Landsat scene.
+ * @returns A Raster Function that contains the `Arithmetic` function to visualize spectral index changes.
+ */
 export const getRasterFunction4ChangeLayer = async (
     /**
      * name of selected spectral index
@@ -65,6 +76,17 @@ export const getRasterFunction4ChangeLayer = async (
         return null;
     }
 
+    // Sort query parameters by acquisition date in ascending order.
+    const [
+        queryParams4SceneAcquiredInEarlierDate,
+        queryParams4SceneAcquiredInLaterDate,
+    ] = [queryParams4SceneA, queryParams4SceneB].sort((a, b) => {
+        return (
+            formattedDateString2Unixtimestamp(a.acquisitionDate) -
+            formattedDateString2Unixtimestamp(b.acquisitionDate)
+        );
+    });
+
     try {
         type Modules = [typeof IRasterFunction];
 
@@ -72,10 +94,12 @@ export const getRasterFunction4ChangeLayer = async (
             'esri/layers/support/RasterFunction',
         ]) as Promise<Modules>);
 
+        // Get the band index for the selected spectral index.
         const bandIndex = getBandIndexesBySpectralIndex(spectralIndex);
 
+        // Retrieve the feature associated with the later acquired Landsat scene.
         const feature = await getLandsatFeatureByObjectId(
-            queryParams4SceneA?.objectIdOfSelectedScene
+            queryParams4SceneAcquiredInLaterDate?.objectIdOfSelectedScene
         );
 
         return new RasterFunction({
@@ -88,12 +112,13 @@ export const getRasterFunction4ChangeLayer = async (
                 // use 1 to keep image inside of the geometry
                 ClippingType: 1,
                 Raster: {
+                    // The `Arithmetic` function performs an arithmetic operation between two rasters.
                     rasterFunction: 'Arithmetic',
                     rasterFunctionArguments: {
                         Raster: {
                             rasterFunction: 'BandArithmetic',
                             rasterFunctionArguments: {
-                                Raster: `$${queryParams4SceneA.objectIdOfSelectedScene}`,
+                                Raster: `$${queryParams4SceneAcquiredInLaterDate.objectIdOfSelectedScene}`,
                                 Method: 0,
                                 BandIndexes: bandIndex,
                             },
@@ -102,7 +127,7 @@ export const getRasterFunction4ChangeLayer = async (
                         Raster2: {
                             rasterFunction: 'BandArithmetic',
                             rasterFunctionArguments: {
-                                Raster: `$${queryParams4SceneB.objectIdOfSelectedScene}`,
+                                Raster: `$${queryParams4SceneAcquiredInEarlierDate.objectIdOfSelectedScene}`,
                                 Method: 0,
                                 BandIndexes: bandIndex,
                             },
@@ -120,6 +145,9 @@ export const getRasterFunction4ChangeLayer = async (
             },
         });
     } catch (err) {
+        console.error(err);
+
+        // handle any potential errors and return null in case of failure.
         return null;
     }
 };
@@ -155,7 +183,7 @@ export const ChangeLayer: FC<Props> = ({
             queryParams4SceneB
         );
 
-        console.log(renderingRule);
+        // console.log(renderingRule);
 
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
