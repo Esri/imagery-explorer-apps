@@ -42,9 +42,39 @@ type Props = {
     activeSceneOnChange: (val: ActiveScene4ChangeCompareTool) => void;
 };
 
+type ButtonTextLabelProps = {
+    activeScene: ActiveScene4ChangeCompareTool;
+    queryParams4ActiveScene: QueryParams4ImageryScene;
+};
+
+const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
+    activeScene,
+    queryParams4ActiveScene,
+}) => {
+    if (!queryParams4ActiveScene || !queryParams4ActiveScene.acquisitionDate) {
+        return (
+            <div className="text-xs normal-case">
+                <span>choose</span>
+                <br />
+                <span className="uppercase">{activeScene}</span>
+            </div>
+        );
+    }
+
+    return (
+        <div className="text-xs normal-case">
+            <span className="uppercase">{activeScene}</span>
+            <br />
+            <span className="">{queryParams4ActiveScene.acquisitionDate}</span>
+        </div>
+    );
+};
+
 export const ChangeCompareLayerSelector: FC<Props> = ({
     activeScene,
     isViewingChange,
+    queryParams4SceneA,
+    queryParams4SceneB,
     activeSceneOnChange,
     viewChangeButtonOnClick,
     selectedSpectralIndexOnChange,
@@ -78,15 +108,21 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     onClickHandler={() => {
                         activeSceneOnChange('scene a');
                     }}
-                    // decorativeIndicator={
-                    //     selectedSide === 'left' ? 'left' : null
-                    // }
+                    decorativeIndicator={
+                        activeScene === 'scene a' && isViewingChange === false
+                            ? 'left'
+                            : null
+                    }
                 >
-                    <div className="text-xs normal-case">
+                    {/* <div className="text-xs normal-case">
                         <span>choose</span>
                         <br />
                         <span className="uppercase">scene a</span>
-                    </div>
+                    </div> */}
+                    <ButtonTextLabel
+                        activeScene={activeScene}
+                        queryParams4ActiveScene={queryParams4SceneA}
+                    />
                 </Button>
             </div>
 
@@ -105,15 +141,21 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     onClickHandler={() => {
                         activeSceneOnChange('scene b');
                     }}
-                    // decorativeIndicator={
-                    //     selectedSide === 'left' ? 'left' : null
-                    // }
+                    decorativeIndicator={
+                        activeScene === 'scene b' && isViewingChange === false
+                            ? 'left'
+                            : null
+                    }
                 >
-                    <div className="text-xs normal-case">
+                    {/* <div className="text-xs normal-case">
                         <span>choose</span>
                         <br />
                         <span className="uppercase">scene b</span>
-                    </div>
+                    </div> */}
+                    <ButtonTextLabel
+                        activeScene={activeScene}
+                        queryParams4ActiveScene={queryParams4SceneB}
+                    />
                 </Button>
             </div>
 
@@ -130,9 +172,9 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     appearance={isViewingChange ? 'solid' : 'transparent'}
                     scale="s"
                     onClickHandler={viewChangeButtonOnClick}
-                    // decorativeIndicator={
-                    //     selectedSide === 'left' ? 'left' : null
-                    // }
+                    decorativeIndicator={
+                        isViewingChange === true ? 'left' : null
+                    }
                 >
                     <div className="text-xs normal-case">
                         <span className="uppercase">view change</span>
