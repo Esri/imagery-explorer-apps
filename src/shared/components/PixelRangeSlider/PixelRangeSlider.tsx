@@ -21,6 +21,10 @@ type Props = {
      */
     steps?: number;
     /**
+     * count of ticks to be displayed on slider
+     */
+    countOfTicks?: number;
+    /**
      * tick labels to be displayed on slider
      */
     tickLabels?: number[];
@@ -42,6 +46,7 @@ export const PixelRangeSlider: FC<Props> = ({
     min = -1,
     max = 1,
     steps = 0.05,
+    countOfTicks = 0,
     tickLabels = [],
     valuesOnChange,
 }) => {
@@ -71,7 +76,7 @@ export const PixelRangeSlider: FC<Props> = ({
                 tickConfigs: [
                     {
                         mode: 'count',
-                        values: 17,
+                        values: countOfTicks,
                     },
                     {
                         mode: 'position',
@@ -130,11 +135,9 @@ export const PixelRangeSlider: FC<Props> = ({
     }, [values]);
 
     return (
-        <div className="w-full h-[120px]">
-            <div
-                className="esri-slider-custom-style show-segment-between-handlers w-full"
-                ref={containerRef}
-            ></div>
-        </div>
+        <div
+            className="esri-slider-custom-style show-segment-between-handlers w-full"
+            ref={containerRef}
+        ></div>
     );
 };
