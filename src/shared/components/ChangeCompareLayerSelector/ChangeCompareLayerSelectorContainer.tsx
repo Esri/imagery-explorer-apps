@@ -41,6 +41,8 @@ export const ChangeCompareLayerSelectorContainer = () => {
             activeScene={activeScene}
             isViewingChange={isViewingChange}
             viewChangeButtonDisabled={viewChangeButtonDisabled}
+            queryParams4SceneA={queryParams4SceneA}
+            queryParams4SceneB={queryParams4SceneB}
             selectedSpectralIndexOnChange={(spectralIndex: SpectralIndex) => {
                 //
             }}

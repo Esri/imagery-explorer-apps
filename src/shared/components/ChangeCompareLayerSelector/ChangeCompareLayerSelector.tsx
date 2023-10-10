@@ -4,6 +4,7 @@ import { Button } from '../Button';
 import { Dropdown } from '../Dropdown';
 import { SpectralIndex } from '@typing/imagery-service';
 import { ActiveScene4ChangeCompareTool } from '@shared/store/ChangeCompareTool/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 
 type Props = {
     activeScene: ActiveScene4ChangeCompareTool;
@@ -15,6 +16,14 @@ type Props = {
      * if true, view change button shouldbe disabled
      */
     viewChangeButtonDisabled: boolean;
+    /**
+     * query params for selected Scene A
+     */
+    queryParams4SceneA: QueryParams4ImageryScene;
+    /**
+     * query params for selected Scene B
+     */
+    queryParams4SceneB: QueryParams4ImageryScene;
     /**
      * emits when user selects a new spectral index
      * @param val

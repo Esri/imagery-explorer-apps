@@ -20,10 +20,12 @@ import {
     selectQueryParams4ScenesInAnimateMode,
     selectQueryParams4SecondaryScene,
     selectSelectedAnimationFrameId,
+    selectActiveAnalysisTool,
 } from './selectors';
 import { nanoid } from 'nanoid';
 import { LandsatScene } from '@typing/imagery-service';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
+import { selectActiveScene4ChangeCompareTool } from '../ChangeCompareTool/selectors';
 
 let abortController: AbortController = null;
 
@@ -110,6 +112,18 @@ export const queryAvailableScenes =
         }
     };
 
+const updateQueryParams4ActiveSceneInChangeCompareTool =
+    (updatedQueryParams: QueryParams4ImageryScene) =>
+    (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const activeScene = selectActiveScene4ChangeCompareTool(getState());
+
+        if (activeScene === 'scene a') {
+            dispatch(queryParams4MainSceneChanged(updatedQueryParams));
+        } else {
+            dispatch(queryParams4SecondarySceneChanged(updatedQueryParams));
+        }
+    };
+
 /**
  * update query params that will be used to find the Landsat Scene in the selected mode
  * @param updatedQueryParams
@@ -119,12 +133,25 @@ export const updateQueryParams4SceneInSelectedMode =
     (updatedQueryParams: QueryParams4ImageryScene) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
         const mode = selectAppMode(getState());
+        const analysisTool = selectActiveAnalysisTool(getState());
 
-        if (
-            mode === 'find a scene' ||
-            mode === 'analysis' ||
-            mode === 'dynamic'
-        ) {
+        if (mode === 'find a scene' || mode === 'dynamic') {
+            dispatch(queryParams4MainSceneChanged(updatedQueryParams));
+            return;
+        }
+
+        if (mode === 'analysis') {
+            // the change compare tool uses both main and secondary scene based on selected active scene in the tool
+            // therefore it needs to be handled by a updateQueryParams4ActiveSceneInChangeCompareTool thunk function
+            if (analysisTool === 'change') {
+                dispatch(
+                    updateQueryParams4ActiveSceneInChangeCompareTool(
+                        updatedQueryParams
+                    )
+                );
+                return;
+            }
+
             dispatch(queryParams4MainSceneChanged(updatedQueryParams));
             return;
         }

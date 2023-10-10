@@ -8,20 +8,32 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
     (state: RootState) => state.Landsat.selectedSide4SwipeMode,
     (state: RootState) => state.Landsat.selectedAnimationFrameId,
+    (state: RootState) => state.Landsat.tool,
+    (state: RootState) => state.ChangeCompareTool.activeScene,
     (
         mode,
         queryParams4MainScene,
         queryParams4SecondaryScene,
         queryParams4ScenesInAnimateMode,
         selectedSide4SwipeMode,
-        selectedAnimationFrameId
+        selectedAnimationFrameId,
+        activeAnalysisTool,
+        activeSceneInChangeCompareTool
     ) => {
-        if (
-            mode === 'find a scene' ||
-            mode === 'analysis' ||
-            mode === 'dynamic'
-        ) {
+        if (mode === 'find a scene' || mode === 'dynamic') {
             return queryParams4MainScene;
+        }
+
+        if (mode === 'analysis') {
+            // analysis tools other than 'change compare' should always use the main scene
+            if (activeAnalysisTool !== 'change') {
+                return queryParams4MainScene;
+            }
+
+            // when in 'change compare' tool, we need to find the query params based on selected scene
+            return activeSceneInChangeCompareTool === 'scene a'
+                ? queryParams4MainScene
+                : queryParams4SecondaryScene;
         }
 
         if (mode === 'swipe') {
