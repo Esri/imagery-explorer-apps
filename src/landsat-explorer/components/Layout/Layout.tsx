@@ -25,6 +25,7 @@ import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
 import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
+import { ChangeCompareTool } from '../ChangeCompareTool';
 
 const DynamicModeContent = () => {
     return (
@@ -97,6 +98,7 @@ const Layout = () => {
                                     <MaskTool />
                                     <TrendTool />
                                     <SpectralTool />
+                                    <ChangeCompareTool />
                                 </div>
                             )}
 
