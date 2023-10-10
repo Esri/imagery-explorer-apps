@@ -12,6 +12,7 @@ import { ChangeLayer } from './ChangeLayer';
 import {
     selectIsViewingChangeInChangeCompareTool,
     selectSpectralIndex4ChangeCompareTool,
+    selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 
 type Props = {
@@ -33,6 +34,10 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const queryParams4SceneB = useSelector(selectQueryParams4SecondaryScene);
 
     const anailysisTool = useSelector(selectActiveAnalysisTool);
+
+    const selectedRange = useSelector(
+        selectUserSelectedRangeInChangeCompareTool
+    );
 
     const isVisible = useMemo(() => {
         if (mode !== 'analysis') {
@@ -67,7 +72,7 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             visible={isVisible}
             queryParams4SceneA={queryParams4SceneA}
             queryParams4SceneB={queryParams4SceneB}
-            selectedRange={[-2, 2]}
+            selectedRange={selectedRange}
         />
     );
 };

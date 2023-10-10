@@ -16,6 +16,11 @@ export const selectIsViewingChangeInChangeCompareTool = createSelector(
     (isViewingChange) => isViewingChange
 );
 
+export const selectUserSelectedRangeInChangeCompareTool = createSelector(
+    (state: RootState) => state.ChangeCompareTool.selectedRange,
+    (selectedRange) => selectedRange
+);
+
 // export const selectSpectralProfileToolState = createSelector(
 //     (state: RootState) => state.SpectralProfileTool,
 //     (SpectralProfileTool) => SpectralProfileTool
