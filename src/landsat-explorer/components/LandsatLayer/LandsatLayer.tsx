@@ -40,7 +40,7 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
         }
 
         if (mode === 'analysis') {
-            // no need to show landsat layer when user is viewing change in the change compare tool
+            // no need to show landsat layer when user is viewing change layer in the change compare tool
             if (
                 analysisTool === 'change' &&
                 isViewingChangeInChangeCompareTool === true

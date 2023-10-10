@@ -11,6 +11,7 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat/getLandsatScenes';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
+import { getPixelColor } from './helpers';
 
 type Props = {
     mapView?: MapView;
@@ -200,7 +201,7 @@ export const ChangeLayer: FC<Props> = ({
     };
 
     const maskPixels = (pixelData: PixelData) => {
-        const color = colorRef.current || [255, 255, 255];
+        // const color = colorRef.current || [255, 255, 255];
 
         const { pixelBlock } = pixelData || {};
 
@@ -238,6 +239,8 @@ export const ChangeLayer: FC<Props> = ({
                 pixelBlock.mask[i] = 0;
                 continue;
             }
+
+            const color = getPixelColor(p1[i]);
 
             pixelBlock.mask[i] = 1;
 
