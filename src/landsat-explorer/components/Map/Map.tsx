@@ -10,6 +10,7 @@ import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2Nativ
 import { Popup } from '../PopUp/PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
+import { ChangeLayer } from '../ChangeLayer';
 
 const Map = () => {
     return (
@@ -21,6 +22,7 @@ const Map = () => {
             >
                 <LandsatLayer />
                 <MaskLayer />
+                <ChangeLayer />
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
             </GroupLayer>

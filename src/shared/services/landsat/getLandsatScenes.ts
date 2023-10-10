@@ -215,3 +215,37 @@ export const getLandsatScenes = async ({
 
     return getFormattedLandsatScenes(data?.features || []);
 };
+
+export const getLandsatFeatureByObjectId = async (
+    objectId: number,
+    abortController?: AbortController
+) => {
+    const queryParams = new URLSearchParams({
+        f: 'json',
+        returnGeometry: 'true',
+        objectIds: objectId.toString(),
+    });
+
+    const res = await fetch(
+        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`,
+        {
+            // signal: abortController.signal,
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error('failed to query Landsat-2 service');
+    }
+
+    const data = await res.json();
+
+    if (data.error) {
+        throw data.error;
+    }
+
+    if (!data?.features || !data.features.length) {
+        return null;
+    }
+
+    return data?.features[0] as IFeature;
+};
