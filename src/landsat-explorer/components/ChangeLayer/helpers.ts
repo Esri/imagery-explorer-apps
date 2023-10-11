@@ -1,45 +1,61 @@
 const ColorRamps = [
-    [199, 234, 255], // #c7eaff,
-    [206, 245, 244], // #cef5f4,
-    [189, 242, 196], // #bdf2c4,
-    [229, 247, 180], // #e5f7b4,
-    [255, 247, 204], // #fff7cc,
-    [255, 226, 191], // #ffe2bf,
-    [255, 216, 191], // #ffd8bf,
-    [255, 199, 179], // #ffc7b3,
-    [255, 198, 191], // #ffc6bf,
+    [0, 132, 168],
+    [51, 151, 165],
+    [118, 177, 161],
+    [178, 199, 157],
+    [247, 226, 153],
+    [235, 190, 119],
+    [214, 147, 81],
+    [191, 102, 42],
+    [173, 65, 9],
 ];
+
+/**
+ * return the color ramp as css gradient
+ * @returns css gradient string (e.g. `linear-gradient(90deg, rgba(0,132,255,1) 0%, rgba(118,177,196,1) 25%, rgba(173,65,9,1) 100%)`)
+ */
+export const getChangeCompareLayerColorrampAsCSSGradient = () => {
+    const stops = ColorRamps.map((color, index) => {
+        const [r, g, b] = color;
+        const pos = (index / (ColorRamps.length - 1)) * 100;
+        return `rgba(${r},${g},${b},1) ${pos}%`;
+    });
+
+    const output = `linear-gradient(90deg, ${stops.join(', ')})`;
+
+    return output;
+};
 
 export const getPixelColor = (value: number): number[] => {
     if (value <= -1.5) {
         return ColorRamps[0];
     }
 
-    if (value > -1.5 && value <= -1) {
+    if (value <= -1) {
         return ColorRamps[1];
     }
 
-    if (value > -1 && value <= -0.5) {
+    if (value <= -0.5) {
         return ColorRamps[2];
     }
 
-    if (value > -0.5 && value <= 0) {
+    if (value <= 0) {
         return ColorRamps[3];
     }
 
-    if (value > 0 && value <= 0.5) {
+    if (value <= 0.5) {
         return ColorRamps[4];
     }
 
-    if (value > 0.5 && value <= 1) {
+    if (value <= 1) {
         return ColorRamps[5];
     }
 
-    if (value > 1 && value <= 1.5) {
+    if (value <= 1.5) {
         return ColorRamps[6];
     }
 
-    if (value > 1.5 && value <= 2) {
+    if (value <= 2) {
         return ColorRamps[7];
     }
 };

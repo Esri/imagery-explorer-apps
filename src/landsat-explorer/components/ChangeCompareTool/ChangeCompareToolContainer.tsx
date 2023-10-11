@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { getChangeCompareLayerColorrampAsCSSGradient } from '../ChangeLayer/helpers';
 
 export const ChangeCompareToolContainer = () => {
     const dispatch = useDispatch();
@@ -70,7 +71,29 @@ export const ChangeCompareToolContainer = () => {
                 }}
             />
 
-            <div className="w-full h-[120px]">
+            <div className="w-full h-[0px] pt-[50px]">
+                <div className="w-full">
+                    <div className="flex items-center text-sm">
+                        <div className="w-1/3">
+                            <span>decrease</span>
+                        </div>
+                        <div className="w-1/3 text-center">
+                            <span>no change</span>
+                        </div>
+                        <div className="w-1/3 text-right">
+                            <span>increase</span>
+                        </div>
+                    </div>
+
+                    <div
+                        className="w-full h-2"
+                        style={{
+                            background:
+                                getChangeCompareLayerColorrampAsCSSGradient(),
+                        }}
+                    ></div>
+                </div>
+
                 <PixelRangeSlider
                     values={selectedRange}
                     valuesOnChange={(vals: number[]) => {
