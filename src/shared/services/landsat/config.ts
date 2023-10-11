@@ -86,6 +86,7 @@ const LANDSAT_RASTER_FUNCTIONS = [
     'Short-wave Infrared with DRA',
     'Surface Temperature Colorized (Fahrenheit)',
     'Surface Temperature Colorized (Celsius)',
+    'MNDWI Colorized',
     'Short-wave Infrared',
     'Color Infrared',
     'Geology with DRA',
@@ -156,6 +157,12 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
         name: 'Surface Temperature Colorized (Fahrenheit)',
         description: 'Colorized surface temperature',
         label: 'Surface Temp',
+    },
+    {
+        name: 'MNDWI Colorized',
+        description:
+            'Modified Normalized Difference Moisture Index with color map computed as (b3 - b6) / (b3 + b6). Wetlands and moist areas are blues, and dry areas in deep yellow and brown.',
+        label: 'MNDWI',
     },
     {
         name: 'Surface Temperature Colorized (Celsius)',

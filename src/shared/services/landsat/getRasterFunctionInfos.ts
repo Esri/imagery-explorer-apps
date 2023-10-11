@@ -6,6 +6,6 @@ import { LANDSAT_RASTER_FUNCTION_INFOS } from './config';
  * @returns
  */
 export const getRasterFunctionInfos = (): RasterFunctionInfo[] => {
-    const data = LANDSAT_RASTER_FUNCTION_INFOS.slice(0, 8);
+    const data = LANDSAT_RASTER_FUNCTION_INFOS.slice(0, 9);
     return data;
 };

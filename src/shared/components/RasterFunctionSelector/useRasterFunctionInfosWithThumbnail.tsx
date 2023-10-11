@@ -9,6 +9,7 @@ import Geology from './thumbnails/Render_Geology.jpg';
 import NDVI from './thumbnails/Render_NDVI.png';
 import ShortWaveIR from './thumbnails/Render_ShortwaveIR.jpg';
 import Thermal from './thumbnails/Render_Thermal.png';
+import MNDWI from './thumbnails/Render_MNDWI.png';
 import { LandsatRasterFunctionName } from '@shared/services/landsat/config';
 
 const LandsatRendererThumbnailByName: Partial<
@@ -22,6 +23,7 @@ const LandsatRendererThumbnailByName: Partial<
     'NDVI Colorized': NDVI,
     'Short-wave Infrared with DRA': ShortWaveIR,
     'Surface Temperature Colorized (Fahrenheit)': Thermal,
+    'MNDWI Colorized': MNDWI,
 };
 
 export const getLandsatRasterFunctionsWithThumbnail = () => {
