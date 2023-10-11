@@ -108,6 +108,11 @@ export const PixelRangeSlider: FC<Props> = ({
         }
     };
 
+    /**
+     * add custom attribute `aria-tooltip-text` to `.esri-slider__anchor` elements
+     * so that it can be used to populate the tooltip when user hovers the slider handles
+     * @returns void
+     */
     const addTooltipTextAttribute = () => {
         if (!showSliderTooltip) {
             return;
@@ -120,16 +125,18 @@ export const PixelRangeSlider: FC<Props> = ({
             '.esri-slider__anchor-1'
         );
 
+        const ATTR_NAME = 'aria-tooltip-text';
+
         if (sliderHandlerA) {
             sliderHandlerA.setAttribute(
-                'aria-tooltip-text',
+                ATTR_NAME,
                 values[0].toFixed(2).toString()
             );
         }
 
         if (sliderHandlerB) {
             sliderHandlerB.setAttribute(
-                'aria-tooltip-text',
+                ATTR_NAME,
                 values[1].toFixed(2).toString()
             );
         }
