@@ -5,7 +5,7 @@ import {
     spectralIndex4ChangeCompareToolChanged,
 } from '@shared/store/ChangeCompareTool/reducer';
 import {
-    selectIsViewingChangeInChangeCompareTool,
+    selectChangeCompareLayerIsOn,
     selectSpectralIndex4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
@@ -30,9 +30,7 @@ export const ChangeCompareToolContainer = () => {
         selectSpectralIndex4ChangeCompareTool
     );
 
-    const isChangeLayerOn = useSelector(
-        selectIsViewingChangeInChangeCompareTool
-    );
+    const isChangeLayerOn = useSelector(selectChangeCompareLayerIsOn);
 
     if (tool !== 'change') {
         return null;

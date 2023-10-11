@@ -24,7 +24,7 @@ import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 import { cloudCoverChanged } from '@shared/store/Landsat/reducer';
-import { selectIsViewingChangeInChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
+import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -41,9 +41,7 @@ const CalendarContainer = () => {
 
     const cloudCoverThreshold = useSelector(selectCloudCover); //queryParams?.cloudCover;
 
-    const isChangeCompareLayerOn = useSelector(
-        selectIsViewingChangeInChangeCompareTool
-    );
+    const isChangeCompareLayerOn = useSelector(selectChangeCompareLayerIsOn);
 
     const [acquisitionYear, setAcquisitionYear] = useState<number>();
 

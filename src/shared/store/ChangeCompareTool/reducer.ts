@@ -18,9 +18,9 @@ export type ChangeCompareToolState = {
      */
     activeScene: ActiveScene4ChangeCompareTool;
     /**
-     * if true, user is viewing change on the map
+     * if true, the change compare layer is visible in the map
      */
-    isViewingChange: boolean;
+    changeCompareLayerIsOn: boolean;
     /**
      * user selected pixel value range, the full range of pixel values of change compare layer should be between -2 and 2
      */
@@ -30,7 +30,7 @@ export type ChangeCompareToolState = {
 export const initialChangeCompareToolState: ChangeCompareToolState = {
     spectralIndex: 'vegetation',
     activeScene: 'scene a',
-    isViewingChange: false,
+    changeCompareLayerIsOn: false,
     selectedRange: [-2, 2],
 };
 
@@ -50,8 +50,11 @@ const slice = createSlice({
         ) => {
             state.activeScene = action.payload;
         },
-        isViewingChangeUpdated: (state, action: PayloadAction<boolean>) => {
-            state.isViewingChange = action.payload;
+        changeCompareLayerIsOnUpdated: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.changeCompareLayerIsOn = action.payload;
         },
         selectedRangeUpdated: (state, action: PayloadAction<number[]>) => {
             state.selectedRange = action.payload;
@@ -64,7 +67,7 @@ const { reducer } = slice;
 export const {
     spectralIndex4ChangeCompareToolChanged,
     activeSceneChanged,
-    isViewingChangeUpdated,
+    changeCompareLayerIsOnUpdated,
     selectedRangeUpdated,
 } = slice.actions;
 

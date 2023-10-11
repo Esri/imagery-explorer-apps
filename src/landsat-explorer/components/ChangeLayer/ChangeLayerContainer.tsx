@@ -10,7 +10,7 @@ import {
 import GroupLayer from 'esri/layers/GroupLayer';
 import { ChangeLayer } from './ChangeLayer';
 import {
-    selectIsViewingChangeInChangeCompareTool,
+    selectChangeCompareLayerIsOn,
     selectSpectralIndex4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
@@ -25,9 +25,7 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
 
     const spectralIndex = useSelector(selectSpectralIndex4ChangeCompareTool);
 
-    const isViewingChange = useSelector(
-        selectIsViewingChangeInChangeCompareTool
-    );
+    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
 
     const queryParams4SceneA = useSelector(selectQueryParams4MainScene);
 
@@ -55,11 +53,11 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             return false;
         }
 
-        return isViewingChange;
+        return changeCompareLayerIsOn;
     }, [
         mode,
         anailysisTool,
-        isViewingChange,
+        changeCompareLayerIsOn,
         queryParams4SceneA,
         queryParams4SceneB,
     ]);

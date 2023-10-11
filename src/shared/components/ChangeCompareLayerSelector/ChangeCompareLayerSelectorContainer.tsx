@@ -3,13 +3,13 @@ import { ChangeCompareLayerSelector } from './ChangeCompareLayerSelector';
 import {
     ActiveScene4ChangeCompareTool,
     activeSceneChanged,
-    isViewingChangeUpdated,
+    changeCompareLayerIsOnUpdated,
 } from '@shared/store/ChangeCompareTool/reducer';
 import { SpectralIndex } from '@typing/imagery-service';
 import { useSelector } from 'react-redux';
 import {
     selectActiveScene4ChangeCompareTool,
-    selectIsViewingChangeInChangeCompareTool,
+    selectChangeCompareLayerIsOn,
 } from '@shared/store/ChangeCompareTool/selectors';
 import { useDispatch } from 'react-redux';
 import {
@@ -22,9 +22,7 @@ export const ChangeCompareLayerSelectorContainer = () => {
 
     const activeScene = useSelector(selectActiveScene4ChangeCompareTool);
 
-    const isViewingChange = useSelector(
-        selectIsViewingChangeInChangeCompareTool
-    );
+    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
 
     const queryParams4SceneA = useSelector(selectQueryParams4MainScene);
 
@@ -39,7 +37,7 @@ export const ChangeCompareLayerSelectorContainer = () => {
     return (
         <ChangeCompareLayerSelector
             activeScene={activeScene}
-            isViewingChange={isViewingChange}
+            changeCompareLayerIsOn={changeCompareLayerIsOn}
             viewChangeButtonDisabled={viewChangeButtonDisabled}
             queryParams4SceneA={queryParams4SceneA}
             queryParams4SceneB={queryParams4SceneB}
@@ -47,13 +45,13 @@ export const ChangeCompareLayerSelectorContainer = () => {
             //     //
             // }}
             viewChangeButtonOnClick={() => {
-                dispatch(isViewingChangeUpdated(true));
+                dispatch(changeCompareLayerIsOnUpdated(true));
             }}
             activeSceneOnChange={(
                 activeScene: ActiveScene4ChangeCompareTool
             ) => {
                 dispatch(activeSceneChanged(activeScene));
-                dispatch(isViewingChangeUpdated(false));
+                dispatch(changeCompareLayerIsOnUpdated(false));
             }}
         />
     );

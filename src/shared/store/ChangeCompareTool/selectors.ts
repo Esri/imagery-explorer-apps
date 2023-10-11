@@ -11,9 +11,9 @@ export const selectActiveScene4ChangeCompareTool = createSelector(
     (activeScene) => activeScene
 );
 
-export const selectIsViewingChangeInChangeCompareTool = createSelector(
-    (state: RootState) => state.ChangeCompareTool.isViewingChange,
-    (isViewingChange) => isViewingChange
+export const selectChangeCompareLayerIsOn = createSelector(
+    (state: RootState) => state.ChangeCompareTool.changeCompareLayerIsOn,
+    (changeCompareLayerIsOn) => changeCompareLayerIsOn
 );
 
 export const selectUserSelectedRangeInChangeCompareTool = createSelector(

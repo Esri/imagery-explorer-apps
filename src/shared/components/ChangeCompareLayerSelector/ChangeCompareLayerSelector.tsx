@@ -9,9 +9,9 @@ import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 type Props = {
     activeScene: ActiveScene4ChangeCompareTool;
     /**
-     * if true, user is viewing change on the map
+     * if true, user is viewing change compare layer on the map
      */
-    isViewingChange: boolean;
+    changeCompareLayerIsOn: boolean;
     /**
      * if true, view change button shouldbe disabled
      */
@@ -72,7 +72,7 @@ const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
 
 export const ChangeCompareLayerSelector: FC<Props> = ({
     activeScene,
-    isViewingChange,
+    changeCompareLayerIsOn,
     queryParams4SceneA,
     queryParams4SceneB,
     activeSceneOnChange,
@@ -100,7 +100,8 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
             <div className={classNames('relative mb-1')}>
                 <Button
                     appearance={
-                        activeScene === 'scene a' && isViewingChange === false
+                        activeScene === 'scene a' &&
+                        changeCompareLayerIsOn === false
                             ? 'solid'
                             : 'transparent'
                     }
@@ -109,7 +110,8 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                         activeSceneOnChange('scene a');
                     }}
                     decorativeIndicator={
-                        activeScene === 'scene a' && isViewingChange === false
+                        activeScene === 'scene a' &&
+                        changeCompareLayerIsOn === false
                             ? 'left'
                             : null
                     }
@@ -133,7 +135,8 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
             <div className={classNames('relative mb-1')}>
                 <Button
                     appearance={
-                        activeScene === 'scene b' && isViewingChange === false
+                        activeScene === 'scene b' &&
+                        changeCompareLayerIsOn === false
                             ? 'solid'
                             : 'transparent'
                     }
@@ -142,7 +145,8 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                         activeSceneOnChange('scene b');
                     }}
                     decorativeIndicator={
-                        activeScene === 'scene b' && isViewingChange === false
+                        activeScene === 'scene b' &&
+                        changeCompareLayerIsOn === false
                             ? 'left'
                             : null
                     }
@@ -169,11 +173,13 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                 })}
             >
                 <Button
-                    appearance={isViewingChange ? 'solid' : 'transparent'}
+                    appearance={
+                        changeCompareLayerIsOn ? 'solid' : 'transparent'
+                    }
                     scale="s"
                     onClickHandler={viewChangeButtonOnClick}
                     decorativeIndicator={
-                        isViewingChange === true ? 'left' : null
+                        changeCompareLayerIsOn === true ? 'left' : null
                     }
                 >
                     <div className="text-xs normal-case">
