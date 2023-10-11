@@ -2,6 +2,8 @@ import React, { FC, useEffect, useRef } from 'react';
 import ISlider from 'esri/widgets/Slider';
 import { loadModules } from 'esri-loader';
 // import classNames from 'classnames';
+import './PixelRangeSlider.css';
+import classNames from 'classnames';
 
 type Props = {
     /**
@@ -29,6 +31,10 @@ type Props = {
      */
     tickLabels?: number[];
     /**
+     * if true, should show slider tooltip when hover over the slider handlers
+     */
+    showSliderTooltip?: boolean;
+    /**
      * emits when user changes the values of the slider either by dragging the thumb or the segment line
      * @param vals
      * @returns
@@ -48,6 +54,7 @@ export const PixelRangeSlider: FC<Props> = ({
     steps = 0.05,
     countOfTicks = 0,
     tickLabels = [],
+    showSliderTooltip,
     valuesOnChange,
 }) => {
     const containerRef = useRef<HTMLDivElement>();
@@ -101,6 +108,33 @@ export const PixelRangeSlider: FC<Props> = ({
         }
     };
 
+    const addTooltipTextAttribute = () => {
+        if (!showSliderTooltip) {
+            return;
+        }
+
+        const sliderHandlerA = containerRef.current.querySelector(
+            '.esri-slider__anchor-0'
+        );
+        const sliderHandlerB = containerRef.current.querySelector(
+            '.esri-slider__anchor-1'
+        );
+
+        if (sliderHandlerA) {
+            sliderHandlerA.setAttribute(
+                'aria-tooltip-text',
+                values[0].toFixed(2).toString()
+            );
+        }
+
+        if (sliderHandlerB) {
+            sliderHandlerB.setAttribute(
+                'aria-tooltip-text',
+                values[1].toFixed(2).toString()
+            );
+        }
+    };
+
     useEffect(() => {
         init();
 
@@ -132,11 +166,18 @@ export const PixelRangeSlider: FC<Props> = ({
         if (sliderRef.current.values[1] !== values[1]) {
             sliderRef.current.viewModel.setValue(1, values[1]);
         }
+
+        addTooltipTextAttribute();
     }, [values]);
 
     return (
         <div
-            className="esri-slider-custom-style show-segment-between-handlers w-full"
+            className={classNames(
+                'esri-slider-custom-style show-segment-between-handlers w-full',
+                {
+                    'show-slider-tooltip': showSliderTooltip,
+                }
+            )}
             ref={containerRef}
         ></div>
     );

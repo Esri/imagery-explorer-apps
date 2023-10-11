@@ -124,11 +124,13 @@ export const MaskToolContainer = () => {
                         values={getValues4SurfaceTempSlider()}
                         min={LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS}
                         max={LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS}
+                        steps={1}
                         valuesOnChange={(values) => {
                             dispatch(updateSelectedRange(values));
                         }}
                         countOfTicks={0}
                         tickLabels={[-30, -15, 0, 15, 30, 45, 60, 75, 90]}
+                        showSliderTooltip={true}
                     />
                 )}
                 {selectedSpectralIndex === 'temperature farhenheit' && (
@@ -136,6 +138,7 @@ export const MaskToolContainer = () => {
                         values={getValues4SurfaceTempSlider()}
                         min={LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT}
                         max={LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT}
+                        steps={1}
                         valuesOnChange={(values) => {
                             values = values.map((value) =>
                                 Math.trunc(((value - 32) * 5) / 9)
@@ -145,6 +148,7 @@ export const MaskToolContainer = () => {
                         }}
                         countOfTicks={0}
                         tickLabels={[-20, 0, 30, 60, 90, 120, 150, 180]}
+                        showSliderTooltip={true}
                     />
                 )}
 
@@ -159,6 +163,7 @@ export const MaskToolContainer = () => {
                             }}
                             countOfTicks={17}
                             tickLabels={[-1, -0.5, 0, 0.5, 1]}
+                            showSliderTooltip={true}
                         />
                     )}
             </div>
