@@ -1,7 +1,6 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@shared/components/MaskTool/PixelRangeSlider';
-import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
-
+// import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@shared/components/MaskTool/PixelRangeSlider';
+// import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
 import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
 import { spectralIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
@@ -21,8 +20,14 @@ import {
 import classNames from 'classnames';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
-import { values } from 'd3';
 import { SpectralIndex } from '@typing/imagery-service';
+import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+import {
+    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+} from '@shared/services/landsat/config';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -113,35 +118,50 @@ export const MaskToolContainer = () => {
                 }}
             />
 
-            {selectedSpectralIndex === 'temperature celcius' ||
-            selectedSpectralIndex === 'temperature farhenheit' ? (
-                <MaskLayerPixelRangeSlider4SurfaceTemp
-                    values={getValues4SurfaceTempSlider()}
-                    unit={
-                        selectedSpectralIndex === 'temperature celcius'
-                            ? 'celsius'
-                            : 'farhenheit'
-                    }
-                    valuesOnChange={(values) => {
-                        if (
-                            selectedSpectralIndex === 'temperature farhenheit'
-                        ) {
+            <div className="w-full h-[120px]">
+                {selectedSpectralIndex === 'temperature celcius' && (
+                    <PixelRangeSlider
+                        values={getValues4SurfaceTempSlider()}
+                        min={LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS}
+                        max={LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS}
+                        valuesOnChange={(values) => {
+                            dispatch(updateSelectedRange(values));
+                        }}
+                        countOfTicks={0}
+                        tickLabels={[-30, -15, 0, 15, 30, 45, 60, 75, 90]}
+                    />
+                )}
+                {selectedSpectralIndex === 'temperature farhenheit' && (
+                    <PixelRangeSlider
+                        values={getValues4SurfaceTempSlider()}
+                        min={LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT}
+                        max={LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT}
+                        valuesOnChange={(values) => {
                             values = values.map((value) =>
                                 Math.trunc(((value - 32) * 5) / 9)
                             );
-                        }
 
-                        dispatch(updateSelectedRange(values));
-                    }}
-                />
-            ) : (
-                <MaskLayerPixelRangeSlider4SpectralIndex
-                    values={maskOptions.selectedRange}
-                    valuesOnChange={(values) => {
-                        dispatch(updateSelectedRange(values));
-                    }}
-                />
-            )}
+                            dispatch(updateSelectedRange(values));
+                        }}
+                        countOfTicks={0}
+                        tickLabels={[-20, 0, 30, 60, 90, 120, 150, 180]}
+                    />
+                )}
+
+                {selectedSpectralIndex !== 'temperature celcius' &&
+                    selectedSpectralIndex !== 'temperature farhenheit' && (
+                        <PixelRangeSlider
+                            values={maskOptions.selectedRange}
+                            min={-1}
+                            max={1}
+                            valuesOnChange={(values) => {
+                                dispatch(updateSelectedRange(values));
+                            }}
+                            countOfTicks={17}
+                            tickLabels={[-1, -0.5, 0, 0.5, 1]}
+                        />
+                    )}
+            </div>
 
             <MaskLayerRenderingControls />
         </div>

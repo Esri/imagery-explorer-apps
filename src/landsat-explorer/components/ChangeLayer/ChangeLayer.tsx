@@ -232,10 +232,7 @@ export const ChangeLayer: FC<Props> = ({
         const [min, max] = selectedRangeRef.current || [0, 0];
 
         for (let i = 0; i < numPixels; i++) {
-            if (p1[i] < min || p1[i] > max || p1[i] === 0) {
-                // should exclude pixels that are outside of the user selected range and
-                // pixels with value of 0 since those are pixels
-                // outside of the mask layer's actual boundary
+            if (p1[i] < min || p1[i] > max) {
                 pixelBlock.mask[i] = 0;
                 continue;
             }

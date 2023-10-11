@@ -11,11 +11,11 @@ type Props = {
     /**
      * min value of the pixel range
      */
-    min: number;
+    min?: number;
     /**
      * max value of the pixel range
      */
-    max: number;
+    max?: number;
     /**
      * slider step
      */
