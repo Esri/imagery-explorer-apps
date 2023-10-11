@@ -3,6 +3,7 @@ import { PartialRootState } from './configureStore';
 import { initialMapState, MapState } from '../store/Map/reducer';
 import {
     getAnimationSpeedFromHashParams,
+    getChangeCompareToolDataFromHashParams,
     getHashParamValueByKey,
     getMapCenterFromHashParams,
     getMaskToolDataFromHashParams,
@@ -31,6 +32,10 @@ import {
     initialSpectralProfileToolState,
     SpectralProfileToolState,
 } from './SpectralProfileTool/reducer';
+import {
+    ChangeCompareToolState,
+    initialChangeCompareToolState,
+} from './ChangeCompareTool/reducer';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 
@@ -134,6 +139,15 @@ const getPreloadedSpectralProfileToolState = (): SpectralProfileToolState => {
     };
 };
 
+const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
+    const changeCompareToolData = getChangeCompareToolDataFromHashParams();
+
+    return {
+        ...initialChangeCompareToolState,
+        ...changeCompareToolData,
+    };
+};
+
 const getPreloadedUIState = (): UIState => {
     const animationSpeed = getAnimationSpeedFromHashParams();
 
@@ -157,5 +171,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         UI: getPreloadedUIState(),
         MaskTool: getPreloadedMaskToolState(),
         SpectralProfileTool: getPreloadedSpectralProfileToolState(),
+        ChangeCompareTool: getPreloadedChangeCompareToolState(),
     };
 };

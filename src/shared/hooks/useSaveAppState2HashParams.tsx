@@ -25,11 +25,13 @@ import {
     saveQueryParams4ScenesInAnimationToHashParams,
     saveAnimationSpeedToHashParams,
     saveSpectralProfileToolStateToHashParams,
+    saveChangeCompareToolStateToHashParams,
 } from '@shared/utils/url-hash-params';
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSpectralProfileToolState } from '@shared/store/SpectralProfileTool/selectors';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { selectChangeCompareToolState } from '@shared/store/ChangeCompareTool/selectors';
 
 export const useSaveAppState2HashParams = () => {
     const mode = useSelector(selectAppMode);
@@ -59,6 +61,8 @@ export const useSaveAppState2HashParams = () => {
     const showMapLabel = useSelector(selectShowMapLabel);
 
     const showTerrain = useSelector(selectShowTerrain);
+
+    const changeCompareToolState = useSelector(selectChangeCompareToolState);
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -103,6 +107,14 @@ export const useSaveAppState2HashParams = () => {
                 : null
         );
     }, [mode, analysisTool, spectralToolState]);
+
+    useEffect(() => {
+        saveChangeCompareToolStateToHashParams(
+            mode === 'analysis' && analysisTool === 'change'
+                ? changeCompareToolState
+                : null
+        );
+    }, [mode, analysisTool, changeCompareToolState]);
 
     useEffect(() => {
         updateHashParams('tool', mode === 'analysis' ? analysisTool : null);

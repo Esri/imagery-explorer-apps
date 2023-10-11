@@ -15,6 +15,10 @@ import {
     SpectralProfileToolState,
     initialSpectralProfileToolState,
 } from '@shared/store/SpectralProfileTool/reducer';
+import {
+    ChangeCompareToolState,
+    initialChangeCompareToolState,
+} from '@shared/store/ChangeCompareTool/reducer';
 
 export const decodeMapCenter = (value: string) => {
     if (!value) {
@@ -221,4 +225,34 @@ export const decodeSpectralProfileToolData = (
         ...initialSpectralProfileToolState,
         queryLocation: decodeQueryLocation(queryLocation),
     };
+};
+
+export const encodeChangeCompareToolData = (
+    data: ChangeCompareToolState
+): string => {
+    if (!data) {
+        return null;
+    }
+
+    const { spectralIndex, changeCompareLayerIsOn, selectedRange } = data;
+
+    return [spectralIndex, changeCompareLayerIsOn, selectedRange].join('|');
+};
+
+export const decodeChangeCompareToolData = (
+    val: string
+): ChangeCompareToolState => {
+    if (!val) {
+        return null;
+    }
+
+    const [spectralIndex, changeCompareLayerIsOn, selectedRange] =
+        val.split('|');
+
+    return {
+        ...initialChangeCompareToolState,
+        spectralIndex,
+        changeCompareLayerIsOn: changeCompareLayerIsOn === 'true',
+        selectedRange: selectedRange.split(',').map((d) => +d),
+    } as ChangeCompareToolState;
 };

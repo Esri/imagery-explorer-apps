@@ -21,7 +21,7 @@ export const selectUserSelectedRangeInChangeCompareTool = createSelector(
     (selectedRange) => selectedRange
 );
 
-// export const selectSpectralProfileToolState = createSelector(
-//     (state: RootState) => state.SpectralProfileTool,
-//     (SpectralProfileTool) => SpectralProfileTool
-// );
+export const selectChangeCompareToolState = createSelector(
+    (state: RootState) => state.ChangeCompareTool,
+    (ChangeCompareTool) => ChangeCompareTool
+);

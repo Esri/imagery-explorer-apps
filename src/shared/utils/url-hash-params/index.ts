@@ -1,10 +1,12 @@
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import {
+    decodeChangeCompareToolData,
     decodeMapCenter,
     decodeMaskToolData,
     decodeQueryParams4ImageryScene,
     decodeSpectralProfileToolData,
     decodeTemporalProfileToolData,
+    encodeChangeCompareToolData,
     encodeMaskToolData,
     encodeQueryParams4ImageryScene,
     encodeSpectralProfileToolData,
@@ -19,6 +21,7 @@ import { nanoid } from 'nanoid';
 import { MaskToolState } from '@shared/store/MaskTool/reducer';
 import { TrendToolState } from '@shared/store/TrendTool/reducer';
 import { SpectralProfileToolState } from '@shared/store/SpectralProfileTool/reducer';
+import { ChangeCompareToolState } from '@shared/store/ChangeCompareTool/reducer';
 // import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
@@ -32,6 +35,7 @@ type UrlHashParamKey =
     | 'profile' // key for 'trend' used to be 'profile'
     | 'trend' // hash params for trend tool
     | 'spectral' // hash params for spectral profile tool
+    | 'change' // hash params for spectral profile tool
     | 'hideTerrain' // hash params for terrain layer
     | 'hideMapLabels' // hash params for map labels layer
     | 'tool'; // hash params for active analysis tool
@@ -118,6 +122,13 @@ export const saveSpectralProfileToolStateToHashParams = debounce(
     500
 );
 
+export const saveChangeCompareToolStateToHashParams = debounce(
+    (data: ChangeCompareToolState) => {
+        updateHashParams('change', encodeChangeCompareToolData(data));
+    },
+    500
+);
+
 export const getMaskToolDataFromHashParams = (): MaskToolState => {
     const value = getHashParamValueByKey('mask');
     return decodeMaskToolData(value);
@@ -133,6 +144,12 @@ export const getSpectralProfileToolDataFromHashParams =
     (): SpectralProfileToolState => {
         const value = getHashParamValueByKey('spectral');
         return decodeSpectralProfileToolData(value);
+    };
+
+export const getChangeCompareToolDataFromHashParams =
+    (): ChangeCompareToolState => {
+        const value = getHashParamValueByKey('change');
+        return decodeChangeCompareToolData(value);
     };
 
 export const saveQueryParams4ScenesInAnimationToHashParams = (
