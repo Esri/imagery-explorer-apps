@@ -38,7 +38,10 @@ const slice = createSlice({
     name: 'ChangeCompareTool',
     initialState: initialChangeCompareToolState,
     reducers: {
-        spectralIndexChanged: (state, action: PayloadAction<SpectralIndex>) => {
+        spectralIndex4ChangeCompareToolChanged: (
+            state,
+            action: PayloadAction<SpectralIndex>
+        ) => {
             state.spectralIndex = action.payload;
         },
         activeSceneChanged: (
@@ -59,7 +62,7 @@ const slice = createSlice({
 const { reducer } = slice;
 
 export const {
-    spectralIndexChanged,
+    spectralIndex4ChangeCompareToolChanged,
     activeSceneChanged,
     isViewingChangeUpdated,
     selectedRangeUpdated,

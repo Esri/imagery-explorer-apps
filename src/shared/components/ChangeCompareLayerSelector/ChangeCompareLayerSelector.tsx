@@ -24,12 +24,12 @@ type Props = {
      * query params for selected Scene B
      */
     queryParams4SceneB: QueryParams4ImageryScene;
-    /**
-     * emits when user selects a new spectral index
-     * @param val
-     * @returns
-     */
-    selectedSpectralIndexOnChange: (val: SpectralIndex) => void;
+    // /**
+    //  * emits when user selects a new spectral index
+    //  * @param val
+    //  * @returns
+    //  */
+    // selectedSpectralIndexOnChange: (val: SpectralIndex) => void;
     /**
      * emits when user clicks on view change button
      * @returns
@@ -43,12 +43,12 @@ type Props = {
 };
 
 type ButtonTextLabelProps = {
-    activeScene: ActiveScene4ChangeCompareTool;
+    nameOfScene: ActiveScene4ChangeCompareTool;
     queryParams4ActiveScene: QueryParams4ImageryScene;
 };
 
 const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
-    activeScene,
+    nameOfScene,
     queryParams4ActiveScene,
 }) => {
     if (!queryParams4ActiveScene || !queryParams4ActiveScene.acquisitionDate) {
@@ -56,14 +56,14 @@ const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
             <div className="text-xs normal-case">
                 <span>choose</span>
                 <br />
-                <span className="uppercase">{activeScene}</span>
+                <span className="uppercase">{nameOfScene}</span>
             </div>
         );
     }
 
     return (
         <div className="text-xs normal-case">
-            <span className="uppercase">{activeScene}</span>
+            <span className="uppercase">{nameOfScene}</span>
             <br />
             <span className="">{queryParams4ActiveScene.acquisitionDate}</span>
         </div>
@@ -77,12 +77,12 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
     queryParams4SceneB,
     activeSceneOnChange,
     viewChangeButtonOnClick,
-    selectedSpectralIndexOnChange,
+    // selectedSpectralIndexOnChange,
     viewChangeButtonDisabled,
 }) => {
     return (
         <div>
-            <div className="mb-2">
+            {/* <div className="mb-2">
                 <Dropdown
                     data={[
                         {
@@ -95,7 +95,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                         // acquisitionYearOnChange(+val);
                     }}
                 />
-            </div>
+            </div> */}
 
             <div className={classNames('relative mb-1')}>
                 <Button
@@ -120,7 +120,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                         <span className="uppercase">scene a</span>
                     </div> */}
                     <ButtonTextLabel
-                        activeScene={activeScene}
+                        nameOfScene={'scene a'}
                         queryParams4ActiveScene={queryParams4SceneA}
                     />
                 </Button>
@@ -153,7 +153,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                         <span className="uppercase">scene b</span>
                     </div> */}
                     <ButtonTextLabel
-                        activeScene={activeScene}
+                        nameOfScene={'scene b'}
                         queryParams4ActiveScene={queryParams4SceneB}
                     />
                 </Button>
