@@ -3,6 +3,7 @@ import { RasterFunctionSelector } from './RasterFunctionSelector';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
+    selectActiveAnalysisTool,
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
@@ -16,6 +17,8 @@ export const RasterFunctionSelectorContainer = () => {
     const dispatch = useDispatch();
 
     const mode = useSelector(selectAppMode);
+
+    const analysisTool = useSelector(selectActiveAnalysisTool);
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
@@ -41,6 +44,10 @@ export const RasterFunctionSelectorContainer = () => {
     };
 
     if (!rasterFunctionInfos || !rasterFunctionInfos.length) {
+        return null;
+    }
+
+    if (mode === 'analysis' && analysisTool === 'change') {
         return null;
     }
 

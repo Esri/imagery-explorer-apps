@@ -166,8 +166,6 @@ export const ChangeLayer: FC<Props> = ({
 
     const selectedRangeRef = useRef<number[]>();
 
-    const colorRef = useRef<number[]>();
-
     /**
      * initialize landsat layer using mosaic created using the input year
      */

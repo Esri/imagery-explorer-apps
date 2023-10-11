@@ -7,6 +7,7 @@ import { Dropdown } from '@shared/components/Dropdown';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 import { useDispatch } from 'react-redux';
 import {
+    selectActiveAnalysisTool,
     selectAppMode,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
@@ -23,11 +24,14 @@ import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 import { cloudCoverChanged } from '@shared/store/Landsat/reducer';
+import { selectIsViewingChangeInChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
 
     const mode = useSelector(selectAppMode);
+
+    const analysisTool = useSelector(selectActiveAnalysisTool);
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
 
@@ -36,6 +40,10 @@ const CalendarContainer = () => {
     const acquisitionDate = queryParams?.acquisitionDate;
 
     const cloudCoverThreshold = useSelector(selectCloudCover); //queryParams?.cloudCover;
+
+    const isChangeCompareLayerOn = useSelector(
+        selectIsViewingChangeInChangeCompareTool
+    );
 
     const [acquisitionYear, setAcquisitionYear] = useState<number>();
 
@@ -68,6 +76,25 @@ const CalendarContainer = () => {
         // If a scene is found, its acquisition date is returned for highlighting.
         return sceneAcquiredOnSelectedDate?.formattedAcquisitionDate;
     }, [acquisitionDate, availableScenes]);
+
+    const shouldBeDisabled = useMemo(() => {
+        if (!queryParams || isAnimationPlaying) {
+            return true;
+        }
+
+        // calendar should be disabled when user is viewing change compare layer
+        if (mode === 'analysis' && analysisTool === 'change') {
+            return isChangeCompareLayerOn;
+        }
+
+        return false;
+    }, [
+        queryParams,
+        isAnimationPlaying,
+        mode,
+        analysisTool,
+        isChangeCompareLayerOn,
+    ]);
 
     const getFormattedAvailableScenes = () => {
         if (isAnimationPlaying) {
@@ -121,7 +148,7 @@ const CalendarContainer = () => {
     return (
         <div
             className={classNames('select-none', {
-                'is-disabled': !queryParams || isAnimationPlaying,
+                'is-disabled': shouldBeDisabled,
             })}
         >
             <div className="text-center mb-2">
