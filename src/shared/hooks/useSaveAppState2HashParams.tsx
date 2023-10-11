@@ -29,6 +29,7 @@ import {
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSpectralProfileToolState } from '@shared/store/SpectralProfileTool/selectors';
+import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 
 export const useSaveAppState2HashParams = () => {
     const mode = useSelector(selectAppMode);
@@ -66,9 +67,17 @@ export const useSaveAppState2HashParams = () => {
     }, [mode, queryParams4MainScene]);
 
     useEffect(() => {
-        saveQueryParams4SecondarySceneToHashParams(
-            mode === 'swipe' ? queryParams4SecondaryScene : null
-        );
+        let queryParams: QueryParams4ImageryScene = null;
+
+        if (mode === 'swipe') {
+            queryParams = queryParams4SecondaryScene;
+        }
+
+        if (mode === 'analysis' && analysisTool === 'change') {
+            queryParams = queryParams4SecondaryScene;
+        }
+
+        saveQueryParams4SecondarySceneToHashParams(queryParams);
     }, [mode, queryParams4SecondaryScene]);
 
     useEffect(() => {
