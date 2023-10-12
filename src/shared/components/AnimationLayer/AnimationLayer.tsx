@@ -111,7 +111,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
             return;
         }
 
-        // why doing this? It seems there is some bug in @types/arcgis-js-api@4.26 and the `elements`
+        // why doing this? It seems there is some bug in @types/arcgis-js-api@4.27 and the `elements`
         // property is no longer defined for `layer.source`, but according to the JSAPI doc (https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LocalMediaElementSource.html#elements),
         // it is still there, therefore we just use this temporary solution so TypeScript won't throw error
         const source = mediaLayerRef.current.source as any;
