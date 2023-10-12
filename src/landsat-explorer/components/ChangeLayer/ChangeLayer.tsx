@@ -51,6 +51,8 @@ type PixelData = {
  * @param queryParams4SceneA - Query parameters for the first selected Landsat scene.
  * @param queryParams4SceneB - Query parameters for the second selected Landsat scene.
  * @returns A Raster Function that contains the `Arithmetic` function to visualize spectral index changes.
+ *
+ * @see https://developers.arcgis.com/documentation/common-data-types/raster-function-objects.htm
  */
 export const getRasterFunction4ChangeLayer = async (
     /**
