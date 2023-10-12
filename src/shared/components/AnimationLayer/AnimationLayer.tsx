@@ -19,6 +19,7 @@ import { CloseButton } from '@shared/components/CloseButton';
 // import { sortQueryParams4ScenesByAcquisitionDate } from './AnimationControl/helpers';
 import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
+import { DownloadAnimationControl } from './DownloadAnimationControl';
 
 type Props = {
     mapView?: IMapView;
@@ -145,6 +146,11 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
                 onClick={() => {
                     dispatch(animationStatusChanged(null));
                 }}
+            />
+
+            <DownloadAnimationControl
+                mediaLayerElements={mediaLayerElements}
+                animationSpeed={animationSpeed}
             />
         </div>
     );
