@@ -178,20 +178,18 @@ export const ChangeLayer: FC<Props> = ({
             'esri/layers/ImageryLayer',
         ]) as Promise<Modules>);
 
-        const renderingRule = await getRasterFunction4ChangeLayer(
+        const rasterFunction = await getRasterFunction4ChangeLayer(
             spectralIndex,
             queryParams4SceneA,
             queryParams4SceneB
         );
-
-        // console.log(renderingRule);
 
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
             url: LANDSAT_LEVEL_2_SERVICE_URL,
             mosaicRule: null,
             format: 'lerc',
-            renderingRule,
+            rasterFunction,
             visible,
             pixelFilter: maskPixels,
             effect: 'drop-shadow(2px, 2px, 3px, #000)',
@@ -263,7 +261,7 @@ export const ChangeLayer: FC<Props> = ({
                 return;
             }
 
-            layerRef.current.renderingRule =
+            layerRef.current.rasterFunction =
                 (await getRasterFunction4ChangeLayer(
                     spectralIndex,
                     queryParams4SceneA,

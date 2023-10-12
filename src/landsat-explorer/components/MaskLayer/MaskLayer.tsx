@@ -100,7 +100,7 @@ export const MaskLayer: FC<Props> = ({
 
         const mosaicRule = objectId ? await getMosaicRule(objectId) : null;
 
-        const renderingRule = await getRasterFunctionBySpectralIndex(
+        const rasterFunction = await getRasterFunctionBySpectralIndex(
             spectralIndex
         );
 
@@ -109,7 +109,7 @@ export const MaskLayer: FC<Props> = ({
             url: LANDSAT_LEVEL_2_SERVICE_URL,
             mosaicRule,
             format: 'lerc',
-            renderingRule,
+            rasterFunction,
             visible,
             pixelFilter: maskPixels,
             blendMode: shouldClip ? 'destination-atop' : null,
@@ -183,7 +183,7 @@ export const MaskLayer: FC<Props> = ({
                 return;
             }
 
-            layerRef.current.renderingRule =
+            layerRef.current.rasterFunction =
                 (await getRasterFunctionBySpectralIndex(spectralIndex)) as any;
         })();
     }, [spectralIndex]);

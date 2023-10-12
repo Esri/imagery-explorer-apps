@@ -73,7 +73,7 @@ const useLandsatLayer = ({ visible, rasterFunction, objectId }: Props) => {
             // URL to the imagery service
             url: LANDSAT_LEVEL_2_SERVICE_URL,
             mosaicRule,
-            renderingRule: {
+            rasterFunction: {
                 functionName: rasterFunction,
             },
             visible,
@@ -99,7 +99,7 @@ const useLandsatLayer = ({ visible, rasterFunction, objectId }: Props) => {
             return;
         }
 
-        layerRef.current.renderingRule = {
+        layerRef.current.rasterFunction = {
             functionName: rasterFunction,
         } as any;
     }, [rasterFunction]);

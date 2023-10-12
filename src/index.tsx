@@ -8,7 +8,7 @@ import { setDefaultOptions } from 'esri-loader';
 
 (async () => {
     setDefaultOptions({
-        version: '4.26',
+        version: '4.27',
     });
 
     const preloadedState = await getPreloadedState();

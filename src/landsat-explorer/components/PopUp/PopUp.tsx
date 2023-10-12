@@ -71,7 +71,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
             controller.abort();
         }
 
-        mapView.popup.close();
+        mapView.closePopup();
 
         dispatch(popupAnchorLocationChanged(null));
     };
