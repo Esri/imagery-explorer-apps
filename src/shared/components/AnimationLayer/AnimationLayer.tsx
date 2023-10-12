@@ -151,6 +151,8 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
             <DownloadAnimationControl
                 mediaLayerElements={mediaLayerElements}
                 animationSpeed={animationSpeed}
+                width={mapView.width}
+                height={mapView.height}
             />
         </div>
     );
