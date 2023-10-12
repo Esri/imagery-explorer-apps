@@ -8,7 +8,7 @@ const ColorRamps = [
     [214, 147, 81],
     [191, 102, 42],
     [173, 65, 9],
-];
+].reverse();
 
 /**
  * return the color ramp as css gradient
