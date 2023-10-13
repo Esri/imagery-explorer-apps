@@ -1,5 +1,4 @@
 import IImageElement from 'esri/layers/support/ImageElement';
-import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 
 type Props = {
     /**
