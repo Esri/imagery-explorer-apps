@@ -1,13 +1,23 @@
 import React, { FC, useEffect, useState } from 'react';
 import IImageElement from 'esri/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
-import { createVideoViaMediaRecorder } from './helpers';
+import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { loadImage } from '@shared/utils/snippets/loadHTMLImageElement';
+import {
+    createVideoViaMediaRecorder,
+    AnimationFrameData,
+} from '@shared/utils/video-maker';
 
 type Props = {
     /**
      * array of image elements to be used to create video file
      */
     mediaLayerElements: IImageElement[];
+    /**
+     * array of query params corresponding to each element in media layer elements array.
+     * it provides info that can be used to add text for each frame in the output animation.
+     */
+    queryParams4ScenesInAnimationMode: QueryParams4ImageryScene[];
     /**
      * animation speed in millisecond
      */
@@ -24,6 +34,7 @@ type Props = {
 
 export const DownloadAnimationControl: FC<Props> = ({
     mediaLayerElements,
+    queryParams4ScenesInAnimationMode,
     animationSpeed,
     width,
     height,
@@ -36,8 +47,27 @@ export const DownloadAnimationControl: FC<Props> = ({
                 return;
             }
 
+            // load media layer elements as an array of HTML Image Elements
+            const images = await Promise.all(
+                mediaLayerElements.map((elem) =>
+                    loadImage(elem.image as string)
+                )
+            );
+
+            const data: AnimationFrameData[] = images.map((image, index) => {
+                const queryParams = queryParams4ScenesInAnimationMode[index];
+
+                return {
+                    image,
+                    headerText: {
+                        value: queryParams.acquisitionDate,
+                        fontSize: 36,
+                    },
+                } as AnimationFrameData;
+            });
+
             const outputVideo = await createVideoViaMediaRecorder({
-                mediaLayerElements,
+                data,
                 animationSpeed,
                 width,
                 height,
@@ -60,7 +90,9 @@ export const DownloadAnimationControl: FC<Props> = ({
             }}
         >
             {isDownloading ? (
-                <calcite-loader></calcite-loader>
+                <div className="absolute bottom-0 right-8">
+                    <calcite-loader scale="s"></calcite-loader>
+                </div>
             ) : (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -1,10 +1,29 @@
-import IImageElement from 'esri/layers/support/ImageElement';
+type TextProps = {
+    value: string;
+    fontSize: number;
+    // color: string;
+};
+
+export type AnimationFrameData = {
+    /**
+     * image of this animation frame
+     */
+    image: HTMLImageElement;
+    /**
+     * header text to be added for this animation frame
+     */
+    headerText?: TextProps;
+    /**
+     * foot text to be added for this animation frame
+     */
+    footerText?: TextProps;
+};
 
 type Props = {
     /**
-     * array of image elements to be used to create video file
+     * array of animation frame data to be used to create video file
      */
-    mediaLayerElements: IImageElement[];
+    data: AnimationFrameData[];
     /**
      * animation speed in millisecond
      */
@@ -19,30 +38,17 @@ type Props = {
     height: number;
 };
 
-export const loadImage = async (
-    imageURL: string
-): Promise<HTMLImageElement> => {
-    const image = new Image();
-    image.src = imageURL;
-
-    return new Promise((resolve) => {
-        image.onload = () => {
-            resolve(image);
-        };
-    });
-};
-
+/**
+ * make a video (in webm format) using the media recorder
+ * @param param0
+ * @returns
+ */
 export const createVideoViaMediaRecorder = async ({
-    mediaLayerElements,
+    data,
     animationSpeed,
     width,
     height,
 }: Props): Promise<Blob> => {
-    // load media layer elements as an array of HTML Image Elements
-    const images = await Promise.all(
-        mediaLayerElements.map((elem) => loadImage(elem.image as string))
-    );
-
     return new Promise((resolve, reject) => {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
@@ -91,7 +97,7 @@ export const createVideoViaMediaRecorder = async ({
             }
 
             // no more frames to add, stop recording
-            if (indexOfCurrFrame === images.length) {
+            if (indexOfCurrFrame === data.length) {
                 mediaRecorder.stop();
                 return;
             }
@@ -100,13 +106,32 @@ export const createVideoViaMediaRecorder = async ({
 
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-            context.drawImage(
-                images[indexOfCurrFrame],
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
+            const { image, headerText } = data[indexOfCurrFrame];
+
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            if (headerText) {
+                // Define the text properties
+                const text = headerText.value;
+                const fontSize = headerText.fontSize || 24;
+                const fontFamily = 'Arial';
+                const x = 50; // X-coordinate
+                const y = 50; // Y-coordinate
+
+                // Set the text font style
+                context.font = fontSize + 'px ' + fontFamily;
+
+                // Set the text color
+                context.fillStyle = '#fff';
+
+                context.shadowColor = 'black'; // Shadow color
+                context.shadowBlur = 8; // Shadow blur
+                context.shadowOffsetX = 0; // Shadow offset X
+                context.shadowOffsetY = 0; // Shadow offset Y
+
+                // Add the text to the canvas on top of the background
+                context.fillText(text, x, y);
+            }
 
             indexOfCurrFrame = indexOfCurrFrame + 1;
 

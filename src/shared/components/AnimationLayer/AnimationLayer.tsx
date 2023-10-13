@@ -150,6 +150,9 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
 
             <DownloadAnimationControl
                 mediaLayerElements={mediaLayerElements}
+                queryParams4ScenesInAnimationMode={
+                    sortedQueryParams4ScenesInAnimationMode
+                }
                 animationSpeed={animationSpeed}
                 width={mapView.width}
                 height={mapView.height}
