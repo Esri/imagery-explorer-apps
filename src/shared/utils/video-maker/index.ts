@@ -66,7 +66,7 @@ export const createVideoViaMediaRecorder = async ({
         canvas.width = width;
         canvas.height = height;
 
-        const canvasStream = canvas.captureStream(60); // frames per second
+        const canvasStream = canvas.captureStream(30); // frames per second
         // console.log('Started stream capture from canvas element: ', stream);
 
         const chunks: Blob[] = [];
@@ -91,29 +91,7 @@ export const createVideoViaMediaRecorder = async ({
             resolve(new Blob(chunks, { type: 'video/webm' }));
         });
 
-        // console.log(images)
-
-        let indexOfCurrFrame = 0;
-
-        let timeLastFrameWasRendered: number = null;
-
-        const animate = () => {
-            if (
-                timeLastFrameWasRendered !== null &&
-                performance.now() - timeLastFrameWasRendered < animationSpeed
-            ) {
-                requestAnimationFrame(animate);
-                return;
-            }
-
-            // no more frames to add, stop recording
-            if (indexOfCurrFrame === data.length) {
-                mediaRecorder.stop();
-                return;
-            }
-
-            timeLastFrameWasRendered = performance.now();
-
+        const drawCanvas = () => {
             context.clearRect(0, 0, canvas.width, canvas.height);
 
             const { image, textLabel } = data[indexOfCurrFrame];
@@ -142,14 +120,40 @@ export const createVideoViaMediaRecorder = async ({
                 // Add the text to the canvas on top of the background
                 context.fillText(text, x, y);
             }
+        };
+
+        let indexOfCurrFrame = 0;
+
+        let timeLastFrameWasRendered: number = null;
+
+        const animate = () => {
+            if (
+                timeLastFrameWasRendered !== null &&
+                performance.now() - timeLastFrameWasRendered < animationSpeed
+            ) {
+                requestAnimationFrame(animate);
+                return;
+            }
+
+            // no more frames to add, stop recording
+            if (indexOfCurrFrame === data.length) {
+                mediaRecorder.stop();
+                return;
+            }
+
+            drawCanvas();
 
             indexOfCurrFrame = indexOfCurrFrame + 1;
+
+            timeLastFrameWasRendered = performance.now();
 
             requestAnimationFrame(animate);
         };
 
-        requestAnimationFrame(animate);
+        drawCanvas();
 
         mediaRecorder.start();
+
+        requestAnimationFrame(animate);
     });
 };
