@@ -59,8 +59,8 @@ export const DownloadAnimationControl: FC<Props> = ({
 
                 return {
                     image,
-                    headerText: {
-                        value: queryParams.acquisitionDate,
+                    textLabel: {
+                        text: queryParams.acquisitionDate,
                         fontSize: 36,
                     },
                 } as AnimationFrameData;

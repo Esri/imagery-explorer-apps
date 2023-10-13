@@ -1,6 +1,20 @@
 type TextProps = {
-    value: string;
+    /**
+     * text content
+     */
+    text: string;
+    /**
+     * size of the text
+     */
     fontSize: number;
+    /**
+     * x position of the text
+     */
+    x?: number;
+    /**
+     * y position of the text
+     */
+    y?: number;
     // color: string;
 };
 
@@ -10,13 +24,9 @@ export type AnimationFrameData = {
      */
     image: HTMLImageElement;
     /**
-     * header text to be added for this animation frame
+     * text label to be added for this animation frame
      */
-    headerText?: TextProps;
-    /**
-     * foot text to be added for this animation frame
-     */
-    footerText?: TextProps;
+    textLabel: TextProps;
 };
 
 type Props = {
@@ -56,7 +66,7 @@ export const createVideoViaMediaRecorder = async ({
         canvas.width = width;
         canvas.height = height;
 
-        const canvasStream = canvas.captureStream(30); // frames per second
+        const canvasStream = canvas.captureStream(60); // frames per second
         // console.log('Started stream capture from canvas element: ', stream);
 
         const chunks: Blob[] = [];
@@ -106,14 +116,14 @@ export const createVideoViaMediaRecorder = async ({
 
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-            const { image, headerText } = data[indexOfCurrFrame];
+            const { image, textLabel } = data[indexOfCurrFrame];
 
             context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            if (headerText) {
+            if (textLabel) {
                 // Define the text properties
-                const text = headerText.value;
-                const fontSize = headerText.fontSize || 24;
+                const text = textLabel.text;
+                const fontSize = textLabel.fontSize || 24;
                 const fontFamily = 'Arial';
                 const x = 50; // X-coordinate
                 const y = 50; // Y-coordinate
