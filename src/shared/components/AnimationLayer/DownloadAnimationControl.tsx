@@ -2,11 +2,10 @@ import React, { FC, useEffect, useState } from 'react';
 import IImageElement from 'esri/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
-import { loadImage } from '@shared/utils/snippets/loadHTMLImageElement';
-import {
-    createVideoViaMediaRecorder,
-    AnimationFrameData,
-} from '@shared/utils/video-maker';
+import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
+import { createVideoViaMediaRecorder } from '@shared/utils/video-encoder/createVideoViaMediaRecorder';
+import { AnimationFrameData } from '@shared/utils/video-encoder';
+import { createVideoViaFFMPEG } from '@shared/utils/video-encoder/createVideoViaFFMPEG';
 
 type Props = {
     /**
@@ -50,7 +49,7 @@ export const DownloadAnimationControl: FC<Props> = ({
             // load media layer elements as an array of HTML Image Elements
             const images = await Promise.all(
                 mediaLayerElements.map((elem) =>
-                    loadImage(elem.image as string)
+                    loadImageAsHTMLIMageElement(elem.image as string)
                 )
             );
 
@@ -66,14 +65,23 @@ export const DownloadAnimationControl: FC<Props> = ({
                 } as AnimationFrameData;
             });
 
-            const outputVideo = await createVideoViaMediaRecorder({
+            const blobOfEncodedVideo = await createVideoViaMediaRecorder({
                 data,
                 animationSpeed,
                 width,
                 height,
             });
 
-            downloadBlob(outputVideo, 'output.webm');
+            downloadBlob(blobOfEncodedVideo, 'output.webm');
+
+            // const blobOfEncodedVideo = await createVideoViaFFMPEG({
+            //     data,
+            //     animationSpeed,
+            //     width,
+            //     height,
+            // });
+
+            // downloadBlob(blobOfEncodedVideo, 'output.mp4');
         })();
         // start making video file and downloading it
     }, [isDownloading]);
