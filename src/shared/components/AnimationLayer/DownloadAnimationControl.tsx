@@ -65,23 +65,25 @@ export const DownloadAnimationControl: FC<Props> = ({
                 } as AnimationFrameData;
             });
 
-            const blobOfEncodedVideo = await createVideoViaMediaRecorder({
-                data,
-                animationSpeed,
-                width,
-                height,
-            });
-
-            downloadBlob(blobOfEncodedVideo, 'output.webm');
-
-            // const blobOfEncodedVideo = await createVideoViaFFMPEG({
+            // const blobOfEncodedVideo = await createVideoViaMediaRecorder({
             //     data,
             //     animationSpeed,
             //     width,
             //     height,
             // });
 
-            // downloadBlob(blobOfEncodedVideo, 'output.mp4');
+            // downloadBlob(blobOfEncodedVideo, 'output.webm');
+
+            const blobOfEncodedVideo = await createVideoViaFFMPEG({
+                data,
+                animationSpeed,
+                width,
+                height,
+            });
+
+            downloadBlob(blobOfEncodedVideo, 'output.mp4');
+
+            setIsDownloading(false);
         })();
         // start making video file and downloading it
     }, [isDownloading]);
