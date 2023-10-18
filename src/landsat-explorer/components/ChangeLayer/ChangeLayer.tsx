@@ -230,7 +230,7 @@ export const ChangeLayer: FC<Props> = ({
         const [min, max] = selectedRangeRef.current || [0, 0];
 
         for (let i = 0; i < numPixels; i++) {
-            if (p1[i] < min || p1[i] > max) {
+            if (p1[i] < min || p1[i] > max || p1[i] === 0) {
                 pixelBlock.mask[i] = 0;
                 continue;
             }

@@ -57,8 +57,8 @@ const getName4OutputMEMFS = (
  *
  * @param data - The `AnimationFrameData` object representing the input image.
  * @param outputName - The name to assign to the resulting MEMFS object.
- * @param height - The desired height of the resized image.
- * @param width - The desired width of the resized image.
+ * @param height - The height of the input image.
+ * @param width - The width of the input image.
  * @returns A Promise that resolves to a MEMFS object containing the image data.
  */
 const getImageAsMEMFS = async (
@@ -70,7 +70,6 @@ const getImageAsMEMFS = async (
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    // FFMPEG expects width and height to be even numbers, so adjust if needed.
     canvas.width = width % 2 === 0 ? width : width - 1;
     canvas.height = height % 2 === 0 ? height : height - 1;
 
