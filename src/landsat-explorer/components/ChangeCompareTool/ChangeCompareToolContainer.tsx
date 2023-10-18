@@ -71,7 +71,7 @@ export const ChangeCompareToolContainer = () => {
 
             <div className="w-full h-[0px] pt-[50px]">
                 <div className="w-full">
-                    <div className="flex items-center text-sm">
+                    {/* <div className="flex items-center text-sm">
                         <div className="w-1/3">
                             <span>decrease</span>
                         </div>
@@ -81,7 +81,7 @@ export const ChangeCompareToolContainer = () => {
                         <div className="w-1/3 text-right">
                             <span>increase</span>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div
                         className="w-full h-2"
@@ -103,6 +103,20 @@ export const ChangeCompareToolContainer = () => {
                     tickLabels={[-2, -1, 0, 1, 2]}
                     countOfTicks={17}
                 />
+
+                <div className="w-full mt-12">
+                    <div className="flex items-center text-xs">
+                        <div className="w-1/3">
+                            <span>decrease</span>
+                        </div>
+                        <div className="w-1/3 text-center">
+                            <span>no change</span>
+                        </div>
+                        <div className="w-1/3 text-right">
+                            <span>increase</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
