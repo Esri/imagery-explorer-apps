@@ -37,7 +37,7 @@ const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
     return (
         <div className="text-xs flex items-center">
             <span className="uppercase text-custom-light-blue-50 mr-1">
-                Cloud Tolerance
+                Cloud
             </span>
 
             <div className="w-[31px] text-right">
@@ -83,7 +83,7 @@ export const CloudFilter: FC<Props> = ({
 
     return (
         <div
-            className={classNames('mx-2 flex items-center', {
+            className={classNames('mx-1 flex items-center', {
                 'is-disabled': disabled,
             })}
         >
@@ -102,7 +102,7 @@ export const CloudFilter: FC<Props> = ({
 
                 <div
                     // id="cloud-filter-container"
-                    className="w-20 h-4 mx-3"
+                    className="w-16 h-4 mx-3"
                 >
                     <Slider
                         steps={[
