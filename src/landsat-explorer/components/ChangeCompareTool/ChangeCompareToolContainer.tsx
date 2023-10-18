@@ -102,6 +102,7 @@ export const ChangeCompareToolContainer = () => {
                     steps={0.1}
                     tickLabels={[-2, -1, 0, 1, 2]}
                     countOfTicks={17}
+                    showSliderTooltip={true}
                 />
 
                 <div className="w-full mt-12">
