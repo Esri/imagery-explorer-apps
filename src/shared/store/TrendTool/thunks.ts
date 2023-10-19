@@ -12,7 +12,10 @@ import {
     selectTrendToolOption,
 } from './selectors';
 import { getTemporalProfileData } from '@shared/services/landsat-level-2/getTemporalProfileData';
-import { selectActiveAnalysisTool } from '../Landsat/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectLandsatMissionsToBeExcluded,
+} from '../Landsat/selectors';
 
 export const updateQueryLocation4TrendTool =
     (point: Point) =>
@@ -40,6 +43,9 @@ export const updateTrendToolData =
 
         const trendToolOption = selectTrendToolOption(rootState);
 
+        const missionsToBeExcluded =
+            selectLandsatMissionsToBeExcluded(rootState);
+
         if (!queryLocation) {
             dispatch(trendToolDataUpdated([]));
             return;
@@ -60,6 +66,7 @@ export const updateTrendToolData =
             acquisitionYear:
                 trendToolOption === 'month-to-month' ? acquisitionYear : null,
             // samplingTemporalResolution,
+            missionsToBeExcluded,
             abortController,
         });
 

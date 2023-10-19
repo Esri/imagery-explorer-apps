@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import {
     selectAppMode,
     selectAvailableScenes,
+    selectLandsatMissionsToBeExcluded,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
 import { selectMapCenter } from '@shared/store/Map/selectors';
@@ -26,6 +27,8 @@ const useAvailableScenes = (acquisitionYear: number) => {
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
+    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+
     /**
      * current map center
      */
@@ -46,7 +49,7 @@ const useAvailableScenes = (acquisitionYear: number) => {
         }
 
         dispatch(queryAvailableScenes(acquisitionYear));
-    }, [center, acquisitionYear, isAnimationPlaying]);
+    }, [center, acquisitionYear, isAnimationPlaying, missionsToBeExcluded]);
 
     useEffect(() => {
         // It is unnecessary to update the object ID of the selected scene while the animation is playing.

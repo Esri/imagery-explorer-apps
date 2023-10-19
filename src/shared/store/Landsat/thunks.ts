@@ -21,6 +21,7 @@ import {
     selectQueryParams4SecondaryScene,
     selectSelectedAnimationFrameId,
     selectActiveAnalysisTool,
+    selectLandsatMissionsToBeExcluded,
 } from './selectors';
 import { nanoid } from 'nanoid';
 import { LandsatScene } from '@typing/imagery-service';
@@ -53,11 +54,16 @@ export const queryAvailableScenes =
 
             const center = selectMapCenter(getState());
 
+            const missionsToBeExcluded = selectLandsatMissionsToBeExcluded(
+                getState()
+            );
+
             // get scenes that were acquired within the acquisition year
             const scenes = await getLandsatScenes({
                 acquisitionYear,
                 mapPoint: center,
                 abortController,
+                missionsToBeExcluded,
             });
 
             // If the year of the acquisition date is different from the input acquisition year, we need to query Landsat scenes acquired on the acquisition date.
@@ -73,6 +79,7 @@ export const queryAvailableScenes =
                     formattedAcquisitionDate: acquisitionDate,
                     mapPoint: center,
                     abortController,
+                    missionsToBeExcluded,
                 });
 
                 for (const scene of scenesByAcquisitionDate) {

@@ -24,6 +24,10 @@ type GetLandsatScenesParams = {
      */
     formattedAcquisitionDate?: string;
     /**
+     * array of landsat missions to be excluded from the query
+     */
+    missionsToBeExcluded?: number[];
+    /**
      * abortController that will be used to cancel the unfinished requests
      */
     abortController: AbortController;
@@ -45,6 +49,7 @@ const {
     MONTH,
     SUNAZIMUTH,
     SUNELEVATION,
+    DATASET_ID,
 } = FIELD_NAMES;
 
 /**
@@ -129,6 +134,7 @@ export const getLandsatScenes = async ({
     acquisitionYear,
     acquisitionMonth,
     formattedAcquisitionDate,
+    missionsToBeExcluded,
     abortController,
 }: GetLandsatScenesParams): Promise<LandsatScene[]> => {
     // if (!acquisitionYear && !formattedAcquisitionDate) {
@@ -151,6 +157,15 @@ export const getLandsatScenes = async ({
 
     if (acquisitionMonth) {
         whereClauses.push(`(${MONTH} = ${acquisitionMonth})`);
+    }
+
+    if (missionsToBeExcluded && missionsToBeExcluded.length) {
+        const missionNames = missionsToBeExcluded.map(
+            (mission) => `'Landsat${mission}'`
+        );
+        whereClauses.push(
+            `(${DATASET_ID} NOT IN (${missionNames.join(', ')}))`
+        );
     }
 
     const [longitude, latitude] = mapPoint;

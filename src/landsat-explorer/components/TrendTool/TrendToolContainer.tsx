@@ -36,6 +36,7 @@ import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
 import {
     selectActiveAnalysisTool,
+    selectLandsatMissionsToBeExcluded,
     selectQueryParams4MainScene,
 } from '@shared/store/Landsat/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
@@ -60,6 +61,8 @@ export const TrendToolContainer = () => {
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
     const isLoading = useSelector(selectIsLoadingData4TrendingTool);
+
+    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
 
     useEffect(() => {
         if (!queryParams4MainScene?.rasterFunctionName) {
@@ -117,7 +120,13 @@ export const TrendToolContainer = () => {
                 console.log(err);
             }
         })();
-    }, [queryLocation, tool, acquisitionMonth, selectedTrendToolOption]);
+    }, [
+        queryLocation,
+        tool,
+        acquisitionMonth,
+        selectedTrendToolOption,
+        missionsToBeExcluded,
+    ]);
 
     // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
     useEffect(() => {

@@ -6,8 +6,8 @@ import {
     selectMaskOptions,
     // selectSamplingTemporalResolution,
 } from './selectors';
-import { getTemporalProfileData } from '@shared/services/landsat-level-2/getTemporalProfileData';
-import { selectActiveAnalysisTool } from '../Landsat/selectors';
+// import { getTemporalProfileData } from '@shared/services/landsat-level-2/getTemporalProfileData';
+// import { selectActiveAnalysisTool } from '../Landsat/selectors';
 
 /**
  * update selected range for the active mask method

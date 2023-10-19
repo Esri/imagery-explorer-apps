@@ -19,6 +19,10 @@ type GetProfileDataOptions = {
      * abortController that will be used to cancel the pending requests
      */
     abortController: AbortController;
+    /**
+     * array of landsat missions to be excluded from the query
+     */
+    missionsToBeExcluded?: number[];
 };
 
 // let controller: AbortController = null;
@@ -68,6 +72,7 @@ export const getTemporalProfileData = async ({
     acquisitionMonth,
     acquisitionYear,
     abortController,
+    missionsToBeExcluded,
 }: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
     const { x, y } = queryLocation;
 
@@ -79,6 +84,7 @@ export const getTemporalProfileData = async ({
             mapPoint: [x, y],
             acquisitionMonth,
             abortController,
+            missionsToBeExcluded,
         });
     } else if (acquisitionYear) {
         // query Landsat scenes based on input location and acquisition year to show "month-to-month" trend
@@ -86,6 +92,7 @@ export const getTemporalProfileData = async ({
             mapPoint: [x, y],
             acquisitionYear,
             abortController,
+            missionsToBeExcluded,
         });
     }
 
