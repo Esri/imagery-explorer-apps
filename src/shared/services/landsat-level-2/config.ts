@@ -261,3 +261,8 @@ export const LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT = celsius2fahrenheit(
 export const LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT = celsius2fahrenheit(
     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS
 );
+
+/**
+ * The Landsat Level-2 service includes imagery from Landsat missions 4, 5, 7, 8, and 9, with a time span of 1982 to present
+ */
+export const LANDSAT_MISSIONS = [4, 5, 7, 8, 9];
