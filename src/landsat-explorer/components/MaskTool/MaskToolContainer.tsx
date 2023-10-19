@@ -27,7 +27,7 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat/config';
+} from '@shared/services/landsat-level-2/config';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();

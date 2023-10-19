@@ -1,5 +1,5 @@
 import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
-import { LANDSAT_LEVEL_2_ITEM_URL } from '@shared/services/landsat/config';
+import { LANDSAT_LEVEL_2_ITEM_URL } from '@shared/services/landsat-level-2/config';
 import React from 'react';
 
 const AboutLandsatExplorer = () => {

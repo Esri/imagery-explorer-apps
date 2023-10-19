@@ -11,7 +11,7 @@ import {
     selectQueryLocation4TrendTool,
     selectTrendToolOption,
 } from './selectors';
-import { getTemporalProfileData } from '@shared/services/landsat/getTemporalProfileData';
+import { getTemporalProfileData } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import { selectActiveAnalysisTool } from '../Landsat/selectors';
 
 export const updateQueryLocation4TrendTool =

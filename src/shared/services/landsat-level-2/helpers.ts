@@ -48,7 +48,8 @@ type LandsatProductInfo = {
  * - Band 6: SWIR 1 (1.57 - 1.65 µm)
  * - Band 7: SWIR 2 (2.11 - 2.29 µm)
  * - Band 8: QA Band
- * - Band 8: Surface Temp
+ * - Band 9: Surface Temp
+ * - Band 10: Surface Temp QA
  *
  * @see https://pro.arcgis.com/en/pro-app/3.0/help/analysis/raster-functions/band-arithmetic-function.htm
  * @see https://www.esri.com/about/newsroom/arcuser/spectral-library/
@@ -94,7 +95,11 @@ const BandIndexesLookup: Record<SpectralIndex, string> = {
     'temperature celcius': '(B9 - 273.15)',
 };
 
-// get value from thermal band, which is the the Band 9
+/**
+ * Get pixel value from surface temp band, which is the the Band 9
+ * @param bandValues
+ * @returns pixel value from surface temp band
+ */
 export const getValFromThermalBand = (bandValues: number[]) => {
     const [B1, B2, B3, B4, B5, B6, B7, B8, B9] = bandValues;
     return B9;

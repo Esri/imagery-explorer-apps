@@ -19,8 +19,8 @@ import { loadModules } from 'esri-loader';
 import {
     getPixelValuesFromIdentifyTaskResponse,
     identify,
-} from '@shared/services/landsat/identify';
-import { getFormattedLandsatScenes } from '@shared/services/landsat/getLandsatScenes';
+} from '@shared/services/landsat-level-2/identify';
+import { getFormattedLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {

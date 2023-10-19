@@ -6,7 +6,7 @@ import {
     selectMaskOptions,
     // selectSamplingTemporalResolution,
 } from './selectors';
-import { getTemporalProfileData } from '@shared/services/landsat/getTemporalProfileData';
+import { getTemporalProfileData } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import { selectActiveAnalysisTool } from '../Landsat/selectors';
 
 /**

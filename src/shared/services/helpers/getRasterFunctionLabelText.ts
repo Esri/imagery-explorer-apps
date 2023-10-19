@@ -1,4 +1,4 @@
-import { LANDSAT_RASTER_FUNCTION_INFOS } from '../landsat/config';
+import { LANDSAT_RASTER_FUNCTION_INFOS } from '../landsat-level-2/config';
 
 let rasterFunctionLabelMap: Map<string, string> = null;
 

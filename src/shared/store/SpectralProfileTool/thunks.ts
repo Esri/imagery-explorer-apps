@@ -14,7 +14,7 @@ import {
 import {
     getPixelValuesFromIdentifyTaskResponse,
     identify,
-} from '@shared/services/landsat/identify';
+} from '@shared/services/landsat-level-2/identify';
 
 let abortController: AbortController = null;
 

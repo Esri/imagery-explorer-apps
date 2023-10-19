@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import IImageryLayer from 'esri/layers/ImageryLayer';
 import { loadModules } from 'esri-loader';
 import IMosaicRule from 'esri/layers/support/MosaicRule';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat/config';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 
 type Props = {
     /**

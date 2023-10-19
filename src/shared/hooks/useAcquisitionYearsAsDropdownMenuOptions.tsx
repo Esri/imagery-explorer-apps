@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DropdownData } from '@shared/components/Dropdown';
-import { getTimeExtent as getTimeExtentOfLandsatService } from '@shared/services/landsat/getTimeExtent';
+import { getTimeExtent as getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
 
 export const useAcquisitionYearsAsDropdownMenuOptions = (

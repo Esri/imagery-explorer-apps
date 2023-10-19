@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { getRasterFunctionInfos as getLandsatRasterFunctionInfos } from '@shared/services/landsat/getRasterFunctionInfos';
+import { getRasterFunctionInfos as getLandsatRasterFunctionInfos } from '@shared/services/landsat-level-2/getRasterFunctionInfos';
 
 import Agriculture from './thumbnails/Render_Agriculture.jpg';
 import Bathymetric from './thumbnails/Render_Bathymetric.jpg';
@@ -10,7 +10,7 @@ import NDVI from './thumbnails/Render_NDVI.png';
 import ShortWaveIR from './thumbnails/Render_ShortwaveIR.jpg';
 import Thermal from './thumbnails/Render_Thermal.png';
 import MNDWI from './thumbnails/Render_MNDWI.png';
-import { LandsatRasterFunctionName } from '@shared/services/landsat/config';
+import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 
 const LandsatRendererThumbnailByName: Partial<
     Record<LandsatRasterFunctionName, string>
