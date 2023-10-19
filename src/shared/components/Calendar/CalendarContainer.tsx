@@ -25,6 +25,7 @@ import { CloudFilter } from '@shared/components/CloudFilter';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 import { cloudCoverChanged } from '@shared/store/Landsat/reducer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+import { LandsatMissionFilter } from '../LandsatMissionFilter';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -153,8 +154,8 @@ const CalendarContainer = () => {
                 <span className="uppercase text-sm">Scene Selection</span>
             </div>
 
-            <div className="flex mb-2 items-center">
-                <div className="mr-2 flex items-center flex-grow">
+            <div className="flex mb-2 items-center justify-between">
+                <div className="flex items-center flex-grow">
                     <Dropdown
                         data={yearOptions}
                         onChange={(year) => {
@@ -171,6 +172,8 @@ const CalendarContainer = () => {
                         }}
                     />
                 </div>
+
+                <LandsatMissionFilter />
 
                 <CloudFilter
                     cloudCoverage={cloudCoverThreshold}
