@@ -127,6 +127,11 @@ export const selectCloudCover = createSelector(
     (cloudCover) => cloudCover
 );
 
+export const selectLandsatMissionsToBeExcluded = createSelector(
+    (state: RootState) => state.Landsat.missionsToBeExcluded,
+    (missionsToBeExcluded) => missionsToBeExcluded
+);
+
 export const selectActiveAnalysisTool = createSelector(
     (state: RootState) => state.Landsat.tool,
     (tool) => tool

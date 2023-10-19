@@ -2,6 +2,17 @@ import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { LANDSAT_MISSIONS } from '@shared/services/landsat-level-2/config';
 import React, { FC, useRef, useState } from 'react';
 
+type Props = {
+    /**
+     * array of landsat missions to be excluded in the query
+     */
+    missionsToBeExcluded: number[];
+    /**
+     * emits when user makes update to missionsToBeExcluded
+     */
+    missionsToBeExcludedOnChange: (missionsToBeExcluded: number[]) => void;
+};
+
 type LandsatMissionFilterButtonProps = {
     /**
      * title of the button
@@ -103,30 +114,44 @@ const FilterListItem: FC<FilterListItemProps> = ({
     );
 };
 
-const FilterOptionsList = () => {
-    return (
-        <div className="absolute w-full top-[100%] left-0 z-10 border border-custom-light-blue-50 bg-custom-background">
-            <FilterListItem title={'all'} checked={true} onClick={() => {}} />
-            {LANDSAT_MISSIONS.map((mission) => {
-                return (
-                    <FilterListItem
-                        key={mission}
-                        title={mission.toString()}
-                        checked={true}
-                        onClick={() => {}}
-                    />
-                );
-            })}
-        </div>
-    );
-};
-
-export const LandsatMissionFilter = () => {
+export const LandsatMissionFilter: FC<Props> = ({
+    missionsToBeExcluded,
+    missionsToBeExcludedOnChange,
+}: Props) => {
     const containerRef = useRef<HTMLDivElement>();
 
     const [expanded, setExpanded] = useState<boolean>(false);
 
     useOnClickOutside(containerRef, setExpanded.bind(null, false));
+
+    const toggleSelectLandsatMission = (mission: number) => {
+        const inExclusionListAready = missionsToBeExcluded.includes(mission);
+
+        const updatedMissionsToBeExcluded = inExclusionListAready
+            ? // remove it from the list if it is already in the missions to be excluded list,
+              missionsToBeExcluded.filter((d) => d !== mission)
+            : // otherwise, add to the list
+              [...missionsToBeExcluded, mission];
+
+        // abort to prohibit the user to exclude all landsat missions
+        if (updatedMissionsToBeExcluded.length === LANDSAT_MISSIONS.length) {
+            return;
+        }
+
+        missionsToBeExcludedOnChange(updatedMissionsToBeExcluded);
+    };
+
+    const getLabel4FilterButton = () => {
+        if (missionsToBeExcluded.length === 0) {
+            return 'all';
+        }
+
+        const missionsToBeIncluded = LANDSAT_MISSIONS.filter((mission) => {
+            return missionsToBeExcluded.includes(mission) === false;
+        });
+
+        return missionsToBeIncluded.join(',');
+    };
 
     return (
         <div ref={containerRef} className="flex items-center mr-3">
@@ -136,12 +161,40 @@ export const LandsatMissionFilter = () => {
 
             <div className="relative w-16">
                 <FilterButton
-                    title="all"
+                    title={getLabel4FilterButton()}
                     expanded={expanded}
                     onClick={setExpanded.bind(null, !expanded)}
                 />
 
-                {expanded && <FilterOptionsList />}
+                {expanded && (
+                    <div className="absolute w-full top-[100%] left-0 z-10 border border-custom-light-blue-50 bg-custom-background">
+                        <FilterListItem
+                            title={'all'}
+                            checked={missionsToBeExcluded.length === 0}
+                            onClick={missionsToBeExcludedOnChange.bind(
+                                null,
+                                []
+                            )}
+                        />
+                        {LANDSAT_MISSIONS.map((mission) => {
+                            return (
+                                <FilterListItem
+                                    key={mission}
+                                    title={mission.toString()}
+                                    checked={
+                                        missionsToBeExcluded.includes(
+                                            mission
+                                        ) === false
+                                    }
+                                    onClick={toggleSelectLandsatMission.bind(
+                                        null,
+                                        mission
+                                    )}
+                                />
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );

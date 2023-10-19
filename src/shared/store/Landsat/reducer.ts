@@ -8,7 +8,7 @@ import {
 import { LandsatScene } from '@typing/imagery-service';
 
 /**
- * the app support 5 different modes that the user can use to explore the imagery layer/scene
+ * the Landsat explorer app support 5 different modes that the user can use to explore the imagery layer/scene
  */
 export type AppMode =
     | 'dynamic'
@@ -18,7 +18,7 @@ export type AppMode =
     | 'analysis';
 
 /**
- * the analysis tool that the app supports
+ * the Landsat explorer app supports these analysis tools
  */
 export type AnalysisTool = 'mask' | 'trend' | 'spectral' | 'change';
 
@@ -115,6 +115,10 @@ export type LandsatState = {
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
     cloudCover: number;
+    /**
+     * list of Landat missions to be excluded
+     */
+    missionsToBeExcluded: number[];
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -146,6 +150,7 @@ export const initialLandsatState: LandsatState = {
     },
     selectedAnimationFrameId: null,
     cloudCover: 0.5,
+    missionsToBeExcluded: [],
 };
 
 const slice = createSlice({
@@ -251,6 +256,12 @@ const slice = createSlice({
         ) => {
             state.tool = action.payload;
         },
+        missionsToBeExcludedUpdated: (
+            state,
+            action: PayloadAction<number[]>
+        ) => {
+            state.missionsToBeExcluded = action.payload;
+        },
     },
 });
 
@@ -268,6 +279,7 @@ export const {
     queryParams4SceneInSelectedAnimationFrameChanged,
     cloudCoverChanged,
     activeAnalysisToolChanged,
+    missionsToBeExcludedUpdated,
 } = slice.actions;
 
 export default reducer;
