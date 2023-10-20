@@ -1,6 +1,6 @@
 import { FIELD_NAMES } from './config';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
-import { IFeature } from '@esri/arcgis-rest-feature-service';
+import { IExtent, IFeature } from '@esri/arcgis-rest-feature-service';
 // import { format } from 'date-fns';
 import { parseLandsatInfo } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
@@ -234,7 +234,7 @@ export const getLandsatScenes = async ({
 export const getLandsatFeatureByObjectId = async (
     objectId: number,
     abortController?: AbortController
-) => {
+): Promise<IFeature> => {
     const queryParams = new URLSearchParams({
         f: 'json',
         returnGeometry: 'true',
@@ -263,4 +263,34 @@ export const getLandsatFeatureByObjectId = async (
     }
 
     return data?.features[0] as IFeature;
+};
+
+export const getExtentOfLandsatSceneByObjectId = async (
+    objectId: number
+): Promise<IExtent> => {
+    const queryParams = new URLSearchParams({
+        f: 'json',
+        returnExtentOnly: 'true',
+        objectIds: objectId.toString(),
+    });
+
+    const res = await fetch(
+        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`
+    );
+
+    if (!res.ok) {
+        throw new Error('failed to query Landsat-2 service');
+    }
+
+    const data = await res.json();
+
+    if (data.error) {
+        throw data.error;
+    }
+
+    if (!data?.extent) {
+        return null;
+    }
+
+    return data?.extent as IExtent;
 };

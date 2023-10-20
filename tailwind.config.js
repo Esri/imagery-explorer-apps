@@ -52,7 +52,8 @@ module.exports = {
         'cloud-slider-height': '80px',
         'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)',
         'analysis-tool-container-width': '255px',
-        'search-widget-width': '240px'
+        'search-widget-width': '240px',
+        'zoom-button-size': '32px'
       },
       dropShadow: {
         'custom-light-blue': '0px 0px 4px rgba(191,238,254, 1)',

@@ -11,6 +11,7 @@ import { Popup } from '../PopUp/PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 import { ChangeLayer } from '../ChangeLayer';
+import { ZoomToExtent } from '../ZoomToExtent';
 
 const Map = () => {
     return (
@@ -29,7 +30,11 @@ const Map = () => {
             <SwipeWidget />
             <AnimationLayer />
             <HillshadeLayer />
-            <Zoom2NativeScale tooltip={"Zoom to Landsat's native resolution"} />
+            <Zoom2NativeScale
+                tooltip={"Zoom to Landsat's native resolution"}
+                nativeScale={113386}
+            />
+            <ZoomToExtent />
             <Popup />
         </MapViewContainer>
     );
