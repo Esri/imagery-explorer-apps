@@ -45,6 +45,7 @@ export const ZoomToExtent: FC<Props> = ({
                 {
                     hidden,
                     'is-disabled': disabled,
+                    'pointer-events-none': showLoadingIndicator,
                 }
             )}
             title={tooltip}
