@@ -20,9 +20,10 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
 import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
-import { selectTrendToolOption } from '@shared/store/TrendTool/selectors';
-import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
+// import { selectTrendToolOption } from '@shared/store/TrendTool/selectors';
+// import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
 import { TrendToolOption } from '@shared/store/TrendTool/reducer';
+import { calcTrendLine } from './helpers';
 
 type Props = {
     /**
@@ -187,6 +188,24 @@ export const TemporalProfileChart: FC<Props> = ({
         return [ymin, ymax];
     }, [chartData]);
 
+    const trendLineData = useMemo(() => {
+        if (!chartData || !chartData.length) {
+            return [];
+        }
+
+        const yVals = chartData.map((d) => d.y);
+
+        const [y1, y2] = calcTrendLine(yVals);
+
+        return [
+            {
+                y1,
+                y2,
+                label: 'national average: 30',
+            },
+        ];
+    }, [chartData]);
+
     const getData4VerticalReferenceLine = (): VerticalReferenceLineData[] => {
         if (!selectedAcquisitionDate || !chartData.length) {
             return null;
@@ -241,6 +260,9 @@ export const TemporalProfileChart: FC<Props> = ({
                         'var(--custom-light-blue-50)',
                     '--vertical-reference-line-color':
                         'var(--custom-light-blue-70)',
+                    '--horizontal-reference-line-color':
+                        'var(--custom-light-blue-80)',
+                    '--horizontal-reference-line-stroke-dasharray': '2 2',
                     '--tooltip-text-font-size': '.725rem',
                     '--tooltip-text-color': 'var(--custom-light-blue-70)',
                     '--tooltip-background-color': 'var(--custom-background-95)',
@@ -278,6 +300,7 @@ export const TemporalProfileChart: FC<Props> = ({
                     },
                 }}
                 verticalReferenceLines={getData4VerticalReferenceLine()}
+                horizontalReferenceLines={trendLineData}
                 onClick={onClickHandler}
             />
         </div>
