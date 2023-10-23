@@ -28,12 +28,14 @@ type Props = {
  * Converts Landsat temporal profile data to chart data.
  * @param temporalProfileData - Array of temporal profile data.
  * @param spectralIndex - Spectral index to calculate the value for each data point.
+ * @param month2month - if true, user is trying to plot month to month trend line for a selected year.
  * @returns An array of QuickD3ChartDataItem objects representing the chart data.
  *
  */
 export const convertLandsatTemporalProfileData2ChartData = (
     temporalProfileData: TemporalProfileData[],
-    spectralIndex: SpectralIndex
+    spectralIndex: SpectralIndex,
+    month2month?: boolean
 ): LineChartDataItem[] => {
     const data = temporalProfileData.map((d) => {
         const { acquisitionDate, values } = d;
@@ -71,7 +73,7 @@ export const convertLandsatTemporalProfileData2ChartData = (
         )}`;
 
         return {
-            x: d.acquisitionDate,
+            x: month2month ? d.acquisitionMonth : d.acquisitionDate,
             y,
             tooltip,
         };
@@ -92,51 +94,43 @@ export const TemporalProfileChart: FC<Props> = ({
 
     const chartData = convertLandsatTemporalProfileData2ChartData(
         data,
-        spectralIndex
+        spectralIndex,
+        trendToolOption === 'month-to-month'
     );
 
     const customDomain4XScale = useMemo(() => {
-        if (!queryParams4SelectedScene?.acquisitionDate || !chartData.length) {
+        if (!chartData.length) {
             return null;
         }
 
-        const timestampOfAcquisitionDate = formattedDateString2Unixtimestamp(
-            queryParams4SelectedScene.acquisitionDate
-        );
+        if (trendToolOption === 'month-to-month') {
+            // use 1 (for Janurary) and 12 (for December) as the x domain
+            return [1, 12];
+        }
 
-        const xMin = chartData[0].x;
+        let xMax = chartData[chartData.length - 1].x;
 
         // In the "year-to-year" option, we aim to display the indicator line for the selected acquisition date on the chart.
         // To achieve this, we adjust the xMax value to ensure it fits within the chart's boundaries.
         // In the "month-to-month" option, we only display the indicator line for the selected acquisition date if it falls within the user-selected acquisition year.
-        const xMax =
-            trendToolOption === 'year-to-year'
-                ? Math.max(
-                      timestampOfAcquisitionDate, // user selected acquisition date in Calendar component
-                      chartData[chartData.length - 1].x // acquisition date of the last item in the chart data
-                  )
-                : chartData[chartData.length - 1].x;
+        if (
+            trendToolOption === 'year-to-year' &&
+            queryParams4SelectedScene.acquisitionDate
+        ) {
+            xMax = Math.max(
+                // user selected acquisition date in Calendar component
+                formattedDateString2Unixtimestamp(
+                    queryParams4SelectedScene.acquisitionDate
+                ),
+                // acquisition date of the last item in the chart data
+                chartData[chartData.length - 1].x
+            );
+        }
+
+        const xMin = chartData[0].x;
 
         return [xMin, xMax];
     }, [chartData, queryParams4SelectedScene, trendToolOption]);
-
-    // const customDomain4YScale = useMemo(() => {
-    //     if (spectralIndex === 'temperature farhenheit') {
-    //         return [
-    //             LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-    //             LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-    //         ];
-    //     }
-
-    //     if (spectralIndex === 'temperature celcius') {
-    //         return [
-    //             LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    //             LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    //         ];
-    //     }
-
-    //     return [-1, 1];
-    // }, [spectralIndex]);
 
     const customDomain4YScale = useMemo(() => {
         const yValues = chartData.map((d) => d.y);
@@ -221,7 +215,7 @@ export const TemporalProfileChart: FC<Props> = ({
                     domain: customDomain4YScale,
                 }}
                 xScaleOptions={{
-                    useTimeScale: true,
+                    useTimeScale: trendToolOption === 'year-to-year',
                     domain: customDomain4XScale,
                 }}
                 bottomAxisOptions={{
@@ -234,9 +228,11 @@ export const TemporalProfileChart: FC<Props> = ({
                             return '';
                         }
 
-                        return trendToolOption === 'year-to-year'
-                            ? format(val, 'yyyy')
-                            : format(val, 'MMM');
+                        if (trendToolOption === 'year-to-year') {
+                            return format(val, 'yyyy');
+                        }
+
+                        return val;
                     },
                 }}
                 verticalReferenceLines={getData4VerticalReferenceLine()}

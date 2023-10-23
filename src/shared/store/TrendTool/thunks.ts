@@ -11,11 +11,12 @@ import {
     selectQueryLocation4TrendTool,
     selectTrendToolOption,
 } from './selectors';
-import { getTemporalProfileData } from '@shared/services/landsat-level-2/getTemporalProfileData';
+import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import {
     selectActiveAnalysisTool,
     selectLandsatMissionsToBeExcluded,
 } from '../Landsat/selectors';
+import { TemporalProfileData } from '@typing/imagery-service';
 
 export const updateQueryLocation4TrendTool =
     (point: Point) =>
@@ -59,18 +60,26 @@ export const updateTrendToolData =
 
         dispatch(trendToolIsLoadingChanged(true));
 
-        const data = await getTemporalProfileData({
-            queryLocation,
-            acquisitionMonth:
-                trendToolOption === 'year-to-year' ? acquisitionMonth : null,
-            acquisitionYear:
-                trendToolOption === 'month-to-month' ? acquisitionYear : null,
-            // samplingTemporalResolution,
-            missionsToBeExcluded,
-            abortController,
-        });
+        try {
+            const data: TemporalProfileData[] = await getDataForTrendTool({
+                queryLocation,
+                acquisitionMonth:
+                    trendToolOption === 'year-to-year'
+                        ? acquisitionMonth
+                        : null,
+                acquisitionYear:
+                    trendToolOption === 'month-to-month'
+                        ? acquisitionYear
+                        : null,
+                // samplingTemporalResolution,
+                missionsToBeExcluded,
+                abortController,
+            });
 
-        dispatch(trendToolDataUpdated(data));
+            dispatch(trendToolDataUpdated(data));
+        } catch (err) {
+            console.log('failed to fetch temporal profile data');
+        }
 
         dispatch(trendToolIsLoadingChanged(false));
     };

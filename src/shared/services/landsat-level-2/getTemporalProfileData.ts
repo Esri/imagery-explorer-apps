@@ -57,7 +57,7 @@ const splitObjectIdsToSeparateGroups = (objectIds: number[]): number[][] => {
 };
 
 /**
- * Retrieves data for the Temporal Profile Tool based on specific criteria.
+ * Retrieves data for the Trend (Temporal Profile) Tool based on specific criteria.
  *
  * This function queries Landsat scenes at the provided query location that were acquired during the given acquisition month.
  * It refines the scenes to retain only the one with the least cloud coverage within a specified month.
@@ -67,7 +67,7 @@ const splitObjectIdsToSeparateGroups = (objectIds: number[]): number[][] => {
  * @param param0
  * @returns An array of TemporalProfileData representing pixel values sampled at input query location over time.
  */
-export const getTemporalProfileData = async ({
+export const getDataForTrendTool = async ({
     queryLocation,
     acquisitionMonth,
     acquisitionYear,
