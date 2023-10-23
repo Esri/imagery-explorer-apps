@@ -64,6 +64,8 @@ export const TrendToolContainer = () => {
 
     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
 
+    const trendToolOption = useSelector(selectTrendToolOption);
+
     useEffect(() => {
         if (!queryParams4MainScene?.rasterFunctionName) {
             return;
@@ -200,6 +202,11 @@ export const TrendToolContainer = () => {
                     <TemporalProfileChart
                         data={temporalProfileData}
                         spectralIndex={spectralIndex}
+                        trendToolOption={trendToolOption}
+                        acquisitionYear={acquisitionYear}
+                        selectedAcquisitionDate={
+                            queryParams4MainScene?.acquisitionDate
+                        }
                         onClickHandler={(index) => {
                             // select user clicked temporal profile chart data element
                             const clickedDataItem = temporalProfileData[index];

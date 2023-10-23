@@ -2,7 +2,11 @@ import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LineChartBasic } from '@vannizhang/react-d3-charts';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
-import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
+import {
+    formattedDateString2Unixtimestamp,
+    getMonthFromFormattedDateString,
+    getYearFromFormattedDateString,
+} from '@shared/utils/date-time/formatDateString';
 import { VerticalReferenceLineData } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { TemporalProfileData } from '@typing/imagery-service';
@@ -17,10 +21,31 @@ import {
 } from '@shared/services/landsat-level-2/config';
 import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { selectTrendToolOption } from '@shared/store/TrendTool/selectors';
+import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
+import { TrendToolOption } from '@shared/store/TrendTool/reducer';
 
 type Props = {
+    /**
+     * data that will be used to plot the trend chart
+     */
     data: TemporalProfileData[];
+    /**
+     * user selected spectral index
+     */
     spectralIndex: SpectralIndex;
+    /**
+     * user selected trend tool option
+     */
+    trendToolOption: TrendToolOption;
+    /**
+     * user selected acquisition year for the 'month-to-month' option
+     */
+    acquisitionYear: number;
+    /**
+     * user selected acquisition date in format of (YYYY-MM-DD)
+     * this date will be rendered as a vertical reference line in the trend chart
+     */
+    selectedAcquisitionDate: string;
     onClickHandler: (index: number) => void;
 };
 
@@ -85,12 +110,15 @@ export const convertLandsatTemporalProfileData2ChartData = (
 export const TemporalProfileChart: FC<Props> = ({
     data,
     spectralIndex,
+    trendToolOption,
+    acquisitionYear,
+    selectedAcquisitionDate,
     onClickHandler,
 }: Props) => {
-    const trendToolOption = useSelector(selectTrendToolOption);
+    // const trendToolOption = useSelector(selectTrendToolOption);
 
-    const queryParams4SelectedScene =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    // const queryParams4SelectedScene =
+    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const chartData = convertLandsatTemporalProfileData2ChartData(
         data,
@@ -113,15 +141,10 @@ export const TemporalProfileChart: FC<Props> = ({
         // In the "year-to-year" option, we aim to display the indicator line for the selected acquisition date on the chart.
         // To achieve this, we adjust the xMax value to ensure it fits within the chart's boundaries.
         // In the "month-to-month" option, we only display the indicator line for the selected acquisition date if it falls within the user-selected acquisition year.
-        if (
-            trendToolOption === 'year-to-year' &&
-            queryParams4SelectedScene.acquisitionDate
-        ) {
+        if (trendToolOption === 'year-to-year' && selectedAcquisitionDate) {
             xMax = Math.max(
                 // user selected acquisition date in Calendar component
-                formattedDateString2Unixtimestamp(
-                    queryParams4SelectedScene.acquisitionDate
-                ),
+                formattedDateString2Unixtimestamp(selectedAcquisitionDate),
                 // acquisition date of the last item in the chart data
                 chartData[chartData.length - 1].x
             );
@@ -130,7 +153,7 @@ export const TemporalProfileChart: FC<Props> = ({
         const xMin = chartData[0].x;
 
         return [xMin, xMax];
-    }, [chartData, queryParams4SelectedScene, trendToolOption]);
+    }, [chartData, selectedAcquisitionDate, trendToolOption]);
 
     const customDomain4YScale = useMemo(() => {
         const yValues = chartData.map((d) => d.y);
@@ -165,13 +188,32 @@ export const TemporalProfileChart: FC<Props> = ({
     }, [chartData]);
 
     const getData4VerticalReferenceLine = (): VerticalReferenceLineData[] => {
-        if (!queryParams4SelectedScene?.acquisitionDate || !chartData.length) {
+        if (!selectedAcquisitionDate || !chartData.length) {
             return null;
         }
 
         const timestampOfAcquisitionDate = formattedDateString2Unixtimestamp(
-            queryParams4SelectedScene.acquisitionDate
+            selectedAcquisitionDate
         );
+
+        if (trendToolOption === 'month-to-month') {
+            // only show vertical reference line if the year of user selected acquisition date
+            // is the same as user selected acquisition year of the trend tool
+            return getYearFromFormattedDateString(selectedAcquisitionDate) ===
+                acquisitionYear
+                ? [
+                      {
+                          x: getMonthFromFormattedDateString(
+                              selectedAcquisitionDate
+                          ),
+                          tooltip: `Selected Image: <br />${format(
+                              timestampOfAcquisitionDate,
+                              DATE_FORMAT
+                          )}`,
+                      },
+                  ]
+                : [];
+        }
 
         return [
             {
@@ -232,7 +274,7 @@ export const TemporalProfileChart: FC<Props> = ({
                             return format(val, 'yyyy');
                         }
 
-                        return val;
+                        return val; //getMonthAbbreviation(val);
                     },
                 }}
                 verticalReferenceLines={getData4VerticalReferenceLine()}
