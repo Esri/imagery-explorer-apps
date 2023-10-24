@@ -24,6 +24,7 @@ import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
 // import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
 import { TrendToolOption } from '@shared/store/TrendTool/reducer';
 import { calcTrendLine } from './helpers';
+import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
 
 type Props = {
     /**
@@ -201,7 +202,6 @@ export const TemporalProfileChart: FC<Props> = ({
             {
                 y1,
                 y2,
-                label: 'national average: 30',
             },
         ];
     }, [chartData]);
@@ -275,6 +275,12 @@ export const TemporalProfileChart: FC<Props> = ({
                 showTooltip
                 stroke="var(--custom-light-blue)"
                 strokeWidth={1.5}
+                margin={{
+                    bottom: 30,
+                    left: 45,
+                    right: 20,
+                    top: 15,
+                }}
                 yScaleOptions={{
                     domain: customDomain4YScale,
                 }}
@@ -296,7 +302,7 @@ export const TemporalProfileChart: FC<Props> = ({
                             return format(val, 'yyyy');
                         }
 
-                        return val; //getMonthAbbreviation(val);
+                        return getMonthAbbreviation(val).slice(0, 1);
                     },
                 }}
                 verticalReferenceLines={getData4VerticalReferenceLine()}

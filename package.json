@@ -103,7 +103,7 @@
     "@types/arcgis-js-api": "4.27",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
-    "@vannizhang/react-d3-charts": "^1.0.20",
+    "@vannizhang/react-d3-charts": "^1.0.22",
     "axios": "^0.21.2",
     "classnames": "^2.2.6",
     "date-fns": "^2.30.0",
