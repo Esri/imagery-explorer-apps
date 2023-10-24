@@ -1,6 +1,5 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import IMapView from 'esri/views/MapView';
 import IMediaLayer from 'esri/layers/MediaLayer';
 import { loadModules } from 'esri-loader';
@@ -19,7 +18,7 @@ import { CloseButton } from '@shared/components/CloseButton';
 // import { sortQueryParams4ScenesByAcquisitionDate } from './AnimationControl/helpers';
 import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
-import { DownloadAnimationControl } from './DownloadAnimationControl';
+import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 
 type Props = {
     mapView?: IMapView;
@@ -148,7 +147,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
                 }}
             />
 
-            <DownloadAnimationControl
+            <AnimationDownloadPanel
                 mediaLayerElements={mediaLayerElements}
                 queryParams4ScenesInAnimationMode={
                     sortedQueryParams4ScenesInAnimationMode
