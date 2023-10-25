@@ -79,6 +79,14 @@ const MapViewContainer: FC<Props> = ({ children }) => {
         saveMapCenterToHashParams(center, zoom);
     }, [zoom, center]);
 
+    useEffect(() => {
+        // adding this class will hide map zoom widget when animation mode is on
+        document.body.classList.toggle(
+            'hide-map-control',
+            animationStatus !== null
+        );
+    }, [animationStatus]);
+
     return (
         <div
             className={classNames('absolute top-0 left-0 w-full', {

@@ -153,8 +153,10 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
                     sortedQueryParams4ScenesInAnimationMode
                 }
                 animationSpeed={animationSpeed}
-                width={mapView.width}
-                height={mapView.height}
+                mapViewWindowSize={{
+                    width: mapView.width,
+                    height: mapView.height,
+                }}
             />
         </div>
     );

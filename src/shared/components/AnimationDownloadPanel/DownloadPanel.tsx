@@ -8,6 +8,7 @@ import { AnimationFrameData } from '@shared/utils/video-encoder';
 import { createVideoViaFFMPEG } from '@shared/utils/video-encoder/createVideoViaFFMPEG';
 import { DownloadOptionsList } from './DownloadOptionsList';
 import classNames from 'classnames';
+import { PreviewWindow, WindowSize } from './PreviewWindow';
 
 type Props = {
     /**
@@ -23,25 +24,30 @@ type Props = {
      * animation speed in millisecond
      */
     animationSpeed: number;
+    // /**
+    //  * width of the output video file
+    //  */
+    // width: number;
+    // /**
+    //  * height of the output video file
+    //  */
+    // height: number;
     /**
-     * width of the output video file
+     * size of the map view window
      */
-    width: number;
-    /**
-     * height of the output video file
-     */
-    height: number;
+    mapViewWindowSize: WindowSize;
 };
 
 export const AnimationDownloadPanel: FC<Props> = ({
     mediaLayerElements,
     queryParams4ScenesInAnimationMode,
     animationSpeed,
-    width,
-    height,
+    mapViewWindowSize,
 }) => {
     const [shouldShowDownloadPanel, setShouldShowDownloadPanel] =
         useState<boolean>(false);
+
+    const [previewWindowSize, setPreviewWindowSize] = useState<WindowSize>();
 
     // useEffect(() => {
     //     (async () => {
@@ -96,50 +102,67 @@ export const AnimationDownloadPanel: FC<Props> = ({
     }
 
     return (
-        <div className="absolute top-0 right-0 w-48 text-white text-center">
-            {/* download icon that would open the download options list on hover */}
-            <div
-                className="absolute top-1 right-16 cursor-pointer z-10"
-                onMouseEnter={setShouldShowDownloadPanel.bind(null, true)}
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 32 32"
-                    height="64"
-                    width="64"
+        <>
+            <div className="absolute top-0 right-0 w-48 text-white text-center">
+                {/* download icon that would open the download options list on hover */}
+                <div
+                    className="absolute top-1 right-16 cursor-pointer z-10"
+                    onMouseEnter={setShouldShowDownloadPanel.bind(null, true)}
                 >
-                    <path
-                        fill="currentColor"
-                        d="M25 27H8v-1h17zm-3.646-9.646l-.707-.707L17 20.293V5h-1v15.293l-3.646-3.646-.707.707 4.853 4.853z"
-                    />
-                    <path fill="none" d="M0 0h32v32H0z" />
-                </svg>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 32 32"
+                        height="64"
+                        width="64"
+                    >
+                        <path
+                            fill="currentColor"
+                            d="M25 27H8v-1h17zm-3.646-9.646l-.707-.707L17 20.293V5h-1v15.293l-3.646-3.646-.707.707 4.853 4.853z"
+                        />
+                        <path fill="none" d="M0 0h32v32H0z" />
+                    </svg>
+                </div>
+
+                {shouldShowDownloadPanel && (
+                    <div
+                        className={classNames(
+                            'absolute top-0 right-0 w-full pt-24 z-[5]',
+                            'theme-background'
+                        )}
+                        onMouseLeave={setShouldShowDownloadPanel.bind(
+                            null,
+                            false
+                        )}
+                    >
+                        <DownloadOptionsList
+                            onMouseEnter={(size) => {
+                                if (!size) {
+                                    return;
+                                }
+
+                                const [width, height] = size;
+
+                                setPreviewWindowSize({
+                                    width,
+                                    height,
+                                });
+                                // console.log(size);
+                            }}
+                            onMouseLeave={setPreviewWindowSize.bind(null, null)}
+                            onClick={(size) => {
+                                const [w, h] = size;
+                            }}
+                        />
+                    </div>
+                )}
             </div>
 
-            {shouldShowDownloadPanel && (
-                <div
-                    className={classNames(
-                        'absolute top-0 right-0 w-full pt-24',
-                        'theme-background'
-                    )}
-                    onMouseLeave={setShouldShowDownloadPanel.bind(null, false)}
-                >
-                    <DownloadOptionsList
-                        onMouseEnter={(size) => {
-                            if (!size) {
-                                return;
-                            }
-
-                            const [w, h] = size;
-                            console.log(size);
-                        }}
-                        onMouseLeave={() => {}}
-                        onClick={(size) => {
-                            const [w, h] = size;
-                        }}
-                    />
-                </div>
+            {previewWindowSize && (
+                <PreviewWindow
+                    size={previewWindowSize}
+                    mapViewWindowSize={mapViewWindowSize}
+                />
             )}
-        </div>
+        </>
     );
 };

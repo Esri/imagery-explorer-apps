@@ -4,3 +4,7 @@
     background: var(--custom-background);
     color: var(--custom-light-blue);
 }
+
+.hide-map-control .esri-zoom {
+    display: none;
+}
