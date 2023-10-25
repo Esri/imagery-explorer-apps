@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { VIDEO_SIZE_OPTIONS } from './config';
 
 type DimensionInfoProps = {
@@ -26,6 +26,19 @@ const DimensionInfo: FC<DimensionInfoProps> = ({
     onMouseEnter,
     onMouseLeave,
 }) => {
+    // const mouseLeaveDelay = useRef<NodeJS.Timeout>()
+
+    // const handleMouseEnter = ()=>{
+    //     clearTimeout(mouseLeaveDelay.current)
+    //     onMouseEnter()
+    // }
+
+    // const handlerMouseLeave = ()=>{
+    //     mouseLeaveDelay.current = setTimeout(()=>{
+    //         onMouseLeave()
+    //     }, 1000)
+    // }
+
     const getDimensionIcon = () => {
         return (
             <div className="flex items-center justify-center w-[32px] h-[32px] mr-2">
@@ -46,13 +59,13 @@ const DimensionInfo: FC<DimensionInfoProps> = ({
 
     return (
         <div
-            className="flex items-center"
+            className="flex items-center opacity-70 hover:opacity-100 cursor-pointer"
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
             {getDimensionIcon()}
-            <span className=" text-xs">
+            <span className=" text-xs hover:underline">
                 {width} x {height}
             </span>
         </div>
@@ -86,14 +99,11 @@ export const DownloadOptionsList: FC<Props> = ({
                 const { title, dimensions } = d;
 
                 return (
-                    <div
-                        className="text-center mb-3 cursor-pointer"
-                        key={title}
-                    >
+                    <div className="text-center mb-3" key={title}>
                         <h4 className="uppercase text-sm text-custom-light-blue-50">
                             {title}
                         </h4>
-                        <div className=" pl-6">
+                        <div className="pl-6">
                             {dimensions.map((size) => {
                                 const [w, h] = size;
 

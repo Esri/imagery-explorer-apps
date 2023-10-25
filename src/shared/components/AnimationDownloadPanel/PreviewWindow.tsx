@@ -1,19 +1,19 @@
 import React, { FC, useMemo } from 'react';
 
-export type WindowSize = {
+export type Dimension = {
     width: number;
     height: number;
 };
 
 type Props = {
     /**
-     * size of the preview window
+     * dimension of the preview window
      */
-    size: WindowSize;
+    size: Dimension;
     /**
-     * size of the map view window
+     * dimension of the map view window
      */
-    mapViewWindowSize: WindowSize;
+    mapViewWindowSize: Dimension;
 };
 
 /**
@@ -32,7 +32,7 @@ export const PreviewWindow: FC<Props> = ({ size, mapViewWindowSize }) => {
      * @param {WindowSize} mapViewWindowSize - The size of the map view window.
      * @returns {WindowSize | null} - The adjusted window size, or null if `size` is falsy.
      */
-    const adjustedSize: WindowSize = useMemo(() => {
+    const adjustedSize: Dimension = useMemo(() => {
         if (!size) {
             return null;
         }

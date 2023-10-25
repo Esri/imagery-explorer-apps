@@ -17,6 +17,14 @@ type Props = {
      * height of the output video file
      */
     height: number;
+    /**
+     * width of the original animation frame image that will be used to encode the output video file
+     */
+    widthOfOriginalAnimationFrame: number;
+    /**
+     * height of the original animation frame image that will be used to encode the output video file
+     */
+    heightOfOriginalAnimationFrame: number;
 };
 
 /**
@@ -61,17 +69,39 @@ const getName4OutputMEMFS = (
  * @param width - The width of the input image.
  * @returns A Promise that resolves to a MEMFS object containing the image data.
  */
-const getImageAsMEMFS = async (
-    data: AnimationFrameData,
-    outputName: string,
-    height: number,
-    width: number
-) => {
+const getImageAsMEMFS = async (params: {
+    data: AnimationFrameData;
+    outputName: string;
+    height: number;
+    width: number;
+    widthOfOriginalAnimationFrame: number;
+    heightOfOriginalAnimationFrame: number;
+}) => {
+    const {
+        data,
+        outputName,
+        height,
+        width,
+        widthOfOriginalAnimationFrame,
+        heightOfOriginalAnimationFrame,
+    } = params;
+
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    canvas.width = width % 2 === 0 ? width : width - 1;
-    canvas.height = height % 2 === 0 ? height : height - 1;
+    canvas.width = width;
+    canvas.height = height;
+
+    // let adjustedWidth = widthOfOriginalAnimationFrame;
+    // let adjustedHeight = heightOfOriginalAnimationFrame;
+
+    // // need to update adjusted width and height so the original animation frames can be stretched to fit into the canvas
+    // if(widthOfOriginalAnimationFrame < width || heightOfOriginalAnimationFrame < height){
+
+    // }
+
+    // const dx = (adjustedWidth - canvas.width) / 2;
+    // const dy = (adjustedHeight - canvas.height) / 2;
 
     context.drawImage(data.image, 0, 0, canvas.width, canvas.height);
 
@@ -98,11 +128,20 @@ export const createVideoViaFFMPEG = async ({
     animationSpeed,
     width,
     height,
+    widthOfOriginalAnimationFrame,
+    heightOfOriginalAnimationFrame,
 }: Props): Promise<Blob> => {
     const inputImages = await Promise.all(
         data.map((d, index) => {
             const name = getName4OutputMEMFS(index, 3, 'jpeg');
-            return getImageAsMEMFS(d, name, height, width);
+            return getImageAsMEMFS({
+                data: d,
+                outputName: name,
+                height,
+                width,
+                widthOfOriginalAnimationFrame,
+                heightOfOriginalAnimationFrame,
+            });
         })
     );
     // console.log(inputImages)

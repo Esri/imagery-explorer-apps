@@ -8,8 +8,7 @@ import { AnimationFrameData } from '@shared/utils/video-encoder';
 import { createVideoViaFFMPEG } from '@shared/utils/video-encoder/createVideoViaFFMPEG';
 import { DownloadOptionsList } from './DownloadOptionsList';
 import classNames from 'classnames';
-import { PreviewWindow, WindowSize } from './PreviewWindow';
-
+import { Dimension, PreviewWindow } from './PreviewWindow';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -35,7 +34,7 @@ type Props = {
     /**
      * size of the map view window
      */
-    mapViewWindowSize: WindowSize;
+    mapViewWindowSize: Dimension;
 };
 
 export const AnimationDownloadPanel: FC<Props> = ({
@@ -47,7 +46,61 @@ export const AnimationDownloadPanel: FC<Props> = ({
     const [shouldShowDownloadPanel, setShouldShowDownloadPanel] =
         useState<boolean>(false);
 
-    const [previewWindowSize, setPreviewWindowSize] = useState<WindowSize>();
+    const [previewWindowSize, setPreviewWindowSize] = useState<Dimension>();
+
+    const [inProgressOfEncodingVideoFile, setInProgressOfEncodingVideoFile] =
+        useState<boolean>();
+
+    const downloadAnimation = async (outputVideoDimension: Dimension) => {
+        // load media layer elements as an array of HTML Image Elements
+        const images = await Promise.all(
+            mediaLayerElements.map((elem) =>
+                loadImageAsHTMLIMageElement(elem.image as string)
+            )
+        );
+
+        const data: AnimationFrameData[] = images.map((image, index) => {
+            const queryParams = queryParams4ScenesInAnimationMode[index];
+
+            return {
+                image,
+                textLabel: {
+                    text: queryParams.acquisitionDate,
+                    fontSize: 36,
+                },
+            } as AnimationFrameData;
+        });
+
+        // const blobOfEncodedVideo = await createVideoViaMediaRecorder({
+        //     data,
+        //     animationSpeed,
+        //     width,
+        //     height,
+        // });
+
+        // downloadBlob(blobOfEncodedVideo, 'output.webm');
+
+        setInProgressOfEncodingVideoFile(true);
+
+        const { width, height } = outputVideoDimension;
+
+        try {
+            const blobOfEncodedVideo = await createVideoViaFFMPEG({
+                data,
+                animationSpeed,
+                width,
+                height,
+                widthOfOriginalAnimationFrame: mapViewWindowSize.width,
+                heightOfOriginalAnimationFrame: mapViewWindowSize.height,
+            });
+
+            downloadBlob(blobOfEncodedVideo, 'output.mp4');
+        } catch (err) {
+            console.log(err);
+        }
+
+        setInProgressOfEncodingVideoFile(false);
+    };
 
     // useEffect(() => {
     //     (async () => {
@@ -104,23 +157,29 @@ export const AnimationDownloadPanel: FC<Props> = ({
     return (
         <>
             <div className="absolute top-0 right-0 w-48 text-white text-center">
-                {/* download icon that would open the download options list on hover */}
-                <div
-                    className="absolute top-1 right-16 cursor-pointer z-10"
-                    onMouseEnter={setShouldShowDownloadPanel.bind(null, true)}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 32 32"
-                        height="64"
-                        width="64"
-                    >
-                        <path
-                            fill="currentColor"
-                            d="M25 27H8v-1h17zm-3.646-9.646l-.707-.707L17 20.293V5h-1v15.293l-3.646-3.646-.707.707 4.853 4.853z"
-                        />
-                        <path fill="none" d="M0 0h32v32H0z" />
-                    </svg>
+                <div className="absolute top-1 right-16 cursor-pointer z-10">
+                    {inProgressOfEncodingVideoFile ? (
+                        <div className="absolute top-0 right-0 w-16 h-16 flex justify-center items-center">
+                            <calcite-loader scale="s" style={{ padding: 0 }} />
+                        </div>
+                    ) : (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 32 32"
+                            height="64"
+                            width="64"
+                            onMouseEnter={setShouldShowDownloadPanel.bind(
+                                null,
+                                true
+                            )}
+                        >
+                            <path
+                                fill="currentColor"
+                                d="M25 27H8v-1h17zm-3.646-9.646l-.707-.707L17 20.293V5h-1v15.293l-3.646-3.646-.707.707 4.853 4.853z"
+                            />
+                            <path fill="none" d="M0 0h32v32H0z" />
+                        </svg>
+                    )}
                 </div>
 
                 {shouldShowDownloadPanel && (
@@ -150,7 +209,16 @@ export const AnimationDownloadPanel: FC<Props> = ({
                             }}
                             onMouseLeave={setPreviewWindowSize.bind(null, null)}
                             onClick={(size) => {
-                                const [w, h] = size;
+                                if (!size) {
+                                    return;
+                                }
+
+                                const [width, height] = size;
+
+                                downloadAnimation({
+                                    width,
+                                    height,
+                                });
                             }}
                         />
                     </div>
