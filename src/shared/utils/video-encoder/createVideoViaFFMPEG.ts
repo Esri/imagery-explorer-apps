@@ -72,38 +72,86 @@ const getName4OutputMEMFS = (
 const getImageAsMEMFS = async (params: {
     data: AnimationFrameData;
     outputName: string;
-    height: number;
-    width: number;
-    widthOfOriginalAnimationFrame: number;
-    heightOfOriginalAnimationFrame: number;
+    outputWidth: number;
+    outputHeight: number;
+    sourceImageWidth: number;
+    sourceImageHeight: number;
 }) => {
     const {
         data,
         outputName,
-        height,
-        width,
-        widthOfOriginalAnimationFrame,
-        heightOfOriginalAnimationFrame,
+        outputHeight,
+        outputWidth,
+        sourceImageWidth,
+        sourceImageHeight,
     } = params;
 
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    canvas.width = width;
-    canvas.height = height;
+    // Set the canvas dimensions to match the desired output dimensions.
+    canvas.width = outputWidth;
+    canvas.height = outputHeight;
 
-    // let adjustedWidth = widthOfOriginalAnimationFrame;
-    // let adjustedHeight = heightOfOriginalAnimationFrame;
+    // Calculate the dimensions of the portion to be selected from the source image.
+    let sWidth = sourceImageWidth;
+    let sHeight = sourceImageHeight;
 
-    // // need to update adjusted width and height so the original animation frames can be stretched to fit into the canvas
-    // if(widthOfOriginalAnimationFrame < width || heightOfOriginalAnimationFrame < height){
+    // output video is a horizontal rectangle
+    if (outputHeight < outputWidth) {
+        // try to get the adjusted width and height along the x axis
+        const aspectRatio = outputHeight / outputWidth;
+        sWidth = sourceImageWidth;
+        sHeight = sourceImageWidth * aspectRatio;
 
-    // }
+        // adjusted height is bigger than the original height,
+        // re-calculate the width and height along the y axis
+        if (sHeight > sourceImageHeight) {
+            // Calculate the aspect ratio of the output image.
+            const aspectRatio = outputWidth / outputHeight;
+            sHeight = sourceImageHeight;
+            sWidth = sourceImageHeight * aspectRatio;
+        }
+    }
+    //  output video is a vertical rectange
+    else if (outputHeight > outputWidth) {
+        const aspectRatio = outputWidth / outputHeight;
+        sHeight = sourceImageHeight;
+        sWidth = sourceImageHeight * aspectRatio;
 
-    // const dx = (adjustedWidth - canvas.width) / 2;
-    // const dy = (adjustedHeight - canvas.height) / 2;
+        if (sWidth > sourceImageWidth) {
+            // Calculate the scale ratio of the output image.
+            const aspectRatio = outputHeight / outputWidth;
+            sWidth = sourceImageWidth;
+            sHeight = sourceImageWidth * aspectRatio;
+        }
+    }
+    //  output video is a square
+    else {
+        const shorterSide = Math.min(sWidth, sHeight);
+        sWidth = shorterSide;
+        sHeight = shorterSide;
+    }
 
-    context.drawImage(data.image, 0, 0, canvas.width, canvas.height);
+    sWidth = Math.floor(sWidth);
+    sHeight = Math.floor(sHeight);
+
+    // Calculate the starting point (sx, sy) for selecting the portion from the source image.
+    // we should always select the center portion of it
+    const sx = Math.floor(Math.abs(sWidth - sourceImageWidth) / 2);
+    const sy = Math.floor(Math.abs(sHeight - sourceImageHeight) / 2);
+
+    context.drawImage(
+        data.image,
+        sx,
+        sy,
+        sWidth,
+        sHeight,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
     // Export the canvas content as a JPEG blob.
     const blob: Blob = await new Promise((resolveBlob, rejectBlob) => {
@@ -137,10 +185,10 @@ export const createVideoViaFFMPEG = async ({
             return getImageAsMEMFS({
                 data: d,
                 outputName: name,
-                height,
-                width,
-                widthOfOriginalAnimationFrame,
-                heightOfOriginalAnimationFrame,
+                outputHeight: height,
+                outputWidth: width,
+                sourceImageWidth: widthOfOriginalAnimationFrame,
+                sourceImageHeight: heightOfOriginalAnimationFrame,
             });
         })
     );
