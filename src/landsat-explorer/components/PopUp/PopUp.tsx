@@ -65,7 +65,9 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
     const openPopupRef = useRef<MapViewOnClickHandler>();
 
-    const closePopUp = () => {
+    const closePopUp = (message: string) => {
+        console.log('calling closePopUp', message);
+
         if (controller) {
             controller.abort();
         }
@@ -111,9 +113,6 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
                     : queryParams4SecondaryScene;
             }
 
-            // let objectId = queryParams?.objectIdOfSelectedScene;
-            // let sceneData = availableScenes[objectId];
-
             if (controller) {
                 controller.abort();
             }
@@ -142,57 +141,10 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
             const bandValues: number[] =
                 getPixelValuesFromIdentifyTaskResponse(res);
 
-            // if (res?.value && res?.value !== 'NoData') {
-            //     // get pixel values from the value property first
-            //     bandValues = res?.value.split(', ').map((d) => +d);
-            // } else if (res?.properties?.Values[0]) {
-            //     bandValues = res?.properties?.Values[0].split(' ').map((d) => {
-            //         if (canBeConvertedToNumber(d) === false) {
-            //             return null;
-            //         }
-
-            //         return +d;
-            //     });
-            // }
-
             if (!bandValues) {
                 throw new Error('identify task does not return band values');
             }
             // console.log(bandValues)
-
-            // // in dynamic mode, we will need to do the identify task first to find the landsat scene that is being displayed on the map
-            // if (mode === 'dynamic') {
-            //     const res = await identify({
-            //         point: mapPoint,
-            //         abortController: controller,
-            //     });
-
-            //     // console.log(res)
-
-            //     const features = res?.catalogItems?.features;
-
-            //     if (!features.length) {
-            //         throw new Error('cannot find scene for dynamic mode');
-            //     }
-
-            //     sceneData = getFormattedLandsatScenes(features)[0];
-
-            //     objectId = sceneData.objectId;
-            // }
-
-            // // cannot display popup if there is no objectId in queryParams for selected landsat scene
-            // if (!objectId || !sceneData) {
-            //     throw new Error(
-            //         'objectIdOfSelectedScene is required to fetch popup data'
-            //     );
-            // }
-
-            // const res = await getSamples(mapPoint, [objectId], controller);
-            // // console.log(res);
-
-            // if (!res.length || !res[0].values) {
-            //     throw new Error('invalid getSampes response');
-            // }
 
             const title = `${sceneData.satellite} | ${format(
                 sceneData.acquisitionDate,
@@ -217,7 +169,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
                 return;
             }
 
-            closePopUp();
+            closePopUp('close because error happened during data fetching');
         }
     };
 
@@ -235,12 +187,19 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
         watch(
             () => mapView.popup.visible,
-            (visible) => {
-                // console.log('mapview popup updated', visible)
-                if (!visible) {
+            (newVal, oldVal) => {
+                // this callback sometimes get triggered before the popup get launched for the first time
+                // therefore we should only proceed when both the new value and old value if ready
+                if (newVal === undefined || oldVal === undefined) {
+                    return;
+                }
+
+                if (oldVal === true && newVal === false) {
                     // need to call closePopup whne popup becomes invisible
                     // so the Popup anchor location can also be removed from the map
-                    closePopUp();
+                    closePopUp(
+                        'close because mapView.popup.visible becomes false'
+                    );
                 }
             }
         );
@@ -254,7 +213,11 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
 
     useEffect(() => {
         if (mapView) {
-            closePopUp();
+            if (!mapView?.popup?.visible) {
+                return;
+            }
+
+            closePopUp('close because app state has changed');
         }
     }, [
         mode,
