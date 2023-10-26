@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import IImageElement from 'esri/layers/support/ImageElement';
+import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';

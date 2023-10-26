@@ -1,4 +1,4 @@
-import MapView from 'esri/views/MapView';
+import MapView from '@arcgis/core/views/MapView';
 import React, { FC } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useSelector } from 'react-redux';

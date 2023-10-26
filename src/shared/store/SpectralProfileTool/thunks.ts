@@ -1,4 +1,4 @@
-import Point from 'esri/geometry/Point';
+import Point from '@arcgis/core/geometry/Point';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
     errorChanged,

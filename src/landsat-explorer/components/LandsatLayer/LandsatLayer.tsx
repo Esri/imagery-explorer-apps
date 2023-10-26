@@ -1,4 +1,4 @@
-import MapView from 'esri/views/MapView';
+import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect } from 'react';
 import useLandsatLayer from './useLandsatLayer';
 import { useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import {
     selectActiveAnalysisTool,
 } from '@shared/store/Landsat/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
-import GroupLayer from 'esri/layers/GroupLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 
 type Props = {

@@ -1,6 +1,6 @@
 import React, { FC, useMemo, useState } from 'react';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
-import MapView from 'esri/views/MapView';
+import MapView from '@arcgis/core/views/MapView';
 import { useSelector } from 'react-redux';
 import { ZoomToExtent } from '@shared/components/ZoomToExtent/ZoomToExtent';
 import {

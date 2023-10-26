@@ -2,7 +2,7 @@ import {
     calcSpectralIndex,
     getValFromThermalBand,
 } from '@shared/services/landsat-level-2/helpers';
-import Point from 'esri/geometry/Point';
+import Point from '@arcgis/core/geometry/Point';
 
 export const getLoadingIndicator = () => {
     const popupDiv = document.createElement('div');

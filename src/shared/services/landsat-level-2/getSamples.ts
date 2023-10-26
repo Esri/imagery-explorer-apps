@@ -1,4 +1,4 @@
-import { Point } from 'esri/geometry';
+import { Point } from '@arcgis/core/geometry';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 
 export type LandsatSampleData = {

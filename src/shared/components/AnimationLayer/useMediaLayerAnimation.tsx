@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import IImageElement from 'esri/layers/support/ImageElement';
+import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type Props = {

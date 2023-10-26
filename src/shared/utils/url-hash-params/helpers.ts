@@ -5,7 +5,7 @@ import {
 } from '@shared/store/TrendTool/reducer';
 import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
-import { Point } from 'esri/geometry';
+import { Point } from '@arcgis/core/geometry';
 import { getCurrentYear } from '../date-time/getCurrentDateTime';
 import {
     MaskToolState,

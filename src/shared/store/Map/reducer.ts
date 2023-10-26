@@ -5,7 +5,7 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { MAP_CENTER, MAP_ZOOM, WEB_MAP_ID } from '../../constants/map';
-import Point from 'esri/geometry/Point';
+import Point from '@arcgis/core/geometry/Point';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 

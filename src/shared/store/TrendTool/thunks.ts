@@ -1,4 +1,4 @@
-import { Point } from 'esri/geometry';
+import { Point } from '@arcgis/core/geometry';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
     trendToolDataUpdated,

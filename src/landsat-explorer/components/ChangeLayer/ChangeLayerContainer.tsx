@@ -1,4 +1,4 @@
-import MapView from 'esri/views/MapView';
+import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -7,7 +7,7 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/Landsat/selectors';
-import GroupLayer from 'esri/layers/GroupLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { ChangeLayer } from './ChangeLayer';
 import {
     selectChangeCompareLayerIsOn,

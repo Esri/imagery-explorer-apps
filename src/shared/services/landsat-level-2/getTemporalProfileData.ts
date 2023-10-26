@@ -1,4 +1,4 @@
-import { Point } from 'esri/geometry';
+import { Point } from '@arcgis/core/geometry';
 import { getLandsatScenes } from './getLandsatScenes';
 import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';

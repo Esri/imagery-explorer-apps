@@ -4,7 +4,7 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import Point from 'esri/geometry/Point';
+import Point from '@arcgis/core/geometry/Point';
 
 export type SpectralProfileToolState = {
     /**

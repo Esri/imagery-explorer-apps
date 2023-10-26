@@ -22,7 +22,7 @@ import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
 // import { queryLocation4TrendToolChanged } from '@shared/store/TrendTool/reducer';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
-import { Point } from 'esri/geometry';
+import { Point } from '@arcgis/core/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
 import SearchWidget from './SearchWidget';

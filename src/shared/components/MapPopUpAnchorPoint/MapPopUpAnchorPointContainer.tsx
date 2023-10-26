@@ -1,6 +1,6 @@
-import MapView from 'esri/views/MapView';
+import MapView from '@arcgis/core/views/MapView';
 import React, { FC } from 'react';
-import GroupLayer from 'esri/layers/GroupLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { MapPopUpAnchorPoint } from './MapPopUpAnchorPoint';
 import { useSelector } from 'react-redux';
 import { selectMapPopupAnchorLocation } from '@shared/store/Map/selectors';

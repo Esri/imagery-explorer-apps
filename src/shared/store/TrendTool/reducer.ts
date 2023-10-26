@@ -9,7 +9,7 @@ import {
     getCurrentYear,
 } from '@shared/utils/date-time/getCurrentDateTime';
 import { TemporalProfileData, SpectralIndex } from '@typing/imagery-service';
-import { Point } from 'esri/geometry';
+import { Point } from '@arcgis/core/geometry';
 
 /**
  * The trend tool has two options

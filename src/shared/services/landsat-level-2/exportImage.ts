@@ -1,4 +1,4 @@
-import IExtent from 'esri/geometry/Extent';
+import IExtent from '@arcgis/core/geometry/Extent';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import { getMosaicRuleByObjectId } from './helpers';
 
