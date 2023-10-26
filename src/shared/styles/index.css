@@ -30,6 +30,6 @@
     }
 }
 
-#root .esri-view .esri-view-surface--inset-outline:focus::after {
-    outline: 0;
+#root .esri-view-root {
+    --esri-view-outline: 0;
 }

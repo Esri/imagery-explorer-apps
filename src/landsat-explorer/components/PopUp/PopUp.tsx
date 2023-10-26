@@ -20,7 +20,7 @@ import {
     identify,
 } from '@shared/services/landsat-level-2/identify';
 import { getFormattedLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
-import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
+// import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {
     mapView?: MapView;
@@ -199,7 +199,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
                 'MMM dd, yyyy'
             )}`;
 
-            mapView.popup.open({
+            mapView.openPopup({
                 // Set the popup's title to the coordinates of the location
                 title: title,
                 location: mapPoint, // Set the location of the popup to the clicked location

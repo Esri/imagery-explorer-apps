@@ -1,10 +1,9 @@
-.esri-view-width-xlarge .esri-popup__main-container {
-    width: 220px;
+.esri-popup__main-container {
+    --calcite-ui-foreground-1: var(--custom-background);
 }
 
-.esri-popup__header-title {
-    font-size: 12px !important;
-    @apply text-custom-light-blue;
+.esri-view-width-xlarge .esri-popup__main-container {
+    width: 220px;
 }
 
 .esri-popup__inline-actions-container,
@@ -14,21 +13,20 @@
     display: none;
 }
 
-/* .esri-popup__header-container.esri-popup__header-container--button{
-    pointer-events: none;
-} */
-
-.esri-popup__main-container,
-.esri-popup__header {
-    /* background: rgba(0,35,47, .85); */
-    @apply bg-custom-background;
+.esri-widget__heading {
+    font-size: 12px !important;
+    @apply text-custom-light-blue;
 }
 
-.esri-popup__main-container .esri-popup__content {
-    --calcite-ui-background: var(--custom-background);
+.esri-popup__main-container calcite-action[title="Dock"] {
+    display: none;
 }
 
-.esri-popup__header-container--button:hover,
+.esri-popup__main-container calcite-action-bar {
+    display: none;
+}
+
+/* .esri-popup__header-container--button:hover,
 .esri-popup__button:hover {
     @apply bg-custom-background-95;
-}
+} */
