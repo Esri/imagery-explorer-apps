@@ -1,13 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import IImageryLayer from 'esri/layers/ImageryLayer';
-import { loadModules } from 'esri-loader';
-import IMosaicRule from 'esri/layers/support/MosaicRule';
+import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
+import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
-import MapView from 'esri/views/MapView';
+import MapView from '@arcgis/core/views/MapView';
 import { getMosaicRule } from '../LandsatLayer/useLandsatLayer';
-import IRasterFunction from 'esri/layers/support/RasterFunction';
-import PixelBlock from 'esri/layers/support/PixelBlock';
-import GroupLayer from 'esri/layers/GroupLayer';
+import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
+import PixelBlock from '@arcgis/core/layers/support/PixelBlock';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { SpectralIndex } from '@typing/imagery-service';
 
@@ -50,16 +49,10 @@ type PixelData = {
 
 export const getRasterFunctionBySpectralIndex = async (
     spectralIndex: SpectralIndex
-): Promise<IRasterFunction> => {
+): Promise<RasterFunction> => {
     if (!spectralIndex) {
         return null;
     }
-
-    type Modules = [typeof IRasterFunction];
-
-    const [RasterFunction] = await (loadModules([
-        'esri/layers/support/RasterFunction',
-    ]) as Promise<Modules>);
 
     return new RasterFunction({
         functionName: 'BandArithmetic',
@@ -82,7 +75,7 @@ export const MaskLayer: FC<Props> = ({
     opacity,
     shouldClip,
 }) => {
-    const layerRef = useRef<IImageryLayer>();
+    const layerRef = useRef<ImageryLayer>();
 
     const selectedRangeRef = useRef<number[]>();
 
@@ -92,12 +85,6 @@ export const MaskLayer: FC<Props> = ({
      * initialize landsat layer using mosaic created using the input year
      */
     const init = async () => {
-        type Modules = [typeof IImageryLayer];
-
-        const [ImageryLayer] = await (loadModules([
-            'esri/layers/ImageryLayer',
-        ]) as Promise<Modules>);
-
         const mosaicRule = objectId ? await getMosaicRule(objectId) : null;
 
         const rasterFunction = await getRasterFunctionBySpectralIndex(

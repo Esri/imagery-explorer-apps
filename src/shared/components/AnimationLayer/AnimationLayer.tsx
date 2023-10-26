@@ -1,8 +1,7 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import IMapView from 'esri/views/MapView';
-import IMediaLayer from 'esri/layers/MediaLayer';
-import { loadModules } from 'esri-loader';
+import MapView from '@arcgis/core/views/MapView';
+import MediaLayer from '@arcgis/core/layers/MediaLayer';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
@@ -21,13 +20,13 @@ import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/Anim
 import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 
 type Props = {
-    mapView?: IMapView;
+    mapView?: MapView;
 };
 
 export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
     const dispatch = useDispatch();
 
-    const mediaLayerRef = useRef<IMediaLayer>();
+    const mediaLayerRef = useRef<MediaLayer>();
 
     const animationStatus = useSelector(selectAnimationStatus);
 
@@ -86,13 +85,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
     });
 
     const initMediaLayer = async () => {
-        type Modules = [typeof IMediaLayer];
-
         try {
-            const [MediaLayer] = await (loadModules([
-                'esri/layers/MediaLayer',
-            ]) as Promise<Modules>);
-
             mediaLayerRef.current = new MediaLayer({
                 visible: true,
                 // effect: LandCoverLayerEffect,

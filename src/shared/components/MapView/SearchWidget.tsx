@@ -1,22 +1,21 @@
 import React, { useRef } from 'react';
 
-import { loadModules } from 'esri-loader';
-import IMapView from 'esri/views/MapView';
-import IExtent from 'esri/geometry/Extent';
-import IGraphic from 'esri/Graphic';
-import ISearchWidget from 'esri/widgets/Search';
+import MapView from '@arcgis/core/views/MapView';
+import Extent from '@arcgis/core/geometry/Extent';
+import Graphic from '@arcgis/core/Graphic';
+import ArcGISSearchWidget from '@arcgis/core/widgets/Search';
 import classNames from 'classnames';
 
 type SearchResult = {
-    extent: IExtent;
-    feature: IGraphic;
+    extent: Extent;
+    feature: Graphic;
     name: string;
     target: string;
 };
 
 type Props = {
     // containerId?: string;
-    mapView?: IMapView;
+    mapView?: MapView;
     hide?: boolean;
     searchCompletedHandler?: (result: SearchResult) => void;
 };
@@ -30,37 +29,27 @@ const SearchWidget: React.FC<Props> = ({
     const containerRef = useRef<HTMLDivElement>();
 
     const init = async () => {
-        type Modules = [typeof ISearchWidget];
+        const searchWidget = new ArcGISSearchWidget({
+            view: mapView,
+            resultGraphicEnabled: false,
+            popupEnabled: false,
+            container: containerRef.current,
+        });
 
-        try {
-            const [Search] = await (loadModules([
-                'esri/widgets/Search',
-            ]) as Promise<Modules>);
+        // mapView.ui.add(searchWidget, 'top-right');
 
-            const searchWidget = new Search({
-                view: mapView,
-                resultGraphicEnabled: false,
-                popupEnabled: false,
-                container: containerRef.current,
+        if (searchCompletedHandler) {
+            searchWidget.on('search-complete', (evt) => {
+                if (
+                    searchWidget.results[0] &&
+                    searchWidget?.results[0]?.results[0]
+                ) {
+                    const searchResult: SearchResult =
+                        searchWidget.results[0].results[0];
+                    // console.log(searchResultGeom);
+                    searchCompletedHandler(searchResult);
+                }
             });
-
-            // mapView.ui.add(searchWidget, 'top-right');
-
-            if (searchCompletedHandler) {
-                searchWidget.on('search-complete', (evt) => {
-                    if (
-                        searchWidget.results[0] &&
-                        searchWidget?.results[0]?.results[0]
-                    ) {
-                        const searchResult: SearchResult =
-                            searchWidget.results[0].results[0];
-                        // console.log(searchResultGeom);
-                        searchCompletedHandler(searchResult);
-                    }
-                });
-            }
-        } catch (err) {
-            console.error(err);
         }
     };
 

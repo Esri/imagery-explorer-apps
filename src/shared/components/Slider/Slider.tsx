@@ -1,8 +1,6 @@
 import './Slider.css';
 import React, { FC, useEffect, useRef } from 'react';
-import ISlider from 'esri/widgets/Slider';
-import { loadModules } from 'esri-loader';
-import classNames from 'classnames';
+import SliderWidget from '@arcgis/core/widgets/Slider';
 
 type Props = {
     /**
@@ -24,39 +22,27 @@ type Props = {
 export const Slider: FC<Props> = ({ value, steps, onChange }) => {
     const containerRef = useRef<HTMLDivElement>();
 
-    const sliderRef = useRef<ISlider>();
+    const sliderRef = useRef<SliderWidget>();
 
     const init = async () => {
-        type Modules = [typeof ISlider];
+        sliderRef.current = new SliderWidget({
+            container: containerRef.current,
+            min: 0,
+            max: 1,
+            steps: steps || [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            values: [value],
+            snapOnClickEnabled: false,
+            visibleElements: {
+                labels: false,
+                rangeLabels: false,
+            },
+            // layout: 'vertical',
+        });
 
-        try {
-            const [Slider] = await (loadModules([
-                'esri/widgets/Slider',
-            ]) as Promise<Modules>);
-
-            sliderRef.current = new Slider({
-                container: containerRef.current,
-                min: 0,
-                max: 1,
-                steps: steps || [
-                    0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
-                ],
-                values: [value],
-                snapOnClickEnabled: false,
-                visibleElements: {
-                    labels: false,
-                    rangeLabels: false,
-                },
-                // layout: 'vertical',
-            });
-
-            sliderRef.current.on('thumb-drag', (evt) => {
-                const value = +evt.value;
-                onChange(value);
-            });
-        } catch (err) {
-            console.error(err);
-        }
+        sliderRef.current.on('thumb-drag', (evt) => {
+            const value = +evt.value;
+            onChange(value);
+        });
     };
 
     useEffect(() => {

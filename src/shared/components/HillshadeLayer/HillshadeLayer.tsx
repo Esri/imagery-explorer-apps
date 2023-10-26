@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 
-import { loadModules } from 'esri-loader';
-import IMapView from 'esri/views/MapView';
-import ITileLayer from 'esri/layers/TileLayer';
+import MapView from '@arcgis/core/views/MapView';
+import TileLayer from '@arcgis/core/layers/TileLayer';
 import {
     TERRAIN_LAYER_ITEM_ID,
     TERRAIN_LAYER_TITLE,
@@ -12,21 +11,15 @@ import { selectShowTerrain } from '@shared/store/Map/selectors';
 
 type Props = {
     // containerId?: string;
-    mapView?: IMapView;
+    mapView?: MapView;
 };
 
 export const HillshadeLayer: FC<Props> = ({ mapView }) => {
     const visible = useSelector(selectShowTerrain);
 
-    const terrainLayerRef = useRef<ITileLayer>();
+    const terrainLayerRef = useRef<TileLayer>();
 
     const init = async () => {
-        type Modules = [typeof ITileLayer];
-
-        const [TileLayer] = await (loadModules([
-            'esri/layers/TileLayer',
-        ]) as Promise<Modules>);
-
         terrainLayerRef.current = new TileLayer({
             title: TERRAIN_LAYER_TITLE,
             portalItem: {

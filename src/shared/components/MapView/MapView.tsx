@@ -1,10 +1,9 @@
 import './CustomMapViewStyle.css';
 import React, { useEffect, useState, useRef } from 'react';
 
-import { loadModules } from 'esri-loader';
-import IMapView from 'esri/views/MapView';
-import IWebMap from 'esri/WebMap';
-import ITileInfo from 'esri/layers/support/TileInfo';
+import ArcGISMapView from '@arcgis/core/views/MapView';
+import WebMap from '@arcgis/core/WebMap';
+import TileInfo from '@arcgis/core/layers/support/TileInfo';
 import classNames from 'classnames';
 
 interface Props {
@@ -39,71 +38,41 @@ const MapView: React.FC<Props> = ({
 }: Props) => {
     const mapDivRef = useRef<HTMLDivElement>();
 
-    const [mapView, setMapView] = useState<IMapView>(null);
+    const [mapView, setMapView] = useState<ArcGISMapView>(null);
 
-    const mapViewRef = useRef<IMapView>();
+    const mapViewRef = useRef<ArcGISMapView>();
 
     const initMapView = async () => {
-        type Modules = [typeof IMapView, typeof IWebMap, typeof ITileInfo];
-
-        try {
-            const [MapView, WebMap, TileInfo] = await (loadModules([
-                'esri/views/MapView',
-                'esri/WebMap',
-                'esri/layers/support/TileInfo',
-            ]) as Promise<Modules>);
-
-            mapViewRef.current = new MapView({
-                container: mapDivRef.current,
-                center,
-                zoom,
-                map: new WebMap({
-                    portalItem: {
-                        id: webmapId,
-                    },
-                }),
-                constraints: {
-                    lods: TileInfo.create().lods,
-                    snapToZoom: false,
+        mapViewRef.current = new ArcGISMapView({
+            container: mapDivRef.current,
+            center,
+            zoom,
+            map: new WebMap({
+                portalItem: {
+                    id: webmapId,
                 },
-                popup: {
-                    autoOpenEnabled: false,
-                },
-            });
+            }),
+            constraints: {
+                lods: TileInfo.create().lods,
+                snapToZoom: false,
+            },
+            popup: {
+                autoOpenEnabled: false,
+            },
+        });
 
-            mapViewRef.current.when(() => {
-                setMapView(mapViewRef.current);
+        mapViewRef.current.when(() => {
+            setMapView(mapViewRef.current);
 
-                //The magnifier will be displayed whenever the cursor hovers over the map.
-                mapViewRef.current.on('pointer-move', function (event) {
-                    mapViewRef.current.magnifier.position = {
-                        x: event.x,
-                        y: event.y,
-                    };
-                });
+            //The magnifier will be displayed whenever the cursor hovers over the map.
+            mapViewRef.current.on('pointer-move', function (event) {
+                mapViewRef.current.magnifier.position = {
+                    x: event.x,
+                    y: event.y,
+                };
             });
-        } catch (err) {
-            console.error(err);
-        }
+        });
     };
-
-    // const updateWebmap = async () => {
-    //     type Modules = [typeof IWebMap];
-
-    //     try {
-    //         const [WebMap] = await (loadModules([
-    //             'esri/WebMap',
-    //         ]) as Promise<Modules>);
-
-    //         mapView.map = new WebMap({
-    //             portalItem: {
-    //                 id: webmapId,
-    //             },
-    //         });
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
 
     useEffect(() => {
         // loadCss();

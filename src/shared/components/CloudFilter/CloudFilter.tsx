@@ -1,6 +1,4 @@
 import React, { FC, useEffect, useMemo, useRef } from 'react';
-import ISlider from 'esri/widgets/Slider';
-import { loadModules } from 'esri-loader';
 import classNames from 'classnames';
 import { Slider } from '../Slider/Slider';
 

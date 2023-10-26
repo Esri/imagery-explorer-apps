@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
-import ISlider from 'esri/widgets/Slider';
-import { loadModules } from 'esri-loader';
+import SliderWidget from '@arcgis/core/widgets/Slider';
 // import classNames from 'classnames';
 import './PixelRangeSlider.css';
 import classNames from 'classnames';
@@ -59,53 +58,43 @@ export const PixelRangeSlider: FC<Props> = ({
 }) => {
     const containerRef = useRef<HTMLDivElement>();
 
-    const sliderRef = useRef<ISlider>();
+    const sliderRef = useRef<SliderWidget>();
 
     const init = async () => {
-        type Modules = [typeof ISlider];
-
-        try {
-            const [Slider] = await (loadModules([
-                'esri/widgets/Slider',
-            ]) as Promise<Modules>);
-
-            sliderRef.current = new Slider({
-                container: containerRef.current,
-                min,
-                max,
-                steps,
-                values,
-                snapOnClickEnabled: false,
-                visibleElements: {
-                    labels: false,
-                    rangeLabels: false,
+        sliderRef.current = new SliderWidget({
+            container: containerRef.current,
+            min,
+            max,
+            steps,
+            values,
+            snapOnClickEnabled: false,
+            visibleElements: {
+                labels: false,
+                rangeLabels: false,
+            },
+            tickConfigs: [
+                {
+                    mode: 'count',
+                    values: countOfTicks,
                 },
-                tickConfigs: [
-                    {
-                        mode: 'count',
-                        values: countOfTicks,
-                    },
-                    {
-                        mode: 'position',
-                        values: tickLabels, //[-1, -0.5, 0, 0.5, 1],
-                        labelsVisible: true,
-                    },
-                ],
-                // layout: 'vertical',
-            });
+                {
+                    mode: 'position',
+                    values: tickLabels, //[-1, -0.5, 0, 0.5, 1],
+                    labelsVisible: true,
+                },
+            ],
+            // layout: 'vertical',
+        });
 
-            sliderRef.current.on('thumb-drag', (evt) => {
-                // const { value, index } = evt;
-                // valOnChange(index, value);
-                valuesOnChange(sliderRef.current.values);
-            });
+        sliderRef.current.on('thumb-drag', (evt) => {
+            // const { value, index } = evt;
+            // valOnChange(index, value);
+            valuesOnChange(sliderRef.current.values);
+        });
 
-            sliderRef.current.on('segment-drag', (evt) => {
-                valuesOnChange(sliderRef.current.values);
-            });
-        } catch (err) {
-            console.error(err);
-        }
+        sliderRef.current.on('segment-drag', (evt) => {
+            valuesOnChange(sliderRef.current.values);
+        });
     };
 
     /**

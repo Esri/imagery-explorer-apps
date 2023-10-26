@@ -1,7 +1,6 @@
-import { loadModules } from 'esri-loader';
-import IReactiveUtils from 'esri/core/reactiveUtils';
-import { Extent, Point } from 'esri/geometry';
-import MapView from 'esri/views/MapView';
+import { watch } from '@arcgis/core/core/reactiveUtils';
+import { Extent, Point } from '@arcgis/core/geometry';
+import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect } from 'react';
 
 type Props = {
@@ -32,14 +31,8 @@ const EventHandlers: FC<Props> = ({
     mapViewUpdatingOnChange,
 }) => {
     const initEventHandlers = async () => {
-        type Modules = [typeof IReactiveUtils];
-
-        const [reactiveUtils] = await (loadModules([
-            'esri/core/reactiveUtils',
-        ]) as Promise<Modules>);
-
         if (onStationary) {
-            reactiveUtils.watch(
+            watch(
                 // getValue function
                 () => mapView.stationary,
                 // callback
@@ -62,7 +55,7 @@ const EventHandlers: FC<Props> = ({
             });
         }
 
-        reactiveUtils.watch(
+        watch(
             () => mapView.updating,
             () => {
                 // console.log('mapview is updating')

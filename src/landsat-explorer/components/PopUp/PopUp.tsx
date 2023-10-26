@@ -1,7 +1,7 @@
 import './PopUp.css';
 import React, { FC, useCallback, useEffect, useRef } from 'react';
-import IMapView from 'esri/views/MapView';
-import IPoint from 'esri/geometry/Point';
+import MapView from '@arcgis/core/views/MapView';
+import Point from '@arcgis/core/geometry/Point';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
@@ -14,8 +14,7 @@ import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getLoadingIndicator, getMainContent } from './helper';
-import IReactiveUtils from 'esri/core/reactiveUtils';
-import { loadModules } from 'esri-loader';
+import { watch } from '@arcgis/core/core/reactiveUtils';
 import {
     getPixelValuesFromIdentifyTaskResponse,
     identify,
@@ -24,10 +23,10 @@ import { getFormattedLandsatScenes } from '@shared/services/landsat-level-2/getL
 import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {
-    mapView?: IMapView;
+    mapView?: MapView;
 };
 
-type MapViewOnClickHandler = (mapPoint: IPoint, mousePointX: number) => void;
+type MapViewOnClickHandler = (mapPoint: Point, mousePointX: number) => void;
 
 let controller: AbortController = null;
 
@@ -76,7 +75,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         dispatch(popupAnchorLocationChanged(null));
     };
 
-    openPopupRef.current = async (mapPoint: IPoint, mousePointX: number) => {
+    openPopupRef.current = async (mapPoint: Point, mousePointX: number) => {
         // no need to show pop-up if in Animation Mode
         if (mode === 'animate') {
             return;
@@ -225,7 +224,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
     const init = async () => {
         // It's necessary to overwrite the default click for the popup
         // behavior in order to display your own popup
-        mapView.popup.autoOpenEnabled = false;
+        mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
         mapView.popup.collapseEnabled = false;
         mapView.popup.alignment = 'bottom-right';
@@ -234,13 +233,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
             openPopupRef.current(evt.mapPoint, evt.x);
         });
 
-        type Modules = [typeof IReactiveUtils];
-
-        const [reactiveUtils] = await (loadModules([
-            'esri/core/reactiveUtils',
-        ]) as Promise<Modules>);
-
-        reactiveUtils.watch(
+        watch(
             () => mapView.popup.visible,
             (visible) => {
                 // console.log('mapview popup updated', visible)

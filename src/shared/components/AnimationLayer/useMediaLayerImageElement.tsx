@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import IMapView from 'esri/views/MapView';
-import IImageElement from 'esri/layers/support/ImageElement';
-import IExtentAndRotationGeoreference from 'esri/layers/support/ExtentAndRotationGeoreference';
-import { loadModules } from 'esri-loader';
+import MapView from '@arcgis/core/views/MapView';
+import ImageElement from '@arcgis/core/layers/support/ImageElement';
+import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAndRotationGeoreference';
 import { AnimationStatus } from '@shared/store/UI/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { exportImage as exportLandsatImage } from '@shared/services/landsat-level-2/exportImage';
 
 type Props = {
-    mapView?: IMapView;
+    mapView?: MapView;
     animationStatus: AnimationStatus;
     QueryParams4ImageryScenes: QueryParams4ImageryScene[];
 };
@@ -18,7 +17,7 @@ const useMediaLayerImageElement = ({
     animationStatus,
     QueryParams4ImageryScenes,
 }: Props) => {
-    const [imageElements, setImageElements] = useState<IImageElement[]>(null);
+    const [imageElements, setImageElements] = useState<ImageElement[]>(null);
 
     const abortControllerRef = useRef<AbortController>();
 
@@ -29,22 +28,11 @@ const useMediaLayerImageElement = ({
             return;
         }
 
-        type Modules = [
-            typeof IImageElement,
-            typeof IExtentAndRotationGeoreference
-        ];
-
         // use a new abort controller so the pending requests can be cancelled
         // if user quits animation mode before the responses are returned
         abortControllerRef.current = new AbortController();
 
         try {
-            const [ImageElement, ExtentAndRotationGeoreference] =
-                await (loadModules([
-                    'esri/layers/support/ImageElement',
-                    'esri/layers/support/ExtentAndRotationGeoreference',
-                ]) as Promise<Modules>);
-
             const { extent, width, height } = mapView;
 
             const { xmin, ymin, xmax, ymax } = extent;

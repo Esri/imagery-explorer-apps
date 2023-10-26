@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
-import MapView from 'esri/views/MapView';
-import IGroupLayer from 'esri/layers/GroupLayer';
-import { loadModules } from 'esri-loader';
+import MapView from '@arcgis/core/views/MapView';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
     index?: number;
@@ -17,15 +16,9 @@ export const GroupLayerWrapper: FC<Props> = ({
     mapView,
     children,
 }: Props) => {
-    const [groupLayer, setGroupLayer] = useState<IGroupLayer>();
+    const [groupLayer, setGroupLayer] = useState<GroupLayer>();
 
     const initGroupLayer = async () => {
-        type Modules = [typeof IGroupLayer];
-
-        const [GroupLayer] = await (loadModules([
-            'esri/layers/GroupLayer',
-        ]) as Promise<Modules>);
-
         const groupLayer = new GroupLayer();
 
         mapView.map.add(groupLayer, index);

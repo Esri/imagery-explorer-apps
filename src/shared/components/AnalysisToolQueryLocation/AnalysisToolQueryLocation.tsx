@@ -1,9 +1,8 @@
-import { loadModules } from 'esri-loader';
-import IGraphic from 'esri/Graphic';
-import { Point } from 'esri/geometry';
-import IGraphicsLayer from 'esri/layers/GraphicsLayer';
-import GroupLayer from 'esri/layers/GroupLayer';
-import MapView from 'esri/views/MapView';
+import Graphic from '@arcgis/core/Graphic';
+import { Point } from '@arcgis/core/geometry';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useRef } from 'react';
 import IconImage from '../../statics/img/map-anchor.png';
 import { SizeOfMapAnchorImage } from '@shared/constants/UI';
@@ -21,16 +20,10 @@ export const AnalysisToolQueryLocation: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const graphicLayerRef = useRef<IGraphicsLayer>();
+    const graphicLayerRef = useRef<GraphicsLayer>();
 
     const init = async () => {
-        type Modules = [typeof IGraphicsLayer];
-
         try {
-            const [GraphicsLayer] = await (loadModules([
-                'esri/layers/GraphicsLayer',
-            ]) as Promise<Modules>);
-
             graphicLayerRef.current = new GraphicsLayer({
                 // effect: 'drop-shadow(2px, 2px, 3px, #000)',
                 visible,
@@ -43,13 +36,7 @@ export const AnalysisToolQueryLocation: FC<Props> = ({
     };
 
     const showQueryLocation = async () => {
-        type Modules = [typeof IGraphic];
-
         try {
-            const [Graphic] = await (loadModules([
-                'esri/Graphic',
-            ]) as Promise<Modules>);
-
             graphicLayerRef.current.removeAll();
 
             const point = new Graphic({

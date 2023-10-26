@@ -1,11 +1,10 @@
 import './style.css';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 
-import ISwipe from 'esri/widgets/Swipe';
-import MapView from 'esri/views/MapView';
-import { loadModules } from 'esri-loader';
-import IReactiveUtils from 'esri/core/reactiveUtils';
-import ImageryLayer from 'esri/layers/ImageryLayer';
+import Swipe from '@arcgis/core/widgets/Swipe';
+import MapView from '@arcgis/core/views/MapView';
+import { watch } from '@arcgis/core/core/reactiveUtils';
+import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 
 type Props = {
     /**
@@ -39,16 +38,9 @@ const SwipeWidget: FC<Props> = ({
     positionOnChange,
     referenceInfoOnToggle,
 }: Props) => {
-    const swipeWidgetRef = useRef<ISwipe>();
+    const swipeWidgetRef = useRef<Swipe>();
 
     const init = async () => {
-        type Modules = [typeof ISwipe, typeof IReactiveUtils];
-
-        const [Swipe, reactiveUtils] = await (loadModules([
-            'esri/widgets/Swipe',
-            'esri/core/reactiveUtils',
-        ]) as Promise<Modules>);
-
         // this swipe widget layers should be added at index of one so that the
         // hillsahde/terrain layer can be added on top of it with blend mode applied
         mapView.map.addMany([leadingLayer, trailingLayer], 1);
@@ -65,7 +57,7 @@ const SwipeWidget: FC<Props> = ({
         // console.log(swipeWidgetRef.current)
         mapView.ui.add(swipeWidgetRef.current);
 
-        reactiveUtils.watch(
+        watch(
             () => swipeWidgetRef.current.position,
             (position: number) => {
                 // console.log('position changes for swipe widget', position);

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import IImageryLayer from 'esri/layers/ImageryLayer';
-import { loadModules } from 'esri-loader';
-import IMosaicRule from 'esri/layers/support/MosaicRule';
+import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
+import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 
 type Props = {
@@ -26,16 +25,10 @@ type Props = {
  *
  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-MosaicRule.html
  */
-export const getMosaicRule = async (objectId: number): Promise<IMosaicRule> => {
+export const getMosaicRule = async (objectId: number): Promise<MosaicRule> => {
     if (!objectId) {
         return null;
     }
-
-    type Modules = [typeof IMosaicRule];
-
-    const [MosaicRule] = await (loadModules([
-        'esri/layers/support/MosaicRule',
-    ]) as Promise<Modules>);
 
     // {"mosaicMethod":"esriMosaicLockRaster","where":"objectid in (2969545)","ascending":false,"lockRasterIds":[2969545]}
     return new MosaicRule({
@@ -53,20 +46,14 @@ export const getMosaicRule = async (objectId: number): Promise<IMosaicRule> => {
  * @returns {IImageryLayer} - The Landsat-2 Imagery Layer.
  */
 const useLandsatLayer = ({ visible, rasterFunction, objectId }: Props) => {
-    const layerRef = useRef<IImageryLayer>();
+    const layerRef = useRef<ImageryLayer>();
 
-    const [landsatLayer, setLandsatLayer] = useState<IImageryLayer>();
+    const [landsatLayer, setLandsatLayer] = useState<ImageryLayer>();
 
     /**
      * initialize landsat layer using mosaic created using the input year
      */
     const init = async () => {
-        type Modules = [typeof IImageryLayer];
-
-        const [ImageryLayer] = await (loadModules([
-            'esri/layers/ImageryLayer',
-        ]) as Promise<Modules>);
-
         const mosaicRule = objectId ? await getMosaicRule(objectId) : null;
 
         layerRef.current = new ImageryLayer({
