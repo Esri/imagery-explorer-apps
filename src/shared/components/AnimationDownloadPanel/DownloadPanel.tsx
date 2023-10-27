@@ -227,7 +227,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
             {previewWindowSize && (
                 <PreviewWindow
-                    size={previewWindowSize}
+                    previewWindowSize={previewWindowSize}
                     mapViewWindowSize={mapViewWindowSize}
                 />
             )}

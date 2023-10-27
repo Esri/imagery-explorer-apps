@@ -9,7 +9,7 @@ type Props = {
     /**
      * dimension of the preview window
      */
-    size: Dimension;
+    previewWindowSize: Dimension;
     /**
      * dimension of the map view window
      */
@@ -21,7 +21,10 @@ type Props = {
  * @param param0
  * @returns
  */
-export const PreviewWindow: FC<Props> = ({ size, mapViewWindowSize }) => {
+export const PreviewWindow: FC<Props> = ({
+    previewWindowSize,
+    mapViewWindowSize,
+}) => {
     /**
      * useMemo Hook for Adjusting Window Size
      *
@@ -33,31 +36,25 @@ export const PreviewWindow: FC<Props> = ({ size, mapViewWindowSize }) => {
      * @returns {WindowSize | null} - The adjusted window size, or null if `size` is falsy.
      */
     const adjustedSize: Dimension = useMemo(() => {
-        if (!size) {
+        if (!previewWindowSize) {
             return null;
         }
 
-        // Check if the preview window size is smaller than or equal to the map view window size.
-        // If it already fits within the map view window, return the original size.
-        if (
-            size.height <= mapViewWindowSize.height &&
-            size.width <= mapViewWindowSize.width
-        ) {
-            return size;
+        // Calculate the aspect ratio of the user selected output size size.
+        const aspectRatio = previewWindowSize.width / previewWindowSize.height;
+
+        if (mapViewWindowSize.height > mapViewWindowSize.width) {
+            return {
+                width: mapViewWindowSize.width,
+                height: mapViewWindowSize.width * (1 / aspectRatio),
+            };
         }
 
-        // Calculate the scale ratio to adjust the window size.
-        const scaleRatio = Math.min(
-            mapViewWindowSize.height / size.height,
-            mapViewWindowSize.width / size.width
-        );
-
-        // Calculate the adjusted size based on the scale ratio.
         return {
-            height: Math.floor(size.height * scaleRatio),
-            width: Math.floor(size.width * scaleRatio),
+            height: mapViewWindowSize.height,
+            width: mapViewWindowSize.height * aspectRatio,
         };
-    }, [size]);
+    }, [previewWindowSize]);
 
     if (!adjustedSize) {
         return null;
