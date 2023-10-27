@@ -4,6 +4,8 @@ import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
+import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
+import { imageDataToBlob } from '@shared/utils/snippets/imageData2Blob';
 
 type Props = {
     mapView?: MapView;
@@ -26,6 +28,10 @@ export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
             setIsCapturingScreenshot(true);
 
             const screenshot = await mapView.takeScreenshot();
+
+            const blob = await imageDataToBlob(screenshot.data);
+
+            downloadBlob(blob, 'snapshot.png');
 
             setIsCapturingScreenshot(false);
         })();
