@@ -93,44 +93,16 @@ const getImageAsMEMFS = async (params: {
     canvas.width = outputWidth;
     canvas.height = outputHeight;
 
+    const aspectRatio = outputWidth / outputHeight;
+
     // Calculate the dimensions of the portion to be selected from the source image.
-    let sWidth = sourceImageWidth;
+    let sWidth = sourceImageHeight * aspectRatio;
     let sHeight = sourceImageHeight;
 
-    // output video is a horizontal rectangle
-    if (outputHeight < outputWidth) {
-        // try to get the adjusted width and height along the x axis
-        const aspectRatio = outputHeight / outputWidth;
+    // re-calculate sWidth and sHeight if sWidth calculated from previous step is wider that the width of the actual source image
+    if (sWidth > sourceImageWidth) {
         sWidth = sourceImageWidth;
-        sHeight = sourceImageWidth * aspectRatio;
-
-        // adjusted height is bigger than the original height,
-        // re-calculate the width and height along the y axis
-        if (sHeight > sourceImageHeight) {
-            // Calculate the aspect ratio of the output image.
-            const aspectRatio = outputWidth / outputHeight;
-            sHeight = sourceImageHeight;
-            sWidth = sourceImageHeight * aspectRatio;
-        }
-    }
-    //  output video is a vertical rectange
-    else if (outputHeight > outputWidth) {
-        const aspectRatio = outputWidth / outputHeight;
-        sHeight = sourceImageHeight;
-        sWidth = sourceImageHeight * aspectRatio;
-
-        if (sWidth > sourceImageWidth) {
-            // Calculate the scale ratio of the output image.
-            const aspectRatio = outputHeight / outputWidth;
-            sWidth = sourceImageWidth;
-            sHeight = sourceImageWidth * aspectRatio;
-        }
-    }
-    //  output video is a square
-    else {
-        const shorterSide = Math.min(sWidth, sHeight);
-        sWidth = shorterSide;
-        sHeight = shorterSide;
+        sHeight = sourceImageWidth * (1 / aspectRatio);
     }
 
     sWidth = Math.floor(sWidth);

@@ -43,7 +43,10 @@ export const PreviewWindow: FC<Props> = ({
         // Calculate the aspect ratio of the user selected output size size.
         const aspectRatio = previewWindowSize.width / previewWindowSize.height;
 
-        if (mapViewWindowSize.height > mapViewWindowSize.width) {
+        const previewWindowHeight = mapViewWindowSize.height;
+        const previewWindowWidth = previewWindowHeight * aspectRatio;
+
+        if (previewWindowWidth > mapViewWindowSize.width) {
             return {
                 width: mapViewWindowSize.width,
                 height: mapViewWindowSize.width * (1 / aspectRatio),
@@ -51,8 +54,8 @@ export const PreviewWindow: FC<Props> = ({
         }
 
         return {
-            height: mapViewWindowSize.height,
-            width: mapViewWindowSize.height * aspectRatio,
+            height: previewWindowHeight,
+            width: previewWindowWidth,
         };
     }, [previewWindowSize]);
 
