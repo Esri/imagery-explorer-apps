@@ -4,26 +4,22 @@ import { map } from 'd3';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
+import { MapActionButton } from '../MapActionButton/MapActionButton';
 
 type Props = {
     /**
      * native scale of the imagery service
      */
     nativeScale: number;
+    tooltip: string;
     mapView?: MapView;
-    /**
-     * tooltip text for the button
-     */
-    tooltip?: string;
 };
 
 export const Zoom2NativeScale: FC<Props> = ({
-    tooltip,
     mapView,
+    tooltip,
     nativeScale,
 }) => {
-    const animationStatus = useSelector(selectAnimationStatus);
-
     const onClickHandler = () => {
         // mapView.scale = 113386;
 
@@ -33,18 +29,12 @@ export const Zoom2NativeScale: FC<Props> = ({
     };
 
     return (
-        <div
-            className={classNames(
-                'absolute left-[16px] top-[130px] w-zoom-button-size h-zoom-button-size z-10 flex items-center justify-center',
-                'bg-custom-background text-custom-light-blue-90 cursor-pointer',
-                {
-                    hidden: animationStatus !== null,
-                }
-            )}
-            title={tooltip}
-            onClick={onClickHandler}
+        <MapActionButton
+            topPosition={130}
+            onClickHandler={onClickHandler}
+            tooltip={tooltip}
         >
             <span className="text-sm italic">1:1</span>
-        </div>
+        </MapActionButton>
     );
 };
