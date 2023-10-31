@@ -1,12 +1,14 @@
 import {
     showMapLabelToggled,
     showTerrainToggled,
+    showBasemapToggled,
 } from '@shared/store/Map/reducer';
 import {
     selectShowMapLabel,
     selectShowTerrain,
+    selectShowBasemap,
 } from '@shared/store/Map/selectors';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+// import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -55,7 +57,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({
 }: ToggleButtonProps) => {
     return (
         <div
-            className="w-1/2 cursor-pointer z-10 flex items-center"
+            className="mx-2 cursor-pointer z-10 flex items-center"
             onClick={onToggle}
         >
             {active ? CheckIcon : UncheckIcon}
@@ -75,10 +77,12 @@ export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
 
     const showTerrain = useSelector(selectShowTerrain);
 
+    const showBasemap = useSelector(selectShowBasemap);
+
     return (
         <div
             className={classNames(
-                'absolute w-search-widget-width bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-layer-toggle-top-position-mobile md:top-layer-toggle-top-position',
+                'absolute w-search-widget-width bg-custom-background flex py-2 px-1 text-custom-light-blue text-xs top-layer-toggle-top-position-mobile md:top-layer-toggle-top-position',
                 {
                     hidden: shoudHide,
                 }
@@ -102,6 +106,15 @@ export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
                 onToggle={() => {
                     // console.log('toggle Terrain');
                     dispatch(showTerrainToggled());
+                }}
+            />
+
+            <ToggleButton
+                label="Basemap"
+                active={showBasemap}
+                onToggle={() => {
+                    // console.log('toggle Terrain');
+                    dispatch(showBasemapToggled());
                 }}
             />
         </div>
