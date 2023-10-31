@@ -6,7 +6,10 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/Landsat/selectors';
 import { LandsatScene } from '@typing/imagery-service';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectIsAnimationPlaying,
+} from '@shared/store/UI/selectors';
 
 export const useDataFromSelectedLandsatScene = () => {
     /**
@@ -29,10 +32,10 @@ export const useDataFromSelectedLandsatScene = () => {
 
     const mode = useSelector(selectAppMode);
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const animationPlaying = useSelector(selectIsAnimationPlaying);
 
     const landsatScene = useMemo(() => {
-        if (animationStatus !== null) {
+        if (animationPlaying) {
             return null;
         }
 
@@ -60,7 +63,7 @@ export const useDataFromSelectedLandsatScene = () => {
         queryParams4SelectedScene,
         availableScenesByObjectId,
         mode,
-        animationStatus,
+        animationPlaying,
     ]);
 
     return landsatScene;

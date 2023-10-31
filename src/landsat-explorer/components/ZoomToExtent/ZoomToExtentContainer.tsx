@@ -1,5 +1,8 @@
 import React, { FC, useMemo, useState } from 'react';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectIsAnimationPlaying,
+} from '@shared/store/UI/selectors';
 import MapView from '@arcgis/core/views/MapView';
 import { useSelector } from 'react-redux';
 import { ZoomToExtent } from '@shared/components/ZoomToExtent/ZoomToExtent';
@@ -17,7 +20,9 @@ type Props = {
 };
 
 export const ZoomToExtentContainer: FC<Props> = ({ mapView }) => {
-    const animationStatus = useSelector(selectAnimationStatus);
+    // const animationStatus = useSelector(selectAnimationStatus);
+
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     const mode = useSelector(selectAppMode);
 
@@ -61,7 +66,7 @@ export const ZoomToExtentContainer: FC<Props> = ({ mapView }) => {
     return (
         <ZoomToExtent
             disabled={disabled}
-            hidden={animationStatus !== null}
+            hidden={isAnimationPlaying}
             showLoadingIndicator={isLoadingExtent}
             tooltip={'Zoom to Extent'}
             onClick={() => {

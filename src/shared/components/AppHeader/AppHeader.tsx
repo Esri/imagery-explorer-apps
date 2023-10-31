@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { shouldShowAboutThisAppToggled } from '../../store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectIsAnimationPlaying,
+} from '@shared/store/UI/selectors';
 
 type Props = {
     /**
@@ -24,9 +27,7 @@ const IMAGERY_EXPLORER_APPS = [
 const AppHeader: FC<Props> = ({ title }) => {
     const dispatch = useDispatch();
 
-    const animationStatus = useSelector(selectAnimationStatus);
-
-    const shouldHide = animationStatus !== null;
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     const [showImageryExplorerAppsList, setShowImageryExplorerAppsList] =
         useState<boolean>(false);
@@ -43,7 +44,7 @@ const AppHeader: FC<Props> = ({ title }) => {
             className={classNames(
                 'absolute z-10 text-custom-light-blue flex top-0 left-0 right-0 md:top-app-header-position md:left-app-header-position md:right-auto',
                 {
-                    hidden: shouldHide,
+                    hidden: isAnimationPlaying,
                 }
             )}
             ref={containerRef}

@@ -1,4 +1,7 @@
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectIsAnimationPlaying,
+} from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
@@ -39,7 +42,7 @@ export const MapActionButton: FC<Props> = ({
     children,
     onClickHandler,
 }) => {
-    const animationStatus = useSelector(selectAnimationStatus);
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     return (
         <div
@@ -47,7 +50,7 @@ export const MapActionButton: FC<Props> = ({
                 'absolute left-[16px] w-map-action-button-size h-map-action-button-size z-10 flex items-center justify-center',
                 'bg-custom-background text-custom-light-blue-90 cursor-pointer',
                 {
-                    hidden: animationStatus !== null,
+                    hidden: isAnimationPlaying,
                     'is-disabled': disabled,
                 }
             )}

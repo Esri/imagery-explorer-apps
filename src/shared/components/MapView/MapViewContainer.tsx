@@ -13,6 +13,7 @@ import {
 import {
     selectAnimationStatus,
     selectHideBottomPanel,
+    selectIsAnimationPlaying,
 } from '../../store/UI/selectors';
 import EventHandlers from './EventHandlers';
 import { useDispatch } from 'react-redux';
@@ -50,7 +51,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
 
@@ -74,6 +75,14 @@ const MapViewContainer: FC<Props> = ({ children }) => {
         return analysisTool === 'trend' || analysisTool === 'spectral';
     }, [analysisTool, mode]);
 
+    const showMapLoadingIndicator = useMemo(() => {
+        if (isAnimationPlaying) {
+            return false;
+        }
+
+        return isUpdating;
+    }, [isUpdating, isAnimationPlaying]);
+
     useEffect(() => {
         // console.log('map view zoom and center has changed', center, zoom);
         saveMapCenterToHashParams(center, zoom);
@@ -81,11 +90,8 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     useEffect(() => {
         // adding this class will hide map zoom widget when animation mode is on
-        document.body.classList.toggle(
-            'hide-map-control',
-            animationStatus !== null
-        );
-    }, [animationStatus]);
+        document.body.classList.toggle('hide-map-control', isAnimationPlaying);
+    }, [isAnimationPlaying]);
 
     return (
         <div
@@ -140,7 +146,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 />
 
                 <MapLoadingIndicator
-                    active={isUpdating}
+                    active={showMapLoadingIndicator}
                     swipeWidgetHandlerPosition={
                         isSwipeWidgetVisible ? swipeWidgetHandlerPosition : null
                     }
@@ -152,14 +158,12 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                     }
                 />
 
-                <SearchWidget hide={animationStatus !== null} />
+                <SearchWidget hide={isAnimationPlaying} />
 
                 <ReferenceLayers />
             </MapView>
 
-            <ReferenceLayersToggleControl
-                shoudHide={animationStatus !== null}
-            />
+            <ReferenceLayersToggleControl shoudHide={isAnimationPlaying} />
         </div>
     );
 };
