@@ -8,6 +8,7 @@ import {
     selectActiveAnalysisTool,
 } from '@shared/store/Landsat/selectors';
 import {
+    selectShowBasemap,
     selectShowMapLabel,
     selectShowTerrain,
 } from '@shared/store/Map/selectors';
@@ -61,6 +62,8 @@ export const useSaveAppState2HashParams = () => {
     const showMapLabel = useSelector(selectShowMapLabel);
 
     const showTerrain = useSelector(selectShowTerrain);
+
+    const showBasemap = useSelector(selectShowBasemap);
 
     const changeCompareToolState = useSelector(selectChangeCompareToolState);
 
@@ -140,6 +143,10 @@ export const useSaveAppState2HashParams = () => {
             showMapLabel === false ? 'true' : null
         );
     }, [showMapLabel]);
+
+    useEffect(() => {
+        updateHashParams('hideBasemap', showBasemap === false ? 'true' : null);
+    }, [showBasemap]);
 
     useEffect(() => {
         updateHashParams('hideTerrain', showTerrain === false ? 'true' : null);

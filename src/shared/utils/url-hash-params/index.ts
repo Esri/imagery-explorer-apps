@@ -38,6 +38,7 @@ type UrlHashParamKey =
     | 'change' // hash params for spectral profile tool
     | 'hideTerrain' // hash params for terrain layer
     | 'hideMapLabels' // hash params for map labels layer
+    | 'hideBasemap' // hash params for map labels layer
     | 'tool'; // hash params for active analysis tool
 
 const hashParams = new URLSearchParams(window.location.hash.slice(1));

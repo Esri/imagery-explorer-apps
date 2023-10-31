@@ -51,12 +51,15 @@ const getPreloadedMapState = (): MapState => {
     // show terrain if there is no `hideTerrain` in hash params
     const showTerrain = getHashParamValueByKey('hideTerrain') === null;
 
+    const showBasemap = getHashParamValueByKey('hideBasemap') === null;
+
     return {
         ...initialMapState,
         center: mapLocation?.center || MAP_CENTER,
         zoom: mapLocation?.zoom || MAP_ZOOM,
         showMapLabel,
         showTerrain,
+        showBasemap,
     };
 };
 
