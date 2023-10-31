@@ -28,6 +28,8 @@ export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
         (async () => {
             setIsCapturingScreenshot(true);
 
+            // add a 2 seconds delay to let the capture screenshot effect play as smooth as possible
+            // before `takeScreenshot` start, which can cause frame drops because it is a relatively heavy task
             await delay(2000);
 
             const screenshot = await mapView.takeScreenshot();
