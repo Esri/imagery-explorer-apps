@@ -34,10 +34,11 @@ const useMediaLayerImageElement = ({
         abortControllerRef.current = new AbortController();
 
         try {
-            // try to get animation window info from the URL hash params. This happens when
-            // user opens the app using a link shared by others. We need to this to make sure
-            // all users that uses the same link always send the exact same `exportImage` requests,
-            // to increase the likelihood of using cached response from the CDN servers instead of the ArcGIS Image Server.
+            // Attempt to retrieve animation window information from the URL hash parameters. This occurs when
+            // a user opens the application via a link shared by others. This is necessary to ensure
+            // that all users who access the application through the same link consistently send identical
+            // `exportImage` requests, thereby enhancing the likelihood of utilizing cached responses
+            // from the CDN servers rather than the ArcGIS Image Server.
             const animationWindowInfoFromHashParams =
                 getAnimationWindowInfoFromHashParams();
 

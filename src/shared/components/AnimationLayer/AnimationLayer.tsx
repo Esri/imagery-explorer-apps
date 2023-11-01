@@ -122,6 +122,12 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
     }, [mediaLayerElements, mapView]);
 
     useEffect(() => {
+        // We only need to save animation window information when the animation is in progress.
+        // Additionally, we should always reset the animation window information in the hash parameters
+        // when the animation stops. Resetting the animation window information is crucial
+        // as it ensures that the animation window information is not used if the user manually starts the animation.
+        // Animation window information from the hash parameters should only be utilized by users
+        // who open the application in animation mode through a link shared by others.
         const extent = animationStatus === 'playing' ? mapView.extent : null;
 
         const width = animationStatus === 'playing' ? mapView.width : null;
