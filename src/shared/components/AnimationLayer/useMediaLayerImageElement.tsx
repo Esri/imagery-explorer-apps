@@ -5,6 +5,7 @@ import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAnd
 import { AnimationStatus } from '@shared/store/UI/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { exportImage as exportLandsatImage } from '@shared/services/landsat-level-2/exportImage';
+import { getAnimationWindowInfoFromHashParams } from '@shared/utils/url-hash-params';
 
 type Props = {
     mapView?: MapView;
@@ -33,7 +34,15 @@ const useMediaLayerImageElement = ({
         abortControllerRef.current = new AbortController();
 
         try {
-            const { extent, width, height } = mapView;
+            // try to get animation window info from the URL hash params. This happens when
+            // user opens the app using a link shared by others. We need to this to make sure
+            // all users that uses the same link always send the exact same `exportImage` requests,
+            // to increase the likelihood of using cached response from the CDN servers instead of the ArcGIS Image Server.
+            const animationWindowInfoFromHashParams =
+                getAnimationWindowInfoFromHashParams();
+
+            const { extent, width, height } =
+                animationWindowInfoFromHashParams || mapView;
 
             const { xmin, ymin, xmax, ymax } = extent;
 

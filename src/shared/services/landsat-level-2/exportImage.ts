@@ -6,7 +6,7 @@ type ExportImageParams = {
     /**
      * Map Extent
      */
-    extent: IExtent;
+    extent: Pick<IExtent, 'xmin' | 'ymin' | 'xmax' | 'ymax'>;
     /**
      * width of map container
      */
