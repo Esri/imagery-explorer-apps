@@ -18,6 +18,7 @@ import { CloseButton } from '@shared/components/CloseButton';
 import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
 import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
+import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';
 
 type Props = {
     mapView?: MapView;
@@ -119,6 +120,16 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
             dispatch(animationStatusChanged('playing'));
         }
     }, [mediaLayerElements, mapView]);
+
+    useEffect(() => {
+        const extent = animationStatus === 'playing' ? mapView.extent : null;
+
+        const width = animationStatus === 'playing' ? mapView.width : null;
+
+        const height = animationStatus === 'playing' ? mapView.height : null;
+
+        saveAnimationWindowInfoToHashParams(extent, width, height);
+    }, [animationStatus]);
 
     if (!animationStatus) {
         return null;

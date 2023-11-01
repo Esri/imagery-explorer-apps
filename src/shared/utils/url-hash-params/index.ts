@@ -22,6 +22,7 @@ import { MaskToolState } from '@shared/store/MaskTool/reducer';
 import { TrendToolState } from '@shared/store/TrendTool/reducer';
 import { SpectralProfileToolState } from '@shared/store/SpectralProfileTool/reducer';
 import { ChangeCompareToolState } from '@shared/store/ChangeCompareTool/reducer';
+import { Extent } from '@arcgis/core/geometry';
 // import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
@@ -31,6 +32,7 @@ type UrlHashParamKey =
     | 'secondaryScene' // hash params for query params of the secondary scene
     | 'animationScenes' // hash params for query params of scenes in the animation mode
     | 'animation' // hash params for animation mode
+    | 'animationWindow' // hash params for animation window info that includes map extent and size
     | 'mask' // hash params for mask tool
     | 'profile' // key for 'trend' used to be 'profile'
     | 'trend' // hash params for trend tool
@@ -191,7 +193,52 @@ export const saveAnimationSpeedToHashParams = (animationSpeed?: number) => {
     );
 };
 
-export const getAnimationSpeedFromHashParams = (animationSpeed?: number) => {
+export const getAnimationSpeedFromHashParams = () => {
     const val = getHashParamValueByKey('animation');
     return val ? +val : null;
+};
+
+/**
+ * Save animation window info to hash params whenever the animation is being played.
+ */
+export const saveAnimationWindowInfoToHashParams = (
+    extent?: Extent,
+    width?: number,
+    height?: number
+) => {
+    if (!extent || !width || !height) {
+        updateHashParams('animationWindow', null);
+
+        return;
+    }
+
+    const { xmin, ymin, xmax, ymax } = extent;
+
+    updateHashParams(
+        'animationWindow',
+        [xmin, ymin, xmax, ymax, width, height].join(',')
+    );
+};
+
+export const getAnimationWindowInfoFromHashParams = () => {
+    const val = getHashParamValueByKey('animationWindow');
+
+    if (!val) {
+        return null;
+    }
+
+    const [xmin, ymin, xmax, ymax, width, height] = val
+        .split(',')
+        .map((v) => +v);
+
+    return {
+        extent: {
+            xmin,
+            ymin,
+            xmax,
+            ymax,
+        },
+        width,
+        height,
+    };
 };
