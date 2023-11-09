@@ -1,4 +1,3 @@
-import '../../styles/index.css';
 import React, { lazy, Suspense } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import LoadingIndicator from './LoadingIndicator';
