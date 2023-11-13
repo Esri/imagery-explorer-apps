@@ -1,5 +1,5 @@
 import { AnimationFrameData } from '.';
-import { getFileName, getImageBlob } from './helpers';
+import { getFileName, getImageBlob, delay } from './helpers';
 
 type Props = {
     /**
@@ -28,7 +28,45 @@ type Props = {
     sourceImageHeight: number;
 };
 
+type CreateImages2VideoJobResponse = {
+    jobId: string;
+};
+
 const IMAGES_2_VIDEO_API_ROOT_URL = 'http://localhost:3000';
+
+const getOutputMP4File = async (jobId: string): Promise<Blob> => {
+    let numOfTries = 0;
+
+    const outputMP4FileURL = `${IMAGES_2_VIDEO_API_ROOT_URL}/video/${jobId}.mp4`;
+
+    return new Promise((resolve, reject) => {
+        const fetchData = async () => {
+            // throw an error if the output video is not ready
+            // after 24 attempts
+            if (numOfTries > 24) {
+                reject();
+                return;
+            }
+
+            numOfTries++;
+
+            // wait for 5 seconds before sending out the request
+            await delay(5000);
+
+            const res = await fetch(outputMP4FileURL);
+
+            if (!res.ok) {
+                fetchData();
+                return;
+            }
+
+            const body = await res.blob();
+            resolve(body);
+        };
+
+        fetchData();
+    });
+};
 
 export const createVideoViaImages2Video = async ({
     data,
@@ -63,12 +101,21 @@ export const createVideoViaImages2Video = async ({
         formdata.append('images', file);
     }
 
-    const res = await fetch(IMAGES_2_VIDEO_API_ROOT_URL + '/images-to-video', {
-        method: 'POST',
-        body: formdata,
-    });
+    const res = await fetch(
+        IMAGES_2_VIDEO_API_ROOT_URL + '/api/images-to-video',
+        {
+            method: 'POST',
+            body: formdata,
+        }
+    );
 
-    const resBody = await res.json();
+    if (!res.ok) {
+        throw new Error('failed to create new images-to-video task');
+    }
 
-    console.log(resBody);
+    const { jobId } = (await res.json()) as CreateImages2VideoJobResponse;
+
+    const blobOfOutputMP4 = await getOutputMP4File(jobId);
+
+    return blobOfOutputMP4;
 };

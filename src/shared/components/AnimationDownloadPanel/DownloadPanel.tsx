@@ -97,7 +97,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
             // downloadBlob(blobOfEncodedVideo, 'output.mp4');
 
-            await createVideoViaImages2Video({
+            const blobOfOutputMP4 = await createVideoViaImages2Video({
                 data,
                 animationSpeed,
                 outputWidth: width,
@@ -105,6 +105,8 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 sourceImageHeight: mapViewWindowSize.height,
                 sourceImageWidth: mapViewWindowSize.width,
             });
+
+            downloadBlob(blobOfOutputMP4, 'output.mp4');
         } catch (err) {
             console.log(err);
         }
