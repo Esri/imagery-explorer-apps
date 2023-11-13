@@ -9,6 +9,7 @@ import { createVideoViaFFMPEG } from '@shared/utils/video-encoder/createVideoVia
 import { DownloadOptionsList } from './DownloadOptionsList';
 import classNames from 'classnames';
 import { Dimension, PreviewWindow } from './PreviewWindow';
+import { createVideoViaImages2Video } from '@shared/utils/video-encoder/createVideoViaImages2Video';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -85,70 +86,31 @@ export const AnimationDownloadPanel: FC<Props> = ({
         const { width, height } = outputVideoDimension;
 
         try {
-            const blobOfEncodedVideo = await createVideoViaFFMPEG({
+            // const blobOfEncodedVideo = await createVideoViaFFMPEG({
+            //     data,
+            //     animationSpeed,
+            //     width,
+            //     height,
+            //     widthOfOriginalAnimationFrame: mapViewWindowSize.width,
+            //     heightOfOriginalAnimationFrame: mapViewWindowSize.height,
+            // });
+
+            // downloadBlob(blobOfEncodedVideo, 'output.mp4');
+
+            await createVideoViaImages2Video({
                 data,
                 animationSpeed,
-                width,
-                height,
-                widthOfOriginalAnimationFrame: mapViewWindowSize.width,
-                heightOfOriginalAnimationFrame: mapViewWindowSize.height,
+                outputWidth: width,
+                outputHeight: height,
+                sourceImageHeight: mapViewWindowSize.height,
+                sourceImageWidth: mapViewWindowSize.width,
             });
-
-            downloadBlob(blobOfEncodedVideo, 'output.mp4');
         } catch (err) {
             console.log(err);
         }
 
         setInProgressOfEncodingVideoFile(false);
     };
-
-    // useEffect(() => {
-    //     (async () => {
-    //         if (!isDownloading) {
-    //             return;
-    //         }
-
-    //         // load media layer elements as an array of HTML Image Elements
-    //         const images = await Promise.all(
-    //             mediaLayerElements.map((elem) =>
-    //                 loadImageAsHTMLIMageElement(elem.image as string)
-    //             )
-    //         );
-
-    //         const data: AnimationFrameData[] = images.map((image, index) => {
-    //             const queryParams = queryParams4ScenesInAnimationMode[index];
-
-    //             return {
-    //                 image,
-    //                 textLabel: {
-    //                     text: queryParams.acquisitionDate,
-    //                     fontSize: 36,
-    //                 },
-    //             } as AnimationFrameData;
-    //         });
-
-    //         // const blobOfEncodedVideo = await createVideoViaMediaRecorder({
-    //         //     data,
-    //         //     animationSpeed,
-    //         //     width,
-    //         //     height,
-    //         // });
-
-    //         // downloadBlob(blobOfEncodedVideo, 'output.webm');
-
-    //         const blobOfEncodedVideo = await createVideoViaFFMPEG({
-    //             data,
-    //             animationSpeed,
-    //             width,
-    //             height,
-    //         });
-
-    //         downloadBlob(blobOfEncodedVideo, 'output.mp4');
-
-    //         setIsDownloading(false);
-    //     })();
-    //     // start making video file and downloading it
-    // }, [isDownloading]);
 
     if (!mediaLayerElements || !mediaLayerElements.length) {
         return null;

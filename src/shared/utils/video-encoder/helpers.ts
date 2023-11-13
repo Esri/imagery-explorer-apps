@@ -11,7 +11,7 @@
  *
  * @example
  * ```js
- * getName4OutputMEMFS(0, 3, 'jpg') // returns `000.jpg`
+ * getFileName(0, 3, 'jpg') // returns `000.jpg`
  * ```
  */
 export const getFileName = (
