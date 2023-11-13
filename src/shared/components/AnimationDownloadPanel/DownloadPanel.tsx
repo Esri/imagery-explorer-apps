@@ -10,6 +10,8 @@ import { DownloadOptionsList } from './DownloadOptionsList';
 import classNames from 'classnames';
 import { Dimension, PreviewWindow } from './PreviewWindow';
 import { createVideoViaImages2Video } from '@shared/utils/video-encoder/createVideoViaImages2Video';
+import { useSelector } from 'react-redux';
+import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selectors';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -44,8 +46,9 @@ export const AnimationDownloadPanel: FC<Props> = ({
     animationSpeed,
     mapViewWindowSize,
 }) => {
-    const [shouldShowDownloadPanel, setShouldShowDownloadPanel] =
-        useState<boolean>(false);
+    const shouldShowDownloadPanel = useSelector(
+        selectShouldShowDownloadAnimationPanel
+    );
 
     const [previewWindowSize, setPreviewWindowSize] = useState<Dimension>();
 
@@ -132,10 +135,6 @@ export const AnimationDownloadPanel: FC<Props> = ({
                             viewBox="0 0 32 32"
                             height="64"
                             width="64"
-                            onMouseEnter={setShouldShowDownloadPanel.bind(
-                                null,
-                                true
-                            )}
                         >
                             <path
                                 fill="currentColor"
@@ -151,10 +150,6 @@ export const AnimationDownloadPanel: FC<Props> = ({
                         className={classNames(
                             'absolute top-0 right-0 w-full pt-24 z-[5]',
                             'theme-background'
-                        )}
-                        onMouseLeave={setShouldShowDownloadPanel.bind(
-                            null,
-                            false
                         )}
                     >
                         <DownloadOptionsList

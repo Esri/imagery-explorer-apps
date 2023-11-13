@@ -35,3 +35,8 @@ export const selectTooltipData = createSelector(
     (state: RootState) => state.UI.tooltipData,
     (tooltipData) => tooltipData
 );
+
+export const selectShouldShowDownloadAnimationPanel = createSelector(
+    (state: RootState) => state.UI.shouldShowDownloadAnimationPanel,
+    (shouldShowDownloadAnimationPanel) => shouldShowDownloadAnimationPanel
+);

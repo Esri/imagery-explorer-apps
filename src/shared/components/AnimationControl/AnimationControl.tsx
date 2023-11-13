@@ -48,6 +48,21 @@ const CloseButton = (
     </svg>
 );
 
+const DownloadButton = (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        height="24"
+        width="24"
+    >
+        <path
+            fill="currentColor"
+            d="M13 3v12.294l2.647-2.647.707.707-3.853 3.854-3.854-3.854.707-.707L12 15.292V3zM6 21h13v-1H6z"
+        />
+        <path fill="none" d="M0 0h24v24H0z" />
+    </svg>
+);
+
 type Props = {
     status: AnimationStatus;
     animationSpeed: number;
@@ -66,6 +81,11 @@ type Props = {
      * @returns void
      */
     addButtonOnClick: () => void;
+    /**
+     * fires when user clicks on "download" button
+     * @returns void
+     */
+    donwloadButtonOnClick: () => void;
     /**
      * fires when user makes change to Animation Status
      * @param newStatus
@@ -86,10 +106,11 @@ export const AnimationControl: FC<Props> = ({
     shouldDisablePlayPauseButton,
     shouldDisableAddFrameButton,
     addButtonOnClick,
+    donwloadButtonOnClick,
     statusOnChange,
     speedOnChange,
 }: Props) => {
-    const shouldShowSpeedControl = status === 'playing' || status === 'pausing';
+    const isAnimtaionOn = status === 'playing' || status === 'pausing';
 
     return (
         <div className={classNames('flex items-center')}>
@@ -116,7 +137,7 @@ export const AnimationControl: FC<Props> = ({
                     </div>
                 )}
 
-                {shouldShowSpeedControl && (
+                {isAnimtaionOn && (
                     <AnimationSpeedControl
                         speed={animationSpeed}
                         onChange={(speed) => {
@@ -146,6 +167,14 @@ export const AnimationControl: FC<Props> = ({
                             active
                             inline
                         ></calcite-loader>
+                    </div>
+                )}
+                {isAnimtaionOn && (
+                    <div
+                        onClick={donwloadButtonOnClick}
+                        title="Download animation"
+                    >
+                        {DownloadButton}
                     </div>
                 )}
                 {status === 'playing' && (
