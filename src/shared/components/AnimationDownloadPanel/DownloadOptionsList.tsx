@@ -1,5 +1,6 @@
 import React, { FC, useRef } from 'react';
 import { VIDEO_SIZE_OPTIONS } from './config';
+import classNames from 'classnames';
 
 type DimensionInfoProps = {
     width: number;
@@ -94,37 +95,43 @@ export const DownloadOptionsList: FC<Props> = ({
     onClick,
 }) => {
     return (
-        <div className="relative w-full p-2">
-            {VIDEO_SIZE_OPTIONS.map((d) => {
-                const { title, dimensions } = d;
+        <div
+            className={classNames(
+                'absolute top-0 right-0 w-48 pt-16 theme-background'
+            )}
+        >
+            <div className="relative w-full p-2">
+                {VIDEO_SIZE_OPTIONS.map((d) => {
+                    const { title, dimensions } = d;
 
-                return (
-                    <div className="text-center mb-3" key={title}>
-                        <h4 className="uppercase text-sm text-custom-light-blue-50 pointer-events-none">
-                            {title}
-                        </h4>
-                        <div className="pl-6">
-                            {dimensions.map((size) => {
-                                const [w, h] = size;
+                    return (
+                        <div className="text-center mb-3" key={title}>
+                            <h4 className="uppercase text-sm text-custom-light-blue-50 pointer-events-none">
+                                {title}
+                            </h4>
+                            <div className="pl-6">
+                                {dimensions.map((size) => {
+                                    const [w, h] = size;
 
-                                return (
-                                    <DimensionInfo
-                                        key={`${w}-${h}`}
-                                        width={w}
-                                        height={h}
-                                        onClick={onClick.bind(null, size)}
-                                        onMouseEnter={onMouseEnter.bind(
-                                            null,
-                                            size
-                                        )}
-                                        onMouseLeave={onMouseLeave}
-                                    />
-                                );
-                            })}
+                                    return (
+                                        <DimensionInfo
+                                            key={`${w}-${h}`}
+                                            width={w}
+                                            height={h}
+                                            onClick={onClick.bind(null, size)}
+                                            onMouseEnter={onMouseEnter.bind(
+                                                null,
+                                                size
+                                            )}
+                                            onMouseLeave={onMouseLeave}
+                                        />
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
+            </div>
         </div>
     );
 };

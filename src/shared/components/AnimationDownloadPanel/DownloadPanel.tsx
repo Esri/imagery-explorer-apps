@@ -12,6 +12,7 @@ import { Dimension, PreviewWindow } from './PreviewWindow';
 import { createVideoViaImages2Video } from '@shared/utils/video-encoder/createVideoViaImages2Video';
 import { useSelector } from 'react-redux';
 import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selectors';
+import { DownloadJobStatusInfo } from './DownloadJobStatus';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -32,6 +33,11 @@ type Props = {
     mapViewWindowSize: Dimension;
 };
 
+/**
+ * status of job to download animation as MP4
+ */
+export type DownloadJobStatus = 'pending' | 'finished' | 'failed';
+
 export const AnimationDownloadPanel: FC<Props> = ({
     mediaLayerElements,
     queryParams4ScenesInAnimationMode,
@@ -44,8 +50,8 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
     const [previewWindowSize, setPreviewWindowSize] = useState<Dimension>();
 
-    const [inProgressOfEncodingVideoFile, setInProgressOfEncodingVideoFile] =
-        useState<boolean>();
+    const [downloadJobStatus, setDownloadJobStatus] =
+        useState<DownloadJobStatus>(null);
 
     const downloadAnimation = async (outputVideoDimension: Dimension) => {
         // load media layer elements as an array of HTML Image Elements
@@ -67,16 +73,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
             } as AnimationFrameData;
         });
 
-        // const blobOfEncodedVideo = await createVideoViaMediaRecorder({
-        //     data,
-        //     animationSpeed,
-        //     width,
-        //     height,
-        // });
-
-        // downloadBlob(blobOfEncodedVideo, 'output.webm');
-
-        setInProgressOfEncodingVideoFile(true);
+        setDownloadJobStatus('pending');
 
         const { width, height } = outputVideoDimension;
 
@@ -102,11 +99,12 @@ export const AnimationDownloadPanel: FC<Props> = ({
             });
 
             downloadBlob(blobOfOutputMP4, 'output.mp4');
+
+            setDownloadJobStatus('finished');
         } catch (err) {
             console.log(err);
+            setDownloadJobStatus('failed');
         }
-
-        setInProgressOfEncodingVideoFile(false);
     };
 
     if (!mediaLayerElements || !mediaLayerElements.length) {
@@ -115,64 +113,46 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
     return (
         <>
-            <div className="absolute top-0 right-0 w-48 text-white text-center">
-                {/* <div className="absolute top-1 right-16 cursor-pointer z-10">
-                    {inProgressOfEncodingVideoFile ? (
-                        <div className="absolute top-0 right-0 w-16 h-16 flex justify-center items-center">
-                            <calcite-loader scale="s" style={{ padding: 0 }} />
-                        </div>
-                    ) : (
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 32 32"
-                            height="64"
-                            width="64"
-                        >
-                            <path
-                                fill="currentColor"
-                                d="M25 27H8v-1h17zm-3.646-9.646l-.707-.707L17 20.293V5h-1v15.293l-3.646-3.646-.707.707 4.853 4.853z"
-                            />
-                            <path fill="none" d="M0 0h32v32H0z" />
-                        </svg>
-                    )}
-                </div> */}
+            <div className="absolute top-0 right-0 text-custom-light-blue z-10">
+                {downloadJobStatus !== null && (
+                    <DownloadJobStatusInfo
+                        status={downloadJobStatus}
+                        cancelButtonOnClick={() => {}}
+                        closeButtonOnClick={() => {
+                            setDownloadJobStatus(null);
+                        }}
+                    />
+                )}
 
-                {shouldShowDownloadPanel && (
-                    <div
-                        className={classNames(
-                            'absolute top-0 right-0 w-48 pt-16 z-10',
-                            'theme-background'
-                        )}
-                    >
-                        <DownloadOptionsList
-                            onMouseEnter={(size) => {
-                                if (!size) {
-                                    return;
-                                }
+                {shouldShowDownloadPanel && downloadJobStatus === null && (
+                    <DownloadOptionsList
+                        onMouseEnter={(size) => {
+                            if (!size) {
+                                return;
+                            }
 
-                                const [width, height] = size;
+                            const [width, height] = size;
 
-                                setPreviewWindowSize({
-                                    width,
-                                    height,
-                                });
-                                // console.log(size);
-                            }}
-                            onMouseLeave={setPreviewWindowSize.bind(null, null)}
-                            onClick={(size) => {
-                                if (!size) {
-                                    return;
-                                }
+                            setPreviewWindowSize({
+                                width,
+                                height,
+                            });
+                            // console.log(size);
+                        }}
+                        onMouseLeave={setPreviewWindowSize.bind(null, null)}
+                        onClick={(size) => {
+                            if (!size) {
+                                return;
+                            }
 
-                                const [width, height] = size;
+                            const [width, height] = size;
 
-                                downloadAnimation({
-                                    width,
-                                    height,
-                                });
-                            }}
-                        />
-                    </div>
+                            downloadAnimation({
+                                width,
+                                height,
+                            });
+                        }}
+                    />
                 )}
             </div>
 
