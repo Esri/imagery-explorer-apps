@@ -1,4 +1,5 @@
 import { AnimationFrameData } from '.';
+import { getFileName, getImageBlob } from './helpers';
 
 type Props = {
     /**
@@ -25,36 +26,6 @@ type Props = {
      * height of the original animation frame image that will be used to encode the output video file
      */
     heightOfOriginalAnimationFrame: number;
-};
-
-/**
- * Generates an image name with leading zero padding to ensure a consistent
- * file name length. If the length of the file name is shorter than the input
- * length, it adds padding zeros to the left of the index.
- *
- * @param index - The index or identifier for the image.
- * @param length - The desired length of the output name.
- * @param extension - The desired extension of the output file name.
- *
- * @returns The formatted image name as a string.
- *
- * @example
- * ```js
- * getName4OutputMEMFS(0, 3, 'jpeg') // returns `000.jpeg`
- * ```
- */
-const getName4OutputMEMFS = (
-    index: number,
-    length: number,
-    extension: string
-) => {
-    let name = index.toString();
-
-    while (name.length < length) {
-        name = '0' + name;
-    }
-
-    return name + '.' + extension;
 };
 
 /**
@@ -86,48 +57,13 @@ const getImageAsMEMFS = async (params: {
         sourceImageHeight,
     } = params;
 
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-
-    // Set the canvas dimensions to match the desired output dimensions.
-    canvas.width = outputWidth;
-    canvas.height = outputHeight;
-
-    const aspectRatio = outputWidth / outputHeight;
-
-    // Calculate the dimensions of the portion to be selected from the source image.
-    let sWidth = sourceImageHeight * aspectRatio;
-    let sHeight = sourceImageHeight;
-
-    // re-calculate sWidth and sHeight if sWidth calculated from previous step is wider that the width of the actual source image
-    if (sWidth > sourceImageWidth) {
-        sWidth = sourceImageWidth;
-        sHeight = sourceImageWidth * (1 / aspectRatio);
-    }
-
-    sWidth = Math.floor(sWidth);
-    sHeight = Math.floor(sHeight);
-
-    // Calculate the starting point (sx, sy) for selecting the portion from the source image.
-    // we should always select the center portion of it
-    const sx = Math.floor(Math.abs(sWidth - sourceImageWidth) / 2);
-    const sy = Math.floor(Math.abs(sHeight - sourceImageHeight) / 2);
-
-    context.drawImage(
-        data.image,
-        sx,
-        sy,
-        sWidth,
-        sHeight,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    // Export the canvas content as a JPEG blob.
-    const blob: Blob = await new Promise((resolveBlob, rejectBlob) => {
-        canvas.toBlob(resolveBlob, 'image/jpeg');
+    const blob = await getImageBlob({
+        image: data.image,
+        outputContentType: 'image/jpeg',
+        outputHeight,
+        outputWidth,
+        sourceImageWidth,
+        sourceImageHeight,
     });
 
     const arrayBuffer = await blob.arrayBuffer();
@@ -153,7 +89,7 @@ export const createVideoViaFFMPEG = async ({
 }: Props): Promise<Blob> => {
     const inputImages = await Promise.all(
         data.map((d, index) => {
-            const name = getName4OutputMEMFS(index, 3, 'jpeg');
+            const name = getFileName(index, 3, 'jpg');
             return getImageAsMEMFS({
                 data: d,
                 outputName: name,
@@ -199,7 +135,7 @@ export const createVideoViaFFMPEG = async ({
                 '-r',
                 '1',
                 '-i',
-                '%03d.jpeg',
+                '%03d.jpg',
                 '-c:v',
                 'libx264',
                 '-r',
