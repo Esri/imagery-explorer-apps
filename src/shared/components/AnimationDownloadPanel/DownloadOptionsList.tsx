@@ -100,7 +100,7 @@ export const DownloadOptionsList: FC<Props> = ({
 
                 return (
                     <div className="text-center mb-3" key={title}>
-                        <h4 className="uppercase text-sm text-custom-light-blue-50">
+                        <h4 className="uppercase text-sm text-custom-light-blue-50 pointer-events-none">
                             {title}
                         </h4>
                         <div className="pl-6">

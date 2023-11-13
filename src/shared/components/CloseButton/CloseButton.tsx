@@ -1,3 +1,4 @@
+import './CloseButton.css';
 import React, { FC } from 'react';
 
 type Props = {
@@ -6,12 +7,7 @@ type Props = {
 
 export const CloseButton: FC<Props> = ({ onClick }: Props) => {
     return (
-        <div
-            className="absolute top-0 right-0 w-40 h-40 text-white"
-            style={{
-                background: `linear-gradient(215deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 40%)`,
-            }}
-        >
+        <div className="close-button text-custom-light-blue z-20">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"

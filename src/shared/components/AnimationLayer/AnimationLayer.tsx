@@ -4,7 +4,10 @@ import MapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { animationStatusChanged } from '@shared/store/UI/reducer';
+import {
+    animationStatusChanged,
+    showDownloadAnimationPanelChanged,
+} from '@shared/store/UI/reducer';
 // import CloseButton from './CloseButton';
 import useMediaLayerImageElement from './useMediaLayerImageElement';
 import useMediaLayerAnimation from './useMediaLayerAnimation';
@@ -135,6 +138,13 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
         const height = animationStatus === 'playing' ? mapView.height : null;
 
         saveAnimationWindowInfoToHashParams(extent, width, height);
+    }, [animationStatus]);
+
+    useEffect(() => {
+        // should close download animation panel whenever user exits the animation mode
+        if (animationStatus === null) {
+            dispatch(showDownloadAnimationPanelChanged(false));
+        }
     }, [animationStatus]);
 
     if (!animationStatus) {

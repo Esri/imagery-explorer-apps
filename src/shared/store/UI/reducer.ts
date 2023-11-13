@@ -34,7 +34,7 @@ export type UIState = {
     /**
      * if true, show animation download panel so user can save the current animation into a .mp4 file
      */
-    shouldShowDownloadAnimationPanel: boolean;
+    showDownloadAnimationPanel: boolean;
     /**
      * The X Position (relative to page) of Tooltip for Control Panel
      */
@@ -50,7 +50,7 @@ export const initialUIState: UIState = {
     shouldShowAboutThisApp: false,
     animationStatus: null,
     animationSpeed: 400,
-    shouldShowDownloadAnimationPanel: false,
+    showDownloadAnimationPanel: false,
     tooltipXPosition: 0,
     tooltipData: null,
 };
@@ -65,9 +65,11 @@ const slice = createSlice({
         shouldShowAboutThisAppToggled: (state) => {
             state.shouldShowAboutThisApp = !state.shouldShowAboutThisApp;
         },
-        shouldShowDownloadAnimationPanelToggled: (state) => {
-            state.shouldShowDownloadAnimationPanel =
-                !state.shouldShowDownloadAnimationPanel;
+        showDownloadAnimationPanelChanged: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.showDownloadAnimationPanel = action.payload;
         },
         animationStatusChanged: (
             state,
@@ -92,7 +94,7 @@ const { reducer } = slice;
 export const {
     bottomPanelToggled,
     shouldShowAboutThisAppToggled,
-    shouldShowDownloadAnimationPanelToggled,
+    showDownloadAnimationPanelChanged,
     animationStatusChanged,
     animationSpeedChanged,
     tooltipDataChanged,

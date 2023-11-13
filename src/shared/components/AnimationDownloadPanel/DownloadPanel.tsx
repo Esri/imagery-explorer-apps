@@ -3,9 +3,9 @@ import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
-import { createVideoViaMediaRecorder } from '@shared/utils/video-encoder/createVideoViaMediaRecorder';
+// import { createVideoViaMediaRecorder } from '@shared/utils/video-encoder/createVideoViaMediaRecorder';
 import { AnimationFrameData } from '@shared/utils/video-encoder';
-import { createVideoViaFFMPEG } from '@shared/utils/video-encoder/createVideoViaFFMPEG';
+// import { createVideoViaFFMPEG } from '@shared/utils/video-encoder/createVideoViaFFMPEG';
 import { DownloadOptionsList } from './DownloadOptionsList';
 import classNames from 'classnames';
 import { Dimension, PreviewWindow } from './PreviewWindow';
@@ -26,14 +26,6 @@ type Props = {
      * animation speed in millisecond
      */
     animationSpeed: number;
-    // /**
-    //  * width of the output video file
-    //  */
-    // width: number;
-    // /**
-    //  * height of the output video file
-    //  */
-    // height: number;
     /**
      * size of the map view window
      */
@@ -124,7 +116,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
     return (
         <>
             <div className="absolute top-0 right-0 w-48 text-white text-center">
-                <div className="absolute top-1 right-16 cursor-pointer z-10">
+                {/* <div className="absolute top-1 right-16 cursor-pointer z-10">
                     {inProgressOfEncodingVideoFile ? (
                         <div className="absolute top-0 right-0 w-16 h-16 flex justify-center items-center">
                             <calcite-loader scale="s" style={{ padding: 0 }} />
@@ -143,12 +135,12 @@ export const AnimationDownloadPanel: FC<Props> = ({
                             <path fill="none" d="M0 0h32v32H0z" />
                         </svg>
                     )}
-                </div>
+                </div> */}
 
                 {shouldShowDownloadPanel && (
                     <div
                         className={classNames(
-                            'absolute top-0 right-0 w-full pt-24 z-[5]',
+                            'absolute top-0 right-0 w-48 pt-16 z-10',
                             'theme-background'
                         )}
                     >
