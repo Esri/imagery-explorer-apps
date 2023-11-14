@@ -164,7 +164,7 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'MNDWI Colorized',
         description:
-            'Modified Normalized Difference Moisture Index with color map computed as (b3 - b6) / (b3 + b6). Wetlands and moist areas are blues, and dry areas in deep yellow and brown.',
+            'Modified Normalized Difference Water Index with color map computed as (b3 - b6) / (b3 + b6).',
         label: 'MNDWI',
     },
     {
