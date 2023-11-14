@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
@@ -36,7 +36,7 @@ type Props = {
 /**
  * status of job to download animation as MP4
  */
-export type DownloadJobStatus = 'pending' | 'finished' | 'failed';
+export type DownloadJobStatus = 'pending' | 'finished' | 'cancelled' | 'failed';
 
 export const AnimationDownloadPanel: FC<Props> = ({
     mediaLayerElements,
@@ -52,6 +52,8 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
     const [downloadJobStatus, setDownloadJobStatus] =
         useState<DownloadJobStatus>(null);
+
+    const abortController = useRef<AbortController>();
 
     const downloadAnimation = async (outputVideoDimension: Dimension) => {
         // load media layer elements as an array of HTML Image Elements
@@ -89,6 +91,12 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
             // downloadBlob(blobOfEncodedVideo, 'output.mp4');
 
+            if (abortController.current) {
+                abortController.current.abort();
+            }
+
+            abortController.current = new AbortController();
+
             const blobOfOutputMP4 = await createVideoViaImages2Video({
                 data,
                 animationSpeed,
@@ -96,14 +104,19 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 outputHeight: height,
                 sourceImageHeight: mapViewWindowSize.height,
                 sourceImageWidth: mapViewWindowSize.width,
+                abortController: abortController.current,
             });
+
+            if (abortController.current.signal.aborted) {
+                return;
+            }
 
             downloadBlob(blobOfOutputMP4, 'output.mp4');
 
             setDownloadJobStatus('finished');
         } catch (err) {
             console.log(err);
-            setDownloadJobStatus('failed');
+            // setDownloadJobStatus('failed');
         }
     };
 
@@ -117,7 +130,12 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 {downloadJobStatus !== null && (
                     <DownloadJobStatusInfo
                         status={downloadJobStatus}
-                        cancelButtonOnClick={() => {}}
+                        cancelButtonOnClick={() => {
+                            if (abortController.current) {
+                                abortController.current.abort();
+                            }
+                            setDownloadJobStatus(null);
+                        }}
                         closeButtonOnClick={() => {
                             setDownloadJobStatus(null);
                         }}

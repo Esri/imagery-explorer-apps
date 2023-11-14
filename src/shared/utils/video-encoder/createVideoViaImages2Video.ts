@@ -26,6 +26,10 @@ type Props = {
      * height of the original animation frame image that will be used to encode the output video file
      */
     sourceImageHeight: number;
+    /**
+     * abort controller to cancel pending job
+     */
+    abortController: AbortController;
 };
 
 type CreateImages2VideoJobResponse = {
@@ -34,7 +38,10 @@ type CreateImages2VideoJobResponse = {
 
 const IMAGES_2_VIDEO_API_ROOT_URL = 'http://localhost:3000';
 
-const getOutputMP4File = async (jobId: string): Promise<Blob> => {
+const getOutputMP4File = async (
+    jobId: string,
+    abortController: AbortController
+): Promise<Blob> => {
     let numOfTries = 0;
 
     const outputMP4FileURL = `${IMAGES_2_VIDEO_API_ROOT_URL}/video/${jobId}.mp4`;
@@ -53,15 +60,21 @@ const getOutputMP4File = async (jobId: string): Promise<Blob> => {
             // wait for 5 seconds before sending out the request
             await delay(5000);
 
-            const res = await fetch(outputMP4FileURL);
+            try {
+                const res = await fetch(outputMP4FileURL, {
+                    signal: abortController.signal,
+                });
 
-            if (!res.ok) {
-                fetchData();
-                return;
+                if (!res.ok) {
+                    fetchData();
+                    return;
+                }
+
+                const body = await res.blob();
+                resolve(body);
+            } catch (err) {
+                reject(err);
             }
-
-            const body = await res.blob();
-            resolve(body);
         };
 
         fetchData();
@@ -75,6 +88,7 @@ export const createVideoViaImages2Video = async ({
     outputHeight,
     sourceImageWidth,
     sourceImageHeight,
+    abortController,
 }: Props) => {
     const OUTPUT_CONTENT_TYPE = 'image/jpeg';
 
@@ -115,7 +129,7 @@ export const createVideoViaImages2Video = async ({
 
     const { jobId } = (await res.json()) as CreateImages2VideoJobResponse;
 
-    const blobOfOutputMP4 = await getOutputMP4File(jobId);
+    const blobOfOutputMP4 = await getOutputMP4File(jobId, abortController);
 
     return blobOfOutputMP4;
 };
