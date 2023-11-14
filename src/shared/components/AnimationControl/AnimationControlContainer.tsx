@@ -15,7 +15,7 @@ import {
 import {
     animationSpeedChanged,
     animationStatusChanged,
-    showDownloadAnimationPanelChanged,
+    showDownloadAnimationPanelToggled,
 } from '@shared/store/UI/reducer';
 import { selectAppMode } from '@shared/store/Landsat/selectors';
 import {
@@ -80,7 +80,7 @@ export const AnimationControlContainer = () => {
                     dispatch(addAnimationFrame());
                 }}
                 donwloadButtonOnClick={() => {
-                    dispatch(showDownloadAnimationPanelChanged(true));
+                    dispatch(showDownloadAnimationPanelToggled());
                 }}
                 statusOnChange={(status) => {
                     dispatch(animationStatusChanged(status));

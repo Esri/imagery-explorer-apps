@@ -13,6 +13,9 @@ import { createVideoViaImages2Video } from '@shared/utils/video-encoder/createVi
 import { useSelector } from 'react-redux';
 import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selectors';
 import { DownloadJobStatusInfo } from './DownloadJobStatus';
+import { CloseButton } from '../CloseButton';
+import { useDispatch } from 'react-redux';
+import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -44,11 +47,13 @@ export const AnimationDownloadPanel: FC<Props> = ({
     animationSpeed,
     mapViewWindowSize,
 }) => {
+    const dispatch = useDispatch();
+
     const shouldShowDownloadPanel = useSelector(
         selectShouldShowDownloadAnimationPanel
     );
 
-    const [previewWindowSize, setPreviewWindowSize] = useState<Dimension>();
+    const [previewWindowSize, setPreviewWindowSize] = useState<Dimension>(null);
 
     const [downloadJobStatus, setDownloadJobStatus] =
         useState<DownloadJobStatus>(null);
@@ -116,9 +121,27 @@ export const AnimationDownloadPanel: FC<Props> = ({
             setDownloadJobStatus('finished');
         } catch (err) {
             console.log(err);
-            // setDownloadJobStatus('failed');
+
+            // no need to set status to failed if error
+            // is caused by the user aborting the pending job
+            if (err.name === 'AbortError') {
+                return;
+            }
+
+            setDownloadJobStatus('failed');
         }
     };
+
+    useEffect(() => {
+        if (!shouldShowDownloadPanel) {
+            setPreviewWindowSize(null);
+            setDownloadJobStatus(null);
+
+            if (abortController.current) {
+                abortController.current.abort();
+            }
+        }
+    }, [shouldShowDownloadPanel]);
 
     if (!mediaLayerElements || !mediaLayerElements.length) {
         return null;
@@ -131,46 +154,55 @@ export const AnimationDownloadPanel: FC<Props> = ({
                     <DownloadJobStatusInfo
                         status={downloadJobStatus}
                         cancelButtonOnClick={() => {
-                            if (abortController.current) {
-                                abortController.current.abort();
-                            }
-                            setDownloadJobStatus(null);
+                            // close animation download panel will also cancel any
+                            // pending tasks
+                            dispatch(showDownloadAnimationPanelChanged(false));
                         }}
                         closeButtonOnClick={() => {
-                            setDownloadJobStatus(null);
+                            dispatch(showDownloadAnimationPanelChanged(false));
                         }}
                     />
                 )}
 
                 {shouldShowDownloadPanel && downloadJobStatus === null && (
-                    <DownloadOptionsList
-                        onMouseEnter={(size) => {
-                            if (!size) {
-                                return;
-                            }
+                    <>
+                        <DownloadOptionsList
+                            onMouseEnter={(size) => {
+                                if (!size) {
+                                    return;
+                                }
 
-                            const [width, height] = size;
+                                const [width, height] = size;
 
-                            setPreviewWindowSize({
-                                width,
-                                height,
-                            });
-                            // console.log(size);
-                        }}
-                        onMouseLeave={setPreviewWindowSize.bind(null, null)}
-                        onClick={(size) => {
-                            if (!size) {
-                                return;
-                            }
+                                setPreviewWindowSize({
+                                    width,
+                                    height,
+                                });
+                                // console.log(size);
+                            }}
+                            onMouseLeave={setPreviewWindowSize.bind(null, null)}
+                            onClick={(size) => {
+                                if (!size) {
+                                    return;
+                                }
 
-                            const [width, height] = size;
+                                const [width, height] = size;
 
-                            downloadAnimation({
-                                width,
-                                height,
-                            });
-                        }}
-                    />
+                                downloadAnimation({
+                                    width,
+                                    height,
+                                });
+                            }}
+                        />
+
+                        <CloseButton
+                            onClick={() => {
+                                dispatch(
+                                    showDownloadAnimationPanelChanged(false)
+                                );
+                            }}
+                        />
+                    </>
                 )}
             </div>
 

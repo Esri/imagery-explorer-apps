@@ -28,7 +28,7 @@ export const DownloadJobStatusInfo: FC<Props> = ({
     return (
         <div
             className={classNames(
-                'absolute top-0 right-0 w-[280px] h-[72px] pl-4 pr-[80px]',
+                'absolute top-0 right-0 w-[220px] h-[72px] px-4',
                 'flex items-center',
                 'theme-background text-xs'
             )}
@@ -46,8 +46,14 @@ export const DownloadJobStatusInfo: FC<Props> = ({
                 </div>
             )}
 
-            {status === 'finished' && (
+            {(status === 'finished' || status === 'failed') && (
                 <div className="flex items-center">
+                    <p className="mr-2">
+                        {status === 'finished'
+                            ? 'Complete! Check browser downloads for the MP4 file.'
+                            : 'Failed to create MP4.'}
+                    </p>
+
                     <calcite-icon
                         icon="x"
                         style={
@@ -57,9 +63,6 @@ export const DownloadJobStatusInfo: FC<Props> = ({
                         }
                         onClick={closeButtonOnClick}
                     />
-                    <p className="ml-1">
-                        Complete! Check browser downloads for the MP4 file.
-                    </p>
                 </div>
             )}
         </div>

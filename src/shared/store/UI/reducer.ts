@@ -71,6 +71,10 @@ const slice = createSlice({
         ) => {
             state.showDownloadAnimationPanel = action.payload;
         },
+        showDownloadAnimationPanelToggled: (state) => {
+            state.showDownloadAnimationPanel =
+                !state.showDownloadAnimationPanel;
+        },
         animationStatusChanged: (
             state,
             action: PayloadAction<AnimationStatus>
@@ -95,6 +99,7 @@ export const {
     bottomPanelToggled,
     shouldShowAboutThisAppToggled,
     showDownloadAnimationPanelChanged,
+    showDownloadAnimationPanelToggled,
     animationStatusChanged,
     animationSpeedChanged,
     tooltipDataChanged,
