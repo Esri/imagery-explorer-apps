@@ -94,7 +94,13 @@ export const createVideoViaImages2Video = async ({
 
     const formdata = new FormData();
 
-    formdata.append('framerate', '1');
+    let framerate = 60;
+
+    if (animationSpeed) {
+        framerate = 1000 / animationSpeed;
+    }
+
+    formdata.append('framerate', framerate.toString());
 
     for (let i = 0; i < data.length; i++) {
         const { image } = data[i];
