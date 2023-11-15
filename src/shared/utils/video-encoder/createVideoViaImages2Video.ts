@@ -36,7 +36,9 @@ type CreateImages2VideoJobResponse = {
     jobId: string;
 };
 
-const IMAGES_2_VIDEO_API_ROOT_URL = 'http://localhost:3000';
+// const IMAGES_2_VIDEO_API_ROOT_URL = 'http://localhost:3000';
+const IMAGES_2_VIDEO_API_ROOT_URL =
+    'https://imagery-animation-dev.westus2.cloudapp.azure.com';
 
 const getOutputMP4File = async (
     jobId: string,
