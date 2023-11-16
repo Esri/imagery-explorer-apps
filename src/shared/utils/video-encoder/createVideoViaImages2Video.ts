@@ -1,5 +1,5 @@
 import { AnimationFrameData } from '.';
-import { getFileName, getImageBlob, delay } from './helpers';
+import { getFileName, getImageBlob } from './helpers';
 
 type Props = {
     /**
@@ -36,53 +36,83 @@ type CreateImages2VideoJobResponse = {
     jobId: string;
 };
 
+type CreateVideoViaImages2VideoResponse = {
+    /**
+     * name of the output .mp4 file
+     */
+    filename: string;
+    /**
+     * content of the output .mp4 file
+     */
+    fileContent: Blob;
+};
+
 // const IMAGES_2_VIDEO_API_ROOT_URL = 'http://localhost:3000';
 const IMAGES_2_VIDEO_API_ROOT_URL =
     'https://imagery-animation-dev.westus2.cloudapp.azure.com';
 
-const getOutputMP4File = async (
+/**
+ * check the status of a pending video encoding job.
+ * @param jobId
+ * @param abortController
+ * @returns
+ */
+const checkJobStatus = async (
     jobId: string,
     abortController: AbortController
-): Promise<Blob> => {
-    let numOfTries = 0;
+): Promise<boolean> => {
+    const maxRetries = 5;
 
-    const outputMP4FileURL = `${IMAGES_2_VIDEO_API_ROOT_URL}/video/${jobId}.mp4`;
+    let retries = 0;
+
+    const jobStatusRequestURL = `${IMAGES_2_VIDEO_API_ROOT_URL}/api/job/${jobId}/status`;
 
     return new Promise((resolve, reject) => {
-        const fetchData = async () => {
-            // throw an error if the output video is not ready
-            // after 24 attempts
-            if (numOfTries > 24) {
-                reject();
-                return;
-            }
-
-            numOfTries++;
-
-            // wait for 5 seconds before sending out the request
-            await delay(5000);
-
+        const fetchJobStatus = async () => {
             try {
-                const res = await fetch(outputMP4FileURL, {
+                const res = await fetch(jobStatusRequestURL, {
                     signal: abortController.signal,
                 });
 
-                if (!res.ok) {
-                    fetchData();
-                    return;
+                if (res.ok) {
+                    return resolve(true);
                 }
 
-                const body = await res.blob();
-                resolve(body);
+                if (retries < maxRetries) {
+                    retries++;
+                    fetchJobStatus();
+                } else {
+                    reject();
+                }
             } catch (err) {
                 reject(err);
             }
         };
 
-        fetchData();
+        fetchJobStatus();
     });
 };
 
+const fetchOutputMP4File = async (
+    jobId: string,
+    abortController: AbortController
+): Promise<Blob> => {
+    const outputMP4FileURL = `${IMAGES_2_VIDEO_API_ROOT_URL}/video/${jobId}.mp4`;
+
+    const res = await fetch(outputMP4FileURL, {
+        signal: abortController.signal,
+    });
+
+    const body = await res.blob();
+
+    return body;
+};
+
+/**
+ * Create a new job that encodes a MP4 video from images in the input data
+ * @param param0
+ * @returns
+ */
 export const createVideoViaImages2Video = async ({
     data,
     animationSpeed,
@@ -91,7 +121,7 @@ export const createVideoViaImages2Video = async ({
     sourceImageWidth,
     sourceImageHeight,
     abortController,
-}: Props) => {
+}: Props): Promise<CreateVideoViaImages2VideoResponse> => {
     const OUTPUT_CONTENT_TYPE = 'image/jpeg';
 
     const formdata = new FormData();
@@ -137,7 +167,13 @@ export const createVideoViaImages2Video = async ({
 
     const { jobId } = (await res.json()) as CreateImages2VideoJobResponse;
 
-    const blobOfOutputMP4 = await getOutputMP4File(jobId, abortController);
+    // wait after video encoding job is done
+    await checkJobStatus(jobId, abortController);
 
-    return blobOfOutputMP4;
+    const blobOfOutputMP4 = await fetchOutputMP4File(jobId, abortController);
+
+    return {
+        filename: jobId + '.mp4',
+        fileContent: blobOfOutputMP4,
+    };
 };

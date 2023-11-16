@@ -102,7 +102,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
             abortController.current = new AbortController();
 
-            const blobOfOutputMP4 = await createVideoViaImages2Video({
+            const { filename, fileContent } = await createVideoViaImages2Video({
                 data,
                 animationSpeed,
                 outputWidth: width,
@@ -112,11 +112,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 abortController: abortController.current,
             });
 
-            if (abortController.current.signal.aborted) {
-                return;
-            }
-
-            downloadBlob(blobOfOutputMP4, 'output.mp4');
+            downloadBlob(fileContent, filename);
 
             setDownloadJobStatus('finished');
         } catch (err) {
