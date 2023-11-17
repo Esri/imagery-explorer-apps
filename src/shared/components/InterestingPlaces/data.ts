@@ -3,7 +3,7 @@
 // import Everest from './thumbnails/Everest.jpg';
 // import Manicouagan from './thumbnails/Manicouagan.jpg';
 // import Giza from './thumbnails/Pyramids.jpg';
-import Ganges from './thumbnails/landsat/GangesDelta.jpg';
+import Ganges from './thumbnails/landsat/Ganges_SWIR.jpg';
 // import Fuji from './thumbnails/MtFuji.jpg';
 import GrandCanyon from './thumbnails/landsat/GrandCanyon.jpg';
 import Richat from './thumbnails/landsat/Richat.jpg';
@@ -49,7 +49,7 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
             center: [89.08, 21.909],
             zoom: 11.557,
         },
-        renderer: 'NDVI Colorized',
+        renderer: 'Short-wave Infrared with DRA',
         thumbnail: Ganges,
         description:
             "The Ganges Delta is a river delta in Eastern South Asia. It is the world's largest river delta and it empties into the Bay of Bengal with the combined waters of several river systems.",
