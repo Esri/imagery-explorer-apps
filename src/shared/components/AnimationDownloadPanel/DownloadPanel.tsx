@@ -16,6 +16,7 @@ import { DownloadJobStatusInfo } from './DownloadJobStatus';
 import { CloseButton } from '../CloseButton';
 import { useDispatch } from 'react-redux';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
+import { selectMapCenter } from '@shared/store/Map/selectors';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -53,6 +54,8 @@ export const AnimationDownloadPanel: FC<Props> = ({
         selectShouldShowDownloadAnimationPanel
     );
 
+    const mapCenter = useSelector(selectMapCenter);
+
     const [previewWindowSize, setPreviewWindowSize] = useState<Dimension>(null);
 
     const [downloadJobStatus, setDownloadJobStatus] =
@@ -73,10 +76,11 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
             return {
                 image,
-                textLabel: {
-                    text: queryParams.acquisitionDate,
-                    fontSize: 36,
-                },
+                footer: `Esri Landsat Explorer  |  ${
+                    queryParams.acquisitionDate
+                }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
+                    3
+                )}  |  Esri, USGS, NASA`,
             } as AnimationFrameData;
         });
 
@@ -85,17 +89,6 @@ export const AnimationDownloadPanel: FC<Props> = ({
         const { width, height } = outputVideoDimension;
 
         try {
-            // const blobOfEncodedVideo = await createVideoViaFFMPEG({
-            //     data,
-            //     animationSpeed,
-            //     width,
-            //     height,
-            //     widthOfOriginalAnimationFrame: mapViewWindowSize.width,
-            //     heightOfOriginalAnimationFrame: mapViewWindowSize.height,
-            // });
-
-            // downloadBlob(blobOfEncodedVideo, 'output.mp4');
-
             if (abortController.current) {
                 abortController.current.abort();
             }

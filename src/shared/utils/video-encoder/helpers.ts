@@ -33,6 +33,7 @@ export const getFileName = (
  * It takes an image, resizes it to specified dimensions, converts it to a JPEG blob
  *
  * @param data - The `AnimationFrameData` object representing the input image.
+ * @param footer - Footer text to be added to bottom of this image.
  * @param outputContentType - The content type of the output blob object (e.g., `image/jpeg`).
  * @param outputHeight - The height of the output image.
  * @param outputWidth - The width of the output image.
@@ -42,6 +43,7 @@ export const getFileName = (
  */
 export const getImageBlob = async (params: {
     image: HTMLImageElement;
+    footer: string;
     outputContentType: string;
     outputWidth: number;
     outputHeight: number;
@@ -50,6 +52,7 @@ export const getImageBlob = async (params: {
 }) => {
     const {
         image,
+        footer,
         outputContentType,
         outputHeight,
         outputWidth,
@@ -96,6 +99,8 @@ export const getImageBlob = async (params: {
         canvas.height
     );
 
+    addFooterText(canvas, footer);
+
     // Export the canvas content as a JPEG blob.
     const blob: Blob = await new Promise((resolveBlob, rejectBlob) => {
         canvas.toBlob(resolveBlob, outputContentType);
@@ -104,8 +109,30 @@ export const getImageBlob = async (params: {
     return blob;
 };
 
-export const delay = (milliseconds: number): Promise<void> => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, milliseconds);
-    });
+const addFooterText = (canvas: HTMLCanvasElement, text: string): void => {
+    if (!text) {
+        return;
+    }
+
+    const { height, width } = canvas;
+
+    const context = canvas.getContext('2d');
+
+    // draw the gradient background rect
+    const gradientRectHeight = 16;
+
+    context.fillStyle = 'rgba(0,0,0,.3)';
+
+    context.rect(0, height - gradientRectHeight, width, gradientRectHeight);
+
+    context.fill();
+
+    // draw the watermark text
+    context.shadowColor = 'black';
+    context.shadowBlur = 5;
+    context.fillStyle = 'rgba(255,255,255,.9)';
+
+    const y = height - 4;
+
+    context.fillText(text, 10, y);
 };

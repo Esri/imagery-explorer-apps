@@ -135,10 +135,11 @@ export const createVideoViaImages2Video = async ({
     formdata.append('framerate', framerate.toString());
 
     for (let i = 0; i < data.length; i++) {
-        const { image } = data[i];
+        const { image, footer } = data[i];
 
         const blob = await getImageBlob({
-            image: image,
+            image,
+            footer,
             outputContentType: OUTPUT_CONTENT_TYPE,
             outputHeight,
             outputWidth,
