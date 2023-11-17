@@ -17,6 +17,7 @@ import { CloseButton } from '../CloseButton';
 import { useDispatch } from 'react-redux';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
+import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -139,6 +140,11 @@ export const AnimationDownloadPanel: FC<Props> = ({
     return (
         <>
             <div className="absolute top-0 right-0 text-custom-light-blue z-10">
+                {/* Download Button that opens the Download Animation Panel */}
+                {shouldShowDownloadPanel === false && (
+                    <OpenDownloadPanelButton />
+                )}
+
                 {downloadJobStatus !== null && (
                     <DownloadJobStatusInfo
                         status={downloadJobStatus}
