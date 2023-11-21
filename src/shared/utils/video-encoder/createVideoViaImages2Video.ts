@@ -27,6 +27,10 @@ type Props = {
      */
     sourceImageHeight: number;
     /**
+     * title of the application. This is be added to the header of each animation frame
+     */
+    appTitle: string;
+    /**
      * abort controller to cancel pending job
      */
     abortController: AbortController;
@@ -120,6 +124,7 @@ export const createVideoViaImages2Video = async ({
     outputHeight,
     sourceImageWidth,
     sourceImageHeight,
+    appTitle,
     abortController,
 }: Props): Promise<CreateVideoViaImages2VideoResponse> => {
     const OUTPUT_CONTENT_TYPE = 'image/jpeg';
@@ -135,16 +140,17 @@ export const createVideoViaImages2Video = async ({
     formdata.append('framerate', framerate.toString());
 
     for (let i = 0; i < data.length; i++) {
-        const { image, footer } = data[i];
+        const { image, imageInfo } = data[i];
 
         const blob = await getImageBlob({
             image,
-            footer,
+            imageInfo,
             outputContentType: OUTPUT_CONTENT_TYPE,
             outputHeight,
             outputWidth,
             sourceImageWidth,
             sourceImageHeight,
+            appTitle,
         });
 
         const file = new File([blob], getFileName(i, 3, 'jpeg'), {

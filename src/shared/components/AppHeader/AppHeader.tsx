@@ -5,10 +5,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { shouldShowAboutThisAppToggled } from '../../store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
-import {
-    selectAnimationStatus,
-    selectIsAnimationPlaying,
-} from '@shared/store/UI/selectors';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 type Props = {
     /**
@@ -76,7 +73,7 @@ const AppHeader: FC<Props> = ({ title }) => {
                 )}
             >
                 <div className="flex h-full items-center">
-                    <span>Esri | {title}</span>
+                    <span>{title}</span>
 
                     <div
                         className="cursor-pointer ml-2 flex items-center"

@@ -33,7 +33,7 @@ export const getFileName = (
  * It takes an image, resizes it to specified dimensions, converts it to a JPEG blob
  *
  * @param data - The `AnimationFrameData` object representing the input image.
- * @param footer - Footer text to be added to bottom of this image.
+ * @param imageInfo - Information and metadata about this animation frame.
  * @param outputContentType - The content type of the output blob object (e.g., `image/jpeg`).
  * @param outputHeight - The height of the output image.
  * @param outputWidth - The width of the output image.
@@ -43,21 +43,23 @@ export const getFileName = (
  */
 export const getImageBlob = async (params: {
     image: HTMLImageElement;
-    footer: string;
+    imageInfo: string;
     outputContentType: string;
     outputWidth: number;
     outputHeight: number;
     sourceImageWidth: number;
     sourceImageHeight: number;
+    appTitle: string;
 }) => {
     const {
         image,
-        footer,
+        imageInfo,
         outputContentType,
         outputHeight,
         outputWidth,
         sourceImageWidth,
         sourceImageHeight,
+        appTitle,
     } = params;
 
     const canvas = document.createElement('canvas');
@@ -99,7 +101,7 @@ export const getImageBlob = async (params: {
         canvas.height
     );
 
-    addFooterText(canvas, footer);
+    addHeaderText(canvas, appTitle, imageInfo);
 
     // Export the canvas content as a JPEG blob.
     const blob: Blob = await new Promise((resolveBlob, rejectBlob) => {
@@ -109,21 +111,25 @@ export const getImageBlob = async (params: {
     return blob;
 };
 
-const addFooterText = (canvas: HTMLCanvasElement, text: string): void => {
-    if (!text) {
+const addHeaderText = (
+    canvas: HTMLCanvasElement,
+    appTitle: string,
+    imageInfo: string
+): void => {
+    if (!appTitle || !imageInfo) {
         return;
     }
 
-    const { height, width } = canvas;
+    const { width } = canvas;
 
     const context = canvas.getContext('2d');
 
     // draw the gradient background rect
-    const gradientRectHeight = 16;
+    const gradientRectHeight = 24;
 
     context.fillStyle = 'rgba(0,0,0,.3)';
 
-    context.rect(0, height - gradientRectHeight, width, gradientRectHeight);
+    context.rect(0, 0, width, gradientRectHeight);
 
     context.fill();
 
@@ -131,8 +137,10 @@ const addFooterText = (canvas: HTMLCanvasElement, text: string): void => {
     context.shadowColor = 'black';
     context.shadowBlur = 5;
     context.fillStyle = 'rgba(255,255,255,.9)';
+    context.font = '1rem Avenir Next';
 
-    const y = height - 4;
+    const metrics4ImageInfo = context.measureText(imageInfo);
 
-    context.fillText(text, 10, y);
+    context.fillText(appTitle, 10, 18);
+    context.fillText(imageInfo, width - metrics4ImageInfo.width - 10, 18);
 };

@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
+import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -77,7 +78,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
             return {
                 image,
-                footer: `Esri Landsat Explorer  |  ${
+                imageInfo: `${
                     queryParams.acquisitionDate
                 }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
                     3
@@ -103,6 +104,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 outputHeight: height,
                 sourceImageHeight: mapViewWindowSize.height,
                 sourceImageWidth: mapViewWindowSize.width,
+                appTitle: LANDSAT_EXPLORER_APP_TITLE,
                 abortController: abortController.current,
             });
 

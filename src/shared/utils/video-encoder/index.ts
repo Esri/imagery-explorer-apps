@@ -4,7 +4,7 @@ export type AnimationFrameData = {
      */
     image: HTMLImageElement;
     /**
-     * footer text to be added for this animation frame
+     * Information and metadata about this animation frame
      */
-    footer: string;
+    imageInfo: string;
 };

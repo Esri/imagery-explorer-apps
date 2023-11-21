@@ -3,4 +3,4 @@ export const TIER =
         ? 'production'
         : 'development';
 
-export const LANDSAT_EXPLORER_APP_TITLE = `Landsat Explorer (beta)`;
+export const LANDSAT_EXPLORER_APP_TITLE = `Esri | Landsat Explorer (beta)`;
