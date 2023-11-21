@@ -27,9 +27,9 @@ type Props = {
      */
     sourceImageHeight: number;
     /**
-     * title of the application. This is be added to the header of each animation frame
+     * title of the authoring application. This is be added to the header of each animation frame
      */
-    appTitle: string;
+    authoringApp: string;
     /**
      * abort controller to cancel pending job
      */
@@ -124,7 +124,7 @@ export const createVideoViaImages2Video = async ({
     outputHeight,
     sourceImageWidth,
     sourceImageHeight,
-    appTitle,
+    authoringApp,
     abortController,
 }: Props): Promise<CreateVideoViaImages2VideoResponse> => {
     const OUTPUT_CONTENT_TYPE = 'image/jpeg';
@@ -150,7 +150,7 @@ export const createVideoViaImages2Video = async ({
             outputWidth,
             sourceImageWidth,
             sourceImageHeight,
-            appTitle,
+            authoringApp,
         });
 
         const file = new File([blob], getFileName(i, 3, 'jpeg'), {

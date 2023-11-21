@@ -1,3 +1,37 @@
+type GetImageBlobParams = {
+    /**
+     * image element to be used for this animation frame
+     */
+    image: HTMLImageElement;
+    /**
+     * Information and metadata about this animation frame.
+     */
+    imageInfo: string;
+    /**
+     * The content type of the output blob object (e.g., `image/jpeg`).
+     */
+    outputContentType: string;
+    /**
+     * The width of the output image.
+     */
+    outputWidth: number;
+    /**
+     * The height of the output image.
+     */
+    outputHeight: number;
+    /**
+     * The height of the input source image.
+     */
+    sourceImageWidth: number;
+    /**
+     * The width of the input source image.
+     */
+    sourceImageHeight: number;
+    /**
+     * title of the authoring app
+     */
+    authoringApp: string;
+};
 /**
  * Generates a filename for image with leading zero padding to ensure a consistent
  * file name length. If the length of the file name is shorter than the input
@@ -32,36 +66,18 @@ export const getFileName = (
  * This function converts an `HTMLImageElement` object into a Blob object,
  * It takes an image, resizes it to specified dimensions, converts it to a JPEG blob
  *
- * @param data - The `AnimationFrameData` object representing the input image.
- * @param imageInfo - Information and metadata about this animation frame.
- * @param outputContentType - The content type of the output blob object (e.g., `image/jpeg`).
- * @param outputHeight - The height of the output image.
- * @param outputWidth - The width of the output image.
- * @param sourceImageWidth - The height of the input source image.
- * @param sourceImageHeight - The width of the input source image.
  * @returns A Promise that resolves to a blob object containing the output image data.
  */
-export const getImageBlob = async (params: {
-    image: HTMLImageElement;
-    imageInfo: string;
-    outputContentType: string;
-    outputWidth: number;
-    outputHeight: number;
-    sourceImageWidth: number;
-    sourceImageHeight: number;
-    appTitle: string;
-}) => {
-    const {
-        image,
-        imageInfo,
-        outputContentType,
-        outputHeight,
-        outputWidth,
-        sourceImageWidth,
-        sourceImageHeight,
-        appTitle,
-    } = params;
-
+export const getImageBlob = async ({
+    image,
+    imageInfo,
+    outputContentType,
+    outputHeight,
+    outputWidth,
+    sourceImageWidth,
+    sourceImageHeight,
+    authoringApp,
+}: GetImageBlobParams) => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
@@ -101,7 +117,7 @@ export const getImageBlob = async (params: {
         canvas.height
     );
 
-    addHeaderText(canvas, appTitle, imageInfo);
+    addHeaderText(canvas, authoringApp, imageInfo);
 
     // Export the canvas content as a JPEG blob.
     const blob: Blob = await new Promise((resolveBlob, rejectBlob) => {
@@ -113,7 +129,13 @@ export const getImageBlob = async (params: {
 
 const addHeaderText = (
     canvas: HTMLCanvasElement,
+    /**
+     * name of the authoring app, this will be added to the left side of header
+     */
     appTitle: string,
+    /**
+     * image metatdata to be added to the right side of the header
+     */
     imageInfo: string
 ): void => {
     if (!appTitle || !imageInfo) {

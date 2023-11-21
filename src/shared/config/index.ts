@@ -1,14 +1,14 @@
 type AppConfig = {
     /**
-     * title of the explorer app (e.g., 'Esri | Landsat Explorer')
+     * Title of the explorer app (e.g., 'Esri | Landsat Explorer')
      */
     title: string;
     /**
-     * item id of the web map to be used in the app
+     * Item id of the web map to be used in the app
      */
     webmapId: string;
     /**
-     * sources information to be added to output MP4 file
+     * Sources information to be added to output MP4 file
      */
     animationMetadataSources?: string;
 };

@@ -104,7 +104,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 outputHeight: height,
                 sourceImageHeight: mapViewWindowSize.height,
                 sourceImageWidth: mapViewWindowSize.width,
-                appTitle: appConfig.title,
+                authoringApp: appConfig.title,
                 abortController: abortController.current,
             });
 
