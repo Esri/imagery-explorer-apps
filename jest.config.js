@@ -34,5 +34,8 @@ module.exports = {
 
     moduleNameMapper: {
         "^@shared(.*)$": "<rootDir>/src/shared$1",
-    } 
+    } ,
+    globals: {
+        "IMAGERY_SERVICE": "landsat"
+    }
 };

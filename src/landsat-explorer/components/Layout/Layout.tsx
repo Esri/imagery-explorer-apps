@@ -22,10 +22,10 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
-import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
 import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { ChangeCompareTool } from '../ChangeCompareTool';
+import { appConfig } from '@shared/config';
 
 const DynamicModeContent = () => {
     return (
@@ -52,7 +52,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={LANDSAT_EXPLORER_APP_TITLE} />
+                <AppHeader title={appConfig.title} />
                 <BottomPanel>
                     <div className="mx-auto">
                         <DynamicModeContent />
@@ -64,7 +64,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={LANDSAT_EXPLORER_APP_TITLE} />
+            <AppHeader title={appConfig.title} />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />

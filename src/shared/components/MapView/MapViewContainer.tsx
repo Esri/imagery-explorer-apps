@@ -8,7 +8,6 @@ import {
     selectMapPopupAnchorLocation,
     selectMapZoom,
     selectSwipeWidgetHandlerPosition,
-    selectWebmapId,
 } from '../../store/Map/selectors';
 import {
     selectAnimationStatus,
@@ -35,6 +34,7 @@ import {
 // import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { MapCenterIndicator } from './MapCenterIndicator';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
+import { appConfig } from '@shared/config';
 
 type Props = {
     children?: React.ReactNode;
@@ -42,8 +42,6 @@ type Props = {
 
 const MapViewContainer: FC<Props> = ({ children }) => {
     const dispatch = useDispatch();
-
-    const webmapId = useSelector(selectWebmapId);
 
     const center = useSelector(selectMapCenter);
 
@@ -101,7 +99,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
             })}
         >
             <MapView
-                webmapId={webmapId}
+                webmapId={appConfig.webmapId}
                 center={center}
                 zoom={zoom}
                 showMagnifier={showMagnifier}

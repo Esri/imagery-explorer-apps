@@ -4,16 +4,16 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { MAP_CENTER, MAP_ZOOM, WEB_MAP_ID } from '../../constants/map';
+import { MAP_CENTER, MAP_ZOOM } from '../../constants/map';
 import Point from '@arcgis/core/geometry/Point';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
 export type MapState = {
-    /**
-     * item id of the web map
-     */
-    webmapId: string;
+    // /**
+    //  * item id of the web map
+    //  */
+    // webmapId: string;
     /**
      * center of map [longitude, latitude]
      */
@@ -45,7 +45,7 @@ export type MapState = {
 };
 
 export const initialMapState: MapState = {
-    webmapId: WEB_MAP_ID, // Topographic
+    // webmapId: WEB_MAP_ID, // Topographic
     center: MAP_CENTER,
     zoom: MAP_ZOOM,
     showMapLabel: true,
@@ -59,9 +59,9 @@ const slice = createSlice({
     name: 'Map',
     initialState: initialMapState,
     reducers: {
-        webmapIdChanged: (state, action: PayloadAction<string>) => {
-            state.webmapId = action.payload;
-        },
+        // webmapIdChanged: (state, action: PayloadAction<string>) => {
+        //     state.webmapId = action.payload;
+        // },
         centerChanged: (state, action: PayloadAction<number[]>) => {
             state.center = action.payload;
         },
@@ -92,7 +92,7 @@ const slice = createSlice({
 const { reducer } = slice;
 
 export const {
-    webmapIdChanged,
+    // webmapIdChanged,
     centerChanged,
     zoomChanged,
     showMapLabelToggled,

@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
-import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
+import { appConfig } from '@shared/config';
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -82,7 +82,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
                     queryParams.acquisitionDate
                 }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
                     3
-                )}  |  Esri, USGS, NASA`,
+                )}  |  ${appConfig.animationMetadataSources}`,
             } as AnimationFrameData;
         });
 
@@ -104,7 +104,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 outputHeight: height,
                 sourceImageHeight: mapViewWindowSize.height,
                 sourceImageWidth: mapViewWindowSize.width,
-                appTitle: LANDSAT_EXPLORER_APP_TITLE,
+                appTitle: appConfig.title,
                 abortController: abortController.current,
             });
 

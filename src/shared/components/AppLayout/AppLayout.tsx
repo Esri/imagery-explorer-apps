@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import LoadingIndicator from './LoadingIndicator';
 import { About } from '../About';
+import { appConfig } from '@shared/config';
 
 const LandsatLayout = lazy(
     () =>

@@ -65,32 +65,32 @@ export const createVideoViaMediaRecorder = async ({
         const drawCanvas = () => {
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-            const { image, textLabel } = data[indexOfCurrFrame];
+            const { image } = data[indexOfCurrFrame];
 
             context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            if (textLabel) {
-                // Define the text properties
-                const text = textLabel.text;
-                const fontSize = textLabel.fontSize || 24;
-                const fontFamily = 'Arial';
-                const x = 50; // X-coordinate
-                const y = 50; // Y-coordinate
+            // if (textLabel) {
+            //     // Define the text properties
+            //     const text = textLabel.text;
+            //     const fontSize = textLabel.fontSize || 24;
+            //     const fontFamily = 'Arial';
+            //     const x = 50; // X-coordinate
+            //     const y = 50; // Y-coordinate
 
-                // Set the text font style
-                context.font = fontSize + 'px ' + fontFamily;
+            //     // Set the text font style
+            //     context.font = fontSize + 'px ' + fontFamily;
 
-                // Set the text color
-                context.fillStyle = '#fff';
+            //     // Set the text color
+            //     context.fillStyle = '#fff';
 
-                context.shadowColor = 'black'; // Shadow color
-                context.shadowBlur = 8; // Shadow blur
-                context.shadowOffsetX = 0; // Shadow offset X
-                context.shadowOffsetY = 0; // Shadow offset Y
+            //     context.shadowColor = 'black'; // Shadow color
+            //     context.shadowBlur = 8; // Shadow blur
+            //     context.shadowOffsetX = 0; // Shadow offset X
+            //     context.shadowOffsetY = 0; // Shadow offset Y
 
-                // Add the text to the canvas on top of the background
-                context.fillText(text, x, y);
-            }
+            //     // Add the text to the canvas on top of the background
+            //     context.fillText(text, x, y);
+            // }
         };
 
         let indexOfCurrFrame = 0;

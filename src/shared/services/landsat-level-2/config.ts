@@ -1,4 +1,5 @@
-import { TIER } from '@shared/constants';
+// import { TIER } from '@shared/constants';
+import { TIER } from '@shared/config';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
 /**

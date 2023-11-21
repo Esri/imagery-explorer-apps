@@ -1,9 +1,4 @@
 /**
- * Default web map to be used
- */
-export const WEB_MAP_ID = '81609bbe235942919ad27c77e42c600e';
-
-/**
  * Default Map Center
  */
 export const MAP_CENTER = [-117.18, 34.055];

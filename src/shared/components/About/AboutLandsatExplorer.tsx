@@ -1,4 +1,4 @@
-import { LANDSAT_EXPLORER_APP_TITLE } from '@shared/constants';
+import { appConfig } from '@shared/config';
 import { LANDSAT_LEVEL_2_ITEM_URL } from '@shared/services/landsat-level-2/config';
 import React from 'react';
 
@@ -12,7 +12,7 @@ const AboutLandsatExplorer = () => {
         >
             <div className="flex items-center mb-8">
                 <div className=" text-custom-light-blue text-3xl pr-4 mr-4">
-                    <span>{LANDSAT_EXPLORER_APP_TITLE}</span>
+                    <span>{appConfig.title}</span>
                 </div>
             </div>
 
