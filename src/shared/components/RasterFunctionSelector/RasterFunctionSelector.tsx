@@ -14,7 +14,7 @@ type Props = {
     /**
      * list of available raster functions
      */
-    rasterFunctionInfos: RasterFunctionInfo[];
+    rasterFunctionInfo: RasterFunctionInfo[];
     /**
      * if true, Raster Function selector should be disabled
      */
@@ -33,7 +33,7 @@ type Props = {
 
 export const RasterFunctionSelector: FC<Props> = ({
     nameOfSelectedRasterFunction,
-    rasterFunctionInfos,
+    rasterFunctionInfo,
     disabled,
     onChange,
     itemOnHover,
@@ -61,7 +61,7 @@ export const RasterFunctionSelector: FC<Props> = ({
             </div>
 
             <div className="grid grid-cols-3 gap-[5px]">
-                {rasterFunctionInfos.slice(0, 9).map((d) => {
+                {rasterFunctionInfo.slice(0, 9).map((d) => {
                     const { name, thumbnail, label } = d;
 
                     const selected =

@@ -10,8 +10,18 @@ import {
 export type AnimationStatus = 'loading' | 'playing' | 'pausing';
 
 export type TooltipData = {
+    /**
+     * title of the tooltip
+     */
     title?: string;
+    /**
+     * text content of the tooltip
+     */
     content?: string;
+    /**
+     * tooltip of the Renderer (Raster Function) Component might include legend image
+     */
+    legendImage?: string;
 };
 
 export type UIState = {
@@ -36,11 +46,11 @@ export type UIState = {
      */
     showDownloadAnimationPanel: boolean;
     /**
-     * The X Position (relative to page) of Tooltip for Control Panel
+     * The X Position (relative to page) of Tooltip for the Bottom Panel
      */
     tooltipXPosition?: number;
     /**
-     * The data that will be shown in the Tooltip
+     * The data that will be used to populate the Tooltip component.
      */
     tooltipData?: TooltipData;
 };

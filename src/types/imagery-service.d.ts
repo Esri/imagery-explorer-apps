@@ -16,9 +16,13 @@ export type RasterFunctionInfo = {
      */
     label?: string;
     /**
-     * datauri of the thumbnail image
+     * URL of the thumbnail image
      */
     thumbnail?: string;
+    /**
+     * URL of the legend image
+     */
+    legend?: string;
 };
 
 /**

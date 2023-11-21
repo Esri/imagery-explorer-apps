@@ -9,7 +9,7 @@ import {
 } from '@shared/store/Landsat/selectors';
 import { updateRasterFunctionName } from '@shared/store/Landsat/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { useRasterFunctionInfosWithThumbnail } from './useRasterFunctionInfosWithThumbnail';
+import { useRasterFunctionInfo } from './useRasterFunctionInfo';
 import { tooltipDataChanged } from '@shared/store/UI/reducer';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 
@@ -22,7 +22,7 @@ export const RasterFunctionSelectorContainer = () => {
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
-    const rasterFunctionInfos = useRasterFunctionInfosWithThumbnail();
+    const rasterFunctionInfo = useRasterFunctionInfo();
 
     const { rasterFunctionName, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -43,7 +43,7 @@ export const RasterFunctionSelectorContainer = () => {
         return false;
     };
 
-    if (!rasterFunctionInfos || !rasterFunctionInfos.length) {
+    if (!rasterFunctionInfo || !rasterFunctionInfo.length) {
         return null;
     }
 
@@ -53,17 +53,20 @@ export const RasterFunctionSelectorContainer = () => {
 
     return (
         <RasterFunctionSelector
-            rasterFunctionInfos={rasterFunctionInfos}
+            rasterFunctionInfo={rasterFunctionInfo}
             nameOfSelectedRasterFunction={rasterFunctionName}
             disabled={shouldDisable()}
             onChange={(rasterFunctionName) => {
                 dispatch(updateRasterFunctionName(rasterFunctionName));
             }}
             itemOnHover={(rasterFunctionData) => {
+                const { label, description, legend } = rasterFunctionData || {};
+
                 const data = rasterFunctionData
                     ? {
-                          title: rasterFunctionData.label,
-                          content: rasterFunctionData.description,
+                          title: label,
+                          content: description,
+                          legendImage: legend,
                       }
                     : null;
 
