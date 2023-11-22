@@ -1,5 +1,6 @@
 /**
- * The typical spectral profiles data from the config file used by the legacy Landsat Explorer app
+ * The typical spectral profiles data from the config file used by the legacy Landsat Explorer app,
+ * and the data prepared using `/scripts/landsat-spectral-signatures`.
  *
  * @see https://github.com/Esri/Imagery-Apps/blob/master/Landsat%20Explorer/configs/Identify/config_Identify.json
  */
