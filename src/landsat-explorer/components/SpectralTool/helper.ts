@@ -37,23 +37,30 @@ function calculateSimilarity(arr1: number[], arr2: number[]) {
 export const findMostSimilarFeatureOfInterest = (
     bandValues: number[]
 ): SpectralProfileFeatureOfInterest => {
-    let minSumOfDifferences = Infinity;
+    // let minSumOfDifferences = Infinity;
+    let minSumOfSquaredDifferences = Infinity;
     let output: SpectralProfileFeatureOfInterest = null;
 
     for (const [key, value] of Object.entries(
         SpectralProfileDataByFeatureOfInterest
     )) {
-        let sumOfDiff = 0;
+        // let sumOfDiff = 0;
+        let sumOfSquaredDiff = 0;
 
         const len = Math.min(bandValues.length, value.length);
 
         for (let i = 0; i < len; i++) {
             const diff = Math.abs(bandValues[i] - value[i]);
-            sumOfDiff += diff;
+            // sumOfDiff += diff;
+
+            // By squaring the differences, larger deviations from the expected values will have a
+            // more significant impact on the total difference.
+            // Therefore, it might provide a more accurate measure of similarity between spectral profiles.
+            sumOfSquaredDiff += diff * diff;
         }
 
-        if (sumOfDiff < minSumOfDifferences) {
-            minSumOfDifferences = sumOfDiff;
+        if (sumOfSquaredDiff < minSumOfSquaredDifferences) {
+            minSumOfSquaredDifferences = sumOfSquaredDiff;
             output = key as SpectralProfileFeatureOfInterest;
         }
     }
