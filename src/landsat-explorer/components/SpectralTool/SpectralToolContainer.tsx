@@ -17,31 +17,32 @@ import { useSelector } from 'react-redux';
 import { SpectralProfileChart } from './SpectralProfileChart';
 import { findMostSimilarFeatureOfInterest } from './helper';
 import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
+import { FeatureOfInterests, SpectralProfileFeatureOfInterest } from './config';
 
-export type SpectralProfileFeatureOfInterest =
-    | 'Cloud'
-    | 'Snow/Ice'
-    | 'Desert'
-    | 'Dry Vegetation'
-    | 'Concrete'
-    | 'Lush Vegetation'
-    | 'Urban'
-    | 'Rock'
-    | 'Forest'
-    | 'Water';
+// export type SpectralProfileFeatureOfInterest =
+//     | 'Cloud'
+//     | 'Snow/Ice'
+//     | 'Desert'
+//     | 'Dry Vegetation'
+//     | 'Concrete'
+//     | 'Lush Vegetation'
+//     | 'Urban'
+//     | 'Rock'
+//     | 'Forest'
+//     | 'Water';
 
-const FeatureOfInterest: SpectralProfileFeatureOfInterest[] = [
-    'Cloud',
-    'Snow/Ice',
-    'Rock',
-    'Desert',
-    'Concrete',
-    'Urban',
-    'Dry Vegetation',
-    'Lush Vegetation',
-    'Forest',
-    'Water',
-];
+// const FeatureOfInterest: SpectralProfileFeatureOfInterest[] = [
+//     'Cloud',
+//     'Snow/Ice',
+//     'Rock',
+//     'Desert',
+//     'Concrete',
+//     'Urban',
+//     'Dry Vegetation',
+//     'Lush Vegetation',
+//     'Forest',
+//     'Water',
+// ];
 
 export const SpectralToolContainer = () => {
     const dispatch = useDispatch();
@@ -130,7 +131,7 @@ export const SpectralToolContainer = () => {
         >
             <AnalysisToolHeader
                 title="Spectral"
-                dropdownListOptions={FeatureOfInterest.map(
+                dropdownListOptions={FeatureOfInterests.map(
                     (featureOfInterest) => {
                         return {
                             value: featureOfInterest,

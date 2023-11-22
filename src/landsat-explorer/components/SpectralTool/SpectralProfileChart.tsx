@@ -2,10 +2,10 @@ import { MultipleLinesChart } from '@vannizhang/react-d3-charts';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 
 import React, { FC, useMemo } from 'react';
-import { SpectralProfileFeatureOfInterest } from './SpectralToolContainer';
+// import { SpectralProfileFeatureOfInterest } from './SpectralToolContainer';
 import {
-    FillColorByFeatureOfInterest,
     SpectralProfileDataByFeatureOfInterest,
+    SpectralProfileFeatureOfInterest,
 } from './config';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 
@@ -73,7 +73,7 @@ export const SpectralProfileChart: FC<Props> = ({
                 values: spectralProfileData4UserSelectedLocation,
             } as LineGroupData,
             {
-                fill: FillColorByFeatureOfInterest[featureOfInterest],
+                fill: 'var(--custom-light-blue-70)',
                 key: featureOfInterest,
                 values: spectralProfileData4SelectedFeatureOfInterest,
                 dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference

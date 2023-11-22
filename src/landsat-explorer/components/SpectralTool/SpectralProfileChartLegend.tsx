@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { SpectralProfileFeatureOfInterest } from './SpectralToolContainer';
-import { FillColorByFeatureOfInterest } from './config';
+// import { SpectralProfileFeatureOfInterest } from './SpectralToolContainer';
+import { SpectralProfileFeatureOfInterest } from './config';
 
 type Props = {
     featureOfInterest: SpectralProfileFeatureOfInterest;
@@ -57,7 +57,7 @@ export const SpectralProfileChartLegend: FC<Props> = ({
 
             <LegendItem
                 label={'Spectral signature of ' + featureOfInterest}
-                fill={FillColorByFeatureOfInterest[featureOfInterest]}
+                fill="var(--custom-light-blue-50)"
                 strokeDasharray="3 1"
             />
         </div>
