@@ -5,7 +5,6 @@ import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
 import { appConfig } from '@shared/config';
 import { SceneInfo as LandsatSceneInfo } from '@landsat-explorer/components/SceneInfo';
-import { ModeSelector } from '@shared/components/ModeSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 
 const Layout = () => {
@@ -15,9 +14,6 @@ const Layout = () => {
         <>
             <AppHeader title={appConfig.title} />
             <BottomPanel>
-                <div className="flex flex-shrink-0">
-                    <ModeSelector />
-                </div>
                 <div className="flex flex-grow justify-center shrink-0">
                     <>
                         <div className="ml-2 3xl:ml-0">

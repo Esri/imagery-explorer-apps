@@ -36,6 +36,7 @@ import {
     ChangeCompareToolState,
     initialChangeCompareToolState,
 } from './ChangeCompareTool/reducer';
+import { initialLandsatState } from './Landsat/reducer';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 
@@ -63,13 +64,19 @@ const getPreloadedMapState = (): MapState => {
     };
 };
 
-const getPreloadedState4ImageryScenes = (): ImageryScenesState => {
+const getPreloadedImageryScenesState = (): ImageryScenesState => {
     const modeFromHashParams = getHashParamValueByKey('mode') as AppMode;
 
     let mode = modeFromHashParams || 'dynamic';
 
+    // user can only use the dynamic mode when using mobile device
     if (IS_MOBILE_DEVICE) {
         mode = 'dynamic';
+    }
+
+    // spectral samping tool only support "find a scene" mode
+    if (APP_NAME === 'spectral-sampling-tool') {
+        mode = 'find a scene';
     }
 
     // Attempt to extract query parameters from the URL hash.
@@ -169,9 +176,12 @@ const getPreloadedUIState = (): UIState => {
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         Map: getPreloadedMapState(),
-        ImageryScenes: getPreloadedState4ImageryScenes(),
-        TrendTool: getPreloadedTrendToolState(),
         UI: getPreloadedUIState(),
+        Landsat: {
+            ...initialLandsatState,
+        },
+        ImageryScenes: getPreloadedImageryScenesState(),
+        TrendTool: getPreloadedTrendToolState(),
         MaskTool: getPreloadedMaskToolState(),
         SpectralProfileTool: getPreloadedSpectralProfileToolState(),
         ChangeCompareTool: getPreloadedChangeCompareToolState(),
