@@ -123,6 +123,10 @@ const MapView: React.FC<Props> = ({
             ></div>
             {mapView
                 ? React.Children.map(children, (child) => {
+                      if (!child) {
+                          return null;
+                      }
+
                       return React.cloneElement(
                           child as React.ReactElement<any>,
                           {

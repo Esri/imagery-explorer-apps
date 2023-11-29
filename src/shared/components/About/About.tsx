@@ -37,7 +37,7 @@ export const About = () => {
                 }}
             >
                 <Suspense fallback={<calcite-loader></calcite-loader>}>
-                    {IMAGERY_SERVICE === 'landsat' && <AboutLandsatExplorer />}
+                    {APP_NAME === 'landsat' && <AboutLandsatExplorer />}
                 </Suspense>
             </div>
         </div>

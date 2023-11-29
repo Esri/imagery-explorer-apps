@@ -29,36 +29,34 @@ module.exports =  (env, options)=> {
     process.env.NODE_ENV = options.mode;
 
     /**
-     * Imagery service that the explorer app currently supports:
+     * name of the explorer app to start/build:
      * - landsat
      * - sentinel-2
      */
-    const imageryService = env['imagery-service']
+    const app = env['app']
 
-    if(
-        !imageryService
-    ){
+    if(!app){
         throw new Error(
-            'A valid `imagery-service` is not found in environment variables, '+
+            'A valid `app` name is not found in environment variables, '+
             'try `npm run start-landsat` or `npm run start-sentinel2` instead.\n'
         )
     }
 
-    if(!appConfig[imageryService]){
+    if(!appConfig[app]){
         throw new Error(
-            `config data for ${imageryService} is not found, `+
+            `config data for ${app} is not found, `+
             'please update `app.config.json` to make sure it includes config data for this imagery service'
         )
     }
 
-    console.log(`starting imagery explorer app for ${imageryService}\n`);
+    console.log(`starting imagery explorer app for ${app}\n`);
 
     const {
         title,
         description,
         thumbnail_url,
         url
-    } = appConfig[imageryService];
+    } = appConfig[app];
 
     return {
         mode: options.mode,
@@ -70,7 +68,7 @@ module.exports =  (env, options)=> {
         },
         entry: path.resolve(__dirname, './src/index.tsx'),
         output: {
-            path: path.resolve(__dirname, `./dist/${imageryService}`),
+            path: path.resolve(__dirname, `./dist/${app}`),
             filename: '[name].[contenthash].js',
             chunkFilename: '[name].[contenthash].js',
             clean: true
@@ -130,9 +128,9 @@ module.exports =  (env, options)=> {
                  */
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
                 /**
-                 * name of the imagery service to support
+                 * name of the imagery explorer app to start/build
                  */
-                IMAGERY_SERVICE: JSON.stringify(imageryService),
+                APP_NAME: JSON.stringify(app),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output

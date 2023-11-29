@@ -9,6 +9,6 @@
 declare const NODE_ENV: 'development' | 'production';
 
 /**
- * The imagery service the explore app to support
+ * Name of the imagery explore app
  */
-declare const IMAGERY_SERVICE: 'landsat' | 'sentinel-2';
+declare const APP_NAME: 'landsat' | 'sentinel-2';

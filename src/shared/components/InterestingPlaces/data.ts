@@ -183,7 +183,7 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
 
 let data: InterestingPlaceData[] = [];
 
-if (IMAGERY_SERVICE === 'landsat') {
+if (APP_NAME === 'landsat') {
     data = LandsatInterestingPlaces;
 }
 

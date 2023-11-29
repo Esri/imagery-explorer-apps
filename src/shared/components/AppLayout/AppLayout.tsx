@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from 'react';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import LoadingIndicator from './LoadingIndicator';
 import { About } from '../About';
-import { appConfig } from '@shared/config';
 
 const LandsatLayout = lazy(
     () =>
@@ -40,10 +39,10 @@ const AppLayout = () => {
     return (
         <ErrorBoundary>
             <Suspense fallback={<LoadingIndicator />}>
-                {IMAGERY_SERVICE === 'landsat' && <LandsatMap />}
-                {IMAGERY_SERVICE === 'landsat' && <LandsatLayout />}
-                {IMAGERY_SERVICE === 'sentinel-2' && <Sentinel2Map />}
-                {IMAGERY_SERVICE === 'sentinel-2' && <Sentinel2Layout />}
+                {APP_NAME === 'landsat' && <LandsatMap />}
+                {APP_NAME === 'landsat' && <LandsatLayout />}
+                {APP_NAME === 'sentinel-2' && <Sentinel2Map />}
+                {APP_NAME === 'sentinel-2' && <Sentinel2Layout />}
                 <About />
             </Suspense>
         </ErrorBoundary>

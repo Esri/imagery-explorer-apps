@@ -36,6 +36,6 @@ module.exports = {
         "^@shared(.*)$": "<rootDir>/src/shared$1",
     } ,
     globals: {
-        "IMAGERY_SERVICE": "landsat"
+        "APP_NAME": "landsat"
     }
 };

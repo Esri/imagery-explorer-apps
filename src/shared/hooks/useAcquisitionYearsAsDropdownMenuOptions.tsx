@@ -33,7 +33,7 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
             try {
                 let timeExtentData: ImageryServiceTimeExtentData = null;
 
-                if (IMAGERY_SERVICE === 'landsat') {
+                if (APP_NAME === 'landsat') {
                     timeExtentData = await getTimeExtentOfLandsatService();
                 }
 

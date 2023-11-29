@@ -16,7 +16,7 @@ export const DynamicModeInfo = () => {
             </div>
 
             <Suspense fallback={<calcite-loader></calcite-loader>}>
-                {IMAGERY_SERVICE === 'landsat' && <LandsatInfo />}
+                {APP_NAME === 'landsat' && <LandsatInfo />}
             </Suspense>
         </div>
     );

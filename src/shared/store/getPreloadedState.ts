@@ -43,7 +43,7 @@ const getPreloadedMapState = (): MapState => {
     let mapLocation = getMapCenterFromHashParams();
 
     if (!mapLocation) {
-        mapLocation = randomInterestingPlace.location;
+        mapLocation = randomInterestingPlace?.location;
     }
     // show map labels if there is no `hideMapLabels` in hash params
     const showMapLabel = getHashParamValueByKey('hideMapLabels') === null;
@@ -77,7 +77,7 @@ const getPreloadedLandsatState = (): LandsatState => {
     // which will serve as the map center.
     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
         ...DefaultQueryParams4ImageryScene,
-        rasterFunctionName: randomInterestingPlace.renderer,
+        rasterFunctionName: randomInterestingPlace?.renderer,
     };
 
     const queryParams4SecondaryScene =

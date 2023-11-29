@@ -1,3 +1,5 @@
+import { AppName } from '@typing/index';
+
 type AppConfig = {
     /**
      * Title of the explorer app (e.g., 'Esri | Landsat Explorer')
@@ -24,10 +26,15 @@ const LandsatExplorerConfig: AppConfig = {
     animationMetadataSources: 'Esri, USGS, NASA',
 };
 
-let appConfig: AppConfig;
+const Sentinel2ExplorerConfig: AppConfig = {
+    title: 'Esri | Sentinel-2 Explorer',
+    webmapId: '81609bbe235942919ad27c77e42c600e',
+    animationMetadataSources: 'Esri, USGS, NASA',
+};
 
-if (IMAGERY_SERVICE === 'landsat') {
-    appConfig = LandsatExplorerConfig;
-}
+const AppConfigByName: Record<AppName, AppConfig> = {
+    landsat: LandsatExplorerConfig,
+    'sentinel-2': Sentinel2ExplorerConfig,
+};
 
-export { appConfig };
+export const appConfig: AppConfig = AppConfigByName[APP_NAME];

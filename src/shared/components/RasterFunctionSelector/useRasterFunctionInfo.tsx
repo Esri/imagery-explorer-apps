@@ -62,7 +62,7 @@ export const getLandsatRasterFunctionInfo = () => {
  */
 export const useRasterFunctionInfo = () => {
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        if (IMAGERY_SERVICE === 'landsat') {
+        if (APP_NAME === 'landsat') {
             return getLandsatRasterFunctionInfo();
         }
 
