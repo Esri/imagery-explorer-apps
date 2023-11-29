@@ -8,17 +8,19 @@ import MaskTool from './MaskTool/reducer';
 import SpectralProfileTool from './SpectralProfileTool/reducer';
 import ChangeCompareTool from './ChangeCompareTool/reducer';
 import Landsat from './Landsat/reducer';
+import SpectralSamplingTool from './SpectralSamplingTool/reducer';
 
 const reducers = combineReducers({
     Map,
+    UI,
     ImageryScenes,
     Sentinel2,
-    UI,
+    Landsat,
     TrendTool,
     MaskTool,
     SpectralProfileTool,
     ChangeCompareTool,
-    Landsat,
+    SpectralSamplingTool,
 });
 
 export default reducers;
