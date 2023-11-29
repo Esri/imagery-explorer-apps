@@ -5,10 +5,9 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 // import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
-import { LandsatScene } from '@typing/imagery-service';
 
 /**
- * the Landsat explorer app support 5 different modes that the user can use to explore the imagery layer/scene
+ * the imagery explorer app support 5 different modes that the user can use to explore the imagery layer/scene
  */
 export type AppMode =
     | 'dynamic'
@@ -18,7 +17,7 @@ export type AppMode =
     | 'analysis';
 
 /**
- * the Landsat explorer app supports these analysis tools
+ * the imagery explorer app supports these analysis tools
  */
 export type AnalysisTool = 'mask' | 'trend' | 'spectral' | 'change';
 
@@ -70,21 +69,12 @@ export type QueryParams4ImageryScene = {
     acquisitionYearFromPreviousAnimationFrame?: number;
 };
 
-export type LandsatState = {
+export type ImageryScenesState = {
     mode?: AppMode;
     /**
      * active analysis tool
      */
     tool: AnalysisTool;
-    /**
-     * Imagery scenes that intersect with center point of map view and were acquired during the input year.
-     */
-    availableScenes?: {
-        byObjectId?: {
-            [key: number]: LandsatScene;
-        };
-        objectIds?: number[];
-    };
     /**
      * query params for the Imagery scene to be used in "Find a Scene" mode; and
      * on the left side of the "Swipe" mode
@@ -115,28 +105,22 @@ export type LandsatState = {
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
     cloudCover: number;
-    /**
-     * list of Landat missions to be excluded
-     */
-    missionsToBeExcluded: number[];
+    // /**
+    //  * list of Landat missions to be excluded
+    //  */
+    // missionsToBeExcluded: number[];
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
-    // acquisitionYear: getCurrentYear(),
     acquisitionDate: '',
-    // cloudCover: 0.5,
     rasterFunctionName: 'Natural Color with DRA',
     objectIdOfSelectedScene: null,
     animationFrameId: null,
 };
 
-export const initialLandsatState: LandsatState = {
+export const initialImagerySceneState: ImageryScenesState = {
     mode: 'find a scene',
     tool: 'mask',
-    availableScenes: {
-        byObjectId: {},
-        objectIds: [],
-    },
     queryParams4MainScene: {
         ...DefaultQueryParams4ImageryScene,
     },
@@ -150,33 +134,12 @@ export const initialLandsatState: LandsatState = {
     },
     selectedAnimationFrameId: null,
     cloudCover: 0.5,
-    missionsToBeExcluded: [],
 };
 
 const slice = createSlice({
-    name: 'Landsat',
-    initialState: initialLandsatState,
+    name: 'ImageryScenes',
+    initialState: initialImagerySceneState,
     reducers: {
-        availableScenesUpdated: (
-            state,
-            action: PayloadAction<LandsatScene[]>
-        ) => {
-            const objectIds: number[] = [];
-
-            const byObjectId = {};
-
-            for (const scene of action.payload) {
-                const { objectId } = scene;
-
-                objectIds.push(objectId);
-                byObjectId[objectId] = scene;
-            }
-
-            state.availableScenes = {
-                objectIds,
-                byObjectId,
-            };
-        },
         queryParams4MainSceneChanged: (
             state,
             action: PayloadAction<QueryParams4ImageryScene>
@@ -256,19 +219,13 @@ const slice = createSlice({
         ) => {
             state.tool = action.payload;
         },
-        missionsToBeExcludedUpdated: (
-            state,
-            action: PayloadAction<number[]>
-        ) => {
-            state.missionsToBeExcluded = action.payload;
-        },
     },
 });
 
 const { reducer } = slice;
 
 export const {
-    availableScenesUpdated,
+    // availableScenesUpdated,
     queryParams4MainSceneChanged,
     queryParams4SecondarySceneChanged,
     queryParams4SceneInSwipeModeChanged,
@@ -279,7 +236,7 @@ export const {
     queryParams4SceneInSelectedAnimationFrameChanged,
     cloudCoverChanged,
     activeAnalysisToolChanged,
-    missionsToBeExcludedUpdated,
+    // missionsToBeExcludedUpdated,
 } = slice.actions;
 
 export default reducer;

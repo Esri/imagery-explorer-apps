@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
-    selectAvailableScenes,
-    selectLandsatMissionsToBeExcluded,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
-import {
-    queryAvailableScenes,
-    updateObjectIdOfSelectedScene,
-} from '@shared/store/ImageryScene/thunks';
+import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import {
+    selectAvailableScenes,
+    selectLandsatMissionsToBeExcluded,
+} from '@shared/store/Landsat/selectors';
+import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
 
 /**
  * This custom hook queries the landsat service and find landsat scenes

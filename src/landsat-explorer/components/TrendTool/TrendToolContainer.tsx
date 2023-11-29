@@ -36,10 +36,10 @@ import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
 import {
     selectActiveAnalysisTool,
-    selectLandsatMissionsToBeExcluded,
     selectQueryParams4MainScene,
 } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
+import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 
 export const TrendToolContainer = () => {
     const dispatch = useDispatch();

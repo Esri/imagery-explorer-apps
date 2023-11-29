@@ -2,13 +2,13 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
 export const selectQueryParams4SceneInSelectedMode = createSelector(
-    (state: RootState) => state.Landsat.mode,
-    (state: RootState) => state.Landsat.queryParams4MainScene,
-    (state: RootState) => state.Landsat.queryParams4SecondaryScene,
-    (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
-    (state: RootState) => state.Landsat.selectedSide4SwipeMode,
-    (state: RootState) => state.Landsat.selectedAnimationFrameId,
-    (state: RootState) => state.Landsat.tool,
+    (state: RootState) => state.ImageryScenes.mode,
+    (state: RootState) => state.ImageryScenes.queryParams4MainScene,
+    (state: RootState) => state.ImageryScenes.queryParams4SecondaryScene,
+    (state: RootState) => state.ImageryScenes.queryParams4ScenesInAnimateMode,
+    (state: RootState) => state.ImageryScenes.selectedSide4SwipeMode,
+    (state: RootState) => state.ImageryScenes.selectedAnimationFrameId,
+    (state: RootState) => state.ImageryScenes.tool,
     (state: RootState) => state.ChangeCompareTool.activeScene,
     (
         mode,
@@ -55,48 +55,32 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
 );
 
 export const selectQueryParams4MainScene = createSelector(
-    (state: RootState) => state.Landsat.queryParams4MainScene,
+    (state: RootState) => state.ImageryScenes.queryParams4MainScene,
     (queryParams4MainScene) => queryParams4MainScene
 );
 
 export const selectQueryParams4SecondaryScene = createSelector(
-    (state: RootState) => state.Landsat.queryParams4SecondaryScene,
+    (state: RootState) => state.ImageryScenes.queryParams4SecondaryScene,
     (queryParams4SecondaryScene) => queryParams4SecondaryScene
 );
 
 export const selectSelectedSideOfSwipeMode = createSelector(
-    (state: RootState) => state.Landsat.selectedSide4SwipeMode,
+    (state: RootState) => state.ImageryScenes.selectedSide4SwipeMode,
     (selectedSide4SwipeMode) => selectedSide4SwipeMode
 );
 
 export const selectAppMode = createSelector(
-    (state: RootState) => state.Landsat.mode,
+    (state: RootState) => state.ImageryScenes.mode,
     (mode) => mode
 );
 
 export const selectIsSwipeModeOn = createSelector(
-    (state: RootState) => state.Landsat.mode,
+    (state: RootState) => state.ImageryScenes.mode,
     (mode) => mode === 'swipe'
 );
 
-export const selectAvailableScenes = createSelector(
-    (state: RootState) => state.Landsat.availableScenes,
-    (availableScenes) => {
-        const { objectIds, byObjectId } = availableScenes;
-        return objectIds.map((objectId) => byObjectId[objectId]);
-    }
-);
-
-export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Landsat.availableScenes,
-    (availableScenes) => {
-        const { byObjectId } = availableScenes;
-        return byObjectId;
-    }
-);
-
 export const selectQueryParams4ScenesInAnimateMode = createSelector(
-    (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
+    (state: RootState) => state.ImageryScenes.queryParams4ScenesInAnimateMode,
     (queryParams4ScenesInAnimateMode) => {
         const { byFrameId, frameIds } = queryParams4ScenesInAnimateMode;
         return frameIds.map((id) => byFrameId[id]);
@@ -104,9 +88,9 @@ export const selectQueryParams4ScenesInAnimateMode = createSelector(
 );
 
 export const selectQueryParamsOfPreviousAnimationFrame = createSelector(
-    (state: RootState) => state.Landsat.queryParams4MainScene,
-    (state: RootState) => state.Landsat.queryParams4ScenesInAnimateMode,
-    (state: RootState) => state.Landsat.selectedAnimationFrameId,
+    (state: RootState) => state.ImageryScenes.queryParams4MainScene,
+    (state: RootState) => state.ImageryScenes.queryParams4ScenesInAnimateMode,
+    (state: RootState) => state.ImageryScenes.selectedAnimationFrameId,
     (
         queryParams4MainScene,
         queryParams4ScenesInAnimateMode,
@@ -118,21 +102,16 @@ export const selectQueryParamsOfPreviousAnimationFrame = createSelector(
 );
 
 export const selectSelectedAnimationFrameId = createSelector(
-    (state: RootState) => state.Landsat.selectedAnimationFrameId,
+    (state: RootState) => state.ImageryScenes.selectedAnimationFrameId,
     (selectedAnimationFrameId) => selectedAnimationFrameId
 );
 
 export const selectCloudCover = createSelector(
-    (state: RootState) => state.Landsat.cloudCover,
+    (state: RootState) => state.ImageryScenes.cloudCover,
     (cloudCover) => cloudCover
 );
 
-export const selectLandsatMissionsToBeExcluded = createSelector(
-    (state: RootState) => state.Landsat.missionsToBeExcluded,
-    (missionsToBeExcluded) => missionsToBeExcluded
-);
-
 export const selectActiveAnalysisTool = createSelector(
-    (state: RootState) => state.Landsat.tool,
+    (state: RootState) => state.ImageryScenes.tool,
     (tool) => tool
 );

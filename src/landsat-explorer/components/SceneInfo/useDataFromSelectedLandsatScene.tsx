@@ -2,9 +2,9 @@ import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
     selectAppMode,
-    selectAvailableScenesByObjectId,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
+import { selectAvailableScenesByObjectId } from '@shared/store/Landsat/selectors';
 import { LandsatScene } from '@typing/imagery-service';
 import {
     selectAnimationStatus,

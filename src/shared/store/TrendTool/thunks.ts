@@ -12,11 +12,9 @@ import {
     selectTrendToolOption,
 } from './selectors';
 import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
-import {
-    selectActiveAnalysisTool,
-    selectLandsatMissionsToBeExcluded,
-} from '../ImageryScene/selectors';
+import { selectActiveAnalysisTool } from '../ImageryScene/selectors';
 import { TemporalProfileData } from '@typing/imagery-service';
+import { selectLandsatMissionsToBeExcluded } from '../Landsat/selectors';
 
 export const updateQueryLocation4TrendTool =
     (point: Point) =>

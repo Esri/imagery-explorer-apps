@@ -19,8 +19,8 @@ import {
     AnalysisTool,
     AppMode,
     DefaultQueryParams4ImageryScene,
-    initialLandsatState,
-    LandsatState,
+    initialImagerySceneState,
+    ImageryScenesState,
     // QueryParams4ImageryScene,
 } from './ImageryScene/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
@@ -63,7 +63,7 @@ const getPreloadedMapState = (): MapState => {
     };
 };
 
-const getPreloadedLandsatState = (): LandsatState => {
+const getPreloadedState4ImageryScenes = (): ImageryScenesState => {
     const modeFromHashParams = getHashParamValueByKey('mode') as AppMode;
 
     let mode = modeFromHashParams || 'dynamic';
@@ -97,7 +97,7 @@ const getPreloadedLandsatState = (): LandsatState => {
     }
 
     return {
-        ...initialLandsatState,
+        ...initialImagerySceneState,
         mode,
         tool: tool || 'mask',
         queryParams4MainScene,
@@ -169,7 +169,7 @@ const getPreloadedUIState = (): UIState => {
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         Map: getPreloadedMapState(),
-        Landsat: getPreloadedLandsatState(),
+        ImageryScenes: getPreloadedState4ImageryScenes(),
         TrendTool: getPreloadedTrendToolState(),
         UI: getPreloadedUIState(),
         MaskTool: getPreloadedMaskToolState(),
