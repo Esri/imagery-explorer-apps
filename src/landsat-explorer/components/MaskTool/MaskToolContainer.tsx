@@ -16,7 +16,7 @@ import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';

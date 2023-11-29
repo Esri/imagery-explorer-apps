@@ -15,7 +15,7 @@ import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTempora
 import {
     selectActiveAnalysisTool,
     selectLandsatMissionsToBeExcluded,
-} from '../Landsat/selectors';
+} from '../ImageryScene/selectors';
 import { TemporalProfileData } from '@typing/imagery-service';
 
 export const updateQueryLocation4TrendTool =

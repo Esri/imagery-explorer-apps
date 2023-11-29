@@ -17,12 +17,12 @@ import {
     animationStatusChanged,
     showDownloadAnimationPanelToggled,
 } from '@shared/store/UI/reducer';
-import { selectAppMode } from '@shared/store/Landsat/selectors';
+import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import {
     addAnimationFrame,
     removeAnimationFrame,
-} from '@shared/store/Landsat/thunks';
-import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
+} from '@shared/store/ImageryScene/thunks';
+import { selectedAnimationFrameIdChanged } from '@shared/store/ImageryScene/reducer';
 import { useAnimationFramesInfo } from './useAnimationFramesInfo';
 import { useShouldDisablePlayPauseButton } from './useShouldDisablePlayPauseButton';
 

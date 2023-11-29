@@ -22,7 +22,7 @@ import {
     initialLandsatState,
     LandsatState,
     // QueryParams4ImageryScene,
-} from './Landsat/reducer';
+} from './ImageryScene/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { initialUIState, UIState } from './UI/reducer';
 import { getRandomInterestingPlace } from '@shared/components/InterestingPlaces/helper';

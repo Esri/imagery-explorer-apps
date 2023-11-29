@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { selectAppMode } from '@shared/store/Landsat/selectors';
-import { modeChanged } from '@shared/store/Landsat/reducer';
+import { selectAppMode } from '@shared/store/ImageryScene/selectors';
+import { modeChanged } from '@shared/store/ImageryScene/reducer';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { ModeSelector } from './ModeSelector';
 

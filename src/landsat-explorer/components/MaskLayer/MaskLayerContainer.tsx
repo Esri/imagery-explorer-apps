@@ -12,7 +12,7 @@ import {
     selectActiveAnalysisTool,
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {

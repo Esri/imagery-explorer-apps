@@ -7,7 +7,7 @@ import {
     selectIsSwipeModeOn,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { useLandsatLayer } from '../LandsatLayer';
 import { useDispatch } from 'react-redux';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';

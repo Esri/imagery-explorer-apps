@@ -1,9 +1,9 @@
-import { activeAnalysisToolChanged } from '@shared/store/Landsat/reducer';
+import { activeAnalysisToolChanged } from '@shared/store/ImageryScene/reducer';
 import { AnalysisToolSelector } from './AnalysisToolSelector';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';

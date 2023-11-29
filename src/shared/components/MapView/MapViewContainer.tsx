@@ -30,7 +30,7 @@ import {
     selectActiveAnalysisTool,
     selectAppMode,
     selectIsSwipeModeOn,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 // import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { MapCenterIndicator } from './MapCenterIndicator';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';

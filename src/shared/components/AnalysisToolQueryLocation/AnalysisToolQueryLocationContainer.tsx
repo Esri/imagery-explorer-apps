@@ -6,7 +6,7 @@ import { AnalysisToolQueryLocation } from './AnalysisToolQueryLocation';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { selectQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/selectors';
 

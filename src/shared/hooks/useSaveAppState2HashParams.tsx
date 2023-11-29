@@ -6,7 +6,7 @@ import {
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
     selectActiveAnalysisTool,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import {
     selectShowBasemap,
     selectShowMapLabel,
@@ -31,7 +31,7 @@ import {
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSpectralProfileToolState } from '@shared/store/SpectralProfileTool/selectors';
-import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectChangeCompareToolState } from '@shared/store/ChangeCompareTool/selectors';
 
 export const useSaveAppState2HashParams = () => {

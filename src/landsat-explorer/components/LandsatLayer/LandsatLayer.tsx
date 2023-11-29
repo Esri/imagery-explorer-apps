@@ -6,7 +6,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
     selectAppMode,
     selectActiveAnalysisTool,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';

@@ -7,7 +7,7 @@ import PixelBlock from '@arcgis/core/layers/support/PixelBlock';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { SpectralIndex } from '@typing/imagery-service';
-import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import { getPixelColor } from './helpers';

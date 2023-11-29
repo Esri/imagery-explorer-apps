@@ -1,4 +1,4 @@
-import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import {
     decodeChangeCompareToolData,
     decodeMapCenter,

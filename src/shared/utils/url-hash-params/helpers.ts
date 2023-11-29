@@ -4,7 +4,7 @@ import {
     initialTrendToolState,
 } from '@shared/store/TrendTool/reducer';
 import { SpectralIndex } from '@typing/imagery-service';
-import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { Point } from '@arcgis/core/geometry';
 import { getCurrentYear } from '../date-time/getCurrentDateTime';
 import {

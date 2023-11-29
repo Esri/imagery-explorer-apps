@@ -15,10 +15,10 @@ import {
     selectAnimationStatus,
     selectAnimationSpeed,
 } from '@shared/store/UI/selectors';
-import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/Landsat/selectors';
+import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/ImageryScene/selectors';
 import { CloseButton } from '@shared/components/CloseButton';
 // import { sortQueryParams4ScenesByAcquisitionDate } from './AnimationControl/helpers';
-import { selectedAnimationFrameIdChanged } from '@shared/store/Landsat/reducer';
+import { selectedAnimationFrameIdChanged } from '@shared/store/ImageryScene/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
 import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';

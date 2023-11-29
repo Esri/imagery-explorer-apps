@@ -5,13 +5,13 @@ import {
     selectAvailableScenes,
     selectLandsatMissionsToBeExcluded,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 import {
     queryAvailableScenes,
     updateObjectIdOfSelectedScene,
-} from '@shared/store/Landsat/thunks';
+} from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 /**

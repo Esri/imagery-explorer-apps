@@ -8,7 +8,7 @@ import {
     selectAppMode,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';

@@ -7,7 +7,7 @@ import {
 import { useDataFromSelectedLandsatScene } from './useDataFromSelectedLandsatScene';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { useSelector } from 'react-redux';
-import { selectAppMode } from '@shared/store/Landsat/selectors';
+import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 
 export const SceneInfoContainer = () => {
     const mode = useSelector(selectAppMode);

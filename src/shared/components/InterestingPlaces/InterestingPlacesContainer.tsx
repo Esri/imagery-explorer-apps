@@ -5,7 +5,7 @@ import { InterestingPlaces } from './InterestingPlaces';
 import { batch } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
-import { updateRasterFunctionName } from '@shared/store/Landsat/thunks';
+import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 
 export const InterestingPlacesContainer = () => {

@@ -3,7 +3,7 @@ import MapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAndRotationGeoreference';
 import { AnimationStatus } from '@shared/store/UI/reducer';
-import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { exportImage as exportLandsatImage } from '@shared/services/landsat-level-2/exportImage';
 import { getAnimationWindowInfoFromHashParams } from '@shared/utils/url-hash-params';
 

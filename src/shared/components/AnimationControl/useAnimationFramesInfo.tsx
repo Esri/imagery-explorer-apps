@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import {
     selectQueryParams4ScenesInAnimateMode,
     selectSelectedAnimationFrameId,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import { format } from 'date-fns';

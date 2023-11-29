@@ -6,8 +6,8 @@ import {
     selectActiveAnalysisTool,
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
-import { updateRasterFunctionName } from '@shared/store/Landsat/thunks';
+} from '@shared/store/ImageryScene/selectors';
+import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { useRasterFunctionInfo } from './useRasterFunctionInfo';
 import { tooltipDataChanged } from '@shared/store/UI/reducer';

@@ -6,7 +6,7 @@ import {
     selectAppMode,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { ChangeLayer } from './ChangeLayer';
 import {

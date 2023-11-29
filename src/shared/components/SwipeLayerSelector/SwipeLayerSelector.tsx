@@ -3,7 +3,7 @@ import { Button } from '../Button';
 import {
     QueryParams4ImageryScene,
     Side4SwipeMode,
-} from '../../store/Landsat/reducer';
+} from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
 import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 

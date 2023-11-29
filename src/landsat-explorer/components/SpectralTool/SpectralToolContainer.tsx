@@ -2,7 +2,7 @@ import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import {
     selectData4SpectralProfileTool,
     selectError4SpectralProfileTool,

@@ -1,5 +1,5 @@
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { modeChanged } from '@shared/store/Landsat/reducer';
+import { modeChanged } from '@shared/store/ImageryScene/reducer';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 

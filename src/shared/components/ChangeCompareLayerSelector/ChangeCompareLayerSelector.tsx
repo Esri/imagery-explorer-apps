@@ -4,7 +4,7 @@ import { Button } from '../Button';
 import { Dropdown } from '../Dropdown';
 import { SpectralIndex } from '@typing/imagery-service';
 import { ActiveScene4ChangeCompareTool } from '@shared/store/ChangeCompareTool/reducer';
-import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 
 type Props = {
     activeScene: ActiveScene4ChangeCompareTool;

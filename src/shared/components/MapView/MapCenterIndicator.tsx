@@ -1,4 +1,4 @@
-import { selectAppMode } from '@shared/store/Landsat/selectors';
+import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';

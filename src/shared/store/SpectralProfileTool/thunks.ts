@@ -10,7 +10,7 @@ import { selectQueryLocation4SpectralProfileTool } from './selectors';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
-} from '../Landsat/selectors';
+} from '../ImageryScene/selectors';
 import {
     getPixelValuesFromIdentifyTaskResponse,
     identify,

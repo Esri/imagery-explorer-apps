@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
 import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { TrendTool } from '../TrendTool';

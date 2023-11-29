@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Button } from '../Button';
-import { AppMode } from '../../store/Landsat/reducer';
+import { AppMode } from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
 import { ContainerOfSecondaryControls } from './ContainerOfSecondaryControls';
 

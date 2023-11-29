@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 
 export const ChangeCompareLayerSelectorContainer = () => {
     const dispatch = useDispatch();

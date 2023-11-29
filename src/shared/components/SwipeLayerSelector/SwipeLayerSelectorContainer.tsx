@@ -5,11 +5,11 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
     selectSelectedSideOfSwipeMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { useDispatch } from 'react-redux';
 import { SwipeLayerSelector } from './SwipeLayerSelector';
-import { selectedSide4SwipeModeChanged } from '@shared/store/Landsat/reducer';
-import { swapMainAndSecondaryScenes } from '@shared/store/Landsat/thunks';
+import { selectedSide4SwipeModeChanged } from '@shared/store/ImageryScene/reducer';
+import { swapMainAndSecondaryScenes } from '@shared/store/ImageryScene/thunks';
 
 export const SwipeLayerSelectorContainer = () => {
     const dispatch = useDispatch();

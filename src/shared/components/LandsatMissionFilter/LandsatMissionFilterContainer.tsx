@@ -1,9 +1,9 @@
 import React from 'react';
 import { LandsatMissionFilter } from './LandsatMissionFilter';
 import { useSelector } from 'react-redux';
-import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
+import { selectLandsatMissionsToBeExcluded } from '@shared/store/ImageryScene/selectors';
 import { useDispatch } from 'react-redux';
-import { missionsToBeExcludedUpdated } from '@shared/store/Landsat/reducer';
+import { missionsToBeExcludedUpdated } from '@shared/store/ImageryScene/reducer';
 
 export const LandsatMissionFilterContainer = () => {
     const dispatch = useDispatch();

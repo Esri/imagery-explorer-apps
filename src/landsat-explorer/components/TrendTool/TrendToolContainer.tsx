@@ -26,7 +26,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TrendChart';
-import { updateAcquisitionDate } from '@shared/store/Landsat/thunks';
+import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
 import {
     // getFormatedDateString,
     getMonthFromFormattedDateString,
@@ -38,7 +38,7 @@ import {
     selectActiveAnalysisTool,
     selectLandsatMissionsToBeExcluded,
     selectQueryParams4MainScene,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 
 export const TrendToolContainer = () => {

@@ -9,7 +9,7 @@ import {
     selectSpectralIndex4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
-import { selectActiveAnalysisTool } from '@shared/store/Landsat/selectors';
+import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React from 'react';

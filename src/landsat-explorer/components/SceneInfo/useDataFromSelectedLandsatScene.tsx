@@ -4,7 +4,7 @@ import {
     selectAppMode,
     selectAvailableScenesByObjectId,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import { LandsatScene } from '@typing/imagery-service';
 import {
     selectAnimationStatus,

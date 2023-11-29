@@ -9,7 +9,7 @@ import { ZoomToExtent } from '@shared/components/ZoomToExtent/ZoomToExtent';
 import {
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import {
     getExtentOfLandsatSceneByObjectId,
     getLandsatFeatureByObjectId,

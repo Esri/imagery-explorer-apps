@@ -11,19 +11,19 @@ import {
     selectAppMode,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/Landsat/selectors';
+} from '@shared/store/ImageryScene/selectors';
 import useAvailableScenes from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
     // updateCloudCover,
-} from '@shared/store/Landsat/thunks';
+} from '@shared/store/ImageryScene/thunks';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
-import { cloudCoverChanged } from '@shared/store/Landsat/reducer';
+import { cloudCoverChanged } from '@shared/store/ImageryScene/reducer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
 

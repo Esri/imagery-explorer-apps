@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
-import { QueryParams4ImageryScene } from '@shared/store/Landsat/reducer';
+import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 // import { createVideoViaMediaRecorder } from '@shared/utils/video-encoder/createVideoViaMediaRecorder';
 import { AnimationFrameData } from '@shared/utils/video-encoder';

@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { LineChartBasic } from '@vannizhang/react-d3-charts';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import {
     formattedDateString2Unixtimestamp,
     getMonthFromFormattedDateString,
