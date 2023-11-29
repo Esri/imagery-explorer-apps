@@ -78,6 +78,7 @@ module.exports =  (env, options)=> {
             extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
             alias: {
                 '@shared': path.resolve(__dirname, 'src/shared/'),
+                '@landsat-explorer': path.resolve(__dirname, 'src/landsat-explorer/'),
                 '@typing': path.resolve(__dirname, 'src/types/'),
             },
         },

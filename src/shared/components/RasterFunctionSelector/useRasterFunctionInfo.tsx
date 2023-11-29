@@ -66,6 +66,10 @@ export const useRasterFunctionInfo = () => {
             return getLandsatRasterFunctionInfo();
         }
 
+        if (APP_NAME === 'spectral-sampling-tool') {
+            return getLandsatRasterFunctionInfo();
+        }
+
         return [];
     }, []);
 

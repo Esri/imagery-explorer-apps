@@ -20,6 +20,7 @@
         "lib": [ "es2015", "dom" ],
         "paths": {
             "@shared/*": ["./src/shared/*"],
+            "@landsat-explorer/*": ["./src/landsat-explorer/*"],
             "@typing/*": ["./src/types/*"]
         }
     },

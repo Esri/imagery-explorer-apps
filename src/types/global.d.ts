@@ -11,4 +11,4 @@ declare const NODE_ENV: 'development' | 'production';
 /**
  * Name of the imagery explore app
  */
-declare const APP_NAME: 'landsat' | 'sentinel-2';
+declare const APP_NAME: 'landsat' | 'sentinel-2' | 'spectral-sampling-tool';

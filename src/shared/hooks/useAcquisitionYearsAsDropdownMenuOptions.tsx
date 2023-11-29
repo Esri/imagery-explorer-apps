@@ -37,6 +37,10 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
                     timeExtentData = await getTimeExtentOfLandsatService();
                 }
 
+                if (APP_NAME === 'spectral-sampling-tool') {
+                    timeExtentData = await getTimeExtentOfLandsatService();
+                }
+
                 if (!timeExtentData) {
                     throw new Error(
                         'no time extent is found for the imagery service'

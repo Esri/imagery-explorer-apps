@@ -35,6 +35,22 @@ const Sentinel2Map = lazy(
         )
 );
 
+const SpectralSamplingToolLayout = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "spectral-sampling-tool" */
+            '../../../spectral-sampling-tool/components/Layout/Layout'
+        )
+);
+
+const SpectralSamplingTool2Map = lazy(
+    () =>
+        import(
+            /* webpackChunkName: "spectral-sampling-tool-map" */
+            '../../../spectral-sampling-tool/components/Map/Map'
+        )
+);
+
 const AppLayout = () => {
     return (
         <ErrorBoundary>
@@ -43,6 +59,12 @@ const AppLayout = () => {
                 {APP_NAME === 'landsat' && <LandsatLayout />}
                 {APP_NAME === 'sentinel-2' && <Sentinel2Map />}
                 {APP_NAME === 'sentinel-2' && <Sentinel2Layout />}
+                {APP_NAME === 'spectral-sampling-tool' && (
+                    <SpectralSamplingTool2Map />
+                )}
+                {APP_NAME === 'spectral-sampling-tool' && (
+                    <SpectralSamplingToolLayout />
+                )}
                 <About />
             </Suspense>
         </ErrorBoundary>

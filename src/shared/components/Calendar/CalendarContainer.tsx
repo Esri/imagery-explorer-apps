@@ -173,7 +173,7 @@ const CalendarContainer = () => {
                     />
                 </div>
 
-                <LandsatMissionFilter />
+                {APP_NAME === 'landsat' && <LandsatMissionFilter />}
 
                 <CloudFilter
                     cloudCoverage={cloudCoverThreshold}
