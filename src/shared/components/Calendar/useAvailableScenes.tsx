@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-    selectAppMode,
-    selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/ImageryScene/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import {
-    selectAvailableScenes,
+    selectAvailableScenes as selectAvailableLandsatScenes,
     selectLandsatMissionsToBeExcluded,
 } from '@shared/store/Landsat/selectors';
 import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
@@ -19,7 +16,7 @@ import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
  * that were acquired within the selected year and intersect with the center of the map screen
  * @returns
  */
-const useAvailableScenes = (acquisitionYear: number) => {
+export const useAvailableLandsatScenes = (acquisitionYear: number) => {
     const dispatch = useDispatch();
 
     const { acquisitionDate } =
@@ -37,7 +34,7 @@ const useAvailableScenes = (acquisitionYear: number) => {
     /**
      * available landsat scenes that intersect with input map geometry and were acquired during the input year.
      */
-    const availableScenes = useSelector(selectAvailableScenes);
+    const availableScenes = useSelector(selectAvailableLandsatScenes);
 
     useEffect(() => {
         if (!center || !acquisitionYear) {
@@ -75,5 +72,3 @@ const useAvailableScenes = (acquisitionYear: number) => {
         availableScenes,
     };
 };
-
-export default useAvailableScenes;

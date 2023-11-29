@@ -12,7 +12,7 @@ import {
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
-import useAvailableScenes from './useAvailableScenes';
+import { useAvailableLandsatScenes } from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
@@ -49,7 +49,7 @@ const CalendarContainer = () => {
     /**
      * landsat scenes that intersect with the map center
      */
-    const { availableScenes } = useAvailableScenes(acquisitionYear);
+    const { availableScenes } = useAvailableLandsatScenes(acquisitionYear);
 
     /**
      * options that will be used to populate the Dropdown Menu for year
