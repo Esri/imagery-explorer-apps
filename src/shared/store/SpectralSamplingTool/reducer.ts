@@ -6,8 +6,8 @@ import {
 } from '@reduxjs/toolkit';
 import Point from '@arcgis/core/geometry/Point';
 
-type SpectralSamplingData = {
-    id: string;
+export type SpectralSamplingData = {
+    uniqueId: string;
     /**
      * point will be used to query the pixel values that will be used in spectral profile comparison
      */
@@ -19,13 +19,15 @@ type SpectralSamplingData = {
 };
 
 export type SpectralSamplingToolState = {
-    byId: {
-        [key: string]: SpectralSamplingData;
+    data: {
+        byId: {
+            [key: string]: SpectralSamplingData;
+        };
+        /**
+         * Id of user selected sampling locations
+         */
+        ids: string[];
     };
-    /**
-     * Id of user selected sampling locations
-     */
-    ids: string[];
     /**
      * if true, it is in process of fetching spectral profile data
      */
@@ -37,8 +39,10 @@ export type SpectralSamplingToolState = {
 };
 
 export const initialSpectralSamplingToolState: SpectralSamplingToolState = {
-    byId: {},
-    ids: [],
+    data: {
+        byId: {},
+        ids: [],
+    },
     isLoading: false,
     error: null,
 };
@@ -47,28 +51,25 @@ const slice = createSlice({
     name: 'SpectralSamplingTool',
     initialState: initialSpectralSamplingToolState,
     reducers: {
-        samplingLocationAdded: (
+        samplingDataUpdated: (
             state,
-            action: PayloadAction<SpectralSamplingData>
+            action: PayloadAction<SpectralSamplingData[]>
         ) => {
-            const { id } = action.payload;
-            state.byId[id] = action.payload;
-            state.ids = [...state.ids, id];
-        },
-        samplingLocationRemoved: (state, action: PayloadAction<string>) => {
-            const idOfItem2Remove = action.payload;
+            const data = action.payload;
 
-            const updatedById = {};
+            const byId = {};
+            const ids = [];
 
-            // remove id of item to remove
-            const updatedIds = state.ids.filter((id) => id !== idOfItem2Remove);
-
-            for (const id of updatedIds) {
-                updatedById[id] = state.byId[id];
+            for (const item of data) {
+                const { uniqueId } = item;
+                byId[uniqueId] = item;
+                ids.push(uniqueId);
             }
 
-            state.byId = updatedById;
-            state.ids = updatedIds;
+            state.data = {
+                byId,
+                ids,
+            };
         },
         errorChanged: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
@@ -78,7 +79,6 @@ const slice = createSlice({
 
 const { reducer } = slice;
 
-export const { samplingLocationAdded, samplingLocationRemoved, errorChanged } =
-    slice.actions;
+export const { samplingDataUpdated, errorChanged } = slice.actions;
 
 export default reducer;

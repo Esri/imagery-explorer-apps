@@ -152,7 +152,8 @@ export const updateAcquisitionDate =
     };
 
 export const addNewItemToListOfQueryParams =
-    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+    (uniqueId: string) =>
+    (dispatch: StoreDispatch, getState: StoreGetState) => {
         const queryParams4ExistingScenes = selectListOfQueryParams(getState());
 
         // Try to inherit data from currently selected item from the list of query params,
@@ -163,7 +164,7 @@ export const addNewItemToListOfQueryParams =
 
         const queryParamsOfNewFrame: QueryParams4ImageryScene = {
             ...queryParamsToInheritDataFrom,
-            uniqueId: nanoid(5),
+            uniqueId,
             // acquisition date should not be cloned over to the new animation frame
             acquisitionDate: '',
             // try to save the acquistion year from the previous animation frame if the previous frame has a acquistion date selected

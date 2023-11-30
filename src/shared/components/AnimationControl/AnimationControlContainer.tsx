@@ -25,6 +25,7 @@ import {
 import { idOfSelectedItemInListOfQueryParamsChanged } from '@shared/store/ImageryScene/reducer';
 import { useAnimationFramesInfo } from './useAnimationFramesInfo';
 import { useShouldDisablePlayPauseButton } from './useShouldDisablePlayPauseButton';
+import { nanoid } from 'nanoid';
 
 const ANIMATION_FRAMES_UPPER_LIMIT = 30;
 
@@ -47,7 +48,7 @@ export const AnimationControlContainer = () => {
         // we should add a animation frame using query params from the main scene
         // if there is no animation scene. Only need to do this when the Animation Controls is mounted.
         if (animationFramesData.length === 0) {
-            dispatch(addNewItemToListOfQueryParams());
+            dispatch(addNewItemToListOfQueryParams(nanoid(5)));
         }
     }, []);
 
@@ -79,7 +80,7 @@ export const AnimationControlContainer = () => {
                     animationFramesData.length >= ANIMATION_FRAMES_UPPER_LIMIT
                 }
                 addButtonOnClick={() => {
-                    dispatch(addNewItemToListOfQueryParams());
+                    dispatch(addNewItemToListOfQueryParams(nanoid(5)));
                 }}
                 donwloadButtonOnClick={() => {
                     dispatch(showDownloadAnimationPanelToggled());
