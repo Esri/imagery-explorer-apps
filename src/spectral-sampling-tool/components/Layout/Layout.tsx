@@ -6,6 +6,8 @@ import { AppHeader } from '@shared/components/AppHeader';
 import { appConfig } from '@shared/config';
 import { SceneInfo as LandsatSceneInfo } from '@landsat-explorer/components/SceneInfo';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
+import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
+import { SamplingDataList } from '../SamplingDataList';
 
 const Layout = () => {
     useSaveAppState2HashParams();
@@ -14,6 +16,9 @@ const Layout = () => {
         <>
             <AppHeader title={appConfig.title} />
             <BottomPanel>
+                <div className="w-36 shrink-0">
+                    <SamplingDataList />
+                </div>
                 <div className="flex flex-grow justify-center shrink-0">
                     <>
                         <div className="ml-2 3xl:ml-0">
