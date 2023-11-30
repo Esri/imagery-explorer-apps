@@ -33,7 +33,7 @@ export const RasterFunctionSelectorContainer = () => {
         }
 
         if (
-            !rasterFunctionName ||
+            // !rasterFunctionName ||
             isAnimationPlaying ||
             !objectIdOfSelectedScene
         ) {
