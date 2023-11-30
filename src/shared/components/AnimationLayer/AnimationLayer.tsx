@@ -15,10 +15,10 @@ import {
     selectAnimationStatus,
     selectAnimationSpeed,
 } from '@shared/store/UI/selectors';
-import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/ImageryScene/selectors';
+import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import { CloseButton } from '@shared/components/CloseButton';
 // import { sortQueryParams4ScenesByAcquisitionDate } from './AnimationControl/helpers';
-import { selectedAnimationFrameIdChanged } from '@shared/store/ImageryScene/reducer';
+import { idOfSelectedItemInListOfQueryParamsChanged } from '@shared/store/ImageryScene/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
 import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';
@@ -37,7 +37,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
     const animationSpeed = useSelector(selectAnimationSpeed);
 
     const queryParams4ScenesInAnimationMode = useSelector(
-        selectQueryParams4ScenesInAnimateMode
+        selectListOfQueryParams
     );
 
     /**
@@ -69,12 +69,12 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
             //     sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame]
             // );
 
-            const queryParams4ActiveLandsatScene =
+            const queryParamsOfActiveFrame =
                 sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame];
 
             dispatch(
-                selectedAnimationFrameIdChanged(
-                    queryParams4ActiveLandsatScene?.animationFrameId
+                idOfSelectedItemInListOfQueryParamsChanged(
+                    queryParamsOfActiveFrame?.uniqueId
                 )
             );
         },

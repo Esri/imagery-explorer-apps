@@ -1,11 +1,11 @@
-import { selectQueryParams4ScenesInAnimateMode } from '@shared/store/ImageryScene/selectors';
+import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { filterQueryParams4ScenesByAcquisitionDate } from './helpers';
 
 export const useShouldDisablePlayPauseButton = () => {
     const queryParams4ScenesInAnimationMode = useSelector(
-        selectQueryParams4ScenesInAnimateMode
+        selectListOfQueryParams
     );
 
     /**

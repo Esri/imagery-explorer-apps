@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { AnimationFrameInfo } from './AnimationFramesList';
 import { useSelector } from 'react-redux';
 import {
-    selectQueryParams4ScenesInAnimateMode,
-    selectSelectedAnimationFrameId,
+    selectListOfQueryParams,
+    selectIdOfSelectedItemInListOfQueryParams,
 } from '@shared/store/ImageryScene/selectors';
 import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
@@ -13,11 +13,11 @@ import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFu
 
 export const useAnimationFramesInfo = () => {
     const selectedAnimationFrameId = useSelector(
-        selectSelectedAnimationFrameId
+        selectIdOfSelectedItemInListOfQueryParams
     );
 
     const queryParams4ScenesInAnimationMode = useSelector(
-        selectQueryParams4ScenesInAnimateMode
+        selectListOfQueryParams
     );
 
     const data: AnimationFrameInfo[] = useMemo(() => {
@@ -29,10 +29,10 @@ export const useAnimationFramesInfo = () => {
         const framesInfo = sortQueryParams4ScenesByAcquisitionDate(
             queryParams4ScenesInAnimationMode
         ).map((d) => {
-            const { animationFrameId, acquisitionDate, rasterFunctionName } = d;
+            const { uniqueId, acquisitionDate, rasterFunctionName } = d;
 
             return {
-                frameId: animationFrameId,
+                frameId: uniqueId,
                 acquisitionDateLabel: acquisitionDate
                     ? format(
                           formattedDateString2Unixtimestamp(acquisitionDate),
@@ -42,7 +42,7 @@ export const useAnimationFramesInfo = () => {
                 rasterFunctionName: acquisitionDate
                     ? getRasterFunctionLabelText(rasterFunctionName)
                     : '',
-                selected: animationFrameId === selectedAnimationFrameId,
+                selected: uniqueId === selectedAnimationFrameId,
             } as AnimationFrameInfo;
         });
 

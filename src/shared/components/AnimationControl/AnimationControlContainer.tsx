@@ -19,10 +19,10 @@ import {
 } from '@shared/store/UI/reducer';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import {
-    addAnimationFrame,
-    removeAnimationFrame,
+    addNewItemToListOfQueryParams,
+    removeItemFromListOfQueryParams,
 } from '@shared/store/ImageryScene/thunks';
-import { selectedAnimationFrameIdChanged } from '@shared/store/ImageryScene/reducer';
+import { idOfSelectedItemInListOfQueryParamsChanged } from '@shared/store/ImageryScene/reducer';
 import { useAnimationFramesInfo } from './useAnimationFramesInfo';
 import { useShouldDisablePlayPauseButton } from './useShouldDisablePlayPauseButton';
 
@@ -47,7 +47,7 @@ export const AnimationControlContainer = () => {
         // we should add a animation frame using query params from the main scene
         // if there is no animation scene. Only need to do this when the Animation Controls is mounted.
         if (animationFramesData.length === 0) {
-            dispatch(addAnimationFrame());
+            dispatch(addNewItemToListOfQueryParams());
         }
     }, []);
 
@@ -61,10 +61,12 @@ export const AnimationControlContainer = () => {
                 data={animationFramesData}
                 disabled={isAnimationPlaying}
                 frameOnSelect={(frameId: string) => {
-                    dispatch(selectedAnimationFrameIdChanged(frameId));
+                    dispatch(
+                        idOfSelectedItemInListOfQueryParamsChanged(frameId)
+                    );
                 }}
                 removeButtonOnClick={(frameId: string) => {
-                    dispatch(removeAnimationFrame(frameId));
+                    dispatch(removeItemFromListOfQueryParams(frameId));
                 }}
             />
 
@@ -77,7 +79,7 @@ export const AnimationControlContainer = () => {
                     animationFramesData.length >= ANIMATION_FRAMES_UPPER_LIMIT
                 }
                 addButtonOnClick={() => {
-                    dispatch(addAnimationFrame());
+                    dispatch(addNewItemToListOfQueryParams());
                 }}
                 donwloadButtonOnClick={() => {
                     dispatch(showDownloadAnimationPanelToggled());

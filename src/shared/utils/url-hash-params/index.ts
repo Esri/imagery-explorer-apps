@@ -176,7 +176,7 @@ export const getQueryParams4ScenesInAnimationFromHashParams =
         return value.split(',').map((d) => {
             return {
                 ...decodeQueryParams4ImageryScene(d),
-                animationFrameId: nanoid(3),
+                uniqueId: nanoid(3),
             } as QueryParams4ImageryScene;
         });
     };

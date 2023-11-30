@@ -2,7 +2,7 @@ import { selectTrendToolState } from '@shared/store/TrendTool/selectors';
 import {
     selectAppMode,
     selectQueryParams4MainScene,
-    selectQueryParams4ScenesInAnimateMode,
+    selectListOfQueryParams,
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
     selectActiveAnalysisTool,
@@ -52,7 +52,7 @@ export const useSaveAppState2HashParams = () => {
     const spectralToolState = useSelector(selectSpectralProfileToolState);
 
     const queryParams4ScenesInAnimationMode = useSelector(
-        selectQueryParams4ScenesInAnimateMode
+        selectListOfQueryParams
     );
 
     const animationStatus = useSelector(selectAnimationStatus);

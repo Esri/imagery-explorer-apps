@@ -66,7 +66,7 @@ export const decodeQueryParams4ImageryScene = (
         rasterFunctionName,
         objectIdOfSelectedScene: objectId ? +objectId : null,
         // cloudCover: 0.5,
-        animationFrameId: null,
+        uniqueId: null,
     };
 };
 

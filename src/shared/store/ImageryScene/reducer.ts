@@ -30,10 +30,6 @@ export type Side4SwipeMode = 'left' | 'right';
  * Query Params and Rendering Options for a Imagery Scene (e.g. Landsat or Sentinel-2)
  */
 export type QueryParams4ImageryScene = {
-    // /**
-    //  * the year that will be used to query available Imagery scenes
-    //  */
-    // acquisitionYear?: number;
     /**
      * User selected acquisition date in format of `YYYY-MM-DD`.
      * This acquisition date will be used to select a Imagery Scene from `availableScenes` array.
@@ -56,17 +52,17 @@ export type QueryParams4ImageryScene = {
      */
     objectIdOfSelectedScene?: number;
     /**
-     * unique id of the animation frame that is associated with this Imagery Scene
+     * unique id of the query params that is associated with this Imagery Scene
      */
-    animationFrameId?: string;
+    uniqueId?: string;
     /**
-     * This property represents the acquisition year inherited from the previously selected animation frame.
+     * This property represents the acquisition year inherited from the previously selected item in the listOfQueryParams.
      *
      * Normally, the current year is used as the default acquisition year for new query parameters.
      * However, to enhance the user experience in animation mode, we retain the acquisition year from the previous frame.
      * This ensures a seamless workflow, allowing users to seamlessly continue their work on the same year as the prior animation frame.
      */
-    acquisitionYearFromPreviousAnimationFrame?: number;
+    inheritedAcquisitionYear?: number;
 };
 
 export type ImageryScenesState = {
@@ -92,18 +88,18 @@ export type ImageryScenesState = {
      */
     selectedSide4SwipeMode?: Side4SwipeMode;
     /**
-     * query parameters for Imagery scenes that will be used in different frames of Animation Mode.
+     * list of query parameters for Imagery scenes that will be used in Animation Mode, Spectral Sampling Mode and etc.
      */
-    queryParams4ScenesInAnimateMode?: {
-        byFrameId?: {
+    listOfQueryParams?: {
+        byId?: {
             [key: string]: QueryParams4ImageryScene;
         };
-        frameIds?: string[];
+        ids?: string[];
     };
     /**
-     * Id of the selected frame of the Animation Mode. This Id helps identify which item in `queryParams4ScenesInAnimateMode` should be updated.
+     * Id of the selected item in `listOfQueryParams`. This Id helps identify which item in `listOfQueryParams` should be updated.
      */
-    selectedAnimationFrameId?: string;
+    idOfSelectedItemInListOfQueryParams?: string;
     /**
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
@@ -118,7 +114,7 @@ export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     acquisitionDate: '',
     rasterFunctionName: '',
     objectIdOfSelectedScene: null,
-    animationFrameId: null,
+    uniqueId: null,
 };
 
 export const initialImagerySceneState: ImageryScenesState = {
@@ -131,11 +127,11 @@ export const initialImagerySceneState: ImageryScenesState = {
         ...DefaultQueryParams4ImageryScene,
     },
     selectedSide4SwipeMode: 'left',
-    queryParams4ScenesInAnimateMode: {
-        byFrameId: {},
-        frameIds: [],
+    listOfQueryParams: {
+        byId: {},
+        ids: [],
     },
-    selectedAnimationFrameId: null,
+    idOfSelectedItemInListOfQueryParams: null,
     cloudCover: 0.5,
 };
 
@@ -176,42 +172,41 @@ const slice = createSlice({
         ) => {
             state.selectedSide4SwipeMode = action.payload;
         },
-        selectedAnimationFrameIdChanged: (
+        idOfSelectedItemInListOfQueryParamsChanged: (
             state,
             action: PayloadAction<string>
         ) => {
-            state.selectedAnimationFrameId = action.payload;
+            state.idOfSelectedItemInListOfQueryParams = action.payload;
         },
-        queryParams4ScenesInAnimationModeChanged: (
+        listOfQueryParamsChanged: (
             state,
             action: PayloadAction<QueryParams4ImageryScene[]>
         ) => {
-            const byFrameId = {};
-            const frameIds = [];
+            const byId = {};
+            const ids = [];
 
             for (const item of action.payload) {
-                const { animationFrameId } = item;
+                const { uniqueId } = item;
 
-                if (!animationFrameId) {
+                if (!uniqueId) {
                     continue;
                 }
 
-                frameIds.push(animationFrameId);
-                byFrameId[animationFrameId] = item;
+                ids.push(uniqueId);
+                byId[uniqueId] = item;
             }
 
-            state.queryParams4ScenesInAnimateMode = {
-                byFrameId,
-                frameIds,
+            state.listOfQueryParams = {
+                byId,
+                ids,
             };
         },
-        queryParams4SceneInSelectedAnimationFrameChanged: (
+        queryParams4SelectedItemInListChanged: (
             state,
             action: PayloadAction<QueryParams4ImageryScene>
         ) => {
-            const frameId = state.selectedAnimationFrameId;
-            state.queryParams4ScenesInAnimateMode.byFrameId[frameId] =
-                action.payload;
+            const itemId = state.idOfSelectedItemInListOfQueryParams;
+            state.listOfQueryParams.byId[itemId] = action.payload;
         },
         cloudCoverChanged: (state, action: PayloadAction<number>) => {
             state.cloudCover = action.payload;
@@ -234,9 +229,9 @@ export const {
     queryParams4SceneInSwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,
-    selectedAnimationFrameIdChanged,
-    queryParams4ScenesInAnimationModeChanged,
-    queryParams4SceneInSelectedAnimationFrameChanged,
+    idOfSelectedItemInListOfQueryParamsChanged,
+    listOfQueryParamsChanged,
+    queryParams4SelectedItemInListChanged,
     cloudCoverChanged,
     activeAnalysisToolChanged,
     // missionsToBeExcludedUpdated,

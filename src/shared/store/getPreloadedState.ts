@@ -94,13 +94,12 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     const queryParams4ScenesInAnimation =
         getQueryParams4ScenesInAnimationFromHashParams() || [];
 
-    const queryParams4ScenesInAnimationByFrameId = {};
+    const listOfQueryParamsById = {};
 
     const tool = getHashParamValueByKey('tool') as AnalysisTool;
 
     for (const queryParams of queryParams4ScenesInAnimation) {
-        queryParams4ScenesInAnimationByFrameId[queryParams.animationFrameId] =
-            queryParams;
+        listOfQueryParamsById[queryParams.uniqueId] = queryParams;
     }
 
     return {
@@ -109,14 +108,12 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         tool: tool || 'mask',
         queryParams4MainScene,
         queryParams4SecondaryScene,
-        queryParams4ScenesInAnimateMode: {
-            byFrameId: queryParams4ScenesInAnimationByFrameId,
-            frameIds: queryParams4ScenesInAnimation.map(
-                (d) => d.animationFrameId
-            ),
+        listOfQueryParams: {
+            byId: listOfQueryParamsById,
+            ids: queryParams4ScenesInAnimation.map((d) => d.uniqueId),
         },
-        selectedAnimationFrameId: queryParams4ScenesInAnimation[0]
-            ? queryParams4ScenesInAnimation[0].animationFrameId
+        idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
+            ? queryParams4ScenesInAnimation[0].uniqueId
             : null,
     };
 };

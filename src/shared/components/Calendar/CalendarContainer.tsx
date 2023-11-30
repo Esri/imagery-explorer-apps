@@ -134,11 +134,11 @@ const CalendarContainer = () => {
             year = getYearFromFormattedDateString(acquisitionDate);
         } else if (
             mode === 'animate' &&
-            queryParams?.acquisitionYearFromPreviousAnimationFrame
+            queryParams?.inheritedAcquisitionYear
         ) {
             // if animation mode, when a new frame is added it won't have acquisition date by default,
             // however, we will want use the acquistion year from the previous frame
-            year = queryParams.acquisitionYearFromPreviousAnimationFrame;
+            year = queryParams.inheritedAcquisitionYear;
         }
 
         setAcquisitionYear(year);

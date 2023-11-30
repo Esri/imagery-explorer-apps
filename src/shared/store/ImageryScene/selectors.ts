@@ -5,18 +5,19 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.ImageryScenes.mode,
     (state: RootState) => state.ImageryScenes.queryParams4MainScene,
     (state: RootState) => state.ImageryScenes.queryParams4SecondaryScene,
-    (state: RootState) => state.ImageryScenes.queryParams4ScenesInAnimateMode,
+    (state: RootState) => state.ImageryScenes.listOfQueryParams,
     (state: RootState) => state.ImageryScenes.selectedSide4SwipeMode,
-    (state: RootState) => state.ImageryScenes.selectedAnimationFrameId,
+    (state: RootState) =>
+        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
     (state: RootState) => state.ImageryScenes.tool,
     (state: RootState) => state.ChangeCompareTool.activeScene,
     (
         mode,
         queryParams4MainScene,
         queryParams4SecondaryScene,
-        queryParams4ScenesInAnimateMode,
+        listOfQueryParams,
         selectedSide4SwipeMode,
-        selectedAnimationFrameId,
+        idOfSelectedItemInListOfQueryParams,
         activeAnalysisTool,
         activeSceneInChangeCompareTool
     ) => {
@@ -44,9 +45,8 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
 
         if (mode === 'animate') {
             return (
-                queryParams4ScenesInAnimateMode.byFrameId[
-                    selectedAnimationFrameId
-                ] || null
+                listOfQueryParams.byId[idOfSelectedItemInListOfQueryParams] ||
+                null
             );
         }
 
@@ -79,31 +79,28 @@ export const selectIsSwipeModeOn = createSelector(
     (mode) => mode === 'swipe'
 );
 
-export const selectQueryParams4ScenesInAnimateMode = createSelector(
-    (state: RootState) => state.ImageryScenes.queryParams4ScenesInAnimateMode,
-    (queryParams4ScenesInAnimateMode) => {
-        const { byFrameId, frameIds } = queryParams4ScenesInAnimateMode;
-        return frameIds.map((id) => byFrameId[id]);
+export const selectListOfQueryParams = createSelector(
+    (state: RootState) => state.ImageryScenes.listOfQueryParams,
+    (listOfQueryParams4Scenes) => {
+        const { byId, ids } = listOfQueryParams4Scenes;
+        return ids.map((id) => byId[id]);
     }
 );
 
-export const selectQueryParamsOfPreviousAnimationFrame = createSelector(
-    (state: RootState) => state.ImageryScenes.queryParams4MainScene,
-    (state: RootState) => state.ImageryScenes.queryParams4ScenesInAnimateMode,
-    (state: RootState) => state.ImageryScenes.selectedAnimationFrameId,
-    (
-        queryParams4MainScene,
-        queryParams4ScenesInAnimateMode,
-        selectedAnimationFrameId
-    ) => {
-        const { byFrameId } = queryParams4ScenesInAnimateMode;
-        return byFrameId[selectedAnimationFrameId] || queryParams4MainScene;
+export const selectSelectedItemFromListOfQueryParams = createSelector(
+    (state: RootState) => state.ImageryScenes.listOfQueryParams,
+    (state: RootState) =>
+        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
+    (listOfQueryParams4Scenes, idOfSelectedItemInListOfQueryParams) => {
+        const { byId } = listOfQueryParams4Scenes;
+        return byId[idOfSelectedItemInListOfQueryParams];
     }
 );
 
-export const selectSelectedAnimationFrameId = createSelector(
-    (state: RootState) => state.ImageryScenes.selectedAnimationFrameId,
-    (selectedAnimationFrameId) => selectedAnimationFrameId
+export const selectIdOfSelectedItemInListOfQueryParams = createSelector(
+    (state: RootState) =>
+        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
+    (idOfSelectedItemInListOfQueryParams) => idOfSelectedItemInListOfQueryParams
 );
 
 export const selectCloudCover = createSelector(

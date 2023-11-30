@@ -4,20 +4,20 @@ import {
     QueryParams4ImageryScene,
     // availableScenesUpdated,
     queryParams4MainSceneChanged,
-    queryParams4ScenesInAnimationModeChanged,
+    listOfQueryParamsChanged,
     queryParams4SceneInSwipeModeChanged,
-    queryParams4SceneInSelectedAnimationFrameChanged,
-    selectedAnimationFrameIdChanged,
+    queryParams4SelectedItemInListChanged,
+    idOfSelectedItemInListOfQueryParamsChanged,
     queryParams4SecondarySceneChanged,
 } from './reducer';
 import {
     selectAppMode,
     selectQueryParams4MainScene,
-    selectQueryParamsOfPreviousAnimationFrame,
+    selectSelectedItemFromListOfQueryParams,
     selectQueryParams4SceneInSelectedMode,
-    selectQueryParams4ScenesInAnimateMode,
+    selectListOfQueryParams,
     selectQueryParams4SecondaryScene,
-    selectSelectedAnimationFrameId,
+    selectIdOfSelectedItemInListOfQueryParams,
     selectActiveAnalysisTool,
     // selectLandsatMissionsToBeExcluded,
 } from './selectors';
@@ -75,11 +75,7 @@ export const updateQueryParams4SceneInSelectedMode =
         }
 
         if (mode === 'animate') {
-            dispatch(
-                queryParams4SceneInSelectedAnimationFrameChanged(
-                    updatedQueryParams
-                )
-            );
+            dispatch(queryParams4SelectedItemInListChanged(updatedQueryParams));
         }
     };
 
@@ -146,7 +142,7 @@ export const updateAcquisitionDate =
             const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 acquisitionDate,
-                acquisitionYearFromPreviousAnimationFrame: null, // reset this value whenever user makes an update to the acquisition date
+                inheritedAcquisitionYear: null, // reset this value whenever user makes an update to the acquisition date
             };
 
             dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
@@ -155,74 +151,71 @@ export const updateAcquisitionDate =
         }
     };
 
-export const addAnimationFrame =
+export const addNewItemToListOfQueryParams =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const queryParams4ExistingScenes =
-            selectQueryParams4ScenesInAnimateMode(getState());
+        const queryParams4ExistingScenes = selectListOfQueryParams(getState());
 
-        const queryParamsOfPreviousFrame =
-            selectQueryParamsOfPreviousAnimationFrame(getState());
+        // Try to inherit data from currently selected item from the list of query params,
+        // or use the data from the main scene
+        const queryParamsToInheritDataFrom =
+            selectSelectedItemFromListOfQueryParams(getState()) ||
+            selectQueryParams4MainScene(getState());
 
         const queryParamsOfNewFrame: QueryParams4ImageryScene = {
-            ...queryParamsOfPreviousFrame,
-            animationFrameId: nanoid(5),
+            ...queryParamsToInheritDataFrom,
+            uniqueId: nanoid(5),
             // acquisition date should not be cloned over to the new animation frame
             acquisitionDate: '',
             // try to save the acquistion year from the previous animation frame if the previous frame has a acquistion date selected
-            acquisitionYearFromPreviousAnimationFrame:
-                queryParamsOfPreviousFrame.acquisitionDate
+            inheritedAcquisitionYear:
+                queryParamsToInheritDataFrom.acquisitionDate
                     ? getYearFromFormattedDateString(
-                          queryParamsOfPreviousFrame.acquisitionDate
+                          queryParamsToInheritDataFrom.acquisitionDate
                       )
                     : null,
         };
 
         batch(() => {
             dispatch(
-                queryParams4ScenesInAnimationModeChanged([
+                listOfQueryParamsChanged([
                     ...queryParams4ExistingScenes,
                     queryParamsOfNewFrame,
                 ])
             );
 
             dispatch(
-                selectedAnimationFrameIdChanged(
-                    queryParamsOfNewFrame.animationFrameId
+                idOfSelectedItemInListOfQueryParamsChanged(
+                    queryParamsOfNewFrame.uniqueId
                 )
             );
         });
     };
 
-export const removeAnimationFrame =
-    (idOfFrame2BeRemoved: string) =>
+export const removeItemFromListOfQueryParams =
+    (idOfItem2Removed: string) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const queryParams4ExistingScenes =
-            selectQueryParams4ScenesInAnimateMode(getState());
+        const queryParams4ExistingScenes = selectListOfQueryParams(getState());
 
         // remove the scene associated with the frame that user wants to remove
-        const updatedQueryParams4ScenesInAnimateMode =
-            queryParams4ExistingScenes.filter(
-                (d) => d.animationFrameId !== idOfFrame2BeRemoved
-            );
+        const updatedListOfQueryParams = queryParams4ExistingScenes.filter(
+            (d) => d.uniqueId !== idOfItem2Removed
+        );
 
-        const selectedAnimationFrameId = selectSelectedAnimationFrameId(
+        const idOfSelectedItem = selectIdOfSelectedItemInListOfQueryParams(
             getState()
         );
 
-        dispatch(
-            queryParams4ScenesInAnimationModeChanged(
-                updatedQueryParams4ScenesInAnimateMode
-            )
-        );
+        dispatch(listOfQueryParamsChanged(updatedListOfQueryParams));
 
         // selected frame got removed, therefore we should select a new frame
-        if (selectedAnimationFrameId === idOfFrame2BeRemoved) {
-            const newSelectedAnimationFrameId =
-                updatedQueryParams4ScenesInAnimateMode[0]?.animationFrameId ||
-                null;
+        if (idOfSelectedItem === idOfItem2Removed) {
+            const updatedIdOfSelectedItem =
+                updatedListOfQueryParams[0]?.uniqueId || null;
 
             dispatch(
-                selectedAnimationFrameIdChanged(newSelectedAnimationFrameId)
+                idOfSelectedItemInListOfQueryParamsChanged(
+                    updatedIdOfSelectedItem
+                )
             );
         }
     };
