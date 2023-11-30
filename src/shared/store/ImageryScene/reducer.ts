@@ -122,7 +122,7 @@ export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
 };
 
 export const initialImagerySceneState: ImageryScenesState = {
-    mode: 'find a scene',
+    mode: 'dynamic',
     tool: 'mask',
     queryParams4MainScene: {
         ...DefaultQueryParams4ImageryScene,
