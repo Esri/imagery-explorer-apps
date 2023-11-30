@@ -70,9 +70,12 @@ export type QueryParams4ImageryScene = {
 };
 
 export type ImageryScenesState = {
+    /**
+     * mode to be used to visualize and compare the imagery scenes
+     */
     mode?: AppMode;
     /**
-     * active analysis tool
+     * tool to be used to analyze the imagery scene
      */
     tool: AnalysisTool;
     /**
@@ -113,7 +116,7 @@ export type ImageryScenesState = {
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     acquisitionDate: '',
-    rasterFunctionName: 'Natural Color with DRA',
+    rasterFunctionName: '',
     objectIdOfSelectedScene: null,
     animationFrameId: null,
 };
