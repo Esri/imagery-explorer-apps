@@ -21,7 +21,7 @@ import {
     selectActiveAnalysisTool,
     // selectLandsatMissionsToBeExcluded,
 } from './selectors';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 import { selectActiveScene4ChangeCompareTool } from '../ChangeCompareTool/selectors';
 
@@ -74,7 +74,7 @@ export const updateQueryParams4SceneInSelectedMode =
             return;
         }
 
-        if (mode === 'animate') {
+        if (mode === 'animate' || mode === 'spectral sampling') {
             dispatch(queryParams4SelectedItemInListChanged(updatedQueryParams));
         }
     };

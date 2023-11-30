@@ -33,7 +33,7 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
             return true;
         }
 
-        if (mode === 'find a scene') {
+        if (mode === 'find a scene' || mode === 'spectral sampling') {
             return objectIdOfSelectedScene !== null;
         }
 

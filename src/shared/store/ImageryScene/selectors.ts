@@ -43,7 +43,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
                 : queryParams4SecondaryScene;
         }
 
-        if (mode === 'animate') {
+        if (mode === 'animate' || mode === 'spectral sampling') {
             return (
                 listOfQueryParams.byId[idOfSelectedItemInListOfQueryParams] ||
                 null

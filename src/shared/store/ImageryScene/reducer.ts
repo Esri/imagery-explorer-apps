@@ -7,14 +7,15 @@ import {
 // import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
 
 /**
- * the imagery explorer app support 5 different modes that the user can use to explore the imagery layer/scene
+ * modes that the user can use to explore the imagery layer/scene
  */
 export type AppMode =
-    | 'dynamic'
-    | 'find a scene'
-    | 'swipe'
-    | 'animate'
-    | 'analysis';
+    | 'dynamic' // view the mosaicked scenes
+    | 'find a scene' // find and explorer a single scene
+    | 'swipe' // compare two scenes side by side using Swipe widget
+    | 'animate' // animate a list of scenes
+    | 'analysis' // analyze the selected scene
+    | 'spectral sampling'; // sampling data from a list of scenes
 
 /**
  * the imagery explorer app supports these analysis tools

@@ -74,9 +74,9 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         mode = 'dynamic';
     }
 
-    // spectral samping tool only support "find a scene" mode
+    // spectral sampling tool should use "spectral sampling" mode
     if (APP_NAME === 'spectral-sampling-tool') {
-        mode = 'find a scene';
+        mode = 'spectral sampling';
     }
 
     // Attempt to extract query parameters from the URL hash.
