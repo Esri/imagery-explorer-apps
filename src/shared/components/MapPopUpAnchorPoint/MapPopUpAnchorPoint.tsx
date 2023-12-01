@@ -4,8 +4,7 @@ import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useRef } from 'react';
-import MapAnchorImage from '../../statics/img/map-anchor.png';
-import { SizeOfMapAnchorImage } from '@shared/constants/UI';
+import { getThemedMapPointGraphic } from '../MapView/helpers';
 
 type Props = {
     anchorLocation: Point;
@@ -34,18 +33,7 @@ export const MapPopUpAnchorPoint: FC<Props> = ({
         try {
             graphicLayerRef.current.removeAll();
 
-            const point = new Graphic({
-                geometry: {
-                    type: 'point',
-                    ...anchorLocation,
-                },
-                symbol: {
-                    type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
-                    url: MapAnchorImage,
-                    width: `${SizeOfMapAnchorImage}px`,
-                    height: `${SizeOfMapAnchorImage}px`,
-                } as any,
-            });
+            const point = getThemedMapPointGraphic(anchorLocation);
 
             graphicLayerRef.current.add(point);
         } catch (err) {

@@ -4,8 +4,7 @@ import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useRef } from 'react';
-import IconImage from '../../statics/img/map-anchor.png';
-import { SizeOfMapAnchorImage } from '@shared/constants/UI';
+import { getThemedMapPointGraphic } from '../MapView/helpers';
 
 type Props = {
     queryLocation: Point;
@@ -39,25 +38,7 @@ export const AnalysisToolQueryLocation: FC<Props> = ({
         try {
             graphicLayerRef.current.removeAll();
 
-            const point = new Graphic({
-                geometry: {
-                    type: 'point',
-                    ...queryLocation,
-                },
-                symbol: {
-                    // type: 'simple-marker', // autocasts as new SimpleMarkerSymbol()
-                    // color: [0, 35, 47, 0.9],
-                    // outline: {
-                    //     // autocasts as new SimpleLineSymbol()
-                    //     color: [191, 238, 254],
-                    //     width: 1,
-                    // },
-                    type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
-                    url: IconImage,
-                    width: SizeOfMapAnchorImage,
-                    height: SizeOfMapAnchorImage,
-                } as any,
-            });
+            const point = getThemedMapPointGraphic(queryLocation);
 
             graphicLayerRef.current.add(point);
         } catch (err) {

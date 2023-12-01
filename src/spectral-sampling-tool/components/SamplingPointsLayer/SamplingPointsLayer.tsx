@@ -3,9 +3,8 @@ import { Point } from '@arcgis/core/geometry';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import React, { FC, useEffect, useRef } from 'react';
-import MapAnchorImage from '@shared/statics/img/map-anchor.png';
-import { SizeOfMapAnchorImage } from '@shared/constants/UI';
 import MapView from '@arcgis/core/views/MapView';
+import { getThemedMapPointGraphic } from '@shared/components/MapView/helpers';
 
 type Props = {
     /**
@@ -43,19 +42,7 @@ export const SamplingPoints: FC<Props> = ({
         graphicLayerRef.current.removeAll();
 
         for (const point of points) {
-            const graphic = new Graphic({
-                geometry: {
-                    type: 'point',
-                    ...point,
-                },
-                symbol: {
-                    type: 'picture-marker', // autocasts as new PictureMarkerSymbol()
-                    url: MapAnchorImage,
-                    width: `${SizeOfMapAnchorImage}px`,
-                    height: `${SizeOfMapAnchorImage}px`,
-                } as any,
-            });
-
+            const graphic = getThemedMapPointGraphic(point);
             graphicLayerRef.current.add(graphic);
         }
     };
