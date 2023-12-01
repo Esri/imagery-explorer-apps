@@ -1,18 +1,10 @@
-import { selectSpectralSamplingPointsData } from '@shared/store/SpectralSamplingTool/selectors';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useChartData } from './useChartData';
+import { SpectralProfileChart } from '@landsat-explorer/components/SpectralTool/SpectralProfileChart';
 
 export const SamplingResultsContainer = () => {
-    const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
-
-    const chartData = useMemo(() => {
-        if (!samplingPointsData || !samplingPointsData.length) {
-            return [];
-        }
-
-        return samplingPointsData.filter((d) => d.location && d.bandValues);
-    }, [samplingPointsData]);
+    const chartData = useChartData();
 
     return (
         <div
@@ -34,7 +26,9 @@ export const SamplingResultsContainer = () => {
                     </p>
                 </div>
             ) : (
-                <div className="w-full h-[120px] my-2"></div>
+                <div className="w-full h-[120px] my-2">
+                    <SpectralProfileChart chartData={chartData} />
+                </div>
             )}
         </div>
     );

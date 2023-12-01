@@ -20,31 +20,6 @@ import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
 import { FeatureOfInterests, SpectralProfileFeatureOfInterest } from './config';
 import { useSpectralProfileChartData } from './useSpectralProfileChartData';
 
-// export type SpectralProfileFeatureOfInterest =
-//     | 'Cloud'
-//     | 'Snow/Ice'
-//     | 'Desert'
-//     | 'Dry Vegetation'
-//     | 'Concrete'
-//     | 'Lush Vegetation'
-//     | 'Urban'
-//     | 'Rock'
-//     | 'Forest'
-//     | 'Water';
-
-// const FeatureOfInterest: SpectralProfileFeatureOfInterest[] = [
-//     'Cloud',
-//     'Snow/Ice',
-//     'Rock',
-//     'Desert',
-//     'Concrete',
-//     'Urban',
-//     'Dry Vegetation',
-//     'Lush Vegetation',
-//     'Forest',
-//     'Water',
-// ];
-
 export const SpectralToolContainer = () => {
     const dispatch = useDispatch();
 

@@ -7,14 +7,7 @@ import {
     SpectralProfileFeatureOfInterest,
 } from './config';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
-
-const normalizeBandValue = (value: number): number => {
-    // band value should never go above 1
-    value = Math.min(value, 1);
-    // band value should never go below 0
-    value = Math.max(value, 0);
-    return value;
-};
+import { formatLandsatBandValuesAsLineChartDataItems } from './helper';
 
 /**
  * This is a custom hook that convert the band values from user selected location and
@@ -38,29 +31,33 @@ export const useSpectralProfileChartData = (
             return [];
         }
 
-        // only need to plot the first 7 bands in the spectral profile chart
-        const bandValues4UserSelectedLocation = data.slice(0, 7);
-        const bandValues4SelectedFeatureOfInterest =
-            SpectralProfileDataByFeatureOfInterest[featureOfInterest].slice(
-                0,
-                7
-            );
+        // // only need to plot the first 7 bands in the spectral profile chart
+        // const bandValues4UserSelectedLocation = data.slice(0, 7);
+        // const bandValues4SelectedFeatureOfInterest =
+        //     SpectralProfileDataByFeatureOfInterest[featureOfInterest].slice(
+        //         0,
+        //         7
+        //     );
 
         const spectralProfileData4UserSelectedLocation =
-            bandValues4UserSelectedLocation.map((val, index) => {
-                return {
-                    x: index,
-                    y: normalizeBandValue(val),
-                } as LineChartDataItem;
-            });
+            formatLandsatBandValuesAsLineChartDataItems(data);
+        // bandValues4UserSelectedLocation.map((val, index) => {
+        //     return {
+        //         x: index,
+        //         y: normalizeBandValue(val),
+        //     } as LineChartDataItem;
+        // });
 
         const spectralProfileData4SelectedFeatureOfInterest =
-            bandValues4SelectedFeatureOfInterest.map((val, index) => {
-                return {
-                    x: index,
-                    y: normalizeBandValue(val),
-                } as LineChartDataItem;
-            });
+            formatLandsatBandValuesAsLineChartDataItems(
+                SpectralProfileDataByFeatureOfInterest[featureOfInterest]
+            );
+        // bandValues4SelectedFeatureOfInterest.map((val, index) => {
+        //     return {
+        //         x: index,
+        //         y: normalizeBandValue(val),
+        //     } as LineChartDataItem;
+        // });
 
         return [
             {
