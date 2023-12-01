@@ -98,7 +98,7 @@ export const getPixelValuesFromIdentifyTaskResponse = (
 };
 
 /**
- * Get values from the pixel from the scene with the input object Id that intersect with the input point.
+ * Run identify task to get values of the pixel that intersects with the input point from the scene with input object id.
  * @param param0
  * @returns
  */
