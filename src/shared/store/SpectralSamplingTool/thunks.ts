@@ -13,8 +13,9 @@ import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
 } from './selectors';
+import { getPixelValues } from '@shared/services/landsat-level-2/identify';
 
-const abortController: AbortController = null;
+let abortController: AbortController = null;
 
 export const addSpectralSamplingPoint =
     (uniqueId: string) =>
@@ -26,7 +27,7 @@ export const addSpectralSamplingPoint =
         const data: SpectralSamplingData = {
             uniqueId,
             location: null,
-            spectralProfileData: null,
+            bandValues: null,
             isLoading: false,
         };
 
@@ -58,7 +59,8 @@ export const removeSpectralSamplingPoint =
     };
 
 export const updateLocationOfSpectralSamplingPoint =
-    (point: Point) => (dispatch: StoreDispatch, getState: StoreGetState) => {
+    (point: Point) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
         // dispatch(queryLocationChanged(point));
 
         const idOfSelectedSamplingPoint =
@@ -79,15 +81,17 @@ export const updateLocationOfSpectralSamplingPoint =
 
         if (
             !queryParamsOfSelectedSpectralSamplingPoint ||
-            !queryParamsOfSelectedSpectralSamplingPoint.acquisitionDate
+            !queryParamsOfSelectedSpectralSamplingPoint.acquisitionDate ||
+            !queryParamsOfSelectedSpectralSamplingPoint.objectIdOfSelectedScene
         ) {
             console.log(
-                'select a acquisition date first, abort calling updateLocationOfSpectralSamplingPoint'
+                'select a imagery scene first, abort calling updateLocationOfSpectralSamplingPoint'
             );
             return;
         }
 
-        const updatedData4SelectedSamplingPoint: SpectralSamplingData = {
+        // save the user selected location and set loading to true
+        let updatedData4SelectedSamplingPoint: SpectralSamplingData = {
             ...selectedSpectralSamplingPointData,
             location: {
                 ...point.toJSON(),
@@ -103,4 +107,51 @@ export const updateLocationOfSpectralSamplingPoint =
                 data: updatedData4SelectedSamplingPoint,
             })
         );
+
+        if (abortController) {
+            abortController.abort();
+        }
+
+        abortController = new AbortController();
+
+        try {
+            const bandValues = await getPixelValues({
+                point,
+                objectId:
+                    queryParamsOfSelectedSpectralSamplingPoint.objectIdOfSelectedScene,
+                abortController,
+            });
+
+            updatedData4SelectedSamplingPoint = {
+                ...updatedData4SelectedSamplingPoint,
+                bandValues,
+                isLoading: false,
+            };
+
+            dispatch(
+                dataOfSelectedSamplingPointChanged({
+                    id: idOfSelectedSamplingPoint,
+                    data: updatedData4SelectedSamplingPoint,
+                })
+            );
+        } catch (err) {
+            console.log(err);
+
+            // failed to get band values for the input location
+            // this can happen when user selects a point outside of the imagery scene
+            // or clicked on a bad pixel. Just reset the location to null to enforce user picks up
+            // a different location
+            updatedData4SelectedSamplingPoint = {
+                ...updatedData4SelectedSamplingPoint,
+                location: null,
+                isLoading: false,
+            };
+
+            dispatch(
+                dataOfSelectedSamplingPointChanged({
+                    id: idOfSelectedSamplingPoint,
+                    data: updatedData4SelectedSamplingPoint,
+                })
+            );
+        }
     };

@@ -15,7 +15,7 @@ export type SpectralSamplingData = {
     /**
      * spectral prfile data/band values from the pixel of the query location
      */
-    spectralProfileData: number[];
+    bandValues: number[];
     /**
      * if true, it is in process of fetching spectral profile data
      */
