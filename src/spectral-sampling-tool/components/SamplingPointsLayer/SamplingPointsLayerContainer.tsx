@@ -42,7 +42,7 @@ export const SamplingPointsLayerContainer: FC<Props> = ({
             groupLayer={groupLayer}
             mapView={mapView}
             selectedPoint={selectedSamplingPoint?.location}
-            points={points}
+            points={[selectedSamplingPoint?.location]}
         />
     );
 };

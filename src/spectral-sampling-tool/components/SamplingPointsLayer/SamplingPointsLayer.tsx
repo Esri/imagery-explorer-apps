@@ -42,6 +42,10 @@ export const SamplingPoints: FC<Props> = ({
         graphicLayerRef.current.removeAll();
 
         for (const point of points) {
+            if (!point) {
+                continue;
+            }
+
             const graphic = getThemedMapPointGraphic(point);
             graphicLayerRef.current.add(graphic);
         }
