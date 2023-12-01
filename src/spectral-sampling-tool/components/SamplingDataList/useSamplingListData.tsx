@@ -25,6 +25,10 @@ export type SamplingListItemData = {
      * acquisition date
      */
     acquisitionDate?: string;
+    /**
+     * if true, it is in process of loading spectral profile data
+     */
+    isLoading?: boolean;
 };
 
 export const useSamplingListData = (): SamplingListItemData[] => {
@@ -47,12 +51,13 @@ export const useSamplingListData = (): SamplingListItemData[] => {
         }
 
         const data: SamplingListItemData[] = samplingPoints.map((d) => {
-            const { uniqueId, location } = d;
+            const { uniqueId, location, isLoading } = d;
             const queryParams = queryParamsById[uniqueId];
 
             return {
                 uniqueId,
                 location,
+                isLoading,
                 selected: uniqueId === idOfSelectedSamplingPoint,
                 acquisitionDate: queryParams?.acquisitionDate,
             };

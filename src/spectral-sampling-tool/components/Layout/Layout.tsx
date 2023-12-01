@@ -26,7 +26,7 @@ const Layout = () => {
                         </div>
 
                         <div className="flex shrink-0">
-                            <LandsatSceneInfo />
+                            {/* <LandsatSceneInfo /> */}
                             <RasterFunctionSelector />
                         </div>
                     </>

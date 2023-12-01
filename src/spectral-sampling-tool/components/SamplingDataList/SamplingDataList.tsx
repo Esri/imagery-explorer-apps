@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
 import { SamplingListItemData } from './useSamplingListData';
 import classNames from 'classnames';
+import { format } from 'date-fns';
+import { DATE_FORMAT } from '@shared/constants/UI';
+import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 
 type Props = {
     data: SamplingListItemData[];
@@ -19,6 +22,47 @@ type Props = {
 };
 
 export const SamplingDataList: FC<Props> = ({ data, onSelect, onRemove }) => {
+    const getContent = (item: SamplingListItemData) => {
+        if (!item) {
+            return null;
+        }
+
+        const { acquisitionDate, location, isLoading } = item;
+
+        if (!acquisitionDate) {
+            return 'Select a Date';
+        }
+
+        if (!location) {
+            return 'Select a Location';
+        }
+
+        if (isLoading) {
+            return (
+                <div className="flex items-center justify-center">
+                    <calcite-loader inline />
+                    <span className="ml-1">fetching data</span>
+                </div>
+            );
+        }
+
+        const formattedAcquisitionDate = format(
+            formattedDateString2Unixtimestamp(acquisitionDate),
+            DATE_FORMAT
+        );
+
+        return (
+            <div>
+                <span>{formattedAcquisitionDate}</span>
+                <br />
+                <span>
+                    {location.longitude.toFixed(4)},{' '}
+                    {location.latitude.toFixed(4)}
+                </span>
+            </div>
+        );
+    };
+
     if (!data || !data.length) {
         return null;
     }
@@ -26,7 +70,7 @@ export const SamplingDataList: FC<Props> = ({ data, onSelect, onRemove }) => {
     return (
         <div>
             {data.map((d) => {
-                const { selected, uniqueId, acquisitionDate } = d;
+                const { selected, uniqueId, isLoading } = d;
                 return (
                     <div
                         key={uniqueId}
@@ -37,6 +81,7 @@ export const SamplingDataList: FC<Props> = ({ data, onSelect, onRemove }) => {
                                 'bg-custom-light-blue': selected,
                                 'text-custom-background': selected,
                                 'drop-shadow-custom-light-blue-50': selected,
+                                'is-disabled': isLoading,
                             }
                         )}
                     >
@@ -44,9 +89,7 @@ export const SamplingDataList: FC<Props> = ({ data, onSelect, onRemove }) => {
                             className="w-full text-xs mr-1 text-center leading-[.9rem]"
                             onClick={onSelect.bind(null, uniqueId)}
                         >
-                            <span>{acquisitionDate}</span>
-                            <br />
-                            <span>{uniqueId}</span>
+                            {getContent(d)}
                         </div>
 
                         <div

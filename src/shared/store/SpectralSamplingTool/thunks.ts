@@ -1,16 +1,22 @@
 import Point from '@arcgis/core/geometry/Point';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import {
-    selectActiveAnalysisTool,
     selectIdOfSelectedItemInListOfQueryParams,
-    selectQueryParams4MainScene,
+    selectSelectedItemFromListOfQueryParams,
 } from '../ImageryScene/selectors';
 import {
     getPixelValuesFromIdentifyTaskResponse,
     identify,
 } from '@shared/services/landsat-level-2/identify';
-import { SpectralSamplingData, samplingDataUpdated } from './reducer';
-import { selectSpectralSamplingPointsData } from './selectors';
+import {
+    SpectralSamplingData,
+    samplingDataUpdated,
+    dataOfSelectedSamplingPointChanged,
+} from './reducer';
+import {
+    selectSelectedSpectralSamplingPointData,
+    selectSpectralSamplingPointsData,
+} from './selectors';
 
 const abortController: AbortController = null;
 
@@ -25,6 +31,7 @@ export const addSpectralSamplingPoint =
             uniqueId,
             location: null,
             spectralProfileData: null,
+            isLoading: false,
         };
 
         const updatedSamplingPoints: SpectralSamplingData[] = [
@@ -54,7 +61,50 @@ export const removeSpectralSamplingPoint =
         // dispatch(queryLocationChanged(point));
     };
 
-export const updateSpectralSamplingPoint =
-    () => (dispatch: StoreDispatch, getState: StoreGetState) => {
+export const updateLocationOfSpectralSamplingPoint =
+    (point: Point) => (dispatch: StoreDispatch, getState: StoreGetState) => {
         // dispatch(queryLocationChanged(point));
+
+        const idOfSelectedSamplingPoint =
+            selectIdOfSelectedItemInListOfQueryParams(getState());
+
+        const selectedSpectralSamplingPointData =
+            selectSelectedSpectralSamplingPointData(getState());
+
+        const queryParamsOfSelectedSpectralSamplingPoint =
+            selectSelectedItemFromListOfQueryParams(getState());
+
+        if (!idOfSelectedSamplingPoint) {
+            console.log(
+                'no selected sampling point is found, abort calling updateLocationOfSpectralSamplingPoint'
+            );
+            return;
+        }
+
+        if (
+            !queryParamsOfSelectedSpectralSamplingPoint ||
+            !queryParamsOfSelectedSpectralSamplingPoint.acquisitionDate
+        ) {
+            console.log(
+                'select a acquisition date first, abort calling updateLocationOfSpectralSamplingPoint'
+            );
+            return;
+        }
+
+        const updatedData4SelectedSamplingPoint: SpectralSamplingData = {
+            ...selectedSpectralSamplingPointData,
+            location: {
+                ...point.toJSON(),
+                latitude: point.latitude,
+                longitude: point.longitude,
+            },
+            isLoading: true,
+        };
+
+        dispatch(
+            dataOfSelectedSamplingPointChanged({
+                id: idOfSelectedSamplingPoint,
+                data: updatedData4SelectedSamplingPoint,
+            })
+        );
     };

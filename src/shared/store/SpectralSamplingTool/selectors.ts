@@ -8,3 +8,12 @@ export const selectSpectralSamplingPointsData = createSelector(
         return ids.map((id) => byId[id]);
     }
 );
+
+export const selectSelectedSpectralSamplingPointData = createSelector(
+    (state: RootState) => state.SpectralSamplingTool.data.byId,
+    (state: RootState) =>
+        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
+    (byId, idOfSelectedItemInListOfQueryParams) => {
+        return byId[idOfSelectedItemInListOfQueryParams];
+    }
+);

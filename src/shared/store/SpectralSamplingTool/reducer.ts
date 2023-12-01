@@ -16,6 +16,10 @@ export type SpectralSamplingData = {
      * spectral prfile data/band values from the pixel of the query location
      */
     spectralProfileData: number[];
+    /**
+     * if true, it is in process of fetching spectral profile data
+     */
+    isLoading: boolean;
 };
 
 export type SpectralSamplingToolState = {
@@ -71,6 +75,16 @@ const slice = createSlice({
                 ids,
             };
         },
+        dataOfSelectedSamplingPointChanged: (
+            state,
+            action: PayloadAction<{
+                id: string;
+                data: SpectralSamplingData;
+            }>
+        ) => {
+            const { data, id } = action.payload;
+            state.data.byId[id] = data;
+        },
         errorChanged: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
         },
@@ -79,6 +93,7 @@ const slice = createSlice({
 
 const { reducer } = slice;
 
-export const { samplingDataUpdated, errorChanged } = slice.actions;
+export const { samplingDataUpdated, dataOfSelectedSamplingPointChanged } =
+    slice.actions;
 
 export default reducer;
