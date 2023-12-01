@@ -5,10 +5,6 @@ import {
     selectSelectedItemFromListOfQueryParams,
 } from '../ImageryScene/selectors';
 import {
-    getPixelValuesFromIdentifyTaskResponse,
-    identify,
-} from '@shared/services/landsat-level-2/identify';
-import {
     SpectralSamplingData,
     samplingDataUpdated,
     dataOfSelectedSamplingPointChanged,

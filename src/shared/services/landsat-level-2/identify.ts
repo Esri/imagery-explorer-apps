@@ -96,3 +96,37 @@ export const getPixelValuesFromIdentifyTaskResponse = (
 
     return bandValues;
 };
+
+/**
+ * Get values from the pixel from the scene with the input object Id that intersect with the input point.
+ * @param param0
+ * @returns
+ */
+export const getPixelValues = async ({
+    point,
+    objectId,
+    abortController,
+}: IdentifyTaskParams): Promise<number[]> => {
+    const res = await identify({
+        point,
+        objectId,
+        abortController,
+    });
+
+    if (
+        res?.catalogItems?.features &&
+        res?.catalogItems?.features.length === 0
+    ) {
+        throw new Error(
+            'Failed to fetch pixel values. Please select a location inside of the selected landsat scene.'
+        );
+    }
+
+    const bandValues = getPixelValuesFromIdentifyTaskResponse(res);
+
+    if (!bandValues) {
+        throw new Error('Identify task does not return band values');
+    }
+
+    return bandValues;
+};
