@@ -76,7 +76,7 @@ export const SamplingDataList: FC<Props> = ({ data, onSelect, onRemove }) => {
                         key={uniqueId}
                         className={classNames(
                             'relative flex items-center px-1 h-[30px] mb-1',
-                            'border border-custom-light-blue-80 cursor-pointer group horizontal-indicator-on-left',
+                            'border border-custom-light-blue-80 cursor-pointer group',
                             {
                                 'bg-custom-light-blue': selected,
                                 'text-custom-background': selected,
