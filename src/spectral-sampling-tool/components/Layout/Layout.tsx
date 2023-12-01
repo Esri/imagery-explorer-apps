@@ -4,10 +4,11 @@ import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelecto
 import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
 import { appConfig } from '@shared/config';
-import { SceneInfo as LandsatSceneInfo } from '@landsat-explorer/components/SceneInfo';
+// import { SceneInfo as LandsatSceneInfo } from '@landsat-explorer/components/SceneInfo';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
-import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
+// import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
 import { SamplingDataList } from '../SamplingDataList';
+import { SamplingResults } from '../SamplingResults';
 
 const Layout = () => {
     useSaveAppState2HashParams();
@@ -26,7 +27,7 @@ const Layout = () => {
                         </div>
 
                         <div className="flex shrink-0">
-                            {/* <LandsatSceneInfo /> */}
+                            <SamplingResults />
                             <RasterFunctionSelector />
                         </div>
                     </>

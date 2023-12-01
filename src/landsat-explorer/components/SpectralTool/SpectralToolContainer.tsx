@@ -18,6 +18,7 @@ import { SpectralProfileChart } from './SpectralProfileChart';
 import { findMostSimilarFeatureOfInterest } from './helper';
 import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
 import { FeatureOfInterests, SpectralProfileFeatureOfInterest } from './config';
+import { useSpectralProfileChartData } from './useSpectralProfileChartData';
 
 // export type SpectralProfileFeatureOfInterest =
 //     | 'Cloud'
@@ -64,6 +65,11 @@ export const SpectralToolContainer = () => {
 
     const [selectedFeatureOfInterest, setSelectedFeatureOfInterest] =
         useState<SpectralProfileFeatureOfInterest>();
+
+    const chartData = useSpectralProfileChartData(
+        spectralProfileData,
+        selectedFeatureOfInterest
+    );
 
     const spectralProfileToolMessage = useMemo(() => {
         if (isLoading) {
@@ -151,8 +157,9 @@ export const SpectralToolContainer = () => {
                 <>
                     <div className="w-full h-[120px] my-2">
                         <SpectralProfileChart
-                            featureOfInterest={selectedFeatureOfInterest}
-                            data={spectralProfileData}
+                            // featureOfInterest={selectedFeatureOfInterest}
+                            // data={spectralProfileData}
+                            chartData={chartData}
                         />
                     </div>
 
