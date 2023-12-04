@@ -9,6 +9,11 @@ export const selectSpectralSamplingPointsData = createSelector(
     }
 );
 
+export const selectClassifictionNameOfSpectralSamplingTask = createSelector(
+    (state: RootState) => state.SpectralSamplingTool.classificationName,
+    (classificationName) => classificationName
+);
+
 export const selectSelectedSpectralSamplingPointData = createSelector(
     (state: RootState) => state.SpectralSamplingTool.data.byId,
     (state: RootState) =>

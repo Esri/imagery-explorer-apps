@@ -17,7 +17,7 @@ const Layout = () => {
         <>
             <AppHeader title={appConfig.title} />
             <BottomPanel>
-                <div className="w-40 shrink-0">
+                <div className="w-44 shrink-0">
                     <SamplingDataList />
                 </div>
 

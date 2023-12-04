@@ -16,11 +16,19 @@ import { nanoid } from 'nanoid';
 import { batch } from 'react-redux';
 import { useSamplingListData } from './useSamplingListData';
 import { idOfSelectedItemInListOfQueryParamsChanged } from '@shared/store/ImageryScene/reducer';
+import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
+import { ClassificationNameEditor } from './ClassificationNameEditor';
+import { classificationNameUpdated } from '@shared/store/SpectralSamplingTool/reducer';
 
 export const SamplingDataListContainer = () => {
     const dispatch = useDispatch();
 
     const samplingListData = useSamplingListData();
+
+    // classification name of the current spectral sampling session
+    const classificationName = useSelector(
+        selectClassifictionNameOfSpectralSamplingTask
+    );
 
     const samplingPointOnAdd = () => {
         // use the same unique id so that the query params of the imagery scene and
@@ -49,6 +57,16 @@ export const SamplingDataListContainer = () => {
             samplingPointOnAdd();
         }
     }, []);
+
+    if (!classificationName) {
+        return (
+            <ClassificationNameEditor
+                classificationNameOnEnter={(name) => {
+                    dispatch(classificationNameUpdated(name));
+                }}
+            />
+        );
+    }
 
     return (
         <div className="w-full h-full relative">

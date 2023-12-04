@@ -23,6 +23,13 @@ export type SpectralSamplingData = {
 };
 
 export type SpectralSamplingToolState = {
+    /**
+     * name of the land cover classification (e.g. 'Desert', 'Lush Vegetation') that the user intends to create spectral sampling of.
+     */
+    classificationName: string;
+    /**
+     * sampling points that the user has created for the current session
+     */
     data: {
         byId: {
             [key: string]: SpectralSamplingData;
@@ -43,6 +50,7 @@ export type SpectralSamplingToolState = {
 };
 
 export const initialSpectralSamplingToolState: SpectralSamplingToolState = {
+    classificationName: '',
     data: {
         byId: {},
         ids: [],
@@ -55,6 +63,9 @@ const slice = createSlice({
     name: 'SpectralSamplingTool',
     initialState: initialSpectralSamplingToolState,
     reducers: {
+        classificationNameUpdated: (state, action: PayloadAction<string>) => {
+            state.classificationName = action.payload;
+        },
         samplingDataUpdated: (
             state,
             action: PayloadAction<SpectralSamplingData[]>
@@ -93,7 +104,10 @@ const slice = createSlice({
 
 const { reducer } = slice;
 
-export const { samplingDataUpdated, dataOfSelectedSamplingPointChanged } =
-    slice.actions;
+export const {
+    classificationNameUpdated,
+    samplingDataUpdated,
+    dataOfSelectedSamplingPointChanged,
+} = slice.actions;
 
 export default reducer;
