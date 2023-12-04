@@ -89,18 +89,22 @@ export type ImageryScenesState = {
      */
     selectedSide4SwipeMode?: Side4SwipeMode;
     /**
-     * list of query parameters for Imagery scenes that will be used in Animation Mode, Spectral Sampling Mode and etc.
+     * query parameters for list of Imagery scenes that will be used in Animation Mode, Spectral Sampling Mode and etc.
      */
-    listOfQueryParams?: {
+    queryParamsList?: {
         byId?: {
             [key: string]: QueryParams4ImageryScene;
         };
         ids?: string[];
+        /**
+         * Id of the selected item. This Id helps identify which item should be updated.
+         */
+        selectedItemID?: string;
     };
-    /**
-     * Id of the selected item in `listOfQueryParams`. This Id helps identify which item in `listOfQueryParams` should be updated.
-     */
-    idOfSelectedItemInListOfQueryParams?: string;
+    // /**
+    //  * Id of the selected item in `listOfQueryParams`. This Id helps identify which item in `listOfQueryParams` should be updated.
+    //  */
+    // idOfSelectedItemInListOfQueryParams?: string;
     /**
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
@@ -128,11 +132,12 @@ export const initialImagerySceneState: ImageryScenesState = {
         ...DefaultQueryParams4ImageryScene,
     },
     selectedSide4SwipeMode: 'left',
-    listOfQueryParams: {
+    queryParamsList: {
         byId: {},
         ids: [],
+        selectedItemID: null,
     },
-    idOfSelectedItemInListOfQueryParams: null,
+    // idOfSelectedItemInListOfQueryParams: null,
     cloudCover: 0.5,
 };
 
@@ -173,20 +178,25 @@ const slice = createSlice({
         ) => {
             state.selectedSide4SwipeMode = action.payload;
         },
-        idOfSelectedItemInListOfQueryParamsChanged: (
+        selectedItemIdOfQueryParamsListChanged: (
             state,
             action: PayloadAction<string>
         ) => {
-            state.idOfSelectedItemInListOfQueryParams = action.payload;
+            state.queryParamsList.selectedItemID = action.payload;
         },
-        listOfQueryParamsChanged: (
+        queryParamsListChanged: (
             state,
-            action: PayloadAction<QueryParams4ImageryScene[]>
+            action: PayloadAction<{
+                queryParams: QueryParams4ImageryScene[];
+                selectedItemID: string;
+            }>
         ) => {
             const byId = {};
             const ids = [];
 
-            for (const item of action.payload) {
+            const { selectedItemID, queryParams } = action.payload;
+
+            for (const item of queryParams) {
                 const { uniqueId } = item;
 
                 if (!uniqueId) {
@@ -197,17 +207,18 @@ const slice = createSlice({
                 byId[uniqueId] = item;
             }
 
-            state.listOfQueryParams = {
+            state.queryParamsList = {
                 byId,
                 ids,
+                selectedItemID,
             };
         },
         queryParams4SelectedItemInListChanged: (
             state,
             action: PayloadAction<QueryParams4ImageryScene>
         ) => {
-            const itemId = state.idOfSelectedItemInListOfQueryParams;
-            state.listOfQueryParams.byId[itemId] = action.payload;
+            const itemId = state.queryParamsList.selectedItemID;
+            state.queryParamsList.byId[itemId] = action.payload;
         },
         cloudCoverChanged: (state, action: PayloadAction<number>) => {
             state.cloudCover = action.payload;
@@ -230,8 +241,8 @@ export const {
     queryParams4SceneInSwipeModeChanged,
     modeChanged,
     selectedSide4SwipeModeChanged,
-    idOfSelectedItemInListOfQueryParamsChanged,
-    listOfQueryParamsChanged,
+    selectedItemIdOfQueryParamsListChanged,
+    queryParamsListChanged,
     queryParams4SelectedItemInListChanged,
     cloudCoverChanged,
     activeAnalysisToolChanged,

@@ -5,19 +5,18 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.ImageryScenes.mode,
     (state: RootState) => state.ImageryScenes.queryParams4MainScene,
     (state: RootState) => state.ImageryScenes.queryParams4SecondaryScene,
-    (state: RootState) => state.ImageryScenes.listOfQueryParams,
+    (state: RootState) => state.ImageryScenes.queryParamsList,
     (state: RootState) => state.ImageryScenes.selectedSide4SwipeMode,
-    (state: RootState) =>
-        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
+    (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
     (state: RootState) => state.ImageryScenes.tool,
     (state: RootState) => state.ChangeCompareTool.activeScene,
     (
         mode,
         queryParams4MainScene,
         queryParams4SecondaryScene,
-        listOfQueryParams,
+        queryParamsList,
         selectedSide4SwipeMode,
-        idOfSelectedItemInListOfQueryParams,
+        selectedItemID,
         activeAnalysisTool,
         activeSceneInChangeCompareTool
     ) => {
@@ -44,10 +43,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         }
 
         if (mode === 'animate' || mode === 'spectral sampling') {
-            return (
-                listOfQueryParams.byId[idOfSelectedItemInListOfQueryParams] ||
-                null
-            );
+            return queryParamsList.byId[selectedItemID] || null;
         }
 
         return null;
@@ -80,27 +76,25 @@ export const selectIsSwipeModeOn = createSelector(
 );
 
 export const selectListOfQueryParams = createSelector(
-    (state: RootState) => state.ImageryScenes.listOfQueryParams,
-    (listOfQueryParams4Scenes) => {
-        const { byId, ids } = listOfQueryParams4Scenes;
+    (state: RootState) => state.ImageryScenes.queryParamsList,
+    (queryParamsList) => {
+        const { byId, ids } = queryParamsList;
         return ids.map((id) => byId[id]);
     }
 );
 
 export const selectSelectedItemFromListOfQueryParams = createSelector(
-    (state: RootState) => state.ImageryScenes.listOfQueryParams,
-    (state: RootState) =>
-        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
-    (listOfQueryParams4Scenes, idOfSelectedItemInListOfQueryParams) => {
-        const { byId } = listOfQueryParams4Scenes;
-        return byId[idOfSelectedItemInListOfQueryParams];
+    (state: RootState) => state.ImageryScenes.queryParamsList,
+    (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
+    (queryParamsList, selectedItemID) => {
+        const { byId } = queryParamsList;
+        return byId[selectedItemID];
     }
 );
 
 export const selectIdOfSelectedItemInListOfQueryParams = createSelector(
-    (state: RootState) =>
-        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
-    (idOfSelectedItemInListOfQueryParams) => idOfSelectedItemInListOfQueryParams
+    (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
+    (selectedItemID) => selectedItemID
 );
 
 export const selectCloudCover = createSelector(

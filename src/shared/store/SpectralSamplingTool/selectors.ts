@@ -16,8 +16,7 @@ export const selectClassifictionNameOfSpectralSamplingTask = createSelector(
 
 export const selectSelectedSpectralSamplingPointData = createSelector(
     (state: RootState) => state.SpectralSamplingTool.data.byId,
-    (state: RootState) =>
-        state.ImageryScenes.idOfSelectedItemInListOfQueryParams,
+    (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
     (byId, idOfSelectedItemInListOfQueryParams) => {
         return byId[idOfSelectedItemInListOfQueryParams];
     }

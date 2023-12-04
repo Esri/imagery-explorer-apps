@@ -4,10 +4,10 @@ import {
     QueryParams4ImageryScene,
     // availableScenesUpdated,
     queryParams4MainSceneChanged,
-    listOfQueryParamsChanged,
+    queryParamsListChanged,
     queryParams4SceneInSwipeModeChanged,
     queryParams4SelectedItemInListChanged,
-    idOfSelectedItemInListOfQueryParamsChanged,
+    selectedItemIdOfQueryParamsListChanged,
     queryParams4SecondarySceneChanged,
 } from './reducer';
 import {
@@ -151,7 +151,7 @@ export const updateAcquisitionDate =
         }
     };
 
-export const addNewItemToListOfQueryParams =
+export const addNewItemToQueryParamsList =
     (uniqueId: string) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
         const queryParams4ExistingScenes = selectListOfQueryParams(getState());
@@ -176,23 +176,18 @@ export const addNewItemToListOfQueryParams =
                     : null,
         };
 
-        batch(() => {
-            dispatch(
-                listOfQueryParamsChanged([
+        dispatch(
+            queryParamsListChanged({
+                queryParams: [
                     ...queryParams4ExistingScenes,
                     queryParamsOfNewFrame,
-                ])
-            );
-
-            dispatch(
-                idOfSelectedItemInListOfQueryParamsChanged(
-                    queryParamsOfNewFrame.uniqueId
-                )
-            );
-        });
+                ],
+                selectedItemID: queryParamsOfNewFrame.uniqueId,
+            })
+        );
     };
 
-export const removeItemFromListOfQueryParams =
+export const removeItemFromQueryParamsList =
     (idOfItem2Removed: string) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const queryParams4ExistingScenes = selectListOfQueryParams(getState());
@@ -206,19 +201,20 @@ export const removeItemFromListOfQueryParams =
             getState()
         );
 
-        dispatch(listOfQueryParamsChanged(updatedListOfQueryParams));
+        let updatedIdOfSelectedItem = idOfSelectedItem;
 
         // selected frame got removed, therefore we should select a new frame
         if (idOfSelectedItem === idOfItem2Removed) {
-            const updatedIdOfSelectedItem =
+            updatedIdOfSelectedItem =
                 updatedListOfQueryParams[0]?.uniqueId || null;
-
-            dispatch(
-                idOfSelectedItemInListOfQueryParamsChanged(
-                    updatedIdOfSelectedItem
-                )
-            );
         }
+
+        dispatch(
+            queryParamsListChanged({
+                queryParams: updatedListOfQueryParams,
+                selectedItemID: updatedIdOfSelectedItem,
+            })
+        );
     };
 
 export const swapMainAndSecondaryScenes =

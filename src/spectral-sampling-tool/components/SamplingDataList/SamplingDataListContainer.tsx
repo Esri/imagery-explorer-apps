@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import { SamplingDataControls } from './SamplingDataControls';
 import { useDispatch } from 'react-redux';
 import {
-    addNewItemToListOfQueryParams,
-    removeItemFromListOfQueryParams,
+    addNewItemToQueryParamsList,
+    removeItemFromQueryParamsList,
 } from '@shared/store/ImageryScene/thunks';
 import {
     addSpectralSamplingPoint,
@@ -15,7 +15,7 @@ import {
 import { nanoid } from 'nanoid';
 import { batch } from 'react-redux';
 import { useSamplingListData } from './useSamplingListData';
-import { idOfSelectedItemInListOfQueryParamsChanged } from '@shared/store/ImageryScene/reducer';
+import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
 import { ClassificationNameEditor } from './ClassificationNameEditor';
 import { classificationNameUpdated } from '@shared/store/SpectralSamplingTool/reducer';
@@ -36,7 +36,7 @@ export const SamplingDataListContainer = () => {
         const idOfSamplingPoint2Add = nanoid(5);
 
         batch(() => {
-            dispatch(addNewItemToListOfQueryParams(idOfSamplingPoint2Add));
+            dispatch(addNewItemToQueryParamsList(idOfSamplingPoint2Add));
             dispatch(addSpectralSamplingPoint(idOfSamplingPoint2Add));
         });
     };
@@ -44,7 +44,7 @@ export const SamplingDataListContainer = () => {
     const samplingPointOnRemove = (idOfItemToRemove: string) => {
         console.log(idOfItemToRemove);
         batch(() => {
-            dispatch(removeItemFromListOfQueryParams(idOfItemToRemove));
+            dispatch(removeItemFromQueryParamsList(idOfItemToRemove));
             dispatch(removeSpectralSamplingPoint(idOfItemToRemove));
         });
     };
@@ -77,9 +77,7 @@ export const SamplingDataListContainer = () => {
             <SamplingDataList
                 data={samplingListData}
                 onSelect={(uniqueId) => {
-                    dispatch(
-                        idOfSelectedItemInListOfQueryParamsChanged(uniqueId)
-                    );
+                    dispatch(selectedItemIdOfQueryParamsListChanged(uniqueId));
                 }}
                 onRemove={samplingPointOnRemove}
             />

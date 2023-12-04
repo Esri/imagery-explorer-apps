@@ -94,12 +94,12 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     const queryParams4ScenesInAnimation =
         getQueryParams4ScenesInAnimationFromHashParams() || [];
 
-    const listOfQueryParamsById = {};
+    const queryParamsById = {};
 
     const tool = getHashParamValueByKey('tool') as AnalysisTool;
 
     for (const queryParams of queryParams4ScenesInAnimation) {
-        listOfQueryParamsById[queryParams.uniqueId] = queryParams;
+        queryParamsById[queryParams.uniqueId] = queryParams;
     }
 
     return {
@@ -108,13 +108,16 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         tool: tool || 'mask',
         queryParams4MainScene,
         queryParams4SecondaryScene,
-        listOfQueryParams: {
-            byId: listOfQueryParamsById,
+        queryParamsList: {
+            byId: queryParamsById,
             ids: queryParams4ScenesInAnimation.map((d) => d.uniqueId),
+            selectedItemID: queryParams4ScenesInAnimation[0]
+                ? queryParams4ScenesInAnimation[0].uniqueId
+                : null,
         },
-        idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
-            ? queryParams4ScenesInAnimation[0].uniqueId
-            : null,
+        // idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
+        //     ? queryParams4ScenesInAnimation[0].uniqueId
+        //     : null,
     };
 };
 

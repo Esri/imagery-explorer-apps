@@ -18,7 +18,7 @@ import {
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import { CloseButton } from '@shared/components/CloseButton';
 // import { sortQueryParams4ScenesByAcquisitionDate } from './AnimationControl/helpers';
-import { idOfSelectedItemInListOfQueryParamsChanged } from '@shared/store/ImageryScene/reducer';
+import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
 import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';
@@ -73,7 +73,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
                 sortedQueryParams4ScenesInAnimationMode[indexOfActiveFrame];
 
             dispatch(
-                idOfSelectedItemInListOfQueryParamsChanged(
+                selectedItemIdOfQueryParamsListChanged(
                     queryParamsOfActiveFrame?.uniqueId
                 )
             );
