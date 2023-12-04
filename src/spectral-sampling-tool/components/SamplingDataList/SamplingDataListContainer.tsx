@@ -70,6 +70,10 @@ export const SamplingDataListContainer = () => {
 
     return (
         <div className="w-full h-full relative">
+            <h5 className="text-sm text-ellipsis">
+                Sampling session for {classificationName}:
+            </h5>
+
             <SamplingDataList
                 data={samplingListData}
                 onSelect={(uniqueId) => {

@@ -12,7 +12,7 @@ export const ClassificationNameEditor: FC<Props> = ({
     const [classificationName, setClassificationName] = useState<string>('');
 
     return (
-        <div className="relative pt-4">
+        <div className="relative">
             <div className="relative w-full border-b border-custom-light-blue-25 mb-3">
                 <input
                     className={classNames(
@@ -25,6 +25,11 @@ export const ClassificationNameEditor: FC<Props> = ({
                     value={classificationName}
                     onChange={(evt) => {
                         setClassificationName(evt.target.value);
+                    }}
+                    onKeyUp={(evt) => {
+                        if (evt.key === 'Enter') {
+                            classificationNameOnEnter(classificationName);
+                        }
                     }}
                 />
 

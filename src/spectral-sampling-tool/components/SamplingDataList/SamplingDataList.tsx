@@ -68,7 +68,7 @@ export const SamplingDataList: FC<Props> = ({ data, onSelect, onRemove }) => {
     }
 
     return (
-        <div>
+        <div className="max-h-[170px] fancy-scrollbar overflow-y-auto pr-1">
             {data.map((d) => {
                 const { selected, uniqueId, isLoading } = d;
                 return (
