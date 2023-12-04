@@ -20,14 +20,18 @@ const Layout = () => {
                 <div className="w-40 shrink-0">
                     <SamplingDataList />
                 </div>
+
+                <div className="shrink-0 ml-5">
+                    <SamplingResults />
+                </div>
+
                 <div className="flex flex-grow justify-center shrink-0">
                     <>
                         <div className="ml-2 3xl:ml-0">
                             <Calendar />
                         </div>
 
-                        <div className="flex shrink-0">
-                            <SamplingResults />
+                        <div className="flex shrink-0 ml-4">
                             <RasterFunctionSelector />
                         </div>
                     </>
