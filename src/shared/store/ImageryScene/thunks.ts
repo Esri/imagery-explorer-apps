@@ -7,7 +7,6 @@ import {
     queryParamsListChanged,
     queryParams4SceneInSwipeModeChanged,
     queryParams4SelectedItemInListChanged,
-    selectedItemIdOfQueryParamsListChanged,
     queryParams4SecondarySceneChanged,
 } from './reducer';
 import {
@@ -151,30 +150,51 @@ export const updateAcquisitionDate =
         }
     };
 
+/**
+ * Adds a new item to the query parameters list of imagery scenes.
+ * @param uniqueId The ID of the new item to be added.
+ * @param shouldOnlyInheritAcquisitionYear If true, should only inherit the acquisition year from the previously selected query parameters.
+ * @returns void
+ */
 export const addNewItemToQueryParamsList =
-    (uniqueId: string) =>
+    (uniqueId: string, shouldOnlyInheirtAcquisitionYear = false) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
+        // Retrieve the query parameters for existing scene
         const queryParams4ExistingScenes = selectListOfQueryParams(getState());
 
-        // Try to inherit data from currently selected item from the list of query params,
-        // or use the data from the main scene
+        // Try to inherit data from previously selected item from the list of query params first.
+        // When there is no previously selected query params, use the data from the main scene instead
+
+        // Try to inherit data from the previously selected item from the list of query parameters first.
+        // When there is no previously selected imagery scene from the list, use the data from the main scene instead.
         const queryParamsToInheritDataFrom =
             selectSelectedItemFromListOfQueryParams(getState()) ||
             selectQueryParams4MainScene(getState());
 
-        const queryParamsOfNewFrame: QueryParams4ImageryScene = {
-            ...queryParamsToInheritDataFrom,
-            uniqueId,
-            // acquisition date should not be cloned over to the new animation frame
-            acquisitionDate: '',
-            // try to save the acquistion year from the previous animation frame if the previous frame has a acquistion date selected
-            inheritedAcquisitionYear:
-                queryParamsToInheritDataFrom.acquisitionDate
-                    ? getYearFromFormattedDateString(
-                          queryParamsToInheritDataFrom.acquisitionDate
-                      )
-                    : null,
-        };
+        // Why the user might want to only inherit the acquisition year instead of the full acquisition date?
+        // This scenario typically occurs when the user adds a new query parameter for an imagery scene used as a new animation frame.
+        // For animation frames, it's unlikely that the user will have two imagery scenes acquired on the exact same date,
+        // but they may be seeking an imagery scene acquired within the same year.
+        // Thus, saving the inherited acquisition year can help the user stay within the same year in the Calendar component without selecting a specific date.
+        const queryParamsOfNewFrame: QueryParams4ImageryScene =
+            shouldOnlyInheirtAcquisitionYear
+                ? {
+                      ...queryParamsToInheritDataFrom,
+                      uniqueId,
+                      // acquisition date should not be cloned over if user want to inherit acquisition year from previously selected secne
+                      acquisitionDate: '',
+                      // use acquistion year from the previously selected scene
+                      inheritedAcquisitionYear:
+                          queryParamsToInheritDataFrom?.acquisitionDate
+                              ? getYearFromFormattedDateString(
+                                    queryParamsToInheritDataFrom.acquisitionDate
+                                )
+                              : null,
+                  }
+                : {
+                      ...queryParamsToInheritDataFrom,
+                      uniqueId,
+                  };
 
         dispatch(
             queryParamsListChanged({

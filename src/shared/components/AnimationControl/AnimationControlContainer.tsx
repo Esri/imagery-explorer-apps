@@ -44,11 +44,15 @@ export const AnimationControlContainer = () => {
 
     const animationSpeed = useSelector(selectAnimationSpeed);
 
+    const addNewAnimationFrame = () => {
+        dispatch(addNewItemToQueryParamsList(nanoid(5), true));
+    };
+
     useEffect(() => {
         // we should add a animation frame using query params from the main scene
         // if there is no animation scene. Only need to do this when the Animation Controls is mounted.
         if (animationFramesData.length === 0) {
-            dispatch(addNewItemToQueryParamsList(nanoid(5)));
+            addNewAnimationFrame();
         }
     }, []);
 
@@ -78,7 +82,7 @@ export const AnimationControlContainer = () => {
                     animationFramesData.length >= ANIMATION_FRAMES_UPPER_LIMIT
                 }
                 addButtonOnClick={() => {
-                    dispatch(addNewItemToQueryParamsList(nanoid(5)));
+                    addNewAnimationFrame();
                 }}
                 donwloadButtonOnClick={() => {
                     dispatch(showDownloadAnimationPanelToggled());
