@@ -90,6 +90,13 @@ export const updateLocationOfSpectralSamplingPoint =
             return;
         }
 
+        if (selectedSpectralSamplingPointData?.location) {
+            console.log(
+                'sampling point aleady has a location selected, abort calling updateLocationOfSpectralSamplingPoint'
+            );
+            return;
+        }
+
         // save the user selected location and set loading to true
         let updatedData4SelectedSamplingPoint: SpectralSamplingData = {
             ...selectedSpectralSamplingPointData,
