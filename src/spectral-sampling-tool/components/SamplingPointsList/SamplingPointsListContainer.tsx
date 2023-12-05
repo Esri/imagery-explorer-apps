@@ -60,7 +60,7 @@ export const SamplingPointsListContainer = () => {
             // dispatch(addNewItemToListOfQueryParams(nanoid(5)));
             samplingPointOnAdd();
         }
-    }, []);
+    }, [samplingListData]);
 
     if (!classificationName) {
         return (
@@ -80,7 +80,7 @@ export const SamplingPointsListContainer = () => {
                     dispatch(resetCurrentSamplingSession());
 
                     // close the reset dialog
-                    setShouldShowResetDialog.bind(null, false);
+                    setShouldShowResetDialog(false);
                 }}
             />
         );

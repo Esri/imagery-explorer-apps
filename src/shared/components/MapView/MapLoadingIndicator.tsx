@@ -24,6 +24,7 @@ export const MapLoadingIndicator: FC<Props> = ({
         <>
             <div
                 className={classNames(
+                    'map-loading-indicator',
                     'flex items-center h-full absolute top-0 left-0 pointer-events-none'
                 )}
                 style={

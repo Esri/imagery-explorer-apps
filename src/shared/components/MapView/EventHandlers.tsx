@@ -58,7 +58,7 @@ const EventHandlers: FC<Props> = ({
         watch(
             () => mapView.updating,
             () => {
-                // console.log('mapview is updating')
+                console.log('mapview is updating');
                 mapViewUpdatingOnChange(mapView.updating);
             }
         );

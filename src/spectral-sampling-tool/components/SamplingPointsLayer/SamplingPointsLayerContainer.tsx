@@ -18,31 +18,31 @@ export const SamplingPointsLayerContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
+    // const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
 
     const selectedSamplingPoint = useSelector(
         selectSelectedSpectralSamplingPointData
     );
 
-    const points: Point[] = useMemo(() => {
-        if (!samplingPointsData || !samplingPointsData.length) {
-            return [];
-        }
+    // const points: Point[] = useMemo(() => {
+    //     if (!selectedSamplingPoint) {
+    //         return [];
+    //     }
 
-        return samplingPointsData
-            .filter((d) => d.location !== null)
-            .map((d) => {
-                const { location } = d;
-                return location;
-            });
-    }, [samplingPointsData]);
+    //     return [selectedSamplingPoint]
+    //         .filter((d) => d.location !== null)
+    //         .map((d) => {
+    //             const { location } = d;
+    //             return location;
+    //         });
+    // }, [selectedSamplingPoint]);
 
     return (
         <SamplingPoints
             groupLayer={groupLayer}
             mapView={mapView}
             selectedPoint={selectedSamplingPoint?.location}
-            points={[selectedSamplingPoint?.location]}
+            // points={points}
         />
     );
 };

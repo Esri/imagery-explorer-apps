@@ -8,11 +8,7 @@ import { getThemedMapPointGraphic } from '@shared/components/MapView/helpers';
 
 type Props = {
     /**
-     * list of sampling points added by the user
-     */
-    points: Point[];
-    /**
-     * selected sampling point that will be used to update the center of the map
+     * selected sampling point that will be displayed the map
      */
     selectedPoint: Point;
     /**
@@ -26,7 +22,7 @@ type Props = {
 };
 
 export const SamplingPoints: FC<Props> = ({
-    points,
+    // points,
     selectedPoint,
     groupLayer,
     mapView,
@@ -38,16 +34,17 @@ export const SamplingPoints: FC<Props> = ({
         groupLayer.add(graphicLayerRef.current);
     };
 
-    const showUpdatedSamplingPoints = () => {
+    const toggleDisplaySelectedSamplingPoint = () => {
         graphicLayerRef.current.removeAll();
 
-        for (const point of points) {
-            if (!point) {
-                continue;
-            }
+        if (selectedPoint) {
+            const graphic = getThemedMapPointGraphic(selectedPoint);
 
-            const graphic = getThemedMapPointGraphic(point);
             graphicLayerRef.current.add(graphic);
+
+            mapView.goTo({
+                center: [selectedPoint.longitude, selectedPoint.latitude],
+            });
         }
     };
 
@@ -56,15 +53,7 @@ export const SamplingPoints: FC<Props> = ({
             init();
         }
 
-        showUpdatedSamplingPoints();
-    }, [points]);
-
-    useEffect(() => {
-        if (selectedPoint) {
-            mapView.goTo({
-                center: [selectedPoint.longitude, selectedPoint.latitude],
-            });
-        }
+        toggleDisplaySelectedSamplingPoint();
     }, [selectedPoint]);
 
     return null;
