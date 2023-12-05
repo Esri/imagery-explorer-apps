@@ -5,8 +5,6 @@
  * @returns A string in CSV format.
  */
 export const convert2csv = (headers: string[], rows: string[][]): string => {
-    // Create the initial string with CSV mime type and encoding
-    // let str = "data:text/csv;charset=utf-8,";
     let str = '';
 
     // set csv headers

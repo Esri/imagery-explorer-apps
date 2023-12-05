@@ -2,13 +2,12 @@ import { convert2csv } from '@shared/utils/snippets/convert2csv';
 import { FormattedSpectralSamplingData } from '../SamplingPointsList/useFormattedSpectralSamplingData';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
+import JSZip from 'jszip';
 
 export const saveLandsatSamplingResults = async (
     classification: string,
     data: FormattedSpectralSamplingData[]
 ) => {
-    // classification, wavelength A, wavelength B, wavelength C, wavelength D, wavelength E, Longitude, Latitude
-
     const rows: string[][] = data.map((d) => {
         const { bandValues, location, objectIdOfSelectedScene } = d;
 
@@ -32,8 +31,11 @@ export const saveLandsatSamplingResults = async (
         rows
     );
 
-    downloadBlob(
-        new Blob([csvStr], { type: 'text/csv' }),
-        `spectral-sampling-results-(${classification}).csv`
-    );
+    const zip = new JSZip();
+
+    zip.file('sampling-results.csv', csvStr);
+
+    const content = await zip.generateAsync({ type: 'blob' });
+
+    downloadBlob(content, `spectral-sampling-results-${classification}.zip`);
 };
