@@ -14,7 +14,7 @@ type Props = {
     addButtonOnClick: () => void;
 };
 
-export const SamplingDataControls: FC<Props> = ({
+export const AddSamplingPointButton: FC<Props> = ({
     shouldDisableAddButton,
     addButtonOnClick,
 }) => {

@@ -6,7 +6,7 @@ type Props = {
     classificationNameOnEnter: (name: string) => void;
 };
 
-export const ClassificationNameEditor: FC<Props> = ({
+export const SamplingSessionNameEditor: FC<Props> = ({
     classificationNameOnEnter,
 }) => {
     const [classificationName, setClassificationName] = useState<string>('');

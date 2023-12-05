@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { SamplingListItemData } from './useSamplingListData';
+import { SamplingDataJoinedWithQueryParams } from './useSamplingListData';
 import classNames from 'classnames';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 
 type Props = {
-    data: SamplingListItemData[];
+    data: SamplingDataJoinedWithQueryParams[];
     /**
      * fires when user select a sampling point
      * @param uniqueId
@@ -21,8 +21,8 @@ type Props = {
     onRemove: (uniqueId: string) => void;
 };
 
-export const SamplingDataList: FC<Props> = ({ data, onSelect, onRemove }) => {
-    const getContent = (item: SamplingListItemData) => {
+export const SamplingPointsList: FC<Props> = ({ data, onSelect, onRemove }) => {
+    const getContent = (item: SamplingDataJoinedWithQueryParams) => {
         if (!item) {
             return null;
         }

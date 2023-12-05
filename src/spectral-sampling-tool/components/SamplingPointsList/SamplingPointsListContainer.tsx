@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { SamplingDataList } from './SamplingDataList';
+import { SamplingPointsList } from './SamplingPointsList';
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import { useSelector } from 'react-redux';
-import { SamplingDataControls } from './SamplingDataControls';
+import { AddSamplingPointButton } from './AddSamplingPointButton';
 import { useDispatch } from 'react-redux';
 import {
     addNewItemToQueryParamsList,
@@ -14,16 +14,16 @@ import {
 } from '@shared/store/SpectralSamplingTool/thunks';
 import { nanoid } from 'nanoid';
 import { batch } from 'react-redux';
-import { useSamplingListData } from './useSamplingListData';
+import { useSamplingPointsDataJoinedWithQueryParams } from './useSamplingListData';
 import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
-import { ClassificationNameEditor } from './ClassificationNameEditor';
+import { SamplingSessionNameEditor } from './SamplingSessionNameEditor';
 import { classificationNameUpdated } from '@shared/store/SpectralSamplingTool/reducer';
 
-export const SamplingDataListContainer = () => {
+export const SamplingPointsListContainer = () => {
     const dispatch = useDispatch();
 
-    const samplingListData = useSamplingListData();
+    const samplingListData = useSamplingPointsDataJoinedWithQueryParams();
 
     // classification name of the current spectral sampling session
     const classificationName = useSelector(
@@ -60,7 +60,7 @@ export const SamplingDataListContainer = () => {
 
     if (!classificationName) {
         return (
-            <ClassificationNameEditor
+            <SamplingSessionNameEditor
                 classificationNameOnEnter={(name) => {
                     dispatch(classificationNameUpdated(name));
                 }}
@@ -74,7 +74,7 @@ export const SamplingDataListContainer = () => {
                 Sampling session for {classificationName}:
             </h5>
 
-            <SamplingDataList
+            <SamplingPointsList
                 data={samplingListData}
                 onSelect={(uniqueId) => {
                     dispatch(selectedItemIdOfQueryParamsListChanged(uniqueId));
@@ -82,7 +82,7 @@ export const SamplingDataListContainer = () => {
                 onRemove={samplingPointOnRemove}
             />
 
-            <SamplingDataControls
+            <AddSamplingPointButton
                 shouldDisableAddButton={samplingListData?.length >= 10}
                 addButtonOnClick={samplingPointOnAdd}
             />
