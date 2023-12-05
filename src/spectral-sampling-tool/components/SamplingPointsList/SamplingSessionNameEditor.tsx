@@ -16,7 +16,7 @@ export const SamplingSessionNameEditor: FC<Props> = ({
             <div className="relative w-full border-b border-custom-light-blue-25 mb-3">
                 <input
                     className={classNames(
-                        'w-full px-1 bg-transparent text-sm',
+                        'w-full px-1 bg-transparent text-xs',
                         'border-none outline-none ',
                         'placeholder:text-custom-light-blue-50 text-custom-light-blue-90'
                     )}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SamplingPointsList } from './SamplingPointsList';
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import {
 } from '@shared/store/ImageryScene/thunks';
 import {
     addSpectralSamplingPoint,
+    resetCurrentSamplingSession,
     removeSpectralSamplingPoint,
 } from '@shared/store/SpectralSamplingTool/thunks';
 import { nanoid } from 'nanoid';
@@ -19,6 +20,7 @@ import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImagerySce
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
 import { SamplingSessionNameEditor } from './SamplingSessionNameEditor';
 import { classificationNameUpdated } from '@shared/store/SpectralSamplingTool/reducer';
+import { ResetDialog } from './ResetDialog';
 
 export const SamplingPointsListContainer = () => {
     const dispatch = useDispatch();
@@ -29,6 +31,8 @@ export const SamplingPointsListContainer = () => {
     const classificationName = useSelector(
         selectClassifictionNameOfSpectralSamplingTask
     );
+
+    const [shouldShowResetDialog, setShouldShowResetDialog] = useState(false);
 
     const samplingPointOnAdd = () => {
         // use the same unique id so that the query params of the imagery scene and
@@ -68,11 +72,38 @@ export const SamplingPointsListContainer = () => {
         );
     }
 
+    if (shouldShowResetDialog) {
+        return (
+            <ResetDialog
+                cancelButtonOnClick={setShouldShowResetDialog.bind(null, false)}
+                resetButtonOnClick={() => {
+                    dispatch(resetCurrentSamplingSession());
+
+                    // close the reset dialog
+                    setShouldShowResetDialog.bind(null, false);
+                }}
+            />
+        );
+    }
+
     return (
         <div className="w-full h-full relative">
-            <h5 className="text-sm text-ellipsis">
-                Sampling session for {classificationName}:
-            </h5>
+            <div className="flex items-center">
+                <h5 className="text-sm text-ellipsis">
+                    Sampling session for {classificationName}:
+                </h5>
+
+                <div
+                    className="cursor-pointer ml-1"
+                    onClick={setShouldShowResetDialog.bind(null, true)}
+                >
+                    <calcite-icon
+                        className="cursor-pointer"
+                        scale="s"
+                        icon="reset"
+                    />
+                </div>
+            </div>
 
             <SamplingPointsList
                 data={samplingListData}

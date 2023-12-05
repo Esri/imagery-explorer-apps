@@ -8,12 +8,14 @@ import {
     SpectralSamplingData,
     samplingDataUpdated,
     dataOfSelectedSamplingPointChanged,
+    classificationNameUpdated,
 } from './reducer';
 import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
 } from './selectors';
 import { getPixelValues } from '@shared/services/landsat-level-2/identify';
+import { queryParamsListChanged } from '../ImageryScene/reducer';
 
 let abortController: AbortController = null;
 
@@ -161,4 +163,25 @@ export const updateLocationOfSpectralSamplingPoint =
                 })
             );
         }
+    };
+
+/**
+ * Reset current sampling session will remove all sampling points and query params associated with it,
+ * it will also reset classification name
+ * @returns
+ */
+export const resetCurrentSamplingSession =
+    () => (dispatch: StoreDispatch, getState: StoreGetState) => {
+        dispatch(samplingDataUpdated([]));
+
+        dispatch(
+            queryParamsListChanged({
+                queryParams: [],
+                selectedItemID: '',
+            })
+        );
+
+        dispatch(classificationNameUpdated(''));
+
+        // dispatch(queryLocationChanged(point));
     };
