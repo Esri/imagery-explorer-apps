@@ -4,21 +4,23 @@ import { useSelector } from 'react-redux';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
 import { convert2csv } from '@shared/utils/snippets/convert2csv';
 import { saveLandsatSamplingResults } from './helpers';
+import { useAveragedBandValues } from './useAveragedSamplingResults';
 
 export const SaveSamplingResults = () => {
-    const data = useFormattedSpectralSamplingData();
+    const samplingPointsData = useFormattedSpectralSamplingData();
+
+    const averagedBandValues = useAveragedBandValues();
 
     const classification = useSelector(
         selectClassifictionNameOfSpectralSamplingTask
     );
 
-    /**
-     * If true, it is in progress of saving the sampling results
-     */
-    const [isSaving, setIsSaving] = useState(false);
-
     const saveSamplingResults = () => {
-        saveLandsatSamplingResults(classification, data);
+        saveLandsatSamplingResults(
+            classification,
+            samplingPointsData,
+            averagedBandValues
+        );
     };
 
     return (

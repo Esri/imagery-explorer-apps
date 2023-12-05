@@ -8,6 +8,7 @@ import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumn
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useAveragedBandValues } from './useAveragedSamplingResults';
 
 /**
  * The custom hook that returns data to be used to render sampling results chart.
@@ -23,44 +24,12 @@ export const useChartData = () => {
         selectSelectedSpectralSamplingPointData
     );
 
+    const averageBandValues = useAveragedBandValues();
+
     const chartData = useMemo(() => {
         if (!samplingPointsData || !samplingPointsData.length) {
             return [];
         }
-
-        // a matrix that contains band values from all sampling points
-        const matrixOfBandValues = samplingPointsData
-            .filter((d) => d.bandValues !== null)
-            .map((d) => d.bandValues);
-
-        // const output: LineGroupData[] = [];
-
-        // if (
-        //     selectedSamplingPointsData &&
-        //     selectedSamplingPointsData.bandValues
-        // ) {
-        //     output.push({
-        //         fill: 'var(--custom-light-blue-90)',
-        //         key: 'selected',
-        //         values: formatLandsatBandValuesAsLineChartDataItems(
-        //             selectedSamplingPointsData.bandValues
-        //         ),
-        //         // dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
-        //     });
-        // }
-
-        // if (matrixOfBandValues.length >= 2) {
-        //     const averageBandValues = averageMatrixColumns(matrixOfBandValues);
-
-        //     output.push({
-        //         fill: 'var(--custom-light-blue-70)',
-        //         key: 'average',
-        //         values: formatLandsatBandValuesAsLineChartDataItems(
-        //             averageBandValues
-        //         ),
-        //         dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
-        //     });
-        // }
 
         const output: LineGroupData[] = samplingPointsData
             .filter((d) => d.location && d.bandValues)
@@ -80,8 +49,12 @@ export const useChartData = () => {
                 } as LineGroupData;
             });
 
-        if (matrixOfBandValues.length >= 2) {
-            const averageBandValues = averageMatrixColumns(matrixOfBandValues);
+        if (!output.length) {
+            return [];
+        }
+
+        if (samplingPointsData.length > 1 && averageBandValues.length) {
+            // const averageBandValues = averageMatrixColumns(matrixOfBandValues);
 
             output.push({
                 fill: 'var(--custom-light-blue-90)',
@@ -94,7 +67,7 @@ export const useChartData = () => {
         }
 
         return output;
-    }, [samplingPointsData, selectedSamplingPointsData]);
+    }, [samplingPointsData, selectedSamplingPointsData, averageBandValues]);
 
     return chartData;
 };

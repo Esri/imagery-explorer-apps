@@ -4,12 +4,22 @@ import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import JSZip from 'jszip';
 
-export const saveLandsatSamplingResults = async (
+const getHeadersForLandsatSamplingResults = () => {
+    return [
+        'Classification',
+        // for Landsat, we only need to include data from the first 7 bands
+        ...LANDSAT_BAND_NAMES.slice(0, 7),
+        'Longitude',
+        'Latitude',
+    ];
+};
+
+const getCsvString4LandsatSamplingResults = (
     classification: string,
     data: FormattedSpectralSamplingData[]
 ) => {
     const rows: string[][] = data.map((d) => {
-        const { bandValues, location, objectIdOfSelectedScene } = d;
+        const { bandValues, location } = d;
 
         return [
             classification,
@@ -20,20 +30,46 @@ export const saveLandsatSamplingResults = async (
         ];
     });
 
-    const csvStr = convert2csv(
-        [
-            'Classification',
-            // for Landsat, we only need to include data from the first 7 bands
-            ...LANDSAT_BAND_NAMES.slice(0, 7),
-            'Longitude',
-            'Latitude',
-        ],
-        rows
-    );
+    const csvStr = convert2csv(getHeadersForLandsatSamplingResults(), rows);
 
+    return csvStr;
+};
+
+const getCsvString4AveragedLandsatSamplingResults = (
+    classification: string,
+    averagedBandValues: number[]
+) => {
+    const rows: string[][] = [
+        [
+            classification,
+            // for Landsat, we only need to include data from the first 7 bands
+            ...averagedBandValues.slice(0, 7).map((d) => d.toString()),
+        ],
+    ];
+
+    const csvStr = convert2csv(getHeadersForLandsatSamplingResults(), rows);
+
+    return csvStr;
+};
+
+export const saveLandsatSamplingResults = async (
+    classification: string,
+    data: FormattedSpectralSamplingData[],
+    averagedBandValues: number[]
+) => {
     const zip = new JSZip();
 
-    zip.file('sampling-results.csv', csvStr);
+    zip.file(
+        'sampling-results.csv',
+        getCsvString4LandsatSamplingResults(classification, data)
+    );
+    zip.file(
+        'averaged-sampling-results.csv',
+        getCsvString4AveragedLandsatSamplingResults(
+            classification,
+            averagedBandValues
+        )
+    );
 
     const content = await zip.generateAsync({ type: 'blob' });
 
