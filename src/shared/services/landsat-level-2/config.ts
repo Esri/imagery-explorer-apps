@@ -270,3 +270,19 @@ export const LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT = celsius2fahrenheit(
  * The Landsat Level-2 service includes imagery from Landsat missions 4, 5, 7, 8, and 9, with a time span of 1982 to present
  */
 export const LANDSAT_MISSIONS = [4, 5, 7, 8, 9];
+
+/**
+ * Name of Multispectral Bands of Landsat Level-2 service
+ */
+export const LANDSAT_BAND_NAMES = [
+    'Costal',
+    'Blue',
+    'Green',
+    'Red',
+    'NIR',
+    'SWIR1',
+    'SWIR2',
+    'Pixel QA',
+    'Surface Temperature (Kelvin)',
+    'Surface Temperature QA',
+];

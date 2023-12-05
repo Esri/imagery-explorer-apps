@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { SamplingDataJoinedWithQueryParams } from './useSamplingListData';
+import { FormattedSpectralSamplingData } from './useFormattedSpectralSamplingData';
 import classNames from 'classnames';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 
 type Props = {
-    data: SamplingDataJoinedWithQueryParams[];
+    data: FormattedSpectralSamplingData[];
     /**
      * fires when user select a sampling point
      * @param uniqueId
@@ -15,14 +15,14 @@ type Props = {
     onSelect: (uniqueId: string) => void;
     /**
      * fires when user clicks on "Remove Point" button
-     * @param uniqueId identifier of the scene to be removed
+     * @param uniqueId identifier of the sampling point to be removed
      * @returns void
      */
     onRemove: (uniqueId: string) => void;
 };
 
 export const SamplingPointsList: FC<Props> = ({ data, onSelect, onRemove }) => {
-    const getContent = (item: SamplingDataJoinedWithQueryParams) => {
+    const getContent = (item: FormattedSpectralSamplingData) => {
         if (!item) {
             return null;
         }

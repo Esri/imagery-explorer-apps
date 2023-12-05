@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { useChartData } from './useChartData';
 import { SpectralProfileChart } from '@landsat-explorer/components/SpectralTool/SpectralProfileChart';
 import { Button } from '@shared/components/Button';
+import { SaveSamplingResults } from './SaveSamplingResults';
 
 export const SamplingResultsContainer = () => {
     const chartData = useChartData();
@@ -32,11 +33,7 @@ export const SamplingResultsContainer = () => {
                         <SpectralProfileChart chartData={chartData} />
                     </div>
 
-                    <div className="mt-1 text-right pr-4">
-                        <span className="cursor-pointer underline text-xs">
-                            Save results to CSV
-                        </span>
-                    </div>
+                    <SaveSamplingResults />
                 </>
             )}
         </div>

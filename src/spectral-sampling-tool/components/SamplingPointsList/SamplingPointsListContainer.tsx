@@ -14,7 +14,7 @@ import {
 } from '@shared/store/SpectralSamplingTool/thunks';
 import { nanoid } from 'nanoid';
 import { batch } from 'react-redux';
-import { useSamplingPointsDataJoinedWithQueryParams } from './useSamplingListData';
+import { useFormattedSpectralSamplingData } from './useFormattedSpectralSamplingData';
 import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
 import { SamplingSessionNameEditor } from './SamplingSessionNameEditor';
@@ -23,7 +23,7 @@ import { classificationNameUpdated } from '@shared/store/SpectralSamplingTool/re
 export const SamplingPointsListContainer = () => {
     const dispatch = useDispatch();
 
-    const samplingListData = useSamplingPointsDataJoinedWithQueryParams();
+    const samplingListData = useFormattedSpectralSamplingData();
 
     // classification name of the current spectral sampling session
     const classificationName = useSelector(

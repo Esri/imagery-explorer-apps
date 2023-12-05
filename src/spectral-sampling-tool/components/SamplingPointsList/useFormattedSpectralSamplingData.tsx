@@ -8,7 +8,7 @@ import { selectSpectralSamplingPointsData } from '@shared/store/SpectralSampling
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-export type SamplingDataJoinedWithQueryParams = {
+export type FormattedSpectralSamplingData = {
     /**
      * unique id of this sampling point
      */
@@ -39,8 +39,8 @@ export type SamplingDataJoinedWithQueryParams = {
     objectIdOfSelectedScene?: number;
 };
 
-export const useSamplingPointsDataJoinedWithQueryParams =
-    (): SamplingDataJoinedWithQueryParams[] => {
+export const useFormattedSpectralSamplingData =
+    (): FormattedSpectralSamplingData[] => {
         const queryParamsForSamplingPoints = useSelector(
             selectListOfQueryParams
         );
@@ -61,13 +61,13 @@ export const useSamplingPointsDataJoinedWithQueryParams =
                 queryParamsById[uniqueId] = queryParams;
             }
 
-            const data: SamplingDataJoinedWithQueryParams[] =
-                samplingPoints.map((d) => {
+            const data: FormattedSpectralSamplingData[] = samplingPoints.map(
+                (d) => {
                     const { uniqueId, location, isLoading, bandValues } = d;
                     const { acquisitionDate, objectIdOfSelectedScene } =
                         queryParamsById[uniqueId] || {};
 
-                    const output: SamplingDataJoinedWithQueryParams = {
+                    const output: FormattedSpectralSamplingData = {
                         uniqueId,
                         location,
                         bandValues,
@@ -78,7 +78,8 @@ export const useSamplingPointsDataJoinedWithQueryParams =
                     };
 
                     return output;
-                });
+                }
+            );
 
             return data;
         }, [
