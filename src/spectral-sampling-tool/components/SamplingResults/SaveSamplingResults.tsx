@@ -24,12 +24,13 @@ export const SaveSamplingResults = () => {
     };
 
     return (
-        <div className="mt-1 text-right pr-4">
+        <div className="text-right pr-4 flex items-center justify-end">
+            <calcite-icon icon="download-to" scale="s" />
             <span
                 className="cursor-pointer underline text-xs"
                 onClick={saveSamplingResults}
             >
-                Save sampling results
+                Download
             </span>
         </div>
     );

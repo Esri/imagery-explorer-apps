@@ -60,11 +60,11 @@ export const saveLandsatSamplingResults = async (
     const zip = new JSZip();
 
     zip.file(
-        'sampling-results.csv',
+        `${classification}-samples.csv`,
         getCsvString4LandsatSamplingResults(classification, data)
     );
     zip.file(
-        'averaged-sampling-results.csv',
+        `${classification}-average.csv`,
         getCsvString4AveragedLandsatSamplingResults(
             classification,
             averagedBandValues
@@ -73,5 +73,5 @@ export const saveLandsatSamplingResults = async (
 
     const content = await zip.generateAsync({ type: 'blob' });
 
-    downloadBlob(content, `spectral-sampling-results-${classification}.zip`);
+    downloadBlob(content, `${classification}-sample-tables.zip`);
 };

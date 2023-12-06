@@ -92,8 +92,8 @@ export const SamplingPointsListContainer = () => {
     return (
         <div className="w-full h-full relative">
             <div className="flex items-center">
-                <h5 className="text-sm text-ellipsis">
-                    Sampling session for {classificationName}:
+                <h5 className="text-sm text-ellipsis flex-grow">
+                    {classificationName}:
                 </h5>
 
                 <div

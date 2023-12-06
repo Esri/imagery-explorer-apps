@@ -20,7 +20,7 @@ export const SamplingSessionNameEditor: FC<Props> = ({
                         'border-none outline-none ',
                         'placeholder:text-custom-light-blue-50 text-custom-light-blue-90'
                     )}
-                    placeholder="Enter Classification Name"
+                    placeholder="Classification Name"
                     type="text"
                     value={classificationName}
                     onChange={(evt) => {

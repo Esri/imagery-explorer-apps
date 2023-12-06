@@ -35,7 +35,7 @@ export const AddSamplingPointButton: FC<Props> = ({
                     fontSize: `.7rem`,
                 }}
             >
-                Add A Sampling Point
+                Add a sample point
             </span>
         </div>
     );

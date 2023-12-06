@@ -29,7 +29,7 @@ export const SamplingResultsContainer = () => {
                 </div>
             ) : (
                 <>
-                    <div className="w-full h-[120px] my-2">
+                    <div className="w-full h-[150px] my-2">
                         <SpectralProfileChart chartData={chartData} />
                     </div>
 
