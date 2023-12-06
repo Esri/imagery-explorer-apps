@@ -20,7 +20,7 @@ const hostname = computerName.includes('Esri')
     ? `${computerName}.arcgis.com` 
     : 'localhost';
 
-const appConfig = require('./app.config.json');
+const appConfig = require('./src/config.json');
 
 module.exports =  (env, options)=> {
 
@@ -70,7 +70,7 @@ module.exports =  (env, options)=> {
             allowedHosts: "all",
             port: 8080
         },
-        entry: path.resolve(__dirname, entrypoint),
+        entry: entrypoint,
         output: {
             path: path.resolve(__dirname, `./dist/${app}`),
             filename: '[name].[contenthash].js',

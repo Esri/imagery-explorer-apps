@@ -1,23 +1,27 @@
 {
     "landsat": {
         "title": "Esri | Landsat Explorer",
+        "webmapId": "81609bbe235942919ad27c77e42c600e",
+        "animationMetadataSources": "Esri, USGS, NASA",
         "url": "https://livingatlas.arcgis.com/landsatexplorer/",
         "description": "Landsat multispectral imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.",
         "thumbnail_url": "https://livingatlas.arcgis.com/landsatexplorer/public/thumbnails/landsatexplorer.png",
-        "entrypoint": "./src/landsat-explorer/index.tsx"
+        "entrypoint": "/src/landsat-explorer/index.tsx"
     },
     "sentinel-2": {
         "title": "Esri | Sentinel-2 Explorer",
+        "webmapId": "81609bbe235942919ad27c77e42c600e",
         "url": "",
         "description": "",
         "thumbnail_url": "",
-        "entrypoint": "./src/sentinel2-explorer/index.tsx"
+        "entrypoint": "/src/sentinel2-explorer/index.tsx"
     },
     "spectral-sampling-tool": {
         "title": "Spectral Sampling Tool",
+        "webmapId": "81609bbe235942919ad27c77e42c600e",
         "url": "",
         "description": "",
         "thumbnail_url": "",
-        "entrypoint": "./src/spectral-sampling-tool/index.tsx"
+        "entrypoint": "/src/spectral-sampling-tool/index.tsx"
     }
 }

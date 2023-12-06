@@ -1,4 +1,7 @@
-import { AppName } from '@typing/index';
+import config from '../../config.json';
+
+// Create a type that represents the keys of the Config object
+export type AppName = keyof typeof config;
 
 type AppConfig = {
     /**
@@ -20,26 +23,4 @@ export const TIER =
         ? 'production'
         : 'development';
 
-const LandsatExplorerConfig: AppConfig = {
-    title: 'Esri | Landsat Explorer (beta)',
-    webmapId: '81609bbe235942919ad27c77e42c600e',
-    animationMetadataSources: 'Esri, USGS, NASA',
-};
-
-const Sentinel2ExplorerConfig: AppConfig = {
-    title: 'Esri | Sentinel-2 Explorer',
-    webmapId: '81609bbe235942919ad27c77e42c600e',
-};
-
-const SpectralSamplingToolConfig: AppConfig = {
-    title: 'Spectral Sampling Tool',
-    webmapId: '81609bbe235942919ad27c77e42c600e',
-};
-
-const AppConfigByName: Record<AppName, AppConfig> = {
-    landsat: LandsatExplorerConfig,
-    'sentinel-2': Sentinel2ExplorerConfig,
-    'spectral-sampling-tool': SpectralSamplingToolConfig,
-};
-
-export const appConfig: AppConfig = AppConfigByName[APP_NAME];
+export const appConfig: AppConfig = config[APP_NAME];
