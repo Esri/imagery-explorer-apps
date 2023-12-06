@@ -19,7 +19,10 @@ import { useFormattedSpectralSamplingData } from './useFormattedSpectralSampling
 import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
 import { SamplingSessionNameEditor } from './SamplingSessionNameEditor';
-import { classificationNameUpdated } from '@shared/store/SpectralSamplingTool/reducer';
+import {
+    classificationNameUpdated,
+    idOfItem2HighlightChanged,
+} from '@shared/store/SpectralSamplingTool/reducer';
 import { ResetDialog } from './ResetDialog';
 
 export const SamplingPointsListContainer = () => {
@@ -111,6 +114,9 @@ export const SamplingPointsListContainer = () => {
                     dispatch(selectedItemIdOfQueryParamsListChanged(uniqueId));
                 }}
                 onRemove={samplingPointOnRemove}
+                item2HighlightOnToggle={(uniqueId) => {
+                    dispatch(idOfItem2HighlightChanged(uniqueId));
+                }}
             />
 
             <AddSamplingPointButton

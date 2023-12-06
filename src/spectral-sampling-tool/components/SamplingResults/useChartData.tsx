@@ -1,5 +1,6 @@
 import { formatLandsatBandValuesAsLineChartDataItems } from '@landsat-explorer/components/SpectralTool/helper';
 import {
+    selectIdOfItem2Highlight,
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
 } from '@shared/store/SpectralSamplingTool/selectors';
@@ -19,6 +20,8 @@ import { useAveragedBandValues } from './useAveragedSamplingResults';
  */
 export const useChartData = () => {
     const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
+
+    const idOfItem2Highlight = useSelector(selectIdOfItem2Highlight);
 
     const selectedSamplingPointsData = useSelector(
         selectSelectedSpectralSamplingPointData
@@ -40,8 +43,8 @@ export const useChartData = () => {
 
                 return {
                     fill:
-                        d.uniqueId === selectedSamplingPointsData?.uniqueId
-                            ? 'var(--custom-light-blue-70)'
+                        d.uniqueId === idOfItem2Highlight
+                            ? 'var(--custom-light-blue-90)'
                             : 'var(--custom-light-blue-25)',
                     key: index.toString(),
                     values,
@@ -67,7 +70,12 @@ export const useChartData = () => {
         }
 
         return output;
-    }, [samplingPointsData, selectedSamplingPointsData, averageBandValues]);
+    }, [
+        samplingPointsData,
+        selectedSamplingPointsData,
+        averageBandValues,
+        idOfItem2Highlight,
+    ]);
 
     return chartData;
 };

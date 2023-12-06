@@ -40,13 +40,10 @@ export type SpectralSamplingToolState = {
         ids: string[];
     };
     /**
-     * if true, it is in process of fetching spectral profile data
+     * id of sampling point to highlight in chart.
+     * This can happen when user hover a item in the sampling points list.
      */
-    isLoading: boolean;
-    /**
-     * error message that was caught while fetch the spectral profile data
-     */
-    error: string;
+    idOfItem2Highlight: string;
 };
 
 export const initialSpectralSamplingToolState: SpectralSamplingToolState = {
@@ -55,8 +52,7 @@ export const initialSpectralSamplingToolState: SpectralSamplingToolState = {
         byId: {},
         ids: [],
     },
-    isLoading: false,
-    error: null,
+    idOfItem2Highlight: '',
 };
 
 const slice = createSlice({
@@ -96,8 +92,8 @@ const slice = createSlice({
             const { data, id } = action.payload;
             state.data.byId[id] = data;
         },
-        errorChanged: (state, action: PayloadAction<string>) => {
-            state.error = action.payload;
+        idOfItem2HighlightChanged: (state, action: PayloadAction<string>) => {
+            state.idOfItem2Highlight = action.payload;
         },
     },
 });
@@ -108,6 +104,7 @@ export const {
     classificationNameUpdated,
     samplingDataUpdated,
     dataOfSelectedSamplingPointChanged,
+    idOfItem2HighlightChanged,
 } = slice.actions;
 
 export default reducer;

@@ -19,9 +19,20 @@ type Props = {
      * @returns void
      */
     onRemove: (uniqueId: string) => void;
+    /**
+     * emits when user mouseover/out a sampling point item in the list
+     * @param uniqueId
+     * @returns
+     */
+    item2HighlightOnToggle: (uniqueId?: string) => void;
 };
 
-export const SamplingPointsList: FC<Props> = ({ data, onSelect, onRemove }) => {
+export const SamplingPointsList: FC<Props> = ({
+    data,
+    onSelect,
+    onRemove,
+    item2HighlightOnToggle,
+}) => {
     const getContent = (item: FormattedSpectralSamplingData) => {
         if (!item) {
             return null;
@@ -84,6 +95,11 @@ export const SamplingPointsList: FC<Props> = ({ data, onSelect, onRemove }) => {
                                 'is-disabled': isLoading,
                             }
                         )}
+                        onMouseOver={item2HighlightOnToggle.bind(
+                            null,
+                            uniqueId
+                        )}
+                        onMouseOut={item2HighlightOnToggle.bind(null, null)}
                     >
                         <div
                             className="w-full text-xs mr-1 text-center leading-[.9rem]"
