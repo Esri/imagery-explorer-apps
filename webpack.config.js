@@ -20,7 +20,7 @@ const hostname = computerName.includes('Esri')
     ? `${computerName}.arcgis.com` 
     : 'localhost';
 
-const appConfig = require('./app.config.json')
+const appConfig = require('./app.config.json');
 
 module.exports =  (env, options)=> {
 
@@ -28,11 +28,7 @@ module.exports =  (env, options)=> {
 
     process.env.NODE_ENV = options.mode;
 
-    /**
-     * name of the explorer app to start/build:
-     * - landsat
-     * - sentinel-2
-     */
+    // name of the explorer app to start/build:
     const app = env['app']
 
     if(!app){
@@ -49,14 +45,22 @@ module.exports =  (env, options)=> {
         )
     }
 
-    console.log(`starting imagery explorer app for ${app}\n`);
-
     const {
+        entrypoint,
         title,
         description,
         thumbnail_url,
-        url
+        url,
     } = appConfig[app];
+
+    if(!entrypoint){
+        throw new Error(
+            `entrypoint for ${app} is not found, `+
+            'please update `app.config.json` to make sure it includes entrypoint of the app to start'
+        )
+    }
+
+    console.log(`starting imagery explorer app for ${app}\n`);
 
     return {
         mode: options.mode,
@@ -66,7 +70,7 @@ module.exports =  (env, options)=> {
             allowedHosts: "all",
             port: 8080
         },
-        entry: path.resolve(__dirname, './src/index.tsx'),
+        entry: path.resolve(__dirname, entrypoint),
         output: {
             path: path.resolve(__dirname, `./dist/${app}`),
             filename: '[name].[contenthash].js',
@@ -154,6 +158,7 @@ module.exports =  (env, options)=> {
                 template: './public/index.html',
                 filename: 'index.html',
                 title,
+
                 meta: {
                     title,
                     description,
