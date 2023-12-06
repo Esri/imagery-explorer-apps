@@ -1,4 +1,3 @@
-import { PartialRootState } from './configureStore';
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
 
@@ -10,9 +9,7 @@ import {
     ImageryScenesState,
     // QueryParams4ImageryScene,
 } from '@shared/store/ImageryScene/reducer';
-import { initialUIState } from '@shared/store/UI/reducer';
-import { initialLandsatState } from '@shared/store/Landsat/reducer';
-import { initialSpectralSamplingToolState } from '@shared/store/SpectralSamplingTool/reducer';
+import { PartialRootState } from '@shared/store/configureStore';
 
 const getPreloadedMapState = (): MapState => {
     const mapLocation = getMapCenterFromHashParams();
@@ -35,14 +32,5 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         ImageryScenes: getPreloadedImageryScenesState(),
         Map: getPreloadedMapState(),
-        UI: {
-            ...initialUIState,
-        },
-        Landsat: {
-            ...initialLandsatState,
-        },
-        SpectralSamplingTool: {
-            ...initialSpectralSamplingToolState,
-        },
     };
 };

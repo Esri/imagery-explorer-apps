@@ -1,4 +1,4 @@
-import { PartialRootState } from './configureStore';
+// import { PartialRootState } from './configureStore';
 
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import {
@@ -43,6 +43,7 @@ import {
     initialChangeCompareToolState,
 } from '@shared/store/ChangeCompareTool/reducer';
 import { initialLandsatState } from '@shared/store/Landsat/reducer';
+import { PartialRootState } from '@shared/store/configureStore';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 
