@@ -49,8 +49,8 @@ module.exports =  (env, options)=> {
         entrypoint,
         title,
         description,
-        thumbnail_url,
-        url,
+        thumbnail_name,
+        pathname,
     } = appConfig[app];
 
     if(!entrypoint){
@@ -158,7 +158,6 @@ module.exports =  (env, options)=> {
                 template: './public/index.html',
                 filename: 'index.html',
                 title,
-
                 meta: {
                     title,
                     description,
@@ -168,8 +167,8 @@ module.exports =  (env, options)=> {
                         : undefined,
                     'og:title': title,
                     'og:description': description,
-                    'og:url': url,
-                    'og:image': thumbnail_url,
+                    'og:url': `https://livingatlas.arcgis.com${pathname}/`,
+                    'og:image': `https://livingatlas.arcgis.com${pathname}/public/thumbnails/${thumbnail_name}`,
                 },
                 minify: {
                     html5                          : true,
