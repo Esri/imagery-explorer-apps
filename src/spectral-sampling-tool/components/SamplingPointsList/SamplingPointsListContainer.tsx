@@ -120,7 +120,7 @@ export const SamplingPointsListContainer = () => {
             />
 
             <AddSamplingPointButton
-                shouldDisableAddButton={samplingListData?.length >= 10}
+                shouldDisableAddButton={samplingListData?.length >= 100}
                 addButtonOnClick={samplingPointOnAdd}
             />
 
