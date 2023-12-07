@@ -1,7 +1,4 @@
-import config from '../../config.json';
-
-// Create a type that represents the keys of the Config object
-export type AppName = keyof typeof config;
+import config from '../../apps.config.json';
 
 type AppConfig = {
     /**
@@ -18,9 +15,23 @@ type AppConfig = {
     animationMetadataSources?: string;
 };
 
+/**
+ * a type that represents the keys of the Config object
+ */
+export type AppName = keyof typeof config;
+
+/**
+ * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
+ * The APP_NAME should match one of the keys in `apps.config.json` file.
+ */
+export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
+
+/**
+ * config file for the app to start/build
+ */
+export const appConfig: AppConfig = config[APP_NAME];
+
 export const TIER =
     window.location.host === 'livingatlas.arcgis.com'
         ? 'production'
         : 'development';
-
-export const appConfig: AppConfig = config[APP_NAME];

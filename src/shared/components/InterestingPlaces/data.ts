@@ -20,6 +20,7 @@ import DashteKevir from './thumbnails/landsat/Dasht-eKevir.jpg';
 import Ouarkziz from './thumbnails/landsat/Ouarkziz.jpg';
 import EtoshaPan from './thumbnails/landsat/EtoshaPan.jpg';
 import LakeMackay from './thumbnails/landsat/LakeMackay.jpg';
+import { APP_NAME } from '@shared/config';
 
 export type InterestingPlaceData = {
     name: string;

@@ -1,12 +1,6 @@
-import React, { Suspense, lazy } from 'react';
-
-const LandsatInfo = lazy(
-    () =>
-        import(
-            /* webpackChunkName: "landsat-dynamic-mode" */
-            './LandsatInfo'
-        )
-);
+import { APP_NAME } from '@shared/config';
+import React from 'react';
+import LandsatInfo from './LandsatInfo';
 
 export const DynamicModeInfo = () => {
     return (
@@ -15,9 +9,7 @@ export const DynamicModeInfo = () => {
                 <span className="uppercase text-sm">Dynamic View</span>
             </div>
 
-            <Suspense fallback={<calcite-loader></calcite-loader>}>
-                {APP_NAME === 'landsat' && <LandsatInfo />}
-            </Suspense>
+            {APP_NAME === 'landsat' && <LandsatInfo />}
         </div>
     );
 };

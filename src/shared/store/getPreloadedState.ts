@@ -37,6 +37,7 @@ import {
     initialChangeCompareToolState,
 } from './ChangeCompareTool/reducer';
 import { initialLandsatState } from './Landsat/reducer';
+import { APP_NAME } from '@shared/config';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 

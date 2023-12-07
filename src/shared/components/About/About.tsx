@@ -4,14 +4,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { CloseButton } from '../CloseButton';
 import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
-
-const AboutLandsatExplorer = lazy(
-    () =>
-        import(
-            /* webpackChunkName: "about-landsatexplorer" */
-            './AboutLandsatExplorer'
-        )
-);
+import { APP_NAME } from '@shared/config';
+import AboutLandsatExplorer from './AboutLandsatExplorer';
 
 export const About = () => {
     const dispatch = useDispatch();
@@ -36,9 +30,7 @@ export const About = () => {
                     maxWidth: '90vw',
                 }}
             >
-                <Suspense fallback={<calcite-loader></calcite-loader>}>
-                    {APP_NAME === 'landsat' && <AboutLandsatExplorer />}
-                </Suspense>
+                {APP_NAME === 'landsat' && <AboutLandsatExplorer />}
             </div>
         </div>
     );

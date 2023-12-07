@@ -16,6 +16,7 @@ import LandsatMNDWILegend from './legends/Landsat/MNDWI.png';
 import LandsatNDVILegend from './legends/Landsat/NDVI.png';
 import LandsatNDMILegend from './legends/Landsat/NDMI.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
+import { APP_NAME } from '@shared/config';
 
 const LandsatRendererThumbnailByName: Partial<
     Record<LandsatRasterFunctionName, string>

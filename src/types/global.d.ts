@@ -1,14 +1,4 @@
-// declare module 'Foo' {
-//     // Some variable declarations
-//     export type Bar = string | number; /*sample*/
-// }
-
 /**
- * Node Running Environment
+ * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
  */
-declare const NODE_ENV: 'development' | 'production';
-
-/**
- * Name of the imagery explore app
- */
-declare const APP_NAME: 'landsat' | 'sentinel-2' | 'spectral-sampling-tool';
+declare const WEBPACK_DEFINED_APP_NAME: string;

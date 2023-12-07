@@ -26,6 +26,7 @@ import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDa
 import { cloudCoverChanged } from '@shared/store/ImageryScene/reducer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
+import { APP_NAME } from '@shared/config';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();

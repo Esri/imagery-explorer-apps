@@ -20,7 +20,7 @@ const hostname = computerName.includes('Esri')
     ? `${computerName}.arcgis.com` 
     : 'localhost';
 
-const appConfig = require('./src/config.json');
+const appConfig = require('./src/apps.config.json');
 
 module.exports =  (env, options)=> {
 
@@ -135,7 +135,7 @@ module.exports =  (env, options)=> {
                 /**
                  * name of the imagery explorer app to start/build
                  */
-                APP_NAME: JSON.stringify(app),
+                WEBPACK_DEFINED_APP_NAME: JSON.stringify(app),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
