@@ -20,7 +20,7 @@ const hostname = computerName.includes('Esri')
     ? `${computerName}.arcgis.com` 
     : 'localhost';
 
-const appConfig = require('./src/apps.config.json');
+const appsConfig = require('./src/apps.config.json');
 
 module.exports =  (env, options)=> {
 
@@ -38,10 +38,10 @@ module.exports =  (env, options)=> {
         )
     }
 
-    if(!appConfig[app]){
+    if(!appsConfig[app]){
         throw new Error(
-            `config data for ${app} is not found, `+
-            'please update `app.config.json` to make sure it includes config data for this imagery service'
+            `config data for "${app}" is not found, `+
+            'please update `./src/apps.config.json` to make sure it includes config data for this app'
         )
     }
 
@@ -51,16 +51,16 @@ module.exports =  (env, options)=> {
         description,
         thumbnail_name,
         pathname,
-    } = appConfig[app];
+    } = appsConfig[app];
 
     if(!entrypoint){
         throw new Error(
-            `entrypoint for ${app} is not found, `+
-            'please update `app.config.json` to make sure it includes entrypoint of the app to start'
+            `entrypoint for "${app}" is not found, `+
+            'please update `./src/apps.config.json` to make sure it includes entrypoint of the app to start'
         )
     }
 
-    console.log(`starting imagery explorer app for ${app}\n`);
+    console.log(`starting ${app}\n`);
 
     return {
         mode: options.mode,
