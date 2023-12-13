@@ -9,7 +9,7 @@ import Point from '@arcgis/core/geometry/Point';
 export type SpectralSamplingData = {
     uniqueId: string;
     /**
-     * point will be used to query the pixel values that will be used in spectral profile comparison
+     * point geometry to query the pixel values that will be used in spectral profile comparison
      */
     location: Point;
     /**

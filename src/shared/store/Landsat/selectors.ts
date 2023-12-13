@@ -10,11 +10,8 @@ export const selectAvailableScenes = createSelector(
 );
 
 export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Landsat.availableScenes,
-    (availableScenes) => {
-        const { byObjectId } = availableScenes;
-        return byObjectId;
-    }
+    (state: RootState) => state.Landsat.availableScenes.byObjectId,
+    (byObjectId) => byObjectId
 );
 
 export const selectLandsatMissionsToBeExcluded = createSelector(

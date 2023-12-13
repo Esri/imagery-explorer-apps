@@ -99,7 +99,7 @@ export const updateLocationOfSpectralSamplingPoint =
             return;
         }
 
-        // save the user selected location and set loading to true
+        // save the user selected location and set loading indicator to true
         let updatedData4SelectedSamplingPoint: SpectralSamplingData = {
             ...selectedSpectralSamplingPointData,
             location: {

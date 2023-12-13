@@ -59,8 +59,6 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
         selectQueryParams4SecondaryScene
     );
 
-    // const availableScenes = useSelector(selectAvailableScenesByObjectId);
-
     const swipePosition = useSelector(selectSwipeWidgetHandlerPosition);
 
     const openPopupRef = useRef<MapViewOnClickHandler>();
