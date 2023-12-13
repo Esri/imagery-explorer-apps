@@ -53,6 +53,11 @@ const {
 } = FIELD_NAMES;
 
 /**
+ * A Map that will be used to retrieve Landsat Scene data using the object Id as key
+ */
+const landsatSceneByObjectId: Map<number, LandsatScene> = new Map();
+
+/**
  * Formats the features from Landsat-level-2 service and returns an array of LandsatScene objects.
  * @param features - An array of IFeature objects from Landsat-level-2 service.
  * @returns An array of LandsatScene objects containing the acquisition date, formatted acquisition date, name, cloud cover, and best attributes.
@@ -126,7 +131,7 @@ export const getFormattedLandsatScenes = (
  * @param {number} params.year - The year of the desired acquisition dates.
  * @param {Object} params.mapPoint - The point geometry to query.
  *
- * @returns {Promise} A promise that resolves to an array of LandsatAcquisitionDate objects.
+ * @returns {Promise} A promise that resolves to an array of LandsatScene objects.
  *
  */
 export const getLandsatScenes = async ({
@@ -205,12 +210,6 @@ export const getLandsatScenes = async ({
         where: whereClauses.join(` AND `),
     });
 
-    // if(controller){
-    //     controller.abort();
-    // }
-
-    // controller = new AbortController()
-
     const res = await fetch(
         `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${params.toString()}`,
         {
@@ -228,12 +227,39 @@ export const getLandsatScenes = async ({
         throw data.error;
     }
 
-    return getFormattedLandsatScenes(data?.features || []);
+    const landsatScenes: LandsatScene[] = getFormattedLandsatScenes(
+        data?.features || []
+    );
+
+    // save the landsat scenes to `landsatSceneByObjectId` map
+    for (const landsatScene of landsatScenes) {
+        landsatSceneByObjectId.set(landsatScene.objectId, landsatScene);
+    }
+
+    return landsatScenes;
+};
+
+/**
+ * Query a feature from Landsat-Level-2 service using the input object Id,
+ * and return the feature as formatted Landsat Scene.
+ * @param objectId The unique identifier of the feature
+ * @returns LandsatScene The formatted Landsat Scene corresponding to the objectId
+ */
+export const getLandsatSceneByObjectId = async (
+    objectId: number
+): Promise<LandsatScene> => {
+    // Check if the landsat scene already exists in the cache
+    if (landsatSceneByObjectId.has(objectId)) {
+        return landsatSceneByObjectId.get(objectId);
+    }
+
+    const feature = await getLandsatFeatureByObjectId(objectId);
+
+    return getFormattedLandsatScenes([feature])[0];
 };
 
 export const getLandsatFeatureByObjectId = async (
-    objectId: number,
-    abortController?: AbortController
+    objectId: number
 ): Promise<IFeature> => {
     const queryParams = new URLSearchParams({
         f: 'json',
@@ -242,10 +268,7 @@ export const getLandsatFeatureByObjectId = async (
     });
 
     const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`,
-        {
-            // signal: abortController.signal,
-        }
+        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`
     );
 
     if (!res.ok) {
@@ -265,6 +288,11 @@ export const getLandsatFeatureByObjectId = async (
     return data?.features[0] as IFeature;
 };
 
+/**
+ * Get the extent of a feature from Landsat-Level-2 service using the object Id as key.
+ * @param objectId The unique identifier of the feature
+ * @returns IExtent The extent of the feature from Landsat-Level-2 service
+ */
 export const getExtentOfLandsatSceneByObjectId = async (
     objectId: number
 ): Promise<IExtent> => {
