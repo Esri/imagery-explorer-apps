@@ -19,9 +19,17 @@
     "spectral-sampling-tool": {
         "title": "Spectral Sampling Tool",
         "webmapId": "81609bbe235942919ad27c77e42c600e",
-        "pathname": "",
+        "pathname": "/",
         "description": "",
         "thumbnail_name": "",
         "entrypoint": "/src/spectral-sampling-tool/index.tsx"
+    },
+    "landsat-surface-temp": {
+        "title": "Landsat Surface Temperature",
+        "webmapId": "81609bbe235942919ad27c77e42c600e",
+        "pathname": "/landsat-surface-temp",
+        "description": "",
+        "thumbnail_name": "",
+        "entrypoint": "/src/landsat-surface-temp/index.tsx"
     }
 }

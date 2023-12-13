@@ -34,7 +34,10 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
             try {
                 let timeExtentData: ImageryServiceTimeExtentData = null;
 
-                if (APP_NAME === 'landsat') {
+                if (
+                    APP_NAME === 'landsat' ||
+                    APP_NAME === 'landsat-surface-temp'
+                ) {
                     timeExtentData = await getTimeExtentOfLandsatService();
                 }
 

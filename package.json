@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "start": "webpack serve --mode development --open",
     "start-landsat": "webpack serve --mode development --open --env app=landsat",
     "start-sentinel2": "webpack serve --mode development --open --env app=sentinel-2",
     "start-spectral-sampling-tool": "webpack serve --mode development --open --env app=spectral-sampling-tool",
-    "build": "webpack --mode production",
+    "start-landsat-surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
     "build-landsat": "webpack --mode production --env app=landsat",
     "build-sentinel2": "webpack --mode production --env app=sentinel-2",
     "build-spectral-sampling-tool": "webpack --mode production --env app=spectral-sampling-tool",
+    "build-landsat-surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
