@@ -3,6 +3,7 @@ import { FormattedSpectralSamplingData } from '../SamplingPointsList/useFormatte
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import JSZip from 'jszip';
+import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 
 const getHeadersForLandsatSamplingResults = () => {
     return [
@@ -11,24 +12,34 @@ const getHeadersForLandsatSamplingResults = () => {
         ...LANDSAT_BAND_NAMES.slice(0, 7),
         'Longitude',
         'Latitude',
+        'SceneId',
     ];
 };
 
-const getCsvString4LandsatSamplingResults = (
+const getCsvString4LandsatSamplingResults = async (
     classification: string,
     data: FormattedSpectralSamplingData[]
-) => {
-    const rows: string[][] = data.map((d) => {
-        const { bandValues, location } = d;
+): Promise<string> => {
+    const rows: string[][] = [];
 
-        return [
+    for (const d of data) {
+        const { bandValues, location, objectIdOfSelectedScene } = d;
+
+        const landsatScene = await getLandsatSceneByObjectId(
+            objectIdOfSelectedScene
+        );
+
+        const row = [
             classification,
             // for Landsat, we only need to include data from the first 7 bands
             ...bandValues.slice(0, 7).map((d) => d.toString()),
             location.longitude.toFixed(5),
             location.latitude.toFixed(5),
+            landsatScene.name,
         ];
-    });
+
+        rows.push(row);
+    }
 
     const csvStr = convert2csv(getHeadersForLandsatSamplingResults(), rows);
 
