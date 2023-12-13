@@ -28,6 +28,7 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
+import { MaskLayerOpacityControl } from './MaskToolControl';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -52,29 +53,6 @@ export const MaskToolContainer = () => {
         ];
     };
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
-
-    useEffect(() => {
-        if (!queryParams4MainScene?.rasterFunctionName) {
-            return;
-        }
-
-        // when user selects a different renderer for the selected landsat scene,
-        // we want to try to sync the selected spectral index for the mask tool because
-        // that is probably what the user is interested in seeing
-        let spectralIndex: SpectralIndex = null;
-
-        if (/Temperature/i.test(queryParams4MainScene?.rasterFunctionName)) {
-            spectralIndex = 'temperature farhenheit';
-        } else if (/NDVI/.test(queryParams4MainScene?.rasterFunctionName)) {
-            spectralIndex = 'vegetation';
-        }
-
-        if (spectralIndex) {
-            dispatch(spectralIndex4MaskToolChanged(spectralIndex));
-        }
-    }, [queryParams4MainScene?.rasterFunctionName]);
-
     if (tool !== 'mask') {
         return null;
     }
@@ -88,18 +66,6 @@ export const MaskToolContainer = () => {
             <AnalysisToolHeader
                 title="Mask"
                 dropdownListOptions={[
-                    {
-                        value: 'water' as SpectralIndex,
-                        label: 'WATER INDEX',
-                    },
-                    {
-                        value: 'vegetation' as SpectralIndex,
-                        label: 'VEGETATION INDEX',
-                    },
-                    {
-                        value: 'moisture' as SpectralIndex,
-                        label: 'MOISTURE INDEX',
-                    },
                     {
                         value: 'temperature farhenheit' as SpectralIndex,
                         label: 'SURFACE TEMP °F',
@@ -151,24 +117,9 @@ export const MaskToolContainer = () => {
                         showSliderTooltip={true}
                     />
                 )}
-
-                {selectedSpectralIndex !== 'temperature celcius' &&
-                    selectedSpectralIndex !== 'temperature farhenheit' && (
-                        <PixelRangeSlider
-                            values={maskOptions.selectedRange}
-                            min={-1}
-                            max={1}
-                            valuesOnChange={(values) => {
-                                dispatch(updateSelectedRange(values));
-                            }}
-                            countOfTicks={17}
-                            tickLabels={[-1, -0.5, 0, 0.5, 1]}
-                            showSliderTooltip={true}
-                        />
-                    )}
             </div>
 
-            <MaskLayerRenderingControls />
+            <MaskLayerOpacityControl />
         </div>
     );
 };

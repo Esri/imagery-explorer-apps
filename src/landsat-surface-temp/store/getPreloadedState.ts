@@ -11,6 +11,10 @@ import {
     // QueryParams4ImageryScene,
 } from '@shared/store/ImageryScene/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
+import {
+    initialMaskToolState,
+    MaskToolState,
+} from '@shared/store/MaskTool/reducer';
 
 const getPreloadedMapState = (): MapState => {
     const mapLocation = getMapCenterFromHashParams();
@@ -36,9 +40,18 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     };
 };
 
+const getPreloadedMaskToolState = (): MaskToolState => {
+    return {
+        ...initialMaskToolState,
+        spectralIndex: 'temperature farhenheit',
+        shouldClipMaskLayer: true,
+    };
+};
+
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         Map: getPreloadedMapState(),
         ImageryScenes: getPreloadedImageryScenesState(),
+        MaskTool: getPreloadedMaskToolState(),
     };
 };
