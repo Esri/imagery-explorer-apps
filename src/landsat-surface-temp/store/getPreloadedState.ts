@@ -16,6 +16,11 @@ import {
     MaskToolState,
 } from '@shared/store/MaskTool/reducer';
 
+import {
+    initialTrendToolState,
+    TrendToolState,
+} from '@shared/store/TrendTool/reducer';
+
 const getPreloadedMapState = (): MapState => {
     const mapLocation = getMapCenterFromHashParams();
 
@@ -45,7 +50,14 @@ const getPreloadedMaskToolState = (): MaskToolState => {
         ...initialMaskToolState,
         spectralIndex: 'temperature farhenheit',
         shouldClipMaskLayer: true,
-    };
+    } as MaskToolState;
+};
+
+const getPreloadedTrendToolState = (): TrendToolState => {
+    return {
+        ...initialTrendToolState,
+        spectralIndex: 'temperature farhenheit',
+    } as TrendToolState;
 };
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
@@ -53,5 +65,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         Map: getPreloadedMapState(),
         ImageryScenes: getPreloadedImageryScenesState(),
         MaskTool: getPreloadedMaskToolState(),
+        TrendTool: getPreloadedTrendToolState(),
     };
 };
