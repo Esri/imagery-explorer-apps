@@ -82,19 +82,22 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         mode = 'dynamic';
     }
 
+    const defaultRasterFunction: LandsatRasterFunctionName =
+        'Natural Color with DRA';
+
     // Attempt to extract query parameters from the URL hash.
     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
     // which will serve as the map center.
     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
         ...DefaultQueryParams4ImageryScene,
-        rasterFunctionName: randomInterestingPlace?.renderer,
+        rasterFunctionName:
+            randomInterestingPlace?.renderer || defaultRasterFunction,
     };
 
     const queryParams4SecondaryScene =
         getQueryParams4SecondarySceneFromHashParams() || {
             ...DefaultQueryParams4ImageryScene,
-            rasterFunctionName:
-                'Natural Color with DRA' as LandsatRasterFunctionName,
+            rasterFunctionName: defaultRasterFunction,
         };
 
     const queryParams4ScenesInAnimation =
