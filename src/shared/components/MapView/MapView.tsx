@@ -20,10 +20,6 @@ interface Props {
      */
     zoom?: number;
     /**
-     * if true, show magnifier of map view
-     */
-    showMagnifier?: boolean;
-    /**
      * Children Elements that will receive Map View as prop
      */
     children?: React.ReactNode;
@@ -33,7 +29,6 @@ const MapView: React.FC<Props> = ({
     webmapId,
     center,
     zoom,
-    showMagnifier,
     children,
 }: Props) => {
     const mapDivRef = useRef<HTMLDivElement>();
@@ -63,14 +58,6 @@ const MapView: React.FC<Props> = ({
 
         mapViewRef.current.when(() => {
             setMapView(mapViewRef.current);
-
-            //The magnifier will be displayed whenever the cursor hovers over the map.
-            mapViewRef.current.on('pointer-move', function (event) {
-                mapViewRef.current.magnifier.position = {
-                    x: event.x,
-                    y: event.y,
-                };
-            });
         });
     };
 
@@ -82,15 +69,6 @@ const MapView: React.FC<Props> = ({
             mapViewRef.current.destroy();
         };
     }, []);
-
-    useEffect(() => {
-        if (!mapView) {
-            return;
-        }
-
-        mapView.magnifier.factor = 2;
-        mapView.magnifier.visible = showMagnifier;
-    }, [showMagnifier, mapView]);
 
     useEffect(() => {
         if (!mapView) {
@@ -117,7 +95,7 @@ const MapView: React.FC<Props> = ({
         <>
             <div
                 className={classNames('absolute top-0 left-0 w-full bottom-0', {
-                    'cursor-none': showMagnifier,
+                    // 'cursor-none': showMagnifier,
                 })}
                 ref={mapDivRef}
             ></div>

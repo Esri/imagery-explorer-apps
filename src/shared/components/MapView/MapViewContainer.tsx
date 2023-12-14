@@ -61,17 +61,17 @@ const MapViewContainer: FC<Props> = ({ children }) => {
 
     const mode = useSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    // const analysisTool = useSelector(selectActiveAnalysisTool);
 
     const anchorLocation = useSelector(selectMapPopupAnchorLocation);
 
-    const showMagnifier = useMemo(() => {
-        if (mode !== 'analysis') {
-            return false;
-        }
+    // const showMagnifier = useMemo(() => {
+    //     if (mode !== 'analysis') {
+    //         return false;
+    //     }
 
-        return analysisTool === 'trend' || analysisTool === 'spectral';
-    }, [analysisTool, mode]);
+    //     return analysisTool === 'trend' || analysisTool === 'spectral';
+    // }, [analysisTool, mode]);
 
     const showMapLoadingIndicator = useMemo(() => {
         if (isAnimationPlaying) {
@@ -98,12 +98,7 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                 'bottom-bottom-panel-height': shouldHideBottomPanel === false,
             })}
         >
-            <MapView
-                webmapId={appConfig.webmapId}
-                center={center}
-                zoom={zoom}
-                showMagnifier={showMagnifier}
-            >
+            <MapView webmapId={appConfig.webmapId} center={center} zoom={zoom}>
                 {children}
 
                 <EventHandlers

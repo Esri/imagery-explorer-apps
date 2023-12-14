@@ -13,6 +13,7 @@ import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer
 import { ChangeLayer } from '../ChangeLayer';
 import { ZoomToExtent } from '../ZoomToExtent';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
+import { MapMagnifier } from '@shared/components/MapMagnifier';
 
 const Map = () => {
     return (
@@ -38,6 +39,7 @@ const Map = () => {
             <ZoomToExtent />
             <ScreenshotWidget />
             <Popup />
+            <MapMagnifier />
         </MapViewContainer>
     );
 };
