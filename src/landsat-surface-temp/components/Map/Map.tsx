@@ -12,6 +12,7 @@ import { Popup } from '@landsat-explorer/components/PopUp/PopUp';
 import { MaskLayer } from '@landsat-explorer/components/MaskLayer';
 import { LandsatLayer } from '../LandsatLayer';
 import { SwipeWidget } from '../SwipeWidget';
+import { CrosshairCursor } from './CrosshairCursor';
 
 const Map = () => {
     return (
@@ -35,6 +36,8 @@ const Map = () => {
             <ZoomToExtent />
             <ScreenshotWidget />
             <Popup />
+            {/* use crosshair cursor for the map component all the time */}
+            <CrosshairCursor />
         </MapViewContainer>
     );
 };
