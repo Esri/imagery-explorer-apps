@@ -19,27 +19,23 @@ import {
     selectSpectralIndex4TrendTool,
     selectAcquisitionYear4TrendTool,
     selectTrendToolOption,
-    selectIsLoadingData4TrendingTool,
 } from '@shared/store/TrendTool/selectors';
 import { updateTrendToolData } from '@shared/store/TrendTool/thunks';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { TemporalProfileChart } from './TrendChart';
-import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
 import {
     // getFormatedDateString,
     getMonthFromFormattedDateString,
     getYearFromFormattedDateString,
 } from '@shared/utils/date-time/formatDateString';
-import { centerChanged } from '@shared/store/Map/reducer';
-import { batch } from 'react-redux';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
 } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
+import { TrendChart } from '.';
 
 export const TrendToolContainer = () => {
     const dispatch = useDispatch();
@@ -60,11 +56,7 @@ export const TrendToolContainer = () => {
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
-    const isLoading = useSelector(selectIsLoadingData4TrendingTool);
-
     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
-
-    const trendToolOption = useSelector(selectTrendToolOption);
 
     useEffect(() => {
         if (!queryParams4MainScene?.rasterFunctionName) {
@@ -189,52 +181,7 @@ export const TrendToolContainer = () => {
             />
 
             <div className="w-full h-[120px] my-2">
-                {!temporalProfileData.length || isLoading ? (
-                    <div className="h-full w-full flex items-center justify-center text-center">
-                        {isLoading && <calcite-loader inline />}
-                        <p className="text-sm opacity-80">
-                            {isLoading
-                                ? 'fetching temporal profile data'
-                                : 'Click on map to get the temporal profile'}
-                        </p>
-                    </div>
-                ) : (
-                    <TemporalProfileChart
-                        data={temporalProfileData}
-                        spectralIndex={spectralIndex}
-                        trendToolOption={trendToolOption}
-                        acquisitionYear={acquisitionYear}
-                        selectedAcquisitionDate={
-                            queryParams4MainScene?.acquisitionDate
-                        }
-                        onClickHandler={(index) => {
-                            // select user clicked temporal profile chart data element
-                            const clickedDataItem = temporalProfileData[index];
-
-                            if (!clickedDataItem) {
-                                return;
-                            }
-
-                            // use has selected a acquisition date from the temporal profile chart,
-                            // to find and display the landsat scene that was acquired on use selected date
-                            // at the query location, we will need to update both of them
-                            batch(() => {
-                                dispatch(
-                                    centerChanged([
-                                        queryLocation.x,
-                                        queryLocation.y,
-                                    ])
-                                );
-
-                                dispatch(
-                                    updateAcquisitionDate(
-                                        clickedDataItem.formattedAcquisitionDate
-                                    )
-                                );
-                            });
-                        }}
-                    />
-                )}
+                <TrendChart />
             </div>
 
             <ProfileToolControls
