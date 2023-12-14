@@ -12,6 +12,7 @@ import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import { TrendTool } from '../TrendTool';
 import { LandsatSurefaceTempModeSelector } from '../ModeSelector';
 import { DynamicModeInfo } from '../DynamicModeInfo/DynamicModeInfo';
+import { useOpenAboutThisAppLink } from '../../hooks/useOpenAboutThisAppLink';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -19,6 +20,10 @@ const Layout = () => {
     const dynamicModeOn = mode === 'dynamic';
 
     useSaveAppState2HashParams();
+
+    // Landsat Surface Temp app has no About This App Modal,
+    // we will just open this link in a new tab whenever user clicks on the About button
+    useOpenAboutThisAppLink();
 
     if (IS_MOBILE_DEVICE) {
         return (
