@@ -28,8 +28,8 @@
         "title": "Landsat Surface Temperature",
         "webmapId": "81609bbe235942919ad27c77e42c600e",
         "pathname": "/landsat-surface-temp",
-        "description": "",
-        "thumbnail_name": "",
+        "description": "Explore Landsat surface temperature archive",
+        "thumbnail_name": "landsat-surface-temp.jpg",
         "entrypoint": "/src/landsat-surface-temp/index.tsx"
     }
 }
