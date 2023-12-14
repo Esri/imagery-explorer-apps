@@ -9,10 +9,10 @@ export const DynamicModeInfo = () => {
 
             <p className="text-sm opacity-80">
                 In the current map display, the most recent and most cloud free
-                scenes from the Landsat archive are prioritized and dynamically
-                fused into a single mosaicked image layer. As you explore, the
-                map continues to dynamically fetch and render the best available
-                scenes.
+                scenes from the Landsat surface temperature archive are
+                prioritized and dynamically fused into a single thermal layer.
+                As you explore, the map continues to dynamically fetch and
+                render the best available scenes.
             </p>
         </div>
     );
