@@ -55,7 +55,7 @@ export const MaskToolContainer = () => {
             })}
         >
             <AnalysisToolHeader
-                title="Mask"
+                title="Highlight"
                 dropdownListOptions={[
                     {
                         value: 'temperature farhenheit' as SpectralIndex,

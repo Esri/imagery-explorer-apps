@@ -67,27 +67,6 @@ export const TrendToolContainer = () => {
     const trendToolOption = useSelector(selectTrendToolOption);
 
     useEffect(() => {
-        if (!queryParams4MainScene?.rasterFunctionName) {
-            return;
-        }
-
-        // when user selects a different renderer for the selected landsat scene,
-        // we want to try to sync the selected spectral index for the profile tool because
-        // that is probably what the user is interested in seeing
-        let spectralIndex: SpectralIndex = null;
-
-        if (/Temperature/i.test(queryParams4MainScene?.rasterFunctionName)) {
-            spectralIndex = 'temperature farhenheit';
-        } else if (/NDVI/.test(queryParams4MainScene?.rasterFunctionName)) {
-            spectralIndex = 'vegetation';
-        }
-
-        if (spectralIndex) {
-            dispatch(spectralIndex4TrendToolChanged(spectralIndex));
-        }
-    }, [queryParams4MainScene?.rasterFunctionName]);
-
-    useEffect(() => {
         if (!queryParams4MainScene?.acquisitionDate) {
             return;
         }
@@ -130,46 +109,15 @@ export const TrendToolContainer = () => {
         missionsToBeExcluded,
     ]);
 
-    // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
-    useEffect(() => {
-        (async () => {
-            if (tool !== 'trend') {
-                return;
-            }
-
-            if (selectedTrendToolOption !== 'month-to-month') {
-                return;
-            }
-
-            try {
-                await dispatch(updateTrendToolData());
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, [queryLocation, tool, acquisitionYear, selectedTrendToolOption]);
-
     if (tool !== 'trend') {
         return null;
     }
 
     return (
-        <div className="w-analysis-tool-container-width h-full">
+        <div className="w-[400px] h-full">
             <AnalysisToolHeader
-                title="Trend"
+                title="Profile"
                 dropdownListOptions={[
-                    {
-                        value: 'moisture' as SpectralIndex,
-                        label: 'moisture index',
-                    },
-                    {
-                        value: 'water' as SpectralIndex,
-                        label: 'water index',
-                    },
-                    {
-                        value: 'vegetation' as SpectralIndex,
-                        label: 'vegetation index',
-                    },
                     {
                         value: 'temperature farhenheit' as SpectralIndex,
                         label: 'surface temp °F',
@@ -188,7 +136,7 @@ export const TrendToolContainer = () => {
                 tooltipText={`The least-cloudy scene from the selected month will be sampled across all years of the imagery archive.`}
             />
 
-            <div className="w-full h-[120px] my-2">
+            <div className="w-full h-[150px] my-2">
                 {!temporalProfileData.length || isLoading ? (
                     <div className="h-full w-full flex items-center justify-center text-center">
                         {isLoading && <calcite-loader inline />}
@@ -236,28 +184,6 @@ export const TrendToolContainer = () => {
                     />
                 )}
             </div>
-
-            <ProfileToolControls
-                acquisitionMonth={acquisitionMonth}
-                acquisitionYear={acquisitionYear}
-                selectedTrendOption={selectedTrendToolOption}
-                shouldShowCloseButton={
-                    temporalProfileData.length > 0 ? true : false
-                }
-                trendOptionOnChange={(data) => {
-                    dispatch(trendToolOptionChanged(data));
-                }}
-                acquisitionMonthOnChange={(month) => {
-                    dispatch(acquisitionMonth4TrendToolChanged(month));
-                }}
-                acquisitionYearOnChange={(year) => {
-                    dispatch(acquisitionYear4TrendToolChanged(year));
-                }}
-                closeButtonOnClick={() => {
-                    dispatch(trendToolDataUpdated([]));
-                    dispatch(queryLocation4TrendToolChanged(null));
-                }}
-            />
         </div>
     );
 };
