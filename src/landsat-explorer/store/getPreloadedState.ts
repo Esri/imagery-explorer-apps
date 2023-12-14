@@ -44,6 +44,7 @@ import {
 } from '@shared/store/ChangeCompareTool/reducer';
 import { initialLandsatState } from '@shared/store/Landsat/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
+import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 
@@ -90,8 +91,11 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     };
 
     const queryParams4SecondaryScene =
-        getQueryParams4SecondarySceneFromHashParams() ||
-        DefaultQueryParams4ImageryScene;
+        getQueryParams4SecondarySceneFromHashParams() || {
+            ...DefaultQueryParams4ImageryScene,
+            rasterFunctionName:
+                'Natural Color with DRA' as LandsatRasterFunctionName,
+        };
 
     const queryParams4ScenesInAnimation =
         getQueryParams4ScenesInAnimationFromHashParams() || [];
