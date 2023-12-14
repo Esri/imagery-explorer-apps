@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';

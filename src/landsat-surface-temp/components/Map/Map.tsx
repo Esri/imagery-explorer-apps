@@ -10,7 +10,7 @@ import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/Screenshot
 import { ZoomToExtent } from '@landsat-explorer/components/ZoomToExtent';
 import { Popup } from '@landsat-explorer/components/PopUp/PopUp';
 import { MaskLayer } from '@landsat-explorer/components/MaskLayer';
-import { LandsatLayer } from '@landsat-explorer/components/LandsatLayer';
+import { LandsatLayer } from '../LandsatLayer';
 import { SwipeWidget } from '../SwipeWidget';
 
 const Map = () => {
