@@ -29,6 +29,10 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
 import { MaskLayerOpacityControl } from './MaskToolControl';
+import {
+    SurfaceTempCelsiusPixelRangeSlider,
+    SurfaceTempFarhenheitPixelRangeSlider,
+} from '@landsat-explorer/components/MaskTool/SurfaceTempPixelRangeSlider';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -37,21 +41,8 @@ export const MaskToolContainer = () => {
 
     const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskOptions);
-
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
-
-    const getValues4SurfaceTempSlider = () => {
-        if (selectedSpectralIndex === 'temperature celcius') {
-            return [...maskOptions.selectedRange];
-        }
-
-        return [
-            celsius2fahrenheit(maskOptions.selectedRange[0]),
-            celsius2fahrenheit(maskOptions.selectedRange[1]),
-        ];
-    };
 
     if (tool !== 'mask') {
         return null;
@@ -86,36 +77,10 @@ export const MaskToolContainer = () => {
 
             <div className="w-full h-[120px]">
                 {selectedSpectralIndex === 'temperature celcius' && (
-                    <PixelRangeSlider
-                        values={getValues4SurfaceTempSlider()}
-                        min={LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS}
-                        max={LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS}
-                        steps={1}
-                        valuesOnChange={(values) => {
-                            dispatch(updateSelectedRange(values));
-                        }}
-                        countOfTicks={0}
-                        tickLabels={[-30, -15, 0, 15, 30, 45, 60, 75, 90]}
-                        showSliderTooltip={true}
-                    />
+                    <SurfaceTempCelsiusPixelRangeSlider />
                 )}
                 {selectedSpectralIndex === 'temperature farhenheit' && (
-                    <PixelRangeSlider
-                        values={getValues4SurfaceTempSlider()}
-                        min={LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT}
-                        max={LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT}
-                        steps={1}
-                        valuesOnChange={(values) => {
-                            values = values.map((value) =>
-                                Math.trunc(((value - 32) * 5) / 9)
-                            );
-
-                            dispatch(updateSelectedRange(values));
-                        }}
-                        countOfTicks={0}
-                        tickLabels={[-20, 0, 30, 60, 90, 120, 150, 180]}
-                        showSliderTooltip={true}
-                    />
+                    <SurfaceTempFarhenheitPixelRangeSlider />
                 )}
             </div>
 
