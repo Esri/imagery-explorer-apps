@@ -1,45 +1,46 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { ProfileToolControls } from '@shared/components/ProfileToolControls';
+// import { ProfileToolControls } from '@shared/components/ProfileToolControls';
 // import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
     acquisitionMonth4TrendToolChanged,
     // samplingTemporalResolutionChanged,
-    trendToolDataUpdated,
+    // trendToolDataUpdated,
     spectralIndex4TrendToolChanged,
-    queryLocation4TrendToolChanged,
-    trendToolOptionChanged,
+    // queryLocation4TrendToolChanged,
+    // trendToolOptionChanged,
     acquisitionYear4TrendToolChanged,
 } from '@shared/store/TrendTool/reducer';
 import {
     selectAcquisitionMonth4TrendTool,
     // selectActiveAnalysisTool,
     // selectSamplingTemporalResolution,
-    selectTrendToolData,
+    // selectTrendToolData,
     selectQueryLocation4TrendTool,
     selectSpectralIndex4TrendTool,
-    selectAcquisitionYear4TrendTool,
+    // selectAcquisitionYear4TrendTool,
     selectTrendToolOption,
-    selectIsLoadingData4TrendingTool,
+    // selectIsLoadingData4TrendingTool,
 } from '@shared/store/TrendTool/selectors';
 import { updateTrendToolData } from '@shared/store/TrendTool/thunks';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { TemporalProfileChart } from './TrendChart';
-import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
+// import { TemporalProfileChart } from './TrendChart';
+// import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
 import {
     // getFormatedDateString,
     getMonthFromFormattedDateString,
     getYearFromFormattedDateString,
 } from '@shared/utils/date-time/formatDateString';
-import { centerChanged } from '@shared/store/Map/reducer';
-import { batch } from 'react-redux';
+// import { centerChanged } from '@shared/store/Map/reducer';
+// import { batch } from 'react-redux';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
 } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
+import { TrendChart } from '@landsat-explorer/components/TrendTool';
 
 export const TrendToolContainer = () => {
     const dispatch = useDispatch();
@@ -50,21 +51,21 @@ export const TrendToolContainer = () => {
 
     const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    // const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
 
     const selectedTrendToolOption = useSelector(selectTrendToolOption);
 
-    const temporalProfileData = useSelector(selectTrendToolData);
+    // const temporalProfileData = useSelector(selectTrendToolData);
 
     const spectralIndex = useSelector(selectSpectralIndex4TrendTool);
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
-    const isLoading = useSelector(selectIsLoadingData4TrendingTool);
+    // const isLoading = useSelector(selectIsLoadingData4TrendingTool);
 
     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
 
-    const trendToolOption = useSelector(selectTrendToolOption);
+    // const trendToolOption = useSelector(selectTrendToolOption);
 
     useEffect(() => {
         if (!queryParams4MainScene?.acquisitionDate) {
@@ -137,52 +138,7 @@ export const TrendToolContainer = () => {
             />
 
             <div className="w-full h-[150px] my-2">
-                {!temporalProfileData.length || isLoading ? (
-                    <div className="h-full w-full flex items-center justify-center text-center">
-                        {isLoading && <calcite-loader inline />}
-                        <p className="text-sm opacity-80">
-                            {isLoading
-                                ? 'fetching temporal profile data'
-                                : 'Click on map to get the temporal profile'}
-                        </p>
-                    </div>
-                ) : (
-                    <TemporalProfileChart
-                        data={temporalProfileData}
-                        spectralIndex={spectralIndex}
-                        trendToolOption={trendToolOption}
-                        acquisitionYear={acquisitionYear}
-                        selectedAcquisitionDate={
-                            queryParams4MainScene?.acquisitionDate
-                        }
-                        onClickHandler={(index) => {
-                            // select user clicked temporal profile chart data element
-                            const clickedDataItem = temporalProfileData[index];
-
-                            if (!clickedDataItem) {
-                                return;
-                            }
-
-                            // use has selected a acquisition date from the temporal profile chart,
-                            // to find and display the landsat scene that was acquired on use selected date
-                            // at the query location, we will need to update both of them
-                            batch(() => {
-                                dispatch(
-                                    centerChanged([
-                                        queryLocation.x,
-                                        queryLocation.y,
-                                    ])
-                                );
-
-                                dispatch(
-                                    updateAcquisitionDate(
-                                        clickedDataItem.formattedAcquisitionDate
-                                    )
-                                );
-                            });
-                        }}
-                    />
-                )}
+                <TrendChart />
             </div>
         </div>
     );
