@@ -10,6 +10,7 @@ import {
     selectQueryParams4MainScene,
 } from '@shared/store/ImageryScene/selectors';
 import MapView from '@arcgis/core/views/MapView';
+import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 
 type Props = {
     mapView?: MapView;
@@ -39,7 +40,7 @@ export const SwipeWidgetContainer: FC<Props> = ({ mapView }: Props) => {
         visible:
             isSwipeWidgetVisible &&
             queryParams4MainScene?.objectIdOfSelectedScene !== null,
-        rasterFunction: 'Natural Color with DRA',
+        rasterFunction: 'Natural Color with DRA' as LandsatRasterFunctionName,
         objectId: queryParams4MainScene?.objectIdOfSelectedScene,
     });
 

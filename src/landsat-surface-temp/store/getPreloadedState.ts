@@ -27,6 +27,7 @@ import {
     initialTrendToolState,
     TrendToolState,
 } from '@shared/store/TrendTool/reducer';
+import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 
 const getPreloadedMapState = (): MapState => {
     const mapLocation = getMapCenterFromHashParams();
@@ -51,11 +52,13 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         mode,
         queryParams4MainScene: {
             ...queryParams4MainScene,
-            rasterFunctionName: 'Surface Temperature Colorized (Fahrenheit)',
+            rasterFunctionName:
+                'Surface Temperature Colorized (Fahrenheit)' as LandsatRasterFunctionName,
         },
         queryParams4SecondaryScene: {
             ...queryParams4MainScene,
-            rasterFunctionName: 'Natural Color with DRA',
+            rasterFunctionName:
+                'Natural Color with DRA' as LandsatRasterFunctionName,
         },
     };
 };
