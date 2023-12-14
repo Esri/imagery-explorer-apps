@@ -47,18 +47,22 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         ...DefaultQueryParams4ImageryScene,
     };
 
+    const rasterFunction4MainScene: LandsatRasterFunctionName =
+        'Surface Temperature Colorized (Fahrenheit)';
+
+    const rasterFunction4SecondaryScene: LandsatRasterFunctionName =
+        'Natural Color with DRA';
+
     return {
         ...initialImagerySceneState,
         mode,
         queryParams4MainScene: {
             ...queryParams4MainScene,
-            rasterFunctionName:
-                'Surface Temperature Colorized (Fahrenheit)' as LandsatRasterFunctionName,
+            rasterFunctionName: rasterFunction4MainScene,
         },
         queryParams4SecondaryScene: {
             ...queryParams4MainScene,
-            rasterFunctionName:
-                'Natural Color with DRA' as LandsatRasterFunctionName,
+            rasterFunctionName: rasterFunction4SecondaryScene,
         },
     };
 };
