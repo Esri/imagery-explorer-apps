@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 import { Button } from '../Button';
-import {
-    QueryParams4ImageryScene,
-    Side4SwipeMode,
-} from '../../store/ImageryScene/reducer';
+import { QueryParams4ImageryScene } from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
 import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
+
+type Side4SwipeMode = 'left' | 'right';
 
 type Props = {
     selectedSide: Side4SwipeMode;
@@ -14,8 +13,6 @@ type Props = {
     onChange: (side: Side4SwipeMode) => void;
     swapButtonOnClick: () => void;
 };
-
-const sides: Side4SwipeMode[] = ['left', 'right'];
 
 export const SwipeLayerSelector: FC<Props> = ({
     selectedSide,

@@ -23,11 +23,6 @@ export type AppMode =
 export type AnalysisTool = 'mask' | 'trend' | 'spectral' | 'change';
 
 /**
- * Swipe Mode allows user to compare Imagery scene the
- */
-export type Side4SwipeMode = 'left' | 'right';
-
-/**
  * Query Params and Rendering Options for a Imagery Scene (e.g. Landsat or Sentinel-2)
  */
 export type QueryParams4ImageryScene = {
@@ -85,9 +80,9 @@ export type ImageryScenesState = {
      */
     queryParams4SecondaryScene?: QueryParams4ImageryScene;
     /**
-     * Selected side for Swipe Mode. This value determines which item in `queryParams4SwipeMode` should be updated.
+     * if true, user has selected the secondary scene
      */
-    selectedSide4SwipeMode?: Side4SwipeMode;
+    isSecondarySceneActive: boolean;
     /**
      * query parameters for list of Imagery scenes that will be used in Animation Mode, Spectral Sampling Mode and etc.
      */
@@ -131,7 +126,7 @@ export const initialImagerySceneState: ImageryScenesState = {
     queryParams4SecondaryScene: {
         ...DefaultQueryParams4ImageryScene,
     },
-    selectedSide4SwipeMode: 'left',
+    isSecondarySceneActive: false,
     queryParamsList: {
         byId: {},
         ids: [],
@@ -157,26 +152,14 @@ const slice = createSlice({
         ) => {
             state.queryParams4SecondaryScene = action.payload;
         },
-        queryParams4SceneInSwipeModeChanged: (
-            state,
-            action: PayloadAction<QueryParams4ImageryScene>
-        ) => {
-            const side = state.selectedSide4SwipeMode;
-
-            if (side === 'left') {
-                state.queryParams4MainScene = action.payload;
-            } else {
-                state.queryParams4SecondaryScene = action.payload;
-            }
-        },
         modeChanged: (state, action: PayloadAction<AppMode>) => {
             state.mode = action.payload;
         },
-        selectedSide4SwipeModeChanged: (
+        isSecondarySceneActiveToggled: (
             state,
-            action: PayloadAction<Side4SwipeMode>
+            action: PayloadAction<boolean>
         ) => {
-            state.selectedSide4SwipeMode = action.payload;
+            state.isSecondarySceneActive = action.payload;
         },
         selectedItemIdOfQueryParamsListChanged: (
             state,
@@ -240,9 +223,8 @@ export const {
     // availableScenesUpdated,
     queryParams4MainSceneChanged,
     queryParams4SecondarySceneChanged,
-    queryParams4SceneInSwipeModeChanged,
     modeChanged,
-    selectedSide4SwipeModeChanged,
+    isSecondarySceneActiveToggled,
     selectedItemIdOfQueryParamsListChanged,
     queryParamsListChanged,
     queryParams4SelectedItemInListChanged,

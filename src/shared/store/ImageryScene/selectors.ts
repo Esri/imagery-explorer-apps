@@ -6,7 +6,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.ImageryScenes.queryParams4MainScene,
     (state: RootState) => state.ImageryScenes.queryParams4SecondaryScene,
     (state: RootState) => state.ImageryScenes.queryParamsList,
-    (state: RootState) => state.ImageryScenes.selectedSide4SwipeMode,
+    (state: RootState) => state.ImageryScenes.isSecondarySceneActive,
     (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
     (state: RootState) => state.ImageryScenes.tool,
     (state: RootState) => state.ChangeCompareTool.activeScene,
@@ -15,7 +15,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         queryParams4MainScene,
         queryParams4SecondaryScene,
         queryParamsList,
-        selectedSide4SwipeMode,
+        isSecondarySceneActive,
         selectedItemID,
         activeAnalysisTool,
         activeSceneInChangeCompareTool
@@ -36,9 +36,9 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         }
 
         if (mode === 'swipe') {
-            return selectedSide4SwipeMode === 'left'
-                ? queryParams4MainScene
-                : queryParams4SecondaryScene;
+            return isSecondarySceneActive
+                ? queryParams4SecondaryScene
+                : queryParams4MainScene;
         }
 
         if (mode === 'animate' || mode === 'spectral sampling') {
@@ -59,9 +59,9 @@ export const selectQueryParams4SecondaryScene = createSelector(
     (queryParams4SecondaryScene) => queryParams4SecondaryScene
 );
 
-export const selectSelectedSideOfSwipeMode = createSelector(
-    (state: RootState) => state.ImageryScenes.selectedSide4SwipeMode,
-    (selectedSide4SwipeMode) => selectedSide4SwipeMode
+export const selectIsSecondarySceneActive = createSelector(
+    (state: RootState) => state.ImageryScenes.isSecondarySceneActive,
+    (isSecondarySceneActive) => isSecondarySceneActive
 );
 
 export const selectAppMode = createSelector(

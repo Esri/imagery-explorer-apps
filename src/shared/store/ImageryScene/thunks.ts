@@ -5,7 +5,6 @@ import {
     // availableScenesUpdated,
     queryParams4MainSceneChanged,
     queryParamsListChanged,
-    queryParams4SceneInSwipeModeChanged,
     queryParams4SelectedItemInListChanged,
     queryParams4SecondarySceneChanged,
 } from './reducer';
@@ -18,6 +17,7 @@ import {
     selectQueryParams4SecondaryScene,
     selectIdOfSelectedItemInListOfQueryParams,
     selectActiveAnalysisTool,
+    selectIsSecondarySceneActive,
     // selectLandsatMissionsToBeExcluded,
 } from './selectors';
 // import { nanoid } from 'nanoid';
@@ -46,6 +46,7 @@ export const updateQueryParams4SceneInSelectedMode =
     (dispatch: StoreDispatch, getState: StoreGetState) => {
         const mode = selectAppMode(getState());
         const analysisTool = selectActiveAnalysisTool(getState());
+        const isSecondarySceneActive = selectIsSecondarySceneActive(getState());
 
         if (mode === 'find a scene' || mode === 'dynamic') {
             dispatch(queryParams4MainSceneChanged(updatedQueryParams));
@@ -69,7 +70,12 @@ export const updateQueryParams4SceneInSelectedMode =
         }
 
         if (mode === 'swipe') {
-            dispatch(queryParams4SceneInSwipeModeChanged(updatedQueryParams));
+            if (isSecondarySceneActive) {
+                dispatch(queryParams4SecondarySceneChanged(updatedQueryParams));
+            } else {
+                dispatch(queryParams4MainSceneChanged(updatedQueryParams));
+            }
+
             return;
         }
 
