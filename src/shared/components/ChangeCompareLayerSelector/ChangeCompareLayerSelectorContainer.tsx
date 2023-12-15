@@ -1,26 +1,30 @@
 import React from 'react';
-import { ChangeCompareLayerSelector } from './ChangeCompareLayerSelector';
 import {
+    ChangeCompareLayerSelector,
     ActiveScene4ChangeCompareTool,
-    activeSceneChanged,
+} from './ChangeCompareLayerSelector';
+import {
+    // ActiveScene4ChangeCompareTool,
+    // activeSceneChanged,
     changeCompareLayerIsOnUpdated,
 } from '@shared/store/ChangeCompareTool/reducer';
-import { SpectralIndex } from '@typing/imagery-service';
 import { useSelector } from 'react-redux';
 import {
-    selectActiveScene4ChangeCompareTool,
+    // selectActiveScene4ChangeCompareTool,
     selectChangeCompareLayerIsOn,
 } from '@shared/store/ChangeCompareTool/selectors';
 import { useDispatch } from 'react-redux';
 import {
+    selectIsSecondarySceneActive,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
+import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 
 export const ChangeCompareLayerSelectorContainer = () => {
     const dispatch = useDispatch();
 
-    const activeScene = useSelector(selectActiveScene4ChangeCompareTool);
+    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
 
     const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
 
@@ -36,21 +40,20 @@ export const ChangeCompareLayerSelectorContainer = () => {
 
     return (
         <ChangeCompareLayerSelector
-            activeScene={activeScene}
+            activeScene={isSecondarySceneActive ? 'scene b' : 'scene a'}
             changeCompareLayerIsOn={changeCompareLayerIsOn}
             viewChangeButtonDisabled={viewChangeButtonDisabled}
             queryParams4SceneA={queryParams4SceneA}
             queryParams4SceneB={queryParams4SceneB}
-            // selectedSpectralIndexOnChange={(spectralIndex: SpectralIndex) => {
-            //     //
-            // }}
             viewChangeButtonOnClick={() => {
                 dispatch(changeCompareLayerIsOnUpdated(true));
             }}
             activeSceneOnChange={(
                 activeScene: ActiveScene4ChangeCompareTool
             ) => {
-                dispatch(activeSceneChanged(activeScene));
+                dispatch(
+                    isSecondarySceneActiveToggled(activeScene === 'scene b')
+                );
                 dispatch(changeCompareLayerIsOnUpdated(false));
             }}
         />

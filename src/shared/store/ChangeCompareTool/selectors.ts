@@ -6,11 +6,6 @@ export const selectSpectralIndex4ChangeCompareTool = createSelector(
     (spectralIndex) => spectralIndex
 );
 
-export const selectActiveScene4ChangeCompareTool = createSelector(
-    (state: RootState) => state.ChangeCompareTool.activeScene,
-    (activeScene) => activeScene
-);
-
 export const selectChangeCompareLayerIsOn = createSelector(
     (state: RootState) => state.ChangeCompareTool.changeCompareLayerIsOn,
     (changeCompareLayerIsOn) => changeCompareLayerIsOn

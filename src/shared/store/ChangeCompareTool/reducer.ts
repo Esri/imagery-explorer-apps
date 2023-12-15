@@ -6,17 +6,11 @@ import {
 } from '@reduxjs/toolkit';
 import { SpectralIndex } from '@typing/imagery-service';
 
-export type ActiveScene4ChangeCompareTool = 'scene a' | 'scene b';
-
 export type ChangeCompareToolState = {
     /**
      * use selected spectral index
      */
     spectralIndex: SpectralIndex;
-    /**
-     * indicator of the active scene for change compare tool
-     */
-    activeScene: ActiveScene4ChangeCompareTool;
     /**
      * if true, the change compare layer is visible in the map
      */
@@ -29,7 +23,6 @@ export type ChangeCompareToolState = {
 
 export const initialChangeCompareToolState: ChangeCompareToolState = {
     spectralIndex: 'vegetation',
-    activeScene: 'scene a',
     changeCompareLayerIsOn: false,
     selectedRange: [-2, 2],
 };
@@ -43,12 +36,6 @@ const slice = createSlice({
             action: PayloadAction<SpectralIndex>
         ) => {
             state.spectralIndex = action.payload;
-        },
-        activeSceneChanged: (
-            state,
-            action: PayloadAction<ActiveScene4ChangeCompareTool>
-        ) => {
-            state.activeScene = action.payload;
         },
         changeCompareLayerIsOnUpdated: (
             state,
@@ -66,7 +53,6 @@ const { reducer } = slice;
 
 export const {
     spectralIndex4ChangeCompareToolChanged,
-    activeSceneChanged,
     changeCompareLayerIsOnUpdated,
     selectedRangeUpdated,
 } = slice.actions;

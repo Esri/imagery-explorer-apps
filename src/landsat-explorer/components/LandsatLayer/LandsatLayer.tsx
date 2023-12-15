@@ -9,6 +9,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 
 type Props = {
     mapView?: MapView;
@@ -25,6 +26,8 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
+    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+
     const getVisibility = () => {
         if (mode === 'dynamic') {
             return true;
@@ -35,9 +38,8 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
         }
 
         if (mode === 'analysis') {
-            // no need to show landsat layer when user is using "compare change" tool,
-            // the "compare change" tool uses "LandsatLayer4ChangeTool" to display selected Landsat scene
-            if (analysisTool === 'change') {
+            // no need to show landsat layer when user is viewing change layer in the change compare tool
+            if (analysisTool === 'change' && changeCompareLayerIsOn) {
                 return false;
             }
 

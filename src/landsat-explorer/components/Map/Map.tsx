@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import MapViewContainer from '@shared/components/MapView/MapViewContainer';
-import { LandsatLayer, LandsatLayer4ChangeTool } from '../LandsatLayer';
+import { LandsatLayer } from '../LandsatLayer';
 import { SwipeWidget } from '../SwipeWidget';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { MaskLayer } from '../MaskLayer';
@@ -24,7 +24,6 @@ const Map = () => {
                 index={1}
             >
                 <LandsatLayer />
-                <LandsatLayer4ChangeTool />
                 <MaskLayer />
                 <ChangeLayer />
                 <AnalysisToolQueryLocation />

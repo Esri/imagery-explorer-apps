@@ -9,7 +9,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.ImageryScenes.isSecondarySceneActive,
     (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
     (state: RootState) => state.ImageryScenes.tool,
-    (state: RootState) => state.ChangeCompareTool.activeScene,
+    // (state: RootState) => state.ChangeCompareTool.activeScene,
     (
         mode,
         queryParams4MainScene,
@@ -17,8 +17,8 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         queryParamsList,
         isSecondarySceneActive,
         selectedItemID,
-        activeAnalysisTool,
-        activeSceneInChangeCompareTool
+        activeAnalysisTool
+        // activeSceneInChangeCompareTool
     ) => {
         if (mode === 'find a scene' || mode === 'dynamic') {
             return queryParams4MainScene;
@@ -30,9 +30,9 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
             }
 
             // when in 'change compare' tool, we need to find the query params based on selected scene
-            return activeSceneInChangeCompareTool === 'scene a'
-                ? queryParams4MainScene
-                : queryParams4SecondaryScene;
+            return isSecondarySceneActive
+                ? queryParams4SecondaryScene
+                : queryParams4MainScene;
         }
 
         if (mode === 'swipe') {

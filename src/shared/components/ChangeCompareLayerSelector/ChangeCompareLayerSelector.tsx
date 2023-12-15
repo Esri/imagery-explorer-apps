@@ -3,8 +3,9 @@ import React, { FC } from 'react';
 import { Button } from '../Button';
 import { Dropdown } from '../Dropdown';
 import { SpectralIndex } from '@typing/imagery-service';
-import { ActiveScene4ChangeCompareTool } from '@shared/store/ChangeCompareTool/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
+
+export type ActiveScene4ChangeCompareTool = 'scene a' | 'scene b';
 
 type Props = {
     activeScene: ActiveScene4ChangeCompareTool;
