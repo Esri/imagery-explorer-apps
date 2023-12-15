@@ -80,7 +80,8 @@ export type ImageryScenesState = {
      */
     queryParams4SecondaryScene?: QueryParams4ImageryScene;
     /**
-     * if true, user has selected the secondary scene
+     * if true, user has selected the secondary scene, this happens when user selects the "right" side of
+     * of the Swipe Mode, or selects the "Scene B" of the Change tool
      */
     isSecondarySceneActive: boolean;
     /**
