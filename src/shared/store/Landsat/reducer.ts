@@ -41,7 +41,9 @@ const slice = createSlice({
         ) => {
             const objectIds: number[] = [];
 
-            const byObjectId = {};
+            const byObjectId: {
+                [key: number]: LandsatScene;
+            } = {};
 
             for (const scene of action.payload) {
                 const { objectId } = scene;

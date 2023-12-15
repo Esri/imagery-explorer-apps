@@ -21,6 +21,7 @@ import {
     DefaultQueryParams4ImageryScene,
     initialImagerySceneState,
     ImageryScenesState,
+    QueryParams4ImageryScene,
     // QueryParams4ImageryScene,
 } from './ImageryScene/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
@@ -95,7 +96,9 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     const queryParams4ScenesInAnimation =
         getQueryParams4ScenesInAnimationFromHashParams() || [];
 
-    const queryParamsById = {};
+    const queryParamsById: {
+        [key: string]: QueryParams4ImageryScene;
+    } = {};
 
     const tool = getHashParamValueByKey('tool') as AnalysisTool;
 

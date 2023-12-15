@@ -192,7 +192,9 @@ export const parseLandsatInfo = (productId: string): LandsatProductInfo => {
         COLLECTION_CATEGORY,
     ] = productId.split('_');
 
-    const sensorNameLookupTable = {
+    const sensorNameLookupTable: {
+        [key: string]: string;
+    } = {
         C: 'OLI/TIRS combined',
         O: 'OLI-only',
         T: 'TIRS-only',
@@ -200,7 +202,9 @@ export const parseLandsatInfo = (productId: string): LandsatProductInfo => {
         M: 'MSS',
     };
 
-    const collectionCategoryLookupTable = {
+    const collectionCategoryLookupTable: {
+        [key: string]: string;
+    } = {
         RT: 'Real-Time',
         T1: 'Tier 1',
         T2: 'Tier 2',

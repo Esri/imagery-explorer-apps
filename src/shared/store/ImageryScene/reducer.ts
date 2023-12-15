@@ -191,8 +191,10 @@ const slice = createSlice({
                 selectedItemID: string;
             }>
         ) => {
-            const byId = {};
-            const ids = [];
+            const byId: {
+                [key: string]: QueryParams4ImageryScene;
+            } = {};
+            const ids: string[] = [];
 
             const { selectedItemID, queryParams } = action.payload;
 

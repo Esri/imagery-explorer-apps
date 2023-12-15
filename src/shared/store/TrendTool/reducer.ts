@@ -94,8 +94,10 @@ const slice = createSlice({
             state,
             action: PayloadAction<TemporalProfileData[]>
         ) => {
-            const objectIds = [];
-            const byObjectId = {};
+            const objectIds: number[] = [];
+            const byObjectId: {
+                [key: number]: TemporalProfileData;
+            } = {};
 
             for (const item of action.payload) {
                 const { objectId } = item;

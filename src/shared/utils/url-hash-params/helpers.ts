@@ -112,7 +112,9 @@ export const decodeMaskToolData = (val: string): MaskToolState => {
                   color: color.split(',').map((d) => +d),
                   selectedRange: selectedRange.split(',').map((d) => +d),
               }
-            : initialMaskToolState.maskOptionsBySpectralIndex[spectralIndex];
+            : initialMaskToolState.maskOptionsBySpectralIndex[
+                  spectralIndex as SpectralIndex
+              ];
 
     return {
         spectralIndex: spectralIndex as SpectralIndex,

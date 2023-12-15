@@ -91,16 +91,16 @@ const LANDSAT_RASTER_FUNCTIONS = [
     'Surface Temperature Colorized (Fahrenheit)',
     'Surface Temperature Colorized (Celsius)',
     'MNDWI Colorized',
-    'Short-wave Infrared',
-    'Color Infrared',
-    'Geology with DRA',
-    'Natural Color',
-    'Geology',
-    'Bathymetric',
-    'Agriculture',
-    'NDVI Raw',
-    'QABand',
-    'None',
+    // 'Short-wave Infrared',
+    // 'Color Infrared',
+    // 'Geology with DRA',
+    // 'Natural Color',
+    // 'Geology',
+    // 'Bathymetric',
+    // 'Agriculture',
+    // 'NDVI Raw',
+    // 'QABand',
+    // 'None',
 ] as const;
 
 export type LandsatRasterFunctionName =
@@ -173,64 +173,64 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
         description: 'Landsat8 TIRS1 temperature values in Celcius',
         label: 'Surface Temp Celcius',
     },
-    {
-        name: 'Short-wave Infrared',
-        description:
-            'Bands shortwave infrared2, shortwave infrared1, red (7, 6, 4) with fixed stretched applied dynamic range adjustment applied.',
-        label: 'Short-wave IR',
-    },
-    {
-        name: 'Color Infrared',
-        description:
-            'Bands near-IR, red, green (5, 4, 3) with fixed stretch applied dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
-        label: 'Color IR',
-    },
-    {
-        name: 'Geology with DRA',
-        description:
-            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
-        label: '',
-    },
-    {
-        name: 'Natural Color',
-        description:
-            'Natural Color bands red, green, blue(4, 3, 2) displayed with fixed stretch applied dynamic range adjustment applied.',
-        label: '',
-    },
-    {
-        name: 'Geology',
-        description:
-            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
-        label: '',
-    },
-    {
-        name: 'Bathymetric',
-        description:
-            'Bands red, green, coastal/aerosol (4, 3, 1) with fixed stretch applied dynamic range adjustment applied. Useful in bathymetric mapping applications.',
-        label: '',
-    },
-    {
-        name: 'Agriculture',
-        description:
-            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with fixed stretch applied dynamic range adjustment applied. Vigorous vegetation is bright green, stressed vegetation dull green and bare areas as brown.',
-        label: '',
-    },
-    {
-        name: 'NDVI Raw',
-        description:
-            'Normalized difference vegetation index (NDVI) computed as (b5 - b4) / (b5 + b4) dynamic range adjustment applied.',
-        label: 'NDVI',
-    },
-    {
-        name: 'QABand',
-        description: 'A raster function template.',
-        label: '',
-    },
-    {
-        name: 'None',
-        description: '',
-        label: '',
-    },
+    // {
+    //     name: 'Short-wave Infrared',
+    //     description:
+    //         'Bands shortwave infrared2, shortwave infrared1, red (7, 6, 4) with fixed stretched applied dynamic range adjustment applied.',
+    //     label: 'Short-wave IR',
+    // },
+    // {
+    //     name: 'Color Infrared',
+    //     description:
+    //         'Bands near-IR, red, green (5, 4, 3) with fixed stretch applied dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
+    //     label: 'Color IR',
+    // },
+    // {
+    //     name: 'Geology with DRA',
+    //     description:
+    //         'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
+    //     label: '',
+    // },
+    // {
+    //     name: 'Natural Color',
+    //     description:
+    //         'Natural Color bands red, green, blue(4, 3, 2) displayed with fixed stretch applied dynamic range adjustment applied.',
+    //     label: '',
+    // },
+    // {
+    //     name: 'Geology',
+    //     description:
+    //         'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
+    //     label: '',
+    // },
+    // {
+    //     name: 'Bathymetric',
+    //     description:
+    //         'Bands red, green, coastal/aerosol (4, 3, 1) with fixed stretch applied dynamic range adjustment applied. Useful in bathymetric mapping applications.',
+    //     label: '',
+    // },
+    // {
+    //     name: 'Agriculture',
+    //     description:
+    //         'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with fixed stretch applied dynamic range adjustment applied. Vigorous vegetation is bright green, stressed vegetation dull green and bare areas as brown.',
+    //     label: '',
+    // },
+    // {
+    //     name: 'NDVI Raw',
+    //     description:
+    //         'Normalized difference vegetation index (NDVI) computed as (b5 - b4) / (b5 + b4) dynamic range adjustment applied.',
+    //     label: 'NDVI',
+    // },
+    // {
+    //     name: 'QABand',
+    //     description: 'A raster function template.',
+    //     label: '',
+    // },
+    // {
+    //     name: 'None',
+    //     description: '',
+    //     label: '',
+    // },
 ];
 
 /**

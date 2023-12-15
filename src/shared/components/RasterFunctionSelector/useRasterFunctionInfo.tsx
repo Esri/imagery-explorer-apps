@@ -18,8 +18,9 @@ import LandsatNDMILegend from './legends/Landsat/NDMI.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
 import { APP_NAME } from '@shared/config';
 
-const LandsatRendererThumbnailByName: Partial<
-    Record<LandsatRasterFunctionName, string>
+const LandsatRendererThumbnailByName: Record<
+    LandsatRasterFunctionName,
+    string
 > = {
     'Agriculture with DRA': LandsatAgricultureThumbnail,
     'Bathymetric with DRA': LandsatBathymetricThumbnail,
@@ -29,12 +30,11 @@ const LandsatRendererThumbnailByName: Partial<
     'NDVI Colorized': LandsatNDVIThumbnail,
     'Short-wave Infrared with DRA': LandsatShortWaveIRThumbnail,
     'Surface Temperature Colorized (Fahrenheit)': LandsatThermalThumbnail,
+    'Surface Temperature Colorized (Celsius)': LandsatThermalThumbnail,
     'MNDWI Colorized': LandsatMNDWIThumbnail,
 };
 
-const LandsatRendererLegendByName: Partial<
-    Record<LandsatRasterFunctionName, string>
-> = {
+const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
     'Agriculture with DRA': null,
     'Bathymetric with DRA': null,
     'Color Infrared with DRA': null,
@@ -43,16 +43,23 @@ const LandsatRendererLegendByName: Partial<
     'NDVI Colorized': LandsatNDVILegend,
     'Short-wave Infrared with DRA': null,
     'Surface Temperature Colorized (Fahrenheit)': LandsatThermalLegend,
+    'Surface Temperature Colorized (Celsius)': LandsatThermalLegend,
     'MNDWI Colorized': LandsatMNDWILegend,
 };
 
 export const getLandsatRasterFunctionInfo = () => {
     const rasterFunctionInfos = getLandsatRasterFunctionInfos();
     return rasterFunctionInfos.map((d) => {
+        const name: LandsatRasterFunctionName =
+            d.name as LandsatRasterFunctionName;
+
+        const thumbnail = LandsatRendererThumbnailByName[name];
+        const legend = LandsatRendererLegendByName[name];
+
         return {
             ...d,
-            thumbnail: LandsatRendererThumbnailByName[d.name],
-            legend: LandsatRendererLegendByName[d.name],
+            thumbnail,
+            legend,
         };
     });
 };

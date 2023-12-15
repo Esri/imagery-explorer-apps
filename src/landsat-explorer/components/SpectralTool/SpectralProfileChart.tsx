@@ -45,7 +45,7 @@ export const SpectralProfileChart: FC<Props> = ({ chartData }) => {
                     tickFormatFunction: (val: number | string, index) => {
                         // console.log(val, index)
                         const ticks = LANDSAT_BAND_NAMES.slice(0, 7);
-                        return ticks[val];
+                        return ticks[val as number];
                     },
                 }}
                 margin={{

@@ -68,8 +68,11 @@ const slice = createSlice({
         ) => {
             const data = action.payload;
 
-            const byId = {};
-            const ids = [];
+            const byId: {
+                [key: string]: SpectralSamplingData;
+            } = {};
+
+            const ids: string[] = [];
 
             for (const item of data) {
                 const { uniqueId } = item;

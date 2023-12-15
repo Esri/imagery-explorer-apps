@@ -14,7 +14,7 @@ export type MaskOptions = {
     color: number[];
 };
 
-type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
+type MaskOptionsBySpectralIndex = Record<SpectralIndex, MaskOptions>;
 
 export type MaskToolState = {
     /**
