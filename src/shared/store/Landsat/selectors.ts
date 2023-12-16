@@ -1,16 +1,16 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectAvailableScenes = createSelector(
-    (state: RootState) => state.Landsat.availableScenes,
-    (availableScenes) => {
-        const { objectIds, byObjectId } = availableScenes;
-        return objectIds.map((objectId) => byObjectId[objectId]);
-    }
-);
+// export const selectLandsatScenes = createSelector(
+//     (state: RootState) => state.Landsat.landsatScenes,
+//     (landsatScenes) => {
+//         const { objectIds, byObjectId } = landsatScenes;
+//         return objectIds.map((objectId) => byObjectId[objectId]);
+//     }
+// );
 
 export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Landsat.availableScenes.byObjectId,
+    (state: RootState) => state.Landsat.landsatScenes.byObjectId,
     (byObjectId) => byObjectId
 );
 

@@ -2,11 +2,15 @@ import { batch } from 'react-redux';
 import { getLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-import { availableScenesUpdated } from './reducer';
+import { landsatScenesUpdated } from './reducer';
 import { selectLandsatMissionsToBeExcluded } from './selectors';
 import { LandsatScene } from '@typing/imagery-service';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
+import {
+    ImageryScene,
+    availableImageryScenesUpdated,
+} from '../ImageryScene/reducer';
 
 let abortController: AbortController = null;
 /**
@@ -70,7 +74,7 @@ export const queryAvailableScenes =
             // which is necessary for us to select between two overlapping scenes in step below
             scenes.sort((a, b) => a.acquisitionDate - b.acquisitionDate);
 
-            const availableScenes: LandsatScene[] = [];
+            const landsatScenes: LandsatScene[] = [];
 
             for (const scene of scenes) {
                 const { formattedAcquisitionDate } = scene;
@@ -80,18 +84,48 @@ export const queryAvailableScenes =
                 // we should just remove that scene and use the current scene instead as the current scene has later
                 // acquisition date
                 if (
-                    availableScenes.length &&
-                    availableScenes[availableScenes.length - 1]
+                    landsatScenes.length &&
+                    landsatScenes[landsatScenes.length - 1]
                         .formattedAcquisitionDate == formattedAcquisitionDate
                 ) {
-                    availableScenes.pop();
+                    landsatScenes.pop();
                 }
 
-                availableScenes.push(scene);
+                landsatScenes.push(scene);
             }
 
+            // convert list of Landsat scenes to list of imagery scenes
+            const imageryScenes: ImageryScene[] = landsatScenes.map(
+                (landsatScene: LandsatScene) => {
+                    const {
+                        objectId,
+                        name,
+                        formattedAcquisitionDate,
+                        acquisitionDate,
+                        acquisitionYear,
+                        acquisitionMonth,
+                        cloudCover,
+                        satellite,
+                    } = landsatScene;
+
+                    const imageryScene: ImageryScene = {
+                        objectId,
+                        sceneId: name,
+                        formattedAcquisitionDate,
+                        acquisitionDate,
+                        acquisitionYear,
+                        acquisitionMonth,
+                        cloudCover,
+                        satellite,
+                    };
+
+                    return imageryScene;
+                }
+            );
+
             batch(() => {
-                dispatch(availableScenesUpdated(availableScenes));
+                dispatch(landsatScenesUpdated(landsatScenes));
+                dispatch(availableImageryScenesUpdated(imageryScenes));
             });
         } catch (err) {
             console.error(err);

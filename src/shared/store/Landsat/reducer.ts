@@ -9,9 +9,9 @@ import { LandsatScene } from '@typing/imagery-service';
 
 export type LandsatState = {
     /**
-     * Imagery scenes that intersect with center point of map view and were acquired during the input year.
+     * Landsat scenes that intersect with center point of map view and were acquired during the input year.
      */
-    availableScenes?: {
+    landsatScenes?: {
         byObjectId?: {
             [key: number]: LandsatScene;
         };
@@ -24,7 +24,7 @@ export type LandsatState = {
 };
 
 export const initialLandsatState: LandsatState = {
-    availableScenes: {
+    landsatScenes: {
         byObjectId: {},
         objectIds: [],
     },
@@ -35,7 +35,7 @@ const slice = createSlice({
     name: 'Landsat',
     initialState: initialLandsatState,
     reducers: {
-        availableScenesUpdated: (
+        landsatScenesUpdated: (
             state,
             action: PayloadAction<LandsatScene[]>
         ) => {
@@ -52,7 +52,7 @@ const slice = createSlice({
                 byObjectId[objectId] = scene;
             }
 
-            state.availableScenes = {
+            state.landsatScenes = {
                 objectIds,
                 byObjectId,
             };
@@ -68,7 +68,7 @@ const slice = createSlice({
 
 const { reducer } = slice;
 
-export const { availableScenesUpdated, missionsToBeExcludedUpdated } =
+export const { landsatScenesUpdated, missionsToBeExcludedUpdated } =
     slice.actions;
 
 export default reducer;

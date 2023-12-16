@@ -108,14 +108,13 @@ const CalendarContainer = () => {
                 // isCloudy,
                 cloudCover,
                 satellite,
-                formattedCloudCover,
             } = scene;
 
             return {
                 formattedAcquisitionDate,
                 acquisitionDate,
                 isCloudy: cloudCover > cloudCoverThreshold,
-                cloudCover: formattedCloudCover,
+                cloudCover: Math.ceil(cloudCover * 100),
                 satellite,
             };
         });

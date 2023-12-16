@@ -130,10 +130,10 @@ export type ImageryScenesState = {
          */
         selectedItemID?: string;
     };
-    imageryScenes: {
-        /**
-         * Imagery scenes that intersect with center point of map view and were acquired during the input year.
-         */
+    /**
+     * List of imagery scenes that intersect with center point of map view and were acquired within the user selected acquisition year.
+     */
+    availableImageryScenes: {
         byObjectId: {
             [key: number]: ImageryScene;
         };
@@ -167,7 +167,7 @@ export const initialImagerySceneState: ImageryScenesState = {
         ids: [],
         selectedItemID: null,
     },
-    imageryScenes: {
+    availableImageryScenes: {
         byObjectId: {},
         objectIds: [],
     },
@@ -252,6 +252,28 @@ const slice = createSlice({
         ) => {
             state.tool = action.payload;
         },
+        availableImageryScenesUpdated: (
+            state,
+            action: PayloadAction<ImageryScene[]>
+        ) => {
+            const objectIds: number[] = [];
+
+            const byObjectId: {
+                [key: number]: ImageryScene;
+            } = {};
+
+            for (const scene of action.payload) {
+                const { objectId } = scene;
+
+                objectIds.push(objectId);
+                byObjectId[objectId] = scene;
+            }
+
+            state.availableImageryScenes = {
+                objectIds,
+                byObjectId,
+            };
+        },
     },
 });
 
@@ -268,6 +290,7 @@ export const {
     queryParams4SelectedItemInListChanged,
     cloudCoverChanged,
     activeAnalysisToolChanged,
+    availableImageryScenesUpdated,
     // missionsToBeExcludedUpdated,
 } = slice.actions;
 

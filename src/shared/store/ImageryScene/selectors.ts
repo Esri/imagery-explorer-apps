@@ -105,3 +105,11 @@ export const selectActiveAnalysisTool = createSelector(
     (state: RootState) => state.ImageryScenes.tool,
     (tool) => tool
 );
+
+export const selectAvailableScenes = createSelector(
+    (state: RootState) => state.ImageryScenes.availableImageryScenes,
+    (availableImageryScenes) => {
+        const { objectIds, byObjectId } = availableImageryScenes;
+        return objectIds.map((objectId) => byObjectId[objectId]);
+    }
+);
