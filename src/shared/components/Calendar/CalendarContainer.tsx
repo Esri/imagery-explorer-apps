@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectAvailableScenes,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
@@ -27,6 +28,7 @@ import { cloudCoverChanged } from '@shared/store/ImageryScene/reducer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
 import { APP_NAME } from '@shared/config';
+import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -48,9 +50,21 @@ const CalendarContainer = () => {
     const [acquisitionYear, setAcquisitionYear] = useState<number>();
 
     /**
-     * landsat scenes that intersect with the map center
+     * List of available imagery scenes that intersect with map center and were acquired during the input year.
      */
-    const { availableScenes } = useAvailableLandsatScenes(acquisitionYear);
+    const availableScenes = useSelector(selectAvailableScenes);
+
+    /**
+     * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
+     * changes, it will dispatch the query that finds the available landsat scenes
+     */
+    useAvailableLandsatScenes(acquisitionYear);
+
+    /**
+     * This custom hook gets invoked whenever the available scenes and acquisition date changes,
+     * it tries to find the selected imagery scene that was acquired from the selected acquisition date
+     */
+    useFindSelectedSceneByDate();
 
     /**
      * options that will be used to populate the Dropdown Menu for year
