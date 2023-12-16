@@ -61,11 +61,44 @@ export type QueryParams4ImageryScene = {
     inheritedAcquisitionYear?: number;
 };
 
+export type ImageryScene = {
+    objectId: number;
+    /**
+     * Unique Identifier of this imagery scene
+     * @example LC08_L1GT_029030_20151209_20160131_01_RT
+     */
+    sceneId: string;
+    /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * acquisitionDate in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * year when this scene was acquired
+     */
+    acquisitionYear: number;
+    /**
+     * month when this scene was acquired
+     */
+    acquisitionMonth: number;
+    /**
+     * name of the satellite that captured this imagery scene (e.g. 'Landsat 8')
+     */
+    satellite: string;
+    /**
+     * percent of cloud cover, the value ranges from 0 - 1
+     */
+    cloudCover: number;
+};
+
 export type ImageryScenesState = {
     /**
      * mode to be used to visualize and compare the imagery scenes
      */
-    mode?: AppMode;
+    mode: AppMode;
     /**
      * tool to be used to analyze the imagery scene
      */
@@ -74,11 +107,11 @@ export type ImageryScenesState = {
      * query params for the Imagery scene to be used in "Find a Scene" mode; and
      * on the left side of the "Swipe" mode
      */
-    queryParams4MainScene?: QueryParams4ImageryScene;
+    queryParams4MainScene: QueryParams4ImageryScene;
     /**
      * query params for the Imagery scene that will be used on the right side of the "swipe" mode
      */
-    queryParams4SecondaryScene?: QueryParams4ImageryScene;
+    queryParams4SecondaryScene: QueryParams4ImageryScene;
     /**
      * if true, user has selected the secondary scene, this happens when user selects the "right" side of
      * of the Swipe Mode, or selects the "Scene B" of the Change tool
@@ -87,7 +120,7 @@ export type ImageryScenesState = {
     /**
      * query parameters for list of Imagery scenes that will be used in Animation Mode, Spectral Sampling Mode and etc.
      */
-    queryParamsList?: {
+    queryParamsList: {
         byId?: {
             [key: string]: QueryParams4ImageryScene;
         };
@@ -97,18 +130,19 @@ export type ImageryScenesState = {
          */
         selectedItemID?: string;
     };
-    // /**
-    //  * Id of the selected item in `listOfQueryParams`. This Id helps identify which item in `listOfQueryParams` should be updated.
-    //  */
-    // idOfSelectedItemInListOfQueryParams?: string;
+    imageryScenes: {
+        /**
+         * Imagery scenes that intersect with center point of map view and were acquired during the input year.
+         */
+        byObjectId: {
+            [key: number]: ImageryScene;
+        };
+        objectIds: number[];
+    };
     /**
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
     cloudCover: number;
-    // /**
-    //  * list of Landat missions to be excluded
-    //  */
-    // missionsToBeExcluded: number[];
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -133,7 +167,10 @@ export const initialImagerySceneState: ImageryScenesState = {
         ids: [],
         selectedItemID: null,
     },
-    // idOfSelectedItemInListOfQueryParams: null,
+    imageryScenes: {
+        byObjectId: {},
+        objectIds: [],
+    },
     cloudCover: 0.5,
 };
 
