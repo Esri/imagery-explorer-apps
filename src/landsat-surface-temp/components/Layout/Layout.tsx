@@ -13,6 +13,7 @@ import { TrendTool } from '../TrendTool';
 import { LandsatSurefaceTempModeSelector } from '../ModeSelector';
 import { DynamicModeInfo } from '../DynamicModeInfo/DynamicModeInfo';
 import { useOpenAboutThisAppLink } from '../../hooks/useOpenAboutThisAppLink';
+import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -20,6 +21,12 @@ const Layout = () => {
     const dynamicModeOn = mode === 'dynamic';
 
     useSaveAppState2HashParams();
+
+    /**
+     * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
+     * changes, it will dispatch the query that finds the available landsat scenes.
+     */
+    useQueryAvailableLandsatScenes();
 
     // Landsat Surface Temp app has no About This App Modal,
     // we will just open this link in a new tab whenever user clicks on the About button
