@@ -8,7 +8,7 @@ import { DATE_FORMAT } from '@shared/constants/UI';
 /**
  * Formatted data of Imagery Scene
  */
-type DataOfImageryScene = {
+export type FormattedImageryScene = {
     /**
      * date as unix timestamp
      */
@@ -45,7 +45,7 @@ type CalendarProps = {
      * Array of available imagery scenes, the dates from these scenes will be rendered using different style on the Calendar
      * so that the user can know there are available data on these days
      */
-    availableScenes?: DataOfImageryScene[];
+    availableScenes?: FormattedImageryScene[];
     /**
      * Fires when user select a new acquisition date
      * @param date date string in format of (YYYY-MM-DD)
@@ -79,7 +79,7 @@ const MonthGrid: FC<MonthGridProps> = ({
     onSelect,
 }: MonthGridProps) => {
     const dataOfImagerySceneByAcquisitionDate = useMemo(() => {
-        const map: Map<string, DataOfImageryScene> = new Map();
+        const map: Map<string, FormattedImageryScene> = new Map();
 
         if (!availableScenes || !availableScenes.length) {
             return map;
