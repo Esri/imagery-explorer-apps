@@ -68,7 +68,7 @@ export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
-export const useRasterFunctionInfo = (): RasterFunctionInfo[] => {
+export const useLandsatRasterFunctions = (): RasterFunctionInfo[] => {
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
         return getLandsatRasterFunctionInfo();
     }, []);

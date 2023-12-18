@@ -26,14 +26,14 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { LandsatRenderers } from '../LandsatRenderers';
+import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 
 const DynamicModeContent = () => {
     return (
         <>
             <DynamicModeInfo />
             <InterestingPlaces />
-            <LandsatRenderers />
+            <LandsatRasterFunctionSelector />
         </>
     );
 };
@@ -111,7 +111,7 @@ const Layout = () => {
 
                             <div className="flex shrink-0">
                                 <SceneInfo />
-                                <LandsatRenderers />
+                                <LandsatRasterFunctionSelector />
                             </div>
                         </>
                     )}

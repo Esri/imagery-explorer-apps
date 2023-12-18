@@ -9,7 +9,7 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { LandsatRenderers } from '@landsat-explorer/components/LandsatRenderers';
+import { LandsatRenderers } from '@landsat-explorer/components/RasterFunctionSelector';
 
 const Layout = () => {
     useSaveAppState2HashParams();
