@@ -5,9 +5,9 @@ import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
 import { getLandsatExplorerStore } from './store';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
-import { About } from '@shared/components/About';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
+import { AboutLandsatExplorer } from './components/About';
 
 (async () => {
     const store = await getLandsatExplorerStore();
@@ -19,7 +19,7 @@ import Layout from './components/Layout/Layout';
             <ErrorBoundary>
                 <Map />
                 <Layout />
-                <About />
+                <AboutLandsatExplorer />
             </ErrorBoundary>
         </ReduxProvider>
     );

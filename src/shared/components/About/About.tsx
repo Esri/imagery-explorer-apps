@@ -1,13 +1,15 @@
 import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
-import React, { Suspense, lazy } from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { CloseButton } from '../CloseButton';
 import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
-import { APP_NAME } from '@shared/config';
-import AboutLandsatExplorer from './AboutLandsatExplorer';
 
-export const About = () => {
+type Props = {
+    children?: React.ReactNode;
+};
+
+export const About: FC<Props> = ({ children }) => {
     const dispatch = useDispatch();
 
     const show = useSelector(selectShouldShowAboutThisApp);
@@ -30,7 +32,8 @@ export const About = () => {
                     maxWidth: '90vw',
                 }}
             >
-                {APP_NAME === 'landsat' && <AboutLandsatExplorer />}
+                {/* {APP_NAME === 'landsat' && <AboutLandsatExplorer />} */}
+                {children}
             </div>
         </div>
     );
