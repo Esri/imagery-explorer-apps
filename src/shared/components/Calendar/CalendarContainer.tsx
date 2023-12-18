@@ -11,17 +11,14 @@ import {
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
-import { useQueryAvailableLandsatScenes } from './useAvailableScenes';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
-import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
-import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 import {
     acquisitionYearChanged,
     cloudCoverChanged,
@@ -49,11 +46,11 @@ const CalendarContainer = () => {
 
     const acquisitionYear = useSelector(selectAcquisitionYear);
 
-    /**
-     * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
-     * changes, it will dispatch the query that finds the available landsat scenes
-     */
-    useQueryAvailableLandsatScenes(acquisitionYear);
+    // /**
+    //  * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
+    //  * changes, it will dispatch the query that finds the available landsat scenes
+    //  */
+    // useQueryAvailableLandsatScenes();
 
     /**
      * This custom hook gets invoked whenever the available scenes and acquisition date changes,

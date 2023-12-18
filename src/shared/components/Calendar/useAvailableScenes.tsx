@@ -1,42 +1,43 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useDispatch } from 'react-redux';
-// import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
-import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
-import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
+// import React, { useEffect } from 'react';
+// import { useSelector } from 'react-redux';
+// import { selectMapCenter } from '@shared/store/Map/selectors';
+// import { useDispatch } from 'react-redux';
+// // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
+// import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+// import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
+// import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
+// import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
-/**
- * This custom hook queries the landsat service and find landsat scenes
- * that were acquired within the selected year and intersect with the center of the map screen
- * @returns
- */
-export const useQueryAvailableLandsatScenes = (
-    acquisitionYear: number
-): void => {
-    const dispatch = useDispatch();
+// /**
+//  * This custom hook queries the landsat service and find landsat scenes
+//  * that were acquired within the selected year and intersect with the center of the map screen
+//  * @returns
+//  */
+// export const useQueryAvailableLandsatScenes = (): void => {
+//     const dispatch = useDispatch();
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+//     const acquisitionYear = useSelector(selectAcquisitionYear);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+//     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
-    /**
-     * current map center
-     */
-    const center = useSelector(selectMapCenter);
+//     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
 
-    useEffect(() => {
-        if (!center || !acquisitionYear) {
-            return;
-        }
+//     /**
+//      * current map center
+//      */
+//     const center = useSelector(selectMapCenter);
 
-        if (isAnimationPlaying) {
-            return;
-        }
+//     useEffect(() => {
+//         if (!center || !acquisitionYear) {
+//             return;
+//         }
 
-        dispatch(queryAvailableScenes(acquisitionYear));
-    }, [center, acquisitionYear, isAnimationPlaying, missionsToBeExcluded]);
+//         if (isAnimationPlaying) {
+//             return;
+//         }
 
-    return null;
-};
+//         dispatch(queryAvailableScenes(acquisitionYear));
+//     }, [center, acquisitionYear, isAnimationPlaying, missionsToBeExcluded]);
+
+//     return null;
+// };

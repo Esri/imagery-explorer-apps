@@ -26,6 +26,7 @@ import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
+import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 
 const DynamicModeContent = () => {
     return (
@@ -46,6 +47,12 @@ const Layout = () => {
 
     const shouldShowSecondaryControls =
         mode === 'swipe' || mode === 'animate' || mode === 'analysis';
+
+    /**
+     * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
+     * changes, it will dispatch the query that finds the available landsat scenes.
+     */
+    useQueryAvailableLandsatScenes();
 
     useSaveAppState2HashParams();
 
