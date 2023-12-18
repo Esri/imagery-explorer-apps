@@ -45,9 +45,10 @@ import {
 import { initialLandsatState } from '@shared/store/Landsat/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
-import { getRandomInterestingPlace } from '@landsat-explorer/components/InterestingPlaces/helper';
+import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
+import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
 
-const randomInterestingPlace = getRandomInterestingPlace();
+const randomInterestingPlace = getRandomElement(landsatInterestingPlaces);
 
 const getPreloadedMapState = (): MapState => {
     let mapLocation = getMapCenterFromHashParams();
