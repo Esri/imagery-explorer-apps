@@ -1,6 +1,5 @@
 import React from 'react';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
-import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
 import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
 import { appConfig } from '@shared/config';
@@ -10,6 +9,7 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
+import { LandsatRenderers } from '@landsat-explorer/components/LandsatRenderers';
 
 const Layout = () => {
     useSaveAppState2HashParams();
@@ -39,7 +39,7 @@ const Layout = () => {
                         </div>
 
                         <div className="flex shrink-0 ml-4">
-                            <RasterFunctionSelector />
+                            <LandsatRenderers />
                         </div>
                     </>
                 </div>

@@ -16,7 +16,7 @@ import LandsatMNDWILegend from './legends/Landsat/MNDWI.png';
 import LandsatNDVILegend from './legends/Landsat/NDVI.png';
 import LandsatNDMILegend from './legends/Landsat/NDMI.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
-import { APP_NAME } from '@shared/config';
+import { RasterFunctionInfo } from '@typing/imagery-service';
 
 const LandsatRendererThumbnailByName: Record<
     LandsatRasterFunctionName,
@@ -47,7 +47,7 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
     'MNDWI Colorized': LandsatMNDWILegend,
 };
 
-export const getLandsatRasterFunctionInfo = () => {
+export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
     const rasterFunctionInfos = getLandsatRasterFunctionInfos();
     return rasterFunctionInfos.map((d) => {
         const name: LandsatRasterFunctionName =
@@ -60,7 +60,7 @@ export const getLandsatRasterFunctionInfo = () => {
             ...d,
             thumbnail,
             legend,
-        };
+        } as RasterFunctionInfo;
     });
 };
 
@@ -68,17 +68,9 @@ export const getLandsatRasterFunctionInfo = () => {
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
-export const useRasterFunctionInfo = () => {
+export const useRasterFunctionInfo = (): RasterFunctionInfo[] => {
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        if (APP_NAME === 'landsat') {
-            return getLandsatRasterFunctionInfo();
-        }
-
-        if (APP_NAME === 'spectral-sampling-tool') {
-            return getLandsatRasterFunctionInfo();
-        }
-
-        return [];
+        return getLandsatRasterFunctionInfo();
     }, []);
 
     return rasterFunctionInfosWithThumbnail;

@@ -1,6 +1,5 @@
 import React from 'react';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
-import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
 import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
 import {
@@ -27,13 +26,14 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
+import { LandsatRenderers } from '../LandsatRenderers';
 
 const DynamicModeContent = () => {
     return (
         <>
             <DynamicModeInfo />
             <InterestingPlaces />
-            <RasterFunctionSelector />
+            <LandsatRenderers />
         </>
     );
 };
@@ -111,7 +111,7 @@ const Layout = () => {
 
                             <div className="flex shrink-0">
                                 <SceneInfo />
-                                <RasterFunctionSelector />
+                                <LandsatRenderers />
                             </div>
                         </>
                     )}

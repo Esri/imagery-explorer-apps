@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { RasterFunctionSelector } from './RasterFunctionSelector';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -9,11 +9,17 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { useRasterFunctionInfo } from './useRasterFunctionInfo';
-import { tooltipDataChanged } from '@shared/store/UI/reducer';
 import { updateTooltipData } from '@shared/store/UI/thunks';
+import { RasterFunctionInfo } from '@typing/imagery-service';
 
-export const RasterFunctionSelectorContainer = () => {
+type Props = {
+    /**
+     * list of raster functions of the imagery service
+     */
+    data: RasterFunctionInfo[];
+};
+
+export const RasterFunctionSelectorContainer: FC<Props> = ({ data }) => {
     const dispatch = useDispatch();
 
     const mode = useSelector(selectAppMode);
@@ -22,7 +28,7 @@ export const RasterFunctionSelectorContainer = () => {
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
-    const rasterFunctionInfo = useRasterFunctionInfo();
+    // const rasterFunctionInfo = useRasterFunctionInfo();
 
     const { rasterFunctionName, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -43,7 +49,7 @@ export const RasterFunctionSelectorContainer = () => {
         return false;
     };
 
-    if (!rasterFunctionInfo || !rasterFunctionInfo.length) {
+    if (!data || !data.length) {
         return null;
     }
 
@@ -53,7 +59,7 @@ export const RasterFunctionSelectorContainer = () => {
 
     return (
         <RasterFunctionSelector
-            rasterFunctionInfo={rasterFunctionInfo}
+            rasterFunctionInfo={data}
             nameOfSelectedRasterFunction={rasterFunctionName}
             disabled={shouldDisable()}
             onChange={(rasterFunctionName) => {
