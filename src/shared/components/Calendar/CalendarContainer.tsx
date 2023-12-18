@@ -7,7 +7,7 @@ import { Dropdown } from '@shared/components/Dropdown';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 import { useDispatch } from 'react-redux';
 import {
-    selectAppMode,
+    selectAcquisitionYear,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
@@ -22,18 +22,20 @@ import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
-import { cloudCoverChanged } from '@shared/store/ImageryScene/reducer';
+import {
+    acquisitionYearChanged,
+    cloudCoverChanged,
+} from '@shared/store/ImageryScene/reducer';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
 import { APP_NAME } from '@shared/config';
 import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
+import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
-
-    const mode = useSelector(selectAppMode);
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
 
@@ -43,7 +45,9 @@ const CalendarContainer = () => {
 
     const cloudCoverThreshold = useSelector(selectCloudCover);
 
-    const [acquisitionYear, setAcquisitionYear] = useState<number>();
+    // const [acquisitionYear, setAcquisitionYear] = useState<number>();
+
+    const acquisitionYear = useSelector(selectAcquisitionYear);
 
     /**
      * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
@@ -86,29 +90,11 @@ const CalendarContainer = () => {
      */
     const shouldBeDisabled = useShouldDisableCalendar();
 
-    useEffect(() => {
-        // const year = acquisitionDate
-        //     ? getYearFromFormattedDateString(acquisitionDate)
-        //     : getCurrentYear();
-
-        // setAcquisitionYear(year);
-
-        let year = getCurrentYear();
-
-        if (acquisitionDate) {
-            // try to use the year from acquisition date first
-            year = getYearFromFormattedDateString(acquisitionDate);
-        } else if (
-            mode === 'animate' &&
-            queryParams?.inheritedAcquisitionYear
-        ) {
-            // if animation mode, when a new frame is added it won't have acquisition date by default,
-            // however, we will want use the acquistion year from the previous frame
-            year = queryParams.inheritedAcquisitionYear;
-        }
-
-        setAcquisitionYear(year);
-    }, [acquisitionDate]);
+    /**
+     * This custom hook is triggered whenever the user-selected acquisition date changes.
+     * It updates the user-selected year based on the year from the selected acquisition date.
+     */
+    useUpdateAcquisitionYear();
 
     return (
         <div
@@ -125,9 +111,8 @@ const CalendarContainer = () => {
                     <Dropdown
                         data={yearOptions}
                         onChange={(year) => {
-                            // select year
-                            // dispatch(updateAcquisitionYear(+year));
-                            setAcquisitionYear(+year);
+                            // setAcquisitionYear(+year);
+                            dispatch(acquisitionYearChanged(+year));
                         }}
                     />
 

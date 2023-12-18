@@ -101,6 +101,11 @@ export const selectCloudCover = createSelector(
     (cloudCover) => cloudCover
 );
 
+export const selectAcquisitionYear = createSelector(
+    (state: RootState) => state.ImageryScenes.acquisitionYear,
+    (acquisitionYear) => acquisitionYear
+);
+
 export const selectActiveAnalysisTool = createSelector(
     (state: RootState) => state.ImageryScenes.tool,
     (tool) => tool

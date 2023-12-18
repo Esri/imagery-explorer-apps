@@ -4,6 +4,7 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
+import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 // import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
 
 /**
@@ -143,6 +144,10 @@ export type ImageryScenesState = {
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
     cloudCover: number;
+    /**
+     * user selected acquisiton year that will be used to find list of available imagery scenes
+     */
+    acquisitionYear: number;
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -172,6 +177,7 @@ export const initialImagerySceneState: ImageryScenesState = {
         objectIds: [],
     },
     cloudCover: 0.5,
+    acquisitionYear: getCurrentYear(),
 };
 
 const slice = createSlice({
@@ -246,6 +252,9 @@ const slice = createSlice({
         cloudCoverChanged: (state, action: PayloadAction<number>) => {
             state.cloudCover = action.payload;
         },
+        acquisitionYearChanged: (state, action: PayloadAction<number>) => {
+            state.acquisitionYear = action.payload;
+        },
         activeAnalysisToolChanged: (
             state,
             action: PayloadAction<AnalysisTool>
@@ -291,7 +300,7 @@ export const {
     cloudCoverChanged,
     activeAnalysisToolChanged,
     availableImageryScenesUpdated,
-    // missionsToBeExcludedUpdated,
+    acquisitionYearChanged,
 } = slice.actions;
 
 export default reducer;
