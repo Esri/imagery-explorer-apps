@@ -9,9 +9,16 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 // import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
+import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 
 const Layout = () => {
     useSaveAppState2HashParams();
+
+    /**
+     * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
+     * changes, it will dispatch the query that finds the available landsat scenes.
+     */
+    useQueryAvailableLandsatScenes();
 
     return (
         <>
