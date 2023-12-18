@@ -3,7 +3,7 @@ import React, { FC, useRef } from 'react';
 import { GirdCard } from '../GirdCard/GirdCard';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
-import { InterestingPlaceData } from './data';
+import { InterestingPlaceData } from '@typing/shared';
 
 type Props = {
     data: InterestingPlaceData[];

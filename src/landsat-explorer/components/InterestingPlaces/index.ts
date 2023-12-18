@@ -1,0 +1,1 @@
+export { LandsatInterestingPlaces } from './LandsatInterestingPlaces';

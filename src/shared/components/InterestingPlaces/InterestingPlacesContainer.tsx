@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
-
-import { data } from './data';
+import React, { FC, useEffect, useState } from 'react';
 import { InterestingPlaces } from './InterestingPlaces';
 import { batch } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
 import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { updateTooltipData } from '@shared/store/UI/thunks';
+import { InterestingPlaceData } from '@typing/shared';
 
-export const InterestingPlacesContainer = () => {
+type Props = {
+    /**
+     * list of interesting place data
+     */
+    data: InterestingPlaceData[];
+};
+
+export const InterestingPlacesContainer: FC<Props> = ({ data }) => {
     const dispatch = useDispatch();
 
     return (

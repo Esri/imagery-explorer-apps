@@ -9,7 +9,7 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { LandsatRenderers } from '@landsat-explorer/components/RasterFunctionSelector';
+import { LandsatRasterFunctionSelector } from '@landsat-explorer/components/RasterFunctionSelector';
 
 const Layout = () => {
     useSaveAppState2HashParams();
@@ -39,7 +39,7 @@ const Layout = () => {
                         </div>
 
                         <div className="flex shrink-0 ml-4">
-                            <LandsatRenderers />
+                            <LandsatRasterFunctionSelector />
                         </div>
                     </>
                 </div>

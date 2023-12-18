@@ -20,19 +20,19 @@ import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
-import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
+import { LandsatInterestingPlaces } from '../InterestingPlaces';
 
 const DynamicModeContent = () => {
     return (
         <>
             <DynamicModeInfo />
-            <InterestingPlaces />
+            <LandsatInterestingPlaces />
             <LandsatRasterFunctionSelector />
         </>
     );

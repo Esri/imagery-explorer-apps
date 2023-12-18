@@ -1,49 +1,18 @@
-// import AralSea from './thumbnails/AralSea.jpg';
-// import Singapore from './thumbnails/Singapore.jpg';
-// import Everest from './thumbnails/Everest.jpg';
-// import Manicouagan from './thumbnails/Manicouagan.jpg';
-// import Giza from './thumbnails/Pyramids.jpg';
 import Ganges from './thumbnails/landsat/Ganges_SWIR.jpg';
-// import Fuji from './thumbnails/MtFuji.jpg';
 import GrandCanyon from './thumbnails/landsat/GrandCanyon.jpg';
 import Richat from './thumbnails/landsat/Richat.jpg';
-// import Irrigation from './thumbnails/Irrigation.jpg';
-// import KeyWest from './thumbnails/landsat/KeyWest.jpg';
-// import Kilimanjaro from './thumbnails/Kilimanjaro.jpg';
 import KalahariDunes from './thumbnails/landsat/KalahariDunes.jpg';
 import KuisebCanyon from './thumbnails/landsat/KuisebCanyon.jpg';
 import Quelccaya from './thumbnails/landsat/Quelccaya.jpg';
 import RupertBay from './thumbnails/landsat/RupertBay.jpg';
-
 import ThreeGorges from './thumbnails/landsat/ThreeGorges.jpg';
 import DashteKevir from './thumbnails/landsat/Dasht-eKevir.jpg';
 import Ouarkziz from './thumbnails/landsat/Ouarkziz.jpg';
 import EtoshaPan from './thumbnails/landsat/EtoshaPan.jpg';
 import LakeMackay from './thumbnails/landsat/LakeMackay.jpg';
-import { APP_NAME } from '@shared/config';
+import { InterestingPlaceData } from '@typing/shared';
 
-export type InterestingPlaceData = {
-    name: string;
-    location: {
-        center: number[];
-        zoom: number;
-    };
-    renderer: string;
-    /**
-     * url of thumbnail image
-     */
-    thumbnail: string;
-    /**
-     * longer name that can be used in tooltip title
-     */
-    label?: string;
-    /**
-     * description of this place
-     */
-    description?: string;
-};
-
-const LandsatInterestingPlaces: InterestingPlaceData[] = [
+export const data: InterestingPlaceData[] = [
     {
         name: 'Ganges Delta',
         location: {
@@ -181,11 +150,3 @@ const LandsatInterestingPlaces: InterestingPlaceData[] = [
             'The Etosha Pan is a large endorheic salt pan in the north of Namibia. Measuring 120 km (75 mi) long, this vast lakebed is periodically flooded with a thin layer of water, which is heavily salted by the mineral deposits on the surface.',
     },
 ];
-
-let data: InterestingPlaceData[] = [];
-
-if (APP_NAME === 'landsat') {
-    data = LandsatInterestingPlaces;
-}
-
-export { data };

@@ -26,7 +26,6 @@ import {
 } from '@shared/store/ImageryScene/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { initialUIState, UIState } from '@shared/store/UI/reducer';
-import { getRandomInterestingPlace } from '@shared/components/InterestingPlaces/helper';
 import {
     MaskToolState,
     initialMaskToolState,
@@ -46,6 +45,7 @@ import {
 import { initialLandsatState } from '@shared/store/Landsat/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import { getRandomInterestingPlace } from '@landsat-explorer/components/InterestingPlaces/helper';
 
 const randomInterestingPlace = getRandomInterestingPlace();
 
