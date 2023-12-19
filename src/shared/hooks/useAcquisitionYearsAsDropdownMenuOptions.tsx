@@ -1,18 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DropdownData } from '@shared/components/Dropdown';
-import { getTimeExtent as getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
-import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
-import { APP_NAME } from '@shared/config';
+import { useAvailableAcquisitionYears } from './useAvailableAcquisitionYears';
 
 export const useAcquisitionYearsAsDropdownMenuOptions = (
     acquisitionYear: number
 ): DropdownData[] => {
-    // const { acquisitionYear } =
-    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    /**
+     * Array of years derived from the data obtained from the chosen imagery service.
+     *
+     * This custom hook fetches the time extent data of an Imagery Service
+     * and returns an array of years (in the format of YYYY) that covers
+     * all years starting from the start date through the year of the end date.
+     */
+    const years = useAvailableAcquisitionYears();
 
-    const [years, setYears] = useState<number[]>([]);
-
-    const options = useMemo(() => {
+    const options: DropdownData[] = useMemo(() => {
         if (!years || !years.length) {
             return [];
         }
@@ -28,50 +30,6 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
             })
             .reverse();
     }, [years, acquisitionYear]);
-
-    useEffect(() => {
-        (async () => {
-            try {
-                let timeExtentData: ImageryServiceTimeExtentData = null;
-
-                if (
-                    APP_NAME === 'landsat' ||
-                    APP_NAME === 'landsat-surface-temp'
-                ) {
-                    timeExtentData = await getTimeExtentOfLandsatService();
-                }
-
-                if (APP_NAME === 'spectral-sampling-tool') {
-                    timeExtentData = await getTimeExtentOfLandsatService();
-                }
-
-                if (!timeExtentData) {
-                    throw new Error(
-                        'no time extent is found for the imagery service'
-                    );
-                }
-
-                const { start, end } = timeExtentData;
-
-                const years: number[] = [];
-
-                const startYear = new Date(start).getFullYear();
-
-                const endYear = new Date(end).getFullYear();
-
-                let currYear = startYear;
-
-                while (currYear <= endYear) {
-                    years.push(currYear);
-                    currYear++;
-                }
-
-                setYears(years);
-            } catch (error) {
-                console.error(error);
-            }
-        })();
-    }, []);
 
     return options;
 };
