@@ -9,7 +9,6 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.ImageryScenes.isSecondarySceneActive,
     (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
     (state: RootState) => state.ImageryScenes.tool,
-    // (state: RootState) => state.ChangeCompareTool.activeScene,
     (
         mode,
         queryParams4MainScene,
@@ -18,7 +17,6 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         isSecondarySceneActive,
         selectedItemID,
         activeAnalysisTool
-        // activeSceneInChangeCompareTool
     ) => {
         if (mode === 'find a scene' || mode === 'dynamic') {
             return queryParams4MainScene;
