@@ -24,7 +24,7 @@ import {
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
 
 /**
- * update query params that will be used to find the Landsat Scene in the selected mode
+ * update query params that will be used to find the Imagery Scene in the selected mode
  * @param updatedQueryParams
  * @returns
  */

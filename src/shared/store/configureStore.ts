@@ -20,6 +20,8 @@ const configureAppStore = (preloadedState: PartialRootState = {}) => {
     return store;
 };
 
+export type AppStore = ReturnType<typeof configureAppStore>;
+
 export type StoreDispatch = ReturnType<typeof configureAppStore>['dispatch'];
 
 export type StoreGetState = ReturnType<typeof configureAppStore>['getState'];
