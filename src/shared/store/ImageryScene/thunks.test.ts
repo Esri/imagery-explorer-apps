@@ -7,34 +7,38 @@ import reducer, {
     initialImagerySceneState,
     isSecondarySceneActiveToggled,
     modeChanged,
+    queryParams4MainSceneChanged,
     queryParamsListChanged,
 } from './reducer';
 import { selectQueryParams4SceneInSelectedMode } from './selectors';
-import { updateQueryParams4SceneInSelectedMode } from './thunks';
+import {
+    updateQueryParams4SceneInSelectedMode,
+    addNewItemToQueryParamsList,
+} from './thunks';
 
 describe('thunks of ImageryScene slice of Redux Store', () => {
     let store: AppStore;
+
+    const queryParams4MainScene: QueryParams4ImageryScene = {
+        ...DefaultQueryParams4ImageryScene,
+        uniqueId: 'mainScene',
+    };
+
+    const queryParams4SecondaryScene: QueryParams4ImageryScene = {
+        ...DefaultQueryParams4ImageryScene,
+        uniqueId: 'secondaryScene',
+    };
+
+    const queryParams4AnotherScene: QueryParams4ImageryScene = {
+        ...DefaultQueryParams4ImageryScene,
+        uniqueId: 'anotherScene',
+    };
 
     beforeEach(() => {
         store = configureAppStore();
     });
 
     describe('test updateQueryParams4SceneInSelectedMode thunk', () => {
-        const queryParams4MainScene: QueryParams4ImageryScene = {
-            ...DefaultQueryParams4ImageryScene,
-            uniqueId: 'mainScene',
-        };
-
-        const queryParams4SecondaryScene: QueryParams4ImageryScene = {
-            ...DefaultQueryParams4ImageryScene,
-            uniqueId: 'secondaryScene',
-        };
-
-        const queryParams4AnotherScene: QueryParams4ImageryScene = {
-            ...DefaultQueryParams4ImageryScene,
-            uniqueId: 'anotherScene',
-        };
-
         it('should update queryParams4MainScene by default', () => {
             const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams4MainScene,
@@ -148,4 +152,58 @@ describe('thunks of ImageryScene slice of Redux Store', () => {
             ).toMatchObject(updatedQueryParams);
         });
     });
+
+    describe('test addNewItemToQueryParamsList thunk', () => {
+        test('new item should inheirt queryParams4MainScene if queryParamsList is empty', () => {
+            const queryParams2Inheirt: QueryParams4ImageryScene = {
+                ...queryParams4MainScene,
+                rasterFunctionName: 'infrared',
+                acquisitionDate: '2010-01-30',
+            };
+
+            const idOfNewItem = 'new item';
+
+            store.dispatch(queryParams4MainSceneChanged(queryParams2Inheirt));
+
+            store.dispatch(modeChanged('animate'));
+
+            store.dispatch(addNewItemToQueryParamsList(idOfNewItem));
+
+            expect(
+                selectQueryParams4SceneInSelectedMode(store.getState())
+            ).toMatchObject({
+                ...queryParams2Inheirt,
+                uniqueId: idOfNewItem,
+            });
+        });
+
+        test('new item should only inheirt acquisition year if shouldOnlyInheirtAcquisitionYear param is true', () => {
+            const queryParams2Inheirt: QueryParams4ImageryScene = {
+                ...queryParams4MainScene,
+                rasterFunctionName: 'geology',
+                acquisitionDate: '1998-12-30',
+            };
+
+            const idOfNewItem = 'new item';
+
+            store.dispatch(queryParams4MainSceneChanged(queryParams2Inheirt));
+
+            store.dispatch(modeChanged('animate'));
+
+            store.dispatch(addNewItemToQueryParamsList(idOfNewItem, true));
+
+            expect(
+                selectQueryParams4SceneInSelectedMode(store.getState())
+            ).toMatchObject({
+                ...queryParams2Inheirt,
+                acquisitionDate: '',
+                inheritedAcquisitionYear: 1998,
+                uniqueId: idOfNewItem,
+            });
+        });
+    });
+
+    // describe('test removeItemFromQueryParamsList thunk', () => {
+
+    // });
 });
