@@ -30,10 +30,6 @@ export const useUpdateAcquisitionYear = (): void => {
     const acquisitionDate = queryParams?.acquisitionDate;
 
     useEffect(() => {
-        // const year = acquisitionDate
-        //     ? getYearFromFormattedDateString(acquisitionDate)
-        //     : getCurrentYear();
-
         let year = getCurrentYear();
 
         // If acquisition date exists, use the year from the date

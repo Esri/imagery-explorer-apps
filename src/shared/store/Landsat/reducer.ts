@@ -4,7 +4,6 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-// import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
 import { LandsatScene } from '@typing/imagery-service';
 
 export type LandsatState = {

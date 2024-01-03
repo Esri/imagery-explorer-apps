@@ -5,7 +5,6 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
-// import { getCurrentYear } from '@shared/utils/date-time/getCurrentYear';
 
 /**
  * modes that the user can use to explore the imagery layer/scene
