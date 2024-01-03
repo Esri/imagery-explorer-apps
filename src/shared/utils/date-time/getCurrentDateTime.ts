@@ -8,7 +8,11 @@ export const getCurrentYear = () => {
     // USGS has temporarily paused the processing of Landsat Level-1 Product.
     // Therefore we should use 2023 as current year for Landsat Explorer app
     // until USGS has this issue reseoved.
-    if (APP_NAME === 'landsat' || APP_NAME === 'landsat-surface-temp') {
+    if (
+        APP_NAME === 'landsat' ||
+        APP_NAME === 'landsat-surface-temp' ||
+        APP_NAME === 'spectral-sampling-tool'
+    ) {
         return 2023;
     }
 
