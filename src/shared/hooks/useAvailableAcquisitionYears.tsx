@@ -2,6 +2,7 @@ import { APP_NAME } from '@shared/config';
 import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
 import React, { useEffect, useState } from 'react';
 import { getTimeExtent as getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 
 /**
  * This custom hook retrieves the time extent data of an Imagery Service
@@ -44,7 +45,7 @@ export const useAvailableAcquisitionYears = () => {
 
                 const startYear = new Date(start).getFullYear();
 
-                const endYear = new Date(end).getFullYear();
+                const endYear = getCurrentYear(); //new Date(end).getFullYear();
 
                 let currYear = startYear;
 
