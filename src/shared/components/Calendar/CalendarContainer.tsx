@@ -42,15 +42,7 @@ const CalendarContainer = () => {
 
     const cloudCoverThreshold = useSelector(selectCloudCover);
 
-    // const [acquisitionYear, setAcquisitionYear] = useState<number>();
-
     const acquisitionYear = useSelector(selectAcquisitionYear);
-
-    // /**
-    //  * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
-    //  * changes, it will dispatch the query that finds the available landsat scenes
-    //  */
-    // useQueryAvailableLandsatScenes();
 
     /**
      * This custom hook gets invoked whenever the available scenes and acquisition date changes,
