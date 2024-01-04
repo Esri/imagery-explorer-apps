@@ -3,6 +3,7 @@ import { DropdownData } from '@shared/components/Dropdown';
 import { getTimeExtent } from '@shared/services/landsat-2/getTimeExtent';
 import { useSelector } from 'react-redux';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/Landsat/selectors';
+import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 
 export const useYearOptions = (acquisitionYear: number): DropdownData[] => {
     // const { acquisitionYear } =
@@ -36,7 +37,7 @@ export const useYearOptions = (acquisitionYear: number): DropdownData[] => {
 
                 const startYear = new Date(start).getFullYear();
 
-                const endYear = new Date(end).getFullYear();
+                const endYear = getCurrentYear(); //new Date(end).getFullYear();
 
                 let currYear = startYear;
 

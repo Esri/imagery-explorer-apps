@@ -12,7 +12,7 @@ export const LANDSAT_LEVEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?i
 export const LANDSAT_LEVEL_2_SERVICE_URL_PROD = `https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer`;
 
 // export const LANDSAT_LEVEL_2_SERVICE_URL_DEV = `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer`;
-export const LANDSAT_LEVEL_2_SERVICE_URL_DEV = `https://utility.arcgis.com/usrsvcs/servers/fef56b39300841aaaf35ead6244b8bf7/rest/services/LandsatC2L2/ImageServer`;
+export const LANDSAT_LEVEL_2_SERVICE_URL_DEV = `https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer`;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
