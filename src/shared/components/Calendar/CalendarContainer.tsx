@@ -43,6 +43,8 @@ const CalendarContainer = () => {
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
+    const acquisitionDateRange = queryParams?.acquisitionDateRange;
+
     const cloudCoverThreshold = useSelector(selectCloudCover);
 
     const acquisitionYear = useAcquisitionYear();
@@ -135,8 +137,9 @@ const CalendarContainer = () => {
             </div>
 
             <Calendar
-                year={acquisitionYear}
+                // year={acquisitionYear}
                 // selectedAcquisitionDate={acquisitionDate}
+                dateRange={acquisitionDateRange}
                 selectedAcquisitionDate={selectedAcquisitionDate}
                 availableScenes={formattedScenes}
                 onSelect={(formattedAcquisitionDate) => {

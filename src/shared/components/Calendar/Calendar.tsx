@@ -1,9 +1,13 @@
 import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
 import { MonthData, isLeapYear } from './helpers';
-import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
+import {
+    getFormatedDateString,
+    getYearFromFormattedDateString,
+} from '@shared/utils/date-time/formatDateString';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { DateRange } from '@typing/shared';
 
 /**
  * Formatted data of Imagery Scene
@@ -33,9 +37,9 @@ export type FormattedImageryScene = {
 
 type CalendarProps = {
     /**
-     * the selected year of the calendar app
+     * date range that will be used to populate the calendar
      */
-    year: number;
+    dateRange: DateRange;
     /**
      * Selected imagery acquisition date as a string in format of (YYYY-MM-DD)
      * @example `2023-05-03`
@@ -54,7 +58,11 @@ type CalendarProps = {
     onSelect: (formattedAcquisitionDate?: string) => void;
 };
 
-type MonthGridProps = CalendarProps & {
+type MonthGridProps = Omit<CalendarProps, 'dateRange'> & {
+    /**
+     * the year
+     */
+    year: number;
     /**
      * month number from 1 to 12
      */
@@ -202,33 +210,47 @@ const MonthGrid: FC<MonthGridProps> = ({
  * @returns
  */
 const Calendar: FC<CalendarProps> = ({
-    year,
+    dateRange,
     selectedAcquisitionDate,
     availableScenes,
     onSelect,
 }: CalendarProps) => {
-    return (
-        <div className="flex">
-            {MonthData.map((d, index) => {
-                // adjust number of days in February if it is a leap year
-                const days =
-                    d.label === 'February' && isLeapYear(year) ? 29 : d.days;
+    const { startDate, endDate } = dateRange;
 
-                return (
-                    <MonthGrid
-                        year={year}
-                        month={index + 1}
-                        key={d.label}
-                        abbrLabel={d.abbrLabel}
-                        days={days}
-                        selectedAcquisitionDate={selectedAcquisitionDate}
-                        availableScenes={availableScenes}
-                        onSelect={onSelect}
-                    />
-                );
-            })}
-        </div>
-    );
+    const startYear = getYearFromFormattedDateString(startDate);
+
+    const endYear = getYearFromFormattedDateString(endDate);
+
+    // Start date and End date fall into the same year,
+    // just render the normal calendar start from Jan thru Dec for the year in the input date range
+    if (startYear === endYear) {
+        const year = startYear;
+
+        return (
+            <div className="flex">
+                {MonthData.map((d, index) => {
+                    // adjust number of days in February if it is a leap year
+                    const days =
+                        d.label === 'February' && isLeapYear(year)
+                            ? 29
+                            : d.days;
+
+                    return (
+                        <MonthGrid
+                            year={year}
+                            month={index + 1}
+                            key={d.label}
+                            abbrLabel={d.abbrLabel}
+                            days={days}
+                            selectedAcquisitionDate={selectedAcquisitionDate}
+                            availableScenes={availableScenes}
+                            onSelect={onSelect}
+                        />
+                    );
+                })}
+            </div>
+        );
+    }
 };
 
 export default Calendar;

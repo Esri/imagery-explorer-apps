@@ -4,11 +4,14 @@ import { cleanup, fireEvent, render } from '@testing-library/react';
 import Calendar from './Calendar';
 
 describe('test Calendar component', () => {
-    it('should render all month/days in selected year', () => {
+    it('should include Feb 29 when it is a leap year', () => {
         const { getByTestId } = render(
             <Calendar
-                year={2020}
-                selectedAcquisitionDate="2020-07-13"
+                dateRange={{
+                    startDate: '2024-01-01',
+                    endDate: '2024-12-31',
+                }}
+                selectedAcquisitionDate="2024-01-13"
                 availableScenes={[]}
                 onSelect={(val) => {
                     console.log(val);
@@ -17,6 +20,6 @@ describe('test Calendar component', () => {
         );
 
         // should handle leap year
-        expect(getByTestId(/2020-02-29/i)).toBeTruthy();
+        expect(getByTestId(/2024-02-29/i)).toBeTruthy();
     });
 });
