@@ -54,7 +54,13 @@ export const identify = async ({
         returnGeometry: 'false',
         returnCatalogItems: 'true',
         geometryType: 'esriGeometryPoint',
-        geometry: JSON.stringify(point),
+        geometry: JSON.stringify({
+            spatialReference: {
+                wkid: 4326,
+            },
+            x: point.longitude,
+            y: point.latitude,
+        }),
         mosaicRule: JSON.stringify(mosaicRule),
     });
 
