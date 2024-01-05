@@ -240,7 +240,7 @@ const Calendar: FC<CalendarProps> = ({
                 <MonthGrid
                     year={year}
                     month={index + 1}
-                    key={d.label}
+                    key={`${year}-${month}`}
                     abbrLabel={getMonthAbbrName(month)}
                     days={getNumberOfDays(year, month)}
                     selectedAcquisitionDate={selectedAcquisitionDate}

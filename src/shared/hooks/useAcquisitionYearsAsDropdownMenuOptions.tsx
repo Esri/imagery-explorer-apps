@@ -19,16 +19,22 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
             return [];
         }
 
-        return years
-            .map((year) => {
-                const value = year.toString();
+        const options: DropdownData[] = years.map((year) => {
+            const value = year.toString();
 
-                return {
-                    value,
-                    selected: year === acquisitionYear,
-                };
-            })
-            .reverse();
+            return {
+                value,
+                selected: year === acquisitionYear,
+            };
+        });
+
+        options.push({
+            value: '',
+            label: 'Past 12 Month'.toUpperCase(),
+            selected: acquisitionYear === null,
+        });
+
+        return options.reverse();
     }, [years, acquisitionYear]);
 
     return options;

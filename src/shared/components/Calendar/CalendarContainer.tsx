@@ -30,7 +30,10 @@ import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
-import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
+import {
+    getDateRangeForPast12Month,
+    getDateRangeForYear,
+} from '@shared/utils/date-time/getTimeRange';
 import { useAcquisitionYear } from './useAcquisitionYear';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
@@ -102,18 +105,23 @@ const CalendarContainer = () => {
 
             <div className="flex mb-2 items-center justify-between">
                 <div className="flex items-center flex-grow">
-                    <Dropdown
-                        data={yearOptions}
-                        onChange={(year) => {
-                            // setAcquisitionYear(+year);
-                            // dispatch(acquisitionYearChanged(+year));
-                            dispatch(
-                                updateAcquisitionDateRange(
-                                    getDateRangeForYear(+year)
-                                )
-                            );
-                        }}
-                    />
+                    <div className="relative w-[124px]">
+                        <Dropdown
+                            data={yearOptions}
+                            onChange={(year) => {
+                                // setAcquisitionYear(+year);
+                                // dispatch(acquisitionYearChanged(+year));
+
+                                const updatedDateRange = year
+                                    ? getDateRangeForYear(+year)
+                                    : getDateRangeForPast12Month();
+
+                                dispatch(
+                                    updateAcquisitionDateRange(updatedDateRange)
+                                );
+                            }}
+                        />
+                    </div>
 
                     <AcquisitionDateLabel
                         acquisitionDate={acquisitionDate}
