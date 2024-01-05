@@ -19,7 +19,10 @@ import {
     ChangeCompareToolState,
     initialChangeCompareToolState,
 } from '@shared/store/ChangeCompareTool/reducer';
-import { getDateRangeForYear } from '../date-time/getTimeRange';
+import {
+    getDateRangeForPast12Month,
+    getDateRangeForYear,
+} from '../date-time/getTimeRange';
 import { getYearFromFormattedDateString } from '../date-time/formatDateString';
 
 export const decodeMapCenter = (value: string) => {
@@ -73,7 +76,7 @@ export const decodeQueryParams4ImageryScene = (
         uniqueId: null,
         acquisitionDateRange: acquisitionDate
             ? getDateRangeForYear(acquisitionYear)
-            : null,
+            : getDateRangeForPast12Month(),
     };
 };
 

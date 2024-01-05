@@ -5,7 +5,10 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
-import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
+import {
+    getDateRangeForPast12Month,
+    getDateRangeForYear,
+} from '@shared/utils/date-time/getTimeRange';
 import { DateRange } from '@typing/shared';
 
 /**
@@ -156,7 +159,7 @@ export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     rasterFunctionName: '',
     objectIdOfSelectedScene: null,
     uniqueId: null,
-    acquisitionDateRange: getDateRangeForYear(2023),
+    acquisitionDateRange: getDateRangeForPast12Month(),
 };
 
 export const initialImagerySceneState: ImageryScenesState = {
