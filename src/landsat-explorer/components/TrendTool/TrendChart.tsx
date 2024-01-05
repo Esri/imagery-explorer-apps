@@ -23,7 +23,7 @@ import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
 // import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
 import { TrendToolOption } from '@shared/store/TrendTool/reducer';
 import { calcTrendLine } from './helpers';
-import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
+import { getMonthAbbreviation } from '@shared/utils/date-time/monthHelpers';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 type Props = {

@@ -15,7 +15,7 @@ module.exports = {
     // moduleFileExtensions: ['js', 'json', 'jsx'],
   
     // // The test environment that will be used for testing
-    // testEnvironment: 'jsdom',
+    testEnvironment: 'jsdom',
   
     // // The glob patterns Jest uses to detect test files
     // testMatch: ['**/__tests__/**/*.js?(x)', '**/?(*.)+(spec|test).js?(x)'],
