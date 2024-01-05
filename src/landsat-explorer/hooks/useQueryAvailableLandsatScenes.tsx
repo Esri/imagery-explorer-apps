@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
-import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+// import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
 /**
  * This custom hook queries the landsat service and find landsat scenes
@@ -16,7 +17,11 @@ import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 export const useQueryAvailableLandsatScenes = (): void => {
     const dispatch = useDispatch();
 
-    const acquisitionYear = useSelector(selectAcquisitionYear);
+    // const acquisitionYear = useSelector(selectAcquisitionYear);
+
+    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+
+    const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
@@ -28,7 +33,7 @@ export const useQueryAvailableLandsatScenes = (): void => {
     const center = useSelector(selectMapCenter);
 
     useEffect(() => {
-        if (!center || !acquisitionYear) {
+        if (!center || !acquisitionDateRange) {
             return;
         }
 
@@ -36,8 +41,13 @@ export const useQueryAvailableLandsatScenes = (): void => {
             return;
         }
 
-        dispatch(queryAvailableScenes(acquisitionYear));
-    }, [center, acquisitionYear, isAnimationPlaying, missionsToBeExcluded]);
+        dispatch(queryAvailableScenes(acquisitionDateRange));
+    }, [
+        center,
+        acquisitionDateRange,
+        isAnimationPlaying,
+        missionsToBeExcluded,
+    ]);
 
     return null;
 };

@@ -177,11 +177,15 @@ describe('thunks of ImageryScene slice of Redux Store', () => {
             });
         });
 
-        test('new item should only inheirt acquisition year if shouldOnlyInheirtAcquisitionYear param is true', () => {
+        test('new item should only inheirt acquisition date range if shouldOnlyInheirtAcquisitionYear param is true', () => {
             const queryParams2Inheirt: QueryParams4ImageryScene = {
                 ...queryParams4MainScene,
                 rasterFunctionName: 'geology',
                 acquisitionDate: '1998-12-30',
+                acquisitionDateRange: {
+                    startDate: '1998-01-01',
+                    endDate: '1998-12-31',
+                },
             };
 
             const idOfNewItem = 'new item';
@@ -197,7 +201,6 @@ describe('thunks of ImageryScene slice of Redux Store', () => {
             ).toMatchObject({
                 ...queryParams2Inheirt,
                 acquisitionDate: '',
-                inheritedAcquisitionYear: 1998,
                 uniqueId: idOfNewItem,
             });
         });

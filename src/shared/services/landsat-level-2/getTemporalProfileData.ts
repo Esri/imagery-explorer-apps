@@ -4,6 +4,7 @@ import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import { getSamples, LandsatSampleData } from './getSamples';
 import { checkClearFlagInQABand } from './helpers';
+import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
 
 type GetProfileDataOptions = {
     queryLocation: Point;
@@ -90,7 +91,7 @@ export const getDataForTrendTool = async ({
         // query Landsat scenes based on input location and acquisition year to show "month-to-month" trend
         landsatScenes = await getLandsatScenes({
             mapPoint: [x, y],
-            acquisitionYear,
+            acquisitionDateRange: getDateRangeForYear(acquisitionYear),
             abortController,
             missionsToBeExcluded,
         });

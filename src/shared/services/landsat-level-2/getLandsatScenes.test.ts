@@ -1,3 +1,4 @@
+import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
 import { getLandsatScenes } from './getLandsatScenes';
 
 const mockedData = {
@@ -42,7 +43,7 @@ describe('test getLandsatScenes', () => {
         });
 
         const response = await getLandsatScenes({
-            acquisitionYear: 2022,
+            acquisitionDateRange: getDateRangeForYear(2022),
             // cloudCover: 0.1,
             mapPoint: [-105, 40],
             abortController: new AbortController(),

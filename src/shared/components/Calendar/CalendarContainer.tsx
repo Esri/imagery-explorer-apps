@@ -7,20 +7,21 @@ import { Dropdown } from '@shared/components/Dropdown';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 import { useDispatch } from 'react-redux';
 import {
-    selectAcquisitionYear,
+    // selectAcquisitionYear,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
+    updateAcquisitionDateRange,
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import {
-    acquisitionYearChanged,
+    // acquisitionYearChanged,
     cloudCoverChanged,
 } from '@shared/store/ImageryScene/reducer';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
@@ -29,7 +30,9 @@ import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
-import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
+import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
+import { useAcquisitionYear } from './useAcquisitionYear';
+// import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -42,7 +45,7 @@ const CalendarContainer = () => {
 
     const cloudCoverThreshold = useSelector(selectCloudCover);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear);
+    const acquisitionYear = useAcquisitionYear();
 
     /**
      * This custom hook gets invoked whenever the available scenes and acquisition date changes,
@@ -79,11 +82,11 @@ const CalendarContainer = () => {
      */
     const shouldBeDisabled = useShouldDisableCalendar();
 
-    /**
-     * This custom hook is triggered whenever the user-selected acquisition date changes.
-     * It updates the user-selected year based on the year from the selected acquisition date.
-     */
-    useUpdateAcquisitionYear();
+    // /**
+    //  * This custom hook is triggered whenever the user-selected acquisition date changes.
+    //  * It updates the user-selected year based on the year from the selected acquisition date.
+    //  */
+    // useUpdateAcquisitionYear();
 
     return (
         <div
@@ -101,7 +104,12 @@ const CalendarContainer = () => {
                         data={yearOptions}
                         onChange={(year) => {
                             // setAcquisitionYear(+year);
-                            dispatch(acquisitionYearChanged(+year));
+                            // dispatch(acquisitionYearChanged(+year));
+                            dispatch(
+                                updateAcquisitionDateRange(
+                                    getDateRangeForYear(+year)
+                                )
+                            );
                         }}
                     />
 

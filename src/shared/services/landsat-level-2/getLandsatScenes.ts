@@ -5,16 +5,29 @@ import { IExtent, IFeature } from '@esri/arcgis-rest-feature-service';
 import { parseLandsatInfo } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 import { LandsatScene } from '@typing/imagery-service';
+import { DateRange } from '@typing/shared';
 
 type GetLandsatScenesParams = {
     /**
      * longitude and latitude (e.g. [-105, 40])
      */
     mapPoint: number[];
+    // /**
+    //  * acquisition year
+    //  */
+    // acquisitionYear?: number;
     /**
-     * acquisition year
+     * acquisition date range.
+     *
+     * @example
+     * ```
+     * {
+     *   startDate: '2023-01-01',
+     *   endDate: '2023-12-31'
+     * }
+     * ```
      */
-    acquisitionYear?: number;
+    acquisitionDateRange?: DateRange;
     /**
      * acquisition month
      */
@@ -22,7 +35,7 @@ type GetLandsatScenesParams = {
     /**
      * acquisition date in formate of `YYYY-MM-DD` (e.g. `2023-05-26`)
      */
-    formattedAcquisitionDate?: string;
+    acquisitionDate?: string;
     /**
      * array of landsat missions to be excluded from the query
      */
@@ -136,9 +149,10 @@ export const getFormattedLandsatScenes = (
  */
 export const getLandsatScenes = async ({
     mapPoint,
-    acquisitionYear,
+    // acquisitionYear,
+    acquisitionDateRange,
     acquisitionMonth,
-    formattedAcquisitionDate,
+    acquisitionDate,
     missionsToBeExcluded,
     abortController,
 }: GetLandsatScenesParams): Promise<LandsatScene[]> => {
@@ -150,13 +164,15 @@ export const getLandsatScenes = async ({
 
     const whereClauses = [`(${CATEGORY} = 1)`];
 
-    if (acquisitionYear || formattedAcquisitionDate) {
+    if (acquisitionDateRange) {
+        whereClauses.push(
+            `(${ACQUISITION_DATE} BETWEEN timestamp '${acquisitionDateRange.startDate} 00:00:00' AND timestamp '${acquisitionDateRange.endDate} 23:59:59')`
+        );
+    } else if (acquisitionDate) {
         // if acquisitionDate is provided, only query scenes that are acquired on this date,
         // otherwise, query scenes that were acquired within the acquisitionYear year
         whereClauses.push(
-            formattedAcquisitionDate
-                ? `(${ACQUISITION_DATE} BETWEEN timestamp '${formattedAcquisitionDate} 00:00:00' AND timestamp '${formattedAcquisitionDate} 23:59:59')`
-                : `(${ACQUISITION_DATE} BETWEEN timestamp '${acquisitionYear}-01-01 00:00:00' AND timestamp '${acquisitionYear}-12-31 23:59:59')`
+            `(${ACQUISITION_DATE} BETWEEN timestamp '${acquisitionDate} 00:00:00' AND timestamp '${acquisitionDate} 23:59:59')`
         );
     }
 

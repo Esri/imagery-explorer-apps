@@ -27,3 +27,25 @@ export type InterestingPlaceData = {
      */
     description?: string;
 };
+
+/**
+ * Date range object
+ *
+ * @example
+ * ```
+ * {
+ *   startDate: '2024-01-01',
+ *   endDate: '2024-12-31'
+ * }
+ * ```
+ */
+export type DateRange = {
+    /**
+     * start date in format of `YYYY-MM-DD`.
+     */
+    startDate: string;
+    /**
+     * end date in format of `YYYY-MM-DD`.
+     */
+    endDate: string;
+};
