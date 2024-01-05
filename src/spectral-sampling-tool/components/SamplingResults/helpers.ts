@@ -23,7 +23,17 @@ const getCsvString4LandsatSamplingResults = async (
     const rows: string[][] = [];
 
     for (const d of data) {
-        const { bandValues, location, objectIdOfSelectedScene } = d;
+        const { bandValues, location, objectIdOfSelectedScene } = d || {};
+
+        // skip if location or object id id not found
+        if (!location || !objectIdOfSelectedScene) {
+            continue;
+        }
+
+        // skip if bandValues contain bad pixel values
+        if (bandValues.filter((d) => d === null).length !== 0) {
+            continue;
+        }
 
         const landsatScene = await getLandsatSceneByObjectId(
             objectIdOfSelectedScene
