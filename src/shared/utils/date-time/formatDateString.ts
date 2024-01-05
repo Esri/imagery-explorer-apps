@@ -14,7 +14,7 @@ import { addLeadingZero } from '../snippets/addLeadingZero';
  * Get Unix timestamp from the formatted date string.
  *
  * @param {string} formattedDate - A string in the format of `yyyy-MM-dd`.
- * @returns {number} - A Unix timestamp representing the date from the input string in UTC time zone.
+ * @returns {number} A Unix timestamp representing the date from the input string in UTC time zone.
  */
 export const formattedDateString2Unixtimestamp = (
     formattedDate: string

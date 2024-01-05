@@ -108,6 +108,7 @@
     "@vannizhang/react-d3-charts": "^1.0.22",
     "classnames": "^2.2.6",
     "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
     "helper-toolkit-ts": "^1.2.1",
     "jszip": "^3.10.1",
     "nanoid": "^4.0.2",
