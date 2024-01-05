@@ -11,7 +11,7 @@ import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScen
 
 /**
  * This custom hook queries the landsat service and find landsat scenes
- * that were acquired within the selected year and intersect with the center of the map screen
+ * that were acquired within the selected date range and intersect with the center of the map screen
  * @returns
  */
 export const useQueryAvailableLandsatScenes = (): void => {

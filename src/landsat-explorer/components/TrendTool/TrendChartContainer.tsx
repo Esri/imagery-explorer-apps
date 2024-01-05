@@ -69,7 +69,8 @@ export const TrendChartContainer = () => {
 
                     dispatch(
                         updateAcquisitionDate(
-                            clickedDataItem.formattedAcquisitionDate
+                            clickedDataItem.formattedAcquisitionDate,
+                            true
                         )
                     );
                 });
