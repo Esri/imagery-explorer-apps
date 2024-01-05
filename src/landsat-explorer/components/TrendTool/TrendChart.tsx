@@ -12,7 +12,6 @@ import { DATE_FORMAT } from '@shared/constants/UI';
 import { TemporalProfileData } from '@typing/imagery-service';
 import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
-import { format } from 'date-fns';
 import {
     LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
@@ -24,7 +23,8 @@ import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
 // import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
 import { TrendToolOption } from '@shared/store/TrendTool/reducer';
 import { calcTrendLine } from './helpers';
-import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
+import { getMonthAbbreviation } from '@shared/utils/date-time/monthHelpers';
+import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 type Props = {
     /**
@@ -95,9 +95,10 @@ export const convertLandsatTemporalProfileData2ChartData = (
         // y should not go beyond y max
         y = Math.min(y, yMax);
 
-        const tooltip = `${format(acquisitionDate, 'LLL yyyy')}: ${y.toFixed(
-            2
-        )}`;
+        const tooltip = `${formatInUTCTimeZone(
+            acquisitionDate,
+            'LLL yyyy'
+        )}: ${y.toFixed(2)}`;
 
         return {
             x: month2month ? d.acquisitionMonth : d.acquisitionDate,
@@ -225,7 +226,7 @@ export const TemporalProfileChart: FC<Props> = ({
                           x: getMonthFromFormattedDateString(
                               selectedAcquisitionDate
                           ),
-                          tooltip: `Selected Image: <br />${format(
+                          tooltip: `Selected Image: <br />${formatInUTCTimeZone(
                               timestampOfAcquisitionDate,
                               DATE_FORMAT
                           )}`,
@@ -237,7 +238,7 @@ export const TemporalProfileChart: FC<Props> = ({
         return [
             {
                 x: timestampOfAcquisitionDate,
-                tooltip: `Selected Image: <br />${format(
+                tooltip: `Selected Image: <br />${formatInUTCTimeZone(
                     timestampOfAcquisitionDate,
                     DATE_FORMAT
                 )}`,
@@ -299,7 +300,7 @@ export const TemporalProfileChart: FC<Props> = ({
                         }
 
                         if (trendToolOption === 'year-to-year') {
-                            return format(val, 'yyyy');
+                            return formatInUTCTimeZone(val, 'yyyy');
                         }
 
                         return getMonthAbbreviation(val).slice(0, 1);

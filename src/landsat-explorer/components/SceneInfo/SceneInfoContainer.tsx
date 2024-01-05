@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { format } from 'date-fns';
 import {
     SceneInfoTable,
     SceneInfoTableData,
@@ -8,6 +7,7 @@ import { useDataFromSelectedLandsatScene } from './useDataFromSelectedLandsatSce
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
+import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 export const SceneInfoContainer = () => {
     const mode = useSelector(selectAppMode);
@@ -68,7 +68,7 @@ export const SceneInfoContainer = () => {
             // },
             {
                 name: 'Acquired',
-                value: format(acquisitionDate, DATE_FORMAT),
+                value: formatInUTCTimeZone(acquisitionDate, DATE_FORMAT),
             },
             {
                 name: 'Sun Elevation',

@@ -19,6 +19,11 @@ import {
     ChangeCompareToolState,
     initialChangeCompareToolState,
 } from '@shared/store/ChangeCompareTool/reducer';
+import {
+    getDateRangeForPast12Month,
+    getDateRangeForYear,
+} from '../date-time/getTimeRange';
+import { getYearFromFormattedDateString } from '../date-time/formatDateString';
 
 export const decodeMapCenter = (value: string) => {
     if (!value) {
@@ -61,12 +66,17 @@ export const decodeQueryParams4ImageryScene = (
 
     const [acquisitionDate, rasterFunctionName, objectId] = val.split('|');
 
+    const acquisitionYear = getYearFromFormattedDateString(acquisitionDate);
+
     return {
         acquisitionDate,
         rasterFunctionName,
         objectIdOfSelectedScene: objectId ? +objectId : null,
         // cloudCover: 0.5,
         uniqueId: null,
+        acquisitionDateRange: acquisitionDate
+            ? getDateRangeForYear(acquisitionYear)
+            : getDateRangeForPast12Month(),
     };
 };
 

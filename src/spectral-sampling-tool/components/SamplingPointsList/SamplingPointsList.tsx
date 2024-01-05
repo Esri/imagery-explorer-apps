@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import { FormattedSpectralSamplingData } from './useFormattedSpectralSamplingData';
 import classNames from 'classnames';
-import { format } from 'date-fns';
-import { DATE_FORMAT } from '@shared/constants/UI';
-import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
+import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 type Props = {
     data: FormattedSpectralSamplingData[];
@@ -57,10 +55,8 @@ export const SamplingPointsList: FC<Props> = ({
             );
         }
 
-        const formattedAcquisitionDate = format(
-            formattedDateString2Unixtimestamp(acquisitionDate),
-            DATE_FORMAT
-        );
+        const formattedAcquisitionDate =
+            formatFormattedDateStrInUTCTimeZone(acquisitionDate);
 
         return (
             <div>

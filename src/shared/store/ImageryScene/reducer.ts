@@ -5,6 +5,11 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
+import {
+    getDateRangeForPast12Month,
+    getDateRangeForYear,
+} from '@shared/utils/date-time/getTimeRange';
+import { DateRange } from '@typing/shared';
 
 /**
  * modes that the user can use to explore the imagery layer/scene
@@ -31,10 +36,6 @@ export type QueryParams4ImageryScene = {
      * This acquisition date will be used to select a Imagery Scene from `availableScenes` array.
      */
     acquisitionDate?: string;
-    // /**
-    //  * use selected cloud coverage threshold ranges from 0 to 1
-    //  */
-    // cloudCover?: number;
     /**
      * name of raster function that will be used to render the Imagery scene
      */
@@ -51,14 +52,18 @@ export type QueryParams4ImageryScene = {
      * unique id of the query params that is associated with this Imagery Scene
      */
     uniqueId?: string;
+    // /**
+    //  * This property represents the acquisition year inherited from the previously selected item in the listOfQueryParams.
+    //  *
+    //  * Normally, the current year is used as the default acquisition year for new query parameters.
+    //  * However, to enhance the user experience in animation mode, we retain the acquisition year from the previous frame.
+    //  * This ensures a seamless workflow, allowing users to seamlessly continue their work on the same year as the prior animation frame.
+    //  */
+    // inheritedAcquisitionYear?: number;
     /**
-     * This property represents the acquisition year inherited from the previously selected item in the listOfQueryParams.
-     *
-     * Normally, the current year is used as the default acquisition year for new query parameters.
-     * However, to enhance the user experience in animation mode, we retain the acquisition year from the previous frame.
-     * This ensures a seamless workflow, allowing users to seamlessly continue their work on the same year as the prior animation frame.
+     * User selected acquisition date range that will be used to query available imagery scenes.
      */
-    inheritedAcquisitionYear?: number;
+    acquisitionDateRange: DateRange;
 };
 
 export type ImageryScene = {
@@ -143,10 +148,10 @@ export type ImageryScenesState = {
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
     cloudCover: number;
-    /**
-     * user selected acquisiton year that will be used to find list of available imagery scenes
-     */
-    acquisitionYear: number;
+    // /**
+    //  * user selected acquisiton year that will be used to find list of available imagery scenes
+    //  */
+    // acquisitionYear: number;
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -154,6 +159,7 @@ export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     rasterFunctionName: '',
     objectIdOfSelectedScene: null,
     uniqueId: null,
+    acquisitionDateRange: getDateRangeForPast12Month(),
 };
 
 export const initialImagerySceneState: ImageryScenesState = {
@@ -176,7 +182,7 @@ export const initialImagerySceneState: ImageryScenesState = {
         objectIds: [],
     },
     cloudCover: 0.5,
-    acquisitionYear: getCurrentYear(),
+    // acquisitionYear: getCurrentYear(),
 };
 
 const slice = createSlice({
@@ -251,9 +257,9 @@ const slice = createSlice({
         cloudCoverChanged: (state, action: PayloadAction<number>) => {
             state.cloudCover = action.payload;
         },
-        acquisitionYearChanged: (state, action: PayloadAction<number>) => {
-            state.acquisitionYear = action.payload;
-        },
+        // acquisitionYearChanged: (state, action: PayloadAction<number>) => {
+        //     state.acquisitionYear = action.payload;
+        // },
         activeAnalysisToolChanged: (
             state,
             action: PayloadAction<AnalysisTool>
@@ -299,7 +305,7 @@ export const {
     cloudCoverChanged,
     activeAnalysisToolChanged,
     availableImageryScenesUpdated,
-    acquisitionYearChanged,
+    // acquisitionYearChanged,
 } = slice.actions;
 
 export default reducer;

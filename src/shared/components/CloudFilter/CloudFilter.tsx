@@ -34,11 +34,11 @@ const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
 
     return (
         <div className="text-xs flex items-center">
-            <span className="uppercase text-custom-light-blue-50 mr-1">
+            <span className="uppercase text-custom-light-blue-50 mr-[1px]">
                 Cloud
             </span>
 
-            <div className="w-[31px] text-right">
+            <div className="w-[30px] text-right">
                 <span>{getFormattedCouldCoverageInPercent()}</span>
             </div>
         </div>
@@ -87,7 +87,7 @@ export const CloudFilter: FC<Props> = ({
         >
             <TitleText cloudCoverage={cloudCoverage} />
 
-            <div className="flex items-center ml-3">
+            <div className="flex items-center ml-2">
                 {/* use offline icon to indicate low cloud tolerance */}
                 <calcite-icon
                     scale="s"
@@ -100,7 +100,7 @@ export const CloudFilter: FC<Props> = ({
 
                 <div
                     // id="cloud-filter-container"
-                    className="w-16 h-4 mx-3"
+                    className="w-12 h-4 mx-3"
                 >
                     <Slider
                         steps={[

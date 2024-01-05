@@ -1,6 +1,4 @@
-import { DATE_FORMAT } from '@shared/constants/UI';
-import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
-import { format } from 'date-fns';
+import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import React, { FC, useMemo } from 'react';
 
 type Props = {
@@ -24,9 +22,8 @@ export const AcquisitionDateLabel: FC<Props> = ({
             return '';
         }
 
-        const timestamp = formattedDateString2Unixtimestamp(acquisitionDate);
-
-        return format(timestamp, DATE_FORMAT);
+        // return format(timestamp, DATE_FORMAT);
+        return formatFormattedDateStrInUTCTimeZone(acquisitionDate);
     }, [acquisitionDate]);
 
     if (!acquisitionDate) {

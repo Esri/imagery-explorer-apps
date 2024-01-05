@@ -1,9 +1,18 @@
 import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
-import { MonthData, isLeapYear } from './helpers';
-import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
-import { format } from 'date-fns';
+import {
+    MonthData,
+    getMonthAbbrName,
+    getNumberOfDays,
+} from '@shared/utils/date-time/monthHelpers';
+import {
+    getFormatedDateString,
+    getMonthFromFormattedDateString,
+    getYearFromFormattedDateString,
+} from '@shared/utils/date-time/formatDateString';
 import { DATE_FORMAT } from '@shared/constants/UI';
+import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { DateRange } from '@typing/shared';
 
 /**
  * Formatted data of Imagery Scene
@@ -33,9 +42,9 @@ export type FormattedImageryScene = {
 
 type CalendarProps = {
     /**
-     * the selected year of the calendar app
+     * date range that will be used to populate the calendar
      */
-    year: number;
+    dateRange: DateRange;
     /**
      * Selected imagery acquisition date as a string in format of (YYYY-MM-DD)
      * @example `2023-05-03`
@@ -54,7 +63,11 @@ type CalendarProps = {
     onSelect: (formattedAcquisitionDate?: string) => void;
 };
 
-type MonthGridProps = CalendarProps & {
+type MonthGridProps = Omit<CalendarProps, 'dateRange'> & {
+    /**
+     * the year
+     */
+    year: number;
     /**
      * month number from 1 to 12
      */
@@ -171,9 +184,8 @@ const MonthGrid: FC<MonthGridProps> = ({
                             <span>{dataOfImageryScene.satellite}</span>
                             <br />
                             <span>
-                                {format(
-                                    dataOfImageryScene.acquisitionDate,
-                                    DATE_FORMAT
+                                {formatInUTCTimeZone(
+                                    dataOfImageryScene.acquisitionDate
                                 )}
                             </span>
                             <br />
@@ -203,33 +215,76 @@ const MonthGrid: FC<MonthGridProps> = ({
  * @returns
  */
 const Calendar: FC<CalendarProps> = ({
-    year,
+    dateRange,
     selectedAcquisitionDate,
     availableScenes,
     onSelect,
 }: CalendarProps) => {
-    return (
-        <div className="flex">
-            {MonthData.map((d, index) => {
-                // adjust number of days in February if it is a leap year
-                const days =
-                    d.label === 'February' && isLeapYear(year) ? 29 : d.days;
+    const { startDate, endDate } = dateRange;
 
-                return (
-                    <MonthGrid
-                        year={year}
-                        month={index + 1}
-                        key={d.label}
-                        abbrLabel={d.abbrLabel}
-                        days={days}
-                        selectedAcquisitionDate={selectedAcquisitionDate}
-                        availableScenes={availableScenes}
-                        onSelect={onSelect}
-                    />
-                );
-            })}
-        </div>
-    );
+    const startYear = getYearFromFormattedDateString(startDate);
+
+    const endYear = getYearFromFormattedDateString(endDate);
+
+    let monthGrids: React.ReactNode[] = [];
+
+    // Start date and End date fall into the same year,
+    // just render the normal calendar start from Jan thru Dec for the year in the input date range
+    if (startYear === endYear) {
+        const year = startYear;
+
+        monthGrids = MonthData.map((d, index) => {
+            const month = index + 1;
+
+            return (
+                <MonthGrid
+                    year={year}
+                    month={index + 1}
+                    key={`${year}-${month}`}
+                    abbrLabel={getMonthAbbrName(month)}
+                    days={getNumberOfDays(year, month)}
+                    selectedAcquisitionDate={selectedAcquisitionDate}
+                    availableScenes={availableScenes}
+                    onSelect={onSelect}
+                />
+            );
+        });
+    } else {
+        const monthOfStartDate = getMonthFromFormattedDateString(startDate);
+        const monthOfEndDate = getMonthFromFormattedDateString(endDate);
+
+        for (let month = monthOfStartDate; month <= 12; month++) {
+            monthGrids.push(
+                <MonthGrid
+                    key={`${startYear}-${month}`}
+                    year={startYear}
+                    month={month}
+                    abbrLabel={getMonthAbbrName(month)}
+                    days={getNumberOfDays(startYear, month)}
+                    selectedAcquisitionDate={selectedAcquisitionDate}
+                    availableScenes={availableScenes}
+                    onSelect={onSelect}
+                />
+            );
+        }
+
+        for (let month = 1; month <= monthOfEndDate; month++) {
+            monthGrids.push(
+                <MonthGrid
+                    key={`${endYear}-${month}`}
+                    year={endYear}
+                    month={month}
+                    abbrLabel={getMonthAbbrName(month)}
+                    days={getNumberOfDays(endYear, month)}
+                    selectedAcquisitionDate={selectedAcquisitionDate}
+                    availableScenes={availableScenes}
+                    onSelect={onSelect}
+                />
+            );
+        }
+    }
+
+    return <div className="flex">{monthGrids}</div>;
 };
 
 export default Calendar;

@@ -22,6 +22,8 @@ import {
 } from './selectors';
 // import { nanoid } from 'nanoid';
 import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
+import { DateRange } from '@typing/shared';
+import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
 
 /**
  * update query params that will be used to find the Imagery Scene in the selected mode
@@ -111,8 +113,58 @@ export const updateObjectIdOfSelectedScene =
         }
     };
 
+/**
+ * Updates the user-selected acquisition date for an imagery scene. If `shouldSyncAcquisitionDateRange` is set to true,
+ * the `acquisitionDateRange` will also be updated, using the date range for the year of the user-selected acquisition date.
+ *
+ * We need to synchronize the `acquisitionDateRange` with the year from `acquisitionDate` when it needs to
+ * triggers custom hooks like `useQueryAvailableLandsatScenes` that query imagery scenes acquired within the new date range.
+ * This ensures that the imagery scene acquired on the new acquisition date can be selected and displayed when the user picks
+ * a new acquisition date from components outside of the main Calendar component, such as the Trend Chart.
+ *
+ * Without syncing the `acquisitionDateRange`, although the new acquisition date is selected, the calendar will continue
+ * displaying imagery scenes acquired from the previously selected date range.
+ *
+ * @param acquisitionDate The new acquisition date in string format.
+ * @param shouldSyncAcquisitionDateRange If true, updates the `acquisitionDateRange` using the date range for the year of the
+ * new acquisition date.
+ * @returns void
+ */
 export const updateAcquisitionDate =
-    (acquisitionDate: string) =>
+    (acquisitionDate: string, shouldSyncAcquisitionDateRange?: boolean) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        try {
+            const queryParams = selectQueryParams4SceneInSelectedMode(
+                getState()
+            );
+
+            if (!queryParams) {
+                return;
+            }
+
+            let acquisitionDateRange = queryParams?.acquisitionDateRange;
+
+            if (shouldSyncAcquisitionDateRange) {
+                acquisitionDateRange = getDateRangeForYear(
+                    getYearFromFormattedDateString(acquisitionDate)
+                );
+            }
+
+            const updatedQueryParams: QueryParams4ImageryScene = {
+                ...queryParams,
+                acquisitionDate,
+                acquisitionDateRange,
+                // inheritedAcquisitionYear: null, // reset this value whenever user makes an update to the acquisition date
+            };
+
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+export const updateAcquisitionDateRange =
+    (acquisitionDateRange: DateRange) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
             const queryParams = selectQueryParams4SceneInSelectedMode(
@@ -125,8 +177,8 @@ export const updateAcquisitionDate =
 
             const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
-                acquisitionDate,
-                inheritedAcquisitionYear: null, // reset this value whenever user makes an update to the acquisition date
+                acquisitionDateRange,
+                // inheritedAcquisitionYear: null, // reset this value whenever user makes an update to the acquisition date
             };
 
             dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
@@ -168,13 +220,13 @@ export const addNewItemToQueryParamsList =
                       uniqueId,
                       // acquisition date should not be cloned over if user want to inherit acquisition year from previously selected secne
                       acquisitionDate: '',
-                      // use acquistion year from the previously selected scene
-                      inheritedAcquisitionYear:
-                          queryParamsToInheritDataFrom?.acquisitionDate
-                              ? getYearFromFormattedDateString(
-                                    queryParamsToInheritDataFrom.acquisitionDate
-                                )
-                              : null,
+                      //   // use acquistion year from the previously selected scene
+                      //   inheritedAcquisitionYear:
+                      //       queryParamsToInheritDataFrom?.acquisitionDate
+                      //           ? getYearFromFormattedDateString(
+                      //                 queryParamsToInheritDataFrom.acquisitionDate
+                      //             )
+                      //           : null,
                   }
                 : {
                       ...queryParamsToInheritDataFrom,

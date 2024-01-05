@@ -1,5 +1,3 @@
-import { APP_NAME } from '@shared/config';
-
 /**
  * Get current year using local date
  * @returns current year in format of `yyyy`, e.g., 2023

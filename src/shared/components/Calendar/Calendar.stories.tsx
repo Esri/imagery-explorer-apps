@@ -33,7 +33,10 @@ export const Primary: Story = {
     args: {
         // primary: true,
         // label: 'Button',
-        year: 2023,
+        dateRange: {
+            startDate: '2023-01-01',
+            endDate: '2023-12-31',
+        },
         selectedAcquisitionDate: '2023-05-03',
         // availableDates: [
         //     '2023-01-10',

@@ -1,5 +1,9 @@
 import { batch } from 'react-redux';
-import { getLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
+import {
+    getLandsatFeatureByObjectId,
+    getLandsatSceneByObjectId,
+    getLandsatScenes,
+} from '@shared/services/landsat-level-2/getLandsatScenes';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import { landsatScenesUpdated } from './reducer';
@@ -11,6 +15,7 @@ import {
     ImageryScene,
     availableImageryScenesUpdated,
 } from '../ImageryScene/reducer';
+import { DateRange } from '@typing/shared';
 
 let abortController: AbortController = null;
 /**
@@ -19,9 +24,9 @@ let abortController: AbortController = null;
  * @returns
  */
 export const queryAvailableScenes =
-    (acquisitionYear: number) =>
+    (acquisitionDateRange: DateRange) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        if (!acquisitionYear) {
+        if (!acquisitionDateRange) {
             return;
         }
 
@@ -32,7 +37,7 @@ export const queryAvailableScenes =
         abortController = new AbortController();
 
         try {
-            const { acquisitionDate } =
+            const { objectIdOfSelectedScene } =
                 selectQueryParams4SceneInSelectedMode(getState()) || {};
 
             const center = selectMapCenter(getState());
@@ -43,7 +48,7 @@ export const queryAvailableScenes =
 
             // get scenes that were acquired within the acquisition year
             const scenes = await getLandsatScenes({
-                acquisitionYear,
+                acquisitionDateRange,
                 mapPoint: center,
                 abortController,
                 missionsToBeExcluded,
@@ -53,21 +58,32 @@ export const queryAvailableScenes =
             // Why are we doing this? Selecting a different year triggers this function to query available scenes for that year.
             // However, we don't want the Landsat Scene on the map and its information to disappear before a new acquisition date is selected.
             // By adding the scene acquired on the acquisition date, we ensure that the currently selected scene will remain visible until a new acquisition date is chosen.
-            if (
-                acquisitionDate &&
-                getYearFromFormattedDateString(acquisitionDate) !==
-                    acquisitionYear
-            ) {
-                const scenesByAcquisitionDate = await getLandsatScenes({
-                    formattedAcquisitionDate: acquisitionDate,
-                    mapPoint: center,
-                    abortController,
-                    missionsToBeExcluded,
-                });
+            // if (
+            //     acquisitionDate &&
+            //     getYearFromFormattedDateString(acquisitionDate) !==
+            //         acquisitionYear
+            // ) {
+            //     const scenesByAcquisitionDate = await getLandsatScenes({
+            //         formattedAcquisitionDate: acquisitionDate,
+            //         mapPoint: center,
+            //         abortController,
+            //         missionsToBeExcluded,
+            //     });
 
-                for (const scene of scenesByAcquisitionDate) {
-                    scenes.push(scene);
-                }
+            //     for (const scene of scenesByAcquisitionDate) {
+            //         scenes.push(scene);
+            //     }
+            // }
+
+            // If there is a selected landsat scene, we need to query Landsat scene by object id.
+            // Why are we doing this? Selecting a different year triggers this function to query available scenes for that year.
+            // However, we don't want the Landsat Scene on the map and its information to disappear before a new acquisition date is selected.
+            // By adding the currently selected scene to the nw list of scenes , we ensure that the currently selected scene will remain visible until a new acquisition date is chosen.
+            if (objectIdOfSelectedScene) {
+                const selectedScene = await getLandsatSceneByObjectId(
+                    objectIdOfSelectedScene
+                );
+                scenes.push(selectedScene);
             }
 
             // sort scenes uing acquisition date in an ascending order

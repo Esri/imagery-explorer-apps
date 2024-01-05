@@ -7,20 +7,21 @@ import { Dropdown } from '@shared/components/Dropdown';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 import { useDispatch } from 'react-redux';
 import {
-    selectAcquisitionYear,
+    // selectAcquisitionYear,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
+    updateAcquisitionDateRange,
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import {
-    acquisitionYearChanged,
+    // acquisitionYearChanged,
     cloudCoverChanged,
 } from '@shared/store/ImageryScene/reducer';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
@@ -29,7 +30,12 @@ import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
-import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
+import {
+    getDateRangeForPast12Month,
+    getDateRangeForYear,
+} from '@shared/utils/date-time/getTimeRange';
+import { useAcquisitionYear } from './useAcquisitionYear';
+// import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
 const CalendarContainer = () => {
     const dispatch = useDispatch();
@@ -40,17 +46,11 @@ const CalendarContainer = () => {
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
+    const acquisitionDateRange = queryParams?.acquisitionDateRange;
+
     const cloudCoverThreshold = useSelector(selectCloudCover);
 
-    // const [acquisitionYear, setAcquisitionYear] = useState<number>();
-
-    const acquisitionYear = useSelector(selectAcquisitionYear);
-
-    // /**
-    //  * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
-    //  * changes, it will dispatch the query that finds the available landsat scenes
-    //  */
-    // useQueryAvailableLandsatScenes();
+    const acquisitionYear = useAcquisitionYear();
 
     /**
      * This custom hook gets invoked whenever the available scenes and acquisition date changes,
@@ -87,11 +87,11 @@ const CalendarContainer = () => {
      */
     const shouldBeDisabled = useShouldDisableCalendar();
 
-    /**
-     * This custom hook is triggered whenever the user-selected acquisition date changes.
-     * It updates the user-selected year based on the year from the selected acquisition date.
-     */
-    useUpdateAcquisitionYear();
+    // /**
+    //  * This custom hook is triggered whenever the user-selected acquisition date changes.
+    //  * It updates the user-selected year based on the year from the selected acquisition date.
+    //  */
+    // useUpdateAcquisitionYear();
 
     return (
         <div
@@ -105,13 +105,23 @@ const CalendarContainer = () => {
 
             <div className="flex mb-2 items-center justify-between">
                 <div className="flex items-center flex-grow">
-                    <Dropdown
-                        data={yearOptions}
-                        onChange={(year) => {
-                            // setAcquisitionYear(+year);
-                            dispatch(acquisitionYearChanged(+year));
-                        }}
-                    />
+                    <div className="relative w-[124px]">
+                        <Dropdown
+                            data={yearOptions}
+                            onChange={(year) => {
+                                // setAcquisitionYear(+year);
+                                // dispatch(acquisitionYearChanged(+year));
+
+                                const updatedDateRange = year
+                                    ? getDateRangeForYear(+year)
+                                    : getDateRangeForPast12Month();
+
+                                dispatch(
+                                    updateAcquisitionDateRange(updatedDateRange)
+                                );
+                            }}
+                        />
+                    </div>
 
                     <AcquisitionDateLabel
                         acquisitionDate={acquisitionDate}
@@ -135,8 +145,9 @@ const CalendarContainer = () => {
             </div>
 
             <Calendar
-                year={acquisitionYear}
+                // year={acquisitionYear}
                 // selectedAcquisitionDate={acquisitionDate}
+                dateRange={acquisitionDateRange || getDateRangeForPast12Month()}
                 selectedAcquisitionDate={selectedAcquisitionDate}
                 availableScenes={formattedScenes}
                 onSelect={(formattedAcquisitionDate) => {

@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import { addLeadingZero } from '../snippets/addLeadingZero';
+import { formatInUTCTimeZone } from './formatInUTCTimeZone';
 
 // /**
 //  * Get formatted date string using the input unix timestamp
@@ -10,17 +11,20 @@ import { format } from 'date-fns';
 // };
 
 /**
- * Get unix timestamp from formated times string
+ * Get Unix timestamp from the formatted date string.
  *
- * @param formattedDate string in format of `yyyy-MM-dd`
- * @returns unix timestamp
+ * @param {string} formattedDate - A string in the format of `yyyy-MM-dd`.
+ * @returns {number} A Unix timestamp representing the date from the input string in UTC time zone.
  */
 export const formattedDateString2Unixtimestamp = (
     formattedDate: string
 ): number => {
+    // Split the formatted date string into year, month, and day components
     const [YYYY, MM, DD] = formattedDate.split('-').map((d) => +d);
 
-    return new Date(YYYY, MM - 1, DD).getTime();
+    // Create a Unix timestamp in UTC time zone using the provided date components
+    // Months in JavaScript's Date object are 0-indexed, so subtract 1 from the month component (MM)
+    return Date.UTC(YYYY, MM - 1, DD);
 };
 
 /**
@@ -53,14 +57,14 @@ export const getFormatedDateString = ({
     /**
      * date as unix timestamp or Date
      */
-    date?: Date | number;
+    date?: number;
 }): string => {
     if (!date && !year && !month && day) {
         throw new Error('missing input date');
     }
 
     if (date) {
-        return format(date, 'yyyy-MM-dd');
+        return formatInUTCTimeZone(date, `yyyy-MM-dd`);
     }
 
     if (month && (month < 1 || month > 12)) {
@@ -71,11 +75,7 @@ export const getFormatedDateString = ({
         throw new Error('invalid day');
     }
 
-    const monthStr = month < 10 ? `0${month}` : month.toString();
-
-    const dayStr = day < 10 ? `0${day}` : day.toString();
-
-    return `${year}-${monthStr}-${dayStr}`;
+    return `${year}-${addLeadingZero(month, 2)}-${addLeadingZero(day, 2)}`;
 };
 
 /**
