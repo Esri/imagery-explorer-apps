@@ -114,21 +114,21 @@ export const updateObjectIdOfSelectedScene =
     };
 
 /**
- * This thunk function update the user selected acquisition date for imagery scene that is currently selected.
- * If `shouldSyncAcquisitionDateRange` is set to true, the `acquisitionDateRange` will be updated to using the date range
- * for the year of the user selected acquisition date.
+ * Updates the user-selected acquisition date for an imagery scene. If `shouldSyncAcquisitionDateRange` is set to true,
+ * the `acquisitionDateRange` will also be updated, using the date range for the year of the user-selected acquisition date.
  *
- * Why is this necessary? By syncing the `acquisitionDateRange` using the year from `acquisitionDate`,
- * it will trigger custom hook like `useQueryAvailableLandsatScenes` that queries the imagery scenes acquired from the new date range,
- * so that the imagery scene that was acquired on the new acquisition date can be selected and displayed once the user selects a new acquisition date.
+ * We need to synchronize the `acquisitionDateRange` with the year from `acquisitionDate` when it needs to
+ * triggers custom hooks like `useQueryAvailableLandsatScenes` that query imagery scenes acquired within the new date range.
+ * This ensures that the imagery scene acquired on the new acquisition date can be selected and displayed when the user picks
+ * a new acquisition date from components outside of the main Calendar component, such as the Trend Chart.
  *
- * This happens when the user picks up a new acquisition date using components outside of the the main Calendar component, like the Trend Chart.
- * Without syncing the `acquisitionDateRange`, the new acquisition date will be selected but the calendar will still show the imagery scenes acquired from the
- * previous selected date range.
+ * Without syncing the `acquisitionDateRange`, although the new acquisition date is selected, the calendar will continue
+ * displaying imagery scenes acquired from the previously selected date range.
  *
- * @param acquisitionDate the new acquisition date
- * @param shouldSyncAcquisitionDateRange if true, the `acquisitionDateRange` should be updated too using the date range for year of the new acquisition date, which
- * @returns
+ * @param acquisitionDate The new acquisition date in string format.
+ * @param shouldSyncAcquisitionDateRange If true, updates the `acquisitionDateRange` using the date range for the year of the
+ * new acquisition date.
+ * @returns void
  */
 export const updateAcquisitionDate =
     (acquisitionDate: string, shouldSyncAcquisitionDateRange?: boolean) =>
