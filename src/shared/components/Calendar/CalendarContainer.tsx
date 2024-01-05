@@ -147,7 +147,7 @@ const CalendarContainer = () => {
             <Calendar
                 // year={acquisitionYear}
                 // selectedAcquisitionDate={acquisitionDate}
-                dateRange={acquisitionDateRange}
+                dateRange={acquisitionDateRange || getDateRangeForPast12Month()}
                 selectedAcquisitionDate={selectedAcquisitionDate}
                 availableScenes={formattedScenes}
                 onSelect={(formattedAcquisitionDate) => {
