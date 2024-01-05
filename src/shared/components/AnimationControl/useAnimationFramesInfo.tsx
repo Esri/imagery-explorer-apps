@@ -7,9 +7,9 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
-import { format } from 'date-fns';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
+import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 export const useAnimationFramesInfo = () => {
     const selectedAnimationFrameId = useSelector(
@@ -34,10 +34,7 @@ export const useAnimationFramesInfo = () => {
             return {
                 frameId: uniqueId,
                 acquisitionDateLabel: acquisitionDate
-                    ? format(
-                          formattedDateString2Unixtimestamp(acquisitionDate),
-                          DATE_FORMAT
-                      )
+                    ? formatFormattedDateStrInUTCTimeZone(acquisitionDate)
                     : 'Select a date',
                 rasterFunctionName: acquisitionDate
                     ? getRasterFunctionLabelText(rasterFunctionName)

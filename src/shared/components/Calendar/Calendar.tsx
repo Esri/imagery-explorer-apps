@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
 import { MonthData, isLeapYear } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
-import { format } from 'date-fns';
 import { DATE_FORMAT } from '@shared/constants/UI';
+import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 /**
  * Formatted data of Imagery Scene
@@ -171,9 +171,8 @@ const MonthGrid: FC<MonthGridProps> = ({
                             <span>{dataOfImageryScene.satellite}</span>
                             <br />
                             <span>
-                                {format(
-                                    dataOfImageryScene.acquisitionDate,
-                                    DATE_FORMAT
+                                {formatInUTCTimeZone(
+                                    dataOfImageryScene.acquisitionDate
                                 )}
                             </span>
                             <br />

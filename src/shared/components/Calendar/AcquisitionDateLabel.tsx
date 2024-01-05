@@ -1,4 +1,3 @@
-import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import React, { FC, useMemo } from 'react';
 

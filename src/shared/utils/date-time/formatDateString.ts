@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
 import { addLeadingZero } from '../snippets/addLeadingZero';
+import { formatInUTCTimeZone } from './formatInUTCTimeZone';
 
 // /**
 //  * Get formatted date string using the input unix timestamp
@@ -64,14 +64,7 @@ export const getFormatedDateString = ({
     }
 
     if (date) {
-        const dateObj = new Date(date);
-        const UTCYear = dateObj.getUTCFullYear();
-        const UTCMonth = dateObj.getUTCMonth() + 1;
-        const UTCDay = dateObj.getUTCDate();
-        return `${UTCYear}-${addLeadingZero(UTCMonth, 2)}-${addLeadingZero(
-            UTCDay,
-            2
-        )}`;
+        return formatInUTCTimeZone(date, `yyyy-MM-dd`);
     }
 
     if (month && (month < 1 || month > 12)) {

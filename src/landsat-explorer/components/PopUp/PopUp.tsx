@@ -10,7 +10,6 @@ import {
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
-import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getLoadingIndicator, getMainContent } from './helper';
@@ -20,6 +19,7 @@ import {
     identify,
 } from '@shared/services/landsat-level-2/identify';
 import { getFormattedLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 // import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {
@@ -144,7 +144,7 @@ export const Popup: FC<Props> = ({ mapView }: Props) => {
             }
             // console.log(bandValues)
 
-            const title = `${sceneData.satellite} | ${format(
+            const title = `${sceneData.satellite} | ${formatInUTCTimeZone(
                 sceneData.acquisitionDate,
                 'MMM dd, yyyy'
             )}`;
