@@ -9,7 +9,10 @@ import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import { landsatScenesUpdated } from './reducer';
 import { selectLandsatMissionsToBeExcluded } from './selectors';
 import { LandsatScene } from '@typing/imagery-service';
-import { getYearFromFormattedDateString } from '@shared/utils/date-time/formatDateString';
+import {
+    formattedDateString2Unixtimestamp,
+    getYearFromFormattedDateString,
+} from '@shared/utils/date-time/formatDateString';
 import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
 import {
     ImageryScene,
@@ -37,7 +40,7 @@ export const queryAvailableScenes =
         abortController = new AbortController();
 
         try {
-            const { objectIdOfSelectedScene } =
+            const { objectIdOfSelectedScene, acquisitionDate } =
                 selectQueryParams4SceneInSelectedMode(getState()) || {};
 
             const center = selectMapCenter(getState());
@@ -75,15 +78,32 @@ export const queryAvailableScenes =
             //     }
             // }
 
-            // If there is a selected landsat scene, we need to query Landsat scene by object id.
-            // Why are we doing this? Selecting a different year triggers this function to query available scenes for that year.
-            // However, we don't want the Landsat Scene on the map and its information to disappear before a new acquisition date is selected.
-            // By adding the currently selected scene to the nw list of scenes , we ensure that the currently selected scene will remain visible until a new acquisition date is chosen.
-            if (objectIdOfSelectedScene) {
-                const selectedScene = await getLandsatSceneByObjectId(
-                    objectIdOfSelectedScene
-                );
-                scenes.push(selectedScene);
+            // Check if a specific acquisition date is selected and falls outside the range of acquisition dates used avove.
+            // If so, it's necessary to query Landsat scenes acquired on the user-selected date.
+            // This step prevents the disappearance of the currently displayed Landsat Scene and its information
+            // until a new acquisition date is selected.
+            // Including the scene acquired on the selected date guarantees its visibility until a new acquisition date is chosen.
+            if (
+                acquisitionDate &&
+                (formattedDateString2Unixtimestamp(acquisitionDate) <
+                    formattedDateString2Unixtimestamp(
+                        acquisitionDateRange.startDate
+                    ) ||
+                    formattedDateString2Unixtimestamp(acquisitionDate) >
+                        formattedDateString2Unixtimestamp(
+                            acquisitionDateRange.endDate
+                        ))
+            ) {
+                const scenesByAcquisitionDate = await getLandsatScenes({
+                    acquisitionDate,
+                    mapPoint: center,
+                    abortController,
+                    missionsToBeExcluded,
+                });
+
+                for (const scene of scenesByAcquisitionDate) {
+                    scenes.push(scene);
+                }
             }
 
             // sort scenes uing acquisition date in an ascending order
