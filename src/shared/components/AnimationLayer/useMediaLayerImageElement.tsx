@@ -6,6 +6,7 @@ import { AnimationStatus } from '@shared/store/UI/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { exportImage as exportLandsatImage } from '@shared/services/landsat-level-2/exportImage';
 import { getAnimationWindowInfoFromHashParams } from '@shared/utils/url-hash-params';
+import { getNormalizedExtent } from '@shared/utils/snippets/getNormalizedExtent';
 
 type Props = {
     mapView?: MapView;
@@ -42,8 +43,14 @@ const useMediaLayerImageElement = ({
             const animationWindowInfoFromHashParams =
                 getAnimationWindowInfoFromHashParams();
 
-            const { extent, width, height } =
-                animationWindowInfoFromHashParams || mapView;
+            console.log(animationWindowInfoFromHashParams);
+
+            let { extent, width, height } =
+                animationWindowInfoFromHashParams || {};
+
+            extent = extent || getNormalizedExtent(mapView.extent);
+            width = width || mapView.width;
+            height = height || mapView.height;
 
             const { xmin, ymin, xmax, ymax } = extent;
 

@@ -23,6 +23,7 @@ import { TrendToolState } from '@shared/store/TrendTool/reducer';
 import { SpectralProfileToolState } from '@shared/store/SpectralProfileTool/reducer';
 import { ChangeCompareToolState } from '@shared/store/ChangeCompareTool/reducer';
 import { Extent } from '@arcgis/core/geometry';
+import { getNormalizedExtent } from '../snippets/getNormalizedExtent';
 // import { AnimationStatus } from '@shared/store/UI/reducer';
 
 type UrlHashParamKey =
@@ -212,7 +213,7 @@ export const saveAnimationWindowInfoToHashParams = (
         return;
     }
 
-    const { xmin, ymin, xmax, ymax } = extent;
+    const { xmin, ymin, xmax, ymax } = getNormalizedExtent(extent);
 
     updateHashParams(
         'animationWindow',
