@@ -15,6 +15,7 @@ import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTempora
 import { selectActiveAnalysisTool } from '../ImageryScene/selectors';
 import { TemporalProfileData } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '../Landsat/selectors';
+import { delay } from '@shared/utils/snippets/delay';
 
 export const updateQueryLocation4TrendTool =
     (point: Point) =>
@@ -50,13 +51,13 @@ export const updateTrendToolData =
             return;
         }
 
+        dispatch(trendToolIsLoadingChanged(true));
+
         if (abortController) {
             abortController.abort();
         }
 
         abortController = new AbortController();
-
-        dispatch(trendToolIsLoadingChanged(true));
 
         try {
             const data: TemporalProfileData[] = await getDataForTrendTool({
@@ -75,9 +76,10 @@ export const updateTrendToolData =
             });
 
             dispatch(trendToolDataUpdated(data));
+
+            dispatch(trendToolIsLoadingChanged(false));
         } catch (err) {
             console.log('failed to fetch temporal profile data');
+            throw err;
         }
-
-        dispatch(trendToolIsLoadingChanged(false));
     };
