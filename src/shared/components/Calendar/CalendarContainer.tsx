@@ -79,8 +79,10 @@ const CalendarContainer = () => {
     /**
      * options that will be used to populate the Dropdown Menu for year
      */
-    const yearOptions =
-        useAcquisitionYearsAsDropdownMenuOptions(acquisitionYear);
+    const yearOptions = useAcquisitionYearsAsDropdownMenuOptions(
+        acquisitionYear,
+        true
+    );
 
     /**
      * if true, Calendar should be disbaled
