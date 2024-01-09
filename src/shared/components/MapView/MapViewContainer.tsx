@@ -122,6 +122,8 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                         const queryLocation = {
                             x: +longitude,
                             y: +latitude,
+                            longitude,
+                            latitude,
                             spatialReference: {
                                 wkid: 4326,
                             },
