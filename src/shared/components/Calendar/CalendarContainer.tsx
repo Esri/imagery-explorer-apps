@@ -105,7 +105,7 @@ const CalendarContainer = () => {
 
             <div className="flex mb-2 items-center justify-between">
                 <div className="flex items-center flex-grow">
-                    <div className="relative w-[124px]">
+                    <div className="relative w-[130px]">
                         <Dropdown
                             data={yearOptions}
                             onChange={(year) => {

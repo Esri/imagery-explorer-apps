@@ -100,7 +100,7 @@ export const CloudFilter: FC<Props> = ({
 
                 <div
                     // id="cloud-filter-container"
-                    className="w-12 h-4 mx-3"
+                    className="w-12 h-4 mx-1"
                 >
                     <Slider
                         steps={[

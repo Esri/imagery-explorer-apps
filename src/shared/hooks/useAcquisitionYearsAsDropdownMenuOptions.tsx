@@ -30,7 +30,7 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
 
         options.push({
             value: '',
-            label: 'Past 12 Month'.toUpperCase(),
+            label: 'Past 12 Months'.toUpperCase(),
             selected: acquisitionYear === null,
         });
 
