@@ -54,7 +54,7 @@ const FilterButton: FC<LandsatMissionFilterButtonProps> = ({
 }) => {
     return (
         <div
-            className="relative flex items-center justify-between w-full border border-custom-light-blue-50 opacity-80 p-1 text-xs cursor-pointer "
+            className="relative flex items-center justify-between w-full bg-custom-light-blue-5 p-1 text-xs cursor-pointer "
             onClick={onClick}
         >
             <span className="mr-1 uppercase">{title}</span>
@@ -167,7 +167,7 @@ export const LandsatMissionFilter: FC<Props> = ({
                 />
 
                 {expanded && (
-                    <div className="absolute w-full top-[100%] left-0 z-10 border border-custom-light-blue-50 bg-custom-background">
+                    <div className="absolute w-full top-[100%] left-0 z-10 border border-custom-light-blue-5 bg-custom-background">
                         <FilterListItem
                             title={'all'}
                             checked={missionsToBeExcluded.length === 0}

@@ -56,7 +56,7 @@ export const Dropdown: FC<Props> = ({
             <div
                 className={classNames(
                     'max-h-[351px] overflow-y-auto',
-                    'text-xs bg-custom-background border border-custom-light-blue-50 border-b-0',
+                    'text-xs bg-custom-background border border-custom-light-blue-5 border-b-0',
                     'fancy-scrollbar'
                 )}
             >
@@ -65,7 +65,7 @@ export const Dropdown: FC<Props> = ({
 
                     return (
                         <div
-                            className="p-1 border-custom-light-blue-50 border-b cursor-pointer"
+                            className="p-1 border-custom-light-blue-5 border-b cursor-pointer"
                             key={value}
                             onClick={() => {
                                 onChange(value);
@@ -132,7 +132,11 @@ export const Dropdown: FC<Props> = ({
         <div ref={containerRef} className={classNames('relative')}>
             <div className="relative group">
                 <div
-                    className="border border-custom-light-blue-50 opacity-80 p-1 text-xs cursor-pointer flex items-center justify-between"
+                    className={classNames([
+                        // "border border-custom-light-blue-50 opacity-80",
+                        'bg-custom-light-blue-5',
+                        'p-1 text-xs cursor-pointer flex items-center justify-between',
+                    ])}
                     onClick={() => {
                         setShouldShowOptions(!shouldShowOptions);
                     }}
