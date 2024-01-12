@@ -2,6 +2,8 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
+    setupFiles: ['./jest.setup.js'],
+    
     // Automatically clear mock calls and instances between every test
     clearMocks: true,
   
