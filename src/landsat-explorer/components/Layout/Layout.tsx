@@ -101,7 +101,7 @@ const Layout = () => {
                             </div>
 
                             {mode === 'analysis' && (
-                                <div className="mx-6 3xl:mx-16">
+                                <div className="analyze-tool-and-scene-info-container">
                                     <MaskTool />
                                     <TrendTool />
                                     <SpectralTool />

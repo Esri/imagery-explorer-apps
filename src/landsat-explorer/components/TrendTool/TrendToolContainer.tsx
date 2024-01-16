@@ -146,7 +146,7 @@ export const TrendToolContainer = () => {
     }
 
     return (
-        <div className="w-analysis-tool-container-width h-full">
+        <div className="w-full h-full">
             <AnalysisToolHeader
                 title="Trend"
                 dropdownListOptions={[

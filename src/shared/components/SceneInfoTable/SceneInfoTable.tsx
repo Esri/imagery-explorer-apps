@@ -66,7 +66,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
     };
     return (
         <div
-            className={classNames('w-[320px] mr-8', {
+            className={classNames('analyze-tool-and-scene-info-container', {
                 'is-disabled': data.length === 0,
             })}
         >

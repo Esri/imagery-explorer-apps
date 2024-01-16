@@ -67,7 +67,7 @@ export const MaskToolContainer = () => {
 
     return (
         <div
-            className={classNames('w-analysis-tool-container-width h-full', {
+            className={classNames('w-full h-full', {
                 'is-disabled': !objectIdOfSelectedScene,
             })}
         >
