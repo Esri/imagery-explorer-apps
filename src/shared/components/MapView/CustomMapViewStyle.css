@@ -8,3 +8,7 @@
 .hide-map-control .esri-zoom {
     display: none;
 }
+
+#root .esri-attribution__powered-by {
+    @apply mr-10;
+}
