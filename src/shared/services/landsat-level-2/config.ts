@@ -86,11 +86,12 @@ const LANDSAT_RASTER_FUNCTIONS = [
     'NDVI Colorized',
     'Agriculture with DRA',
     'Bathymetric with DRA',
-    'Geology with DRA',
+    // 'Geology with DRA',
     'Short-wave Infrared with DRA',
     'Surface Temperature Colorized (Fahrenheit)',
     'Surface Temperature Colorized (Celsius)',
     'MNDWI Colorized',
+    'Urban with DRA',
     // 'Short-wave Infrared',
     // 'Color Infrared',
     // 'Geology with DRA',
@@ -145,11 +146,17 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
             'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied dynamic range adjustment applied. Useful in bathymetric mapping applications.',
         label: 'Bathymetric',
     },
+    // {
+    //     name: 'Geology with DRA',
+    //     description:
+    //         'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
+    //     label: 'Geology',
+    // },
     {
-        name: 'Geology with DRA',
+        name: 'Urban with DRA',
         description:
-            'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
-        label: 'Geology',
+            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.',
+        label: 'Urban',
     },
     {
         name: 'Short-wave Infrared with DRA',
