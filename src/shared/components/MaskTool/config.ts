@@ -1,3 +1,3 @@
 export const MASK_TOOL_HEADER_TOOLTIP = `
-The Landsat platform collects imagery in multiple wavelengths of the spectrum. Combining these wavelengths can reveal interesting and task-specific images.
+The spectral bands can be used to compute a variety of indices. Different thresholds can be applied to these spectral indices to mask and highlight different characteristics of the Earth's surface..
 `;
