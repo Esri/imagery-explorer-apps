@@ -59,7 +59,9 @@ export const ChangeCompareToolContainer = () => {
                     },
                 ]}
                 selectedValue={selectedSpectralIndex}
-                tooltipText={''}
+                tooltipText={
+                    'Compare and report changes between two selected images. Change is always calculated and reported chronologically from oldest to newest.'
+                }
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
                         spectralIndex4ChangeCompareToolChanged(
