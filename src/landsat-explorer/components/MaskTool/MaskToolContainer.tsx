@@ -9,7 +9,7 @@ import {
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
 import { updateSelectedRange } from '@shared/store/MaskTool/thunks';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
@@ -40,6 +40,10 @@ export const MaskToolContainer = () => {
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
+    const shouldBeDisabled = useMemo(() => {
+        return !objectIdOfSelectedScene;
+    }, [objectIdOfSelectedScene]);
+
     useEffect(() => {
         if (!queryParams4MainScene?.rasterFunctionName) {
             return;
@@ -66,11 +70,7 @@ export const MaskToolContainer = () => {
     }
 
     return (
-        <div
-            className={classNames('w-full h-full', {
-                'is-disabled': !objectIdOfSelectedScene,
-            })}
-        >
+        <div className={classNames('w-full h-full')}>
             <AnalysisToolHeader
                 title="Index"
                 dropdownListOptions={[
@@ -104,31 +104,44 @@ export const MaskToolContainer = () => {
                 }}
             />
 
-            <div className="w-full h-[120px]">
-                {selectedSpectralIndex === 'temperature celcius' && (
-                    <SurfaceTempCelsiusPixelRangeSlider />
-                )}
-                {selectedSpectralIndex === 'temperature farhenheit' && (
-                    <SurfaceTempFarhenheitPixelRangeSlider />
-                )}
-
-                {selectedSpectralIndex !== 'temperature celcius' &&
-                    selectedSpectralIndex !== 'temperature farhenheit' && (
-                        <PixelRangeSlider
-                            values={maskOptions.selectedRange}
-                            min={-1}
-                            max={1}
-                            valuesOnChange={(values) => {
-                                dispatch(updateSelectedRange(values));
-                            }}
-                            countOfTicks={17}
-                            tickLabels={[-1, -0.5, 0, 0.5, 1]}
-                            showSliderTooltip={true}
-                        />
+            {shouldBeDisabled ? (
+                <div
+                    className={classNames(
+                        'w-full mt-10 flex justify-center text-center text-sm is-disabled'
                     )}
-            </div>
+                >
+                    <p>Select a scene to visualize the Index</p>
+                </div>
+            ) : (
+                <>
+                    <div className={classNames('w-full h-[120px]')}>
+                        {selectedSpectralIndex === 'temperature celcius' && (
+                            <SurfaceTempCelsiusPixelRangeSlider />
+                        )}
+                        {selectedSpectralIndex === 'temperature farhenheit' && (
+                            <SurfaceTempFarhenheitPixelRangeSlider />
+                        )}
 
-            <MaskLayerRenderingControls />
+                        {selectedSpectralIndex !== 'temperature celcius' &&
+                            selectedSpectralIndex !==
+                                'temperature farhenheit' && (
+                                <PixelRangeSlider
+                                    values={maskOptions.selectedRange}
+                                    min={-1}
+                                    max={1}
+                                    valuesOnChange={(values) => {
+                                        dispatch(updateSelectedRange(values));
+                                    }}
+                                    countOfTicks={17}
+                                    tickLabels={[-1, -0.5, 0, 0.5, 1]}
+                                    showSliderTooltip={true}
+                                />
+                            )}
+                    </div>
+
+                    <MaskLayerRenderingControls />
+                </>
+            )}
         </div>
     );
 };
