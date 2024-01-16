@@ -51,12 +51,12 @@ export const SpectralProfileChartLegend: FC<Props> = ({
     return (
         <div className="w-full mt-3">
             <LegendItem
-                label="Spectral signature of selected location"
+                label="Spectral profile of selected location"
                 fill="var(--custom-light-blue-90)"
             />
 
             <LegendItem
-                label={'Spectral signature of ' + featureOfInterest}
+                label={'Spectral profile of ' + featureOfInterest}
                 fill="var(--custom-light-blue-50)"
                 strokeDasharray="3 1"
             />
