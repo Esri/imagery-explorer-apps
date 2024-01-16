@@ -72,7 +72,7 @@ export const MaskToolContainer = () => {
             })}
         >
             <AnalysisToolHeader
-                title="Mask"
+                title="Index"
                 dropdownListOptions={[
                     {
                         value: 'water' as SpectralIndex,

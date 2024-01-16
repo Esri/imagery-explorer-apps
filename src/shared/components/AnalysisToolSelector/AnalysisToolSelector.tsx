@@ -9,12 +9,14 @@ const AnalysisTools: {
 }[] = [
     {
         tool: 'mask',
+        label: 'Index',
     },
     {
         tool: 'trend',
     },
     {
         tool: 'spectral',
+        label: 'Profile',
     },
     {
         tool: 'change',

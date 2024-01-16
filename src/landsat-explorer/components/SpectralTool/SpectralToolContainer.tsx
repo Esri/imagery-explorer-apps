@@ -111,7 +111,7 @@ export const SpectralToolContainer = () => {
             })}
         >
             <AnalysisToolHeader
-                title="Spectral"
+                title="Profile"
                 dropdownListOptions={FeatureOfInterests.map(
                     (featureOfInterest) => {
                         return {

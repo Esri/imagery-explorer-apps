@@ -31,6 +31,14 @@ export const ModeSelector: FC<Props> = ({
     disabled,
     selectedModeOnChange,
 }: Props) => {
+    const getFormattedModeName = (mode: AppMode) => {
+        if (mode === 'analysis') {
+            return 'Analyze';
+        }
+
+        return mode;
+    };
+
     const isExploreButtonSelected =
         selectedMode === 'find a scene' || selectedMode === 'dynamic';
 
@@ -80,7 +88,9 @@ export const ModeSelector: FC<Props> = ({
                                 selectedModeOnChange(mode);
                             }}
                         >
-                            <span className="uppercase">{mode}</span>
+                            <span className="uppercase">
+                                {getFormattedModeName(mode)}
+                            </span>
                         </Button>
                     </div>
                 ))}
