@@ -133,10 +133,10 @@ export const LandsatMissionFilter: FC<Props> = ({
             : // otherwise, add to the list
               [...missionsToBeExcluded, mission];
 
-        // abort to prohibit the user to exclude all landsat missions
-        if (updatedMissionsToBeExcluded.length === LANDSAT_MISSIONS.length) {
-            return;
-        }
+        // // abort to prohibit the user to exclude all landsat missions
+        // if (updatedMissionsToBeExcluded.length === LANDSAT_MISSIONS.length) {
+        //     return;
+        // }
 
         missionsToBeExcludedOnChange(updatedMissionsToBeExcluded);
     };
