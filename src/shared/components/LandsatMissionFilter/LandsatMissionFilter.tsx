@@ -141,9 +141,24 @@ export const LandsatMissionFilter: FC<Props> = ({
         missionsToBeExcludedOnChange(updatedMissionsToBeExcluded);
     };
 
+    const toggleSelectAllLandsatMission = () => {
+        // clicks on "ALL" button would include all missions if some of the missions
+        // are not included. If all missions are already included, then clicks on "ALL" button
+        // should deselect all missions.
+        const updatedMissionsToBeExcluded = !missionsToBeExcluded.length
+            ? LANDSAT_MISSIONS
+            : [];
+
+        missionsToBeExcludedOnChange(updatedMissionsToBeExcluded);
+    };
+
     const getLabel4FilterButton = () => {
         if (missionsToBeExcluded.length === 0) {
             return 'all';
+        }
+
+        if (missionsToBeExcluded.length === LANDSAT_MISSIONS.length) {
+            return 'none';
         }
 
         const missionsToBeIncluded = LANDSAT_MISSIONS.filter((mission) => {
@@ -171,10 +186,11 @@ export const LandsatMissionFilter: FC<Props> = ({
                         <FilterListItem
                             title={'all'}
                             checked={missionsToBeExcluded.length === 0}
-                            onClick={missionsToBeExcludedOnChange.bind(
-                                null,
-                                []
-                            )}
+                            // onClick={missionsToBeExcludedOnChange.bind(
+                            //     null,
+                            //     []
+                            // )}
+                            onClick={toggleSelectAllLandsatMission}
                         />
                         {LANDSAT_MISSIONS.map((mission) => {
                             return (
