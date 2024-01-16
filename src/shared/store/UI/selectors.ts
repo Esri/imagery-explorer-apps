@@ -40,3 +40,8 @@ export const selectShouldShowDownloadAnimationPanel = createSelector(
     (state: RootState) => state.UI.showDownloadAnimationPanel,
     (showDownloadAnimationPanel) => showDownloadAnimationPanel
 );
+
+export const selectNameOfSelectedInterestingPlace = createSelector(
+    (state: RootState) => state.UI.nameOfSelectedInterestingPlace,
+    (nameOfSelectedInterestingPlace) => nameOfSelectedInterestingPlace
+);

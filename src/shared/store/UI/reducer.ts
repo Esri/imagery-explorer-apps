@@ -53,6 +53,10 @@ export type UIState = {
      * The data that will be used to populate the Tooltip component.
      */
     tooltipData?: TooltipData;
+    /**
+     * name of selected interesting place
+     */
+    nameOfSelectedInterestingPlace: string;
 };
 
 export const initialUIState: UIState = {
@@ -63,6 +67,7 @@ export const initialUIState: UIState = {
     showDownloadAnimationPanel: false,
     tooltipXPosition: 0,
     tooltipData: null,
+    nameOfSelectedInterestingPlace: '',
 };
 
 const slice = createSlice({
@@ -100,6 +105,12 @@ const slice = createSlice({
         tooltipDataChanged: (state, action: PayloadAction<TooltipData>) => {
             state.tooltipData = action.payload;
         },
+        nameOfSelectedInterestingPlaceChanged: (
+            state,
+            action: PayloadAction<string>
+        ) => {
+            state.nameOfSelectedInterestingPlace = action.payload;
+        },
     },
 });
 
@@ -114,6 +125,7 @@ export const {
     animationSpeedChanged,
     tooltipDataChanged,
     tooltipXPositionChanged,
+    nameOfSelectedInterestingPlaceChanged,
 } = slice.actions;
 
 export default reducer;
