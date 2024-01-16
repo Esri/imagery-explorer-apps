@@ -120,7 +120,7 @@ export const SpectralToolContainer = () => {
                     }
                 )}
                 selectedValue={selectedFeatureOfInterest}
-                tooltipText={''}
+                tooltipText={`The spectral reflectance of different materials on the Earth's surface is variable. Spectral profiles can be used to identify different land cover types.`}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     setSelectedFeatureOfInterest(
                         val as SpectralProfileFeatureOfInterest
