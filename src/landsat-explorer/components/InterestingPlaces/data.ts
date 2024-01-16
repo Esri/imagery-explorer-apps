@@ -78,7 +78,7 @@ export const data: InterestingPlaceData[] = [
         renderer: 'Color Infrared with DRA',
         thumbnail: KuisebCanyon,
         description:
-            'The Kuiseb Canyon has been carved out over millions of years by the ephemeral Kuiseb River in this barren and inaccessible area. It is characterized by its rock formations, steep cliffs, and unique ecosystems.',
+            'The Kuiseb Canyon has been carved out over millions of years by the ephemeral Kuiseb River in this barren and inaccessible area of Namibia, Africa. It is characterized by its rock formations, steep cliffs, and unique ecosystems.',
     },
     {
         name: 'Quelccaya',
