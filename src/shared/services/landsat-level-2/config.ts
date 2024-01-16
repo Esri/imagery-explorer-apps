@@ -129,10 +129,10 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
         label: 'Color IR',
     },
     {
-        name: 'NDVI Colorized',
+        name: 'Short-wave Infrared with DRA',
         description:
-            'Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.',
-        label: 'NDVI Colorized',
+            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied dynamic range adjustment applied.',
+        label: 'Short-wave IR',
     },
     {
         name: 'Agriculture with DRA',
@@ -159,10 +159,10 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
         label: 'Urban',
     },
     {
-        name: 'Short-wave Infrared with DRA',
+        name: 'NDVI Colorized',
         description:
-            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied dynamic range adjustment applied.',
-        label: 'Short-wave IR',
+            'Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.',
+        label: 'NDVI Colorized',
     },
     {
         name: 'Surface Temperature Colorized (Fahrenheit)',
