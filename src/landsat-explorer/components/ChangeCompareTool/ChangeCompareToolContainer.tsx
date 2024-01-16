@@ -37,11 +37,7 @@ export const ChangeCompareToolContainer = () => {
     }
 
     return (
-        <div
-            className={classNames('w-full h-full', {
-                'is-disabled': isChangeLayerOn === false,
-            })}
-        >
+        <div className={classNames('w-full h-full')}>
             <AnalysisToolHeader
                 title="Change"
                 dropdownListOptions={[
@@ -71,20 +67,12 @@ export const ChangeCompareToolContainer = () => {
                 }}
             />
 
-            <div className="w-full h-[0px] pt-[50px]">
+            <div
+                className={classNames('w-full h-[0px] pt-[50px]', {
+                    'is-disabled': isChangeLayerOn === false,
+                })}
+            >
                 <div className="w-full">
-                    {/* <div className="flex items-center text-sm">
-                        <div className="w-1/3">
-                            <span>decrease</span>
-                        </div>
-                        <div className="w-1/3 text-center">
-                            <span>no change</span>
-                        </div>
-                        <div className="w-1/3 text-right">
-                            <span>increase</span>
-                        </div>
-                    </div> */}
-
                     <div
                         className="w-full h-2"
                         style={{

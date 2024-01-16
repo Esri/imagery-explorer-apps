@@ -106,9 +106,12 @@ export const SpectralToolContainer = () => {
 
     return (
         <div
-            className={classNames('w-full h-full', {
-                'is-disabled': !objectIdOfSelectedScene || !queryLocation,
-            })}
+            className={classNames(
+                'w-full h-full'
+                // {
+                //     'is-disabled': !objectIdOfSelectedScene || !queryLocation,
+                // }
+            )}
         >
             <AnalysisToolHeader
                 title="Profile"
@@ -147,7 +150,7 @@ export const SpectralToolContainer = () => {
             {spectralProfileToolMessage && (
                 <div className="w-full mt-10 flex justify-center text-center">
                     {isLoading && <calcite-loader inline />}
-                    <p className="text-sm opacity-80">
+                    <p className="text-sm opacity-50">
                         {spectralProfileToolMessage}
                     </p>
                 </div>
