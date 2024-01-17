@@ -48,10 +48,21 @@ import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/conf
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
 
-const randomInterestingPlace = getRandomElement(landsatInterestingPlaces);
+/**
+ * Map location info that contains center and zoom info from URL Hash Params
+ */
+const mapLocationFromHashParams = getMapCenterFromHashParams();
+
+/**
+ * Use the location of a randomly selected interesting place if there is no map location info
+ * found in the URL hash params.
+ */
+const randomInterestingPlace = !mapLocationFromHashParams
+    ? getRandomElement(landsatInterestingPlaces)
+    : null;
 
 const getPreloadedMapState = (): MapState => {
-    let mapLocation = getMapCenterFromHashParams();
+    let mapLocation = mapLocationFromHashParams;
 
     if (!mapLocation) {
         mapLocation = randomInterestingPlace?.location;
@@ -173,8 +184,9 @@ const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
 const getPreloadedUIState = (): UIState => {
     const animationSpeed = getAnimationSpeedFromHashParams();
 
-    const proloadedUIState = {
+    const proloadedUIState: UIState = {
         ...initialUIState,
+        nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
     };
 
     if (animationSpeed) {
