@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
-import { getRasterFunctionInfos as getLandsatRasterFunctionInfos } from '@shared/services/landsat-level-2/getRasterFunctionInfos';
-import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import {
+    LANDSAT_RASTER_FUNCTION_INFOS,
+    LandsatRasterFunctionName,
+} from '@shared/services/landsat-level-2/config';
 
 import LandsatAgricultureThumbnail from './thumbnails/Landsat/Render_Agriculture.jpg';
 import LandsatBathymetricThumbnail from './thumbnails/Landsat/Render_Bathymetric.jpg';
 import LandsatColorIRThumbnail from './thumbnails/Landsat/Render_ColorIR.jpg';
 import LandsatNaturalColorThumbnail from './thumbnails/Landsat/Render_NaturalColor.jpg';
-// import LandsatGeologyThumbnail from './thumbnails/Landsat/Render_Geology.jpg';
+import LandsatGeologyThumbnail from './thumbnails/Landsat/Render_Geology.jpg';
 import LandsatNDVIThumbnail from './thumbnails/Landsat/Render_NDVI.png';
 import LandsatShortWaveIRThumbnail from './thumbnails/Landsat/Render_ShortwaveIR.jpg';
 import LandsatThermalThumbnail from './thumbnails/Landsat/Render_Thermal.png';
@@ -27,7 +29,7 @@ const LandsatRendererThumbnailByName: Record<
     'Bathymetric with DRA': LandsatBathymetricThumbnail,
     'Color Infrared with DRA': LandsatColorIRThumbnail,
     'Natural Color with DRA': LandsatNaturalColorThumbnail,
-    // 'Geology with DRA': LandsatGeologyThumbnail,
+    'Geology with DRA': LandsatGeologyThumbnail,
     'NDVI Colorized': LandsatNDVIThumbnail,
     'Short-wave Infrared with DRA': LandsatShortWaveIRThumbnail,
     'Surface Temperature Colorized (Fahrenheit)': LandsatThermalThumbnail,
@@ -41,7 +43,7 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
     'Bathymetric with DRA': null,
     'Color Infrared with DRA': null,
     'Natural Color with DRA': null,
-    // 'Geology with DRA': null,
+    'Geology with DRA': null,
     'NDVI Colorized': LandsatNDVILegend,
     'Short-wave Infrared with DRA': null,
     'Surface Temperature Colorized (Fahrenheit)': LandsatThermalLegend,
@@ -51,8 +53,7 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
 };
 
 export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
-    const rasterFunctionInfos = getLandsatRasterFunctionInfos();
-    return rasterFunctionInfos.map((d) => {
+    return LANDSAT_RASTER_FUNCTION_INFOS.map((d) => {
         const name: LandsatRasterFunctionName =
             d.name as LandsatRasterFunctionName;
 
