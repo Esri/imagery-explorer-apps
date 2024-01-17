@@ -75,11 +75,10 @@ const getPreloadedMapState = (): MapState => {
 };
 
 const getPreloadedImageryScenesState = (): ImageryScenesState => {
-    const modeFromHashParams = getHashParamValueByKey('mode') as AppMode;
+    let mode: AppMode =
+        (getHashParamValueByKey('mode') as AppMode) || 'dynamic';
 
-    let mode = modeFromHashParams || 'dynamic';
-
-    // user can only use the dynamic mode when using mobile device
+    // user is only allowed to use the "dynamic" mode when using mobile device
     if (IS_MOBILE_DEVICE) {
         mode = 'dynamic';
     }
