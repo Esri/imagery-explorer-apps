@@ -56,7 +56,7 @@ export const SpectralToolContainer = () => {
         }
 
         if (!spectralProfileData.length) {
-            return 'Select an acquisition date in Calendar and click on map to get the spectral profile';
+            return 'Select a scene and click on the map to identify the spectral profile for the point of interest.';
         }
 
         return '';
