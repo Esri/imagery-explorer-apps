@@ -40,7 +40,7 @@ export const TrendChartContainer = () => {
                 <p className="text-sm opacity-80">
                     {isLoading
                         ? 'fetching temporal profile data'
-                        : 'Click on map to get the temporal profile'}
+                        : 'Click on the map to get the temporal profile.'}
                 </p>
             </div>
         );
