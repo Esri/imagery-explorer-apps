@@ -48,13 +48,17 @@ export const AnimationControlContainer = () => {
         dispatch(addNewItemToQueryParamsList(nanoid(5), true));
     };
 
-    useEffect(() => {
-        // we should add a animation frame using query params from the main scene
-        // if there is no animation scene. Only need to do this when the Animation Controls is mounted.
-        if (animationFramesData.length === 0) {
-            addNewAnimationFrame();
-        }
-    }, []);
+    /**
+     * Comment out the section below because we have decided to not preload an animation frame
+     * @see https://github.com/vannizhang/imagery-explorer-apps/issues/77
+     */
+    // useEffect(() => {
+    //     // we should add a animation frame using query params from the main scene
+    //     // if there is no animation scene. Only need to do this when the Animation Controls is mounted.
+    //     if (animationFramesData.length === 0) {
+    //         addNewAnimationFrame();
+    //     }
+    // }, []);
 
     if (mode !== 'animate') {
         return null;
