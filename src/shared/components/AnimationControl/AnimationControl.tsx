@@ -3,7 +3,22 @@ import { AnimationStatus } from '../../store/UI/reducer';
 import classNames from 'classnames';
 import { AnimationSpeedControl } from './AnimationSpeedControl';
 
-const PlayButton = (
+const StartPlayButton = (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        height="16"
+        width="16"
+    >
+        <path
+            fill="currentColor"
+            d="M6 1.773v20.454l15-10.225zm1 1.892l12.225 8.337L7 20.335z"
+        />
+        <path fill="none" d="M0 0h24v24H0z" />
+    </svg>
+);
+
+const ContinuePlayButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -12,7 +27,7 @@ const PlayButton = (
     >
         <path
             fill="currentColor"
-            d="M9 6.886v10.228L16.5 12zm1 1.893L14.725 12 10 15.221zM1 3v18h22V3zm21 17H2V4h20z"
+            d="M6 1.773v20.454l15-10.225zm1 1.892l12.225 8.337L7 20.335z"
         />
         <path fill="none" d="M0 0h24v24H0z" />
     </svg>
@@ -113,12 +128,12 @@ export const AnimationControl: FC<Props> = ({
     const isAnimtaionOn = status === 'playing' || status === 'pausing';
 
     return (
-        <div className={classNames('flex items-center')}>
-            <div className="flex items-center flex-grow">
+        <div className={classNames('flex items-center mt-1')}>
+            <div className="flex items-center flex-grow mr-1">
                 {status === null && (
                     <div
                         className={classNames(
-                            'w-full cursor-pointer text-center flex items-center',
+                            'w-full cursor-pointer text-center flex items-center bg-custom-light-blue-5',
                             {
                                 'is-disabled': shouldDisableAddFrameButton,
                             }
@@ -127,7 +142,7 @@ export const AnimationControl: FC<Props> = ({
                     >
                         <calcite-icon icon="plus" scale="s" />
                         <span
-                            className=" text-custom-light-blue uppercase ml-1 underline"
+                            className=" text-custom-light-blue uppercase ml-1"
                             style={{
                                 fontSize: `.7rem`,
                             }}
@@ -156,8 +171,12 @@ export const AnimationControl: FC<Props> = ({
                 )}
             >
                 {!status && (
-                    <div onClick={statusOnChange.bind(null, 'loading')}>
-                        {PlayButton}
+                    <div
+                        className=" bg-custom-light-blue-5 px-1"
+                        onClick={statusOnChange.bind(null, 'loading')}
+                        title="Play animation"
+                    >
+                        {StartPlayButton}
                     </div>
                 )}
                 {status === 'loading' && (
@@ -184,7 +203,7 @@ export const AnimationControl: FC<Props> = ({
                 )}
                 {status === 'pausing' && (
                     <div onClick={statusOnChange.bind(null, 'playing')}>
-                        {PlayButton}
+                        {ContinuePlayButton}
                     </div>
                 )}
                 {status && (
