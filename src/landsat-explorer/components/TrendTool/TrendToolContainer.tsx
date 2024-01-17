@@ -177,7 +177,7 @@ export const TrendToolContainer = () => {
                         spectralIndex4TrendToolChanged(val as SpectralIndex)
                     );
                 }}
-                tooltipText={`The least-cloudy scene from the selected month will be sampled across all years of the imagery archive.`}
+                tooltipText={`The least cloudy scenes from the selected time interval will be sampled to show a temporal trend for the selected point and category.`}
             />
 
             <div className="w-full h-[120px] my-2">
