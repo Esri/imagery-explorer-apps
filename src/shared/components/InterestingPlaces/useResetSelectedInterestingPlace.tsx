@@ -24,7 +24,7 @@ export const useResetSelectedInterestingPlace = (
         if (
             Math.abs(mapCenter[0] - location.center[0]) > 0.01 ||
             Math.abs(mapCenter[1] - location.center[1]) > 0.01 ||
-            zoom !== location.zoom
+            Math.abs(zoom - location.zoom) > 0.5
         ) {
             // console.log()
             dispatch(nameOfSelectedInterestingPlaceChanged(''));
