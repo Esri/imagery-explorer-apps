@@ -133,7 +133,7 @@ export const AnimationControl: FC<Props> = ({
                 {status === null && (
                     <div
                         className={classNames(
-                            'w-full cursor-pointer text-center flex items-center bg-custom-light-blue-5',
+                            'w-[105px] cursor-pointer text-center flex items-center bg-custom-light-blue-5',
                             {
                                 'is-disabled': shouldDisableAddFrameButton,
                             }
