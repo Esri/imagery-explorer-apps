@@ -28,15 +28,6 @@ import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQuery
 import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
 
-const DynamicModeContent = () => {
-    return (
-        <>
-            <DynamicModeInfo />
-            <LandsatInterestingPlaces />
-        </>
-    );
-};
-
 const Layout = () => {
     const mode = useSelector(selectAppMode);
 
@@ -61,7 +52,9 @@ const Layout = () => {
                 <AppHeader title={appConfig.title} />
                 <BottomPanel>
                     <div className="mx-auto">
-                        <DynamicModeContent />
+                        <DynamicModeInfo />
+                        <LandsatInterestingPlaces />
+                        <LandsatRasterFunctionSelector />
                     </div>
                 </BottomPanel>
             </>
@@ -92,7 +85,10 @@ const Layout = () => {
 
                 <div className="flex flex-grow justify-center shrink-0">
                     {dynamicModeOn ? (
-                        <DynamicModeContent />
+                        <>
+                            <DynamicModeInfo />
+                            <LandsatInterestingPlaces />
+                        </>
                     ) : (
                         <>
                             <div className="ml-2 3xl:ml-0">
