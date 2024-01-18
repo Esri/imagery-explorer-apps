@@ -9,6 +9,8 @@ import { InterestingPlaceData } from '@typing/shared';
 import { nameOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
 import { useSelector } from 'react-redux';
 import { selectNameOfSelectedInterestingPlace } from '@shared/store/UI/selectors';
+import { selectMapCenter } from '@shared/store/Map/selectors';
+import { useResetSelectedInterestingPlace } from './useResetSelectedInterestingPlace';
 
 type Props = {
     /**
@@ -34,6 +36,8 @@ export const InterestingPlacesContainer: FC<Props> = ({ data }) => {
         );
         return dataItem;
     }, [nameOfSelectedInterestingPlace]);
+
+    useResetSelectedInterestingPlace(selectedInterestingPlace);
 
     useEffect(() => {
         if (!selectedInterestingPlace) {

@@ -33,7 +33,6 @@ const DynamicModeContent = () => {
         <>
             <DynamicModeInfo />
             <LandsatInterestingPlaces />
-            <LandsatRasterFunctionSelector />
         </>
     );
 };
@@ -109,12 +108,11 @@ const Layout = () => {
                                 </div>
                             )}
 
-                            <div className="flex shrink-0">
-                                <SceneInfo />
-                                <LandsatRasterFunctionSelector />
-                            </div>
+                            <SceneInfo />
                         </>
                     )}
+
+                    <LandsatRasterFunctionSelector />
                 </div>
             </BottomPanel>
         </>
