@@ -84,7 +84,6 @@ export const updateSpectralProfileData =
 
             // console.log(res);
         } catch (err) {
-            // console.log(err);
             dispatch(
                 errorChanged(
                     err.message || 'failed to fetch spectral profile data'

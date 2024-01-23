@@ -14,6 +14,8 @@ export const decodeQueryLocation = (val: string): Point => {
     return {
         x,
         y,
+        longitude: x,
+        latitude: y,
         spatialReference: {
             wkid: 4326,
         },
