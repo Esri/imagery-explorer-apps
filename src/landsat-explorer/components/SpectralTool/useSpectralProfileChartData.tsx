@@ -7,7 +7,10 @@ import {
     SpectralProfileFeatureOfInterest,
 } from './config';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
-import { formatLandsatBandValuesAsLineChartDataItems } from './helper';
+import {
+    formatLandsatBandValuesAsLineChartDataItems,
+    getFillColorByFeatureOfInterest,
+} from './helper';
 
 /**
  * This is a custom hook that convert the band values from user selected location and
@@ -61,12 +64,12 @@ export const useSpectralProfileChartData = (
 
         return [
             {
-                fill: 'var(--custom-light-blue)',
+                fill: 'var(--custom-light-blue-90)',
                 key: 'selected-location',
                 values: spectralProfileData4UserSelectedLocation,
             } as LineGroupData,
             {
-                fill: 'var(--custom-light-blue-70)',
+                fill: getFillColorByFeatureOfInterest(featureOfInterest), //'var(--custom-light-blue-70)',
                 key: featureOfInterest,
                 values: spectralProfileData4SelectedFeatureOfInterest,
                 dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
