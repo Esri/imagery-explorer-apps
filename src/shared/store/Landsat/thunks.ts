@@ -19,6 +19,7 @@ import {
     availableImageryScenesUpdated,
 } from '../ImageryScene/reducer';
 import { DateRange } from '@typing/shared';
+import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
 
 let abortController: AbortController = null;
 /**
@@ -40,8 +41,8 @@ export const queryAvailableScenes =
         abortController = new AbortController();
 
         try {
-            // const { objectIdOfSelectedScene, acquisitionDate } =
-            //     selectQueryParams4SceneInSelectedMode(getState()) || {};
+            const { objectIdOfSelectedScene, acquisitionDate } =
+                selectQueryParams4SceneInSelectedMode(getState()) || {};
 
             const center = selectMapCenter(getState());
 
@@ -112,22 +113,29 @@ export const queryAvailableScenes =
 
             const landsatScenes: LandsatScene[] = [];
 
-            for (const scene of scenes) {
-                const { formattedAcquisitionDate } = scene;
+            for (const currScene of scenes) {
+                // Get the last Landsat scene in the 'landsatScenes' array
+                const prevScene = landsatScenes[landsatScenes.length - 1];
 
-                // Only need to keep the one Landsat Scene for each day
-                // therefore if there is aleady a scene in the `availableScenes` that was acquired on the same date,
-                // we should just remove that scene and use the current scene instead as the current scene has later
-                // acquisition date
+                // Check if there is a previous scene and its acquisition date matches the current scene.
+                // We aim to keep only one Landsat scene for each day. When there are two scenes acquired on the same date,
+                // we prioritize keeping the currently selected scene or the one acquired later.
                 if (
-                    landsatScenes.length &&
-                    landsatScenes[landsatScenes.length - 1]
-                        .formattedAcquisitionDate == formattedAcquisitionDate
+                    prevScene &&
+                    prevScene.formattedAcquisitionDate ===
+                        currScene.formattedAcquisitionDate
                 ) {
+                    // Check if the previous scene is the currently selected scene
+                    // Skip the current iteration if the previous scene is the selected scene
+                    if (prevScene.objectId === objectIdOfSelectedScene) {
+                        continue;
+                    }
+
+                    // Remove the previous scene from 'landsatScenes' as it was acquired before the current scene
                     landsatScenes.pop();
                 }
 
-                landsatScenes.push(scene);
+                landsatScenes.push(currScene);
             }
 
             // convert list of Landsat scenes to list of imagery scenes
