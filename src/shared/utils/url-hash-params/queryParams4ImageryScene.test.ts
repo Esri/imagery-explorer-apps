@@ -2,24 +2,12 @@
  * @jest-environment jsdom
  * @jest-environment-options {"url": "https://localhost:8080/"}
  */
+import { mockWindowLocation } from '../__jest_utils__/jest-helpers';
 import { getQueryParams4MainSceneFromHashParams } from './queryParams4ImageryScene';
 
 // use Friday, January 5, 2024 12:00:00 AM GMT as system time
 const FAKE_SYSTEM_TIME = 1704412800000;
 jest.useFakeTimers().setSystemTime(FAKE_SYSTEM_TIME);
-
-/**
- * mock `window.location` object using the input href
- * @param href
- */
-const mockWindowLocation = (href: string) => {
-    delete window.location;
-
-    Object.defineProperty(window, 'location', {
-        value: new URL(href),
-        configurable: true,
-    });
-};
 
 describe('test getQueryParams4MainSceneFromHashParams', () => {
     it(`should return null if "mainScene" is not found in URL Hash params`, () => {
