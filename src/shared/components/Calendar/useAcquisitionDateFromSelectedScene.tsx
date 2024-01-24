@@ -10,12 +10,13 @@ import { useSelector } from 'react-redux';
  * @returns
  */
 export const useAcquisitionDateFromSelectedScene = (): string => {
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const { objectIdOfSelectedScene } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    /**
-     * user selected acquisition date
-     */
-    const acquisitionDate = queryParams?.acquisitionDate;
+    // /**
+    //  * user selected acquisition date
+    //  */
+    // const acquisitionDate = queryParams?.acquisitionDate;
 
     /**
      * List of available imagery scenes that intersect with map center and were acquired during the input year.
@@ -25,13 +26,13 @@ export const useAcquisitionDateFromSelectedScene = (): string => {
     const selectedAcquisitionDate = useMemo(() => {
         // If the user has not selected a date or there are no available scenes for the query location,
         // then the selected acquisition date should be empty.
-        if (!acquisitionDate || !availableScenes.length) {
+        if (!objectIdOfSelectedScene || !availableScenes.length) {
             return '';
         }
 
         // Find the scene from the available scenes list that has the acquisition date matching the user-selected acquisition date.
         const sceneAcquiredOnSelectedDate = availableScenes.find(
-            (scene) => scene.formattedAcquisitionDate === acquisitionDate
+            (scene) => scene.objectId === objectIdOfSelectedScene
         );
 
         // Use the acquisition date of the scene that is found to highlight on the calendar.
@@ -40,7 +41,7 @@ export const useAcquisitionDateFromSelectedScene = (): string => {
         // indicating that they need to select another date to choose a scene.
         // If a scene is found, its acquisition date is returned for highlighting.
         return sceneAcquiredOnSelectedDate?.formattedAcquisitionDate;
-    }, [acquisitionDate, availableScenes]);
+    }, [objectIdOfSelectedScene, availableScenes]);
 
     return selectedAcquisitionDate;
 };

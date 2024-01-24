@@ -37,7 +37,6 @@ export const useFindSelectedSceneByDate = (): void => {
         // Remove the object Id of selected scene when user removes the selected acquisition date
         if (!acquisitionDate) {
             dispatch(updateObjectIdOfSelectedScene(null));
-
             return;
         }
 
@@ -57,5 +56,5 @@ export const useFindSelectedSceneByDate = (): void => {
         dispatch(
             updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
         );
-    }, [availableScenes, acquisitionDate, isAnimationPlaying]);
+    }, [availableScenes, acquisitionDate, objectIdOfSelectedScene]);
 };
