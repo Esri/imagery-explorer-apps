@@ -270,7 +270,15 @@ export const getLandsatSceneByObjectId = async (
 
     const feature = await getLandsatFeatureByObjectId(objectId);
 
-    return getFormattedLandsatScenes([feature])[0];
+    if (!feature) {
+        return null;
+    }
+
+    const landsatScene = getFormattedLandsatScenes([feature])[0];
+
+    landsatSceneByObjectId.set(objectId, landsatScene);
+
+    return landsatScene;
 };
 
 export const getLandsatFeatureByObjectId = async (
@@ -280,6 +288,7 @@ export const getLandsatFeatureByObjectId = async (
         f: 'json',
         returnGeometry: 'true',
         objectIds: objectId.toString(),
+        outFields: '*',
     });
 
     const res = await fetch(

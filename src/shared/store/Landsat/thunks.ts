@@ -1,7 +1,7 @@
 import { batch } from 'react-redux';
 import {
-    getLandsatFeatureByObjectId,
-    getLandsatSceneByObjectId,
+    // getLandsatFeatureByObjectId,
+    // getLandsatSceneByObjectId,
     getLandsatScenes,
 } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { selectMapCenter } from '../Map/selectors';
@@ -9,11 +9,11 @@ import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import { landsatScenesUpdated } from './reducer';
 import { selectLandsatMissionsToBeExcluded } from './selectors';
 import { LandsatScene } from '@typing/imagery-service';
-import {
-    formattedDateString2Unixtimestamp,
-    getYearFromFormattedDateString,
-} from '@shared/utils/date-time/formatDateString';
-import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
+// import {
+//     formattedDateString2Unixtimestamp,
+//     getYearFromFormattedDateString,
+// } from '@shared/utils/date-time/formatDateString';
+// import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
 import {
     ImageryScene,
     availableImageryScenesUpdated,
@@ -40,8 +40,8 @@ export const queryAvailableScenes =
         abortController = new AbortController();
 
         try {
-            const { objectIdOfSelectedScene, acquisitionDate } =
-                selectQueryParams4SceneInSelectedMode(getState()) || {};
+            // const { objectIdOfSelectedScene, acquisitionDate } =
+            //     selectQueryParams4SceneInSelectedMode(getState()) || {};
 
             const center = selectMapCenter(getState());
 
@@ -104,11 +104,6 @@ export const queryAvailableScenes =
             //     for (const scene of scenesByAcquisitionDate) {
             //         scenes.push(scene);
             //     }
-            // }
-
-            // if(objectIdOfSelectedScene){
-            //     const selectedScene = await getLandsatSceneByObjectId(objectIdOfSelectedScene);
-            //     scenes.push(selectedScene);
             // }
 
             // sort scenes uing acquisition date in an ascending order
