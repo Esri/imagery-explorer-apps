@@ -15,7 +15,7 @@ import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 export const useFindSelectedSceneByDate = (): void => {
     const dispatch = useDispatch();
 
-    const { acquisitionDate } =
+    const { acquisitionDate, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
@@ -31,6 +31,20 @@ export const useFindSelectedSceneByDate = (): void => {
         // Moreover, when the animation is playing, the map center or acquisition date cannot be changed.
         // Therefore, the object ID of the Landsat scene for each animation frame remains fixed, eliminating the need for updating it.
         if (isAnimationPlaying) {
+            return;
+        }
+
+        // Remove the object Id of selected scene when user removes the selected acquisition date
+        if (!acquisitionDate) {
+            dispatch(updateObjectIdOfSelectedScene(null));
+
+            return;
+        }
+
+        // We want to maintain the selected imagery scene as locked, in other words,
+        // once a scene is chosen, it will remain locked until the user explicitly removes the
+        // selected date from the calendar or removes the object Id of the selected scene.
+        if (objectIdOfSelectedScene) {
             return;
         }
 

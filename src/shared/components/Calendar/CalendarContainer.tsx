@@ -15,6 +15,7 @@ import { AcquisitionDateLabel } from './AcquisitionDateLabel';
 import {
     updateAcquisitionDate,
     updateAcquisitionDateRange,
+    updateObjectIdOfSelectedScene,
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
@@ -35,6 +36,7 @@ import {
     getDateRangeForYear,
 } from '@shared/utils/date-time/getTimeRange';
 import { useAcquisitionYear } from './useAcquisitionYear';
+import { batch } from 'react-redux';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
 const CalendarContainer = () => {
@@ -154,7 +156,17 @@ const CalendarContainer = () => {
                 availableScenes={formattedScenes}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
-                    dispatch(updateAcquisitionDate(formattedAcquisitionDate));
+
+                    batch(() => {
+                        // unselect the selected imagery scene so that a new scene can be selected
+                        dispatch(updateObjectIdOfSelectedScene(null));
+
+                        // select a new acquisition date that will be used to find the scenes that was acquired on
+                        // this date
+                        dispatch(
+                            updateAcquisitionDate(formattedAcquisitionDate)
+                        );
+                    });
                 }}
             />
         </div>

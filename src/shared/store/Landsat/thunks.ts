@@ -78,33 +78,38 @@ export const queryAvailableScenes =
             //     }
             // }
 
-            // Check if a specific acquisition date is selected and falls outside the range of acquisition dates used avove.
-            // If so, it's necessary to query Landsat scenes acquired on the user-selected date.
-            // This step prevents the disappearance of the currently displayed Landsat Scene and its information
-            // until a new acquisition date is selected.
-            // Including the scene acquired on the selected date guarantees its visibility until a new acquisition date is chosen.
-            if (
-                acquisitionDate &&
-                (formattedDateString2Unixtimestamp(acquisitionDate) <
-                    formattedDateString2Unixtimestamp(
-                        acquisitionDateRange.startDate
-                    ) ||
-                    formattedDateString2Unixtimestamp(acquisitionDate) >
-                        formattedDateString2Unixtimestamp(
-                            acquisitionDateRange.endDate
-                        ))
-            ) {
-                const scenesByAcquisitionDate = await getLandsatScenes({
-                    acquisitionDate,
-                    mapPoint: center,
-                    abortController,
-                    missionsToBeExcluded,
-                });
+            // // Check if a specific acquisition date is selected and falls outside the range of acquisition dates used avove.
+            // // If so, it's necessary to query Landsat scenes acquired on the user-selected date.
+            // // This step prevents the disappearance of the currently displayed Landsat Scene and its information
+            // // until a new acquisition date is selected.
+            // // Including the scene acquired on the selected date guarantees its visibility until a new acquisition date is chosen.
+            // if (
+            //     acquisitionDate &&
+            //     (formattedDateString2Unixtimestamp(acquisitionDate) <
+            //         formattedDateString2Unixtimestamp(
+            //             acquisitionDateRange.startDate
+            //         ) ||
+            //         formattedDateString2Unixtimestamp(acquisitionDate) >
+            //             formattedDateString2Unixtimestamp(
+            //                 acquisitionDateRange.endDate
+            //             ))
+            // ) {
+            //     const scenesByAcquisitionDate = await getLandsatScenes({
+            //         acquisitionDate,
+            //         mapPoint: center,
+            //         abortController,
+            //         missionsToBeExcluded,
+            //     });
 
-                for (const scene of scenesByAcquisitionDate) {
-                    scenes.push(scene);
-                }
-            }
+            //     for (const scene of scenesByAcquisitionDate) {
+            //         scenes.push(scene);
+            //     }
+            // }
+
+            // if(objectIdOfSelectedScene){
+            //     const selectedScene = await getLandsatSceneByObjectId(objectIdOfSelectedScene);
+            //     scenes.push(selectedScene);
+            // }
 
             // sort scenes uing acquisition date in an ascending order
             // which is necessary for us to select between two overlapping scenes in step below
