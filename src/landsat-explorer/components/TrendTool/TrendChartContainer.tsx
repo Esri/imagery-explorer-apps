@@ -10,7 +10,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TrendChart';
-import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
+import {
+    updateAcquisitionDate,
+    updateObjectIdOfSelectedScene,
+} from '@shared/store/ImageryScene/thunks';
 
 import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
@@ -61,11 +64,13 @@ export const TrendChartContainer = () => {
                     return;
                 }
 
-                // use has selected a acquisition date from the temporal profile chart,
-                // to find and display the landsat scene that was acquired on use selected date
-                // at the query location, we will need to update both of them
                 batch(() => {
+                    // update the center of the map using user selected query location to
+                    // invoke query that fetches the landsat scenes that intersects with the query location
                     dispatch(centerChanged([queryLocation.x, queryLocation.y]));
+
+                    // unselect the selected imagery scene so that a new scene can be selected
+                    dispatch(updateObjectIdOfSelectedScene(null));
 
                     dispatch(
                         updateAcquisitionDate(
