@@ -15,6 +15,7 @@ import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTempora
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectQueryParams4SceneInSelectedMode,
 } from '../ImageryScene/selectors';
 import { TemporalProfileData } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '../Landsat/selectors';
@@ -42,6 +43,9 @@ export const updateTrendToolData =
 
         const queryLocation = selectQueryLocation4TrendTool(rootState);
 
+        const { objectIdOfSelectedScene } =
+            selectQueryParams4SceneInSelectedMode(rootState);
+
         const acquisitionMonth = selectAcquisitionMonth4TrendTool(rootState);
 
         const acquisitionYear = selectAcquisitionYear4TrendTool(rootState);
@@ -51,8 +55,9 @@ export const updateTrendToolData =
         const missionsToBeExcluded =
             selectLandsatMissionsToBeExcluded(rootState);
 
-        if (!queryLocation) {
+        if (!queryLocation || !objectIdOfSelectedScene) {
             dispatch(trendToolDataUpdated([]));
+            dispatch(queryLocation4TrendToolChanged(null));
             return;
         }
 

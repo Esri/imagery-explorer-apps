@@ -21,7 +21,7 @@ import {
     selectTrendToolOption,
 } from '@shared/store/TrendTool/selectors';
 import { updateTrendToolData } from '@shared/store/TrendTool/thunks';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
@@ -32,10 +32,13 @@ import {
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
+    selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { TrendChart } from '.';
+import { batch } from 'react-redux';
+import { debounce } from '@shared/utils/snippets/debounce';
 
 export const TrendToolContainer = () => {
     const dispatch = useDispatch();
@@ -54,12 +57,20 @@ export const TrendToolContainer = () => {
 
     const spectralIndex = useSelector(selectSpectralIndex4TrendTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
 
+    const updateTrendToolDataDebounced = useCallback(
+        debounce(async () => {
+            await dispatch(updateTrendToolData());
+        }, 200),
+        []
+    );
+
     useEffect(() => {
-        if (!queryParams4MainScene?.rasterFunctionName) {
+        if (rasterFunctionName) {
             return;
         }
 
@@ -68,34 +79,31 @@ export const TrendToolContainer = () => {
         // that is probably what the user is interested in seeing
         let spectralIndex: SpectralIndex = null;
 
-        if (/Temperature/i.test(queryParams4MainScene?.rasterFunctionName)) {
+        if (/Temperature/i.test(rasterFunctionName)) {
             spectralIndex = 'temperature farhenheit';
-        } else if (/NDVI/.test(queryParams4MainScene?.rasterFunctionName)) {
+        } else if (/NDVI/.test(rasterFunctionName)) {
             spectralIndex = 'vegetation';
         }
 
         if (spectralIndex) {
             dispatch(spectralIndex4TrendToolChanged(spectralIndex));
         }
-    }, [queryParams4MainScene?.rasterFunctionName]);
+    }, [rasterFunctionName]);
 
     useEffect(() => {
-        if (!queryParams4MainScene?.acquisitionDate) {
+        if (!acquisitionDate) {
             return;
         }
 
-        const month = getMonthFromFormattedDateString(
-            queryParams4MainScene?.acquisitionDate
-        );
+        const month = getMonthFromFormattedDateString(acquisitionDate);
 
-        const year = getYearFromFormattedDateString(
-            queryParams4MainScene?.acquisitionDate
-        );
+        const year = getYearFromFormattedDateString(acquisitionDate);
 
-        dispatch(acquisitionMonth4TrendToolChanged(month));
-
-        dispatch(acquisitionYear4TrendToolChanged(year));
-    }, [queryParams4MainScene?.acquisitionDate]);
+        batch(() => {
+            dispatch(acquisitionMonth4TrendToolChanged(month));
+            dispatch(acquisitionYear4TrendToolChanged(year));
+        });
+    }, [acquisitionDate]);
 
     // triggered when user selects a new acquisition month that will be used to draw the "year-to-year" trend data
     useEffect(() => {
@@ -104,42 +112,18 @@ export const TrendToolContainer = () => {
                 return;
             }
 
-            if (selectedTrendToolOption !== 'year-to-year') {
-                return;
-            }
-
-            try {
-                await dispatch(updateTrendToolData());
-            } catch (err) {
-                console.log(err);
-            }
+            // console.log('calling updateTrendToolData')
+            updateTrendToolDataDebounced();
         })();
     }, [
         queryLocation,
         tool,
         acquisitionMonth,
+        acquisitionYear,
         selectedTrendToolOption,
         missionsToBeExcluded,
+        objectIdOfSelectedScene,
     ]);
-
-    // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
-    useEffect(() => {
-        (async () => {
-            if (tool !== 'trend') {
-                return;
-            }
-
-            if (selectedTrendToolOption !== 'month-to-month') {
-                return;
-            }
-
-            try {
-                await dispatch(updateTrendToolData());
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, [queryLocation, tool, acquisitionYear, selectedTrendToolOption]);
 
     if (tool !== 'trend') {
         return null;
