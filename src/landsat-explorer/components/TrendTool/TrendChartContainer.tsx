@@ -43,12 +43,8 @@ export const TrendChartContainer = () => {
             return 'fetching temporal profile data';
         }
 
-        if (!objectIdOfSelectedScene) {
-            return 'Select a scene and click on the map to get the temporal profile.';
-        }
-
-        if (!temporalProfileData.length) {
-            return 'Click on the map to get the temporal profile.';
+        if (!objectIdOfSelectedScene || !temporalProfileData.length) {
+            return 'Select a scene and click a location within that scene to generate a temporal profile for the selected category.';
         }
 
         return '';
@@ -58,7 +54,7 @@ export const TrendChartContainer = () => {
         return (
             <div className="h-full w-full flex items-center justify-center text-center">
                 {isLoading && <calcite-loader inline />}
-                <p className="text-sm opacity-80">{message}</p>
+                <p className="text-sm opacity-50">{message}</p>
             </div>
         );
     }

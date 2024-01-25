@@ -19,6 +19,7 @@ import {
 } from '../ImageryScene/selectors';
 import { TemporalProfileData } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '../Landsat/selectors';
+import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getLandsatScenes';
 // import { delay } from '@shared/utils/snippets/delay';
 
 export const updateQueryLocation4TrendTool =
@@ -70,6 +71,18 @@ export const updateTrendToolData =
         abortController = new AbortController();
 
         try {
+            const isIntersected = await intersectWithLandsatScene(
+                queryLocation,
+                objectIdOfSelectedScene,
+                abortController
+            );
+
+            if (!isIntersected) {
+                throw new Error(
+                    'cannot query tempory profile outside of selected Imagery scene.'
+                );
+            }
+
             const data: TemporalProfileData[] = await getDataForTrendTool({
                 queryLocation,
                 acquisitionMonth:
@@ -89,7 +102,8 @@ export const updateTrendToolData =
 
             dispatch(trendToolIsLoadingChanged(false));
         } catch (err) {
-            console.log('failed to fetch temporal profile data');
+            // console.log('failed to fetch temporal profile data');
+            dispatch(trendToolIsLoadingChanged(false));
             throw err;
         }
     };

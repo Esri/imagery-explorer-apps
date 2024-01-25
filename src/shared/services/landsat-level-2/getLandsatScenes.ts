@@ -5,6 +5,7 @@ import { parseLandsatInfo } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 import { LandsatScene } from '@typing/imagery-service';
 import { DateRange } from '@typing/shared';
+import { Point } from '@arcgis/core/geometry';
 
 type GetLandsatScenesParams = {
     /**
@@ -345,4 +346,49 @@ export const getExtentOfLandsatSceneByObjectId = async (
     }
 
     return data?.extent as IExtent;
+};
+
+/**
+ * Check if the input point intersects with the Landsat scene specified by the input object ID.
+ * @param point Point geometry representing the location to check for intersection.
+ * @param objectId Object ID of the Landsat scene to check intersection with.
+ * @returns {boolean} Returns true if the input point intersects with the specified Landsat scene, otherwise false.
+ */
+export const intersectWithLandsatScene = async (
+    point: Point,
+    objectId: number,
+    abortController?: AbortController
+) => {
+    const geometry = JSON.stringify({
+        spatialReference: {
+            wkid: 4326,
+        },
+        x: point.longitude,
+        y: point.latitude,
+    });
+
+    const queryParams = new URLSearchParams({
+        f: 'json',
+        returnCountOnly: 'true',
+        returnGeometry: 'false',
+        objectIds: objectId.toString(),
+        geometry,
+        spatialRel: 'esriSpatialRelIntersects',
+        geometryType: 'esriGeometryPoint',
+    });
+
+    const res = await fetch(
+        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`,
+        {
+            signal: abortController.signal,
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error('failed to query Landsat-2 service');
+    }
+
+    const data = await res.json();
+
+    return data?.count && data?.count > 0;
 };

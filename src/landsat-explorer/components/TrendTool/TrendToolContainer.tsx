@@ -62,9 +62,16 @@ export const TrendToolContainer = () => {
 
     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
 
+    const [error, setError] = useState<Error>();
+
     const updateTrendToolDataDebounced = useCallback(
         debounce(async () => {
-            await dispatch(updateTrendToolData());
+            try {
+                setError(null);
+                await dispatch(updateTrendToolData());
+            } catch (err) {
+                setError(err);
+            }
         }, 200),
         []
     );
@@ -136,15 +143,15 @@ export const TrendToolContainer = () => {
                 dropdownListOptions={[
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'moisture index',
+                        label: 'moisture',
                     },
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'water index',
+                        label: 'water',
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'vegetation index',
+                        label: 'vegetation',
                     },
                     {
                         value: 'temperature farhenheit' as SpectralIndex,
@@ -165,7 +172,16 @@ export const TrendToolContainer = () => {
             />
 
             <div className="w-full h-[120px] my-2">
-                <TrendChart />
+                {error ? (
+                    <div className="text-center pt-8">
+                        <span className="opacity-50 text-sm">
+                            {error?.message ||
+                                'failed to fetch data for trend tool'}
+                        </span>
+                    </div>
+                ) : (
+                    <TrendChart />
+                )}
             </div>
 
             <TrendToolControls
@@ -173,17 +189,12 @@ export const TrendToolContainer = () => {
                 acquisitionYear={acquisitionYear}
                 selectedTrendOption={selectedTrendToolOption}
                 shouldShowCloseButton={
-                    temporalProfileData.length > 0 ? true : false
+                    queryLocation !== null
+                    // temporalProfileData.length > 0 ? true : false
                 }
                 trendOptionOnChange={(data) => {
                     dispatch(trendToolOptionChanged(data));
                 }}
-                // acquisitionMonthOnChange={(month) => {
-                //     dispatch(acquisitionMonth4TrendToolChanged(month));
-                // }}
-                // acquisitionYearOnChange={(year) => {
-                //     dispatch(acquisitionYear4TrendToolChanged(year));
-                // }}
                 closeButtonOnClick={() => {
                     dispatch(trendToolDataUpdated([]));
                     dispatch(queryLocation4TrendToolChanged(null));
