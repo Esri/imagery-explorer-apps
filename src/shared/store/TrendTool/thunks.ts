@@ -12,17 +12,22 @@ import {
     selectTrendToolOption,
 } from './selectors';
 import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
-import { selectActiveAnalysisTool } from '../ImageryScene/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectAppMode,
+} from '../ImageryScene/selectors';
 import { TemporalProfileData } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '../Landsat/selectors';
-import { delay } from '@shared/utils/snippets/delay';
+// import { delay } from '@shared/utils/snippets/delay';
 
 export const updateQueryLocation4TrendTool =
     (point: Point) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const mode = selectAppMode(getState());
+
         const tool = selectActiveAnalysisTool(getState());
 
-        if (tool !== 'trend') {
+        if (mode !== 'analysis' || tool !== 'trend') {
             return;
         }
 
