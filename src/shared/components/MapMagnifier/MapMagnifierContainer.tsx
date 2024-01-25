@@ -2,6 +2,7 @@ import MapView from '@arcgis/core/views/MapView';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import React, { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -21,13 +22,21 @@ export const MapMagnifierContainer: FC<Props> = ({ mapView }) => {
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
+    const { objectIdOfSelectedScene } = useSelector(
+        selectQueryParams4SceneInSelectedMode
+    );
+
     const showMagnifier = useMemo(() => {
         if (mode !== 'analysis') {
             return false;
         }
 
+        if (!objectIdOfSelectedScene) {
+            return false;
+        }
+
         return analysisTool === 'trend' || analysisTool === 'spectral';
-    }, [analysisTool, mode]);
+    }, [analysisTool, mode, objectIdOfSelectedScene]);
 
     return <MapMagnifier mapView={mapView} showMagnifier={showMagnifier} />;
 };
