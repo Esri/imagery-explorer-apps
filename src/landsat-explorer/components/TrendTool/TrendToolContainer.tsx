@@ -1,5 +1,5 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { ProfileToolControls } from '@shared/components/ProfileToolControls';
+import { TrendToolControls } from '@shared/components/TrendToolControls';
 // import { getProfileData } from '@shared/services/landsat-2/getProfileData';
 import {
     acquisitionMonth4TrendToolChanged,
@@ -184,7 +184,7 @@ export const TrendToolContainer = () => {
                 <TrendChart />
             </div>
 
-            <ProfileToolControls
+            <TrendToolControls
                 acquisitionMonth={acquisitionMonth}
                 acquisitionYear={acquisitionYear}
                 selectedTrendOption={selectedTrendToolOption}
@@ -194,12 +194,12 @@ export const TrendToolContainer = () => {
                 trendOptionOnChange={(data) => {
                     dispatch(trendToolOptionChanged(data));
                 }}
-                acquisitionMonthOnChange={(month) => {
-                    dispatch(acquisitionMonth4TrendToolChanged(month));
-                }}
-                acquisitionYearOnChange={(year) => {
-                    dispatch(acquisitionYear4TrendToolChanged(year));
-                }}
+                // acquisitionMonthOnChange={(month) => {
+                //     dispatch(acquisitionMonth4TrendToolChanged(month));
+                // }}
+                // acquisitionYearOnChange={(year) => {
+                //     dispatch(acquisitionYear4TrendToolChanged(year));
+                // }}
                 closeButtonOnClick={() => {
                     dispatch(trendToolDataUpdated([]));
                     dispatch(queryLocation4TrendToolChanged(null));

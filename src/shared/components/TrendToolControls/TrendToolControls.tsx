@@ -1,10 +1,10 @@
 import React from 'react';
 import { Dropdown } from '../Dropdown';
-import { useMonthOptions } from './useMonthOptions';
+// import { useMonthOptions } from './useMonthOptions';
 import { Tooltip } from '../Tooltip';
 import { useTrendOptions } from './useTrendOptions';
 import { TrendToolOption } from '@shared/store/TrendTool/reducer';
-import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
+// import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 
 type Props = {
     /**
@@ -23,18 +23,18 @@ type Props = {
      * if true, show close button
      */
     shouldShowCloseButton: boolean;
-    /**
-     * fires when user selects a new acquisition month that will be used in 'year-to-year' trend
-     * @param month
-     * @returns
-     */
-    acquisitionMonthOnChange: (month: number) => void;
-    /**
-     * fires when user selects a new acquisition year that will be used in 'month-to-month' trend
-     * @param year
-     * @returns
-     */
-    acquisitionYearOnChange: (year: number) => void;
+    // /**
+    //  * fires when user selects a new acquisition month that will be used in 'year-to-year' trend
+    //  * @param month
+    //  * @returns
+    //  */
+    // acquisitionMonthOnChange: (month: number) => void;
+    // /**
+    //  * fires when user selects a new acquisition year that will be used in 'month-to-month' trend
+    //  * @param year
+    //  * @returns
+    //  */
+    // acquisitionYearOnChange: (year: number) => void;
     /**
      * fires when user clicks on the close button
      * @returns
@@ -48,25 +48,25 @@ type Props = {
     trendOptionOnChange: (option: TrendToolOption) => void;
 };
 
-export const ProfileToolControls = ({
-    acquisitionMonth,
-    acquisitionYear,
+export const TrendToolControls = ({
+    // acquisitionMonth,
+    // acquisitionYear,
     selectedTrendOption,
     shouldShowCloseButton,
-    acquisitionMonthOnChange,
-    acquisitionYearOnChange,
+    // acquisitionMonthOnChange,
+    // acquisitionYearOnChange,
     closeButtonOnClick,
     trendOptionOnChange,
 }: Props) => {
-    const monthDropdownMenuData = useMonthOptions(acquisitionMonth);
+    // const monthDropdownMenuData = useMonthOptions(acquisitionMonth);
 
     const trendOptionsDropdownMenuData = useTrendOptions(selectedTrendOption);
 
-    /**
-     * options that will be used to populate the Dropdown Menu for year
-     */
-    const yearDropdownMenuData =
-        useAcquisitionYearsAsDropdownMenuOptions(acquisitionYear);
+    // /**
+    //  * options that will be used to populate the Dropdown Menu for year
+    //  */
+    // const yearDropdownMenuData =
+    //     useAcquisitionYearsAsDropdownMenuOptions(acquisitionYear);
 
     return (
         <div className="prfile-control-tools">
@@ -75,7 +75,7 @@ export const ProfileToolControls = ({
                     Time:
                 </span>
 
-                <div className="mx-1 w-1/3">
+                <div className="mx-1 w-1/2">
                     <Dropdown
                         data={trendOptionsDropdownMenuData}
                         onChange={(val) => {
@@ -85,7 +85,7 @@ export const ProfileToolControls = ({
                     />
                 </div>
 
-                <div className="mx-1 w-1/3">
+                {/* <div className="mx-1 w-1/3">
                     {selectedTrendOption === 'year-to-year' && (
                         <Dropdown
                             data={monthDropdownMenuData}
@@ -104,7 +104,7 @@ export const ProfileToolControls = ({
                             }}
                         />
                     )}
-                </div>
+                </div> */}
 
                 {shouldShowCloseButton && (
                     <div

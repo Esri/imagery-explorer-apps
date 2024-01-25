@@ -6,7 +6,7 @@ import {
     selectTrendToolOption,
     selectIsLoadingData4TrendingTool,
 } from '@shared/store/TrendTool/selectors';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TrendChart';
@@ -36,15 +36,29 @@ export const TrendChartContainer = () => {
 
     const isLoading = useSelector(selectIsLoadingData4TrendingTool);
 
-    if (!temporalProfileData.length || isLoading) {
+    const { objectIdOfSelectedScene } = queryParams4MainScene || {};
+
+    const message = useMemo(() => {
+        if (isLoading) {
+            return 'fetching temporal profile data';
+        }
+
+        if (!objectIdOfSelectedScene) {
+            return 'Select a scene and click on the map to get the temporal profile.';
+        }
+
+        if (!temporalProfileData.length) {
+            return 'Click on the map to get the temporal profile.';
+        }
+
+        return '';
+    }, [temporalProfileData, isLoading, objectIdOfSelectedScene]);
+
+    if (message) {
         return (
             <div className="h-full w-full flex items-center justify-center text-center">
                 {isLoading && <calcite-loader inline />}
-                <p className="text-sm opacity-80">
-                    {isLoading
-                        ? 'fetching temporal profile data'
-                        : 'Click on the map to get the temporal profile.'}
-                </p>
+                <p className="text-sm opacity-80">{message}</p>
             </div>
         );
     }
