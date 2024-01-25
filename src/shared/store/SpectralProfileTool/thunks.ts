@@ -39,6 +39,7 @@ export const updateSpectralProfileData =
 
         if (!queryLocation || !objectIdOfSelectedScene) {
             dispatch(spectralProfileDataUpdated([]));
+            dispatch(updateQueryLocation4SpectralProfileTool(null));
             return;
         }
 
@@ -53,27 +54,6 @@ export const updateSpectralProfileData =
         dispatch(errorChanged(null));
 
         try {
-            // const res = await identify({
-            //     point: queryLocation,
-            //     objectId: objectIdOfSelectedScene,
-            //     abortController,
-            // });
-
-            // if (
-            //     res?.catalogItems?.features &&
-            //     res?.catalogItems?.features.length === 0
-            // ) {
-            //     throw new Error(
-            //         'Failed to fetch spectral profile data. Please select a location inside of the selected landsat scene.'
-            //     );
-            // }
-
-            // const bandValues = getPixelValuesFromIdentifyTaskResponse(res);
-
-            // if (!bandValues) {
-            //     throw new Error('Identify task does not return band values');
-            // }
-
             const bandValues = await getPixelValues({
                 point: queryLocation,
                 objectId: objectIdOfSelectedScene,

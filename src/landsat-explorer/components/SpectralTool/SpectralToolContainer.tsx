@@ -11,7 +11,7 @@ import {
 } from '@shared/store/SpectralProfileTool/selectors';
 import { updateSpectralProfileData } from '@shared/store/SpectralProfileTool/thunks';
 import classNames from 'classnames';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { SpectralProfileChart } from './SpectralProfileChart';
@@ -19,6 +19,7 @@ import { findMostSimilarFeatureOfInterest } from './helper';
 import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
 import { FeatureOfInterests, SpectralProfileFeatureOfInterest } from './config';
 import { useSpectralProfileChartData } from './useSpectralProfileChartData';
+import { debounce } from '@shared/utils/snippets/debounce';
 
 export const SpectralToolContainer = () => {
     const dispatch = useDispatch();
@@ -74,6 +75,13 @@ export const SpectralToolContainer = () => {
         return true;
     }, [isLoading, error4SpectralProfileTool, spectralProfileData]);
 
+    const updateSpectralProfileDataDebounced = useCallback(
+        debounce(async () => {
+            dispatch(updateSpectralProfileData());
+        }, 200),
+        []
+    );
+
     // triggers when user selects a new query location
     useEffect(() => {
         (async () => {
@@ -81,11 +89,13 @@ export const SpectralToolContainer = () => {
                 return;
             }
 
-            try {
-                await dispatch(updateSpectralProfileData());
-            } catch (err) {
-                console.log(err);
-            }
+            // When the user selects a new acquisition date from the calendar,
+            // the currently selected imagery scene is deselected first,
+            // followed by the selection of a new scene. These two actions occur sequentially,
+            // potentially causing `updateSpectralProfileData` to be called twice in rapid succession,
+            // resulting in unnecessary network requests being triggered. To mitigate this issue,
+            // we need to debounce the `updateSpectralProfileData` function with a 200 ms delay.
+            updateSpectralProfileDataDebounced();
         })();
     }, [queryLocation, objectIdOfSelectedScene]);
 
