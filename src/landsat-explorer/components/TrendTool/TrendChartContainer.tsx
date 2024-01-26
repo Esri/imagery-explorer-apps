@@ -36,19 +36,17 @@ export const TrendChartContainer = () => {
 
     const isLoading = useSelector(selectIsLoadingData4TrendingTool);
 
-    const { objectIdOfSelectedScene } = queryParams4MainScene || {};
-
     const message = useMemo(() => {
         if (isLoading) {
             return 'fetching temporal profile data';
         }
 
-        if (!objectIdOfSelectedScene || !temporalProfileData.length) {
+        if (!temporalProfileData.length) {
             return 'Select a scene and click a location within that scene to generate a temporal profile for the selected category.';
         }
 
         return '';
-    }, [temporalProfileData, isLoading, objectIdOfSelectedScene]);
+    }, [temporalProfileData, isLoading]);
 
     if (message) {
         return (

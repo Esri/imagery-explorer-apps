@@ -20,7 +20,10 @@ import {
     selectAcquisitionYear4TrendTool,
     selectTrendToolOption,
 } from '@shared/store/TrendTool/selectors';
-import { updateTrendToolData } from '@shared/store/TrendTool/thunks';
+import {
+    updateQueryLocation4TrendTool,
+    updateTrendToolData,
+} from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -53,8 +56,6 @@ export const TrendToolContainer = () => {
 
     const selectedTrendToolOption = useSelector(selectTrendToolOption);
 
-    const temporalProfileData = useSelector(selectTrendToolData);
-
     const spectralIndex = useSelector(selectSpectralIndex4TrendTool);
 
     const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
@@ -72,7 +73,7 @@ export const TrendToolContainer = () => {
             } catch (err) {
                 setError(err);
             }
-        }, 200),
+        }, 50),
         []
     );
 
@@ -98,7 +99,9 @@ export const TrendToolContainer = () => {
     }, [rasterFunctionName]);
 
     useEffect(() => {
+        // remove query location when selected acquisition date is removed
         if (!acquisitionDate) {
+            dispatch(updateQueryLocation4TrendTool(null));
             return;
         }
 
@@ -119,17 +122,39 @@ export const TrendToolContainer = () => {
                 return;
             }
 
-            // console.log('calling updateTrendToolData')
+            if (selectedTrendToolOption !== 'year-to-year') {
+                return;
+            }
+
             updateTrendToolDataDebounced();
         })();
     }, [
+        acquisitionMonth,
         queryLocation,
         tool,
-        acquisitionMonth,
-        acquisitionYear,
         selectedTrendToolOption,
         missionsToBeExcluded,
-        objectIdOfSelectedScene,
+    ]);
+
+    // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
+    useEffect(() => {
+        (async () => {
+            if (tool !== 'trend') {
+                return;
+            }
+
+            if (selectedTrendToolOption !== 'month-to-month') {
+                return;
+            }
+
+            updateTrendToolDataDebounced();
+        })();
+    }, [
+        acquisitionYear,
+        queryLocation,
+        tool,
+        selectedTrendToolOption,
+        missionsToBeExcluded,
     ]);
 
     if (tool !== 'trend') {
