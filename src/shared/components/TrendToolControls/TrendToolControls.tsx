@@ -4,6 +4,10 @@ import { Dropdown } from '../Dropdown';
 import { Tooltip } from '../Tooltip';
 import { useTrendOptions } from './useTrendOptions';
 import { TrendToolOption } from '@shared/store/TrendTool/reducer';
+import {
+    getMonthAbbrName,
+    getMonthAbbreviation,
+} from '@shared/utils/date-time/monthHelpers';
 // import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 
 type Props = {
@@ -49,8 +53,8 @@ type Props = {
 };
 
 export const TrendToolControls = ({
-    // acquisitionMonth,
-    // acquisitionYear,
+    acquisitionMonth,
+    acquisitionYear,
     selectedTrendOption,
     shouldShowCloseButton,
     // acquisitionMonthOnChange,
@@ -85,26 +89,13 @@ export const TrendToolControls = ({
                     />
                 </div>
 
-                {/* <div className="mx-1 w-1/3">
-                    {selectedTrendOption === 'year-to-year' && (
-                        <Dropdown
-                            data={monthDropdownMenuData}
-                            // tooltip="Choose a season"
-                            onChange={(val) => {
-                                acquisitionMonthOnChange(+val);
-                            }}
-                        />
-                    )}
-
-                    {selectedTrendOption === 'month-to-month' && (
-                        <Dropdown
-                            data={yearDropdownMenuData}
-                            onChange={(val) => {
-                                acquisitionYearOnChange(+val);
-                            }}
-                        />
-                    )}
-                </div> */}
+                <div className="mx-1">
+                    <div className="p-1 text-xs bg-custom-background uppercase">
+                        {selectedTrendOption === 'year-to-year'
+                            ? getMonthAbbreviation(acquisitionMonth)
+                            : acquisitionYear}
+                    </div>
+                </div>
 
                 {shouldShowCloseButton && (
                     <div
