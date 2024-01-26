@@ -22,9 +22,8 @@ export const MapMagnifierContainer: FC<Props> = ({ mapView }) => {
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
-    const { objectIdOfSelectedScene } = useSelector(
-        selectQueryParams4SceneInSelectedMode
-    );
+    const { objectIdOfSelectedScene } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const showMagnifier = useMemo(() => {
         if (mode !== 'analysis') {
