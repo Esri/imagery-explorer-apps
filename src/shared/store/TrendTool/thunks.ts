@@ -38,6 +38,18 @@ export const updateQueryLocation4TrendTool =
 
 let abortController: AbortController = null;
 
+export const resetTrendToolData =
+    () => (dispatch: StoreDispatch, getState: StoreGetState) => {
+        // cancel pending requests triggered by `updateTrendToolData` thunk function
+        if (abortController) {
+            abortController.abort();
+        }
+
+        dispatch(trendToolDataUpdated([]));
+        dispatch(queryLocation4TrendToolChanged(null));
+        dispatch(trendToolIsLoadingChanged(false));
+    };
+
 export const updateTrendToolData =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const rootState = getState();
@@ -56,17 +68,17 @@ export const updateTrendToolData =
         const missionsToBeExcluded =
             selectLandsatMissionsToBeExcluded(rootState);
 
+        if (!queryLocation || !objectIdOfSelectedScene) {
+            // dispatch(trendToolDataUpdated([]));
+            // dispatch(queryLocation4TrendToolChanged(null));
+            return dispatch(resetTrendToolData());
+        }
+
         if (abortController) {
             abortController.abort();
         }
 
         abortController = new AbortController();
-
-        if (!queryLocation || !objectIdOfSelectedScene) {
-            dispatch(trendToolDataUpdated([]));
-            dispatch(queryLocation4TrendToolChanged(null));
-            return;
-        }
 
         dispatch(trendToolIsLoadingChanged(true));
 
@@ -102,6 +114,12 @@ export const updateTrendToolData =
 
             dispatch(trendToolIsLoadingChanged(false));
         } catch (err) {
+            // no need to throw the error
+            // is caused by the user aborting the pending query
+            if (err.name === 'AbortError') {
+                return;
+            }
+
             // console.log('failed to fetch temporal profile data');
             dispatch(trendToolIsLoadingChanged(false));
             throw err;

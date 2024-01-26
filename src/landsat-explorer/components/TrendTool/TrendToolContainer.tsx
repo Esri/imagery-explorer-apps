@@ -21,6 +21,7 @@ import {
     selectTrendToolOption,
 } from '@shared/store/TrendTool/selectors';
 import {
+    resetTrendToolData,
     updateQueryLocation4TrendTool,
     updateTrendToolData,
 } from '@shared/store/TrendTool/thunks';
@@ -221,8 +222,9 @@ export const TrendToolContainer = () => {
                     dispatch(trendToolOptionChanged(data));
                 }}
                 closeButtonOnClick={() => {
-                    dispatch(trendToolDataUpdated([]));
-                    dispatch(queryLocation4TrendToolChanged(null));
+                    // dispatch(trendToolDataUpdated([]));
+                    // dispatch(queryLocation4TrendToolChanged(null));
+                    dispatch(resetTrendToolData());
                 }}
             />
         </div>
