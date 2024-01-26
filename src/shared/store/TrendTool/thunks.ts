@@ -56,6 +56,12 @@ export const updateTrendToolData =
         const missionsToBeExcluded =
             selectLandsatMissionsToBeExcluded(rootState);
 
+        if (abortController) {
+            abortController.abort();
+        }
+
+        abortController = new AbortController();
+
         if (!queryLocation || !objectIdOfSelectedScene) {
             dispatch(trendToolDataUpdated([]));
             dispatch(queryLocation4TrendToolChanged(null));
@@ -63,12 +69,6 @@ export const updateTrendToolData =
         }
 
         dispatch(trendToolIsLoadingChanged(true));
-
-        if (abortController) {
-            abortController.abort();
-        }
-
-        abortController = new AbortController();
 
         try {
             const isIntersected = await intersectWithLandsatScene(

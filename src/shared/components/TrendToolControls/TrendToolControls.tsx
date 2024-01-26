@@ -79,7 +79,7 @@ export const TrendToolControls = ({
                     Time:
                 </span>
 
-                <div className="mx-1 w-1/2">
+                <div className="mx-1 w-1/3">
                     <Dropdown
                         data={trendOptionsDropdownMenuData}
                         onChange={(val) => {
@@ -89,12 +89,10 @@ export const TrendToolControls = ({
                     />
                 </div>
 
-                <div className="mx-1">
-                    <div className="p-1 text-xs bg-custom-background uppercase">
-                        {selectedTrendOption === 'year-to-year'
-                            ? getMonthAbbreviation(acquisitionMonth)
-                            : acquisitionYear}
-                    </div>
+                <div className="p-1 text-xs bg-custom-background uppercase mx-1 px-1">
+                    {selectedTrendOption === 'year-to-year'
+                        ? getMonthAbbreviation(acquisitionMonth)
+                        : acquisitionYear}
                 </div>
 
                 {shouldShowCloseButton && (
