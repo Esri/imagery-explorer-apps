@@ -46,11 +46,11 @@ export const RenderingControls: FC<Props> = ({
                     </Tooltip>
                 </div>
                 <span className="text-xs ml-2 max-w-[90px] leading-none">
-                    Show as clipping mask
+                    Clip to mask
                 </span>
             </div>
 
-            <div className={classNames('flex-grow pr-4')}>
+            <div className={classNames('flex-grow px-4')}>
                 <Slider value={selectedOpacity} onChange={opacityOnChange} />
             </div>
 
