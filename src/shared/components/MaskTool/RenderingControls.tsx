@@ -51,7 +51,14 @@ export const RenderingControls: FC<Props> = ({
             </div>
 
             <div className={classNames('flex-grow px-4')}>
-                <Slider value={transparence} onChange={transparenceOnChange} />
+                <Slider
+                    value={transparence}
+                    showSliderTooltip={true}
+                    tooltipTextFormatter={(val) => {
+                        return Math.floor(val * 100).toString() + '%';
+                    }}
+                    onChange={transparenceOnChange}
+                />
             </div>
 
             <div

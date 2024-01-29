@@ -1,6 +1,7 @@
 import './Slider.css';
 import React, { FC, useEffect, useRef } from 'react';
 import SliderWidget from '@arcgis/core/widgets/Slider';
+import classNames from 'classnames';
 
 type Props = {
     /**
@@ -8,6 +9,16 @@ type Props = {
      */
     value: number;
     steps?: number[];
+    /**
+     * if true, should show slider tooltip when hover over the slider handlers
+     */
+    showSliderTooltip?: boolean;
+    /**
+     * The function to format the text to be displayed in slider tooltip
+     * @param val
+     * @returns
+     */
+    tooltipTextFormatter?: (val: number) => string;
     /**
      * fires when user selects a new value using the slider
      */
@@ -19,7 +30,13 @@ type Props = {
  * @param param0
  * @returns
  */
-export const Slider: FC<Props> = ({ value, steps, onChange }) => {
+export const Slider: FC<Props> = ({
+    value,
+    steps,
+    showSliderTooltip,
+    tooltipTextFormatter,
+    onChange,
+}) => {
     const containerRef = useRef<HTMLDivElement>();
 
     const sliderRef = useRef<SliderWidget>();
@@ -43,6 +60,31 @@ export const Slider: FC<Props> = ({ value, steps, onChange }) => {
             const value = +evt.value;
             onChange(value);
         });
+    };
+
+    /**
+     * add custom attribute `aria-tooltip-text` to `.esri-slider__anchor` elements
+     * so that it can be used to populate the tooltip when user hovers the slider handles
+     * @returns void
+     */
+    const addTooltipTextAttribute = () => {
+        if (!showSliderTooltip) {
+            return;
+        }
+
+        const sliderHandlerA = containerRef.current.querySelector(
+            '.esri-slider__anchor-0'
+        );
+
+        const ATTR_NAME = 'aria-tooltip-text';
+
+        const tooltipText = tooltipTextFormatter
+            ? tooltipTextFormatter(value)
+            : value.toFixed(2).toString();
+
+        if (sliderHandlerA) {
+            sliderHandlerA.setAttribute(ATTR_NAME, tooltipText);
+        }
     };
 
     useEffect(() => {
@@ -70,12 +112,16 @@ export const Slider: FC<Props> = ({ value, steps, onChange }) => {
         if (sliderRef.current.values[0] !== value) {
             sliderRef.current.viewModel.setValue(0, value);
         }
+
+        addTooltipTextAttribute();
     }, [value]);
 
     return (
         <div
             // id="cloud-filter-container"
-            className="esri-slider-custom-style w-full"
+            className={classNames('esri-slider-custom-style w-full', {
+                'show-slider-tooltip': showSliderTooltip,
+            })}
             ref={containerRef}
         ></div>
     );
