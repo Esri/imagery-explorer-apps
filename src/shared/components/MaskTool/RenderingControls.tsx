@@ -6,9 +6,9 @@ import { Tooltip } from '../Tooltip';
 
 type Props = {
     /**
-     * opacity of the Mask Layer
+     * transparence of the Mask Layer
      */
-    selectedOpacity: number;
+    transparence: number;
     /**
      * if true, uses the pixels as a clipping mask, showing the underlying landsat imagery using the “destination atop” blend mode
      */
@@ -19,16 +19,16 @@ type Props = {
     color: number[];
     colorOnChange: (color: number[]) => void;
     shouldClipOnToggle: () => void;
-    opacityOnChange: (val: number) => void;
+    transparenceOnChange: (val: number) => void;
 };
 
 export const RenderingControls: FC<Props> = ({
-    selectedOpacity,
+    transparence,
     shouldClip,
     color,
     colorOnChange,
     shouldClipOnToggle,
-    opacityOnChange,
+    transparenceOnChange,
 }: Props) => {
     return (
         <div className="flex items-center calcite-mode-dark select-none">
@@ -51,7 +51,7 @@ export const RenderingControls: FC<Props> = ({
             </div>
 
             <div className={classNames('flex-grow px-4')}>
-                <Slider value={selectedOpacity} onChange={opacityOnChange} />
+                <Slider value={transparence} onChange={transparenceOnChange} />
             </div>
 
             <div

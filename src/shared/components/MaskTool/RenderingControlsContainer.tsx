@@ -33,7 +33,7 @@ export const RenderingControlsContainer = () => {
 
     return (
         <RenderingControls
-            selectedOpacity={opacity}
+            transparence={1 - opacity}
             shouldClip={shouldClip}
             color={maskOptions.color}
             colorOnChange={(color) => {
@@ -42,8 +42,8 @@ export const RenderingControlsContainer = () => {
             shouldClipOnToggle={() => {
                 dispatch(shouldClipMaskLayerToggled());
             }}
-            opacityOnChange={(val) => {
-                dispatch(maskLayerOpacityChanged(val));
+            transparenceOnChange={(val) => {
+                dispatch(maskLayerOpacityChanged(1 - val));
             }}
         />
     );
