@@ -173,7 +173,7 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'NDMI Colorized',
         description:
-            'Normalized Difference Moisture Index with color map computed as (b5 - b6) / (b5 + b6). Wetlands and moist areas are blues, and dry areas in green.',
+            'Normalized Difference Moisture Index with color map computed as (b5 - b6) / (b5 + b6). Moist areas range from light green to dark blue.',
         label: 'NDMI',
     },
     {
