@@ -32,3 +32,12 @@
 .esri-slider-custom-style .esri-slider__tick-label{
     @apply text-xs text-custom-light-blue-80 mt-3;
 }
+
+.show-slider-tooltip .esri-slider__anchor::after {
+    content: '';
+    @apply absolute top-[-30px] left-[-10px] text-center text-custom-light-blue-80 text-xs;
+}
+
+.show-slider-tooltip .esri-slider__anchor:hover:after {
+    content: attr(aria-tooltip-text);
+}

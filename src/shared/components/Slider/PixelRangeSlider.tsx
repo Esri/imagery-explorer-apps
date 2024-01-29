@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useRef } from 'react';
 import SliderWidget from '@arcgis/core/widgets/Slider';
 // import classNames from 'classnames';
-import './PixelRangeSlider.css';
+// import './PixelRangeSlider.css';
+import './Slider.css';
 import classNames from 'classnames';
 
 type Props = {

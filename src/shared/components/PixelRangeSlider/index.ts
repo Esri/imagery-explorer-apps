@@ -1,1 +1,1 @@
-export { PixelRangeSlider } from './PixelRangeSlider';
+export { PixelRangeSlider } from '../Slider/PixelRangeSlider';

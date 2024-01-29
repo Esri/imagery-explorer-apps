@@ -1,8 +1,0 @@
-.show-slider-tooltip .esri-slider__anchor::after {
-    content: '';
-    @apply absolute top-[-30px] left-[-10px] text-center text-custom-light-blue-80 text-xs;
-}
-
-.show-slider-tooltip .esri-slider__anchor:hover:after {
-    content: attr(aria-tooltip-text);
-}
