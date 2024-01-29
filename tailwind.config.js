@@ -43,7 +43,7 @@ module.exports = {
     },
     extend: {
       spacing: {
-        'bottom-panel-height': '230px',
+        'bottom-panel-height': '236px',
         'app-header-size': '40px',
         'app-header-position': '15px',
         'layer-toggle-top-position': '15px',

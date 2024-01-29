@@ -5,21 +5,28 @@ import { AnalysisTool } from '@shared/store/ImageryScene/reducer';
 
 const AnalysisTools: {
     tool: AnalysisTool;
-    label?: string;
+    title: string;
+    subtitle: string;
 }[] = [
     {
         tool: 'mask',
-        label: 'Index',
+        title: 'Index',
+        subtitle: 'mask',
     },
     {
         tool: 'trend',
+        title: 'Temporal',
+        subtitle: 'profile',
     },
     {
         tool: 'spectral',
-        label: 'Profile',
+        title: 'Spectral',
+        subtitle: 'profile',
     },
     {
         tool: 'change',
+        title: 'Change',
+        subtitle: 'detection',
     },
 ];
 
@@ -34,7 +41,7 @@ export const AnalysisToolSelector: FC<Props> = ({
 }: Props) => {
     return (
         <>
-            {AnalysisTools.map(({ tool, label }) => (
+            {AnalysisTools.map(({ tool, title, subtitle }) => (
                 <div key={tool} className={classNames('relative mb-1')}>
                     <Button
                         // fullHeight={true}
@@ -49,7 +56,11 @@ export const AnalysisToolSelector: FC<Props> = ({
                             tool === selectedTool ? 'left' : null
                         }
                     >
-                        <span className="uppercase">{label || tool}</span>
+                        <div className="text-center text-xs">
+                            <span className="uppercase">{title}</span>
+                            <br />
+                            <span className="lowercase">{subtitle}</span>
+                        </div>
                     </Button>
                 </div>
             ))}
