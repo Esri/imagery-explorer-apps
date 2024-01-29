@@ -37,7 +37,7 @@ const LandsatRendererThumbnailByName: Record<
     'Surface Temperature Colorized (Celsius)': LandsatThermalThumbnail,
     'MNDWI Colorized': LandsatMNDWIThumbnail,
     'Urban with DRA': LandsatUrbanThumbnail,
-    'NDWI Colorized': LandsatNDMIThumbnail,
+    'NDMI Colorized': LandsatNDMIThumbnail,
 };
 
 const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
@@ -52,7 +52,7 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
     'Surface Temperature Colorized (Celsius)': LandsatThermalLegend,
     'MNDWI Colorized': LandsatMNDWILegend,
     'Urban with DRA': null,
-    'NDWI Colorized': LandsatNDMILegend,
+    'NDMI Colorized': LandsatNDMILegend,
 };
 
 export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
