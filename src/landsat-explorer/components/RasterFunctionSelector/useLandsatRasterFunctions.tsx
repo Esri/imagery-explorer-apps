@@ -13,11 +13,12 @@ import LandsatNDVIThumbnail from './thumbnails/Landsat/Render_NDVI.png';
 import LandsatShortWaveIRThumbnail from './thumbnails/Landsat/Render_ShortwaveIR.jpg';
 import LandsatThermalThumbnail from './thumbnails/Landsat/Render_Thermal.png';
 import LandsatMNDWIThumbnail from './thumbnails/Landsat/Render_MNDWI.png';
+import LandsatNDMIThumbnail from './thumbnails/Landsat/Render_NDMI.png';
 import LandsatUrbanThumbnail from './thumbnails/Landsat/Render_Urban.jpg';
 
 import LandsatMNDWILegend from './legends/Landsat/MNDWI.png';
 import LandsatNDVILegend from './legends/Landsat/NDVI.png';
-// import LandsatNDMILegend from './legends/Landsat/NDMI.png';
+import LandsatNDMILegend from './legends/Landsat/NDMI.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 
@@ -36,6 +37,7 @@ const LandsatRendererThumbnailByName: Record<
     'Surface Temperature Colorized (Celsius)': LandsatThermalThumbnail,
     'MNDWI Colorized': LandsatMNDWIThumbnail,
     'Urban with DRA': LandsatUrbanThumbnail,
+    'NDWI Colorized': LandsatNDMIThumbnail,
 };
 
 const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
@@ -50,6 +52,7 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
     'Surface Temperature Colorized (Celsius)': LandsatThermalLegend,
     'MNDWI Colorized': LandsatMNDWILegend,
     'Urban with DRA': null,
+    'NDWI Colorized': LandsatNDMILegend,
 };
 
 export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
