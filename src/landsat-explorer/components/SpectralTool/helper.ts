@@ -88,7 +88,7 @@ export const FILL_COLOR_BY_FEATURE_OF_INTEREST: Record<
     Sand: '#EDC692',
     'Bare Soil': '#EE9720',
     'Paved Surface': '#EB7EE0',
-    Forest: '#0AC5C0',
+    Trees: '#0AC5C0',
     'Healthy Vegetation': '#1BE43E',
     'Dry Vegetation': '#CAD728',
 };
