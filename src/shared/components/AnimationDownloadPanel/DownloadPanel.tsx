@@ -3,13 +3,8 @@ import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
-// import { createVideoViaMediaRecorder } from '@shared/utils/video-encoder/createVideoViaMediaRecorder';
-import { AnimationFrameData } from '@shared/utils/video-encoder';
-// import { createVideoViaFFMPEG } from '@shared/utils/video-encoder/createVideoViaFFMPEG';
 import { DownloadOptionsList } from './DownloadOptionsList';
-import classNames from 'classnames';
 import { Dimension, PreviewWindow } from './PreviewWindow';
-import { createVideoViaImages2Video } from '@shared/utils/video-encoder/createVideoViaImages2Video';
 import { useSelector } from 'react-redux';
 import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selectors';
 import { DownloadJobStatusInfo } from './DownloadJobStatus';
@@ -19,6 +14,11 @@ import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
 import { appConfig } from '@shared/config';
+import {
+    convertImages2Video,
+    AnimationFrameData,
+} from '@vannizhang/images-to-video-converter-client';
+
 type Props = {
     /**
      * array of image elements to be used to create video file
@@ -97,7 +97,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
 
             abortController.current = new AbortController();
 
-            const { filename, fileContent } = await createVideoViaImages2Video({
+            const { filename, fileContent } = await convertImages2Video({
                 data,
                 animationSpeed,
                 outputWidth: width,
