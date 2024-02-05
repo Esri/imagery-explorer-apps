@@ -8,14 +8,6 @@
         "thumbnail_name": "landsatexplorer.png",
         "entrypoint": "/src/landsat-explorer/index.tsx"
     },
-    "sentinel-2": {
-        "title": "Esri | Sentinel-2 Explorer",
-        "webmapId": "81609bbe235942919ad27c77e42c600e",
-        "pathname": "",
-        "description": "",
-        "thumbnail_name": "",
-        "entrypoint": "/src/sentinel2-explorer/index.tsx"
-    },
     "spectral-sampling-tool": {
         "title": "Spectral Sampling Tool",
         "webmapId": "81609bbe235942919ad27c77e42c600e",

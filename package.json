@@ -6,11 +6,9 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "start-landsat": "webpack serve --mode development --open --env app=landsat",
-    "start-sentinel2": "webpack serve --mode development --open --env app=sentinel-2",
     "start-spectral-sampling-tool": "webpack serve --mode development --open --env app=spectral-sampling-tool",
     "start-landsat-surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
     "build-landsat": "webpack --mode production --env app=landsat",
-    "build-sentinel2": "webpack --mode production --env app=sentinel-2",
     "build-spectral-sampling-tool": "webpack --mode production --env app=spectral-sampling-tool",
     "build-landsat-surface-temp": "webpack --mode production --env app=landsat-surface-temp",
     "prepare": "husky install",
