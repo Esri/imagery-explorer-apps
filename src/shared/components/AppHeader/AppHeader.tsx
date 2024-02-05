@@ -96,17 +96,22 @@ const AppHeader: FC<Props> = ({ title }) => {
                             'absolute left-0 top-app-header-size theme-background w-full border-t border-custom-light-blue-50'
                         )}
                     >
+                        <div className="px-2 pt-2 text-xs text-custom-light-blue-50">
+                            <span>Image Explorer Apps</span>
+                        </div>
+
                         {IMAGERY_EXPLORER_APPS.map((d) => {
                             return (
                                 <a
+                                    key={d.title}
                                     href={d.url}
                                     target="_blank"
-                                    key={d.title}
+                                    title={`Launch the ${d.title} in a new tab`}
                                     rel="noreferrer"
                                 >
-                                    <div className="w-full p-2 text-sm cursor-pointer flex items-center">
-                                        <span className="mr-2">{d.title}</span>
-                                        <calcite-icon icon="launch" scale="s" />
+                                    <div className="w-full p-2 text-xs cursor-pointer flex items-center">
+                                        <span className="">{d.title}</span>
+                                        {/* <calcite-icon icon="launch" scale="s" /> */}
                                     </div>
                                 </a>
                             );
