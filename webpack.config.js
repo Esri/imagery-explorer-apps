@@ -168,7 +168,7 @@ module.exports =  (env, options)=> {
                     'og:title': title,
                     'og:description': description,
                     'og:url': `https://livingatlas.arcgis.com${pathname}/`,
-                    'og:image': `https://livingatlas.arcgis.com${pathname}/public/thumbnails/${thumbnail_name}`,
+                    'og:image': `https://livingatlas.arcgis.com${pathname}/public/thumbnails/${app}.jpg`,
                     'last-modified':  new Date().toString()
                 },
                 minify: {

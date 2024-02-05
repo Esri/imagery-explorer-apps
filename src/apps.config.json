@@ -5,7 +5,6 @@
         "animationMetadataSources": "Esri, USGS, NASA",
         "pathname": "/landsatexplorer",
         "description": "Landsat multispectral imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.",
-        "thumbnail_name": "landsatexplorer.png",
         "entrypoint": "/src/landsat-explorer/index.tsx"
     },
     "spectral-sampling-tool": {
@@ -13,7 +12,6 @@
         "webmapId": "81609bbe235942919ad27c77e42c600e",
         "pathname": "/",
         "description": "",
-        "thumbnail_name": "",
         "entrypoint": "/src/spectral-sampling-tool/index.tsx"
     },
     "landsat-surface-temp": {
@@ -21,7 +19,6 @@
         "webmapId": "81609bbe235942919ad27c77e42c600e",
         "pathname": "/landsat-surface-temp",
         "description": "Explore Landsat surface temperature archive",
-        "thumbnail_name": "landsat-surface-temp.jpg",
         "entrypoint": "/src/landsat-surface-temp/index.tsx"
     }
 }
