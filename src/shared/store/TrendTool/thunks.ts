@@ -91,7 +91,7 @@ export const updateTrendToolData =
 
             if (!isIntersected) {
                 throw new Error(
-                    'cannot query tempory profile outside of selected Imagery scene.'
+                    'Temporal profiles are only available for points selected within the selected scene.'
                 );
             }
 
