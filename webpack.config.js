@@ -20,7 +20,7 @@ const hostname = computerName.includes('Esri')
     ? `${computerName}.arcgis.com` 
     : 'localhost';
 
-const appsConfig = require('./src/apps.config.json');
+const config = require('./src/config.json');
 
 module.exports =  (env, options)=> {
 
@@ -38,7 +38,9 @@ module.exports =  (env, options)=> {
         )
     }
 
-    if(!appsConfig[app]){
+    const appConfig = config.apps[app]
+
+    if(!appConfig){
         throw new Error(
             `config data for "${app}" is not found, `+
             'please update `./src/apps.config.json` to make sure it includes config data for this app'
@@ -49,9 +51,8 @@ module.exports =  (env, options)=> {
         entrypoint,
         title,
         description,
-        thumbnail_name,
         pathname,
-    } = appsConfig[app];
+    } = appConfig;
 
     if(!entrypoint){
         throw new Error(
