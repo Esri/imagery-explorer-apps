@@ -37,7 +37,8 @@ export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
 export const appConfig: AppConfig = config.apps[APP_NAME];
 
 export const TIER =
-    window.location.host === 'livingatlas.arcgis.com'
+    window.location.host === 'livingatlas.arcgis.com' ||
+    window.location.host === 'livingatlasstg.arcgis.com'
         ? 'production'
         : 'development';
 
