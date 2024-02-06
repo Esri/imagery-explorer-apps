@@ -1,6 +1,8 @@
 // import { TIER } from '@shared/constants';
-import { TIER } from '@shared/config';
+import { TIER, getServiceConfig } from '@shared/config';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
+
+const serviceConfig = getServiceConfig('landsat-level-2');
 
 /**
  * Landsat 8 and 9 multispectral and multitemporal atmospherically corrected imagery with on-the-fly renderings and indices for visualization and analysis.
@@ -8,15 +10,28 @@ import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
  */
 export const LANDSAT_LEVEL_2_ITEM_ID = `bd6b545b95654d91a0b7faf7b5e010f5`;
 
+/**
+ * URL of the Landsat-Level-2 Item on ArcGIS Online
+ */
 export const LANDSAT_LEVEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${LANDSAT_LEVEL_2_ITEM_ID}`;
 
-export const LANDSAT_LEVEL_2_SERVICE_URL_PROD = `https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer`;
+/**
+ * This is the original service URL, which will prompt user to sign in by default as it requires subscription
+ */
+const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL =
+    'https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer';
 
 /**
- * A proxy item for Landsat Level-2 dev service
- * @see https://www.arcgis.com/home/item.html?id=f89d8adb0d5141a7a5820e8a6375480e
+ * Service URL to be used in PROD enviroment
  */
-export const LANDSAT_LEVEL_2_SERVICE_URL_DEV = `https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer`;
+export const LANDSAT_LEVEL_2_SERVICE_URL_PROD =
+    serviceConfig?.production || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
+
+/**
+ * Service URL to be used in DEV enviroment
+ */
+export const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
+    serviceConfig?.development || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service

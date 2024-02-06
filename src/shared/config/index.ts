@@ -21,6 +21,11 @@ type AppConfig = {
 export type AppName = keyof typeof config.apps;
 
 /**
+ * a type that represents the keys of the imagery services object in the config file
+ */
+export type ServiceName = keyof typeof config.services;
+
+/**
  * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
  * The APP_NAME should match one of the keys in `apps.config.json` file.
  */
@@ -35,3 +40,12 @@ export const TIER =
     window.location.host === 'livingatlas.arcgis.com'
         ? 'production'
         : 'development';
+
+/**
+ * Get imagery service config by name
+ * @param serviceName
+ * @returns
+ */
+export const getServiceConfig = (serviceName: ServiceName) => {
+    return config.services[serviceName];
+};
