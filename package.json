@@ -1,7 +1,7 @@
 {
-  "name": "imagery-explorer",
+  "name": "imagery-explorer-apps",
   "version": "1.0.0",
-  "description": "Start React+Redux project with TypeScript in an easier and faster way",
+  "description": "A collection of Imagery Explorer applications developed by the Esri's Living Atlas team.",
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests",
