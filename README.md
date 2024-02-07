@@ -1,8 +1,14 @@
 # Imagery Explorer Apps
-This repository contains a collection of Imagery Explorer applications developed by the Esri's Living Atlas team.
+This repository contains a collection of Imagery Explorer web applications developed by Esri's ArcGIS Living Atlas team.
+
+## Table of Content
+- [Getting Started](#getting-started)
+- [Landsat Explorer](#landsat-explorer)
+- [Resources](#resources)
+- [Issues](#issues)
 
 ## Getting Started
-Before we begin, make sure you have a fresh version of [Node.js](https://nodejs.org/en/) and NPM installed. The current Long Term Support (LTS) release is an ideal starting point.
+Before you begin, make sure you have a fresh version of [Node.js](https://nodejs.org/en/) and NPM installed. The current Long Term Support (LTS) release is an ideal starting point.
 
 To get started, clone this repository (or your fork) to your local machine:
 ```sh
@@ -30,9 +36,7 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 - Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
 
 ### Usage
-Before running the application, you may need to create a proxy item for the [Landsat-Level-2](https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5) service with your credentials embedded (Learn more about [storing credentials with service item](https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2)). Please note that the proxy items utilized by the application hosted on the Living Atlas server only allow usage from the Living Atlas domain.
-
-Next, update the `landsat-level-2` URLs in the [`config.json`](./src/config.json) to use the URL of the proxy service you just created.
+Before running the application, update the `landsat-level-2` URLs in the [`config.json`](./src/config.json) to use the URL of the your service. 
 
 [`config.json`](./src/config.json):
 ```js
@@ -57,22 +61,16 @@ To build the app, you can run the command below, this will place all files neede
 npm run build-landsat
 ```
 
+### Licensing
+- Landsat Level-2 Imagery
+    - Source Image Products - USGS. USGS-authored or produced data and information are considered to be in the U.S. Public Domain and may be used without restriction. [Acknowledging or Crediting USGS](https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs)
+    - Image Service - Esri. This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
+
+- Landsat Explorer App
+- This apps are licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
+
 ## Resources
 - [Landsat Level-2 archive available in Living Atlas](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/landsat-level-2-science-products-and-landsat-explorer/)
 
 ## Issues
-
 Find a bug or want to request a new feature?  Please let us know by submitting an issue.
-
-## Contributing
-
-Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
-
-## Licensing
-
-### Landsat Level-2 Imagery
-- Source Image Products - USGS. USGS-authored or produced data and information are considered to be in the U.S. Public Domain and may be used without restriction. [Acknowledging or Crediting USGS](https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs)
-- Image Service - Esri. This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
-
-### Landsat Explorer App
-This apps are licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
