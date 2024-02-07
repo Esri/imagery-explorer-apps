@@ -14,7 +14,7 @@ Before you begin, make sure you have a fresh version of [Node.js](https://nodejs
 
 To get started, clone this repository (or your fork) to your local machine:
 ```sh
-git clone https://github.com/vannizhang/imagery-explorer-apps.git
+git clone https://github.com/Esri/imagery-explorer-apps.git
 ```
 
 Navigate to the root directory of the project and install the necessary packages (dependencies):
