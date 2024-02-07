@@ -38,7 +38,7 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 - Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
 
 ### Usage
-Before running the application, update the `landsat-level-2` URLs in the [`config.json`](./src/config.json) to use the URL of the your service. 
+Before running the application, update the `landsat-level-2` URLs in the [`config.json`](./src/config.json) to use the URL of your service. 
 
 [`config.json`](./src/config.json):
 ```js
