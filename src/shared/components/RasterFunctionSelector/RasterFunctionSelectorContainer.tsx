@@ -11,6 +11,7 @@ import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { RasterFunctionInfo } from '@typing/imagery-service';
+import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 
 type Props = {
     /**
@@ -30,6 +31,8 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({ data }) => {
 
     // const rasterFunctionInfo = useRasterFunctionInfo();
 
+    const isChangeCompareLayerOn = useSelector(selectChangeCompareLayerIsOn);
+
     const { rasterFunctionName, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
@@ -46,6 +49,14 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({ data }) => {
             return true;
         }
 
+        if (
+            mode === 'analysis' &&
+            analysisTool === 'change' &&
+            isChangeCompareLayerOn
+        ) {
+            return true;
+        }
+
         return false;
     };
 
@@ -53,9 +64,9 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({ data }) => {
         return null;
     }
 
-    if (mode === 'analysis' && analysisTool === 'change') {
-        return null;
-    }
+    // if (mode === 'analysis' && analysisTool === 'change') {
+    //     return null;
+    // }
 
     return (
         <RasterFunctionSelector
