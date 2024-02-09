@@ -34,7 +34,7 @@ module.exports =  (env, options)=> {
     if(!app){
         throw new Error(
             'A valid `app` name is not found in environment variables, '+
-            'try `npm run start-landsat` or `npm run start-sentinel2` instead.\n'
+            'try `npm run start-landsat`.\n'
         )
     }
 
@@ -43,7 +43,7 @@ module.exports =  (env, options)=> {
     if(!appConfig){
         throw new Error(
             `config data for "${app}" is not found, `+
-            'please update `./src/apps.config.json` to make sure it includes config data for this app'
+            'please update `./src/config.json` to make sure it includes config data for this app'
         )
     }
 
@@ -57,7 +57,7 @@ module.exports =  (env, options)=> {
     if(!entrypoint){
         throw new Error(
             `entrypoint for "${app}" is not found, `+
-            'please update `./src/apps.config.json` to make sure it includes entrypoint of the app to start'
+            'please update `./src/config.json` to make sure it includes entrypoint of the app to start'
         )
     }
 
