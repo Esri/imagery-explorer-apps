@@ -38,7 +38,7 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 - Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
 
 ### Usage
-Before running the application, update the `landsat-level-2` URLs in the [`config.json`](./src/config.json) to use the URL of of the [Landsat Level-2](https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer) or your service proxy. 
+Before running the application, update the `landsat-level-2` URLs in the [`config.json`](./src/config.json) to use the URL of your service proxy for [Landsat Level-2](https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer). 
 
 [`config.json`](./src/config.json):
 ```js
