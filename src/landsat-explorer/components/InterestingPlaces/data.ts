@@ -19,12 +19,13 @@ import Richat from './thumbnails/landsat/Richat.jpg';
 import KalahariDunes from './thumbnails/landsat/KalahariDunes.jpg';
 import KuisebCanyon from './thumbnails/landsat/KuisebCanyon.jpg';
 import Quelccaya from './thumbnails/landsat/Quelccaya.jpg';
-import RupertBay from './thumbnails/landsat/RupertBay.jpg';
+// import RupertBay from './thumbnails/landsat/RupertBay.jpg';
 import ThreeGorges from './thumbnails/landsat/ThreeGorges.jpg';
 import DashteKevir from './thumbnails/landsat/Dasht-eKevir.jpg';
 import Ouarkziz from './thumbnails/landsat/Ouarkziz.jpg';
 import EtoshaPan from './thumbnails/landsat/EtoshaPan.jpg';
 import LakeMackay from './thumbnails/landsat/LakeMackay.jpg';
+import GossesBluff from './thumbnails/landsat/GossesBluff.png';
 import { InterestingPlaceData } from '@typing/shared';
 
 export const data: InterestingPlaceData[] = [
@@ -69,7 +70,7 @@ export const data: InterestingPlaceData[] = [
         },
         renderer: 'Geology with DRA',
         thumbnail: Richat,
-        label: 'Richat Structure',
+        label: 'Richat Structure (Eye of the Sahara)',
         description:
             'The Richat Structure is a prominent circular geological feature in the Sahara Desert. It is an eroded geological dome, 40 km (25 mi) in diameter, exposing sedimentary rock in layers that appear as concentric rings.',
     },
@@ -108,15 +109,15 @@ export const data: InterestingPlaceData[] = [
             'The Quelccaya Ice Cap is the second largest glaciated area in the tropics. Located in tropical highlands of the Andes mountains in southern Peru, the cap covers an area of 42.8 sq km (16.5 sq mi) with ice up to 200 meters (660 ft) thick.',
     },
     {
-        name: 'Rupert Bay',
+        name: 'Gosses Bluff',
         location: {
-            center: [-78.993, 51.73],
-            zoom: 11,
+            center: [132.307, -23.815],
+            zoom: 12,
         },
-        renderer: 'Color Infrared with DRA',
-        thumbnail: RupertBay,
+        renderer: 'Agriculture with DRA',
+        thumbnail: GossesBluff,
         description:
-            'Rupert Bay is a large bay located on the south-east shore of James Bay, in Canada. This view shows fresh river water colliding with the ocean. Sediment and dissolved organic matter from nearby peatlands give the water its unique characteristics.',
+            'Gosses Bluff, located in the Northern Territory of Australia, is the eroded remnant of an impact crater believed to have been formed by an asteroid impact about 142 million years ago. The circular bluff formation in the center of the crater is believed to be the crater’s central uplift, or rock displacement, from the original impact.',
     },
     {
         name: 'Three Gorges',
