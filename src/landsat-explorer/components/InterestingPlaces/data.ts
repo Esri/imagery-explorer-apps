@@ -15,7 +15,7 @@
 
 import Ganges from './thumbnails/landsat/Ganges_SWIR.jpg';
 import GrandCanyon from './thumbnails/landsat/GrandCanyon.jpg';
-import Richat from './thumbnails/landsat/Richat.jpg';
+import Richat from './thumbnails/landsat/Richat.png';
 import KalahariDunes from './thumbnails/landsat/KalahariDunes.jpg';
 import KuisebCanyon from './thumbnails/landsat/KuisebCanyon.jpg';
 import Quelccaya from './thumbnails/landsat/Quelccaya.jpg';
