@@ -68,7 +68,7 @@ export type LandcoverExplorerAppState = {
     swipeWidget?: {
         year4LeadingLayer?: number;
         year4TrailingLayer?: number;
-        position?: number;
+        // position?: number;
     };
     /**
      * The active Land Cover type selected by the user that will be used to
@@ -149,9 +149,9 @@ const slice = createSlice({
         ) => {
             state.activeLandCoverType = action.payload;
         },
-        swipePositionChanged: (state, action: PayloadAction<number>) => {
-            state.swipeWidget.position = action.payload;
-        },
+        // swipePositionChanged: (state, action: PayloadAction<number>) => {
+        //     state.swipeWidget.position = action.payload;
+        // },
         // showMapLabelToggled: (state) => {
         //     state.showMapLabel = !state.showMapLabel;
         // },
@@ -199,7 +199,7 @@ export const {
     extentUpdated,
     shouldShowSentinel2LayerToggled,
     activeLandCoverTypeChanged,
-    swipePositionChanged,
+    // swipePositionChanged,
     // showMapLabelToggled,
     // showTerrainToggled,
     // mapCenterUpdated,

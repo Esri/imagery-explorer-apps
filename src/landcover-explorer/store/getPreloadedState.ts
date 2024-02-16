@@ -39,26 +39,15 @@ import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/tim
 import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { isMobileDevice } from 'helper-toolkit-ts';
 import { PartialRootState } from '@shared/store/configureStore';
+import { initialMapState, MapState } from '@shared/store/Map/reducer';
+import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 const isMobileView = isMobileDevice();
-
-/**
- * Get a map center from list of default map centers randomly
- */
-const getMapCenterFromDefaultLocations = () => {
-    const randomIdx = Math.floor(Math.random() * DEFAULT_MAP_CENTERS.length);
-    const [lon, lat] = DEFAULT_MAP_CENTERS[randomIdx];
-    return {
-        lon,
-        lat,
-    };
-};
 
 const getPreloadedStateForLandcoverExplorerApp =
     (): LandcoverExplorerAppState => {
         const availableYears = getAvailableYears();
 
-        const mapCenterInfo = getMapCenterFromHashParams();
         const timeExtent = getTimeExtentFromHashParams();
         const activelandCoverType = getActiveLandCoverTypeFromHashParams();
         const shouldShowSentinel2Layer = getShowImageryLayerFromHashParams();
@@ -97,7 +86,7 @@ const getPreloadedStateForLandcoverExplorerApp =
             swipeWidget: {
                 year4LeadingLayer: startYear,
                 year4TrailingLayer: endYear,
-                position: 50,
+                // position: 50,
             },
             sentinel2RasterFunction,
             /**
@@ -128,9 +117,20 @@ const getPreloadedUIState = (): UIState => {
     };
 };
 
+const getPreloadedMapState = (): MapState => {
+    const { zoom, center } = getMapCenterFromHashParams() || {};
+
+    return {
+        ...initialMapState,
+        zoom: zoom || DEFAULT_MAP_ZOOM,
+        center: center || getRandomElement(DEFAULT_MAP_CENTERS),
+    };
+};
+
 export const getPreloadedState = (): PartialRootState => {
     return {
         LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp(),
         UI: getPreloadedUIState(),
+        Map: getPreloadedMapState(),
     };
 };

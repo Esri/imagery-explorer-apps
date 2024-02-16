@@ -83,10 +83,7 @@ export const getMapCenterFromHashParams = () => {
     const [lon, lat, zoom] = value.split(',').map((d) => +d);
 
     return {
-        center: {
-            lon,
-            lat,
-        },
+        center: [lon, lat],
         zoom,
     };
 };

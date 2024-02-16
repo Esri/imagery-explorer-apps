@@ -30,11 +30,12 @@ import {
     selectSentinel2AquisitionMonth,
     selectSentinel2RasterFunction,
     selectShouldShowSentinel2Layer,
-    selectSwipePosition,
+    // selectSwipePosition,
     selectYear,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { format } from 'date-fns';
+import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 
 type Props = {
     mapView?: IMapView;
@@ -71,7 +72,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
 
     const aquisitionMonth = useSelector(selectSentinel2AquisitionMonth);
 
-    const swipePosition = useSelector(selectSwipePosition);
+    const swipePosition = useSelector(selectSwipeWidgetHandlerPosition);
 
     const mode = useSelector(selectMapMode);
 

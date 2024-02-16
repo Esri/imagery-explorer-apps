@@ -18,13 +18,14 @@ import React, { useEffect, FC } from 'react';
 import { useSelector } from 'react-redux';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
-    selectMapMode,
+    // selectMapMode,
     selectShouldShowSentinel2Layer,
-    selectSwipePosition,
+    // selectSwipePosition,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 
 type Props = {
     /**
@@ -59,7 +60,7 @@ const MapInfoIndicators: FC<Props> = ({
     isUpdating,
     isSwipeWidgetVisible,
 }: Props) => {
-    const position = useSelector(selectSwipePosition);
+    const position = useSelector(selectSwipeWidgetHandlerPosition);
 
     const animationMode = useSelector(selectAnimationStatus);
 

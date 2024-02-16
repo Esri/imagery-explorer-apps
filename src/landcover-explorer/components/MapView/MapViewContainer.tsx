@@ -23,7 +23,7 @@ import {
     // mapCenterUpdated,
     // MapExtent,
     resolutionUpdated,
-    swipePositionChanged,
+    // swipePositionChanged,
     // zoomUpdated,
 } from '@shared/store/LandcoverExplorer/reducer';
 import {
@@ -57,7 +57,11 @@ import AnimationPanel from '../AnimationPanel/AnimationPanel';
 import MapInfoIndicators from './MapReferenceInfo';
 import MapView from './MapView';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
-import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
+import {
+    centerChanged,
+    swipeWidgetHanlderPositionChanged,
+    zoomChanged,
+} from '@shared/store/Map/reducer';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
@@ -122,7 +126,7 @@ const MapViewContainer = () => {
                     yearForTailingLayer={year4TrailingLayer}
                     visible={isSwipeWidgetVisible}
                     positionOnChange={(position) => {
-                        dispatch(swipePositionChanged(position));
+                        dispatch(swipeWidgetHanlderPositionChanged(position));
                     }}
                     referenceInfoOnToggle={(shouldDisplay) => {
                         dispatch(

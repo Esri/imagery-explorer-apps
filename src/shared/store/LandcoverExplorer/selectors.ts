@@ -70,10 +70,10 @@ export const selectActiveLandCoverType = createSelector(
     (activeLandCoverType) => activeLandCoverType
 );
 
-export const selectSwipePosition = createSelector(
-    (state: RootState) => state.LandcoverExplorer.swipeWidget.position,
-    (position) => position
-);
+// export const selectSwipePosition = createSelector(
+//     (state: RootState) => state.LandcoverExplorer.swipeWidget.position,
+//     (position) => position
+// );
 
 // export const selectShowMapLabel = createSelector(
 //     (state: RootState) => state.LandcoverExplorer.showMapLabel,
