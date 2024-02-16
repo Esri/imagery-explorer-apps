@@ -16,19 +16,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { hideControlPanelToggled } from '@shared/store/LandcoverUI/reducer';
+// import { hideControlPanelToggled } from '@shared/store/LandcoverUI/reducer';
 import {
     selectAnimationMode,
-    selectShouldHideControlPanel,
+    // selectShouldHideControlPanel,
 } from '@shared/store/LandcoverUI/selectors';
 import ToggleButton from './ToggleButton';
+import { selectHideBottomPanel } from '@shared/store/UI/selectors';
+import { bottomPanelToggled } from '@shared/store/UI/reducer';
 
 const ToggleButtonContainer = () => {
     const dispatch = useDispatch();
 
     const animationMode = useSelector(selectAnimationMode);
 
-    const hideControlPanel = useSelector(selectShouldHideControlPanel);
+    const hideControlPanel = useSelector(selectHideBottomPanel);
 
     if (animationMode) {
         return null;
@@ -38,7 +40,7 @@ const ToggleButtonContainer = () => {
         <ToggleButton
             hideControlPanel={hideControlPanel}
             onClickHandler={() => {
-                dispatch(hideControlPanelToggled());
+                dispatch(bottomPanelToggled(!hideControlPanel));
             }}
         />
     );

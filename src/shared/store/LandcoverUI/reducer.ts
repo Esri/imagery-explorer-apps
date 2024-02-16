@@ -48,10 +48,10 @@ export type UIState = {
      * If true, show leading and trailing year in Swipe Widget Reference Info Component
      */
     showSwipeWidgetYearIndicator?: boolean;
-    /**
-     * If true, hide control panel at bottom
-     */
-    hideControlPanel?: boolean;
+    // /**
+    //  * If true, hide control panel at bottom
+    //  */
+    // hideControlPanel?: boolean;
     /**
      * if true, animation mode is on and should animating land cover or sentinel-2 layers
      */
@@ -72,7 +72,7 @@ export const initialUIState: UIState = {
     tooltipXPosition: 0,
     tooltipData: null,
     showSwipeWidgetYearIndicator: false,
-    hideControlPanel: false,
+    // hideControlPanel: false,
     animationMode: null,
     showAboutThisApp: false,
     showSaveWebMap: false,
@@ -97,9 +97,9 @@ const slice = createSlice({
         ) => {
             state.showSwipeWidgetYearIndicator = action.payload;
         },
-        hideControlPanelToggled: (state, action: PayloadAction<boolean>) => {
-            state.hideControlPanel = !state.hideControlPanel;
-        },
+        // hideControlPanelToggled: (state, action: PayloadAction<boolean>) => {
+        //     state.hideControlPanel = !state.hideControlPanel;
+        // },
         showDownloadPanelToggled: (state, action: PayloadAction<boolean>) => {
             state.showDownloadPanel = action.payload;
         },
@@ -122,7 +122,7 @@ export const {
     tooltipXPositionChanged,
     tooltipDataChanged,
     showSwipeWidgetYearIndicatorToggled,
-    hideControlPanelToggled,
+    // hideControlPanelToggled,
     showDownloadPanelToggled,
     animationModeUpdated,
     showAboutThisAppToggled,

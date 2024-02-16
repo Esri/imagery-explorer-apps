@@ -16,23 +16,24 @@
 import './ControlPanel.css';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { year4LeadingLayerUpdated } from '@shared/store/LandcoverExplorer/reducer';
-import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
+// import { year4LeadingLayerUpdated } from '@shared/store/LandcoverExplorer/reducer';
+// import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
 import LayerSelector from './LayerSelector/LayerSelectorContainer';
 import TimeSlider from './TimeSlider/TimeSliderContainer';
 import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 import Tooltip from './Tooltip/TooltipContainer';
 import ToggleButton from './ToggleButton/ToggleButtonContainer';
-import { selectShouldHideControlPanel } from '@shared/store/LandcoverUI/selectors';
-import ActionBar from './ActionBar/ActionBar';
+// import { selectShouldHideControlPanel } from '@shared/store/LandcoverUI/selectors';
+// import ActionBar from './ActionBar/ActionBar';
 import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
+import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 
 const ControlPanel = () => {
     // const dispatch = useDispatch();
 
-    const hideControlPanel = useSelector(selectShouldHideControlPanel);
+    const hideControlPanel = useSelector(selectHideBottomPanel);
 
     const shouldShowSentinel2Layer = useSelector(
         selectShouldShowSentinel2Layer

@@ -40,8 +40,9 @@ import Popup from '../Popup/Popup';
 
 import {
     selectAnimationMode,
-    selectShouldHideControlPanel,
+    // selectShouldHideControlPanel,
 } from '@shared/store/LandcoverUI/selectors';
+import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 // import ToggleAttribution from './ToggleAttribution';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverUI/thunks';
@@ -63,7 +64,7 @@ const MapViewContainer = () => {
 
     const animationMode = useSelector(selectAnimationMode);
 
-    const hideControlPanel = useSelector(selectShouldHideControlPanel);
+    const hideControlPanel = useSelector(selectHideBottomPanel);
 
     const isSentinel2LayerOutOfVisibleRange = useSelector(
         selectIsSentinel2LayerOutOfVisibleRange
