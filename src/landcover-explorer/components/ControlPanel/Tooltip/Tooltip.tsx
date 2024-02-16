@@ -14,7 +14,7 @@
  */
 
 import React, { FC } from 'react';
-import { TooltipData } from '@landcover-explorer/store/LandcoverUI/reducer';
+import { TooltipData } from '@shared/store/LandcoverUI/reducer';
 
 type Props = {
     data: TooltipData;

@@ -15,10 +15,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectShowSaveWebMap } from '@landcover-explorer/store/LandcoverUI/selectors';
+import { selectShowSaveWebMap } from '@shared/store/LandcoverUI/selectors';
 import { SaveWebMap, WebMapMetadata } from './SaveWebMap';
 import { useDispatch } from 'react-redux';
-import { showSaveWebMapToggled } from '@landcover-explorer/store/LandcoverUI/reducer';
+import { showSaveWebMapToggled } from '@shared/store/LandcoverUI/reducer';
 import {
     getSignedInUser,
     isAnonymouns,

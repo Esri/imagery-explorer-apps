@@ -25,14 +25,14 @@ import {
     resolutionUpdated,
     swipePositionChanged,
     zoomUpdated,
-} from '@landcover-explorer/store/LandcoverExplorer/reducer';
+} from '@shared/store/LandcoverExplorer/reducer';
 import {
     selectMapCenterAndZoom,
     selectIsSentinel2LayerOutOfVisibleRange,
     selectShouldShowSentinel2Layer,
     selectYearsForSwipeWidgetLayers,
     selectMapMode,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
+} from '@shared/store/LandcoverExplorer/selectors';
 import SwipeWidget from '../SwipeWidget/SwipeWidget';
 // import LandcoverLayer from '../LandcoverLayer/LandcoverLayerContainer';
 import MapViewEventHandlers from './MapViewEventHandler';
@@ -41,10 +41,10 @@ import Popup from '../Popup/Popup';
 import {
     selectAnimationMode,
     selectShouldHideControlPanel,
-} from '@landcover-explorer/store/LandcoverUI/selectors';
+} from '@shared/store/LandcoverUI/selectors';
 import classNames from 'classnames';
 // import ToggleAttribution from './ToggleAttribution';
-import { toggleShowSwipeWidgetYearIndicator } from '@landcover-explorer/store/LandcoverUI/thunks';
+import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverUI/thunks';
 import SearchWidget from './SearchWidget';
 import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';

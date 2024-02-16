@@ -15,7 +15,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
+import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
@@ -28,7 +28,7 @@ import {
     selectSentinel2RasterFunction,
     selectShouldShowSentinel2Layer,
     selectYear,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
+} from '@shared/store/LandcoverExplorer/selectors';
 import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 

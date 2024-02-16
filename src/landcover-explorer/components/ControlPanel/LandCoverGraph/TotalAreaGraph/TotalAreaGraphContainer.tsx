@@ -28,8 +28,8 @@ import {
     // selectMapMode,
     selectMapResolution,
     selectYear,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
-import { updateTooltipData } from '@landcover-explorer/store/LandcoverUI/thunks';
+} from '@shared/store/LandcoverExplorer/selectors';
+import { updateTooltipData } from '@shared/store/LandcoverUI/thunks';
 import TotalsGraph from './TotalAreaGraph';
 import { numberWithCommas } from 'helper-toolkit-ts';
 import { BarChartDataItem } from '@vannizhang/react-d3-charts/dist/BarChart/types';

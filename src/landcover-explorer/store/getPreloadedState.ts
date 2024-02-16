@@ -13,14 +13,12 @@
  * limitations under the License.
  */
 
-import { PartialRootState } from './configureStore';
-
 import {
     initialMapState,
     MapMode,
     MapState,
-} from './LandcoverExplorer/reducer';
-import { initialUIState, UIState } from './LandcoverUI/reducer';
+} from '@shared/store/LandcoverExplorer/reducer';
+import { initialUIState, UIState } from '@shared/store/LandcoverUI/reducer';
 import {
     getActiveYearFromHashParams,
     getDonwloadModeFromHashParams,
@@ -40,6 +38,7 @@ import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcov
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { isMobileDevice } from 'helper-toolkit-ts';
+import { PartialRootState } from '@shared/store/configureStore';
 
 const isMobileView = isMobileDevice();
 
@@ -126,11 +125,9 @@ const getPreloadedUIState = (): UIState => {
     };
 };
 
-const getPreloadedState = (): PartialRootState => {
+export const getPreloadedState = (): PartialRootState => {
     return {
         LandcoverExplorer: getPreloadedStateForLandcoverExplorer(),
         LandcoverUI: getPreloadedUIState(),
     };
 };
-
-export default getPreloadedState;

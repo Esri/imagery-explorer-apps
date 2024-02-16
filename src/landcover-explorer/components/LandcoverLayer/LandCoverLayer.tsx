@@ -21,9 +21,9 @@ import {
     selectMapMode,
     selectShouldShowSentinel2Layer,
     selectYear,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
+} from '@shared/store/LandcoverExplorer/selectors';
 import useLandCoverLayer from './useLandCoverLayer';
-import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
+import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 
 type Props = {
     mapView?: IMapView;

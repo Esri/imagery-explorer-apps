@@ -24,6 +24,8 @@ import SpectralProfileTool from './SpectralProfileTool/reducer';
 import ChangeCompareTool from './ChangeCompareTool/reducer';
 import Landsat from './Landsat/reducer';
 import SpectralSamplingTool from './SpectralSamplingTool/reducer';
+import LandcoverExplorer from './LandcoverExplorer/reducer';
+import LandcoverUI from './LandcoverUI/reducer';
 
 const reducers = combineReducers({
     Map,
@@ -36,6 +38,8 @@ const reducers = combineReducers({
     SpectralProfileTool,
     ChangeCompareTool,
     SpectralSamplingTool,
+    LandcoverExplorer,
+    LandcoverUI,
 });
 
 export default reducers;

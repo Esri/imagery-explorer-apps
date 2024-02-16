@@ -15,12 +15,12 @@
 
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
+import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
-import { selectYear } from '@landcover-explorer/store/LandcoverExplorer/selectors';
+import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { useDispatch } from 'react-redux';
-import { yearUpdated } from '@landcover-explorer/store/LandcoverExplorer/reducer';
+import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 
 const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
 

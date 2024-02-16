@@ -23,15 +23,15 @@ import {
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,
     yearUpdated,
-} from '@landcover-explorer/store/LandcoverExplorer/reducer';
+} from '@shared/store/LandcoverExplorer/reducer';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSentinel2Layer,
     selectYear,
     selectYearsForSwipeWidgetLayers,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
-import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
+} from '@shared/store/LandcoverExplorer/selectors';
+import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 import {
     saveActiveYearToHashParams,
     saveTimeExtentToHashParams,

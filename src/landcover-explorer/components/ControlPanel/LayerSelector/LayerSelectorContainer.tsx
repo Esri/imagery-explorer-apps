@@ -16,13 +16,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { shouldShowSentinel2LayerToggled } from '@landcover-explorer/store/LandcoverExplorer/reducer';
-import { selectShouldShowSentinel2Layer } from '@landcover-explorer/store/LandcoverExplorer/selectors';
+import { shouldShowSentinel2LayerToggled } from '@shared/store/LandcoverExplorer/reducer';
+import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 import {
     showDownloadPanelToggled,
     showSaveWebMapToggled,
-} from '@landcover-explorer/store/LandcoverUI/reducer';
-import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
+} from '@shared/store/LandcoverUI/reducer';
+import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 import { saveshowImageryLayerToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import LayerSelector from './LayerSelector';
 

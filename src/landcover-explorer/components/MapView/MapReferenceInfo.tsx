@@ -22,11 +22,11 @@ import {
     selectShouldShowSentinel2Layer,
     selectSwipePosition,
     selectYearsForSwipeWidgetLayers,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
+} from '@shared/store/LandcoverExplorer/selectors';
 import {
     selectAnimationMode,
     selectShowSwipeWidgetYearIndicator,
-} from '@landcover-explorer/store/LandcoverUI/selectors';
+} from '@shared/store/LandcoverUI/selectors';
 
 type Props = {
     /**

@@ -17,11 +17,11 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { activeLandCoverTypeChanged } from '@landcover-explorer/store/LandcoverExplorer/reducer';
-import { selectActiveLandCoverType } from '@landcover-explorer/store/LandcoverExplorer/selectors';
-import { tooltipDataChanged } from '@landcover-explorer/store/LandcoverUI/reducer';
-import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
-import { updateTooltipData } from '@landcover-explorer/store/LandcoverUI/thunks';
+import { activeLandCoverTypeChanged } from '@shared/store/LandcoverExplorer/reducer';
+import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
+import { tooltipDataChanged } from '@shared/store/LandcoverUI/reducer';
+import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { updateTooltipData } from '@shared/store/LandcoverUI/thunks';
 import { saveActiveLandCoverTypeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import ClassificationsList from './ClassificationsList';
 

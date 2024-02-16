@@ -19,7 +19,7 @@ import { CreateWebMapResponse, createWebMap } from './createWebMap';
 import {
     selectMapExtent,
     selectYear,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
+} from '@shared/store/LandcoverExplorer/selectors';
 import { useSelector } from 'react-redux';
 
 export const useCreateWebmap = (webmapMetadata: WebMapMetadata) => {

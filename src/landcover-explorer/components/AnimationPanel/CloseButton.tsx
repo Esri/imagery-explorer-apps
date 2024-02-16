@@ -15,7 +15,7 @@
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { animationModeUpdated } from '@landcover-explorer/store/LandcoverUI/reducer';
+import { animationModeUpdated } from '@shared/store/LandcoverUI/reducer';
 
 const CloseButton = () => {
     const dispatch = useDispatch();

@@ -23,8 +23,8 @@ import {
     selectShouldShowSentinel2Layer,
     selectIsSentinel2LayerOutOfVisibleRange,
     selectYear,
-} from '@landcover-explorer/store/LandcoverExplorer/selectors';
-import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
+} from '@shared/store/LandcoverExplorer/selectors';
+import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 
 type Props = {
     mapView?: IMapView;
