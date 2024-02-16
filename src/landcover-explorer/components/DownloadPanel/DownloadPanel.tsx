@@ -17,7 +17,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { DWONLOAD_MODE_WEB_MAP_ID } from '@landcover-explorer/constants/map';
-import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
+import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { selectMapCenterAndZoom } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { showDownloadPanelToggled } from '@landcover-explorer/store/UI/reducer';
 import { selectShowDownloadPanel } from '@landcover-explorer/store/UI/selectors';

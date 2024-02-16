@@ -16,7 +16,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getLandCoverClassifications } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { activeLandCoverTypeChanged } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import { selectActiveLandCoverType } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { tooltipDataChanged } from '@landcover-explorer/store/UI/reducer';

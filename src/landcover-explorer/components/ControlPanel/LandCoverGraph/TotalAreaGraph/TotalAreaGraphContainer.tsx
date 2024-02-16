@@ -20,8 +20,8 @@ import {
     getLandCoverAreaByYear,
     // getLandCoverChangeInAcres,
     LandCoverArea,
-} from '@landcover-explorer/services/sentinel-2-10m-landcover/computeHistograms';
-import { getLandCoverClassificationShortName } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
+} from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
+import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
     selectMapCenterAndZoom,
     selectMapExtent,

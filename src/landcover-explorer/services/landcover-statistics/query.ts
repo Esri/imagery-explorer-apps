@@ -22,11 +22,11 @@ import {
     AreaByYear,
     formatAreaPercentage,
     HistoricalLandCoverData,
-} from '../sentinel-2-10m-landcover/computeHistograms';
+} from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
 import {
     getLandCoverClassifications,
     LandCoverClassification,
-} from '../sentinel-2-10m-landcover/rasterAttributeTable';
+} from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 
 import { LAND_COVER_STATISTICS_SERVICE_URL, FIELD_NAMES } from './config';
 

@@ -17,13 +17,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
     getTimeExtentByYear,
     // TimeExtentData,
-} from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
+} from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@landcover-explorer/services/sentinel-2-10m-landcover/config';
+import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 import {
     getRasterFunctionByLandCoverClassName,
     LandCoverClassification,
-} from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
+} from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { useSelector } from 'react-redux';
 import { selectActiveLandCoverType } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 // import IMapView from '@arcgis/core/views/MapView';

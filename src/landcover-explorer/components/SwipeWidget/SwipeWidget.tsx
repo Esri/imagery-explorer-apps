@@ -19,9 +19,9 @@ import React, { FC, useEffect, useMemo, useRef } from 'react';
 import Swipe from '@arcgis/core/widgets/Swipe';
 import IMapView from '@arcgis/core/views/MapView';
 import useLandCoverLayer from '../LandcoverLayer/useLandCoverLayer';
-import IImageryLayer from '@arcgis/core/layers/ImageryLayer';
+// import IImageryLayer from '@arcgis/core/layers/ImageryLayer';
 import useSentinel2Layer from '../Sentinel2Layer/useSentinel2Layer';
-import { LandCoverClassification } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 
 type Props = {

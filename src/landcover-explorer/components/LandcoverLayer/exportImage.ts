@@ -17,8 +17,8 @@ import IExtent from '@arcgis/core/geometry/Extent';
 import {
     getTimeExtentByYear,
     // TimeExtentData,
-} from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@landcover-explorer/services/sentinel-2-10m-landcover/config';
+} from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 
 type ExportImageParams = {
     /**

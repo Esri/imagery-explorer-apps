@@ -20,7 +20,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import configureAppStore, { getPreloadedState } from './store/configureStore';
 import AppLayout from './components/AppLayout/AppLayout';
-import { loadServiceInfo } from './services/sentinel-2-10m-landcover/loadServiceInfo';
+import { loadServiceInfo } from '../shared/services/sentinel-2-10m-landcover/loadServiceInfo';
 import { ErrorPage } from './components/ErrorPage';
 import { initEsriOAuth } from './utils/esriOAuth';
 import { APP_ID } from './constants';

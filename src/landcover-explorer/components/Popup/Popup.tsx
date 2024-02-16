@@ -17,11 +17,11 @@ import './style.css';
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import IMapView from '@arcgis/core/views/MapView';
 import IPoint from '@arcgis/core/geometry/Point';
-import { LandcoverClassificationData } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { LandcoverClassificationData } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
     identifyLandcoverClassificationsByLocation,
     LandcoverClassificationsByYear,
-} from '@landcover-explorer/services/sentinel-2-10m-landcover/identifyTask';
+} from '@shared/services/sentinel-2-10m-landcover/identifyTask';
 import { identify } from '../Sentinel2Layer/identify';
 import { useSelector } from 'react-redux';
 import {

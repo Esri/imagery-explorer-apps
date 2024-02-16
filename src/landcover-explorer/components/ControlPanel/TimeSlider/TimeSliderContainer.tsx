@@ -18,7 +18,7 @@ import React, { useEffect } from 'react';
 import { batch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
+import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import {
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,

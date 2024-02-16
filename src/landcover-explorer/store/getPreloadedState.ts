@@ -36,8 +36,8 @@ import {
     getShowSaveWebMapPanelFromHashParams,
 } from '@landcover-explorer/utils/URLHashParams';
 import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
-import { LandCoverClassification } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
+import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { isMobileDevice } from 'helper-toolkit-ts';
 

@@ -24,7 +24,7 @@ import { showInfoPanelToggled } from '@landcover-explorer/store/UI/reducer';
 import {
     getHistoricalLandCoverDataByMapExtent,
     HistoricalLandCoverData,
-} from '@landcover-explorer/services/sentinel-2-10m-landcover/computeHistograms';
+} from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
 import {
     selectMapExtent,
     selectMapResolution,
