@@ -4,7 +4,7 @@ This repository contains a collection of Imagery Explorer web applications devel
 ## Table of Content
 - [Getting Started](#getting-started)
 - [Landsat Explorer](#landsat-explorer)
-- [Sentinel-2 Landcover Explorer](#sentinel-2-landcover-explorer)
+- [Sentinel-2 Landcover Explorer](#sentinel-2-land-cover-explorer)
 - [Resources](#resources)
 - [Issues](#issues)
 - [Contributing](#contributing)
