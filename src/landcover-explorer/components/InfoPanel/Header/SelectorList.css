@@ -1,0 +1,25 @@
+.fancy-scroller {
+    /* scrollbar-color: #888 #4b4b4b; */
+    scrollbar-width: thin;
+  }
+  
+  /* width */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-custom-background
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-custom-light-blue-50;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-custom-light-blue-90;
+  }

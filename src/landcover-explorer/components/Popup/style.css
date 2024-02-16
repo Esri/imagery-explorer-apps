@@ -1,0 +1,36 @@
+.esri-view-width-xlarge .esri-popup__main-container {
+    width: 230px;
+}
+
+.download-panel .esri-popup__main-container {
+    width: 180px;
+}
+
+.esri-popup__header-title {
+    font-size: 12px !important;
+    @apply text-custom-light-blue;
+}
+
+.esri-popup__inline-actions-container,
+.esri-popup__footer.esri-popup__footer--has-actions,
+.esri-popup__button.esri-popup__button--dock {
+    display: none;
+}
+
+/* .esri-popup__header-container.esri-popup__header-container--button{
+    pointer-events: none;
+} */
+
+.esri-popup__main-container {
+    /* background: rgba(0,35,47, .85); */
+    @apply bg-custom-background-85;
+}
+
+.esri-popup__header {
+    @apply bg-custom-background-90;
+}
+
+.active-year-indicator {
+    height: 6px;
+    width: 6px;
+}

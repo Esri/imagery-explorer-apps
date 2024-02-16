@@ -21,6 +21,7 @@
         "paths": {
             "@shared/*": ["./src/shared/*"],
             "@landsat-explorer/*": ["./src/landsat-explorer/*"],
+            "@landcover-explorer/*": ["./src/landcover-explorer/*"],
             "@typing/*": ["./src/types/*"]
         }
     },

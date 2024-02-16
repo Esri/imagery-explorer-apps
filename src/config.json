@@ -8,6 +8,14 @@
             "pathname": "/landsatexplorer",
             "entrypoint": "/src/landsat-explorer/index.tsx"
         },
+        "landcover-explorer": {
+            "title": "Esri | Sentinel-2 Land Cover Explorer",
+            "webmapId": "f8770e0adc5c41038026494b871ceb99",
+            "description": "This application displays the land use/land cover (LULC) timeseries layer derived from ESA Sentinel-2 imagery at 10m resolution. ",
+            "animationMetadataSources": "",
+            "pathname": "/landcoverexplorer",
+            "entrypoint": "/src/landcover-explorer/index.tsx"
+        },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",
             "webmapId": "81609bbe235942919ad27c77e42c600e",

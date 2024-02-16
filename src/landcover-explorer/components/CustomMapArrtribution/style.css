@@ -1,0 +1,23 @@
+.custom-attribution-text {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 0 5px;
+    background-color: rgba(36,36,36,.8);
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(255,255,255,.7);
+}
+
+.esri-attribution {
+    opacity: 0;
+}
+
+.esri-attribution.show {
+    opacity: 1;
+}
+
+.esri-attribution__powered-by { 
+    margin-right: 50px;
+}
