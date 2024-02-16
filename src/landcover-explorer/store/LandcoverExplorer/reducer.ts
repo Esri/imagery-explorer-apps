@@ -21,19 +21,20 @@ import {
 } from '@reduxjs/toolkit';
 import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { LandCoverClassification } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { Extent } from '@arcgis/core/geometry';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
-export type MapExtent = {
-    spatialReference?: {
-        latestWkid?: number;
-        wkid?: number;
-    };
-    xmin?: number;
-    xmax?: number;
-    ymin?: number;
-    ymax?: number;
-};
+// export type MapExtent = {
+//     spatialReference?: {
+//         latestWkid?: number;
+//         wkid?: number;
+//     };
+//     xmin?: number;
+//     xmax?: number;
+//     ymin?: number;
+//     ymax?: number;
+// };
 
 export type MapMode = 'swipe' | 'step';
 
@@ -76,7 +77,7 @@ export type MapState = {
     /**
      * The extent represents the visible portion of a map within the view as an instance of Extent.
      */
-    extent?: MapExtent;
+    extent?: Extent;
     swipeWidget?: {
         year4LeadingLayer?: number;
         year4TrailingLayer?: number;
@@ -136,7 +137,7 @@ const slice = createSlice({
         resolutionUpdated: (state, action: PayloadAction<number>) => {
             state.resolution = action.payload;
         },
-        extentUpdated: (state, action: PayloadAction<MapExtent>) => {
+        extentUpdated: (state, action: PayloadAction<Extent>) => {
             state.extent = action.payload;
         },
         shouldShowSentinel2LayerToggled: (

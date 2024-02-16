@@ -13,8 +13,9 @@
  * limitations under the License.
  */
 
+import { Extent } from '@arcgis/core/geometry';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
-import { MapExtent } from '@landcover-explorer/store/LandcoverExplorer/reducer';
+// import { MapExtent } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import { DEFAULT_RENDERING_RULE } from './config';
 import {
     getDistinctLandCoverClassificationPixelValues,
@@ -24,7 +25,7 @@ import {
 import { getAvailableYears } from './timeInfo';
 
 type ComputeHistogramsParams = {
-    extent: MapExtent;
+    extent: Extent;
     resolution: number;
     year: number;
 };
@@ -50,7 +51,7 @@ type GetLandCoverChangeParams = {
     /**
      * Map Extent to be used as input geomerty
      */
-    extent: MapExtent;
+    extent: Extent;
     /**
      * Map resolution
      */
@@ -69,7 +70,7 @@ type GetLandCoverAreaInAcresByYearParams = {
     /**
      * Map Extent to be used as input geomerty
      */
-    extent: MapExtent;
+    extent: Extent;
     /**
      * Map resolution
      */
@@ -366,7 +367,7 @@ export const getLandCoverChangeInAcres = async ({
 };
 
 export const getHistoricalLandCoverDataByMapExtent = async (
-    extent: MapExtent,
+    extent: Extent,
     resolution: number
 ): Promise<HistoricalLandCoverData[]> => {
     const availableYears = getAvailableYears();
