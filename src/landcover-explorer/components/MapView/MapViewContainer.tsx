@@ -18,7 +18,6 @@ import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
-import { identifyLandcoverClassificationsByLocation } from '@landcover-explorer/services/sentinel-2-10m-landcover/identifyTask';
 import {
     extentUpdated,
     mapCenterUpdated,
@@ -55,7 +54,7 @@ import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import AnimationPanel from '../AnimationPanel/AnimationPanel';
 import MapInfoIndicators from './MapReferenceInfo';
-import MapView from '@shared/components/MapView/MapView';
+import MapView from './MapView';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
