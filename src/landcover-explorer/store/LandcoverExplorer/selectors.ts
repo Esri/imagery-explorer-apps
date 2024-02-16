@@ -23,8 +23,9 @@ import { RootState } from '../configureStore';
  * @return `[year4LeadingLayer, year4TrailingLayer]`
  */
 export const selectYearsForSwipeWidgetLayers = createSelector(
-    (state: RootState) => state.Map.swipeWidget.year4LeadingLayer,
-    (state: RootState) => state.Map.swipeWidget.year4TrailingLayer,
+    (state: RootState) => state.LandcoverExplorer.swipeWidget.year4LeadingLayer,
+    (state: RootState) =>
+        state.LandcoverExplorer.swipeWidget.year4TrailingLayer,
     (year4LeadingLayer, year4TrailingLayer) => {
         return {
             year4LeadingLayer,
@@ -39,8 +40,8 @@ export const selectYearsForSwipeWidgetLayers = createSelector(
  * @return `{ zoom: number, cenetr: {lat: number, lon: number} }`
  */
 export const selectMapCenterAndZoom = createSelector(
-    (state: RootState) => state.Map.zoom,
-    (state: RootState) => state.Map.center,
+    (state: RootState) => state.LandcoverExplorer.zoom,
+    (state: RootState) => state.LandcoverExplorer.center,
     (zoom, center) => {
         return {
             zoom,
@@ -50,48 +51,48 @@ export const selectMapCenterAndZoom = createSelector(
 );
 
 export const selectMapExtent = createSelector(
-    (state: RootState) => state.Map.extent,
+    (state: RootState) => state.LandcoverExplorer.extent,
     (extent) => extent
 );
 
 export const selectMapResolution = createSelector(
-    (state: RootState) => state.Map.resolution,
+    (state: RootState) => state.LandcoverExplorer.resolution,
     (resolution) => resolution
 );
 
 export const selectShouldShowSentinel2Layer = createSelector(
-    (state: RootState) => state.Map.shouldShowSentinel2Layer,
+    (state: RootState) => state.LandcoverExplorer.shouldShowSentinel2Layer,
     (shouldShowSentinel2Layer) => shouldShowSentinel2Layer
 );
 
 export const selectActiveLandCoverType = createSelector(
-    (state: RootState) => state.Map.activeLandCoverType,
+    (state: RootState) => state.LandcoverExplorer.activeLandCoverType,
     (activeLandCoverType) => activeLandCoverType
 );
 
 export const selectSwipePosition = createSelector(
-    (state: RootState) => state.Map.swipeWidget.position,
+    (state: RootState) => state.LandcoverExplorer.swipeWidget.position,
     (position) => position
 );
 
 export const selectShowMapLabel = createSelector(
-    (state: RootState) => state.Map.showMapLabel,
+    (state: RootState) => state.LandcoverExplorer.showMapLabel,
     (showMapLabel) => showMapLabel
 );
 
 export const selectShowTerrain = createSelector(
-    (state: RootState) => state.Map.showTerrain,
+    (state: RootState) => state.LandcoverExplorer.showTerrain,
     (showTerrain) => showTerrain
 );
 
 export const selectSentinel2RasterFunction = createSelector(
-    (state: RootState) => state.Map.sentinel2RasterFunction,
+    (state: RootState) => state.LandcoverExplorer.sentinel2RasterFunction,
     (sentinel2RasterFunction) => sentinel2RasterFunction
 );
 
 export const selectIsSentinel2LayerOutOfVisibleRange = createSelector(
-    (state: RootState) => state.Map.shouldShowSentinel2Layer,
-    (state: RootState) => state.Map.zoom,
+    (state: RootState) => state.LandcoverExplorer.shouldShowSentinel2Layer,
+    (state: RootState) => state.LandcoverExplorer.zoom,
     (shouldShowSentinel2Layer, zoom) => {
         return (
             shouldShowSentinel2Layer && zoom < MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER
@@ -100,16 +101,16 @@ export const selectIsSentinel2LayerOutOfVisibleRange = createSelector(
 );
 
 export const selectSentinel2AquisitionMonth = createSelector(
-    (state: RootState) => state.Map.sentinel2AquisitionMonth,
+    (state: RootState) => state.LandcoverExplorer.sentinel2AquisitionMonth,
     (sentinel2AquisitionMonth) => sentinel2AquisitionMonth
 );
 
 export const selectMapMode = createSelector(
-    (state: RootState) => state.Map.mode,
+    (state: RootState) => state.LandcoverExplorer.mode,
     (mode) => mode
 );
 
 export const selectYear = createSelector(
-    (state: RootState) => state.Map.year,
+    (state: RootState) => state.LandcoverExplorer.year,
     (year) => year
 );

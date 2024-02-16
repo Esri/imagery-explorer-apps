@@ -118,7 +118,7 @@ export const initialMapState: MapState = {
 };
 
 const slice = createSlice({
-    name: 'Map',
+    name: 'LandcoverExplorer',
     initialState: initialMapState,
     reducers: {
         modeChanged: (state, action: PayloadAction<MapMode>) => {

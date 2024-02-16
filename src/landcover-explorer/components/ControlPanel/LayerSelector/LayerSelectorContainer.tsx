@@ -16,8 +16,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { shouldShowSentinel2LayerToggled } from '@landcover-explorer/store/Map/reducer';
-import { selectShouldShowSentinel2Layer } from '@landcover-explorer/store/Map/selectors';
+import { shouldShowSentinel2LayerToggled } from '@landcover-explorer/store/LandcoverExplorer/reducer';
+import { selectShouldShowSentinel2Layer } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import {
     showDownloadPanelToggled,
     showSaveWebMapToggled,

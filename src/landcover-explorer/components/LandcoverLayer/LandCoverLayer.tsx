@@ -21,7 +21,7 @@ import {
     selectMapMode,
     selectShouldShowSentinel2Layer,
     selectYear,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import useLandCoverLayer from './useLandCoverLayer';
 import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
 

@@ -23,7 +23,7 @@ import { getToken } from '@landcover-explorer/utils/esriOAuth';
 import { getSignedInUser } from '@landcover-explorer/utils/esriOAuth';
 import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@landcover-explorer/services/sentinel-2-10m-landcover/config';
-import { MapExtent } from '@landcover-explorer/store/Map/reducer';
+import { MapExtent } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import { LandCoverLayerBlendMode } from '../LandcoverLayer/useLandCoverLayer';
 import * as webMercatorUtils from '@arcgis/core/geometry/support/webMercatorUtils';
 

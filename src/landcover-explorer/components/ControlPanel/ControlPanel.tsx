@@ -16,12 +16,12 @@
 import './ControlPanel.css';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { year4LeadingLayerUpdated } from '@landcover-explorer/store/Map/reducer';
+import { year4LeadingLayerUpdated } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
 import LayerSelector from './LayerSelector/LayerSelectorContainer';
 import TimeSlider from './TimeSlider/TimeSliderContainer';
-import { selectShouldShowSentinel2Layer } from '@landcover-explorer/store/Map/selectors';
+import { selectShouldShowSentinel2Layer } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import Tooltip from './Tooltip/TooltipContainer';
 import ToggleButton from './ToggleButton/ToggleButtonContainer';
 import { selectShouldHideControlPanel } from '@landcover-explorer/store/UI/selectors';

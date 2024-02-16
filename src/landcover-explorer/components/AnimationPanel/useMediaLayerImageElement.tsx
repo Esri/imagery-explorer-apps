@@ -28,7 +28,7 @@ import {
     selectSentinel2RasterFunction,
     selectShouldShowSentinel2Layer,
     selectYear,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { getRasterFunctionByLandCoverClassName } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
 

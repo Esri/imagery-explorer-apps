@@ -28,7 +28,7 @@ import {
     selectMapMode,
     selectMapResolution,
     selectYearsForSwipeWidgetLayers,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 // import { showInfoPanelToggled } from '@landcover-explorer/store/UI/reducer';
 import { updateTooltipData } from '@landcover-explorer/store/UI/thunks';
 // import {

@@ -24,7 +24,7 @@ import {
     selectShouldShowSentinel2Layer,
     selectYear,
     selectYearsForSwipeWidgetLayers,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { showInfoPanelToggled } from '@landcover-explorer/store/UI/reducer';
 import ChangeCompareGraph from './ChangeCompareGraph/ChangeCompareGraphContainer';
 import HeaderText from '../HeaderText/HeaderText';

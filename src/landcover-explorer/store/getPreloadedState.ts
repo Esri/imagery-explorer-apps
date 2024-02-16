@@ -15,7 +15,11 @@
 
 import { PartialRootState } from './configureStore';
 
-import { initialMapState, MapMode, MapState } from '../store/Map/reducer';
+import {
+    initialMapState,
+    MapMode,
+    MapState,
+} from './LandcoverExplorer/reducer';
 import { initialUIState, UIState } from './UI/reducer';
 import {
     getActiveYearFromHashParams,
@@ -51,7 +55,7 @@ const getMapCenterFromDefaultLocations = () => {
     };
 };
 
-const getPreloadedMapState = (): MapState => {
+const getPreloadedStateForLandcoverExplorer = (): MapState => {
     const availableYears = getAvailableYears();
 
     const mapCenterInfo = getMapCenterFromHashParams();
@@ -124,7 +128,7 @@ const getPreloadedUIState = (): UIState => {
 
 const getPreloadedState = (): PartialRootState => {
     return {
-        Map: getPreloadedMapState(),
+        LandcoverExplorer: getPreloadedStateForLandcoverExplorer(),
         UI: getPreloadedUIState(),
     };
 };

@@ -21,8 +21,8 @@ import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-l
 import {
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,
-} from '@landcover-explorer/store/Map/reducer';
-import { selectYearsForSwipeWidgetLayers } from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/reducer';
+import { selectYearsForSwipeWidgetLayers } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import Dropdown from './Dropdown';
 import MonthPicker from './MonthPicker';
 

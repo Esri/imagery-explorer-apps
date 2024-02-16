@@ -28,7 +28,7 @@ import {
 import {
     selectMapExtent,
     selectMapResolution,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 // import { QuickD3ChartData, QuickD3ChartDataItem } from '../QuickD3Chart/types';
 import CountrySelector from './Header/CountrySelector';
 import SubRegionSelector from './Header/SubRegionSelector';

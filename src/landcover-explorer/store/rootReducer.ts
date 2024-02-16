@@ -14,10 +14,10 @@
  */
 
 import { combineReducers } from 'redux';
-import Map from './Map/reducer';
+import LandcoverExplorer from './LandcoverExplorer/reducer';
 import UI from './UI/reducer';
 
 export default combineReducers({
-    Map,
+    LandcoverExplorer,
     UI,
 });

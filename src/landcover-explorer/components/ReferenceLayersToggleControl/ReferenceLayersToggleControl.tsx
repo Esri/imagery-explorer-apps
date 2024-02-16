@@ -20,11 +20,11 @@ import { useSelector } from 'react-redux';
 import {
     showMapLabelToggled,
     showTerrainToggled,
-} from '@landcover-explorer/store/Map/reducer';
+} from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import {
     selectShowMapLabel,
     selectShowTerrain,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
 import { SEARCH_WIDGET_WIDTH } from '../MapView/SearchWidget';
 

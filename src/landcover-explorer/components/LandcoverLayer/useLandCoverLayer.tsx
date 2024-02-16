@@ -25,7 +25,7 @@ import {
     LandCoverClassification,
 } from '@landcover-explorer/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { useSelector } from 'react-redux';
-import { selectActiveLandCoverType } from '@landcover-explorer/store/Map/selectors';
+import { selectActiveLandCoverType } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 // import IMapView from '@arcgis/core/views/MapView';
 
 type UseLandCoverLayerParams = {

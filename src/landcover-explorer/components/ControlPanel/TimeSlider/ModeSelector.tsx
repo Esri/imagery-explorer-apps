@@ -17,8 +17,8 @@ import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { modeChanged } from '@landcover-explorer/store/Map/reducer';
-import { selectMapMode } from '@landcover-explorer/store/Map/selectors';
+import { modeChanged } from '@landcover-explorer/store/LandcoverExplorer/reducer';
+import { selectMapMode } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { saveMapModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 
 const BTN_CLASSNAMES =

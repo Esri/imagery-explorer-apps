@@ -33,7 +33,7 @@ import {
     selectSwipePosition,
     selectYear,
     selectYearsForSwipeWidgetLayers,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { format } from 'date-fns';
 
 type Props = {

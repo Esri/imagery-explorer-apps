@@ -24,7 +24,7 @@ import { useSelector } from 'react-redux';
 import {
     selectSentinel2AquisitionMonth,
     selectSentinel2RasterFunction,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { getMosaicRuleByAcquisitionDate } from './exportImage';
 
 type UseLandCoverLayerParams = {

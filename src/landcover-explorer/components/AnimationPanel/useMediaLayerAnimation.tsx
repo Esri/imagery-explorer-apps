@@ -17,10 +17,10 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
-import { selectYear } from '@landcover-explorer/store/Map/selectors';
+import { selectYear } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
 import { useDispatch } from 'react-redux';
-import { yearUpdated } from '@landcover-explorer/store/Map/reducer';
+import { yearUpdated } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 
 const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
 

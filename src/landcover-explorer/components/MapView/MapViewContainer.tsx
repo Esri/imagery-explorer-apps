@@ -26,14 +26,14 @@ import {
     resolutionUpdated,
     swipePositionChanged,
     zoomUpdated,
-} from '@landcover-explorer/store/Map/reducer';
+} from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import {
     selectMapCenterAndZoom,
     selectIsSentinel2LayerOutOfVisibleRange,
     selectShouldShowSentinel2Layer,
     selectYearsForSwipeWidgetLayers,
     selectMapMode,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import SwipeWidget from '../SwipeWidget/SwipeWidget';
 // import LandcoverLayer from '../LandcoverLayer/LandcoverLayerContainer';
 import MapViewEventHandlers from './MapViewEventHandler';

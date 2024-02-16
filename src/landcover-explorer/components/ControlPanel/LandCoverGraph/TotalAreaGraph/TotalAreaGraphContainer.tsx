@@ -28,7 +28,7 @@ import {
     // selectMapMode,
     selectMapResolution,
     selectYear,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { updateTooltipData } from '@landcover-explorer/store/UI/thunks';
 import TotalsGraph from './TotalAreaGraph';
 import { numberWithCommas } from 'helper-toolkit-ts';

@@ -18,8 +18,8 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
-import { sentinel2AquisitionMonthChanged } from '@landcover-explorer/store/Map/reducer';
-import { selectSentinel2AquisitionMonth } from '@landcover-explorer/store/Map/selectors';
+import { sentinel2AquisitionMonthChanged } from '@landcover-explorer/store/LandcoverExplorer/reducer';
+import { selectSentinel2AquisitionMonth } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import { saveActiveMonthToHashParams } from '@landcover-explorer/utils/URLHashParams';
 
 const MONTH_ABBR = [

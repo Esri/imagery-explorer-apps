@@ -22,7 +22,7 @@ import {
     selectShouldShowSentinel2Layer,
     selectSwipePosition,
     selectYearsForSwipeWidgetLayers,
-} from '@landcover-explorer/store/Map/selectors';
+} from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import {
     selectAnimationMode,
     selectShowSwipeWidgetYearIndicator,
