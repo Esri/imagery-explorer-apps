@@ -19,9 +19,9 @@ import { useSelector } from 'react-redux';
 import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { activeLandCoverTypeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
-import { tooltipDataChanged } from '@shared/store/LandcoverUI/reducer';
+// import { tooltipDataChanged } from '@shared/store/UI/reducer';
 import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
-import { updateTooltipData } from '@shared/store/LandcoverUI/thunks';
+import { updateTooltipData } from '@shared/store/UI/thunks';
 import { saveActiveLandCoverTypeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import ClassificationsList from './ClassificationsList';
 

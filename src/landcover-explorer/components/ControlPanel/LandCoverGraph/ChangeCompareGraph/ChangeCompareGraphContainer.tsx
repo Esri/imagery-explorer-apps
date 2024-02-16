@@ -30,17 +30,17 @@ import {
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 // import { showInfoPanelToggled } from '@landcover-explorer/store/UI/reducer';
-import { updateTooltipData } from '@shared/store/LandcoverUI/thunks';
+import { updateTooltipData } from '@shared/store/UI/thunks';
 // import {
 //     QuickD3ChartData,
 //     QuickD3ChartDataItem,
 // } from '@landcover-explorer/QuickD3Chart/types';
 import ChangeCompareGraph from './ChangeCompareGraph';
 // import { numberFns } from 'helper-toolkit-ts';
-import {
-    // DEFAULT_MAP_ZOOM,
-    MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM,
-} from '@landcover-explorer/constants/map';
+// import {
+//     // DEFAULT_MAP_ZOOM,
+//     MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM,
+// } from '@landcover-explorer/constants/map';
 import { TooltipData } from '@shared/store/LandcoverUI/reducer';
 import { DivergingBarChartDataItem } from '@vannizhang/react-d3-charts/dist/DivergingBarChart/types';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';

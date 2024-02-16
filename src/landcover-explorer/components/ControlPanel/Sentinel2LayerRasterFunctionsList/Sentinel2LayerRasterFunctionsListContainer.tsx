@@ -26,7 +26,7 @@ import { useDispatch } from 'react-redux';
 import { sentinel2RasterFunctionChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { useSelector } from 'react-redux';
 import { selectSentinel2RasterFunction } from '@shared/store/LandcoverExplorer/selectors';
-import { updateTooltipData } from '@shared/store/LandcoverUI/thunks';
+import { updateTooltipData } from '@shared/store/UI/thunks';
 import { saveSentinel2RasterFunctionToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 

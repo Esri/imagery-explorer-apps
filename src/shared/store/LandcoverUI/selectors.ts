@@ -26,15 +26,15 @@ export const selectShowDownloadPanel = createSelector(
     (showDownloadPanel) => showDownloadPanel
 );
 
-export const selectTooltipXPosition = createSelector(
-    (state: RootState) => state.LandcoverUI.tooltipXPosition,
-    (tooltipXPosition) => tooltipXPosition
-);
+// export const selectTooltipXPosition = createSelector(
+//     (state: RootState) => state.LandcoverUI.tooltipXPosition,
+//     (tooltipXPosition) => tooltipXPosition
+// );
 
-export const selectTooltipData = createSelector(
-    (state: RootState) => state.LandcoverUI.tooltipData,
-    (tooltipData) => tooltipData
-);
+// export const selectTooltipData = createSelector(
+//     (state: RootState) => state.LandcoverUI.tooltipData,
+//     (tooltipData) => tooltipData
+// );
 
 export const selectShowSwipeWidgetYearIndicator = createSelector(
     (state: RootState) => state.LandcoverUI.showSwipeWidgetYearIndicator,

@@ -36,14 +36,14 @@ export type UIState = {
      * If true, open download panel
      */
     showDownloadPanel?: boolean;
-    /**
-     * The X Position (relative to page) of Tooltip for Control Panel
-     */
-    tooltipXPosition?: number;
-    /**
-     * The data that will be shown in the Tooltip
-     */
-    tooltipData?: TooltipData;
+    // /**
+    //  * The X Position (relative to page) of Tooltip for Control Panel
+    //  */
+    // tooltipXPosition?: number;
+    // /**
+    //  * The data that will be shown in the Tooltip
+    //  */
+    // tooltipData?: TooltipData;
     /**
      * If true, show leading and trailing year in Swipe Widget Reference Info Component
      */
@@ -69,8 +69,8 @@ export type UIState = {
 export const initialUIState: UIState = {
     showInfoPanel: false,
     showDownloadPanel: false,
-    tooltipXPosition: 0,
-    tooltipData: null,
+    // tooltipXPosition: 0,
+    // tooltipData: null,
     showSwipeWidgetYearIndicator: false,
     // hideControlPanel: false,
     animationMode: null,
@@ -85,12 +85,12 @@ const slice = createSlice({
         showInfoPanelToggled: (state, action: PayloadAction<boolean>) => {
             state.showInfoPanel = action.payload;
         },
-        tooltipXPositionChanged: (state, action: PayloadAction<number>) => {
-            state.tooltipXPosition = action.payload;
-        },
-        tooltipDataChanged: (state, action: PayloadAction<TooltipData>) => {
-            state.tooltipData = action.payload;
-        },
+        // tooltipXPositionChanged: (state, action: PayloadAction<number>) => {
+        //     state.tooltipXPosition = action.payload;
+        // },
+        // tooltipDataChanged: (state, action: PayloadAction<TooltipData>) => {
+        //     state.tooltipData = action.payload;
+        // },
         showSwipeWidgetYearIndicatorToggled: (
             state,
             action: PayloadAction<boolean>
@@ -119,8 +119,8 @@ const { reducer } = slice;
 
 export const {
     showInfoPanelToggled,
-    tooltipXPositionChanged,
-    tooltipDataChanged,
+    // tooltipXPositionChanged,
+    // tooltipDataChanged,
     showSwipeWidgetYearIndicatorToggled,
     // hideControlPanelToggled,
     showDownloadPanelToggled,

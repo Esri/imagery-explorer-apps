@@ -29,7 +29,7 @@ import {
     selectMapResolution,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { updateTooltipData } from '@shared/store/LandcoverUI/thunks';
+import { updateTooltipData } from '@shared/store/UI/thunks';
 import TotalsGraph from './TotalAreaGraph';
 import { numberWithCommas } from 'helper-toolkit-ts';
 import { BarChartDataItem } from '@vannizhang/react-d3-charts/dist/BarChart/types';

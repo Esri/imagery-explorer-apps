@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux';
 import {
     selectTooltipData,
     selectTooltipXPosition,
-} from '@shared/store/LandcoverUI/selectors';
+} from '@shared/store/UI/selectors';
 import Tooltip from './Tooltip';
 
 const TooltipContainer = () => {
