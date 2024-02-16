@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { DWONLOAD_MODE_WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { selectMapCenterAndZoom } from '@shared/store/LandcoverExplorer/selectors';
+// import { selectMapCenterAndZoom } from '@shared/store/LandcoverExplorer/selectors';
 import { showDownloadPanelToggled } from '@shared/store/UI/reducer';
 import { selectShowDownloadPanel } from '@shared/store/UI/selectors';
 import { saveDonwloadModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
@@ -26,13 +26,14 @@ import Header from './Header';
 import LulcFootprintsLayer from './LulcFootprintsLayer';
 import { CloseButton } from '@shared/components/CloseButton';
 import MapView from '../MapView/MapView';
+import { selectMapCenter } from '@shared/store/Map/selectors';
 
 const DownloadPanel = () => {
     const dispatch = useDispatch();
 
     const showDownloadPanel = useSelector(selectShowDownloadPanel);
 
-    const { center } = useSelector(selectMapCenterAndZoom);
+    const center = useSelector(selectMapCenter);
 
     const availableYears = getAvailableYears();
 
@@ -69,7 +70,7 @@ const DownloadPanel = () => {
                 >
                     <MapView
                         webmapId={DWONLOAD_MODE_WEB_MAP_ID}
-                        center={[center.lon, center.lat]}
+                        center={center}
                         zoom={3}
                     >
                         <LulcFootprintsLayer availableYears={availableYears} />

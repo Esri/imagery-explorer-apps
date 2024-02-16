@@ -17,7 +17,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import IMapView from '@arcgis/core/views/MapView';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import IPoint from '@arcgis/core/geometry/Point';
-import { MapCenter } from '@shared/store/LandcoverExplorer/reducer';
+// import { MapCenter } from '@shared/store/LandcoverExplorer/reducer';
 import { Extent } from '@arcgis/core/geometry';
 
 type Props = {
@@ -31,7 +31,7 @@ type Props = {
     extentOnChange?: (
         extent: Extent,
         resolution: number,
-        center: MapCenter,
+        center: number[],
         zoom: number
     ) => void;
     /**
@@ -59,10 +59,11 @@ const MapViewEventHandlers: FC<Props> = ({
         extentOnChange(
             mapView.extent.toJSON(),
             mapView.resolution,
-            {
-                lon: +mapView.center.longitude.toFixed(3),
-                lat: +mapView.center.latitude.toFixed(3),
-            },
+            // {
+            //     lon: +mapView.center.longitude.toFixed(3),
+            //     lat: +mapView.center.latitude.toFixed(3),
+            // },
+            [mapView.center.longitude, mapView.center.latitude],
             mapView.zoom
         );
     };

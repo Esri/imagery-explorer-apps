@@ -23,7 +23,7 @@ import {
 } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
 import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
-    selectMapCenterAndZoom,
+    // selectMapCenterAndZoom,
     selectMapExtent,
     // selectMapMode,
     selectMapResolution,
@@ -33,11 +33,14 @@ import { updateTooltipData } from '@shared/store/UI/thunks';
 import TotalsGraph from './TotalAreaGraph';
 import { numberWithCommas } from 'helper-toolkit-ts';
 import { BarChartDataItem } from '@vannizhang/react-d3-charts/dist/BarChart/types';
+import { selectMapZoom } from '@shared/store/Map/selectors';
 
 const TotalAreaGraphContainer = () => {
     const dispatch = useDispatch();
 
-    const { zoom } = useSelector(selectMapCenterAndZoom);
+    // const { zoom } = useSelector(selectMapCenterAndZoom);
+
+    const zoom = useSelector(selectMapZoom);
 
     const resolution = useSelector(selectMapResolution);
 

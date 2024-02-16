@@ -25,10 +25,10 @@ import { Extent } from '@arcgis/core/geometry';
 
 export type MapMode = 'swipe' | 'step';
 
-export type MapCenter = {
-    lon?: number;
-    lat?: number;
-};
+// export type MapCenter = {
+//     lon?: number;
+//     lat?: number;
+// };
 
 export type LandcoverExplorerAppState = {
     /**
@@ -48,14 +48,14 @@ export type LandcoverExplorerAppState = {
      * The month that will be used to fetch sentinel-2 imagery layer
      */
     sentinel2AquisitionMonth?: number;
-    /**
-     * Represents the level of detail (LOD) at the center of the view.
-     */
-    zoom?: number;
-    /**
-     * Represents the view's center point
-     */
-    center?: MapCenter;
+    // /**
+    //  * Represents the level of detail (LOD) at the center of the view.
+    //  */
+    // zoom?: number;
+    // /**
+    //  * Represents the view's center point
+    //  */
+    // center?: MapCenter;
     /**
      * Represents the size of one pixel in map units.
      * The value of resolution can be found by dividing the extent width by the view's width.
@@ -102,8 +102,8 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     year: null,
     shouldShowSentinel2Layer: false,
     sentinel2AquisitionMonth: 9,
-    zoom: 11,
-    center: null,
+    // zoom: 11,
+    // center: null,
     resolution: null,
     extent: null,
     swipeWidget: null,
@@ -158,12 +158,12 @@ const slice = createSlice({
         // showTerrainToggled: (state) => {
         //     state.showTerrain = !state.showTerrain;
         // },
-        mapCenterUpdated: (state, action: PayloadAction<MapCenter>) => {
-            state.center = action.payload;
-        },
-        zoomUpdated: (state, action: PayloadAction<number>) => {
-            state.zoom = action.payload;
-        },
+        // mapCenterUpdated: (state, action: PayloadAction<MapCenter>) => {
+        //     state.center = action.payload;
+        // },
+        // zoomUpdated: (state, action: PayloadAction<number>) => {
+        //     state.zoom = action.payload;
+        // },
         sentinel2RasterFunctionChanged: (
             state,
             action: PayloadAction<Sentinel2RasterFunction>
@@ -202,8 +202,8 @@ export const {
     swipePositionChanged,
     // showMapLabelToggled,
     // showTerrainToggled,
-    mapCenterUpdated,
-    zoomUpdated,
+    // mapCenterUpdated,
+    // zoomUpdated,
     sentinel2RasterFunctionChanged,
     sentinel2AquisitionMonthChanged,
     showInfoPanelToggled,

@@ -87,8 +87,8 @@ const getPreloadedStateForLandcoverExplorerApp =
             sentinel2AquisitionMonth: sentinel2AquisitionMonth
                 ? +sentinel2AquisitionMonth
                 : 9,
-            zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
-            center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
+            // zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
+            // center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
             activeLandCoverType: activelandCoverType as LandCoverClassification,
             // sentinel-2 layer can only be displayed in desktop view with wide screen
             shouldShowSentinel2Layer: isMobileView

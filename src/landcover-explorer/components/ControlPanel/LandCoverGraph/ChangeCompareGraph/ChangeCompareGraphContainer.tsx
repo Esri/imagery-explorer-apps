@@ -23,7 +23,7 @@ import {
 } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
 import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
-    selectMapCenterAndZoom,
+    // selectMapCenterAndZoom,
     selectMapExtent,
     selectMapMode,
     selectMapResolution,
@@ -43,12 +43,14 @@ import ChangeCompareGraph from './ChangeCompareGraph';
 // } from '@landcover-explorer/constants/map';
 import { TooltipData } from '@shared/store/UI/reducer';
 import { DivergingBarChartDataItem } from '@vannizhang/react-d3-charts/dist/DivergingBarChart/types';
+import { selectMapZoom } from '@shared/store/Map/selectors';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 const ChangeCompareGraphContainer = () => {
     const dispatch = useDispatch();
 
-    const { zoom } = useSelector(selectMapCenterAndZoom);
+    // const { zoom } = useSelector(selectMapCenterAndZoom);
+    const zoom = useSelector(selectMapZoom);
 
     const resolution = useSelector(selectMapResolution);
 

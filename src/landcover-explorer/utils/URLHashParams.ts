@@ -15,7 +15,7 @@
 
 import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { MapCenter, MapMode } from '@shared/store/LandcoverExplorer/reducer';
+import { MapMode } from '@shared/store/LandcoverExplorer/reducer';
 
 type UrlHashParamKey =
     | 'mapCenter'
@@ -67,8 +67,8 @@ export const getHashParamValueByKey = (key: UrlHashParamKey): string => {
     return hashParams.get(key);
 };
 
-export const saveMapCenterToHashParams = (center: MapCenter, zoom: number) => {
-    const { lon, lat } = center;
+export const saveMapCenterToHashParams = (center: number[], zoom: number) => {
+    const [lon, lat] = center;
     const value = `${lon},${lat},${zoom}`;
     updateHashParams('mapCenter', value);
 };

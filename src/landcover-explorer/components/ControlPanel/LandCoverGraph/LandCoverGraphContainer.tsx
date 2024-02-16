@@ -16,10 +16,10 @@
 import React, { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM } from '@landcover-explorer/constants/map';
+// import { MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM } from '@landcover-explorer/constants/map';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
-    selectMapCenterAndZoom,
+    // selectMapCenterAndZoom,
     selectMapMode,
     selectShouldShowSentinel2Layer,
     selectYear,

@@ -34,21 +34,21 @@ export const selectYearsForSwipeWidgetLayers = createSelector(
     }
 );
 
-/**
- * Select default values (zoom and center) that will be used to initiate map
- *
- * @return `{ zoom: number, cenetr: {lat: number, lon: number} }`
- */
-export const selectMapCenterAndZoom = createSelector(
-    (state: RootState) => state.LandcoverExplorer.zoom,
-    (state: RootState) => state.LandcoverExplorer.center,
-    (zoom, center) => {
-        return {
-            zoom,
-            center,
-        };
-    }
-);
+// /**
+//  * Select default values (zoom and center) that will be used to initiate map
+//  *
+//  * @return `{ zoom: number, cenetr: {lat: number, lon: number} }`
+//  */
+// export const selectMapCenterAndZoom = createSelector(
+//     (state: RootState) => state.LandcoverExplorer.zoom,
+//     (state: RootState) => state.LandcoverExplorer.center,
+//     (zoom, center) => {
+//         return {
+//             zoom,
+//             center,
+//         };
+//     }
+// );
 
 export const selectMapExtent = createSelector(
     (state: RootState) => state.LandcoverExplorer.extent,
@@ -92,7 +92,7 @@ export const selectSentinel2RasterFunction = createSelector(
 
 export const selectIsSentinel2LayerOutOfVisibleRange = createSelector(
     (state: RootState) => state.LandcoverExplorer.shouldShowSentinel2Layer,
-    (state: RootState) => state.LandcoverExplorer.zoom,
+    (state: RootState) => state.Map.zoom,
     (shouldShowSentinel2Layer, zoom) => {
         return (
             shouldShowSentinel2Layer && zoom < MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER

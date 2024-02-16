@@ -20,14 +20,14 @@ import { useSelector } from 'react-redux';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     extentUpdated,
-    mapCenterUpdated,
+    // mapCenterUpdated,
     // MapExtent,
     resolutionUpdated,
     swipePositionChanged,
-    zoomUpdated,
+    // zoomUpdated,
 } from '@shared/store/LandcoverExplorer/reducer';
 import {
-    selectMapCenterAndZoom,
+    // selectMapCenterAndZoom,
     selectIsSentinel2LayerOutOfVisibleRange,
     selectShouldShowSentinel2Layer,
     selectYearsForSwipeWidgetLayers,
@@ -56,6 +56,8 @@ import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import AnimationPanel from '../AnimationPanel/AnimationPanel';
 import MapInfoIndicators from './MapReferenceInfo';
 import MapView from './MapView';
+import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
+import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
@@ -80,7 +82,11 @@ const MapViewContainer = () => {
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
-    const { center, zoom } = useSelector(selectMapCenterAndZoom);
+    // const { center, zoom } = useSelector(selectMapCenterAndZoom);
+
+    const center = useSelector(selectMapCenter);
+
+    const zoom = useSelector(selectMapZoom);
 
     /**
      * Show Swipe Widget when in swipe mode
@@ -109,11 +115,7 @@ const MapViewContainer = () => {
                 'bottom-0': hideControlPanel,
             })}
         >
-            <MapView
-                webmapId={WEB_MAP_ID}
-                center={[center.lon, center.lat]}
-                zoom={zoom}
-            >
+            <MapView webmapId={WEB_MAP_ID} center={center} zoom={zoom}>
                 <SwipeWidget
                     shouldShowSentinel2Layer={shouldShowSentinel2Layer}
                     yearForLeadingLayer={year4LeadingLayer}
@@ -133,8 +135,10 @@ const MapViewContainer = () => {
                         batch(() => {
                             dispatch(resolutionUpdated(resolution));
                             dispatch(extentUpdated(extent));
-                            dispatch(mapCenterUpdated(center));
-                            dispatch(zoomUpdated(zoom));
+                            // dispatch(mapCenterUpdated(center));
+                            // dispatch(zoomUpdated(zoom));
+                            dispatch(centerChanged(center));
+                            dispatch(zoomChanged(zoom));
                         });
                     }}
                     // mapViewOnClick={fetchLandCoverData}
