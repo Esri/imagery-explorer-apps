@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
 import { useDispatch } from 'react-redux';
-import { showAboutThisAppToggled } from '@shared/store/LandcoverUI/reducer';
+import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 
 const IMAGERY_EXPLORER_APPS = [
@@ -59,7 +59,7 @@ const AppTitle = () => {
                 // onMouseEnter={setHideTitle.bind(null, false)}
                 // onMouseLeave={setHideTitle.bind(null, true)}
                 onClick={() => {
-                    dispatch(showAboutThisAppToggled());
+                    dispatch(shouldShowAboutThisAppToggled());
                 }}
             >
                 <svg

@@ -51,10 +51,10 @@ export const selectAnimationMode = createSelector(
     (animationMode) => animationMode
 );
 
-export const selectShowAboutThisApp = createSelector(
-    (state: RootState) => state.LandcoverUI.showAboutThisApp,
-    (showAboutThisApp) => showAboutThisApp
-);
+// export const selectShowAboutThisApp = createSelector(
+//     (state: RootState) => state.LandcoverUI.showAboutThisApp,
+//     (showAboutThisApp) => showAboutThisApp
+// );
 
 export const selectShowSaveWebMap = createSelector(
     (state: RootState) => state.LandcoverUI.showSaveWebMap,

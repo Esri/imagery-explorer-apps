@@ -16,15 +16,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { showAboutThisAppToggled } from '@shared/store/LandcoverUI/reducer';
-import { selectShowAboutThisApp } from '@shared/store/LandcoverUI/selectors';
+// import { showAboutThisAppToggled } from '@shared/store/LandcoverUI/reducer';
+// import { selectShowAboutThisApp } from '@shared/store/LandcoverUI/selectors';
 import { CloseButton } from '@shared/components/CloseButton';
 import EsriLogo from './esri-logo.png';
+import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
+import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
 
 const About = () => {
     const dispatch = useDispatch();
 
-    const show = useSelector(selectShowAboutThisApp);
+    const show = useSelector(selectShouldShowAboutThisApp);
 
     if (!show) {
         return null;
@@ -34,7 +36,7 @@ const About = () => {
         <div className="absolute top-0 left-0 bottom-0 right-0 px-4 py-10 bg-custom-background-95 z-20 text-custom-light-blue overflow-y-auto">
             <CloseButton
                 onClick={() => {
-                    dispatch(showAboutThisAppToggled());
+                    dispatch(shouldShowAboutThisAppToggled());
                 }}
             />
 
