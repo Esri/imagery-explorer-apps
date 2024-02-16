@@ -70,7 +70,7 @@ const useSentinel2Layer = ({
             // URL to the imagery service
             url: SENTINEL_2_IMAGE_SERVICE_URL,
             mosaicRule: createMosaicRuleByYear(year, aquisitionMonth) as any,
-            renderingRule: {
+            rasterFunction: {
                 functionName: selectedRasterFunction,
             },
             visible,
@@ -95,7 +95,7 @@ const useSentinel2Layer = ({
         // console.log(selectedRasterFunction);
 
         if (layerRef.current) {
-            layerRef.current.renderingRule = {
+            layerRef.current.rasterFunction = {
                 functionName: selectedRasterFunction || '',
             } as any;
         }

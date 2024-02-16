@@ -59,7 +59,7 @@ const useLandCoverLayer = ({
             // URL to the imagery service
             url: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
             timeExtent,
-            renderingRule: {
+            rasterFunction: {
                 functionName:
                     getRasterFunctionByLandCoverClassName(activeLandCoverType),
             },
