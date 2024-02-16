@@ -4,6 +4,7 @@ This repository contains a collection of Imagery Explorer web applications devel
 ## Table of Content
 - [Getting Started](#getting-started)
 - [Landsat Explorer](#landsat-explorer)
+- [Sentinel-2 Landcover Explorer](#sentinel-2-landcover-explorer)
 - [Resources](#resources)
 - [Issues](#issues)
 - [Contributing](#contributing)
@@ -67,11 +68,42 @@ npm run build-landsat
 - Source Image Products - USGS. USGS-authored or produced data and information are considered to be in the U.S. Public Domain and may be used without restriction. [Acknowledging or Crediting USGS](https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs)
 - Image Service - Esri. This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
 
+## Sentinel-2 Land Cover Explorer
+
+Land use land cover (LULC) maps are an increasingly important tool for decision-makers in many industry sectors and developing nations around the world. The information provided by these maps helps inform policy and land management decisions by better understanding and quantifying the impacts of earth processes and human activity.
+
+The Sentinel-2 Land Cover Explorer app provides dynamic visual and statistical change by comparing annual slices of the Sentinel-2 10m Land Use/Land Cover data as you explore the map.
+
+[View it live](https://livingatlas.arcgis.com/landcoverexplorer/)
+
+![App](./public/thumbnails/landcover-explorer.jpg)
+
+### Features:
+- Visual change analysis with either ‘Step Mode’ or ‘Swipe Mode’
+- Dynamic statistical change analysis by year, map extent, and class
+- Filter by selected land cover class
+- Regional class statistics summarized by administrative boundaries
+- Imagery mode for visualization and comparison of the source imagery
+- Select and dynamically change imagery renderings
+- Data download for offline use
+
+### Usage
+To run and test the app on your local machine:
+```sh
+npm run start-landcover
+```
+
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landsat` directory.
+```sh
+npm run build-landcover
+```
+
 ## Issues
 Find a bug or want to request a new feature?  Please let us know by submitting an issue.
 
 ## Resources
 - [Landsat Level-2 archive available in Living Atlas](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/landsat-level-2-science-products-and-landsat-explorer/)
+- [Global Land Cover Revealed](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/global-land-cover-revealed/)
 
 ## Contributing
 
