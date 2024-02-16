@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import './PopUp.css';
+// import './PopUp.css';
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import Point from '@arcgis/core/geometry/Point';
