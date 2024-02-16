@@ -16,11 +16,9 @@
 import React, { useEffect, useState } from 'react';
 import { WebMapMetadata } from './SaveWebMap';
 import { CreateWebMapResponse, createWebMap } from './createWebMap';
-import {
-    selectMapExtent,
-    selectYear,
-} from '@shared/store/LandcoverExplorer/selectors';
+import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { useSelector } from 'react-redux';
+import { selectMapExtent } from '@shared/store/Map/selectors';
 
 export const useCreateWebmap = (webmapMetadata: WebMapMetadata) => {
     const mapExtent = useSelector(selectMapExtent);

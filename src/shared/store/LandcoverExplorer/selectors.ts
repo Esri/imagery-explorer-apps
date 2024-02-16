@@ -50,15 +50,15 @@ export const selectYearsForSwipeWidgetLayers = createSelector(
 //     }
 // );
 
-export const selectMapExtent = createSelector(
-    (state: RootState) => state.LandcoverExplorer.extent,
-    (extent) => extent
-);
+// export const selectMapExtent = createSelector(
+//     (state: RootState) => state.LandcoverExplorer.extent,
+//     (extent) => extent
+// );
 
-export const selectMapResolution = createSelector(
-    (state: RootState) => state.LandcoverExplorer.resolution,
-    (resolution) => resolution
-);
+// export const selectMapResolution = createSelector(
+//     (state: RootState) => state.LandcoverExplorer.resolution,
+//     (resolution) => resolution
+// );
 
 export const selectShouldShowSentinel2Layer = createSelector(
     (state: RootState) => state.LandcoverExplorer.shouldShowSentinel2Layer,

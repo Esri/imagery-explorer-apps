@@ -19,14 +19,6 @@ import { batch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
-    extentUpdated,
-    // mapCenterUpdated,
-    // MapExtent,
-    resolutionUpdated,
-    // swipePositionChanged,
-    // zoomUpdated,
-} from '@shared/store/LandcoverExplorer/reducer';
-import {
     // selectMapCenterAndZoom,
     selectIsSentinel2LayerOutOfVisibleRange,
     selectShouldShowSentinel2Layer,
@@ -59,6 +51,8 @@ import MapView from './MapView';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import {
     centerChanged,
+    extentUpdated,
+    resolutionUpdated,
     swipeWidgetHanlderPositionChanged,
     zoomChanged,
 } from '@shared/store/Map/reducer';

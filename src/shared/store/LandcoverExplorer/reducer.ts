@@ -56,15 +56,15 @@ export type LandcoverExplorerAppState = {
     //  * Represents the view's center point
     //  */
     // center?: MapCenter;
-    /**
-     * Represents the size of one pixel in map units.
-     * The value of resolution can be found by dividing the extent width by the view's width.
-     */
-    resolution?: number;
-    /**
-     * The extent represents the visible portion of a map within the view as an instance of Extent.
-     */
-    extent?: Extent;
+    // /**
+    //  * Represents the size of one pixel in map units.
+    //  * The value of resolution can be found by dividing the extent width by the view's width.
+    //  */
+    // resolution?: number;
+    // /**
+    //  * The extent represents the visible portion of a map within the view as an instance of Extent.
+    //  */
+    // extent?: Extent;
     swipeWidget?: {
         year4LeadingLayer?: number;
         year4TrailingLayer?: number;
@@ -104,8 +104,8 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     sentinel2AquisitionMonth: 9,
     // zoom: 11,
     // center: null,
-    resolution: null,
-    extent: null,
+    // resolution: null,
+    // extent: null,
     swipeWidget: null,
     activeLandCoverType: null,
     // showMapLabel: true,
@@ -131,12 +131,12 @@ const slice = createSlice({
         year4TrailingLayerUpdated: (state, action: PayloadAction<number>) => {
             state.swipeWidget.year4TrailingLayer = action.payload;
         },
-        resolutionUpdated: (state, action: PayloadAction<number>) => {
-            state.resolution = action.payload;
-        },
-        extentUpdated: (state, action: PayloadAction<Extent>) => {
-            state.extent = action.payload;
-        },
+        // resolutionUpdated: (state, action: PayloadAction<number>) => {
+        //     state.resolution = action.payload;
+        // },
+        // extentUpdated: (state, action: PayloadAction<Extent>) => {
+        //     state.extent = action.payload;
+        // },
         shouldShowSentinel2LayerToggled: (
             state,
             action: PayloadAction<boolean>
@@ -195,8 +195,8 @@ export const {
     yearUpdated,
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,
-    resolutionUpdated,
-    extentUpdated,
+    // resolutionUpdated,
+    // extentUpdated,
     shouldShowSentinel2LayerToggled,
     activeLandCoverTypeChanged,
     // swipePositionChanged,

@@ -31,6 +31,16 @@ export const selectMapZoom = createSelector(
     (zoom) => zoom
 );
 
+export const selectMapExtent = createSelector(
+    (state: RootState) => state.Map.extent,
+    (extent) => extent
+);
+
+export const selectMapResolution = createSelector(
+    (state: RootState) => state.Map.resolution,
+    (resolution) => resolution
+);
+
 export const selectShowMapLabel = createSelector(
     (state: RootState) => state.Map.showMapLabel,
     (showMapLabel) => showMapLabel

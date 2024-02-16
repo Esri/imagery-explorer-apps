@@ -24,11 +24,7 @@ import {
     getHistoricalLandCoverDataByMapExtent,
     HistoricalLandCoverData,
 } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
-import {
-    selectMapExtent,
-    selectMapResolution,
-    selectShowInfoPanel,
-} from '@shared/store/LandcoverExplorer/selectors';
+import { selectShowInfoPanel } from '@shared/store/LandcoverExplorer/selectors';
 // import { QuickD3ChartData, QuickD3ChartDataItem } from '../QuickD3Chart/types';
 import CountrySelector from './Header/CountrySelector';
 import SubRegionSelector from './Header/SubRegionSelector';
@@ -39,6 +35,10 @@ import {
 } from '@landcover-explorer/utils/URLHashParams';
 import { GroupedBarChartGroupData } from '@vannizhang/react-d3-charts/dist/GroupedBarChart/types';
 import { CloseButton } from '@shared/components/CloseButton';
+import {
+    selectMapExtent,
+    selectMapResolution,
+} from '@shared/store/Map/selectors';
 
 // import { numberFns } from 'helper-toolkit-ts';
 // import { saveHistoricalLandCoverDataAsCSV } from './helper';

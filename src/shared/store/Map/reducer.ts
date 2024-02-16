@@ -21,6 +21,7 @@ import {
 } from '@reduxjs/toolkit';
 import { MAP_CENTER, MAP_ZOOM } from '../../constants/map';
 import Point from '@arcgis/core/geometry/Point';
+import { Extent } from '@arcgis/core/geometry';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
@@ -37,6 +38,15 @@ export type MapState = {
      * zoom level
      */
     zoom: number;
+    /**
+     * Represents the size of one pixel in map units.
+     * The value of resolution can be found by dividing the extent width by the view's width.
+     */
+    resolution?: number;
+    /**
+     * The extent represents the visible portion of a map within the view as an instance of Extent.
+     */
+    extent?: Extent;
     /**
      * If true, Map Reference Labels layer will be on
      */
@@ -63,6 +73,8 @@ export const initialMapState: MapState = {
     // webmapId: WEB_MAP_ID, // Topographic
     center: MAP_CENTER,
     zoom: MAP_ZOOM,
+    resolution: null,
+    extent: null,
     showMapLabel: true,
     showTerrain: true,
     showBasemap: true,
@@ -82,6 +94,12 @@ const slice = createSlice({
         },
         zoomChanged: (state, action: PayloadAction<number>) => {
             state.zoom = action.payload;
+        },
+        resolutionUpdated: (state, action: PayloadAction<number>) => {
+            state.resolution = action.payload;
+        },
+        extentUpdated: (state, action: PayloadAction<Extent>) => {
+            state.extent = action.payload;
         },
         showMapLabelToggled: (state) => {
             state.showMapLabel = !state.showMapLabel;
@@ -110,6 +128,8 @@ export const {
     // webmapIdChanged,
     centerChanged,
     zoomChanged,
+    resolutionUpdated,
+    extentUpdated,
     showMapLabelToggled,
     showTerrainToggled,
     showBasemapToggled,

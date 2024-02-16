@@ -24,9 +24,9 @@ import {
 import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
     // selectMapCenterAndZoom,
-    selectMapExtent,
-    selectMapMode,
-    selectMapResolution,
+    // selectMapExtent,
+    // selectMapMode,
+    // selectMapResolution,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 // import { showInfoPanelToggled } from '@landcover-explorer/store/UI/reducer';
@@ -43,7 +43,11 @@ import ChangeCompareGraph from './ChangeCompareGraph';
 // } from '@landcover-explorer/constants/map';
 import { TooltipData } from '@shared/store/UI/reducer';
 import { DivergingBarChartDataItem } from '@vannizhang/react-d3-charts/dist/DivergingBarChart/types';
-import { selectMapZoom } from '@shared/store/Map/selectors';
+import {
+    selectMapExtent,
+    selectMapResolution,
+    selectMapZoom,
+} from '@shared/store/Map/selectors';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 const ChangeCompareGraphContainer = () => {
