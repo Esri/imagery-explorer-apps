@@ -75,15 +75,15 @@ export const selectSwipePosition = createSelector(
     (position) => position
 );
 
-export const selectShowMapLabel = createSelector(
-    (state: RootState) => state.LandcoverExplorer.showMapLabel,
-    (showMapLabel) => showMapLabel
-);
+// export const selectShowMapLabel = createSelector(
+//     (state: RootState) => state.LandcoverExplorer.showMapLabel,
+//     (showMapLabel) => showMapLabel
+// );
 
-export const selectShowTerrain = createSelector(
-    (state: RootState) => state.LandcoverExplorer.showTerrain,
-    (showTerrain) => showTerrain
-);
+// export const selectShowTerrain = createSelector(
+//     (state: RootState) => state.LandcoverExplorer.showTerrain,
+//     (showTerrain) => showTerrain
+// );
 
 export const selectSentinel2RasterFunction = createSelector(
     (state: RootState) => state.LandcoverExplorer.sentinel2RasterFunction,

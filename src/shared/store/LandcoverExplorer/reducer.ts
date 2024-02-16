@@ -75,14 +75,14 @@ export type LandcoverExplorerAppState = {
      * get the raster functions to filter the Land Cover layer
      */
     activeLandCoverType?: LandCoverClassification;
-    /**
-     * If true, Map Reference Labels layer will be on
-     */
-    showMapLabel?: boolean;
-    /**
-     * If true, Terrain Layer will be on
-     */
-    showTerrain?: boolean;
+    // /**
+    //  * If true, Map Reference Labels layer will be on
+    //  */
+    // showMapLabel?: boolean;
+    // /**
+    //  * If true, Terrain Layer will be on
+    //  */
+    // showTerrain?: boolean;
     /**
      * Sentinel 2 Raster function that will be used to render the layer
      */
@@ -108,8 +108,8 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     extent: null,
     swipeWidget: null,
     activeLandCoverType: null,
-    showMapLabel: true,
-    showTerrain: true,
+    // showMapLabel: true,
+    // showTerrain: true,
     sentinel2RasterFunction: 'Natural Color with DRA',
     showInfoPanel: false,
     showSwipeWidgetYearIndicator: false,
@@ -152,12 +152,12 @@ const slice = createSlice({
         swipePositionChanged: (state, action: PayloadAction<number>) => {
             state.swipeWidget.position = action.payload;
         },
-        showMapLabelToggled: (state) => {
-            state.showMapLabel = !state.showMapLabel;
-        },
-        showTerrainToggled: (state) => {
-            state.showTerrain = !state.showTerrain;
-        },
+        // showMapLabelToggled: (state) => {
+        //     state.showMapLabel = !state.showMapLabel;
+        // },
+        // showTerrainToggled: (state) => {
+        //     state.showTerrain = !state.showTerrain;
+        // },
         mapCenterUpdated: (state, action: PayloadAction<MapCenter>) => {
             state.center = action.payload;
         },
@@ -200,8 +200,8 @@ export const {
     shouldShowSentinel2LayerToggled,
     activeLandCoverTypeChanged,
     swipePositionChanged,
-    showMapLabelToggled,
-    showTerrainToggled,
+    // showMapLabelToggled,
+    // showTerrainToggled,
     mapCenterUpdated,
     zoomUpdated,
     sentinel2RasterFunctionChanged,

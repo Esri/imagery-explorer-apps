@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import {
     selectShowMapLabel,
     selectShowTerrain,
-} from '@shared/store/LandcoverExplorer/selectors';
+} from '@shared/store/Map/selectors';
 import {
     HUMAN_GEO_DARK_LABEL_LAYER_TITLE,
     HUMAN_GEO_LIGHT_WATER_LAYER_TITLE,
