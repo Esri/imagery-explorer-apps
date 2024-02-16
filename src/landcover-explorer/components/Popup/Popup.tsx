@@ -226,7 +226,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     const init = async () => {
         // It's necessary to overwrite the default click for the popup
         // behavior in order to display your own popup
-        mapView.popup.autoOpenEnabled = false;
+        // mapView.popup.autoOpenEnabled = false;
         mapView.popup.dockEnabled = false;
 
         mapView.on('click', async (evt) => {
@@ -242,7 +242,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
 
     useEffect(() => {
         if (mapView) {
-            mapView.popup.close();
+            mapView.closePopup();
         }
     }, [
         aquisitionYear,
