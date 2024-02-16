@@ -93,7 +93,7 @@ To run and test the app on your local machine:
 npm run start-landcover
 ```
 
-To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landsat` directory.
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landcover-explorer` directory.
 ```sh
 npm run build-landcover
 ```
