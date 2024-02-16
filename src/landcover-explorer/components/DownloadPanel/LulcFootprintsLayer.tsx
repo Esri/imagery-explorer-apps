@@ -52,8 +52,9 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
 
         // It's necessary to overwrite the default click for the popup
         // behavior in order to display your own popup
-        mapView.popup.autoOpenEnabled = false;
+        mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
+        mapView.popup.collapseEnabled = false;
 
         addEventHandlers();
     };

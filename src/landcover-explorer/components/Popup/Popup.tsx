@@ -226,8 +226,9 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     const init = async () => {
         // It's necessary to overwrite the default click for the popup
         // behavior in order to display your own popup
-        // mapView.popup.autoOpenEnabled = false;
+        mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
+        mapView.popup.collapseEnabled = false;
 
         mapView.on('click', async (evt) => {
             mapViewOnClickHandlerRef.current(evt.mapPoint, evt.x);
