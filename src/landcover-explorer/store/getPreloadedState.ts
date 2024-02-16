@@ -18,7 +18,7 @@ import {
     MapMode,
     MapState,
 } from '@shared/store/LandcoverExplorer/reducer';
-import { initialUIState, UIState } from '@shared/store/LandcoverUI/reducer';
+import { initialUIState, UIState } from '@shared/store/UI/reducer';
 import {
     getActiveYearFromHashParams,
     getDonwloadModeFromHashParams,
@@ -110,24 +110,24 @@ const getPreloadedUIState = (): UIState => {
 
     return {
         ...initialUIState,
-        showDownloadPanel,
-        /**
-         * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
-         * so it can show the land cover chart using data from land cover stats table
-         */
-        showInfoPanel: region !== '',
+        // showDownloadPanel,
+        // /**
+        //  * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
+        //  * so it can show the land cover chart using data from land cover stats table
+        //  */
+        // showInfoPanel: region !== '',
         // /**
         //  * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
         //  * animation mode can only be enabled in desktop view with wide screen
         //  */
         // animationMode: isMobileView ? null : animationMode,
-        showSaveWebMap: showSaveWebMapPanel,
+        // showSaveWebMap: showSaveWebMapPanel,
     };
 };
 
 export const getPreloadedState = (): PartialRootState => {
     return {
         LandcoverExplorer: getPreloadedStateForLandcoverExplorer(),
-        LandcoverUI: getPreloadedUIState(),
+        // LandcoverUI: getPreloadedUIState(),
     };
 };

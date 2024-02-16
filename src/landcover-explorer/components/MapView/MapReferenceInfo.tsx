@@ -23,7 +23,7 @@ import {
     selectSwipePosition,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { selectShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverUI/selectors';
+import { selectShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type Props = {

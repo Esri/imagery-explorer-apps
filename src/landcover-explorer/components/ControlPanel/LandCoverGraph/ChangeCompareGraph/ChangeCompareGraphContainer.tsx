@@ -41,7 +41,7 @@ import ChangeCompareGraph from './ChangeCompareGraph';
 //     // DEFAULT_MAP_ZOOM,
 //     MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM,
 // } from '@landcover-explorer/constants/map';
-import { TooltipData } from '@shared/store/LandcoverUI/reducer';
+import { TooltipData } from '@shared/store/UI/reducer';
 import { DivergingBarChartDataItem } from '@vannizhang/react-d3-charts/dist/DivergingBarChart/types';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 

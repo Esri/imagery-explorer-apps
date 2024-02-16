@@ -20,8 +20,8 @@ import { shouldShowSentinel2LayerToggled } from '@shared/store/LandcoverExplorer
 import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 import {
     showDownloadPanelToggled,
-    showSaveWebMapToggled,
-} from '@shared/store/LandcoverUI/reducer';
+    showSaveWebMapPanelToggled,
+} from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { saveshowImageryLayerToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import LayerSelector from './LayerSelector';
@@ -53,7 +53,7 @@ const LayerSelectorContainer = () => {
                 dispatch(showDownloadPanelToggled(true));
             }}
             saveWebMapButtonOnClick={() => {
-                dispatch(showSaveWebMapToggled());
+                dispatch(showSaveWebMapPanelToggled());
             }}
         />
     );

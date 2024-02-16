@@ -16,7 +16,7 @@
 import classNames from 'classnames';
 import React, { FC, useRef } from 'react';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
-import { TooltipData } from '@shared/store/LandcoverUI/reducer';
+import { TooltipData } from '@shared/store/UI/reducer';
 import HeaderText from '../HeaderText/HeaderText';
 import {
     RasterFunctionData,

@@ -72,6 +72,14 @@ export type UIState = {
      * name of selected interesting place
      */
     nameOfSelectedInterestingPlace: string;
+    /**
+     * If true, open download panel
+     */
+    showDownloadPanel?: boolean;
+    /**
+     * if true, show Save Webmap Panel
+     */
+    showSaveWebMapPanel?: boolean;
 };
 
 export const initialUIState: UIState = {
@@ -83,6 +91,8 @@ export const initialUIState: UIState = {
     tooltipXPosition: 0,
     tooltipData: null,
     nameOfSelectedInterestingPlace: '',
+    showDownloadPanel: false,
+    showSaveWebMapPanel: false,
 };
 
 const slice = createSlice({
@@ -126,6 +136,12 @@ const slice = createSlice({
         ) => {
             state.nameOfSelectedInterestingPlace = action.payload;
         },
+        showDownloadPanelToggled: (state, action: PayloadAction<boolean>) => {
+            state.showDownloadPanel = action.payload;
+        },
+        showSaveWebMapPanelToggled: (state) => {
+            state.showSaveWebMapPanel = !state.showSaveWebMapPanel;
+        },
     },
 });
 
@@ -141,6 +157,8 @@ export const {
     tooltipDataChanged,
     tooltipXPositionChanged,
     nameOfSelectedInterestingPlaceChanged,
+    showDownloadPanelToggled,
+    showSaveWebMapPanelToggled,
 } = slice.actions;
 
 export default reducer;

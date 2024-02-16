@@ -25,7 +25,7 @@ import {
     selectYear,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { showInfoPanelToggled } from '@shared/store/LandcoverUI/reducer';
+import { showInfoPanelToggled } from '@shared/store/LandcoverExplorer/reducer';
 import ChangeCompareGraph from './ChangeCompareGraph/ChangeCompareGraphContainer';
 import HeaderText from '../HeaderText/HeaderText';
 import TotalAreaGraph from './TotalAreaGraph/TotalAreaGraphContainer';

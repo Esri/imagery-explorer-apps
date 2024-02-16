@@ -114,3 +114,13 @@ export const selectYear = createSelector(
     (state: RootState) => state.LandcoverExplorer.year,
     (year) => year
 );
+
+export const selectShowInfoPanel = createSelector(
+    (state: RootState) => state.LandcoverExplorer.showInfoPanel,
+    (showInfoPanel) => showInfoPanel
+);
+
+export const selectShowSwipeWidgetYearIndicator = createSelector(
+    (state: RootState) => state.LandcoverExplorer.showSwipeWidgetYearIndicator,
+    (showSwipeWidgetYearIndicator) => showSwipeWidgetYearIndicator
+);

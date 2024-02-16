@@ -23,19 +23,6 @@ import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlP
 import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { Extent } from '@arcgis/core/geometry';
 
-// import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-
-// export type MapExtent = {
-//     spatialReference?: {
-//         latestWkid?: number;
-//         wkid?: number;
-//     };
-//     xmin?: number;
-//     xmax?: number;
-//     ymin?: number;
-//     ymax?: number;
-// };
-
 export type MapMode = 'swipe' | 'step';
 
 export type MapCenter = {
@@ -100,6 +87,14 @@ export type MapState = {
      * Sentinel 2 Raster function that will be used to render the layer
      */
     sentinel2RasterFunction?: Sentinel2RasterFunction;
+    /**
+     * If true, open info panel that shows detailed land cover info
+     */
+    showInfoPanel?: boolean;
+    /**
+     * If true, show leading and trailing year in Swipe Widget Reference Info Component
+     */
+    showSwipeWidgetYearIndicator?: boolean;
 };
 
 export const initialMapState: MapState = {
@@ -116,6 +111,8 @@ export const initialMapState: MapState = {
     showMapLabel: true,
     showTerrain: true,
     sentinel2RasterFunction: 'Natural Color with DRA',
+    showInfoPanel: false,
+    showSwipeWidgetYearIndicator: false,
 };
 
 const slice = createSlice({
@@ -179,6 +176,15 @@ const slice = createSlice({
         ) => {
             state.sentinel2AquisitionMonth = action.payload;
         },
+        showInfoPanelToggled: (state, action: PayloadAction<boolean>) => {
+            state.showInfoPanel = action.payload;
+        },
+        showSwipeWidgetYearIndicatorToggled: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.showSwipeWidgetYearIndicator = action.payload;
+        },
     },
 });
 
@@ -200,6 +206,8 @@ export const {
     zoomUpdated,
     sentinel2RasterFunctionChanged,
     sentinel2AquisitionMonthChanged,
+    showInfoPanelToggled,
+    showSwipeWidgetYearIndicatorToggled,
 } = slice.actions;
 
 export default reducer;

@@ -15,10 +15,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectShowSaveWebMap } from '@shared/store/LandcoverUI/selectors';
+import { selectShowSaveWebMapPanel } from '@shared/store/UI/selectors';
 import { SaveWebMap, WebMapMetadata } from './SaveWebMap';
 import { useDispatch } from 'react-redux';
-import { showSaveWebMapToggled } from '@shared/store/LandcoverUI/reducer';
+import { showSaveWebMapPanelToggled } from '@shared/store/UI/reducer';
 import {
     getSignedInUser,
     isAnonymouns,
@@ -31,7 +31,7 @@ import { useCreateWebmap } from './useCreateWebmap';
 export const SaveWebMapContainer = () => {
     const dispatch = useDispatch();
 
-    const showSaveWebMap = useSelector(selectShowSaveWebMap);
+    const showSaveWebMap = useSelector(selectShowSaveWebMapPanel);
 
     const [webmapMetadata, setWebMapMetadata] = useState<WebMapMetadata>();
 
@@ -69,7 +69,7 @@ export const SaveWebMapContainer = () => {
             saveButtonOnClick={setWebMapMetadata}
             closeButtonOnClick={() => {
                 // close
-                dispatch(showSaveWebMapToggled());
+                dispatch(showSaveWebMapPanelToggled());
             }}
             signInButtonOnClick={signInUsingDifferentAccount}
         />

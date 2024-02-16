@@ -60,3 +60,13 @@ export const selectNameOfSelectedInterestingPlace = createSelector(
     (state: RootState) => state.UI.nameOfSelectedInterestingPlace,
     (nameOfSelectedInterestingPlace) => nameOfSelectedInterestingPlace
 );
+
+export const selectShowDownloadPanel = createSelector(
+    (state: RootState) => state.UI.showDownloadPanel,
+    (showDownloadPanel) => showDownloadPanel
+);
+
+export const selectShowSaveWebMapPanel = createSelector(
+    (state: RootState) => state.UI.showSaveWebMapPanel,
+    (showSaveWebMapPanel) => showSaveWebMapPanel
+);

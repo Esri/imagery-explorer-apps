@@ -45,7 +45,7 @@ import {
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 // import ToggleAttribution from './ToggleAttribution';
-import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverUI/thunks';
+import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import SearchWidget from './SearchWidget';
 import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';

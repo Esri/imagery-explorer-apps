@@ -25,7 +25,6 @@ import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/
 import Tooltip from './Tooltip/TooltipContainer';
 import ToggleButton from './ToggleButton/ToggleButtonContainer';
 // import { selectShouldHideControlPanel } from '@shared/store/LandcoverUI/selectors';
-// import ActionBar from './ActionBar/ActionBar';
 import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
