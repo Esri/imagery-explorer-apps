@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { shouldShowAboutThisAppToggled } from '../../store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import { APP_NAME, AppName } from '@shared/config';
 
 type Props = {
     /**
@@ -29,10 +30,20 @@ type Props = {
     title: string;
 };
 
-const IMAGERY_EXPLORER_APPS = [
+const IMAGERY_EXPLORER_APPS: {
+    appName: AppName;
+    title: string;
+    url: string;
+}[] = [
     {
+        appName: 'landcover-explorer',
         title: 'Sentinel-2 Land Cover Explorer',
         url: '/landcoverexplorer',
+    },
+    {
+        appName: 'landsat',
+        title: 'Landsat Explorer',
+        url: '/landsatexplorer',
     },
 ];
 
@@ -111,26 +122,29 @@ const AppHeader: FC<Props> = ({ title }) => {
                             'absolute left-0 top-app-header-size theme-background w-full border-t border-custom-light-blue-50'
                         )}
                     >
-                        <div className="px-2 pt-2 text-xs text-custom-light-blue-50">
+                        <div className="px-2 py-2 text-xs text-custom-light-blue-50">
                             <span>Image Explorer Apps</span>
                         </div>
 
-                        {IMAGERY_EXPLORER_APPS.map((d) => {
-                            return (
-                                <a
-                                    key={d.title}
-                                    href={d.url}
-                                    target="_blank"
-                                    title={`Launch the ${d.title} in a new tab`}
-                                    rel="noreferrer"
-                                >
-                                    <div className="w-full p-2 text-xs cursor-pointer flex items-center">
-                                        <span className="">{d.title}</span>
-                                        {/* <calcite-icon icon="launch" scale="s" /> */}
-                                    </div>
-                                </a>
-                            );
-                        })}
+                        {IMAGERY_EXPLORER_APPS
+                            // should not show current app in the list
+                            .filter((d) => d.appName !== APP_NAME)
+                            .map((d) => {
+                                return (
+                                    <a
+                                        key={d.title}
+                                        href={d.url}
+                                        target="_blank"
+                                        title={`Launch the ${d.title} in a new tab`}
+                                        rel="noreferrer"
+                                    >
+                                        <div className="w-full px-2 py-1 text-xs cursor-pointer flex items-center">
+                                            <span className="">{d.title}</span>
+                                            {/* <calcite-icon icon="launch" scale="s" /> */}
+                                        </div>
+                                    </a>
+                                );
+                            })}
                     </div>
                 )}
             </div>
