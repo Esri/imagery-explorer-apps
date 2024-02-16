@@ -22,14 +22,14 @@ import {
     showDownloadPanelToggled,
     showSaveWebMapToggled,
 } from '@shared/store/LandcoverUI/reducer';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { saveshowImageryLayerToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import LayerSelector from './LayerSelector';
 
 const LayerSelectorContainer = () => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useSelector(
         selectShouldShowSentinel2Layer

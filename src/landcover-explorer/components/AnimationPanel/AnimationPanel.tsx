@@ -15,13 +15,13 @@
 
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { animationModeUpdated } from '@shared/store/LandcoverUI/reducer';
+import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { saveAnimationModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import CloseButton from './CloseButton';
 import useMediaLayerImageElement from './useMediaLayerImageElement';
@@ -38,7 +38,7 @@ type Props = {
 const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const mediaLayerRef = useRef<MediaLayer>();
 
@@ -79,7 +79,7 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
         } else {
             source.elements.addMany(mediaLayerElements);
             // media layer elements are ready, change animation mode to playing to start the animation
-            dispatch(animationModeUpdated('playing'));
+            dispatch(animationStatusChanged('playing'));
         }
     }, [mediaLayerElements, mapView]);
 

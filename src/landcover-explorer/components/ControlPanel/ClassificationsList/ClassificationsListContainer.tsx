@@ -20,7 +20,7 @@ import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-lan
 import { activeLandCoverTypeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
 // import { tooltipDataChanged } from '@shared/store/UI/reducer';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { saveActiveLandCoverTypeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import ClassificationsList from './ClassificationsList';
@@ -30,7 +30,7 @@ const ClassificationsListContainer = () => {
 
     const activeLandCoverType = useSelector(selectActiveLandCoverType);
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const data = useMemo(() => {
         return getLandCoverClassifications();

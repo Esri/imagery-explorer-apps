@@ -55,7 +55,7 @@ export type UIState = {
     /**
      * if true, animation mode is on and should animating land cover or sentinel-2 layers
      */
-    animationMode?: AnimationMode;
+    // animationMode?: AnimationMode;
     // /**
     //  * If true, show About This App Modal
     //  */
@@ -73,7 +73,7 @@ export const initialUIState: UIState = {
     // tooltipData: null,
     showSwipeWidgetYearIndicator: false,
     // hideControlPanel: false,
-    animationMode: null,
+    // animationMode: null,
     // showAboutThisApp: false,
     showSaveWebMap: false,
 };
@@ -103,9 +103,9 @@ const slice = createSlice({
         showDownloadPanelToggled: (state, action: PayloadAction<boolean>) => {
             state.showDownloadPanel = action.payload;
         },
-        animationModeUpdated: (state, action: PayloadAction<AnimationMode>) => {
-            state.animationMode = action.payload;
-        },
+        // animationModeUpdated: (state, action: PayloadAction<AnimationMode>) => {
+        //     state.animationMode = action.payload;
+        // },
         // showAboutThisAppToggled: (state) => {
         //     state.showAboutThisApp = !state.showAboutThisApp;
         // },
@@ -124,7 +124,7 @@ export const {
     showSwipeWidgetYearIndicatorToggled,
     // hideControlPanelToggled,
     showDownloadPanelToggled,
-    animationModeUpdated,
+    // animationModeUpdated,
     // showAboutThisAppToggled,
     showSaveWebMapToggled,
 } = slice.actions;

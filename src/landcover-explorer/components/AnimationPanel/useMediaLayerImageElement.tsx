@@ -15,7 +15,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
@@ -51,7 +51,7 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
 
     const activeLandCoverType = useSelector(selectActiveLandCoverType);
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const loadFrameData = async () => {
         if (!mapView) {

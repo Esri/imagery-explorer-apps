@@ -24,7 +24,7 @@ import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type Props = {
     mapView?: IMapView;
@@ -35,7 +35,7 @@ const Sentinel2Layer: FC<Props> = ({ mapView }: Props) => {
 
     const mode = useSelector(selectMapMode);
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useSelector(
         selectShouldShowSentinel2Layer

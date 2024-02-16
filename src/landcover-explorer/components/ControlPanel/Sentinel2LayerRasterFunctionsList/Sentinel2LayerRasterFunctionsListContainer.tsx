@@ -28,7 +28,7 @@ import { useSelector } from 'react-redux';
 import { selectSentinel2RasterFunction } from '@shared/store/LandcoverExplorer/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { saveSentinel2RasterFunctionToHashParams } from '@landcover-explorer/utils/URLHashParams';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 export type Sentinel2RasterFunction =
     | 'Natural Color with DRA'
@@ -93,7 +93,7 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
 const ImageryRasterFunctionsListContainer = () => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const selectedRasterFunction = useSelector(selectSentinel2RasterFunction);
 

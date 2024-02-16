@@ -25,7 +25,7 @@ import {
     selectShowMapLabel,
     selectShowTerrain,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { SEARCH_WIDGET_WIDTH } from '../MapView/SearchWidget';
 
 type ToggleButtonProps = {
@@ -83,7 +83,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({
 const LayersToggleControl = () => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const showMapLabel = useSelector(selectShowMapLabel);
 

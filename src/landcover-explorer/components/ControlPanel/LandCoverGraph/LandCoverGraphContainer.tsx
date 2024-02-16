@@ -29,7 +29,7 @@ import { showInfoPanelToggled } from '@shared/store/LandcoverUI/reducer';
 import ChangeCompareGraph from './ChangeCompareGraph/ChangeCompareGraphContainer';
 import HeaderText from '../HeaderText/HeaderText';
 import TotalAreaGraph from './TotalAreaGraph/TotalAreaGraphContainer';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 
 const LandCoverGraphContainer = () => {
@@ -45,7 +45,7 @@ const LandCoverGraphContainer = () => {
         selectShouldShowSentinel2Layer
     );
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const isAnimationControlVisible =
         animationMode !== undefined && animationMode !== null;

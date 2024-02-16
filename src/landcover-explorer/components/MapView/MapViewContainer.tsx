@@ -39,9 +39,9 @@ import MapViewEventHandlers from './MapViewEventHandler';
 import Popup from '../Popup/Popup';
 
 import {
-    selectAnimationMode,
+    selectAnimationStatus,
     // selectShouldHideControlPanel,
-} from '@shared/store/LandcoverUI/selectors';
+} from '@shared/store/UI/selectors';
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 // import ToggleAttribution from './ToggleAttribution';
@@ -62,7 +62,7 @@ const MapViewContainer = () => {
 
     const mode = useSelector(selectMapMode);
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const hideControlPanel = useSelector(selectHideBottomPanel);
 

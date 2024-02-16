@@ -46,10 +46,10 @@ export const selectShowSwipeWidgetYearIndicator = createSelector(
 //     (hideControlPanel) => hideControlPanel
 // );
 
-export const selectAnimationMode = createSelector(
-    (state: RootState) => state.LandcoverUI.animationMode,
-    (animationMode) => animationMode
-);
+// export const selectAnimationMode = createSelector(
+//     (state: RootState) => state.LandcoverUI.animationMode,
+//     (animationMode) => animationMode
+// );
 
 // export const selectShowAboutThisApp = createSelector(
 //     (state: RootState) => state.LandcoverUI.showAboutThisApp,

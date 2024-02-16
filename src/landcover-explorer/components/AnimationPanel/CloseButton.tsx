@@ -15,7 +15,7 @@
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { animationModeUpdated } from '@shared/store/LandcoverUI/reducer';
+import { animationStatusChanged } from '@shared/store/UI/reducer';
 
 const CloseButton = () => {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const CloseButton = () => {
                 width="64"
                 className="absolute top-1 right-1 cursor-pointer"
                 onClick={() => {
-                    dispatch(animationModeUpdated(null));
+                    dispatch(animationStatusChanged(null));
                 }}
             >
                 <path

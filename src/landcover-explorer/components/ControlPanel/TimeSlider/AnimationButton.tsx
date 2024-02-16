@@ -16,8 +16,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { animationModeUpdated } from '@shared/store/LandcoverUI/reducer';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { animationStatusChanged } from '@shared/store/UI/reducer';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 const PlayButton = (
     <svg
@@ -67,14 +67,14 @@ const CloseButton = (
 const AnimationButton = () => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     return (
         <div className="flex cursor-pointer">
             {!animationMode && (
                 <div
                     onClick={() => {
-                        dispatch(animationModeUpdated('loading'));
+                        dispatch(animationStatusChanged('loading'));
                     }}
                 >
                     {PlayButton}
@@ -88,7 +88,7 @@ const AnimationButton = () => {
             {animationMode === 'playing' && (
                 <div
                     onClick={() => {
-                        dispatch(animationModeUpdated('pausing'));
+                        dispatch(animationStatusChanged('pausing'));
                     }}
                 >
                     {PauseButton}
@@ -97,7 +97,7 @@ const AnimationButton = () => {
             {animationMode === 'pausing' && (
                 <div
                     onClick={() => {
-                        dispatch(animationModeUpdated('playing'));
+                        dispatch(animationStatusChanged('playing'));
                     }}
                 >
                     {PlayButton}
@@ -106,7 +106,7 @@ const AnimationButton = () => {
             {animationMode && (
                 <div
                     onClick={() => {
-                        dispatch(animationModeUpdated(null));
+                        dispatch(animationStatusChanged(null));
                     }}
                 >
                     {CloseButton}

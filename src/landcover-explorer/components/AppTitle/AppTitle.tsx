@@ -17,7 +17,7 @@ import './style.css';
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { useDispatch } from 'react-redux';
 import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
@@ -32,7 +32,7 @@ const IMAGERY_EXPLORER_APPS = [
 const AppTitle = () => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const [showImageryExplorerAppsList, setShowImageryExplorerAppsList] =
         useState<boolean>(false);

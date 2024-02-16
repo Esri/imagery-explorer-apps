@@ -15,7 +15,7 @@
 
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
@@ -31,7 +31,7 @@ const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
 const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const years = getAvailableYears();
 

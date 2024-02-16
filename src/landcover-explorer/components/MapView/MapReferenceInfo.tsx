@@ -23,10 +23,8 @@ import {
     selectSwipePosition,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import {
-    selectAnimationMode,
-    selectShowSwipeWidgetYearIndicator,
-} from '@shared/store/LandcoverUI/selectors';
+import { selectShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type Props = {
     /**
@@ -63,7 +61,7 @@ const MapInfoIndicators: FC<Props> = ({
 }: Props) => {
     const position = useSelector(selectSwipePosition);
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const isSentinel2LayerOutOfVisibleRange = useSelector(
         selectIsSentinel2LayerOutOfVisibleRange

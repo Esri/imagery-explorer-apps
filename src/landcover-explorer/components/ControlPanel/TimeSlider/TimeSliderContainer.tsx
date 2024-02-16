@@ -31,7 +31,7 @@ import {
     selectYear,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import {
     saveActiveYearToHashParams,
     saveTimeExtentToHashParams,
@@ -46,7 +46,7 @@ import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
 const TimeSliderContainer = () => {
     const dispatch = useDispatch();
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const mode = useSelector(selectMapMode);
 

@@ -23,7 +23,7 @@ import {
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import useLandCoverLayer from './useLandCoverLayer';
-import { selectAnimationMode } from '@shared/store/LandcoverUI/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type Props = {
     mapView?: IMapView;
@@ -34,7 +34,7 @@ const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
 
     const mode = useSelector(selectMapMode);
 
-    const animationMode = useSelector(selectAnimationMode);
+    const animationMode = useSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useSelector(
         selectShouldShowSentinel2Layer

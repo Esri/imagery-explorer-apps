@@ -116,11 +116,11 @@ const getPreloadedUIState = (): UIState => {
          * so it can show the land cover chart using data from land cover stats table
          */
         showInfoPanel: region !== '',
-        /**
-         * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
-         * animation mode can only be enabled in desktop view with wide screen
-         */
-        animationMode: isMobileView ? null : animationMode,
+        // /**
+        //  * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
+        //  * animation mode can only be enabled in desktop view with wide screen
+        //  */
+        // animationMode: isMobileView ? null : animationMode,
         showSaveWebMap: showSaveWebMapPanel,
     };
 };
