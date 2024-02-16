@@ -47,7 +47,7 @@ import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import AnimationPanel from '../AnimationPanel/AnimationPanel';
 import MapInfoIndicators from './MapReferenceInfo';
-import MapView from './MapView';
+// import MapView from './MapView';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import {
     centerChanged,
@@ -56,6 +56,7 @@ import {
     swipeWidgetHanlderPositionChanged,
     zoomChanged,
 } from '@shared/store/Map/reducer';
+import MapView from '@shared/components/MapView/MapView';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();

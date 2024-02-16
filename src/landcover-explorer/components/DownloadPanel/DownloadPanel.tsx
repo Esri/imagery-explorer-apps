@@ -25,8 +25,9 @@ import { saveDonwloadModeToHashParams } from '@landcover-explorer/utils/URLHashP
 import Header from './Header';
 import LulcFootprintsLayer from './LulcFootprintsLayer';
 import { CloseButton } from '@shared/components/CloseButton';
-import MapView from '../MapView/MapView';
+// import MapView from '../MapView/MapView';
 import { selectMapCenter } from '@shared/store/Map/selectors';
+import MapView from '@shared/components/MapView/MapView';
 
 const DownloadPanel = () => {
     const dispatch = useDispatch();
