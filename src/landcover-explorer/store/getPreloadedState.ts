@@ -14,9 +14,9 @@
  */
 
 import {
-    initialMapState,
+    initialLandcoverExplorerAppState,
+    LandcoverExplorerAppState,
     MapMode,
-    MapState,
 } from '@shared/store/LandcoverExplorer/reducer';
 import { initialUIState, UIState } from '@shared/store/UI/reducer';
 import {
@@ -54,80 +54,83 @@ const getMapCenterFromDefaultLocations = () => {
     };
 };
 
-const getPreloadedStateForLandcoverExplorer = (): MapState => {
-    const availableYears = getAvailableYears();
+const getPreloadedStateForLandcoverExplorerApp =
+    (): LandcoverExplorerAppState => {
+        const availableYears = getAvailableYears();
 
-    const mapCenterInfo = getMapCenterFromHashParams();
-    const timeExtent = getTimeExtentFromHashParams();
-    const activelandCoverType = getActiveLandCoverTypeFromHashParams();
-    const shouldShowSentinel2Layer = getShowImageryLayerFromHashParams();
+        const mapCenterInfo = getMapCenterFromHashParams();
+        const timeExtent = getTimeExtentFromHashParams();
+        const activelandCoverType = getActiveLandCoverTypeFromHashParams();
+        const shouldShowSentinel2Layer = getShowImageryLayerFromHashParams();
 
-    const mode = (getMapModeFromHashParams() as MapMode) || 'step';
+        const mode = (getMapModeFromHashParams() as MapMode) || 'step';
 
-    const year = getActiveYearFromHashParams();
-    const sentinel2AquisitionMonth = getActiveMonthFromHashParams();
+        const year = getActiveYearFromHashParams();
+        const sentinel2AquisitionMonth = getActiveMonthFromHashParams();
 
-    const sentinel2RasterFunction =
-        (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
-        'Natural Color with DRA';
+        const sentinel2RasterFunction =
+            (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
+            'Natural Color with DRA';
 
-    const startYear = timeExtent?.startYear || availableYears[0];
-    const endYear =
-        timeExtent?.endYear || availableYears[availableYears.length - 1];
+        const startYear = timeExtent?.startYear || availableYears[0];
+        const endYear =
+            timeExtent?.endYear || availableYears[availableYears.length - 1];
 
-    return {
-        ...initialMapState,
-        // swipe mode can only be enabled in desktop view with wide screen
-        mode: isMobileView ? 'step' : mode,
-        // use year from hash params or the most recent year by default
-        year: year ? +year : availableYears[availableYears.length - 1],
-        sentinel2AquisitionMonth: sentinel2AquisitionMonth
-            ? +sentinel2AquisitionMonth
-            : 9,
-        zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
-        center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
-        activeLandCoverType: activelandCoverType as LandCoverClassification,
-        // sentinel-2 layer can only be displayed in desktop view with wide screen
-        shouldShowSentinel2Layer: isMobileView
-            ? false
-            : shouldShowSentinel2Layer,
-        swipeWidget: {
-            year4LeadingLayer: startYear,
-            year4TrailingLayer: endYear,
-            position: 50,
-        },
-        sentinel2RasterFunction,
+        const region = getRegionFromHashParams();
+
+        return {
+            ...initialLandcoverExplorerAppState,
+            // swipe mode can only be enabled in desktop view with wide screen
+            mode: isMobileView ? 'step' : mode,
+            // use year from hash params or the most recent year by default
+            year: year ? +year : availableYears[availableYears.length - 1],
+            sentinel2AquisitionMonth: sentinel2AquisitionMonth
+                ? +sentinel2AquisitionMonth
+                : 9,
+            zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
+            center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
+            activeLandCoverType: activelandCoverType as LandCoverClassification,
+            // sentinel-2 layer can only be displayed in desktop view with wide screen
+            shouldShowSentinel2Layer: isMobileView
+                ? false
+                : shouldShowSentinel2Layer,
+            swipeWidget: {
+                year4LeadingLayer: startYear,
+                year4TrailingLayer: endYear,
+                position: 50,
+            },
+            sentinel2RasterFunction,
+            /**
+             * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
+             * so it can show the land cover chart using data from land cover stats table
+             */
+            showInfoPanel: region !== '',
+        };
     };
-};
 
 const getPreloadedUIState = (): UIState => {
     const showDownloadPanel = getDonwloadModeFromHashParams();
     const isAnimationModeOn = getAnimationModeFromHashParams();
-    const region = getRegionFromHashParams();
+
     const showSaveWebMapPanel = getShowSaveWebMapPanelFromHashParams();
 
-    const animationMode = isAnimationModeOn ? 'loading' : null;
+    const animationStatus = isAnimationModeOn ? 'loading' : null;
 
     return {
         ...initialUIState,
-        // showDownloadPanel,
-        // /**
-        //  * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
-        //  * so it can show the land cover chart using data from land cover stats table
-        //  */
-        // showInfoPanel: region !== '',
-        // /**
-        //  * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
-        //  * animation mode can only be enabled in desktop view with wide screen
-        //  */
-        // animationMode: isMobileView ? null : animationMode,
-        // showSaveWebMap: showSaveWebMapPanel,
+        showDownloadPanel,
+        /**
+         * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
+         * animation mode can only be enabled in desktop view with wide screen
+         */
+        animationStatus: isMobileView ? null : animationStatus,
+        showSaveWebMapPanel,
     };
 };
 
 export const getPreloadedState = (): PartialRootState => {
     return {
-        LandcoverExplorer: getPreloadedStateForLandcoverExplorer(),
-        // LandcoverUI: getPreloadedUIState(),
+        LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp(),
+        UI: getPreloadedUIState(),
     };
 };

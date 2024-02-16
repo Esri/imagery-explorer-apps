@@ -30,7 +30,7 @@ export type MapCenter = {
     lat?: number;
 };
 
-export type MapState = {
+export type LandcoverExplorerAppState = {
     /**
      * In Swipe Mode, user is allowed to pick up two years from the Time Slider and compare the map layers from those two years using the Swipe Mode
      * In Step Mode, user can only select one year at a time and the Swipe Widget will be disabled
@@ -97,7 +97,7 @@ export type MapState = {
     showSwipeWidgetYearIndicator?: boolean;
 };
 
-export const initialMapState: MapState = {
+export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     mode: 'swipe',
     year: null,
     shouldShowSentinel2Layer: false,
@@ -117,7 +117,7 @@ export const initialMapState: MapState = {
 
 const slice = createSlice({
     name: 'LandcoverExplorer',
-    initialState: initialMapState,
+    initialState: initialLandcoverExplorerAppState,
     reducers: {
         modeChanged: (state, action: PayloadAction<MapMode>) => {
             state.mode = action.payload;
