@@ -25,11 +25,11 @@ import {
     selectYear,
     selectYearsForSwipeWidgetLayers,
 } from '@landcover-explorer/store/LandcoverExplorer/selectors';
-import { showInfoPanelToggled } from '@landcover-explorer/store/UI/reducer';
+import { showInfoPanelToggled } from '@landcover-explorer/store/LandcoverUI/reducer';
 import ChangeCompareGraph from './ChangeCompareGraph/ChangeCompareGraphContainer';
 import HeaderText from '../HeaderText/HeaderText';
 import TotalAreaGraph from './TotalAreaGraph/TotalAreaGraphContainer';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 import classNames from 'classnames';
 
 const LandCoverGraphContainer = () => {

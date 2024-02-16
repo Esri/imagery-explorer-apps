@@ -20,7 +20,7 @@ import {
     MapMode,
     MapState,
 } from './LandcoverExplorer/reducer';
-import { initialUIState, UIState } from './UI/reducer';
+import { initialUIState, UIState } from './LandcoverUI/reducer';
 import {
     getActiveYearFromHashParams,
     getDonwloadModeFromHashParams,
@@ -129,7 +129,7 @@ const getPreloadedUIState = (): UIState => {
 const getPreloadedState = (): PartialRootState => {
     return {
         LandcoverExplorer: getPreloadedStateForLandcoverExplorer(),
-        UI: getPreloadedUIState(),
+        LandcoverUI: getPreloadedUIState(),
     };
 };
 

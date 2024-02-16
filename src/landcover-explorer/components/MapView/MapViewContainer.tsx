@@ -41,10 +41,10 @@ import Popup from '../Popup/Popup';
 import {
     selectAnimationMode,
     selectShouldHideControlPanel,
-} from '@landcover-explorer/store/UI/selectors';
+} from '@landcover-explorer/store/LandcoverUI/selectors';
 import classNames from 'classnames';
 // import ToggleAttribution from './ToggleAttribution';
-import { toggleShowSwipeWidgetYearIndicator } from '@landcover-explorer/store/UI/thunks';
+import { toggleShowSwipeWidgetYearIndicator } from '@landcover-explorer/store/LandcoverUI/thunks';
 import SearchWidget from './SearchWidget';
 import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';

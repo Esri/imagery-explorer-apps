@@ -19,7 +19,7 @@ import {
     LandCoverClassification,
     LandcoverClassificationData,
 } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { TooltipData } from '@landcover-explorer/store/UI/reducer';
+import { TooltipData } from '@landcover-explorer/store/LandcoverUI/reducer';
 import HeaderText from '../HeaderText/HeaderText';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 

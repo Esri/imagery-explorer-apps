@@ -15,9 +15,9 @@
 
 import { combineReducers } from 'redux';
 import LandcoverExplorer from './LandcoverExplorer/reducer';
-import UI from './UI/reducer';
+import LandcoverUI from './LandcoverUI/reducer';
 
 export default combineReducers({
     LandcoverExplorer,
-    UI,
+    LandcoverUI,
 });

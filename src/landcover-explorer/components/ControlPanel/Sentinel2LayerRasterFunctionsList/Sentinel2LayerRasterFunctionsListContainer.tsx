@@ -26,9 +26,9 @@ import { useDispatch } from 'react-redux';
 import { sentinel2RasterFunctionChanged } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import { useSelector } from 'react-redux';
 import { selectSentinel2RasterFunction } from '@landcover-explorer/store/LandcoverExplorer/selectors';
-import { updateTooltipData } from '@landcover-explorer/store/UI/thunks';
+import { updateTooltipData } from '@landcover-explorer/store/LandcoverUI/thunks';
 import { saveSentinel2RasterFunctionToHashParams } from '@landcover-explorer/utils/URLHashParams';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 
 export type Sentinel2RasterFunction =
     | 'Natural Color with DRA'

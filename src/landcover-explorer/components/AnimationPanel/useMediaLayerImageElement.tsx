@@ -15,7 +15,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';

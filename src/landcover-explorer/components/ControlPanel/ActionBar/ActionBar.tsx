@@ -15,7 +15,7 @@
 
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { showDownloadPanelToggled } from '@landcover-explorer/store/UI/reducer';
+import { showDownloadPanelToggled } from '@landcover-explorer/store/LandcoverUI/reducer';
 
 const IconClassNames = 'mb-3 cursor-pointer';
 

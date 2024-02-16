@@ -21,8 +21,8 @@ import { selectShouldShowSentinel2Layer } from '@landcover-explorer/store/Landco
 import {
     showDownloadPanelToggled,
     showSaveWebMapToggled,
-} from '@landcover-explorer/store/UI/reducer';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+} from '@landcover-explorer/store/LandcoverUI/reducer';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 import { saveshowImageryLayerToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import LayerSelector from './LayerSelector';
 

@@ -79,7 +79,7 @@ export const initialUIState: UIState = {
 };
 
 const slice = createSlice({
-    name: 'UI',
+    name: 'LandcoverUI',
     initialState: initialUIState,
     reducers: {
         showInfoPanelToggled: (state, action: PayloadAction<boolean>) => {

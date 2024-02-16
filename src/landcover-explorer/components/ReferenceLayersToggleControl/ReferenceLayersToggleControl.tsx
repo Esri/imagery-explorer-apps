@@ -25,7 +25,7 @@ import {
     selectShowMapLabel,
     selectShowTerrain,
 } from '@landcover-explorer/store/LandcoverExplorer/selectors';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 import { SEARCH_WIDGET_WIDTH } from '../MapView/SearchWidget';
 
 type ToggleButtonProps = {

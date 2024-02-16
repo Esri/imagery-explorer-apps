@@ -15,13 +15,13 @@
 
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { animationModeUpdated } from '@landcover-explorer/store/UI/reducer';
+import { animationModeUpdated } from '@landcover-explorer/store/LandcoverUI/reducer';
 import { saveAnimationModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import CloseButton from './CloseButton';
 import useMediaLayerImageElement from './useMediaLayerImageElement';

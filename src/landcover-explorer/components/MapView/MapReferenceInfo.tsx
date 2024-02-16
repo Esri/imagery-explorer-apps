@@ -26,7 +26,7 @@ import {
 import {
     selectAnimationMode,
     selectShowSwipeWidgetYearIndicator,
-} from '@landcover-explorer/store/UI/selectors';
+} from '@landcover-explorer/store/LandcoverUI/selectors';
 
 type Props = {
     /**

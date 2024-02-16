@@ -16,10 +16,10 @@
 import React, { useEffect, useState } from 'react';
 import LandcoverGraph from './LandcoverGraph/LandcoverGraphContainer';
 import { useSelector } from 'react-redux';
-import { selectShowInfoPanel } from '@landcover-explorer/store/UI/selectors';
+import { selectShowInfoPanel } from '@landcover-explorer/store/LandcoverUI/selectors';
 import Header from './Header/Header';
 import { useDispatch } from 'react-redux';
-import { showInfoPanelToggled } from '@landcover-explorer/store/UI/reducer';
+import { showInfoPanelToggled } from '@landcover-explorer/store/LandcoverUI/reducer';
 
 import {
     getHistoricalLandCoverDataByMapExtent,

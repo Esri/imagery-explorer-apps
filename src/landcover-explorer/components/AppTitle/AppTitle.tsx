@@ -17,9 +17,9 @@ import './style.css';
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 import { useDispatch } from 'react-redux';
-import { showAboutThisAppToggled } from '@landcover-explorer/store/UI/reducer';
+import { showAboutThisAppToggled } from '@landcover-explorer/store/LandcoverUI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 
 const IMAGERY_EXPLORER_APPS = [

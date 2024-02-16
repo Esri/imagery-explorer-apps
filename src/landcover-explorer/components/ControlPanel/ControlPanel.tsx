@@ -24,7 +24,7 @@ import TimeSlider from './TimeSlider/TimeSliderContainer';
 import { selectShouldShowSentinel2Layer } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import Tooltip from './Tooltip/TooltipContainer';
 import ToggleButton from './ToggleButton/ToggleButtonContainer';
-import { selectShouldHideControlPanel } from '@landcover-explorer/store/UI/selectors';
+import { selectShouldHideControlPanel } from '@landcover-explorer/store/LandcoverUI/selectors';
 import ActionBar from './ActionBar/ActionBar';
 import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';

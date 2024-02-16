@@ -23,7 +23,7 @@ import {
     selectYear,
 } from '@landcover-explorer/store/LandcoverExplorer/selectors';
 import useLandCoverLayer from './useLandCoverLayer';
-import { selectAnimationMode } from '@landcover-explorer/store/UI/selectors';
+import { selectAnimationMode } from '@landcover-explorer/store/LandcoverUI/selectors';
 
 type Props = {
     mapView?: IMapView;
