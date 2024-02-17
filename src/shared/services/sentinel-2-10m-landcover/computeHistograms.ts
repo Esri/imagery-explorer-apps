@@ -23,6 +23,7 @@ import {
     LandcoverClassificationData,
 } from './rasterAttributeTable';
 import { getAvailableYears } from './timeInfo';
+import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
 
 type ComputeHistogramsParams = {
     extent: Extent;
@@ -188,6 +189,11 @@ const computeHistograms = async ({
     resolution,
     year,
 }: ComputeHistogramsParams): Promise<ComputeHistogramsResponse> => {
+    // convert the map extent to geographic unit to avoid
+    // using the incorrect Web Mercator extent after moving map
+    // across the international date line
+    extent = webMercatorToGeographic(extent) as Extent;
+
     const params = new URLSearchParams({
         f: 'json',
         geometryType: 'esriGeometryEnvelope',

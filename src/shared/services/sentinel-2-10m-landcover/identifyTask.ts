@@ -24,6 +24,7 @@ import {
     getLandCoverClassificationByPixelValue,
     LandcoverClassificationData,
 } from './rasterAttributeTable';
+import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
 
 export type LandcoverClassificationsByYear = {
     year: number;
@@ -60,6 +61,10 @@ const identify = async (
     point: IPoint,
     year: number
 ): Promise<IdentifyTaskResponse> => {
+    // To prevent inaccuracies due to moving the map across the International Date Line,
+    // convert the map extent to geographic units from Web Mercator.
+    point = webMercatorToGeographic(point) as IPoint;
+
     const params = new URLSearchParams({
         f: 'json',
         renderingRule: JSON.stringify(DEFAULT_RENDERING_RULE),
