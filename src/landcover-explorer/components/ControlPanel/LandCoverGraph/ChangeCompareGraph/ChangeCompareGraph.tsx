@@ -68,11 +68,12 @@ const ChangeCompareGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
                     shouldRotateTextLabels: true,
                 }}
                 margin={{
-                    top: 15,
-                    right: 15,
+                    top: 20,
+                    right: 10,
                     bottom: 50,
-                    left: 30,
+                    left: 10,
                 }}
+                innerPadding={0.4}
                 // itemOnHover={itemOnHover}
             />
         );
@@ -85,9 +86,11 @@ const ChangeCompareGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
             style={
                 {
                     '--axis-tick-line-color': 'rgba(0,0,0,0)',
-                    '--axis-tick-text-color': 'var(--custom-light-blue-80)',
+                    '--axis-tick-text-color': 'var(--custom-light-blue-90)',
+                    '--axis-tick-text-font-size': '11px',
+                    '--bar-label-text-font-size': '11px',
+                    '--bar-label-text-color': 'var(--custom-light-blue-90)',
                     '--divider-line-color': 'var(--custom-light-blue-25)',
-                    '--bar-label-text-color': 'var(--custom-light-blue-80)',
                 } as React.CSSProperties
             }
         >
