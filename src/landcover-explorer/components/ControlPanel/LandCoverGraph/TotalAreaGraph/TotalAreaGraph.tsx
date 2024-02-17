@@ -60,11 +60,12 @@ const TotalAreaGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
                 bottomAxisOptions={{
                     shouldRotateTextLabels: true,
                 }}
+                innerPadding={0.4}
                 margin={{
-                    top: 15,
-                    right: 15,
+                    top: 35,
+                    right: 10,
                     bottom: 50,
-                    left: 30,
+                    left: 10,
                 }}
             />
         );
@@ -77,8 +78,11 @@ const TotalAreaGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
             style={
                 {
                     '--axis-tick-line-color': 'var(--custom-light-blue-50)',
-                    '--axis-tick-text-color': 'var(--custom-light-blue-80)',
-                    '--bar-label-text-color': 'var(--custom-light-blue-80)',
+                    '--axis-tick-text-color': 'var(--custom-light-blue-90)',
+                    '--axis-tick-text-font-size': '11px',
+                    '--bar-label-text-font-size': '11px',
+                    '--bar-label-text-color': 'var(--custom-light-blue-90)',
+                    '--bar-label-text-translate-y-position-sticky': '-22px',
                 } as React.CSSProperties
             }
         >

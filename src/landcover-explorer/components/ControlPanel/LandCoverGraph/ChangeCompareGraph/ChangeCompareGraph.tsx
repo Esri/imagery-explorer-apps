@@ -84,7 +84,7 @@ const ChangeCompareGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
             ref={containerRef}
             style={
                 {
-                    '--axis-tick-line-color': 'var(--custom-light-blue-50)',
+                    '--axis-tick-line-color': 'rgba(0,0,0,0)',
                     '--axis-tick-text-color': 'var(--custom-light-blue-80)',
                     '--divider-line-color': 'var(--custom-light-blue-25)',
                     '--bar-label-text-color': 'var(--custom-light-blue-80)',
