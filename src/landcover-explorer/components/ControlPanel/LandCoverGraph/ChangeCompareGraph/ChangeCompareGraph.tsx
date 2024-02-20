@@ -74,6 +74,12 @@ const ChangeCompareGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
                     left: 10,
                 }}
                 innerPadding={0.4}
+                onBarMouseEnter={(d) => {
+                    itemOnHover(d?.index);
+                }}
+                onBarMouseLeave={() => {
+                    itemOnHover(-1);
+                }}
                 // itemOnHover={itemOnHover}
             />
         );
