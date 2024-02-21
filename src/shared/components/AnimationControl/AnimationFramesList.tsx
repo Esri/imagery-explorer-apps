@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { usePrevious } from '@shared/hooks/usePrevious';
 import classNames from 'classnames';
 import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
 
@@ -74,13 +75,22 @@ export const AnimationFramesList: FC<Props> = ({
 }) => {
     const containerRef = useRef<HTMLDivElement>();
 
+    /**
+     * track the number of frame from the previous state of the animation frames data
+     */
+    const prevNumOfAnimationFrames = usePrevious(data?.length);
+
     useEffect(() => {
         if (!containerRef.current) {
             return;
         }
 
-        containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }, [data]);
+        // we should only auto-scoll to the bottom of the list when user
+        // adds a new frame.
+        if (data?.length > prevNumOfAnimationFrames) {
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
+    }, [data?.length]);
 
     return (
         <div

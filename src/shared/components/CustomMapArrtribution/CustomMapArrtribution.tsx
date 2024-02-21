@@ -14,9 +14,22 @@
  */
 
 import './style.css';
-import React from 'react';
+import React, { FC } from 'react';
 
-const CustomMapArrtribution = () => {
+type Props = {
+    /**
+     * a custom attribution to display by default
+     */
+    atrribution: string;
+};
+
+/**
+ * This component would hide the default esri attribution and display a custom attribution message instead.
+ * When user hover over this component, the actual esri attribution will be displayed.
+ * @param param0
+ * @returns
+ */
+const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
     const toggleEsriAttribution = () => {
         const element = document.querySelector('.esri-attribution');
         element.classList.toggle('show');
@@ -30,8 +43,9 @@ const CustomMapArrtribution = () => {
         >
             <div className="pointer-events-none">
                 <span>
-                    Powered by Esri | Sentinel-2 10m Land Use/Land Cover data by
-                    Impact Observatory, Microsoft, and Esri
+                    Powered by Esri
+                    {'  |  '}
+                    {atrribution}
                 </span>
             </div>
         </div>

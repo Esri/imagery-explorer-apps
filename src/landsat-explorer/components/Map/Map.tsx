@@ -29,6 +29,7 @@ import { ChangeLayer } from '../ChangeLayer';
 import { ZoomToExtent } from '../ZoomToExtent';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { MapMagnifier } from '@shared/components/MapMagnifier';
+import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 
 const Map = () => {
     return (
@@ -55,6 +56,7 @@ const Map = () => {
             <ScreenshotWidget />
             <Popup />
             <MapMagnifier />
+            <CustomMapArrtribution atrribution="Landsat imagery courtesy of USGS, NASA, and Microsoft" />
         </MapViewContainer>
     );
 };
