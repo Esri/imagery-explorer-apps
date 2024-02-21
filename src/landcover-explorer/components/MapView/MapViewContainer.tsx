@@ -36,13 +36,12 @@ import {
 } from '@shared/store/UI/selectors';
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
-// import ToggleAttribution from './ToggleAttribution';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import SearchWidget from './SearchWidget';
 import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
 import { saveMapCenterToHashParams } from '@landcover-explorer/utils/URLHashParams';
-import CustomMapArrtribution from '../CustomMapArrtribution/CustomMapArrtribution';
+import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import AnimationPanel from '../AnimationPanel/AnimationPanel';
