@@ -56,7 +56,7 @@ const Map = () => {
             <ScreenshotWidget />
             <Popup />
             <MapMagnifier />
-            <CustomMapArrtribution atrribution="" />
+            <CustomMapArrtribution atrribution="Landsat imagery courtesy of USGS, NASA, and Microsoft" />
         </MapViewContainer>
     );
 };
