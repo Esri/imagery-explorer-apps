@@ -157,7 +157,7 @@ const MapViewContainer = () => {
 
                 <ReferenceLayers />
 
-                <CustomMapArrtribution />
+                <CustomMapArrtribution atrribution="Sentinel-2 10m Land Use/Land Cover data by Impact Observatory, Microsoft, and Esri" />
 
                 <AnimationPanel />
             </MapView>
