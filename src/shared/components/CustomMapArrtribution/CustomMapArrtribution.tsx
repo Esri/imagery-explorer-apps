@@ -23,6 +23,12 @@ type Props = {
     atrribution: string;
 };
 
+/**
+ * This component would hide the default esri attribution and display a custom attribution message instead.
+ * When user hover over this component, the actual esri attribution will be displayed.
+ * @param param0
+ * @returns
+ */
 const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
     const toggleEsriAttribution = () => {
         const element = document.querySelector('.esri-attribution');
