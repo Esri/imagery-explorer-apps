@@ -37,6 +37,12 @@
     background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.5) 100%);
 }
 
-.esri-swipe--horizontal .esri-swipe__container {
+/*
+ * The outline should not be displayed per request from John Nelson
+ * @see https://github.com/Esri/imagery-explorer-apps/issues/5
+ */
+.esri-swipe--horizontal .esri-swipe__container,
+.esri-swipe__container:focus .esri-swipe__handle, 
+.esri-swipe__container:focus .esri-swipe__divider {
     outline: 0;
 }
