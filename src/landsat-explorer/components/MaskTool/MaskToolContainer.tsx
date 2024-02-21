@@ -59,26 +59,26 @@ export const MaskToolContainer = () => {
         return !objectIdOfSelectedScene;
     }, [objectIdOfSelectedScene]);
 
-    useEffect(() => {
-        if (!queryParams4MainScene?.rasterFunctionName) {
-            return;
-        }
+    // useEffect(() => {
+    //     if (!queryParams4MainScene?.rasterFunctionName) {
+    //         return;
+    //     }
 
-        // when user selects a different renderer for the selected landsat scene,
-        // we want to try to sync the selected spectral index for the mask tool because
-        // that is probably what the user is interested in seeing
-        let spectralIndex: SpectralIndex = null;
+    //     // when user selects a different renderer for the selected landsat scene,
+    //     // we want to try to sync the selected spectral index for the mask tool because
+    //     // that is probably what the user is interested in seeing
+    //     let spectralIndex: SpectralIndex = null;
 
-        if (/Temperature/i.test(queryParams4MainScene?.rasterFunctionName)) {
-            spectralIndex = 'temperature farhenheit';
-        } else if (/NDVI/.test(queryParams4MainScene?.rasterFunctionName)) {
-            spectralIndex = 'vegetation';
-        }
+    //     if (/Temperature/i.test(queryParams4MainScene?.rasterFunctionName)) {
+    //         spectralIndex = 'temperature farhenheit';
+    //     } else if (/NDVI/.test(queryParams4MainScene?.rasterFunctionName)) {
+    //         spectralIndex = 'vegetation';
+    //     }
 
-        if (spectralIndex) {
-            dispatch(spectralIndex4MaskToolChanged(spectralIndex));
-        }
-    }, [queryParams4MainScene?.rasterFunctionName]);
+    //     if (spectralIndex) {
+    //         dispatch(spectralIndex4MaskToolChanged(spectralIndex));
+    //     }
+    // }, [queryParams4MainScene?.rasterFunctionName]);
 
     if (tool !== 'mask') {
         return null;
