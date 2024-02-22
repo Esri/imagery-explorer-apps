@@ -5,10 +5,6 @@ This repository contains a collection of Imagery Explorer web applications devel
 - [Getting Started](#getting-started)
 - [Landsat Explorer](#landsat-explorer)
 - [Sentinel-2 Landcover Explorer](#sentinel-2-land-cover-explorer)
-- [Resources](#resources)
-- [Issues](#issues)
-- [Contributing](#contributing)
-- [Licensing](#licensing)
 
 ## Getting Started
 Before you begin, make sure you have a fresh version of [Node.js](https://nodejs.org/en/) and NPM installed. The current Long Term Support (LTS) release is an ideal starting point.
