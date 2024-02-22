@@ -21,11 +21,11 @@ import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     // selectMapCenterAndZoom,
     selectIsSentinel2LayerOutOfVisibleRange,
-    selectShouldShowSentinel2Layer,
-    selectYearsForSwipeWidgetLayers,
+    // selectShouldShowSentinel2Layer,
+    // selectYearsForSwipeWidgetLayers,
     selectMapMode,
 } from '@shared/store/LandcoverExplorer/selectors';
-import SwipeWidget from '../SwipeWidget/SwipeWidget';
+// import SwipeWidget from '../SwipeWidget/SwipeWidget';
 // import LandcoverLayer from '../LandcoverLayer/LandcoverLayerContainer';
 import MapViewEventHandlers from './MapViewEventHandler';
 import Popup from '../Popup/Popup';
@@ -36,7 +36,7 @@ import {
 } from '@shared/store/UI/selectors';
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
-import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
+// import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import SearchWidget from './SearchWidget';
 import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
@@ -52,10 +52,11 @@ import {
     centerChanged,
     extentUpdated,
     resolutionUpdated,
-    swipeWidgetHanlderPositionChanged,
+    // swipeWidgetHanlderPositionChanged,
     zoomChanged,
 } from '@shared/store/Map/reducer';
 import MapView from '@shared/components/MapView/MapView';
+import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
@@ -70,13 +71,13 @@ const MapViewContainer = () => {
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
-        selectYearsForSwipeWidgetLayers
-    );
+    // const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    //     selectYearsForSwipeWidgetLayers
+    // );
 
-    const shouldShowSentinel2Layer = useSelector(
-        selectShouldShowSentinel2Layer
-    );
+    // const shouldShowSentinel2Layer = useSelector(
+    //     selectShouldShowSentinel2Layer
+    // );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
@@ -114,7 +115,7 @@ const MapViewContainer = () => {
             })}
         >
             <MapView webmapId={WEB_MAP_ID} center={center} zoom={zoom}>
-                <SwipeWidget
+                {/* <SwipeWidget
                     shouldShowSentinel2Layer={shouldShowSentinel2Layer}
                     yearForLeadingLayer={year4LeadingLayer}
                     yearForTailingLayer={year4TrailingLayer}
@@ -127,7 +128,9 @@ const MapViewContainer = () => {
                             toggleShowSwipeWidgetYearIndicator(shouldDisplay)
                         );
                     }}
-                />
+                /> */}
+                <SwipeWidget4Landcover />
+                <SwipeWidget4Sentinel2 />
                 <MapViewEventHandlers
                     extentOnChange={(extent, resolution, center, zoom) => {
                         batch(() => {

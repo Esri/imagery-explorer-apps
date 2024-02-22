@@ -1,4 +1,4 @@
-.esri-swipe__handle {
+/* .esri-swipe__handle {
     @apply rounded-full bg-custom-background;
 }
 
@@ -19,14 +19,12 @@
     content: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' height='16' width='16' viewBox='0 0 16 16'%3E%3Cpath fill='rgb(191, 238, 255)' d='M9.5 2A1.5 1.5 0 1 1 8 .5 1.501 1.501 0 0 1 9.5 2zM8 6.5A1.5 1.5 0 1 0 9.5 8 1.501 1.501 0 0 0 8 6.5zm0 6A1.5 1.5 0 1 0 9.5 14 1.501 1.501 0 0 0 8 12.5z'/%3E%3C/svg%3E");
 }
 
-/* right */
 .esri-swipe--horizontal .esri-swipe__divider {
     background: linear-gradient(90deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 100%);
     width: 6px;
     border: none;
 }
 
-/* left */
 .esri-swipe--horizontal .esri-swipe__divider::before {
     content: ' ';
     position: absolute;
@@ -39,4 +37,4 @@
 
 .esri-swipe--horizontal .esri-swipe__container {
     outline: 0;
-}
+} */
