@@ -34,25 +34,25 @@ import {
     AnimationFrameData,
 } from '@vannizhang/images-to-video-converter-client';
 
-/**
- * This object contains the data for each animation frame.
- */
-export type AnimationFrameData4DownloadJob = {
-    /**
-     * The image element representing the median layer for this frame.
-     */
-    mediaLayerElement: IImageElement;
-    /**
-     * Additional information about this frame.
-     */
-    info: string;
-};
+// /**
+//  * This object contains the data for each animation frame.
+//  */
+// export type AnimationFrameData4DownloadJob = {
+//     /**
+//      * The image element representing the median layer for this frame.
+//      */
+//     mediaLayerElement: IImageElement;
+//     /**
+//      * Additional information about this frame.
+//      */
+//     info: string;
+// };
 
 type Props = {
     /**
      * An array containing data representing the animation frames.
      */
-    frameData4DownloadJob: AnimationFrameData4DownloadJob[];
+    frameData4DownloadJob: AnimationFrameData[];
     /**
      * animation speed in millisecond
      */
@@ -87,21 +87,21 @@ export const AnimationDownloadPanel: FC<Props> = ({
     const abortController = useRef<AbortController>();
 
     const downloadAnimation = async (outputVideoDimension: Dimension) => {
-        // load media layer elements as an array of HTML Image Elements
-        const images = await Promise.all(
-            frameData4DownloadJob.map((d) =>
-                loadImageAsHTMLIMageElement(d.mediaLayerElement.image as string)
-            )
-        );
+        // // load media layer elements as an array of HTML Image Elements
+        // const images = await Promise.all(
+        //     frameData4DownloadJob.map((d) =>
+        //         loadImageAsHTMLIMageElement(d.mediaLayerElement.image as string)
+        //     )
+        // );
 
-        const data: AnimationFrameData[] = images.map((image, index) => {
-            // const queryParams = queryParams4ScenesInAnimationMode[index];
+        // const data: AnimationFrameData[] = images.map((image, index) => {
+        //     // const queryParams = queryParams4ScenesInAnimationMode[index];
 
-            return {
-                image,
-                imageInfo: frameData4DownloadJob[index].info,
-            } as AnimationFrameData;
-        });
+        //     return {
+        //         image,
+        //         imageInfo: frameData4DownloadJob[index].info,
+        //     } as AnimationFrameData;
+        // });
 
         setDownloadJobStatus('pending');
 
@@ -115,7 +115,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
             abortController.current = new AbortController();
 
             const { filename, fileContent } = await convertImages2Video({
-                data,
+                data: frameData4DownloadJob,
                 animationSpeed,
                 outputWidth: width,
                 outputHeight: height,

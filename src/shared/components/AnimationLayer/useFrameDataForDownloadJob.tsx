@@ -17,9 +17,11 @@ import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import { appConfig } from '@shared/config';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
-import React, { FC, useMemo } from 'react';
+import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
+import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { AnimationFrameData4DownloadJob } from '../AnimationDownloadPanel/DownloadPanel';
+// import { AnimationFrameData4DownloadJob } from '../AnimationDownloadPanel/DownloadPanel';
 
 /**
  * Represents the properties required by the custom hook `useFrameDataForDownloadJob`.
@@ -37,7 +39,7 @@ type Props = {
 };
 
 /**
- * This custom hook returns an array of `AnimationFrameData4DownloadJob` objects that
+ * This custom hook returns an array of `AnimationFrameData` objects that
  * can be used by the Animation Download task.
  * @param {Props} - The properties required by the hook.
  * @returns An array of `AnimationFrameData4DownloadJob` objects.
@@ -48,27 +50,64 @@ export const useFrameDataForDownloadJob = ({
 }: Props) => {
     const mapCenter = useSelector(selectMapCenter);
 
-    const frameData: AnimationFrameData4DownloadJob[] = useMemo(() => {
-        if (
-            !sortedQueryParams4ScenesInAnimationMode?.length ||
-            !mediaLayerElements?.length
-        ) {
-            return [];
-        }
+    const [frameData, setFrameData] = useState<AnimationFrameData[]>([]);
 
-        return mediaLayerElements.map((mediaLayerElement, index) => {
-            const queryParams = sortedQueryParams4ScenesInAnimationMode[index];
+    // const frameData: AnimationFrameData4DownloadJob[] = useMemo(() => {
+    //     if (
+    //         !sortedQueryParams4ScenesInAnimationMode?.length ||
+    //         !mediaLayerElements?.length
+    //     ) {
+    //         return [];
+    //     }
 
-            return {
-                mediaLayerElement,
-                info: `${
-                    queryParams.acquisitionDate
-                }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
-                    3
-                )}  |  ${appConfig.animationMetadataSources}`,
-            } as AnimationFrameData4DownloadJob;
-        });
-    }, [sortedQueryParams4ScenesInAnimationMode, mediaLayerElements]);
+    //     return mediaLayerElements.map((mediaLayerElement, index) => {
+    //         const queryParams = sortedQueryParams4ScenesInAnimationMode[index];
+
+    //         return {
+    //             mediaLayerElement,
+    //             info: `${
+    //                 queryParams.acquisitionDate
+    //             }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
+    //                 3
+    //             )}  |  ${appConfig.animationMetadataSources}`,
+    //         } as AnimationFrameData4DownloadJob;
+    //     });
+    // }, [sortedQueryParams4ScenesInAnimationMode, mediaLayerElements]);
+
+    useEffect(() => {
+        (async () => {
+            if (
+                !sortedQueryParams4ScenesInAnimationMode?.length ||
+                !mediaLayerElements?.length
+            ) {
+                setFrameData([]);
+                return;
+            }
+
+            // load media layer elements as an array of HTML Image Elements
+            const images = await Promise.all(
+                mediaLayerElements.map((d) =>
+                    loadImageAsHTMLIMageElement(d.image as string)
+                )
+            );
+
+            const data: AnimationFrameData[] = images.map((image, index) => {
+                const queryParams =
+                    sortedQueryParams4ScenesInAnimationMode[index];
+
+                return {
+                    image,
+                    imageInfo: `${
+                        queryParams.acquisitionDate
+                    }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
+                        3
+                    )}  |  ${appConfig.animationMetadataSources}`,
+                } as AnimationFrameData;
+            });
+
+            setFrameData(data);
+        })();
+    }, [mediaLayerElements]);
 
     return frameData;
 };
