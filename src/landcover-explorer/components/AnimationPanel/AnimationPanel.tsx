@@ -31,8 +31,8 @@ import {
     LandCoverLayerEffect,
 } from '../LandcoverLayer/useLandCoverLayer';
 import { AnimationDownloadPanel } from '@shared/components/AnimationDownloadPanel';
-import { AnimationFrameData4DownloadJob } from '@shared/components/AnimationDownloadPanel/DownloadPanel';
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
+import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 
 type Props = {
     mapView?: IMapView;
@@ -47,7 +47,7 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
 
     const mediaLayerElements = useMediaLayerImageElement(mapView);
 
-    const frameData4DownloadJob: AnimationFrameData4DownloadJob[] =
+    const frameData4DownloadJob: AnimationFrameData[] =
         useFrameDataForDownloadJob({ mediaLayerElements });
 
     useMediaLayerAnimation(mediaLayerElements);
