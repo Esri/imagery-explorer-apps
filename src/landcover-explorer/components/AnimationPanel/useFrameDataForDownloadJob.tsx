@@ -15,13 +15,17 @@
 
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import { appConfig } from '@shared/config';
-import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
+// import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 // import { AnimationFrameData4DownloadJob } from '@shared/components/AnimationDownloadPanel/DownloadPanel';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
+// import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
+import MapView from '@arcgis/core/views/MapView';
+import { combineLandcoverImageWithMapScreenshot } from './helpers';
+import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 
 /**
@@ -32,6 +36,7 @@ type Props = {
      * An array of ImageElement objects representing media layer elements.
      */
     mediaLayerElements: ImageElement[];
+    mapView?: MapView;
 };
 
 /**
@@ -40,31 +45,19 @@ type Props = {
  * @param {Props} - The properties required by the hook.
  * @returns An array of `AnimationFrameData4DownloadJob` objects.
  */
-export const useFrameDataForDownloadJob = ({ mediaLayerElements }: Props) => {
+export const useFrameDataForDownloadJob = ({
+    mediaLayerElements,
+    mapView,
+}: Props) => {
     const mapCenter = useSelector(selectMapCenter);
 
     const years = getAvailableYears();
 
+    const shouldShowSentinel2Layer = useSelector(
+        selectShouldShowSentinel2Layer
+    );
+
     const [frameData, setFrameData] = useState<AnimationFrameData[]>([]);
-
-    // const frameData: AnimationFrameData4DownloadJob[] = useMemo(() => {
-    //     if (!mediaLayerElements?.length) {
-    //         return [];
-    //     }
-
-    //     return mediaLayerElements.map((mediaLayerElement, index) => {
-    //         // const queryParams = sortedQueryParams4ScenesInAnimationMode[index];
-
-    //         return {
-    //             mediaLayerElement,
-    //             info: `${years[index]}  |  x ${mapCenter[0].toFixed(
-    //                 3
-    //             )} y ${mapCenter[1].toFixed(3)}  |  ${
-    //                 appConfig.animationMetadataSources
-    //             }`,
-    //         } as AnimationFrameData4DownloadJob;
-    //     });
-    // }, [mediaLayerElements]);
 
     useEffect(() => {
         (async () => {
@@ -73,11 +66,23 @@ export const useFrameDataForDownloadJob = ({ mediaLayerElements }: Props) => {
                 return;
             }
 
+            // take a screenshot for the basemap layers if it is showing the landcover layer,
+            // as the landcover layer will need to be combined/blended with the screenshot of basemap layers
+            const screenshot = !shouldShowSentinel2Layer
+                ? await mapView.takeScreenshot()
+                : null;
+            // console.log(screenshot)
+
             // load media layer elements as an array of HTML Image Elements
             const images = await Promise.all(
-                mediaLayerElements.map((d) =>
-                    loadImageAsHTMLIMageElement(d.image as string)
-                )
+                mediaLayerElements.map((d) => {
+                    return shouldShowSentinel2Layer
+                        ? loadImageAsHTMLIMageElement(d.image as string)
+                        : combineLandcoverImageWithMapScreenshot(
+                              d.image as string,
+                              screenshot.data
+                          ); // if showing Landcover layer, the image need to be blended with the screenshot of basemap layers
+                })
             );
 
             const data: AnimationFrameData[] = images.map((image, index) => {

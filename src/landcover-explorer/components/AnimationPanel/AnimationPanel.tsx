@@ -48,7 +48,7 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
     const mediaLayerElements = useMediaLayerImageElement(mapView);
 
     const frameData4DownloadJob: AnimationFrameData[] =
-        useFrameDataForDownloadJob({ mediaLayerElements });
+        useFrameDataForDownloadJob({ mediaLayerElements, mapView });
 
     useMediaLayerAnimation(mediaLayerElements);
 
