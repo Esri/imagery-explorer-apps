@@ -73,16 +73,25 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
 
         const source = mediaLayerRef.current.source as any;
 
+        // If the animation is not yet started or has been stopped,
+        // clear all elements in the media layer to ensure a clean slate.
         if (!mediaLayerElements) {
-            // animation is not started or just stopped
-            // just clear all elements in media layer
             source.elements.removeAll();
-        } else {
-            source.elements.addMany(mediaLayerElements);
-            // media layer elements are ready, change animation mode to playing to start the animation
-            dispatch(animationStatusChanged('playing'));
+            return;
         }
-    }, [mediaLayerElements]);
+
+        // Check if the frameData4DownloadJob is ready before starting the animation.
+        // This is crucial to ensure that the basemap screenshot is captured and blended into each animation frame properly.
+        // If the animation starts before the frameData4DownloadJob is ready, there's a risk that the basemap
+        // may get obscured by elements in the media layer.
+        if (!frameData4DownloadJob?.length) {
+            return;
+        }
+
+        source.elements.addMany(mediaLayerElements);
+        // media layer elements are ready, change animation mode to playing to start the animation
+        dispatch(animationStatusChanged('playing'));
+    }, [mediaLayerElements, frameData4DownloadJob]);
 
     useEffect(() => {
         if (!mapView) {
