@@ -52,18 +52,14 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
 
     useMediaLayerAnimation(mediaLayerElements);
 
-    const initMediaLayer = async () => {
-        try {
-            mediaLayerRef.current = new MediaLayer({
-                visible: true,
-                effect: LandCoverLayerEffect,
-                blendMode: LandCoverLayerBlendMode,
-            });
+    const initMediaLayer = () => {
+        mediaLayerRef.current = new MediaLayer({
+            visible: true,
+            effect: LandCoverLayerEffect,
+            blendMode: LandCoverLayerBlendMode,
+        });
 
-            mapView.map.add(mediaLayerRef.current);
-        } catch (err) {
-            console.error(err);
-        }
+        mapView.map.add(mediaLayerRef.current);
     };
 
     useEffect(() => {
@@ -72,7 +68,6 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
 
     useEffect(() => {
         if (!mediaLayerRef.current) {
-            initMediaLayer();
             return;
         }
 
@@ -87,7 +82,17 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
             // media layer elements are ready, change animation mode to playing to start the animation
             dispatch(animationStatusChanged('playing'));
         }
-    }, [mediaLayerElements, mapView]);
+    }, [mediaLayerElements]);
+
+    useEffect(() => {
+        if (!mapView) {
+            return;
+        }
+
+        if (!mediaLayerRef.current) {
+            initMediaLayer();
+        }
+    }, [mapView]);
 
     if (!animationMode) {
         return null;
