@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
@@ -30,6 +30,9 @@ import {
     LandCoverLayerBlendMode,
     LandCoverLayerEffect,
 } from '../LandcoverLayer/useLandCoverLayer';
+import { AnimationDownloadPanel } from '@shared/components/AnimationDownloadPanel';
+import { AnimationFrameData4DownloadJob } from '@shared/components/AnimationDownloadPanel/DownloadPanel';
+import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 
 type Props = {
     mapView?: IMapView;
@@ -43,6 +46,9 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
     const mediaLayerRef = useRef<MediaLayer>();
 
     const mediaLayerElements = useMediaLayerImageElement(mapView);
+
+    const frameData4DownloadJob: AnimationFrameData4DownloadJob[] =
+        useFrameDataForDownloadJob({ mediaLayerElements });
 
     useMediaLayerAnimation(mediaLayerElements);
 
@@ -98,6 +104,15 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
             )}
 
             <CloseButton />
+
+            <AnimationDownloadPanel
+                frameData4DownloadJob={frameData4DownloadJob}
+                animationSpeed={1000}
+                mapViewWindowSize={{
+                    width: mapView.width,
+                    height: mapView.height,
+                }}
+            />
         </div>
     );
 };
