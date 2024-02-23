@@ -45,7 +45,7 @@ const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
             return false;
         }
 
-        if (animationMode && animationMode !== 'loading') {
+        if (animationMode !== null) {
             return false;
         }
 
