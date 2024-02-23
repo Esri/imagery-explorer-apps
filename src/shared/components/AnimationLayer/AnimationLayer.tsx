@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import MapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
@@ -37,6 +37,7 @@ import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImagerySce
 import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/AnimationControl/helpers';
 import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';
+import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 
 type Props = {
     mapView?: MapView;
@@ -72,6 +73,15 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
         mapView,
         animationStatus,
         QueryParams4ImageryScenes: sortedQueryParams4ScenesInAnimationMode,
+    });
+
+    /**
+     * an array of `AnimationFrameData4DownloadJob` objects
+     * that can be used by the AnimationDownloadPanel
+     */
+    const frameData4DownloadJob = useFrameDataForDownloadJob({
+        mediaLayerElements,
+        sortedQueryParams4ScenesInAnimationMode,
     });
 
     /**
@@ -183,10 +193,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
             />
 
             <AnimationDownloadPanel
-                mediaLayerElements={mediaLayerElements}
-                queryParams4ScenesInAnimationMode={
-                    sortedQueryParams4ScenesInAnimationMode
-                }
+                frameData4DownloadJob={frameData4DownloadJob}
                 animationSpeed={animationSpeed}
                 mapViewWindowSize={{
                     width: mapView.width,
