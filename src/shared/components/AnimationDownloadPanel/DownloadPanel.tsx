@@ -16,7 +16,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
-import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
+// import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import { DownloadOptionsList } from './DownloadOptionsList';
 import { Dimension, PreviewWindow } from './PreviewWindow';
@@ -26,7 +26,7 @@ import { DownloadJobStatusInfo } from './DownloadJobStatus';
 import { CloseButton } from '../CloseButton';
 import { useDispatch } from 'react-redux';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
-import { selectMapCenter } from '@shared/store/Map/selectors';
+// import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
 import { appConfig } from '@shared/config';
 import {
@@ -34,16 +34,25 @@ import {
     AnimationFrameData,
 } from '@vannizhang/images-to-video-converter-client';
 
+/**
+ * This object contains the data for each animation frame.
+ */
+export type AnimationFrameData4DownloadJob = {
+    /**
+     * The image element representing the median layer for this frame.
+     */
+    mediaLayerElement: IImageElement;
+    /**
+     * Additional information about this frame.
+     */
+    info: string;
+};
+
 type Props = {
     /**
-     * array of image elements to be used to create video file
+     * An array containing data representing the animation frames.
      */
-    mediaLayerElements: IImageElement[];
-    /**
-     * array of query params corresponding to each element in media layer elements array.
-     * it provides info that can be used to add text for each frame in the output animation.
-     */
-    queryParams4ScenesInAnimationMode: QueryParams4ImageryScene[];
+    frameData4DownloadJob: AnimationFrameData4DownloadJob[];
     /**
      * animation speed in millisecond
      */
@@ -60,8 +69,7 @@ type Props = {
 export type DownloadJobStatus = 'pending' | 'finished' | 'cancelled' | 'failed';
 
 export const AnimationDownloadPanel: FC<Props> = ({
-    mediaLayerElements,
-    queryParams4ScenesInAnimationMode,
+    frameData4DownloadJob,
     animationSpeed,
     mapViewWindowSize,
 }) => {
@@ -70,8 +78,6 @@ export const AnimationDownloadPanel: FC<Props> = ({
     const shouldShowDownloadPanel = useSelector(
         selectShouldShowDownloadAnimationPanel
     );
-
-    const mapCenter = useSelector(selectMapCenter);
 
     const [previewWindowSize, setPreviewWindowSize] = useState<Dimension>(null);
 
@@ -83,21 +89,17 @@ export const AnimationDownloadPanel: FC<Props> = ({
     const downloadAnimation = async (outputVideoDimension: Dimension) => {
         // load media layer elements as an array of HTML Image Elements
         const images = await Promise.all(
-            mediaLayerElements.map((elem) =>
-                loadImageAsHTMLIMageElement(elem.image as string)
+            frameData4DownloadJob.map((d) =>
+                loadImageAsHTMLIMageElement(d.mediaLayerElement.image as string)
             )
         );
 
         const data: AnimationFrameData[] = images.map((image, index) => {
-            const queryParams = queryParams4ScenesInAnimationMode[index];
+            // const queryParams = queryParams4ScenesInAnimationMode[index];
 
             return {
                 image,
-                imageInfo: `${
-                    queryParams.acquisitionDate
-                }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
-                    3
-                )}  |  ${appConfig.animationMetadataSources}`,
+                imageInfo: frameData4DownloadJob[index].info,
             } as AnimationFrameData;
         });
 
@@ -148,7 +150,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
         }
     }, [shouldShowDownloadPanel]);
 
-    if (!mediaLayerElements || !mediaLayerElements.length) {
+    if (!frameData4DownloadJob || !frameData4DownloadJob?.length) {
         return null;
     }
 
