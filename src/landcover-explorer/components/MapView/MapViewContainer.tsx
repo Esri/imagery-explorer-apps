@@ -37,7 +37,6 @@ import {
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 // import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
-import SearchWidget from './SearchWidget';
 import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
 import { saveMapCenterToHashParams } from '@landcover-explorer/utils/URLHashParams';
@@ -57,6 +56,7 @@ import {
 } from '@shared/store/Map/reducer';
 import MapView from '@shared/components/MapView/MapView';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
+import SearchWidget from '@shared/components/MapView/SearchWidget';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
