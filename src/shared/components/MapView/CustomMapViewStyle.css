@@ -7,6 +7,12 @@
     color: var(--custom-light-blue);
 }
 
+.esri-widget--button{
+    --calcite-ui-foreground-3: var(--custom-background);
+    --calcite-ui-text-1: var(--custom-light-blue);
+    --calcite-color-text-3: var(--custom-light-blue);
+}
+
 .hide-map-control .esri-zoom {
     display: none;
 }
