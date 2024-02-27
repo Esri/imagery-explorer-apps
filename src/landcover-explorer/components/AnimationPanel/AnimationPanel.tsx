@@ -23,7 +23,7 @@ import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { saveAnimationModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
-import CloseButton from './CloseButton';
+// import CloseButton from './CloseButton';
 import useMediaLayerImageElement from './useMediaLayerImageElement';
 import useMediaLayerAnimation from './useMediaLayerAnimation';
 import {
@@ -33,6 +33,7 @@ import {
 import { AnimationDownloadPanel } from '@shared/components/AnimationDownloadPanel';
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
+import { CloseButton } from '@shared/components/CloseButton';
 
 type Props = {
     mapView?: IMapView;
@@ -117,7 +118,11 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
                 <calcite-loader active scale="l"></calcite-loader>
             )}
 
-            <CloseButton />
+            <CloseButton
+                onClick={() => {
+                    dispatch(animationStatusChanged(null));
+                }}
+            />
 
             <AnimationDownloadPanel
                 frameData4DownloadJob={frameData4DownloadJob}
