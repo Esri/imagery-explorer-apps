@@ -1,11 +1,16 @@
 :root {
     --custom-light-blue: rgb(191,238,254);
+    --custom-light-blue-95: rgba(191,238,254, .95);
     --custom-light-blue-90: rgba(191,238,254, .9);
+    --custom-light-blue-85: rgba(191,238,254, .85);
     --custom-light-blue-80: rgba(191,238,254, .8);
+    --custom-light-blue-75: rgba(191,238,254, .75);
     --custom-light-blue-70: rgba(191,238,254, .7);
+    --custom-light-blue-65: rgba(191,238,254, .65);
     --custom-light-blue-60: rgba(191,238,254, .6);
     --custom-light-blue-50: rgba(191,238,254, .5);
     --custom-light-blue-25: rgba(191,238,254, .25);
+    --custom-light-blue-20: rgba(191,238,254, .20);
     --custom-light-blue-10: rgba(191,238,254, .1);
     --custom-light-blue-5: rgba(191,238,254, .05);
     --custom-light-blue-0: rgba(191,238,254, .0);
@@ -15,7 +20,21 @@
     --custom-background-90: rgba(0,35,47,.90);
     --custom-background-85: rgba(0,35,47,.85);
     --custom-background-80: rgba(0,35,47,.80);
+    --custom-background-75: rgba(0,35,47,.75);
     --custom-background-70: rgba(0,35,47,.70);
+    --custom-background-65: rgba(0,35,47,.65);
+    --custom-background-60: rgba(0,35,47,.60);
+    --custom-background-55: rgba(0,35,47,.55);
+    --custom-background-50: rgba(0,35,47,.50);
+    --custom-background-45: rgba(0,35,47,.45);
+    --custom-background-40: rgba(0,35,47,.4);
+    --custom-background-35: rgba(0,35,47,.35);
+    --custom-background-30: rgba(0,35,47,.3);
+    --custom-background-25: rgba(0,35,47,.25);
+    --custom-background-20: rgba(0,35,47,.2);
+    --custom-background-15: rgba(0,35,47,.15);
+    --custom-background-10: rgba(0,35,47,.1);
+    --custom-background-5: rgba(0,35,47,.5);
 
     --space-between-main-secondary-selectors: 10px;
 }
