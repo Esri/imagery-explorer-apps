@@ -30,6 +30,7 @@ import { ZoomToExtent } from '../ZoomToExtent';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
+import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 
 const Map = () => {
     return (
@@ -48,12 +49,16 @@ const Map = () => {
             <SwipeWidget />
             <AnimationLayer />
             <HillshadeLayer />
-            <Zoom2NativeScale
-                nativeScale={113386}
-                tooltip={"Zoom to Landsat's native resolution"}
-            />
-            <ZoomToExtent />
-            <ScreenshotWidget />
+
+            <MapActionButtonsGroup>
+                <Zoom2NativeScale
+                    nativeScale={113386}
+                    tooltip={"Zoom to Landsat's native resolution"}
+                />
+                <ZoomToExtent />
+                <ScreenshotWidget />
+            </MapActionButtonsGroup>
+
             <Popup />
             <MapMagnifier />
             <CustomMapArrtribution atrribution="Landsat imagery courtesy of USGS, NASA, and Microsoft" />

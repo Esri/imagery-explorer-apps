@@ -23,10 +23,6 @@ import { useSelector } from 'react-redux';
 
 type Props = {
     /**
-     * top position of this button in the map view
-     */
-    topPosition: number;
-    /**
      * tooltip of the button
      */
     tooltip: string;
@@ -39,6 +35,10 @@ type Props = {
      */
     disabled?: boolean;
     /**
+     * marging space on top
+     */
+    topMarging?: number;
+    /**
      * children element, can be be text or svg icon elements
      */
     children?: React.ReactNode;
@@ -50,7 +50,7 @@ type Props = {
 };
 
 export const MapActionButton: FC<Props> = ({
-    topPosition,
+    topMarging,
     tooltip,
     showLoadingIndicator,
     disabled,
@@ -62,7 +62,7 @@ export const MapActionButton: FC<Props> = ({
     return (
         <div
             className={classNames(
-                'absolute left-[16px] w-map-action-button-size h-map-action-button-size z-10 flex items-center justify-center',
+                'relative w-map-action-button-size h-map-action-button-size z-10 flex items-center justify-center',
                 'bg-custom-background text-custom-light-blue-90 cursor-pointer',
                 {
                     hidden: isAnimationPlaying,
@@ -70,7 +70,7 @@ export const MapActionButton: FC<Props> = ({
                 }
             )}
             style={{
-                top: topPosition,
+                marginTop: topMarging || 1,
             }}
             title={tooltip}
             onClick={onClickHandler}

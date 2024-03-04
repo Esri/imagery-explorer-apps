@@ -45,7 +45,7 @@ export const Zoom2NativeScale: FC<Props> = ({
 
     return (
         <MapActionButton
-            topPosition={130}
+            // topPosition={130}
             onClickHandler={onClickHandler}
             tooltip={tooltip}
         >

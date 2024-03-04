@@ -50,7 +50,6 @@ export const ZoomToExtent: FC<Props> = ({
 }) => {
     return (
         <MapActionButton
-            topPosition={163}
             showLoadingIndicator={showLoadingIndicator}
             tooltip={tooltip}
             disabled={disabled}
