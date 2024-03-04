@@ -16,6 +16,10 @@
 import React, { CSSProperties, useState } from 'react';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
 import { delay } from '@shared/utils/snippets/delay';
+import {
+    COPIED_LINK_MESSAGE_STRING,
+    COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS,
+} from '@shared/constants/UI';
 
 export const CopyLinkWidget = () => {
     const [notificationMessage, setNotificationMessage] =
@@ -36,11 +40,11 @@ export const CopyLinkWidget = () => {
                         } as CSSProperties
                     }
                 />
-                <span className=" lin">link copied to clipboard</span>
+                <span className=" lin">{COPIED_LINK_MESSAGE_STRING}</span>
             </>
         );
 
-        await delay(3000);
+        await delay(COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS);
 
         setNotificationMessage(null);
     };

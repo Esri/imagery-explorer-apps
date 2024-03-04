@@ -33,3 +33,13 @@ export const IS_MOBILE_DEVICE = isMobileDevice();
  * size of Map Anchor Icon Image used by Pop Up and Map Center indicator
  */
 export const SizeOfMapAnchorImage = 44;
+
+/**
+ * milliseconds to wait before turn off the copy link message
+ */
+export const COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS = 3000;
+
+/**
+ * content of copy link message
+ */
+export const COPIED_LINK_MESSAGE_STRING = 'link copied to clipboard';

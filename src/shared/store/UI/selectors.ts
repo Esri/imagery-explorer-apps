@@ -70,3 +70,8 @@ export const selectShowSaveWebMapPanel = createSelector(
     (state: RootState) => state.UI.showSaveWebMapPanel,
     (showSaveWebMapPanel) => showSaveWebMapPanel
 );
+
+export const selectAnimationLinkIsCopied = createSelector(
+    (state: RootState) => state.UI.animationLinkIsCopied,
+    (animationLinkIsCopied) => animationLinkIsCopied
+);

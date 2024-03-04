@@ -61,6 +61,10 @@ export type UIState = {
      */
     showDownloadAnimationPanel: boolean;
     /**
+     * if true, the link of the current animiation has been copied to the clipboard
+     */
+    animationLinkIsCopied: boolean;
+    /**
      * The X Position (relative to page) of Tooltip for the Bottom Panel
      */
     tooltipXPosition?: number;
@@ -88,6 +92,7 @@ export const initialUIState: UIState = {
     animationStatus: null,
     animationSpeed: 400,
     showDownloadAnimationPanel: false,
+    animationLinkIsCopied: false,
     tooltipXPosition: 0,
     tooltipData: null,
     nameOfSelectedInterestingPlace: '',
@@ -110,6 +115,12 @@ const slice = createSlice({
             action: PayloadAction<boolean>
         ) => {
             state.showDownloadAnimationPanel = action.payload;
+        },
+        animationLinkIsCopiedChanged: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.animationLinkIsCopied = action.payload;
         },
         showDownloadAnimationPanelToggled: (state) => {
             state.showDownloadAnimationPanel =
@@ -152,6 +163,7 @@ export const {
     shouldShowAboutThisAppToggled,
     showDownloadAnimationPanelChanged,
     showDownloadAnimationPanelToggled,
+    animationLinkIsCopiedChanged,
     animationStatusChanged,
     animationSpeedChanged,
     tooltipDataChanged,
