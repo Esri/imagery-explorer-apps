@@ -124,14 +124,14 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
                 }}
             />
 
-            <AnimationDownloadPanel
+            {/* <AnimationDownloadPanel
                 frameData4DownloadJob={frameData4DownloadJob}
                 animationSpeed={1000}
                 mapViewWindowSize={{
                     width: mapView.width,
                     height: mapView.height,
                 }}
-            />
+            /> */}
         </div>
     );
 };
