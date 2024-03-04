@@ -150,7 +150,8 @@ const MonthGrid: FC<MonthGridProps> = ({
             };
 
             if (hasAvailableData) {
-                dataProps['data-has-available-scene'] = 'true';
+                dataProps['data-element'] =
+                    'calendar-cell-with-available-scene';
             }
 
             return (
