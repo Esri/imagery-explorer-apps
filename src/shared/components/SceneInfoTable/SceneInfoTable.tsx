@@ -52,7 +52,10 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
     const getContent = () => {
         if (!data || !data.length) {
             return (
-                <div className="text-xs opacity-80 text-center mx-auto max-w-[240px]">
+                <div
+                    className="text-xs opacity-80 text-center mx-auto max-w-[240px]"
+                    data-element="scene-info"
+                >
                     <p className="my-3 mx-3">
                         Select an acquisition date in Calendar to find a scene.
                     </p>
