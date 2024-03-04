@@ -228,16 +228,16 @@ export const AnimationControl: FC<Props> = ({
                     </div>
                 )}
                 {isAnimtaionOn && (
+                    <div onClick={copyLinkOnClick} title="Copy animation link">
+                        {CopyLinkButton}
+                    </div>
+                )}
+                {isAnimtaionOn && (
                     <div
                         onClick={donwloadButtonOnClick}
                         title="Download animation"
                     >
                         {DownloadButton}
-                    </div>
-                )}
-                {isAnimtaionOn && (
-                    <div onClick={copyLinkOnClick} title="Copy animation link">
-                        {CopyLinkButton}
                     </div>
                 )}
                 {status === 'playing' && (

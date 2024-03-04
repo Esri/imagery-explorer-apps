@@ -187,7 +187,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
             )}
 
             <CloseButton
-                gradientBackgroundSize="m"
+                gradientBackgroundSize="l"
                 onClick={() => {
                     dispatch(animationStatusChanged(null));
                 }}

@@ -31,7 +31,7 @@ export const CopyLinkButton = () => {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
-                height={64}
+                height={58}
                 width={64}
             >
                 <path
