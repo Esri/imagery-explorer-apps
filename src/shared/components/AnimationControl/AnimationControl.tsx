@@ -99,8 +99,8 @@ const CopyLinkButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        height={ICON_SIZE}
-        width={ICON_SIZE}
+        height={18} // the Link Icon looks bigger than other calcite Icons, therefore we should use this hardcoded size to make it looks normal
+        width={18} // the Link Icon looks bigger than other calcite Icons, therefore we should use this hardcoded size to make it looks normal
     >
         <path
             fill="currentColor"

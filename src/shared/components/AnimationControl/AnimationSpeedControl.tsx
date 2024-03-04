@@ -112,7 +112,7 @@ export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
     return (
         <div
             // id="cloud-filter-container"
-            className="flex-grow px-1 pt-2"
+            className="flex-grow pl-1 pr-2 pt-2"
         >
             <Slider
                 steps={steps}
