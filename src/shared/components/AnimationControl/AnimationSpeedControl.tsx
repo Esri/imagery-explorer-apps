@@ -130,7 +130,7 @@ export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
             />
 
             <div className="text-xs text-center mt-1">
-                <span>Speed</span>
+                <span>speed</span>
             </div>
         </div>
     );
