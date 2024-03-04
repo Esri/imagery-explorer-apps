@@ -1,5 +1,13 @@
 .close-button::before {
-    @apply absolute top-0 right-0 w-52 h-52 pointer-events-none;
+    @apply absolute top-0 right-0 w-52 h-52 pointer-events-none z-0;
     content: ' ';
     background: linear-gradient(215deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 40%);
+}
+
+.close-button.medium-gradient-background::before {
+    @apply w-72 h-72;
+}
+
+.close-button.large-gradient-background::before {
+    @apply w-96 h-96 ;
 }

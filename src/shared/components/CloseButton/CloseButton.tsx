@@ -13,16 +13,29 @@
  * limitations under the License.
  */
 
+import classNames from 'classnames';
 import './CloseButton.css';
 import React, { FC } from 'react';
 
 type Props = {
+    /**
+     * size of the gradient backgeound
+     */
+    gradientBackgroundSize?: 'l' | 'm' | 's';
     onClick: () => void;
 };
 
-export const CloseButton: FC<Props> = ({ onClick }: Props) => {
+export const CloseButton: FC<Props> = ({
+    gradientBackgroundSize,
+    onClick,
+}: Props) => {
     return (
-        <div className="close-button text-custom-light-blue">
+        <div
+            className={classNames('close-button text-custom-light-blue', {
+                'large-gradient-background': gradientBackgroundSize === 'l',
+                'medium-gradient-background': gradientBackgroundSize === 'm',
+            })}
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
