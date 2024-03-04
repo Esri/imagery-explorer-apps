@@ -142,6 +142,17 @@ const MonthGrid: FC<MonthGridProps> = ({
 
             const isSelected = formatedDateStr === selectedAcquisitionDate;
 
+            /**
+             * data atrributes that will be used for testing, monitoring purposes
+             */
+            const dataProps: { [key: string]: string } = {
+                'data-testid': formatedDateStr,
+            };
+
+            if (hasAvailableData) {
+                dataProps['data-has-available-scene'] = 'true';
+            }
+
             return (
                 <div
                     className={classNames('relative h-2 w-2 border group', {
@@ -171,7 +182,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                             : '',
                     }}
                     key={index}
-                    data-testid={formatedDateStr}
+                    {...dataProps}
                     // title={formatedDateStr}
                     onClick={() => {
                         // unselect if this date is already selected
