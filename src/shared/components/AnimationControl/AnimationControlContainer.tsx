@@ -41,6 +41,7 @@ import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImagerySce
 import { useAnimationFramesInfo } from './useAnimationFramesInfo';
 import { useShouldDisablePlayPauseButton } from './useShouldDisablePlayPauseButton';
 import { nanoid } from 'nanoid';
+import { copyAnimationLink } from '@shared/store/UI/thunks';
 
 const ANIMATION_FRAMES_UPPER_LIMIT = 30;
 
@@ -105,6 +106,9 @@ export const AnimationControlContainer = () => {
                 }}
                 donwloadButtonOnClick={() => {
                     dispatch(showDownloadAnimationPanelToggled());
+                }}
+                copyLinkOnClick={() => {
+                    dispatch(copyAnimationLink());
                 }}
                 statusOnChange={(status) => {
                     dispatch(animationStatusChanged(status));

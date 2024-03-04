@@ -18,12 +18,14 @@ import { AnimationStatus } from '../../store/UI/reducer';
 import classNames from 'classnames';
 import { AnimationSpeedControl } from './AnimationSpeedControl';
 
+const ICON_SIZE = 22;
+
 const StartPlayButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        height="16"
-        width="16"
+        height={ICON_SIZE}
+        width={ICON_SIZE}
     >
         <path
             fill="currentColor"
@@ -37,8 +39,8 @@ const ContinuePlayButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        height="24"
-        width="24"
+        height={ICON_SIZE}
+        width={ICON_SIZE}
     >
         <path
             fill="currentColor"
@@ -52,8 +54,8 @@ const PauseButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        height="24"
-        width="24"
+        height={ICON_SIZE}
+        width={ICON_SIZE}
     >
         <path
             fill="currentColor"
@@ -67,8 +69,8 @@ const CloseButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        height="24"
-        width="24"
+        height={ICON_SIZE}
+        width={ICON_SIZE}
     >
         <path
             fill="currentColor"
@@ -82,12 +84,27 @@ const DownloadButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        height="24"
-        width="24"
+        height={ICON_SIZE}
+        width={ICON_SIZE}
     >
         <path
             fill="currentColor"
             d="M13 3v12.294l2.647-2.647.707.707-3.853 3.854-3.854-3.854.707-.707L12 15.292V3zM6 21h13v-1H6z"
+        />
+        <path fill="none" d="M0 0h24v24H0z" />
+    </svg>
+);
+
+const CopyLinkButton = (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        height={ICON_SIZE}
+        width={ICON_SIZE}
+    >
+        <path
+            fill="currentColor"
+            d="M7 14c0 .025.003.05.004.075l-3.54-3.54a5 5 0 0 1 7.072-7.07l4 4a4.992 4.992 0 0 1-1.713 8.187l-.237-.237a1.998 1.998 0 0 1-.413-.609 3.985 3.985 0 0 0 1.656-6.635l-4-4a4 4 0 0 0-5.369-.26l-.318-.387.318.386a4 4 0 0 0-.29 5.92l2.94 2.94A7.012 7.012 0 0 0 7 14zm16 4a4.97 4.97 0 0 0-1.464-3.536l-3.54-3.539c0 .025.004.05.004.075a7.087 7.087 0 0 1-.113 1.23l2.942 2.941a4 4 0 0 1-.128 5.78l.338.368-.338-.368a4 4 0 0 1-5.53-.122l-4-4a3.966 3.966 0 0 1 1.658-6.631 1.998 1.998 0 0 0-.415-.613l-.234-.234a5.004 5.004 0 0 0-1.907 1.315 5 5 0 0 0 .191 6.87l4 4A5 5 0 0 0 23 18z"
         />
         <path fill="none" d="M0 0h24v24H0z" />
     </svg>
@@ -117,6 +134,12 @@ type Props = {
      */
     donwloadButtonOnClick: () => void;
     /**
+     * fires when user clicks on "copy" link button
+     * @param newSpeed speed in milliseconds
+     * @returns
+     */
+    copyLinkOnClick: () => void;
+    /**
      * fires when user makes change to Animation Status
      * @param newStatus
      * @returns void;
@@ -137,6 +160,7 @@ export const AnimationControl: FC<Props> = ({
     shouldDisableAddFrameButton,
     addButtonOnClick,
     donwloadButtonOnClick,
+    copyLinkOnClick,
     statusOnChange,
     speedOnChange,
 }: Props) => {
@@ -209,6 +233,11 @@ export const AnimationControl: FC<Props> = ({
                         title="Download animation"
                     >
                         {DownloadButton}
+                    </div>
+                )}
+                {isAnimtaionOn && (
+                    <div onClick={copyLinkOnClick} title="Copy animation link">
+                        {CopyLinkButton}
                     </div>
                 )}
                 {status === 'playing' && (
