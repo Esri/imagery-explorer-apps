@@ -22,12 +22,15 @@ import { MapActionButton } from '../MapActionButton/MapActionButton';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { imageDataToBlob } from '@shared/utils/snippets/imageData2Blob';
 import { delay } from '@shared/utils/snippets/delay';
+import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 
 type Props = {
     mapView?: MapView;
 };
 
 export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
+    const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
+
     const [isCapturingScreenshot, setIsCapturingScreenshot] =
         useState<boolean>(false);
 
@@ -81,7 +84,16 @@ export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
             </MapActionButton>
 
             {isCapturingScreenshot && (
-                <div className="absolute top-0 left-0 w-full h-full z-50 pointer-events-none screenshot-effect"></div>
+                <div
+                    className={classNames(
+                        'fixed top-0 left-0 w-full z-50 pointer-events-none screenshot-effect',
+                        {
+                            'bottom-0': shouldHideBottomPanel === true,
+                            'bottom-bottom-panel-height':
+                                shouldHideBottomPanel === false,
+                        }
+                    )}
+                ></div>
             )}
         </>
     );

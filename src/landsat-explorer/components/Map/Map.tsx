@@ -31,6 +31,7 @@ import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/Screenshot
 import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
+import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
 
 const Map = () => {
     return (
@@ -57,6 +58,7 @@ const Map = () => {
                 />
                 <ZoomToExtent />
                 <ScreenshotWidget />
+                <CopyLinkWidget />
             </MapActionButtonsGroup>
 
             <Popup />

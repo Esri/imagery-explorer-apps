@@ -27,6 +27,10 @@ type Props = {
      */
     tooltip: string;
     /**
+     * notification message to be displayed next to the action button
+     */
+    notificationMessage?: string | React.ReactNode;
+    /**
      * if true, show loading indicator
      */
     showLoadingIndicator?: boolean;
@@ -50,10 +54,11 @@ type Props = {
 };
 
 export const MapActionButton: FC<Props> = ({
-    topMarging,
     tooltip,
+    notificationMessage,
     showLoadingIndicator,
     disabled,
+    topMarging,
     children,
     onClickHandler,
 }) => {
@@ -61,31 +66,41 @@ export const MapActionButton: FC<Props> = ({
 
     return (
         <div
-            className={classNames(
-                'relative w-map-action-button-size h-map-action-button-size z-10 flex items-center justify-center',
-                'bg-custom-background text-custom-light-blue-90 cursor-pointer',
-                {
-                    hidden: isAnimationPlaying,
-                    'is-disabled': disabled,
-                }
-            )}
+            className={classNames('relative z-10', {
+                hidden: isAnimationPlaying,
+                'is-disabled': disabled,
+            })}
             style={{
                 marginTop: topMarging || 1,
             }}
             title={tooltip}
             onClick={onClickHandler}
         >
-            {showLoadingIndicator ? (
-                <div className="w-full h-full flex items-center justify-center text-center">
-                    <calcite-loader
-                        scale="m"
-                        inline
-                        style={{ marginRight: 0 } as React.CSSProperties}
-                    />
+            <div className="w-map-action-button-size h-map-action-button-size flex items-center justify-center bg-custom-background text-custom-light-blue-90 cursor-pointer">
+                {showLoadingIndicator ? (
+                    <div className="w-full h-full flex items-center justify-center text-center">
+                        <calcite-loader
+                            scale="m"
+                            inline
+                            style={{ marginRight: 0 } as React.CSSProperties}
+                        />
+                    </div>
+                ) : (
+                    children
+                )}
+            </div>
+
+            {notificationMessage ? (
+                <div
+                    className={classNames(
+                        'absolute left-[110%] top-0 h-map-action-button-size px-2 flex items-center',
+                        'w-auto whitespace-nowrap', // expand its width to cover the whole text content without wrapping the text
+                        'bg-custom-background text-custom-light-blue-90 pointer-events-none text-xs'
+                    )}
+                >
+                    {notificationMessage}
                 </div>
-            ) : (
-                children
-            )}
+            ) : null}
         </div>
     );
 };
