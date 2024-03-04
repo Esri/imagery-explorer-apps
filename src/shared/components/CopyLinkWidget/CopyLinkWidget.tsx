@@ -54,7 +54,7 @@ export const CopyLinkWidget = () => {
             // topPosition={130}
             onClickHandler={onClickHandler}
             notificationMessage={notificationMessage}
-            tooltip={'copy a link to this map, in its current condition'}
+            tooltip={'Copy link to this app in its current state'}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
