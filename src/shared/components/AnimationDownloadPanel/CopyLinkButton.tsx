@@ -33,6 +33,7 @@ export const CopyLinkButton = () => {
                 viewBox="0 0 32 32"
                 height={58}
                 width={64}
+                className="with-drop-shadow"
             >
                 <path
                     fill="currentColor"
