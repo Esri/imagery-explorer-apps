@@ -68,7 +68,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
         return (
             <div
                 className="grid grid-cols-2 text-xs"
-                data-element="scene-info-table"
+                data-element="scene-info-table" // this [data-element] attribute will be used to monitor the health of the app
             >
                 {data.map((d: SceneInfoTableData) => {
                     return (
