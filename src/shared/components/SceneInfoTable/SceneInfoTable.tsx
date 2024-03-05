@@ -52,10 +52,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
     const getContent = () => {
         if (!data || !data.length) {
             return (
-                <div
-                    className="text-xs opacity-80 text-center mx-auto max-w-[240px]"
-                    data-element="scene-info"
-                >
+                <div className="text-xs opacity-80 text-center mx-auto max-w-[240px]">
                     <p className="my-3 mx-3">
                         Select an acquisition date in Calendar to find a scene.
                     </p>
@@ -69,7 +66,10 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
         }
 
         return (
-            <div className="grid grid-cols-2 text-xs">
+            <div
+                className="grid grid-cols-2 text-xs"
+                data-element="scene-info-table"
+            >
                 {data.map((d: SceneInfoTableData) => {
                     return (
                         <SceneInfoRow
