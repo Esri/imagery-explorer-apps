@@ -22,6 +22,9 @@ import { shouldShowAboutThisAppToggled } from '../../store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { APP_NAME, AppName } from '@shared/config';
+import { encodeMapCenter } from '@shared/utils/url-hash-params/map';
+import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
+import { UrlHashParamKey } from '@shared/utils/url-hash-params';
 
 type Props = {
     /**
@@ -56,6 +59,16 @@ const AppHeader: FC<Props> = ({ title }) => {
         useState<boolean>(false);
 
     const containerRef = useRef<HTMLDivElement>();
+
+    const mapCenter = useSelector(selectMapCenter);
+
+    const zoom = useSelector(selectMapZoom);
+
+    const launchImageryExplorerApp = (url: string) => {
+        const key: UrlHashParamKey = 'mapCenter';
+        const targetURL = url + `#${key}=${encodeMapCenter(mapCenter, zoom)}`;
+        window.open(targetURL, '_blank');
+    };
 
     useOnClickOutside(
         containerRef,
@@ -131,18 +144,22 @@ const AppHeader: FC<Props> = ({ title }) => {
                             .filter((d) => d.appName !== APP_NAME)
                             .map((d) => {
                                 return (
-                                    <a
+                                    <span
                                         key={d.title}
-                                        href={d.url}
-                                        target="_blank"
+                                        // href={d.url}
+                                        // target="_blank"
                                         title={`Launch the ${d.title} in a new tab`}
-                                        rel="noreferrer"
+                                        // rel="noreferrer"
+                                        onClick={launchImageryExplorerApp.bind(
+                                            null,
+                                            d.url
+                                        )}
                                     >
                                         <div className="w-full px-2 py-1 text-xs cursor-pointer flex items-center">
                                             <span className="">{d.title}</span>
                                             {/* <calcite-icon icon="launch" scale="s" /> */}
                                         </div>
-                                    </a>
+                                    </span>
                                 );
                             })}
                     </div>

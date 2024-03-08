@@ -32,17 +32,28 @@ const decodeMapCenter = (value: string) => {
     };
 };
 
+export const encodeMapCenter = (center: number[], zoom: number) => {
+    const [longitude, latitude] = center;
+
+    const value = `${longitude.toFixed(3)},${latitude.toFixed(
+        3
+    )},${zoom.toFixed(3)}`;
+
+    return value;
+};
+
 /**
  * Save the map center coordinates and zoom level to the hash parameters of a URL.
  * @param center An array of numbers representing the map center coordinates - longitude and the latitude. (e.g. [-122.789, 35])
  * @param zoom A number representing the zoom level of the map (e.g. 10)
  */
 export const saveMapCenterToHashParams = (center: number[], zoom: number) => {
-    const [longitude, latitude] = center;
-    const value = `${longitude.toFixed(3)},${latitude.toFixed(
-        3
-    )},${zoom.toFixed(3)}`;
-    updateHashParams('mapCenter', value);
+    // const [longitude, latitude] = center;
+    // const value = `${longitude.toFixed(3)},${latitude.toFixed(
+    //     3
+    // )},${zoom.toFixed(3)}`;
+
+    updateHashParams('mapCenter', encodeMapCenter(center, zoom));
 };
 
 export const getMapCenterFromHashParams = () => {

@@ -51,7 +51,7 @@ export {
     getSpectralProfileToolDataFromHashParams,
 } from './spectralTool';
 
-type UrlHashParamKey =
+export type UrlHashParamKey =
     | 'mapCenter' // hash params for map center
     | 'mode' // hash params for app mode
     | 'mainScene' // hash params for query params of the main scene
