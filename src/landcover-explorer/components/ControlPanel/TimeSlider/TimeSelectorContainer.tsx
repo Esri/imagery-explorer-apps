@@ -19,30 +19,23 @@ import { batch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import {
-    year4LeadingLayerUpdated,
-    year4TrailingLayerUpdated,
-    yearUpdated,
-} from '@shared/store/LandcoverExplorer/reducer';
+import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSentinel2Layer,
     selectYear,
-    selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
-import {
-    saveActiveYearToHashParams,
-    saveTimeExtentToHashParams,
-} from '@landcover-explorer/utils/URLHashParams';
+
 import HeaderText from '../HeaderText/HeaderText';
-import AnimationButton from './AnimationButton';
+import AnimationButton from '../AnimationControls/AnimationStatusButton';
 // import ModeSelector from './ModeSelector';
-import MonthPicker from './MonthPicker';
+import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
 import TimeSliderWidget from './TimeSliderWidget';
 import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
 import { Sentinel2OutOfVisibleRangeWarning } from './Sentinel2OutOfVisibleRangeWarning';
+import { AnimationControls } from '../AnimationControls/AnimationControls';
 
 export const TimeSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -60,28 +53,14 @@ export const TimeSelectorContainer = () => {
     const shouldShowSentinel2Layer = useSelector(
         selectShouldShowSentinel2Layer
     );
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
-        selectYearsForSwipeWidgetLayers
-    );
 
     const year = useSelector(selectYear);
 
     const shouldShowMonthPicker =
         shouldShowSentinel2Layer && isSentinel2LayerOutOfVisibleRange === false;
 
-    const timeRangeSliderVisibility =
-        mode === 'swipe' && isSentinel2LayerOutOfVisibleRange === false;
-
     const timeStepSliderVisibility =
         mode === 'step' && isSentinel2LayerOutOfVisibleRange === false;
-
-    useEffect(() => {
-        saveTimeExtentToHashParams(year4LeadingLayer, year4TrailingLayer);
-    }, [year4LeadingLayer, year4TrailingLayer]);
-
-    useEffect(() => {
-        saveActiveYearToHashParams(mode === 'step' ? year : null);
-    }, [year, mode]);
 
     return (
         <div className="text-center w-full xl:w-auto">
@@ -98,69 +77,36 @@ export const TimeSelectorContainer = () => {
                 }
             />
 
-            {/* <ModeSelector disabled={animationMode !== null} /> */}
+            <div className={classNames('relative w-full xl:max-w-md mt-2')}>
+                <div className="flex">
+                    <div
+                        className={classNames('w-full', {
+                            'pointer-events-none': animationMode !== null,
+                        })}
+                    >
+                        <TimeSliderWidget
+                            mode="instant"
+                            years={years}
+                            initialTimeExtent={{
+                                start: new Date(year, 0, 1),
+                                end: new Date(year, 0, 1),
+                            }}
+                            visible={timeStepSliderVisibility}
+                            timeExtentOnChange={(startYear) => {
+                                batch(() => {
+                                    dispatch(yearUpdated(startYear));
+                                });
+                            }}
+                            selectedYear={year}
+                        />
+                    </div>
 
-            <div
-                className={classNames(
-                    'relative w-full md:w-11/12 xl:w-full xl:max-w-md mt-2'
-                )}
-            >
-                <div
-                    className={classNames('w-full', {
-                        'pointer-events-none': animationMode !== null,
-                    })}
-                >
-                    <TimeSliderWidget
-                        mode="instant"
-                        years={years}
-                        initialTimeExtent={{
-                            start: new Date(year, 0, 1),
-                            end: new Date(year, 0, 1),
-                        }}
-                        visible={timeStepSliderVisibility}
-                        timeExtentOnChange={(startYear) => {
-                            // console.log(startYear)
-
-                            batch(() => {
-                                dispatch(yearUpdated(startYear));
-                            });
-                        }}
-                        selectedYear={year}
-                    />
+                    <AnimationControls />
                 </div>
 
                 <TimeSelector4SwipeMode
                     shouldShowMonthPicker={shouldShowMonthPicker}
                 />
-
-                {isSentinel2LayerOutOfVisibleRange === false &&
-                    mode === 'step' && (
-                        <div
-                            className="absolute hidden lg:block"
-                            style={{
-                                right: -40,
-                                bottom: 11,
-                                width: 55,
-                            }}
-                        >
-                            <div className="mb-3">
-                                <AnimationButton />
-                            </div>
-
-                            <div
-                                className="w-full"
-                                style={{
-                                    height: 26,
-                                }}
-                            >
-                                {shouldShowMonthPicker && (
-                                    <MonthPicker
-                                        disabled={animationMode !== null}
-                                    />
-                                )}
-                            </div>
-                        </div>
-                    )}
             </div>
 
             <Sentinel2OutOfVisibleRangeWarning />

@@ -24,8 +24,11 @@ import MapView from '@landcover-explorer/components/MapView/MapViewContainer';
 import { SaveWebMap } from '@landcover-explorer/components/SaveWebMap';
 import { AppHeader } from '@shared/components/AppHeader';
 import { appConfig } from '@shared/config';
+import { useSaveAppState2HashParams } from '@landcover-explorer/hooks/useSaveAppState2HashParams';
 
 const AppLayout = () => {
+    useSaveAppState2HashParams();
+
     return (
         <ErrorBoundary>
             <MapView />
