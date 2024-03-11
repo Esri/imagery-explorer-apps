@@ -16,7 +16,7 @@
 import { APP_NAME } from '@shared/config';
 import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
 import React, { useEffect, useState } from 'react';
-import { getTimeExtent as getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 
 /**
