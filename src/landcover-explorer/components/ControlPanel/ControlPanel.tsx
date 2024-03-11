@@ -41,7 +41,7 @@ const ControlPanel = () => {
 
     return (
         <BottomPanel>
-            <div className="relative w-full h-full p-2 xl:flex text-custom-light-blue justify-around">
+            <div className="relative w-full h-full p-2 xl:flex text-custom-light-blue justify-between">
                 <div className="flex">
                     <LayerSelector />
                     <TimeSlider />
