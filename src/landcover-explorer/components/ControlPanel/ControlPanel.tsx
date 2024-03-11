@@ -29,6 +29,7 @@ import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsLi
 import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 // import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
+import { ModeSelector } from './ModeSelector';
 
 const ControlPanel = () => {
     // const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const ControlPanel = () => {
             <div className="relative w-full h-full p-2 xl:flex text-custom-light-blue justify-between">
                 <div className="flex">
                     <LayerSelector />
+                    <ModeSelector />
                     <TimeSlider />
                 </div>
 

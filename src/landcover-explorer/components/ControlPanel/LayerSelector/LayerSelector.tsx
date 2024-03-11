@@ -23,6 +23,7 @@ import { THEME_COLOR_LIGHT_BLUE } from '@landcover-explorer/constants/style';
 import DownloadIcon from './DownloadIcon';
 import OpenIcon from './OpenIcon';
 import SaveWebMapIcon from './SaveWebMapIcon';
+import { Button } from '@shared/components/Button';
 
 type LayerSelectorButtonProps = {
     /**
@@ -33,7 +34,7 @@ type LayerSelectorButtonProps = {
     children?: React.ReactNode;
 };
 
-const BUTTON_CONATINER_CLASSNAMES = 'my-3';
+const BUTTON_CONATINER_CLASSNAMES = 'relative h-1/2 mb-2'; //'my-3';
 
 const ICONS_CONATINER_CLASSNAMES = 'mt-2 flex items-center justify-end';
 
@@ -84,11 +85,43 @@ const LayerSelector: FC<Props> = ({
 }: Props) => {
     return (
         <div
-            className={classNames('hidden md:block mx-4 mt-0', {
+            className={classNames('relative hidden md:block mt-0', {
                 'disabled-when-animation-mode-is-on': disabled,
             })}
         >
             <div className={BUTTON_CONATINER_CLASSNAMES}>
+                <Button
+                    fullHeight={true}
+                    appearance={
+                        shouldShowSentinel2Layer === false
+                            ? 'solid'
+                            : 'transparent'
+                    }
+                    onClickHandler={landcoverButtonOnClick}
+                    decorativeIndicator={
+                        shouldShowSentinel2Layer === false ? 'right' : null
+                    }
+                >
+                    <span className="uppercase">Land Cover</span>
+                </Button>
+            </div>
+
+            <div className={BUTTON_CONATINER_CLASSNAMES}>
+                <Button
+                    fullHeight={true}
+                    appearance={
+                        shouldShowSentinel2Layer ? 'solid' : 'transparent'
+                    }
+                    onClickHandler={imageryButtonOnClick}
+                    decorativeIndicator={
+                        shouldShowSentinel2Layer ? 'right' : null
+                    }
+                >
+                    <span className="uppercase">Imagery</span>
+                </Button>
+            </div>
+
+            {/* <div className={BUTTON_CONATINER_CLASSNAMES}>
                 <LayerSelectorButton
                     onClickHandler={landcoverButtonOnClick}
                     active={!shouldShowSentinel2Layer}
@@ -143,7 +176,7 @@ const LayerSelector: FC<Props> = ({
                         />
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

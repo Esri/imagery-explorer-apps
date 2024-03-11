@@ -38,7 +38,7 @@ import {
 } from '@landcover-explorer/utils/URLHashParams';
 import HeaderText from '../HeaderText/HeaderText';
 import AnimationButton from './AnimationButton';
-import ModeSelector from './ModeSelector';
+// import ModeSelector from './ModeSelector';
 import MonthPicker from './MonthPicker';
 import TimeSliderWidget from './TimeSliderWidget';
 import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
@@ -97,7 +97,7 @@ const TimeSliderContainer = () => {
                 }
             />
 
-            <ModeSelector disabled={animationMode !== null} />
+            {/* <ModeSelector disabled={animationMode !== null} /> */}
 
             <div
                 className={classNames(
