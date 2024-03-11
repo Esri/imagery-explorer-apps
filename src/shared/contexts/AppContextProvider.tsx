@@ -13,39 +13,46 @@
  * limitations under the License.
  */
 
-import React, { useState, createContext } from 'react';
+import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
+import React, { useState, createContext, useEffect } from 'react';
 
 type AppContextValue = {
-    darkMode: boolean;
+    timeExtent: ImageryServiceTimeExtentData;
 };
 
 type AppContextProviderProps = {
+    timeExtent: ImageryServiceTimeExtentData;
     children?: React.ReactNode;
 };
 
 export const AppContext = createContext<AppContextValue>(null);
 
 const AppContextProvider: React.FC<AppContextProviderProps> = ({
+    timeExtent,
     children,
 }: AppContextProviderProps) => {
-    const [value, setValue] = useState<AppContextValue>({
-        darkMode: false,
+    const [appContextValue, setAppContextValue] = useState<AppContextValue>({
+        timeExtent,
     });
 
-    const init = async () => {
-        // const contextValue: AppContextValue = {
-        //     darkMode: false
-        // };
-        // setValue(contextValue);
-    };
+    // const init = async () => {
+    //     // const contextValue: AppContextValue = {
+    //     //     darkMode: false
+    //     // };
+    //     // setValue(contextValue);
+    // };
 
-    React.useEffect(() => {
-        init();
-    }, []);
+    // React.useEffect(() => {
+    //     init();
+    // }, []);
+
+    // useEffect(()=>{
+    //     console.log('App Context', appContextValue)
+    // }, [appContextValue])
 
     return (
-        <AppContext.Provider value={value}>
-            {value ? children : null}
+        <AppContext.Provider value={appContextValue}>
+            {children}
         </AppContext.Provider>
     );
 };

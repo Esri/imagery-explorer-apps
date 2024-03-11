@@ -24,6 +24,8 @@ import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { AboutLandsatExplorer } from './components/About';
 import { ErrorPage } from '@shared/components/ErrorPage';
+import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+import AppContextProvider from '@shared/contexts/AppContextProvider';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -31,13 +33,18 @@ import { ErrorPage } from '@shared/components/ErrorPage';
     try {
         const store = await getLandsatExplorerStore();
 
+        const timeExtent = await getTimeExtentOfLandsatService();
+        console.log(timeExtent);
+
         root.render(
             <ReduxProvider store={store}>
-                <ErrorBoundary>
-                    <Map />
-                    <Layout />
-                    <AboutLandsatExplorer />
-                </ErrorBoundary>
+                <AppContextProvider timeExtent={timeExtent}>
+                    <ErrorBoundary>
+                        <Map />
+                        <Layout />
+                        <AboutLandsatExplorer />
+                    </ErrorBoundary>
+                </AppContextProvider>
             </ReduxProvider>
         );
     } catch (err) {
