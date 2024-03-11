@@ -23,19 +23,24 @@ import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { AboutLandsatExplorer } from './components/About';
+import { ErrorPage } from '@shared/components/ErrorPage';
 
 (async () => {
-    const store = await getLandsatExplorerStore();
-
     const root = createRoot(document.getElementById('root'));
 
-    root.render(
-        <ReduxProvider store={store}>
-            <ErrorBoundary>
-                <Map />
-                <Layout />
-                <AboutLandsatExplorer />
-            </ErrorBoundary>
-        </ReduxProvider>
-    );
+    try {
+        const store = await getLandsatExplorerStore();
+
+        root.render(
+            <ReduxProvider store={store}>
+                <ErrorBoundary>
+                    <Map />
+                    <Layout />
+                    <AboutLandsatExplorer />
+                </ErrorBoundary>
+            </ReduxProvider>
+        );
+    } catch (err) {
+        root.render(<ErrorPage error={err} />);
+    }
 })();

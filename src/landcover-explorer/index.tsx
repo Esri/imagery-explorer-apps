@@ -21,9 +21,9 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { getLandsatcoverExplorerStore } from './store';
 import AppLayout from './components/AppLayout/AppLayout';
 import { loadServiceInfo } from '@shared/services/sentinel-2-10m-landcover/loadServiceInfo';
-import { ErrorPage } from './components/ErrorPage';
 import { initEsriOAuth } from './utils/esriOAuth';
 import { APP_ID } from './constants';
+import { ErrorPage } from '@shared/components/ErrorPage';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -44,6 +44,6 @@ import { APP_ID } from './constants';
             </ReduxProvider>
         );
     } catch (err) {
-        root.render(<ErrorPage />);
+        root.render(<ErrorPage error={err} />);
     }
 })();

@@ -13,9 +13,13 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 
-export const ErrorPage = () => {
+type Props = {
+    error?: Error;
+};
+
+export const ErrorPage: FC<Props> = ({ error }) => {
     return (
         <div className="flex justify-center items-center w-screen h-screen theme-background text-custom-light-blue">
             <div className="max-w-2xl">
@@ -23,6 +27,12 @@ export const ErrorPage = () => {
                     This app is temporarily unavailable due to an issue fetching
                     data from one of the data services.
                 </p>
+
+                {error && error.message ? (
+                    <p className="mt-4 text-sm">
+                        Error Message: {error.message}
+                    </p>
+                ) : null}
             </div>
         </div>
     );
