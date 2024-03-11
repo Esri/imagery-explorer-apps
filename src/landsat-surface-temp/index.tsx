@@ -22,18 +22,24 @@ import { getLandsatExplorerStore } from './store';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
+import AppContextProvider from '@shared/contexts/AppContextProvider';
+import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 
 (async () => {
     const store = await getLandsatExplorerStore();
+
+    const timeExtent = await getTimeExtentOfLandsatService();
 
     const root = createRoot(document.getElementById('root'));
 
     root.render(
         <ReduxProvider store={store}>
-            <ErrorBoundary>
-                <Map />
-                <Layout />
-            </ErrorBoundary>
+            <AppContextProvider timeExtent={timeExtent}>
+                <ErrorBoundary>
+                    <Map />
+                    <Layout />
+                </ErrorBoundary>
+            </AppContextProvider>
         </ReduxProvider>
     );
 })();

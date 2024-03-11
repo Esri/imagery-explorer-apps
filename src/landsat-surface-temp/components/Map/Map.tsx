@@ -44,12 +44,12 @@ const Map = () => {
             </GroupLayer>
             <SwipeWidget />
             <HillshadeLayer />
-            <Zoom2NativeScale
+            {/* <Zoom2NativeScale
                 nativeScale={113386}
                 tooltip={"Zoom to Landsat's native resolution"}
             />
             <ZoomToExtent />
-            <ScreenshotWidget />
+            <ScreenshotWidget /> */}
             <Popup />
             {/* use crosshair cursor for the map component all the time */}
             <CrosshairCursor />
