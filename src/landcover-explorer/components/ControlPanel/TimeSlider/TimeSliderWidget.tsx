@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import './style.css';
+import './TimeSliderWidget.css';
 import React, { useRef, useEffect, FC, useMemo } from 'react';
 // import ISlider from '@arcgis/core/widgets/Slider';
 import TimeSlider from '@arcgis/core/widgets/TimeSlider';

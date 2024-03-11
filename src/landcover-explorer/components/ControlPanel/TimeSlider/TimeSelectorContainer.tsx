@@ -29,13 +29,13 @@ import {
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 import HeaderText from '../HeaderText/HeaderText';
-import AnimationButton from '../AnimationControls/AnimationStatusButton';
+// import AnimationButton from '../AnimationControls/AnimationStatusButton';
 // import ModeSelector from './ModeSelector';
-import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
+// import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
 import TimeSliderWidget from './TimeSliderWidget';
 import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
 import { Sentinel2OutOfVisibleRangeWarning } from './Sentinel2OutOfVisibleRangeWarning';
-import { AnimationControls } from '../AnimationControls/AnimationControls';
+import { AnimationControls } from '../AnimationControls/AnimationStatusControls';
 
 export const TimeSelectorContainer = () => {
     const dispatch = useDispatch();
