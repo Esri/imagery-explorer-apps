@@ -71,7 +71,7 @@ export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                         dispatch(modeChanged('swipe'));
                     }}
                 >
-                    <span className="uppercase">Step</span>
+                    <span className="uppercase">Swipe</span>
                 </Button>
             </div>
             {/* <div
