@@ -36,6 +36,7 @@ import TimeSliderWidget from './TimeSliderWidget';
 import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
 import { Sentinel2OutOfVisibleRangeWarning } from './Sentinel2OutOfVisibleRangeWarning';
 import { AnimationControls } from '../AnimationControls/AnimationStatusControls';
+import { ExtraOptions } from './ExtraOptions';
 
 export const TimeSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -76,6 +77,8 @@ export const TimeSelectorContainer = () => {
                         : 'Choose a Year to View'
                 }
             />
+
+            <ExtraOptions />
 
             <div className={classNames('relative w-full xl:max-w-md mt-2')}>
                 <div className="flex">

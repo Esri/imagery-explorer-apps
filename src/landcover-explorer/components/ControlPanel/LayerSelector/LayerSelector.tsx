@@ -70,9 +70,9 @@ type Props = {
     shouldShowSentinel2Layer: boolean;
     disabled?: boolean;
     landcoverButtonOnClick: () => void;
-    downloadLandcoverButtonOnClick: () => void;
+    // downloadLandcoverButtonOnClick: () => void;
     imageryButtonOnClick: () => void;
-    saveWebMapButtonOnClick: () => void;
+    // saveWebMapButtonOnClick: () => void;
 };
 
 const LayerSelector: FC<Props> = ({
@@ -80,9 +80,9 @@ const LayerSelector: FC<Props> = ({
     disabled,
     landcoverButtonOnClick,
     imageryButtonOnClick,
-    downloadLandcoverButtonOnClick,
-    saveWebMapButtonOnClick,
-}: Props) => {
+}: // downloadLandcoverButtonOnClick,
+// saveWebMapButtonOnClick,
+Props) => {
     return (
         <div
             className={classNames('relative hidden md:block mt-0', {
