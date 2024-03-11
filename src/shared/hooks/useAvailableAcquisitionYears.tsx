@@ -32,6 +32,10 @@ export const useAvailableAcquisitionYears = () => {
     const { timeExtent } = useContext(AppContext);
 
     useEffect(() => {
+        if (!timeExtent) {
+            return;
+        }
+
         // Extract start and end dates (in format of unix epoch timestamp) from the time extent data
         const { start, end } = timeExtent;
 
