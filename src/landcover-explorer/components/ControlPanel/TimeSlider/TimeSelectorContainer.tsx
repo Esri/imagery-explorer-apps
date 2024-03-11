@@ -42,8 +42,9 @@ import AnimationButton from './AnimationButton';
 import MonthPicker from './MonthPicker';
 import TimeSliderWidget from './TimeSliderWidget';
 import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
+import { Sentinel2OutOfVisibleRangeWarning } from './Sentinel2OutOfVisibleRangeWarning';
 
-const TimeSliderContainer = () => {
+export const TimeSelectorContainer = () => {
     const dispatch = useDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
@@ -128,12 +129,9 @@ const TimeSliderContainer = () => {
                     />
                 </div>
 
-                {isSentinel2LayerOutOfVisibleRange === false &&
-                    mode === 'swipe' && (
-                        <TimeSelector4SwipeMode
-                            shouldShowMonthPicker={shouldShowMonthPicker}
-                        />
-                    )}
+                <TimeSelector4SwipeMode
+                    shouldShowMonthPicker={shouldShowMonthPicker}
+                />
 
                 {isSentinel2LayerOutOfVisibleRange === false &&
                     mode === 'step' && (
@@ -165,17 +163,7 @@ const TimeSliderContainer = () => {
                     )}
             </div>
 
-            {isSentinel2LayerOutOfVisibleRange && (
-                <div className="mt-9 text-center text-sm opacity-50">
-                    <p>
-                        {mode === 'swipe'
-                            ? 'Zoom in to compare Sentinel-2 Imagery Layers'
-                            : 'Zoom in to enable time slider'}
-                    </p>
-                </div>
-            )}
+            <Sentinel2OutOfVisibleRangeWarning />
         </div>
     );
 };
-
-export default TimeSliderContainer;

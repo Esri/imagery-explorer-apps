@@ -22,7 +22,11 @@ import {
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,
 } from '@shared/store/LandcoverExplorer/reducer';
-import { selectYearsForSwipeWidgetLayers } from '@shared/store/LandcoverExplorer/selectors';
+import {
+    selectIsSentinel2LayerOutOfVisibleRange,
+    selectMapMode,
+    selectYearsForSwipeWidgetLayers,
+} from '@shared/store/LandcoverExplorer/selectors';
 import Dropdown from './Dropdown';
 import MonthPicker from './MonthPicker';
 
@@ -34,6 +38,12 @@ const TimeSelector4SwipeMode: FC<Props> = ({
     shouldShowMonthPicker,
 }: Props) => {
     const dispatch = useDispatch();
+
+    const mode = useSelector(selectMapMode);
+
+    const isSentinel2LayerOutOfVisibleRange = useSelector(
+        selectIsSentinel2LayerOutOfVisibleRange
+    );
 
     const years = getAvailableYears();
 
@@ -54,6 +64,10 @@ const TimeSelector4SwipeMode: FC<Props> = ({
             active: year === year4TrailingLayer,
         };
     });
+
+    if (mode !== 'swipe' || isSentinel2LayerOutOfVisibleRange) {
+        return null;
+    }
 
     return (
         <div className="mt-8 flex">
