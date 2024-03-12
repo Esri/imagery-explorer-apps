@@ -65,7 +65,7 @@ const TotalAreaGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
                     top: 35,
                     right: 10,
                     bottom: 50,
-                    left: 10,
+                    left: 20,
                 }}
             />
         );
