@@ -114,7 +114,7 @@ const ClassificationsList: FC<Props> = ({
                                     }}
                                 ></div>
 
-                                <span className="ml-2 text-xs lg:text-sm">
+                                <span className="ml-2 text-xs 2xl:text-sm">
                                     {ClassName}
                                 </span>
                             </div>
