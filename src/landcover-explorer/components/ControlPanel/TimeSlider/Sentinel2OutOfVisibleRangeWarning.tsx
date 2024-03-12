@@ -32,7 +32,7 @@ export const Sentinel2OutOfVisibleRangeWarning = () => {
     }
 
     return (
-        <div className="mt-9 text-center text-sm opacity-50">
+        <div className="mt-6 text-center text-sm opacity-50">
             <p>
                 {mode === 'swipe'
                     ? 'Zoom in to compare Sentinel-2 Imagery Layers'

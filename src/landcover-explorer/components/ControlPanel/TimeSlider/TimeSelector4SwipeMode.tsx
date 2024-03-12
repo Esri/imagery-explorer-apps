@@ -70,7 +70,7 @@ const TimeSelector4SwipeMode: FC<Props> = ({
     }
 
     return (
-        <div className="flex w-full">
+        <div className="flex w-full px-6 mt-6">
             <div
                 className={classNames('grid grid-cols-2 gap-2', {
                     'w-4/5': shouldShowMonthPicker,

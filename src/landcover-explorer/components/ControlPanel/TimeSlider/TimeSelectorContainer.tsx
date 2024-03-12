@@ -64,7 +64,7 @@ export const TimeSelectorContainer = () => {
         mode === 'step' && isSentinel2LayerOutOfVisibleRange === false;
 
     return (
-        <div className="text-center w-full xl:w-auto">
+        <div className="w-[450px] text-center">
             <HeaderText
                 title={`${
                     shouldShowSentinel2Layer
@@ -80,7 +80,7 @@ export const TimeSelectorContainer = () => {
 
             <ExtraOptions />
 
-            <div className={classNames('relative w-full xl:max-w-md mt-2')}>
+            <div className={classNames('relative w-full mt-4')}>
                 <div className="flex">
                     <div
                         className={classNames('w-full', {
