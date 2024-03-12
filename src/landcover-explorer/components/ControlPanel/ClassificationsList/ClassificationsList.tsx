@@ -110,7 +110,7 @@ const ClassificationsList: FC<Props> = ({
                                 }}
                             >
                                 <div
-                                    className="w-4 h-4 border-2 border-white rounded-full"
+                                    className="w-4 h-4 shrink-0 border-2 border-white rounded-full"
                                     style={{
                                         background: `rgb(${Red}, ${Green}, ${Blue})`,
                                     }}
