@@ -88,7 +88,7 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
             </div> */}
 
             <OptionButton
-                label="Download as GeoTIFF"
+                label="Download GeoTIFF"
                 icon="download-to"
                 onClick={donwloadButtonOnClick}
             />
@@ -129,7 +129,7 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
                     speedOnChange={speedOnChange}
                 />
 
-                <span className="ml-3">speed</span>
+                <span className="ml-3">Speed</span>
             </div>
 
             <OptionButton
@@ -139,7 +139,7 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
             />
 
             <OptionButton
-                label="Download"
+                label="Download MP4"
                 icon="download-to"
                 onClick={donwloadAnimationOnClick}
             />
