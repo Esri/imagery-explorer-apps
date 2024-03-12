@@ -30,6 +30,7 @@ import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 // import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { ModeSelector } from './ModeSelector';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 const ControlPanel = () => {
     // const dispatch = useDispatch();
@@ -39,6 +40,18 @@ const ControlPanel = () => {
     const shouldShowSentinel2Layer = useSelector(
         selectShouldShowSentinel2Layer
     );
+
+    if (IS_MOBILE_DEVICE) {
+        return (
+            <BottomPanel>
+                <div className="mx-auto">
+                    {/* <TimeSelector /> */}
+                    <ClassificationsList />
+                    <LandCoverGraph />
+                </div>
+            </BottomPanel>
+        );
+    }
 
     return (
         <BottomPanel>

@@ -82,10 +82,12 @@ const LandCoverGraphContainer = () => {
 
     return (
         <div
-            className={classNames('text-center mx-6 w-auto 2xl:w-96', {
+            className={classNames(
+                'text-center mx-6 w-auto 2xl:w-96',
+                'pb-8 md:pb-0' // in mobile view, we need to add some padding space at the bottom because this component is the last one in the bottom panel
                 // 'md:w-64': isAnimationControlVisible,
                 // 'md:w-96': isAnimationControlVisible === false,
-            })}
+            )}
         >
             <HeaderText
                 title={`${
