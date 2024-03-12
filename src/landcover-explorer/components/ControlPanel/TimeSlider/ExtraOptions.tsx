@@ -14,11 +14,19 @@
  */
 
 import {
+    AnimationSpeedControl,
+    AnimationSpeedSlider,
+} from '@shared/components/AnimationControl/AnimationSpeedControl';
+import {
+    animationSpeedChanged,
     showDownloadAnimationPanelChanged,
     showDownloadPanelToggled,
     showSaveWebMapPanelToggled,
 } from '@shared/store/UI/reducer';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationSpeed,
+    selectAnimationStatus,
+} from '@shared/store/UI/selectors';
 import { copyAnimationLink } from '@shared/store/UI/thunks';
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
@@ -30,6 +38,13 @@ type SaveOptionsProps = {
 };
 
 type AnimationOptionsProps = {
+    animationSpeed: number;
+    /**
+     * fires when user makes change to Animation Speed
+     * @param newSpeed speed in milliseconds
+     * @returns
+     */
+    speedOnChange: (newSpeed?: number) => void;
     copyLinkOnClick: () => void;
     donwloadAnimationOnClick: () => void;
 };
@@ -95,9 +110,11 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
 };
 
 export const AnimationOptions: FC<AnimationOptionsProps> = ({
+    animationSpeed,
     copyLinkOnClick,
     donwloadAnimationOnClick,
-}) => {
+    speedOnChange,
+}: AnimationOptionsProps) => {
     const animationMode = useSelector(selectAnimationStatus);
 
     if (!animationMode) {
@@ -106,6 +123,15 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 
     return (
         <div className="flex items-center justify-around">
+            <div className="flex items-center w-24">
+                <AnimationSpeedSlider
+                    speedInMilliseonds={animationSpeed}
+                    speedOnChange={speedOnChange}
+                />
+
+                <span className="ml-3">speed</span>
+            </div>
+
             <OptionButton
                 label="Copy Link"
                 icon="link"
@@ -124,6 +150,8 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 export const ExtraOptions = () => {
     const dispatch = useDispatch();
 
+    const animationSpeed = useSelector(selectAnimationSpeed);
+
     return (
         <div className="w-full my-6 text-xs">
             <SaveOptions
@@ -136,11 +164,15 @@ export const ExtraOptions = () => {
             />
 
             <AnimationOptions
+                animationSpeed={animationSpeed}
                 donwloadAnimationOnClick={() => {
                     dispatch(showDownloadAnimationPanelChanged(true));
                 }}
                 copyLinkOnClick={() => {
                     dispatch(copyAnimationLink());
+                }}
+                speedOnChange={(speed: number) => {
+                    dispatch(animationSpeedChanged(speed));
                 }}
             />
         </div>
