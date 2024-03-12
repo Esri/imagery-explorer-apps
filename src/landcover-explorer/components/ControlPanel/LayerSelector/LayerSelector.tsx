@@ -34,7 +34,7 @@ type LayerSelectorButtonProps = {
     children?: React.ReactNode;
 };
 
-const BUTTON_CONATINER_CLASSNAMES = 'relative h-1/2 mb-2'; //'my-3';
+const BUTTON_CONATINER_CLASSNAMES = 'relative flex-grow mb-3'; //'my-3';
 
 const ICONS_CONATINER_CLASSNAMES = 'mt-2 flex items-center justify-end';
 
@@ -85,11 +85,11 @@ const LayerSelector: FC<Props> = ({
 Props) => {
     return (
         <div
-            className={classNames('relative hidden md:block mt-0', {
+            className={classNames('relative flex flex-col', {
                 'disabled-when-animation-mode-is-on': disabled,
             })}
         >
-            <div className={BUTTON_CONATINER_CLASSNAMES}>
+            <div className={classNames('relative flex-grow mb-2')}>
                 <Button
                     fullHeight={true}
                     appearance={
@@ -106,7 +106,7 @@ Props) => {
                 </Button>
             </div>
 
-            <div className={BUTTON_CONATINER_CLASSNAMES}>
+            <div className={'relative flex-grow '}>
                 <Button
                     fullHeight={true}
                     appearance={
