@@ -15,7 +15,10 @@
 
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationSpeed,
+    selectAnimationStatus,
+} from '@shared/store/UI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
@@ -50,6 +53,8 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
 
     const frameData4DownloadJob: AnimationFrameData[] =
         useFrameDataForDownloadJob({ mediaLayerElements, mapView });
+
+    const animationSpeed = useSelector(selectAnimationSpeed);
 
     useMediaLayerAnimation(mediaLayerElements);
 
@@ -126,7 +131,7 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
 
             <AnimationDownloadPanel
                 frameData4DownloadJob={frameData4DownloadJob}
-                animationSpeed={1000}
+                animationSpeed={animationSpeed}
                 mapViewWindowSize={{
                     width: mapView.width,
                     height: mapView.height,
