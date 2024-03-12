@@ -64,7 +64,7 @@ export const TimeSelectorContainer = () => {
         mode === 'step' && isSentinel2LayerOutOfVisibleRange === false;
 
     return (
-        <div className="w-[430px] text-center">
+        <div className="w-[430px] text-center mx-6">
             <HeaderText
                 title={`${
                     shouldShowSentinel2Layer

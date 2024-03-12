@@ -46,10 +46,11 @@ const ControlPanel = () => {
                 <div className="flex">
                     <LayerSelector />
                     <ModeSelector />
-                    <TimeSelector />
                 </div>
 
-                <div className="flex flex-col-reverse md:flex-row pb-6 md:pb-0">
+                <div className="flex flex-grow justify-center shrink-0">
+                    <TimeSelector />
+
                     {shouldShowSentinel2Layer === false && (
                         <ClassificationsList />
                     )}

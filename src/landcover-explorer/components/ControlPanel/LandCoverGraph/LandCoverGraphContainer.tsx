@@ -82,13 +82,10 @@ const LandCoverGraphContainer = () => {
 
     return (
         <div
-            className={classNames(
-                'h-40 text-center mx-6 my-4 md:my-0 flex-grow',
-                {
-                    'md:w-64': isAnimationControlVisible,
-                    'md:w-96': isAnimationControlVisible === false,
-                }
-            )}
+            className={classNames('text-center mx-6', {
+                'md:w-64': isAnimationControlVisible,
+                'md:w-96': isAnimationControlVisible === false,
+            })}
         >
             <HeaderText
                 title={`${
@@ -101,7 +98,7 @@ const LandCoverGraphContainer = () => {
                 }}
             />
 
-            {shouldShowChart === false && (
+            {shouldShowChart === false ? (
                 <div className="w-full flex justify-center items-center text-sm opacity-50 mt-16">
                     {animationMode ? (
                         <p> Graph is disabled when animation is on</p>
@@ -112,11 +109,15 @@ const LandCoverGraphContainer = () => {
                         </p>
                     )}
                 </div>
+            ) : (
+                <div className="w-full h-40">
+                    {mode === 'swipe' ? (
+                        <ChangeCompareGraph />
+                    ) : (
+                        <TotalAreaGraph />
+                    )}
+                </div>
             )}
-
-            {shouldShowChart && mode === 'swipe' && <ChangeCompareGraph />}
-
-            {shouldShowChart && mode === 'step' && <TotalAreaGraph />}
         </div>
     );
 };
