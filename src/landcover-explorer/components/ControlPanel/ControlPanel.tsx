@@ -31,6 +31,8 @@ import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { ModeSelector } from './ModeSelector';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { TimeSliderWidgetContainer } from './TimeSlider/TimeSliderWidget';
+import { TimeSelectorHeader } from './TimeSlider/TimeSelectorHeader';
 
 const ControlPanel = () => {
     // const dispatch = useDispatch();
@@ -45,7 +47,10 @@ const ControlPanel = () => {
         return (
             <BottomPanel>
                 <div className="mx-auto">
-                    {/* <TimeSelector /> */}
+                    <div className="pt-4">
+                        <TimeSelectorHeader />
+                        <TimeSliderWidgetContainer />
+                    </div>
                     <ClassificationsList />
                     <LandCoverGraph />
                 </div>

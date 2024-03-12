@@ -37,10 +37,10 @@ import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
 import { Sentinel2OutOfVisibleRangeWarning } from './Sentinel2OutOfVisibleRangeWarning';
 import { AnimationControls } from '../AnimationControls/AnimationStatusControls';
 import { ExtraOptions } from './ExtraOptions';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { TimeSelectorHeader } from './TimeSelectorHeader';
 
 export const TimeSelectorContainer = () => {
-    const mode = useSelector(selectMapMode);
-
     const isSentinel2LayerOutOfVisibleRange = useSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
@@ -54,18 +54,7 @@ export const TimeSelectorContainer = () => {
 
     return (
         <div className="w-[400px] text-center mx-6">
-            <HeaderText
-                title={`${
-                    shouldShowSentinel2Layer
-                        ? 'Sentinel-2 Imagery'
-                        : '10m Land Cover'
-                }`}
-                subTitle={
-                    mode === 'swipe'
-                        ? 'Choose Two Years to Compare'
-                        : 'Choose a Year to View'
-                }
-            />
+            <TimeSelectorHeader />
 
             <ExtraOptions />
 
