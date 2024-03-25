@@ -37,8 +37,8 @@ type Props = {
 };
 
 /**
- * Get the mosaic rule that will be used to define how the Landsat images should be mosaicked.
- * @param objectId - object id of the selected Landsat scene
+ * Get the mosaic rule that will be used to define how the Imagery images should be mosaicked.
+ * @param objectId - object id of the selected Imagery scene
  * @returns A Promise that resolves to an IMosaicRule object representing the mosaic rule.
  *
  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-MosaicRule.html
@@ -61,7 +61,7 @@ export const getMosaicRule = async (objectId: number): Promise<MosaicRule> => {
  * A custom React hook that returns an Imagery Layer instance .
  * The hook also updates the Imagery Layer when the input parameters are changed.
  *
- * @returns {IImageryLayer} - The Landsat-2 Imagery Layer.
+ * @returns {IImageryLayer} - The Imagery Layer.
  */
 export const useImageryLayerByObjectId = ({
     url,
@@ -71,10 +71,10 @@ export const useImageryLayerByObjectId = ({
 }: Props) => {
     const layerRef = useRef<ImageryLayer>();
 
-    const [landsatLayer, setLandsatLayer] = useState<ImageryLayer>();
+    const [layer, setLayer] = useState<ImageryLayer>();
 
     /**
-     * initialize landsat layer using mosaic created using the input year
+     * initialize imagery layer using mosaic created using the input year
      */
     const init = async () => {
         const mosaicRule = objectId ? await getMosaicRule(objectId) : null;
@@ -90,7 +90,7 @@ export const useImageryLayerByObjectId = ({
             // blendMode: 'multiply'
         });
 
-        setLandsatLayer(layerRef.current);
+        setLayer(layerRef.current);
     };
 
     useEffect(() => {
@@ -132,5 +132,5 @@ export const useImageryLayerByObjectId = ({
         layerRef.current.visible = visible;
     }, [visible]);
 
-    return landsatLayer;
+    return layer;
 };
