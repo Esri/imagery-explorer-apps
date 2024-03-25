@@ -16,6 +16,14 @@
             "pathname": "/landcoverexplorer",
             "entrypoint": "/src/landcover-explorer/index.tsx"
         },
+        "sentinel1-explorer": {
+            "title": "Esri | Sentinel-1 Explorer",
+            "webmapId": "f8770e0adc5c41038026494b871ceb99",
+            "description": "",
+            "animationMetadataSources": "Esri, European Space Agency",
+            "pathname": "/sentinel1explorer",
+            "entrypoint": "/src/sentinel-1-explorer/index.tsx"
+        },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
@@ -35,6 +43,10 @@
         "landsat-level-2": {
             "development": "https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer",
             "production": "https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer"
+        },
+        "sentinel-1": {
+            "development": "https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer",
+            "production": "https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer"
         }
     }
 }
