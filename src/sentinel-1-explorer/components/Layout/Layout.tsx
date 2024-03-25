@@ -95,8 +95,8 @@ export const Layout = () => {
                 <div className="flex flex-grow justify-center shrink-0">
                     {dynamicModeOn ? (
                         <>
-                            {/* <DynamicModeInfo />
-                            <LandsatInterestingPlaces /> */}
+                            <DynamicModeInfo />
+                            {/* <LandsatInterestingPlaces /> */}
                         </>
                     ) : (
                         <>

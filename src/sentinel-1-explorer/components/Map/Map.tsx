@@ -30,6 +30,7 @@ import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
+import { Sentinel1Layer } from '../Sentinel1Layer';
 
 export const Map = () => {
     return (
@@ -39,8 +40,8 @@ export const Map = () => {
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
                 index={1}
             >
-                {/* <LandsatLayer />
-                <MaskLayer /> */}
+                <Sentinel1Layer />
+                {/* <MaskLayer /> */}
                 {/* <ChangeLayer /> */}
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />

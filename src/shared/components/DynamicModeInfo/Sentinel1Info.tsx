@@ -13,20 +13,18 @@
  * limitations under the License.
  */
 
-import { APP_NAME } from '@shared/config';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import React from 'react';
-import LandsatInfo from './LandsatInfo';
-import { Sentinel1Info } from './Sentinel1Info';
 
-export const DynamicModeInfo = () => {
+export const Sentinel1Info = () => {
     return (
-        <div className="max-w-sm ml-4 2xl:ml-10">
-            <div className="text-center mb-3">
-                <span className="uppercase text-sm">Dynamic View</span>
-            </div>
-
-            {APP_NAME === 'landsat' && <LandsatInfo />}
-            {APP_NAME === 'sentinel1-explorer' && <Sentinel1Info />}
-        </div>
+        <>
+            <p className="text-sm opacity-80">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius
+                quidem obcaecati ea tempore ullam alias reprehenderit. Aperiam
+                reprehenderit, sapiente cupiditate possimus alias blanditiis ad
+                vel, accusamus non atque doloribus architecto!
+            </p>
+        </>
     );
 };

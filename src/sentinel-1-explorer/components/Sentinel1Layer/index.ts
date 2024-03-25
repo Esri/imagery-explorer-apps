@@ -13,20 +13,4 @@
  * limitations under the License.
  */
 
-import { APP_NAME } from '@shared/config';
-import React from 'react';
-import LandsatInfo from './LandsatInfo';
-import { Sentinel1Info } from './Sentinel1Info';
-
-export const DynamicModeInfo = () => {
-    return (
-        <div className="max-w-sm ml-4 2xl:ml-10">
-            <div className="text-center mb-3">
-                <span className="uppercase text-sm">Dynamic View</span>
-            </div>
-
-            {APP_NAME === 'landsat' && <LandsatInfo />}
-            {APP_NAME === 'sentinel1-explorer' && <Sentinel1Info />}
-        </div>
-    );
-};
+export { Sentinel1Layer } from './Sentinel1Layer';
