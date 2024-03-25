@@ -63,7 +63,7 @@ export const getMosaicRule = async (objectId: number): Promise<MosaicRule> => {
  *
  * @returns {IImageryLayer} - The Landsat-2 Imagery Layer.
  */
-export const useImageryLayer = ({
+export const useImageryLayerByObjectId = ({
     url,
     visible,
     rasterFunction,

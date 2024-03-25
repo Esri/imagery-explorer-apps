@@ -24,7 +24,7 @@ import {
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 // import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
-import { useImageryLayer } from '@shared/hooks/useImageLayer';
+import { useImageryLayerByObjectId } from '@shared/hooks/useImageLayer';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 
 type Props = {
@@ -83,7 +83,7 @@ export const Sentinel1Layer: FC<Props> = ({ mapView, groupLayer }: Props) => {
         return objectIdOfSelectedScene;
     };
 
-    const layer = useImageryLayer({
+    const layer = useImageryLayerByObjectId({
         url: SENTINEL_1_SERVICE_URL,
         visible: getVisibility(),
         rasterFunction: rasterFunctionName,
