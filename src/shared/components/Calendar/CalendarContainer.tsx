@@ -112,6 +112,10 @@ const CalendarContainer = () => {
     //  */
     // useUpdateAcquisitionYear();
 
+    const shouldShowCloudFilter = useMemo(() => {
+        return APP_NAME === 'landsat' || APP_NAME === 'landsat-surface-temp';
+    }, []);
+
     return (
         <div
             className={classNames('select-none', {
@@ -152,15 +156,18 @@ const CalendarContainer = () => {
 
                 {APP_NAME === 'landsat' && <LandsatMissionFilter />}
 
-                <CloudFilter
-                    cloudCoverage={cloudCoverThreshold}
-                    disabled={
-                        cloudCoverThreshold === undefined || isAnimationPlaying
-                    }
-                    onChange={(newValue) => {
-                        dispatch(cloudCoverChanged(newValue));
-                    }}
-                />
+                {shouldShowCloudFilter && (
+                    <CloudFilter
+                        cloudCoverage={cloudCoverThreshold}
+                        disabled={
+                            cloudCoverThreshold === undefined ||
+                            isAnimationPlaying
+                        }
+                        onChange={(newValue) => {
+                            dispatch(cloudCoverChanged(newValue));
+                        }}
+                    />
+                )}
             </div>
 
             <Calendar
