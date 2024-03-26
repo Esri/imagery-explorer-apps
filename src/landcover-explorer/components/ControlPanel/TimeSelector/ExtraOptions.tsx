@@ -17,6 +17,7 @@ import {
     AnimationSpeedControl,
     AnimationSpeedSlider,
 } from '@shared/components/AnimationControl/AnimationSpeedControl';
+import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 import {
     animationSpeedChanged,
     showDownloadAnimationPanelChanged,
@@ -74,8 +75,22 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
 }) => {
     const animationMode = useSelector(selectAnimationStatus);
 
+    const shouldShowSentinel2Layer = useSelector(
+        selectShouldShowSentinel2Layer
+    );
+
     if (animationMode !== null) {
         return null;
+    }
+
+    // no need to show save options if the Sentinel-2 Imagery Layer is on
+    // but we still want to add to a place holder component to prevent the TimeSlider from jumping up and down.
+    if (shouldShowSentinel2Layer) {
+        return (
+            <div className="h-[16px] w-full">
+                {/* <span className='text-xs'>Save options are only enabled for Land Cover layer</span> */}
+            </div>
+        );
     }
 
     return (
