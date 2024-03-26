@@ -27,8 +27,9 @@ import {
     selectMapMode,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import Dropdown from './Dropdown';
+// import Dropdown from './Dropdown';
 import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
+import { Dropdown, DropdownData } from '@shared/components/Dropdown';
 
 type Props = {
     shouldShowMonthPicker: boolean;
@@ -51,17 +52,17 @@ const TimeSelector4SwipeMode: FC<Props> = ({
         selectYearsForSwipeWidgetLayers
     );
 
-    const data4LeadingYearDropdown = years.map((year) => {
+    const data4LeadingYearDropdown: DropdownData[] = years.map((year) => {
         return {
             value: year.toString(),
-            active: year === year4LeadingLayer,
+            selected: year === year4LeadingLayer,
         };
     });
 
-    const data4TrailingYearDropdown = years.map((year) => {
+    const data4TrailingYearDropdown: DropdownData[] = years.map((year) => {
         return {
             value: year.toString(),
-            active: year === year4TrailingLayer,
+            selected: year === year4TrailingLayer,
         };
     });
 
