@@ -58,6 +58,23 @@ export const SENTINEL_1_SERVICE_URL =
         : SENTINEL_1_SERVICE_URL_PROD;
 
 /**
+ * Field Names Look-up table for Sentinel1RTC (ImageServer)
+ * @see https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer
+ */
+export const FIELD_NAMES = {
+    OBJECTID: 'objectid',
+    NAME: 'name',
+    CENTER_X: 'centerx',
+    CENTER_Y: 'centery',
+    POLARIZATION_TYPE: 'polarizationtype',
+    SENSOR: 'sensor',
+    ORBIT_DIRECTION: 'orbitdirection',
+    ACQUISITION_DATE: 'acquisitiondate',
+    ABS_ORBIT: 'absoluteorbit',
+    RELATIVE_ORBIT: 'relativeorbit',
+};
+
+/**
  * List of Raster Functions for the Sentinel-1 service
  */
 const SENTINEL1_RASTER_FUNCTIONS = [
