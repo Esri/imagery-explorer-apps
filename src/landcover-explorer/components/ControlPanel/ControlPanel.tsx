@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
 import LayerSelector from './LayerSelector/LayerSelectorContainer';
-import { TimeSelector } from './TimeSlider';
+import { TimeSelector } from './TimeSelector';
 import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 // import Tooltip from './Tooltip/TooltipContainer';
 // import ToggleButton from './ToggleButton/ToggleButtonContainer';
@@ -31,8 +31,8 @@ import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { ModeSelector } from './ModeSelector';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { TimeSliderWidgetContainer } from './TimeSlider/TimeSliderWidget';
-import { TimeSelectorHeader } from './TimeSlider/TimeSelectorHeader';
+import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
+import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
 
 const ControlPanel = () => {
     // const dispatch = useDispatch();
