@@ -168,3 +168,40 @@ type ImageryServiceTimeExtentData = {
     start: number;
     end: number;
 };
+
+export type Sentinel1Scene = {
+    objectId: number;
+    /**
+     * product name
+     * @example S1A_IW_GRDH_1SDV_20141003T040550_20141003T040619_002660_002F64_EC04
+     */
+    name: string;
+    /**
+     * name of the sensor
+     */
+    sensor: string;
+    /**
+     * orbit direction of the sentinel-1 imagery scene
+     */
+    orbitDirection: 'Ascending' | 'Descending';
+    /**
+     * single polarisation (HH or VV) or dual polarisation (HH+HV or VV+VH)
+     */
+    polarizationType: string;
+    /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * acquisitionDate in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * year when this scene was acquired
+     */
+    acquisitionYear: number;
+    /**
+     * month when this scene was acquired
+     */
+    acquisitionMonth: number;
+};
