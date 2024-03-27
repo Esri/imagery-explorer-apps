@@ -25,6 +25,7 @@ import ChangeCompareTool from './ChangeCompareTool/reducer';
 import Landsat from './Landsat/reducer';
 import SpectralSamplingTool from './SpectralSamplingTool/reducer';
 import LandcoverExplorer from './LandcoverExplorer/reducer';
+import Sentinel1 from './Sentinel1/reducer';
 
 const reducers = combineReducers({
     Map,
@@ -38,6 +39,7 @@ const reducers = combineReducers({
     ChangeCompareTool,
     SpectralSamplingTool,
     LandcoverExplorer,
+    Sentinel1,
 });
 
 export default reducers;

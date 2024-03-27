@@ -19,7 +19,7 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-// import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
+import { queryAvailableScenes } from '@shared/store/Sentinel1/thunks';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
@@ -51,7 +51,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
             return;
         }
 
-        // dispatch(queryAvailableScenes(acquisitionDateRange));
+        dispatch(queryAvailableScenes(acquisitionDateRange));
     }, [center, acquisitionDateRange, isAnimationPlaying]);
 
     return null;
