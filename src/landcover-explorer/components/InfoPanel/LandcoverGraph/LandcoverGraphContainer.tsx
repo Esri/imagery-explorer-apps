@@ -38,6 +38,21 @@ const LandcoverGraphContainer: FC<Props> = ({
 Props) => {
     // const years = getAvailableYears();
 
+    const containerMinWidth = useMemo(() => {
+        if (!chartData || !chartData.length) {
+            return 1600;
+        }
+
+        const groups = chartData.length;
+        const itemsPerGroup = chartData[0].data.length;
+        const minWidthPerItem = 32;
+
+        const minWidthPerGroup = itemsPerGroup * minWidthPerItem;
+        const spacesBetweenGroups = (groups - 1) * minWidthPerItem;
+
+        return groups * minWidthPerGroup + spacesBetweenGroups;
+    }, [chartData]);
+
     const customDomain4YScale = useMemo(() => {
         if (!chartData) {
             return [];
@@ -71,7 +86,7 @@ Props) => {
         <div
             className="relative w-full h-full overflow-x-auto"
             style={{
-                minWidth: 1600,
+                minWidth: containerMinWidth,
                 height: '50vh',
             }}
         >
