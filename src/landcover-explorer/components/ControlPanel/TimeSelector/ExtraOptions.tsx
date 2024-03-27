@@ -84,18 +84,18 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
         return null;
     }
 
-    // // no need to show save options if the Sentinel-2 Imagery Layer is on
-    // // but we still want to add to a place holder component to prevent the TimeSlider from jumping up and down.
-    // if (shouldShowSentinel2Layer) {
-    //     return null;
-    // }
+    // no need to show save options if the Sentinel-2 Imagery Layer is on
+    // but we still want to add to a place holder component to prevent the TimeSlider from jumping up and down.
+    if (shouldShowSentinel2Layer) {
+        return (
+            <div className="h-[16px] w-full">
+                {/* <span className='text-xs'>Save options are only enabled for Land Cover layer</span> */}
+            </div>
+        );
+    }
 
     return (
-        <div
-            className={classNames('flex items-center justify-around', {
-                'is-disabled': shouldShowSentinel2Layer,
-            })}
-        >
+        <div className={classNames('flex items-center justify-around')}>
             {/* <div className='cursor-pointer flex items-center'
                 onClick={donwloadButtonOnClick}
             >
