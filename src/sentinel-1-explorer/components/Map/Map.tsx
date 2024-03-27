@@ -31,6 +31,8 @@ import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/Cust
 import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
 import { Sentinel1Layer } from '../Sentinel1Layer';
+import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
+import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 
 export const Map = () => {
     return (
@@ -46,7 +48,7 @@ export const Map = () => {
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
             </GroupLayer>
-            {/* <SwipeWidget /> */}
+            <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_1_SERVICE_URL} />
             <AnimationLayer />
             <HillshadeLayer />
 
