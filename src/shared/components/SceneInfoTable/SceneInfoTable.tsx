@@ -14,6 +14,7 @@
  */
 
 import classNames from 'classnames';
+import { generateUID } from 'helper-toolkit-ts';
 import React, { FC } from 'react';
 
 /**
@@ -73,7 +74,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
                 {data.map((d: SceneInfoTableData) => {
                     return (
                         <SceneInfoRow
-                            key={d.name}
+                            key={generateUID()}
                             name={d.name}
                             value={d.value}
                         />
