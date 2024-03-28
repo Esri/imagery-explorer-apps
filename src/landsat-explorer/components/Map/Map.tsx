@@ -33,10 +33,21 @@ import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/Cust
 import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import { useDispatch } from 'react-redux';
+import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
+import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 
 const Map = () => {
+    const dispatch = useDispatch();
+
     return (
-        <MapViewContainer>
+        <MapViewContainer
+            mapOnClick={(point) => {
+                dispatch(updateQueryLocation4TrendTool(point));
+
+                dispatch(updateQueryLocation4SpectralProfileTool(point));
+            }}
+        >
             <GroupLayer
                 // this group layer should be added at index of one so that the
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
