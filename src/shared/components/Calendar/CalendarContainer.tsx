@@ -40,7 +40,7 @@ import {
     // acquisitionYearChanged,
     cloudCoverChanged,
 } from '@shared/store/ImageryScene/reducer';
-import { LandsatMissionFilter } from '../LandsatMissionFilter';
+// import { LandsatMissionFilter } from '../LandsatMissionFilter';
 import { APP_NAME } from '@shared/config';
 import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
@@ -158,7 +158,8 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
                     />
                 </div>
 
-                {APP_NAME === 'landsat' && <LandsatMissionFilter />}
+                {/* {APP_NAME === 'landsat' && <LandsatMissionFilter />} */}
+                {children}
 
                 {shouldShowCloudFilter && (
                     <CloudFilter
@@ -172,8 +173,6 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
                         }}
                     />
                 )}
-
-                {children}
             </div>
 
             <Calendar

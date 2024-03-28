@@ -42,6 +42,7 @@ import { appConfig } from '@shared/config';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
+import { LandsatMissionFilter } from '../LandsatMissionFilter';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -107,7 +108,9 @@ const Layout = () => {
                     ) : (
                         <>
                             <div className="ml-2 3xl:ml-0">
-                                <Calendar />
+                                <Calendar>
+                                    <LandsatMissionFilter />
+                                </Calendar>
                             </div>
 
                             {mode === 'analysis' && (
