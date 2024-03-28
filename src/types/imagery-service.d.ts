@@ -169,6 +169,8 @@ type ImageryServiceTimeExtentData = {
     end: number;
 };
 
+export type Sentinel1OrbitDirection = 'Ascending' | 'Descending';
+
 export type Sentinel1Scene = {
     objectId: number;
     /**
@@ -183,7 +185,7 @@ export type Sentinel1Scene = {
     /**
      * orbit direction of the sentinel-1 imagery scene
      */
-    orbitDirection: 'Ascending' | 'Descending';
+    orbitDirection: Sentinel1OrbitDirection;
     /**
      * single polarisation (HH or VV) or dual polarisation (HH+HV or VV+VH)
      */

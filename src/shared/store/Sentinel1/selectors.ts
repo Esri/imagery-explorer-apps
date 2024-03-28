@@ -20,3 +20,8 @@ export const selectAvailableScenesByObjectId = createSelector(
     (state: RootState) => state.Sentinel1.sentinel1Scenes.byObjectId,
     (byObjectId) => byObjectId
 );
+
+export const selectSentinel1OrbitDirection = createSelector(
+    (state: RootState) => state.Sentinel1.orbitDirection,
+    (orbitDirection) => orbitDirection
+);

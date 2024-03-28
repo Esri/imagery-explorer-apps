@@ -19,7 +19,10 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { Sentinel1Scene } from '@typing/imagery-service';
+import {
+    Sentinel1OrbitDirection,
+    Sentinel1Scene,
+} from '@typing/imagery-service';
 
 export type Sentinel1State = {
     /**
@@ -31,6 +34,7 @@ export type Sentinel1State = {
         };
         objectIds?: number[];
     };
+    orbitDirection: Sentinel1OrbitDirection;
 };
 
 export const initialSentinel1State: Sentinel1State = {
@@ -38,6 +42,7 @@ export const initialSentinel1State: Sentinel1State = {
         byObjectId: {},
         objectIds: [],
     },
+    orbitDirection: 'Descending',
 };
 
 const slice = createSlice({
@@ -66,11 +71,17 @@ const slice = createSlice({
                 byObjectId,
             };
         },
+        orbitDirectionChanged: (
+            state,
+            action: PayloadAction<Sentinel1OrbitDirection>
+        ) => {
+            state.orbitDirection = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { sentinel1ScenesUpdated } = slice.actions;
+export const { sentinel1ScenesUpdated, orbitDirectionChanged } = slice.actions;
 
 export default reducer;
