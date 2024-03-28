@@ -14,12 +14,10 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER } from '@shared/config';
+import { TIER, getServiceConfig } from '@shared/config';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
-import config from '../../../config.json';
 
-const serviceConfig = config.services['landsat-level-2']; //getServiceConfig('landsat-level-2');
-
+const serviceConfig = getServiceConfig('landsat-level-2');
 /**
  * Landsat 8 and 9 multispectral and multitemporal atmospherically corrected imagery with on-the-fly renderings and indices for visualization and analysis.
  * @see https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5

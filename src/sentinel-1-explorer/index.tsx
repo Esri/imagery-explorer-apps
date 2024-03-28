@@ -26,6 +26,7 @@ import { AboutSentinel1Explorer } from './components/About';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import { getTimeExtentOfSentinel1Service } from '@shared/services/sentinel-1/getTimeExtent';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
+import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -38,7 +39,10 @@ import AppContextProvider from '@shared/contexts/AppContextProvider';
 
         root.render(
             <ReduxProvider store={store}>
-                <AppContextProvider timeExtent={timeExtent}>
+                <AppContextProvider
+                    timeExtent={timeExtent}
+                    rasterFunctionInfo={SENTINEL1_RASTER_FUNCTION_INFOS}
+                >
                     <ErrorBoundary>
                         <Map />
                         <Layout />
