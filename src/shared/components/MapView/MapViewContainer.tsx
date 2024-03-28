@@ -36,7 +36,7 @@ import { centerChanged, zoomChanged } from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
 // import { queryLocation4TrendToolChanged } from '@shared/store/TrendTool/reducer';
-import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
+// import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { Point } from '@arcgis/core/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
@@ -48,14 +48,20 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 // import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { MapCenterIndicator } from './MapCenterIndicator';
-import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
+// import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 import { appConfig } from '@shared/config';
 
 type Props = {
+    /**
+     * emits when user click on the map
+     * @param point map point where the user has clicked
+     * @returns
+     */
+    mapOnClick?: (point: Point) => void;
     children?: React.ReactNode;
 };
 
-const MapViewContainer: FC<Props> = ({ children }) => {
+const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
     const dispatch = useDispatch();
 
     const center = useSelector(selectMapCenter);
@@ -144,13 +150,9 @@ const MapViewContainer: FC<Props> = ({ children }) => {
                             },
                         } as Point;
 
-                        dispatch(updateQueryLocation4TrendTool(queryLocation));
-
-                        dispatch(
-                            updateQueryLocation4SpectralProfileTool(
-                                queryLocation
-                            )
-                        );
+                        if (mapOnClick) {
+                            mapOnClick(queryLocation);
+                        }
                     }}
                     mapViewUpdatingOnChange={setIsUpdating}
                 />
