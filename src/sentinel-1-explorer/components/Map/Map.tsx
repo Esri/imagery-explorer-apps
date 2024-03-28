@@ -49,7 +49,7 @@ export const Map = () => {
                 <MapPopUpAnchorPoint />
             </GroupLayer>
             <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_1_SERVICE_URL} />
-            <AnimationLayer />
+            <AnimationLayer imageryServiceUrl={SENTINEL_1_SERVICE_URL} />
             <HillshadeLayer />
 
             <MapActionButtonsGroup>
