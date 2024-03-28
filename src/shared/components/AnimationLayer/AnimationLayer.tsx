@@ -40,10 +40,17 @@ import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-para
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 
 type Props = {
+    /**
+     * The URL of the Imagery Service that will be used to provide image for theframes of Animation Layer
+     */
+    imageryServiceUrl: string;
     mapView?: MapView;
 };
 
-export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
+export const AnimationLayer: FC<Props> = ({
+    imageryServiceUrl,
+    mapView,
+}: Props) => {
     const dispatch = useDispatch();
 
     const mediaLayerRef = useRef<MediaLayer>();
@@ -70,6 +77,7 @@ export const AnimationLayer: FC<Props> = ({ mapView }: Props) => {
      * Array of Imagery Elements for each scene in `sortedQueryParams4ScenesInAnimationMode`
      */
     const mediaLayerElements = useMediaLayerImageElement({
+        imageryServiceUrl,
         mapView,
         animationStatus,
         QueryParams4ImageryScenes: sortedQueryParams4ScenesInAnimationMode,

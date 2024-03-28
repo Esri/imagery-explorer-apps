@@ -32,6 +32,7 @@ import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 
 const Map = () => {
     return (
@@ -48,7 +49,7 @@ const Map = () => {
                 <MapPopUpAnchorPoint />
             </GroupLayer>
             <SwipeWidget />
-            <AnimationLayer />
+            <AnimationLayer imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL} />
             <HillshadeLayer />
 
             <MapActionButtonsGroup>
