@@ -37,6 +37,7 @@ import { useQueryAvailableSentinel1Scenes } from '../../hooks/useQueryAvailableS
 import { SceneInfo } from '../SceneInfo';
 import { Sentinel1FunctionSelector } from '../RasterFunctionSelector';
 import { OrbitDirectionFilter } from '../OrbitDirectionFilter';
+import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -45,8 +46,7 @@ export const Layout = () => {
 
     const dynamicModeOn = mode === 'dynamic';
 
-    const shouldShowSecondaryControls =
-        mode === 'swipe' || mode === 'animate' || mode === 'analysis';
+    const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
     /**
      * This custom hook gets invoked whenever the acquisition year, map center, or other filters are
@@ -81,8 +81,8 @@ export const Layout = () => {
                     {shouldShowSecondaryControls && (
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
-                            {/* <AnimationControl />
-                            <AnalysisToolSelector /> */}
+                            <AnimationControl />
+                            {/* <AnalysisToolSelector /> */}
                         </ContainerOfSecondaryControls>
                     )}
 
