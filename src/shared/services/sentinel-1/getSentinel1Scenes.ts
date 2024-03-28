@@ -64,6 +64,8 @@ const {
     SENSOR,
     ORBIT_DIRECTION,
     POLARIZATION_TYPE,
+    ABSOLUTE_ORBIT,
+    RELATIVE_ORBIT,
 } = FIELD_NAMES;
 
 /**
@@ -103,6 +105,8 @@ export const getFormattedLandsatScenes = (
             sensor: attributes[SENSOR],
             orbitDirection: attributes[ORBIT_DIRECTION],
             polarizationType: attributes[POLARIZATION_TYPE],
+            absoluteOrbit: attributes[ABSOLUTE_ORBIT],
+            relativeOrbit: attributes[RELATIVE_ORBIT],
             acquisitionDate,
             formattedAcquisitionDate,
             acquisitionYear,

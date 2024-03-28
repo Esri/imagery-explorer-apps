@@ -188,6 +188,10 @@ export type Sentinel1Scene = {
      * single polarisation (HH or VV) or dual polarisation (HH+HV or VV+VH)
      */
     polarizationType: string;
+
+    absoluteOrbit: string;
+
+    relativeOrbit: string;
     /**
      * acquisitionDate as a string in ISO format (YYYY-MM-DD).
      */

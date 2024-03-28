@@ -40,6 +40,8 @@ export const SceneInfoContainer = () => {
             sensor,
             orbitDirection,
             polarizationType,
+            absoluteOrbit,
+            relativeOrbit,
         } = data;
 
         return [
@@ -73,10 +75,14 @@ export const SceneInfoContainer = () => {
                 name: 'Polarization',
                 value: polarizationType,
             },
-            // {
-            //     name: 'Cloud Cover',
-            //     value: `${formattedCloudCover}%`,
-            // },
+            {
+                name: 'Absolute Orbit',
+                value: absoluteOrbit,
+            },
+            {
+                name: 'Relative Orbit',
+                value: relativeOrbit,
+            },
         ];
     }, [data]);
 

@@ -70,7 +70,7 @@ export const FIELD_NAMES = {
     SENSOR: 'sensor',
     ORBIT_DIRECTION: 'orbitdirection',
     ACQUISITION_DATE: 'acquisitiondate',
-    ABS_ORBIT: 'absoluteorbit',
+    ABSOLUTE_ORBIT: 'absoluteorbit',
     RELATIVE_ORBIT: 'relativeorbit',
 };
 
