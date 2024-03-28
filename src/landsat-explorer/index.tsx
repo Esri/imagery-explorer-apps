@@ -26,6 +26,7 @@ import { AboutLandsatExplorer } from './components/About';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
+import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -38,7 +39,10 @@ import AppContextProvider from '@shared/contexts/AppContextProvider';
 
         root.render(
             <ReduxProvider store={store}>
-                <AppContextProvider timeExtent={timeExtent}>
+                <AppContextProvider
+                    timeExtent={timeExtent}
+                    rasterFunctionInfo={LANDSAT_RASTER_FUNCTION_INFOS}
+                >
                     <ErrorBoundary>
                         <Map />
                         <Layout />

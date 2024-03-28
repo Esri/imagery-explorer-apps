@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { AnimationFrameInfo } from './AnimationFramesList';
 import { useSelector } from 'react-redux';
 import {
@@ -21,12 +21,15 @@ import {
     selectIdOfSelectedItemInListOfQueryParams,
 } from '@shared/store/ImageryScene/selectors';
 import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
-import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
-import { DATE_FORMAT } from '@shared/constants/UI';
-import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
+// import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
+// import { DATE_FORMAT } from '@shared/constants/UI';
+// import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { AppContext } from '@shared/contexts/AppContextProvider';
 
 export const useAnimationFramesInfo = () => {
+    const { rasterFunctionLabelMap } = useContext(AppContext);
+
     const selectedAnimationFrameId = useSelector(
         selectIdOfSelectedItemInListOfQueryParams
     );
@@ -46,14 +49,16 @@ export const useAnimationFramesInfo = () => {
         ).map((d) => {
             const { uniqueId, acquisitionDate, rasterFunctionName } = d;
 
+            const rasterFunctionLabel =
+                rasterFunctionLabelMap.get(rasterFunctionName) ||
+                rasterFunctionName;
+
             return {
                 frameId: uniqueId,
                 acquisitionDateLabel: acquisitionDate
                     ? formatFormattedDateStrInUTCTimeZone(acquisitionDate)
                     : 'Select a date',
-                rasterFunctionName: acquisitionDate
-                    ? getRasterFunctionLabelText(rasterFunctionName)
-                    : '',
+                rasterFunctionName: acquisitionDate ? rasterFunctionLabel : '',
                 selected: uniqueId === selectedAnimationFrameId,
             } as AnimationFrameInfo;
         });
