@@ -14,13 +14,17 @@
  */
 
 import { LANDSAT_RASTER_FUNCTION_INFOS } from '../landsat-level-2/config';
+import { SENTINEL1_RASTER_FUNCTION_INFOS } from '../sentinel-1/config';
 
 let rasterFunctionLabelMap: Map<string, string> = null;
 
 const initRasterFunctionLabelMap = () => {
     rasterFunctionLabelMap = new Map();
 
-    const infos = [...LANDSAT_RASTER_FUNCTION_INFOS];
+    const infos = [
+        ...LANDSAT_RASTER_FUNCTION_INFOS,
+        ...SENTINEL1_RASTER_FUNCTION_INFOS,
+    ];
 
     for (const { name, label } of infos) {
         rasterFunctionLabelMap.set(name, label);
