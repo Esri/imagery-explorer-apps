@@ -17,6 +17,7 @@
 import { TIER, getServiceConfig } from '@shared/config';
 
 const serviceConfig = getServiceConfig('sentinel-1');
+console.log('sentinel-1 service config', serviceConfig);
 
 /**
  * Sentinel-1 RTC 10-meter C-band synthetic aperture radar (SAR) imagery in single and dual V-polarization with on-the-fly functions for visualization and unit conversions for analysis.
