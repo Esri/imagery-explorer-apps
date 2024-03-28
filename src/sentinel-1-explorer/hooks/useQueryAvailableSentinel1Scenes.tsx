@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { queryAvailableScenes } from '@shared/store/Sentinel1/thunks';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
 /**
@@ -42,6 +43,8 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
      */
     const center = useSelector(selectMapCenter);
 
+    const orbitDirection = useSelector(selectSentinel1OrbitDirection);
+
     useEffect(() => {
         if (!center || !acquisitionDateRange) {
             return;
@@ -51,8 +54,8 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
             return;
         }
 
-        dispatch(queryAvailableScenes(acquisitionDateRange));
-    }, [center, acquisitionDateRange, isAnimationPlaying]);
+        dispatch(queryAvailableScenes(acquisitionDateRange, orbitDirection));
+    }, [center, acquisitionDateRange, isAnimationPlaying, orbitDirection]);
 
     return null;
 };

@@ -17,7 +17,10 @@ import { batch } from 'react-redux';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import { sentinel1ScenesUpdated } from './reducer';
-import { Sentinel1Scene } from '@typing/imagery-service';
+import {
+    Sentinel1OrbitDirection,
+    Sentinel1Scene,
+} from '@typing/imagery-service';
 import {
     ImageryScene,
     availableImageryScenesUpdated,
@@ -35,7 +38,10 @@ let abortController: AbortController = null;
  * @returns
  */
 export const queryAvailableScenes =
-    (acquisitionDateRange: DateRange) =>
+    (
+        acquisitionDateRange: DateRange,
+        orbitDirection: Sentinel1OrbitDirection
+    ) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         if (!acquisitionDateRange) {
             return;
@@ -56,6 +62,7 @@ export const queryAvailableScenes =
             // get scenes that were acquired within the acquisition year
             const scenes = await getSentinel1Scenes({
                 acquisitionDateRange,
+                orbitDirection,
                 mapPoint: center,
                 abortController,
             });

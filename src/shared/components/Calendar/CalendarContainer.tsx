@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import Calendar, { FormattedImageryScene } from './Calendar';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useSelector } from 'react-redux';
@@ -54,7 +54,11 @@ import { useAcquisitionYear } from './useAcquisitionYear';
 import { batch } from 'react-redux';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
-const CalendarContainer = () => {
+type Props = {
+    children?: React.ReactNode;
+};
+
+const CalendarContainer: FC<Props> = ({ children }: Props) => {
     const dispatch = useDispatch();
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
@@ -168,6 +172,8 @@ const CalendarContainer = () => {
                         }}
                     />
                 )}
+
+                {children}
             </div>
 
             <Calendar

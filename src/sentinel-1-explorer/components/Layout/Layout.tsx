@@ -36,6 +36,7 @@ import { appConfig } from '@shared/config';
 import { useQueryAvailableSentinel1Scenes } from '../../hooks/useQueryAvailableSentinel1Scenes';
 import { SceneInfo } from '../SceneInfo';
 import { Sentinel1FunctionSelector } from '../RasterFunctionSelector';
+import { OrbitDirectionFilter } from '../OrbitDirectionFilter';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -101,7 +102,9 @@ export const Layout = () => {
                     ) : (
                         <>
                             <div className="ml-2 3xl:ml-0">
-                                <Calendar />
+                                <Calendar>
+                                    <OrbitDirectionFilter />
+                                </Calendar>
                             </div>
 
                             {/* {mode === 'analysis' && (

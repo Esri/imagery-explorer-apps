@@ -17,7 +17,10 @@ import { FIELD_NAMES } from './config';
 import { SENTINEL_1_SERVICE_URL } from './config';
 import { IExtent, IFeature } from '@esri/arcgis-rest-feature-service';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
-import { Sentinel1Scene } from '@typing/imagery-service';
+import {
+    Sentinel1OrbitDirection,
+    Sentinel1Scene,
+} from '@typing/imagery-service';
 import { DateRange } from '@typing/shared';
 import { Point } from '@arcgis/core/geometry';
 import { getFeatureByObjectId } from '../helpers/getFeatureById';
@@ -29,6 +32,10 @@ type GetSentinel1ScenesParams = {
      * longitude and latitude (e.g. [-105, 40])
      */
     mapPoint: number[];
+    /**
+     * orbit direction
+     */
+    orbitDirection: Sentinel1OrbitDirection;
     /**
      * acquisition date range.
      *
@@ -129,6 +136,7 @@ export const getSentinel1Scenes = async ({
     mapPoint,
     // acquisitionYear,
     acquisitionDateRange,
+    orbitDirection,
     acquisitionMonth,
     acquisitionDate,
     abortController,
@@ -149,9 +157,9 @@ export const getSentinel1Scenes = async ({
         );
     }
 
-    // if (acquisitionMonth) {
-    //     whereClauses.push(`(${MONTH} = ${acquisitionMonth})`);
-    // }
+    if (ORBIT_DIRECTION) {
+        whereClauses.push(`(${ORBIT_DIRECTION} = '${orbitDirection}')`);
+    }
 
     const [longitude, latitude] = mapPoint;
 
