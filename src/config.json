@@ -43,10 +43,6 @@
         "landsat-level-2": {
             "development": "https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer",
             "production": "https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer"
-        },
-        "sentinel-1": {
-            "development": "https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer",
-            "production": "https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer"
         }
     }
 }

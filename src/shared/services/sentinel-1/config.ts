@@ -14,10 +14,20 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER, getServiceConfig } from '@shared/config';
+import {
+    TIER,
+    // getServiceConfig
+} from '@shared/config';
 
-const serviceConfig = getServiceConfig('sentinel-1');
-console.log('sentinel-1 service config', serviceConfig);
+// const serviceConfig = getServiceConfig('sentinel-1');
+// console.log('sentinel-1 service config', serviceConfig);
+
+const serviceUrls = {
+    development:
+        'https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer',
+    production:
+        'https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer',
+};
 
 /**
  * Sentinel-1 RTC 10-meter C-band synthetic aperture radar (SAR) imagery in single and dual V-polarization with on-the-fly functions for visualization and unit conversions for analysis.
@@ -41,13 +51,13 @@ const SENTINEL_1_ORIGINAL_SERVICE_URL =
  * Service URL to be used in PROD enviroment
  */
 export const SENTINEL_1_SERVICE_URL_PROD =
-    serviceConfig?.production || SENTINEL_1_ORIGINAL_SERVICE_URL;
+    serviceUrls.production || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
 /**
  * Service URL to be used in DEV enviroment
  */
 export const SENTINEL_1_SERVICE_URL_DEV =
-    serviceConfig?.development || SENTINEL_1_ORIGINAL_SERVICE_URL;
+    serviceUrls.development || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service

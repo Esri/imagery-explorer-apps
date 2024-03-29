@@ -57,11 +57,11 @@ export const TIER =
         ? 'production'
         : 'development';
 
-/**
- * Get imagery service config by name
- * @param serviceName
- * @returns
- */
-export const getServiceConfig = (serviceName: ServiceName) => {
-    return config.services[serviceName];
-};
+// /**
+//  * Get imagery service config by name
+//  * @param serviceName
+//  * @returns
+//  */
+// export const getServiceConfig = (serviceName: ServiceName) => {
+//     return config.services[serviceName];
+// };
