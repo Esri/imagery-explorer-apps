@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import Calendar, { FormattedImageryScene } from './Calendar';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ import {
     // acquisitionYearChanged,
     cloudCoverChanged,
 } from '@shared/store/ImageryScene/reducer';
-import { LandsatMissionFilter } from '../LandsatMissionFilter';
+// import { LandsatMissionFilter } from '../LandsatMissionFilter';
 import { APP_NAME } from '@shared/config';
 import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
@@ -54,7 +54,11 @@ import { useAcquisitionYear } from './useAcquisitionYear';
 import { batch } from 'react-redux';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
-const CalendarContainer = () => {
+type Props = {
+    children?: React.ReactNode;
+};
+
+const CalendarContainer: FC<Props> = ({ children }: Props) => {
     const dispatch = useDispatch();
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
@@ -112,6 +116,10 @@ const CalendarContainer = () => {
     //  */
     // useUpdateAcquisitionYear();
 
+    const shouldShowCloudFilter = useMemo(() => {
+        return APP_NAME === 'landsat' || APP_NAME === 'landsat-surface-temp';
+    }, []);
+
     return (
         <div
             className={classNames('select-none', {
@@ -150,17 +158,21 @@ const CalendarContainer = () => {
                     />
                 </div>
 
-                {APP_NAME === 'landsat' && <LandsatMissionFilter />}
+                {/* {APP_NAME === 'landsat' && <LandsatMissionFilter />} */}
+                {children}
 
-                <CloudFilter
-                    cloudCoverage={cloudCoverThreshold}
-                    disabled={
-                        cloudCoverThreshold === undefined || isAnimationPlaying
-                    }
-                    onChange={(newValue) => {
-                        dispatch(cloudCoverChanged(newValue));
-                    }}
-                />
+                {shouldShowCloudFilter && (
+                    <CloudFilter
+                        cloudCoverage={cloudCoverThreshold}
+                        disabled={
+                            cloudCoverThreshold === undefined ||
+                            isAnimationPlaying
+                        }
+                        onChange={(newValue) => {
+                            dispatch(cloudCoverChanged(newValue));
+                        }}
+                    />
+                )}
             </div>
 
             <Calendar

@@ -13,10 +13,10 @@
         "production": {
             "plugins": [
                 [
-                    "babel-plugin-jsx-remove-data-test-id",
-                    {
-                        "attributes": ["data-test-id", "data-testid", "data-test-attr"]
-                    }
+                    // "babel-plugin-jsx-remove-data-test-id",
+                    // {
+                    //     "attributes": ["data-test-id", "data-testid", "data-test-attr"]
+                    // }
                 ]
             ]
         }

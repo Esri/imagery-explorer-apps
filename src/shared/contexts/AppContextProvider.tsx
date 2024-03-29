@@ -13,26 +13,58 @@
  * limitations under the License.
  */
 
-import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
+import {
+    ImageryServiceTimeExtentData,
+    RasterFunctionInfo,
+} from '@typing/imagery-service';
 import React, { useState, createContext, useEffect } from 'react';
+
+type RrasterFunctionLabelMap = Map<string, string>;
 
 type AppContextValue = {
     timeExtent: ImageryServiceTimeExtentData;
+    /**
+     * Map object that can be used to get the label text of a raster function by it's name
+     */
+    rasterFunctionLabelMap: RrasterFunctionLabelMap;
 };
 
 type AppContextProviderProps = {
+    /**
+     * time extent of the imagery service
+     */
     timeExtent: ImageryServiceTimeExtentData;
+    /**
+     * raster functions of the imagert service
+     */
+    rasterFunctionInfo: RasterFunctionInfo[];
     children?: React.ReactNode;
 };
 
 export const AppContext = createContext<AppContextValue>(null);
 
+const getRasterFunctionLabelMap = (
+    rasterFunctionInfo: RasterFunctionInfo[]
+) => {
+    const rasterFunctionLabelMap = new Map();
+
+    // const infos = [...LANDSAT_RASTER_FUNCTION_INFOS];
+
+    for (const { name, label } of rasterFunctionInfo) {
+        rasterFunctionLabelMap.set(name, label);
+    }
+
+    return rasterFunctionLabelMap;
+};
+
 const AppContextProvider: React.FC<AppContextProviderProps> = ({
     timeExtent,
+    rasterFunctionInfo,
     children,
 }: AppContextProviderProps) => {
     const [appContextValue, setAppContextValue] = useState<AppContextValue>({
         timeExtent,
+        rasterFunctionLabelMap: getRasterFunctionLabelMap(rasterFunctionInfo),
     });
 
     // const init = async () => {
