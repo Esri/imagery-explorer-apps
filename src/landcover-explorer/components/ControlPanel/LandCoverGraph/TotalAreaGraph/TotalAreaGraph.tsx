@@ -42,6 +42,16 @@ const TotalAreaGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
             );
         }
 
+        if (!data.length) {
+            return (
+                <div className="w-full text-center">
+                    <p className="text-sm opacity-50 mt-12">
+                        Failed to fetch Land Cover data.
+                    </p>
+                </div>
+            );
+        }
+
         return (
             // <BarChart
             //     data4Bars={data}
@@ -50,24 +60,28 @@ const TotalAreaGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
             //     showXAxisLine={true}
             //     // itemOnHover={itemOnHover}
             // />
-
-            <BarChartBasic
-                data={data}
-                showStickyLabelText={true}
-                leftAxisOptions={{
-                    shouldHide: true,
-                }}
-                bottomAxisOptions={{
-                    shouldRotateTextLabels: true,
-                }}
-                innerPadding={0.4}
-                margin={{
-                    top: 35,
-                    right: 10,
-                    bottom: 50,
-                    left: 20,
-                }}
-            />
+            <div
+                className="relative w-full h-full"
+                data-testid="total-area-graph"
+            >
+                <BarChartBasic
+                    data={data}
+                    showStickyLabelText={true}
+                    leftAxisOptions={{
+                        shouldHide: true,
+                    }}
+                    bottomAxisOptions={{
+                        shouldRotateTextLabels: true,
+                    }}
+                    innerPadding={0.4}
+                    margin={{
+                        top: 35,
+                        right: 10,
+                        bottom: 50,
+                        left: 20,
+                    }}
+                />
+            </div>
         );
     };
 
