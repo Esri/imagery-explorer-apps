@@ -15,14 +15,14 @@
 
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import {
-    SENTINEL_2_10M_LAND_COVER_ITEM_URL,
-    SENTINEL_2_ITEM_URL,
-} from '@landcover-explorer/constants/map';
-import { THEME_COLOR_LIGHT_BLUE } from '@landcover-explorer/constants/style';
-import DownloadIcon from './DownloadIcon';
-import OpenIcon from './OpenIcon';
-import SaveWebMapIcon from './SaveWebMapIcon';
+// import {
+//     SENTINEL_2_10M_LAND_COVER_ITEM_URL,
+//     SENTINEL_2_ITEM_URL,
+// } from '@landcover-explorer/constants/map';
+// import { THEME_COLOR_LIGHT_BLUE } from '@landcover-explorer/constants/style';
+// import DownloadIcon from './DownloadIcon';
+// import OpenIcon from './OpenIcon';
+// import SaveWebMapIcon from './SaveWebMapIcon';
 import { Button } from '@shared/components/Button';
 
 type LayerSelectorButtonProps = {
@@ -34,37 +34,37 @@ type LayerSelectorButtonProps = {
     children?: React.ReactNode;
 };
 
-const BUTTON_CONATINER_CLASSNAMES = 'relative flex-grow mb-3'; //'my-3';
+// const BUTTON_CONATINER_CLASSNAMES = 'relative flex-grow mb-3'; //'my-3';
 
-const ICONS_CONATINER_CLASSNAMES = 'mt-2 flex items-center justify-end';
+// const ICONS_CONATINER_CLASSNAMES = 'mt-2 flex items-center justify-end';
 
-const LayerSelectorButton: FC<LayerSelectorButtonProps> = ({
-    active,
-    onClickHandler,
-    children,
-}: LayerSelectorButtonProps) => {
-    return (
-        <div
-            className={classNames(
-                'p-2 px-4 border w-36 shrink-0 text-sm md:text-base border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
-                {
-                    'bg-custom-light-blue': active,
-                    'text-custom-background': active,
-                    'bg-custom-background': !active,
-                    'text-custom-light-blue': !active,
-                }
-            )}
-            style={{
-                filter: active
-                    ? `drop-shadow(1px 1px 4px rgba(191,238,255, .5))`
-                    : 'none',
-            }}
-            onClick={onClickHandler}
-        >
-            {children}
-        </div>
-    );
-};
+// const LayerSelectorButton: FC<LayerSelectorButtonProps> = ({
+//     active,
+//     onClickHandler,
+//     children,
+// }: LayerSelectorButtonProps) => {
+//     return (
+//         <div
+//             className={classNames(
+//                 'p-2 px-4 border w-36 shrink-0 text-sm md:text-base border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center',
+//                 {
+//                     'bg-custom-light-blue': active,
+//                     'text-custom-background': active,
+//                     'bg-custom-background': !active,
+//                     'text-custom-light-blue': !active,
+//                 }
+//             )}
+//             style={{
+//                 filter: active
+//                     ? `drop-shadow(1px 1px 4px rgba(191,238,255, .5))`
+//                     : 'none',
+//             }}
+//             onClick={onClickHandler}
+//         >
+//             {children}
+//         </div>
+//     );
+// };
 
 type Props = {
     shouldShowSentinel2Layer: boolean;

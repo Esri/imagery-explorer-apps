@@ -22,8 +22,8 @@ import { selectMapMode } from '@shared/store/LandcoverExplorer/selectors';
 import { saveMapModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { Button } from '@shared/components/Button';
 
-const BTN_CLASSNAMES =
-    'p-1 mx-2 cursor-pointer uppercase flex items-center border-b';
+// const BTN_CLASSNAMES =
+//     'p-1 mx-2 cursor-pointer uppercase flex items-center border-b';
 
 type Props = {
     disabled?: boolean;
