@@ -214,7 +214,14 @@ module.exports =  (env, options)=> {
                     }
                 }), 
                 new CssMinimizerPlugin()
-            ]
+            ],
+            /**
+             * Encountered the `Uncaught ReferenceError: x is not defined` error during the production build. 
+             * One suggestion that we found is disabling the `optimization.innerGraph` option is the best way to prevent this issue.
+             * 
+             * @see https://img.ly/docs/pesdk/web/faq/webpack_reference_error/
+             */
+            innerGraph: false,
         },
     }
 
