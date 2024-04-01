@@ -19,8 +19,8 @@ import {
     SENTINEL_2_10M_LAND_COVER_ITEM_ID,
     WEB_MAP_ID,
 } from '@landcover-explorer/constants/map';
-import { getToken } from '@landcover-explorer/utils/esriOAuth';
-import { getSignedInUser } from '@landcover-explorer/utils/esriOAuth';
+import { getToken } from '@shared/utils/esri-oauth';
+import { getSignedInUser } from '@shared/utils/esri-oauth';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 // import { MapExtent } from '@landcover-explorer/store/LandcoverExplorer/reducer';
