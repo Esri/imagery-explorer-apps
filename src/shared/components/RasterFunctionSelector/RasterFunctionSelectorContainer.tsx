@@ -30,12 +30,19 @@ import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/se
 
 type Props = {
     /**
+     * tooltip text that will be displayed when user hovers the info icon next to the header
+     */
+    headerTooltip: string;
+    /**
      * list of raster functions of the imagery service
      */
     data: RasterFunctionInfo[];
 };
 
-export const RasterFunctionSelectorContainer: FC<Props> = ({ data }) => {
+export const RasterFunctionSelectorContainer: FC<Props> = ({
+    headerTooltip,
+    data,
+}) => {
     const dispatch = useDispatch();
 
     const mode = useSelector(selectAppMode);
@@ -85,6 +92,7 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({ data }) => {
 
     return (
         <RasterFunctionSelector
+            headerTooltip={headerTooltip}
             rasterFunctionInfo={data}
             nameOfSelectedRasterFunction={rasterFunctionName}
             disabled={shouldDisable()}
