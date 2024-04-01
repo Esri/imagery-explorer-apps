@@ -20,5 +20,10 @@ import { useLandsatRasterFunctions } from './useLandsatRasterFunctions';
 export const RasterFunctionSelectorContainer = () => {
     const data = useLandsatRasterFunctions();
 
-    return <RasterFunctionSelector data={data} />;
+    return (
+        <RasterFunctionSelector
+            headerTooltip={`Landsat sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.`}
+            data={data}
+        />
+    );
 };
