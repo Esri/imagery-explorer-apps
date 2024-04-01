@@ -20,5 +20,12 @@ import { useSentinel1RasterFunctions } from './useSentinel1RasterFunctions';
 export const RasterFunctionSelectorContainer = () => {
     const data = useSentinel1RasterFunctions();
 
-    return <RasterFunctionSelector data={data} />;
+    return (
+        <RasterFunctionSelector
+            headerTooltip={
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lobortis nibh lacus, eleifend tincidunt sapien vestibulum a. Duis lacinia ante mollis mauris ornare, ut semper tortor interdum. Phasellus venenatis sit amet sem ornare semper.'
+            }
+            data={data}
+        />
+    );
 };
