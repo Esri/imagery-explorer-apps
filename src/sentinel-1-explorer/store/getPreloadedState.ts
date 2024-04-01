@@ -109,7 +109,8 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         mode = 'dynamic';
     }
 
-    const defaultRasterFunction: Sentinel1FunctionName = 'Sentinel-1 RGB dB';
+    const defaultRasterFunction: Sentinel1FunctionName =
+        'Sentinel-1 RGB dB DRA';
 
     // Attempt to extract query parameters from the URL hash.
     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,

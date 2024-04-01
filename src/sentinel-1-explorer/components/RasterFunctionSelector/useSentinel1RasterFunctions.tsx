@@ -25,7 +25,6 @@ import PlaceholderThumbnail from './thumbnails/placeholder.jpg';
 
 const Sentinel1RendererThumbnailByName: Record<Sentinel1FunctionName, string> =
     {
-        'Sentinel-1 RGB dB': PlaceholderThumbnail,
         'Sentinel-1 RGB dB DRA': PlaceholderThumbnail,
         'Sentinel-1 RTC VH dB with DRA': PlaceholderThumbnail,
         'Sentinel-1 RTC VV dB with DRA': PlaceholderThumbnail,
@@ -33,7 +32,6 @@ const Sentinel1RendererThumbnailByName: Record<Sentinel1FunctionName, string> =
     };
 
 const Sentinel1RendererLegendByName: Record<Sentinel1FunctionName, string> = {
-    'Sentinel-1 RGB dB': null,
     'Sentinel-1 RGB dB DRA': null,
     'Sentinel-1 RTC VH dB with DRA': null,
     'Sentinel-1 RTC VV dB with DRA': null,

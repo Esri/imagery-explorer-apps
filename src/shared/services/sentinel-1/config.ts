@@ -87,7 +87,7 @@ export const FIELD_NAMES = {
  */
 const SENTINEL1_RASTER_FUNCTIONS = [
     'Sentinel-1 RGB dB DRA',
-    'Sentinel-1 RGB dB',
+    // 'Sentinel-1 RGB dB',
     'Sentinel-1 RTC VV dB with DRA',
     'Sentinel-1 RTC VH dB with DRA',
 ] as const;
@@ -108,12 +108,6 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         description:
             'RGB color composite of VV,VH,VV/VH in dB scale with a dynamic stretch applied for visualization only',
         label: 'RGB dB DRA',
-    },
-    {
-        name: 'Sentinel-1 RGB dB',
-        description:
-            'RGB color composite of VV,VH,VV/VH in dB scale for visualization and some computational analysis',
-        label: 'RGB dB',
     },
     {
         name: 'Sentinel-1 RTC VV dB with DRA',
