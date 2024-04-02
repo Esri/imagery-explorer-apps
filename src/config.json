@@ -45,8 +45,8 @@
             "production": "https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer"
         },
         "sentinel-1": {
-            "development": "https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer",
-            "production": "https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer"
+            "development": "https://utility.arcgis.com/usrsvcs/servers/ae20c269388b4ea3acac60b9bf2a319f/rest/services/Sentinel1RTC/ImageServer",
+            "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
         }
     }
 }
