@@ -83,11 +83,10 @@ const LandCoverGraphContainer = () => {
     return (
         <div
             className={classNames(
-                'h-40 text-center mx-6 my-4 md:my-0 flex-grow',
-                {
-                    'md:w-64': isAnimationControlVisible,
-                    'md:w-96': isAnimationControlVisible === false,
-                }
+                'text-center mx-6 w-auto 2xl:w-96',
+                'pb-8 md:pb-0' // in mobile view, we need to add some padding space at the bottom because this component is the last one in the bottom panel
+                // 'md:w-64': isAnimationControlVisible,
+                // 'md:w-96': isAnimationControlVisible === false,
             )}
         >
             <HeaderText
@@ -101,7 +100,7 @@ const LandCoverGraphContainer = () => {
                 }}
             />
 
-            {shouldShowChart === false && (
+            {shouldShowChart === false ? (
                 <div className="w-full flex justify-center items-center text-sm opacity-50 mt-16">
                     {animationMode ? (
                         <p> Graph is disabled when animation is on</p>
@@ -112,11 +111,15 @@ const LandCoverGraphContainer = () => {
                         </p>
                     )}
                 </div>
+            ) : (
+                <div className="w-full h-40">
+                    {mode === 'swipe' ? (
+                        <ChangeCompareGraph />
+                    ) : (
+                        <TotalAreaGraph />
+                    )}
+                </div>
             )}
-
-            {shouldShowChart && mode === 'swipe' && <ChangeCompareGraph />}
-
-            {shouldShowChart && mode === 'step' && <TotalAreaGraph />}
         </div>
     );
 };

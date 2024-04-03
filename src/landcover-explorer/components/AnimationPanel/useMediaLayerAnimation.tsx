@@ -15,14 +15,17 @@
 
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationSpeed,
+    selectAnimationStatus,
+} from '@shared/store/UI/selectors';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { useDispatch } from 'react-redux';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 
-const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
+// const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
 
 /**
  * Animate media layer elements
@@ -43,6 +46,10 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
 
     const indexOfNextFrame = useRef<number>(0);
 
+    const animationSpeed = useSelector(selectAnimationSpeed);
+
+    const animationSpeedRef = useRef<number>(animationSpeed);
+
     const showNextFrame = () => {
         // use has stopped animation, no need to show next frame
         if (!isPlayingRef.current) {
@@ -55,7 +62,7 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
         const millisecondsSinceLastFrame = now - timeLastFrameDisplayed.current;
 
         // if last frame was shown within the time window, no need to display next frame
-        if (millisecondsSinceLastFrame < ANIMATION_SPEED_IN_MILLISECONDS) {
+        if (millisecondsSinceLastFrame < animationSpeedRef.current) {
             requestAnimationFrame(showNextFrame);
             return;
         }
@@ -97,6 +104,10 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
             requestAnimationFrame(showNextFrame);
         }
     }, [animationMode, mediaLayerElements]);
+
+    useEffect(() => {
+        animationSpeedRef.current = animationSpeed;
+    }, [animationSpeed]);
 };
 
 export default useMediaLayerAnimation;

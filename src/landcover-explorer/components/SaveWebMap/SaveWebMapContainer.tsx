@@ -24,9 +24,10 @@ import {
     isAnonymouns,
     signIn,
     signInUsingDifferentAccount,
-} from '@landcover-explorer/utils/esriOAuth';
+} from '@shared/utils/esri-oauth';
 import { saveShowSaveWebMapPanelToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { useCreateWebmap } from './useCreateWebmap';
+import { getPortalBaseUrl } from '@shared/utils/esri-oauth';
 
 export const SaveWebMapContainer = () => {
     const dispatch = useDispatch();
@@ -38,6 +39,18 @@ export const SaveWebMapContainer = () => {
     const { isSavingChanges, response } = useCreateWebmap(webmapMetadata);
 
     const portalUser = getSignedInUser();
+
+    const openWebMap = () => {
+        if (!response) {
+            return;
+        }
+
+        const url = `${getPortalBaseUrl()}/home/item.html?id=${response.id}`;
+
+        window.open(url, '_blank');
+
+        dispatch(showSaveWebMapPanelToggled());
+    };
 
     useEffect(() => {
         saveShowSaveWebMapPanelToHashParams(showSaveWebMap);
@@ -61,17 +74,13 @@ export const SaveWebMapContainer = () => {
             isSavingChanges={isSavingChanges}
             hasNoPrivilege2CreateContent={portalUser?.role === 'org_user'}
             response={response}
-            // response={{
-            //     id: '123',
-            //     success: true,
-            //     folder: ''
-            // }}
             saveButtonOnClick={setWebMapMetadata}
             closeButtonOnClick={() => {
                 // close
                 dispatch(showSaveWebMapPanelToggled());
             }}
             signInButtonOnClick={signInUsingDifferentAccount}
+            openWebmapButtonOnClick={openWebMap}
         />
     );
 };
