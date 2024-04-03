@@ -136,6 +136,7 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
                     width: mapView.width,
                     height: mapView.height,
                 }}
+                authoringAppName="landcover"
             />
         </div>
     );
