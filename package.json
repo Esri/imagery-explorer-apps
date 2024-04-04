@@ -26,15 +26,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vannizhang/imagery-explorer-apps.git"
+    "url": "git+https://github.com/Esri/imagery-explorer-apps.git"
   },
-  "keywords": [],
+  "keywords": ["landsat", "remote-sensing", "sentinel-2", "landcover", "remote-sensing", "living-atlas"],
   "author": "ArcGIS Living Atlas of the World",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vannizhang/imagery-explorer-apps/issues"
+    "url": "https://github.com/Esri/imagery-explorer-apps/issues"
   },
-  "homepage": "https://github.com/vannizhang/imagery-explorer-apps",
+  "homepage": "https://github.com/Esri/imagery-explorer-apps",
   "devDependencies": {
     "@babel/core": "^7.24.3",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
