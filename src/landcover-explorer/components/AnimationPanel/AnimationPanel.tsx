@@ -37,6 +37,7 @@ import { AnimationDownloadPanel } from '@shared/components/AnimationDownloadPane
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 import { CloseButton } from '@shared/components/CloseButton';
+import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 
 type Props = {
     mapView?: IMapView;
@@ -55,6 +56,10 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
         useFrameDataForDownloadJob({ mediaLayerElements, mapView });
 
     const animationSpeed = useSelector(selectAnimationSpeed);
+
+    const shouldShowSentinel2Layer = useSelector(
+        selectShouldShowSentinel2Layer
+    );
 
     useMediaLayerAnimation(mediaLayerElements);
 
@@ -136,7 +141,9 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
                     width: mapView.width,
                     height: mapView.height,
                 }}
-                authoringAppName="landcover"
+                authoringAppName={
+                    shouldShowSentinel2Layer ? 'sentinel2' : 'landcover'
+                }
             />
         </div>
     );
