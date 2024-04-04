@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { Button } from '../Button';
 import { QueryParams4ImageryScene } from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
-import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
+import { AppContext } from '@shared/contexts/AppContextProvider';
+// import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
 type Side4SwipeMode = 'left' | 'right';
 
@@ -36,6 +37,8 @@ export const SwipeLayerSelector: FC<Props> = ({
     onChange,
     swapButtonOnClick,
 }) => {
+    const { rasterFunctionLabelMap } = useContext(AppContext);
+
     const getButtonContent = (side: Side4SwipeMode) => {
         const queryParams =
             side === 'left'
@@ -56,9 +59,9 @@ export const SwipeLayerSelector: FC<Props> = ({
                             <br />
 
                             <span className="normal-case">
-                                {getRasterFunctionLabelText(
+                                {rasterFunctionLabelMap.get(
                                     queryParams?.rasterFunctionName
-                                )}
+                                ) || queryParams?.rasterFunctionName}
                             </span>
                         </>
                     ) : (

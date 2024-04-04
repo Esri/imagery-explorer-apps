@@ -22,9 +22,14 @@ import {
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,
 } from '@shared/store/LandcoverExplorer/reducer';
-import { selectYearsForSwipeWidgetLayers } from '@shared/store/LandcoverExplorer/selectors';
-import Dropdown from './Dropdown';
-import MonthPicker from './MonthPicker';
+import {
+    selectIsSentinel2LayerOutOfVisibleRange,
+    selectMapMode,
+    selectYearsForSwipeWidgetLayers,
+} from '@shared/store/LandcoverExplorer/selectors';
+// import Dropdown from './Dropdown';
+import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
+import { Dropdown, DropdownData } from '@shared/components/Dropdown';
 
 type Props = {
     shouldShowMonthPicker: boolean;
@@ -35,30 +40,40 @@ const TimeSelector4SwipeMode: FC<Props> = ({
 }: Props) => {
     const dispatch = useDispatch();
 
+    const mode = useSelector(selectMapMode);
+
+    const isSentinel2LayerOutOfVisibleRange = useSelector(
+        selectIsSentinel2LayerOutOfVisibleRange
+    );
+
     const years = getAvailableYears();
 
     const { year4LeadingLayer, year4TrailingLayer } = useSelector(
         selectYearsForSwipeWidgetLayers
     );
 
-    const data4LeadingYearDropdown = years.map((year) => {
+    const data4LeadingYearDropdown: DropdownData[] = years.map((year) => {
         return {
             value: year.toString(),
-            active: year === year4LeadingLayer,
+            selected: year === year4LeadingLayer,
         };
     });
 
-    const data4TrailingYearDropdown = years.map((year) => {
+    const data4TrailingYearDropdown: DropdownData[] = years.map((year) => {
         return {
             value: year.toString(),
-            active: year === year4TrailingLayer,
+            selected: year === year4TrailingLayer,
         };
     });
+
+    if (mode !== 'swipe' || isSentinel2LayerOutOfVisibleRange) {
+        return null;
+    }
 
     return (
-        <div className="mt-8 flex">
+        <div className="flex w-full px-6 mt-6">
             <div
-                className={classNames('grid grid-cols-2 gap-2 mr-2', {
+                className={classNames('grid grid-cols-2 gap-2', {
                     'w-4/5': shouldShowMonthPicker,
                     'w-full': shouldShowMonthPicker === false,
                 })}
@@ -79,7 +94,7 @@ const TimeSelector4SwipeMode: FC<Props> = ({
             </div>
 
             {shouldShowMonthPicker && (
-                <div className="relative border-l border-custom-light-blue-50 ml-1 pl-3">
+                <div className="relative border-l border-custom-light-blue-50 ml-3 pl-3">
                     <MonthPicker />
                 </div>
             )}

@@ -28,10 +28,21 @@ import { MaskLayer } from '@landsat-explorer/components/MaskLayer';
 import { LandsatLayer } from '../LandsatLayer';
 import { SwipeWidget } from '../SwipeWidget';
 import { CrosshairCursor } from './CrosshairCursor';
+import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
+import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
+import { useDispatch } from 'react-redux';
 
 const Map = () => {
+    const dispatch = useDispatch();
+
     return (
-        <MapViewContainer>
+        <MapViewContainer
+            mapOnClick={(point) => {
+                dispatch(updateQueryLocation4TrendTool(point));
+
+                dispatch(updateQueryLocation4SpectralProfileTool(point));
+            }}
+        >
             <GroupLayer
                 // this group layer should be added at index of one so that the
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
@@ -44,12 +55,12 @@ const Map = () => {
             </GroupLayer>
             <SwipeWidget />
             <HillshadeLayer />
-            <Zoom2NativeScale
+            {/* <Zoom2NativeScale
                 nativeScale={113386}
                 tooltip={"Zoom to Landsat's native resolution"}
             />
             <ZoomToExtent />
-            <ScreenshotWidget />
+            <ScreenshotWidget /> */}
             <Popup />
             {/* use crosshair cursor for the map component all the time */}
             <CrosshairCursor />

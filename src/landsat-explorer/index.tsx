@@ -23,19 +23,35 @@ import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { AboutLandsatExplorer } from './components/About';
+import { ErrorPage } from '@shared/components/ErrorPage';
+import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+import AppContextProvider from '@shared/contexts/AppContextProvider';
+import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
 
 (async () => {
-    const store = await getLandsatExplorerStore();
-
     const root = createRoot(document.getElementById('root'));
 
-    root.render(
-        <ReduxProvider store={store}>
-            <ErrorBoundary>
-                <Map />
-                <Layout />
-                <AboutLandsatExplorer />
-            </ErrorBoundary>
-        </ReduxProvider>
-    );
+    try {
+        const store = await getLandsatExplorerStore();
+
+        const timeExtent = await getTimeExtentOfLandsatService();
+        console.log(timeExtent);
+
+        root.render(
+            <ReduxProvider store={store}>
+                <AppContextProvider
+                    timeExtent={timeExtent}
+                    rasterFunctionInfo={LANDSAT_RASTER_FUNCTION_INFOS}
+                >
+                    <ErrorBoundary>
+                        <Map />
+                        <Layout />
+                        <AboutLandsatExplorer />
+                    </ErrorBoundary>
+                </AppContextProvider>
+            </ReduxProvider>
+        );
+    } catch (err) {
+        root.render(<ErrorPage error={err} />);
+    }
 })();

@@ -23,19 +23,29 @@ import { About } from '@shared/components/About';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { getSpectralSampingToolStore } from './store';
+import AppContextProvider from '@shared/contexts/AppContextProvider';
+import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
 
 (async () => {
     const store = await getSpectralSampingToolStore();
+
+    const timeExtent = await getTimeExtentOfLandsatService();
 
     const root = createRoot(document.getElementById('root'));
 
     root.render(
         <ReduxProvider store={store}>
-            <ErrorBoundary>
-                <Map />
-                <Layout />
-                <About />
-            </ErrorBoundary>
+            <AppContextProvider
+                timeExtent={timeExtent}
+                rasterFunctionInfo={LANDSAT_RASTER_FUNCTION_INFOS}
+            >
+                <ErrorBoundary>
+                    <Map />
+                    <Layout />
+                    <About />
+                </ErrorBoundary>
+            </AppContextProvider>
         </ReduxProvider>
     );
 })();

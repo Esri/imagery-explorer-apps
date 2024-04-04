@@ -15,6 +15,7 @@
 
 import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
+import { getTimeExtent } from '../helpers/getTimeExtent';
 
 let timeExtentData: ImageryServiceTimeExtentData = null;
 
@@ -36,27 +37,31 @@ let timeExtentData: ImageryServiceTimeExtentData = null;
  * }
  * ```
  */
-export const getTimeExtent =
+export const getTimeExtentOfLandsatService =
     async (): Promise<ImageryServiceTimeExtentData> => {
         if (timeExtentData) {
             return timeExtentData;
         }
 
         try {
-            const res = await fetch(`${LANDSAT_LEVEL_2_SERVICE_URL}?f=json`);
+            // const res = await fetch(`${LANDSAT_LEVEL_2_SERVICE_URL}?f=json`);
 
-            if (!res.ok) {
-                throw new Error('failed to fetch JSON for Landsat-2 service');
-            }
+            // if (!res.ok) {
+            //     throw new Error('failed to fetch JSON for Landsat-2 service');
+            // }
 
-            const data = await res.json();
+            // const data = await res.json();
 
-            const [start, end] = data?.timeInfo?.timeExtent || [];
+            // const [start, end] = data?.timeInfo?.timeExtent || [];
 
-            return (timeExtentData = {
-                start,
-                end,
-            });
+            // return (timeExtentData = {
+            //     start,
+            //     end,
+            // });
+
+            const data = await getTimeExtent(LANDSAT_LEVEL_2_SERVICE_URL);
+
+            return (timeExtentData = data);
         } catch (error) {
             console.error(error);
         }

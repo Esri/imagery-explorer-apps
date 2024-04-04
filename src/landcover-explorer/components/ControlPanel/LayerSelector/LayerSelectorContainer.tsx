@@ -49,12 +49,12 @@ const LayerSelectorContainer = () => {
             landcoverButtonOnClick={() => {
                 dispatch(shouldShowSentinel2LayerToggled(false));
             }}
-            downloadLandcoverButtonOnClick={() => {
-                dispatch(showDownloadPanelToggled(true));
-            }}
-            saveWebMapButtonOnClick={() => {
-                dispatch(showSaveWebMapPanelToggled());
-            }}
+            // downloadLandcoverButtonOnClick={() => {
+            //     dispatch(showDownloadPanelToggled(true));
+            // }}
+            // saveWebMapButtonOnClick={() => {
+            //     dispatch(showSaveWebMapPanelToggled());
+            // }}
         />
     );
 };

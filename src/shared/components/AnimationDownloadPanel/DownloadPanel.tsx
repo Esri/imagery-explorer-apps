@@ -63,6 +63,10 @@ type Props = {
      * size of the map view window
      */
     mapViewWindowSize: Dimension;
+    /**
+     * name of the app/service to be added as prefix to the filename of the output .mp4 file
+     */
+    authoringAppName?: string;
 };
 
 /**
@@ -74,6 +78,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
     frameData4DownloadJob,
     animationSpeed,
     mapViewWindowSize,
+    authoringAppName,
 }) => {
     const dispatch = useDispatch();
 
@@ -125,7 +130,11 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 abortController: abortController.current,
             });
 
-            downloadBlob(fileContent, filename);
+            const outputFileName = authoringAppName
+                ? `${authoringAppName}-animation-${filename}`
+                : filename;
+
+            downloadBlob(fileContent, outputFileName);
 
             setDownloadJobStatus('finished');
         } catch (err) {

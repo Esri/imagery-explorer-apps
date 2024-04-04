@@ -35,7 +35,7 @@ const HeaderText: FC<Props> = ({
     expandButtonOnClick,
 }: Props) => {
     return (
-        <div className="flex items-center justify-center mb-2 ">
+        <div className="flex items-center justify-center mb-4 ">
             <h5 className="uppercase text-xs">
                 <span className="opacity-90">{title}</span>
                 {subTitle && <span className="opacity-50"> {subTitle}</span>}

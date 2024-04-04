@@ -17,7 +17,6 @@ import './style.css';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { CreateWebMapResponse } from './createWebMap';
-import { getPortalBaseUrl } from '@landcover-explorer/utils/esriOAuth';
 import { CloseButton } from '@shared/components/CloseButton';
 
 export type WebMapMetadata = {
@@ -49,10 +48,15 @@ type Props = {
     saveButtonOnClick: (data: WebMapMetadata) => void;
     closeButtonOnClick: () => void;
     /**
-     * fires when user clicks on 'sign-in' button to sign in using a different accounr
+     * fires when user clicks on 'sign-in' button to sign in using a different account
      * @returns
      */
     signInButtonOnClick: () => void;
+    /**
+     * fires when user clicks on 'Open' button to open the new web map
+     * @returns
+     */
+    openWebmapButtonOnClick: () => void;
 };
 
 type TextInputProps = {
@@ -107,6 +111,7 @@ export const SaveWebMap: FC<Props> = ({
     saveButtonOnClick,
     closeButtonOnClick,
     signInButtonOnClick,
+    openWebmapButtonOnClick,
 }: Props) => {
     const [title, setTitle] = useState<string>(
         'Sentinel-2 Land Cover Exlorer export map'
@@ -147,12 +152,13 @@ export const SaveWebMap: FC<Props> = ({
 
                     <div
                         className={ButtonClassNames}
-                        onClick={() => {
-                            const url = `${getPortalBaseUrl()}/home/item.html?id=${
-                                response.id
-                            }`;
-                            window.open(url, '_blank');
-                        }}
+                        // onClick={() => {
+                        //     const url = `${getPortalBaseUrl()}/home/item.html?id=${
+                        //         response.id
+                        //     }`;
+                        //     window.open(url, '_blank');
+                        // }}
+                        onClick={openWebmapButtonOnClick}
                     >
                         Open
                     </div>

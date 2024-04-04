@@ -19,17 +19,23 @@ import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAndRotationGeoreference';
 import { AnimationStatus } from '@shared/store/UI/reducer';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
-import { exportImage as exportLandsatImage } from '@shared/services/landsat-level-2/exportImage';
+// import { exportImage as exportLandsatImage } from '@shared/services/landsat-level-2/exportImage';
 import { getAnimationWindowInfoFromHashParams } from '@shared/utils/url-hash-params';
 import { getNormalizedExtent } from '@shared/utils/snippets/getNormalizedExtent';
+import { exportImage } from '@shared/services/helpers/exportImage';
 
 type Props = {
+    /**
+     * The URL of the Imagery Service that will be used to provide image for the media layer elements
+     */
+    imageryServiceUrl: string;
     mapView?: MapView;
     animationStatus: AnimationStatus;
     QueryParams4ImageryScenes: QueryParams4ImageryScene[];
 };
 
 const useMediaLayerImageElement = ({
+    imageryServiceUrl,
     mapView,
     animationStatus,
     QueryParams4ImageryScenes,
@@ -58,7 +64,7 @@ const useMediaLayerImageElement = ({
             const animationWindowInfoFromHashParams =
                 getAnimationWindowInfoFromHashParams();
 
-            console.log(animationWindowInfoFromHashParams);
+            // console.log(animationWindowInfoFromHashParams);
 
             let { extent, width, height } =
                 animationWindowInfoFromHashParams || {};
@@ -73,7 +79,8 @@ const useMediaLayerImageElement = ({
             const requests = QueryParams4ImageryScenes.filter(
                 (queryParam) => queryParam.objectIdOfSelectedScene !== null
             ).map((queryParam) => {
-                return exportLandsatImage({
+                return exportImage({
+                    serviceUrl: imageryServiceUrl,
                     extent,
                     width,
                     height,

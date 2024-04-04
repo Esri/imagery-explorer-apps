@@ -28,6 +28,7 @@
 
 #timeSliderDiv .esri-time-slider__slider  {
   background: transparent;
+  padding: 0 20px;
 }
 
 #timeSliderDiv .esri-time-slider__slider .esri-slider {

@@ -58,7 +58,7 @@ const ClassificationsList: FC<Props> = ({
 
     return (
         <div
-            className="text-center mx-4 my-4 md:my-0 shrink-0"
+            className="text-center mx-4 my-12 md:my-0 shrink-0"
             ref={containerRef}
         >
             <HeaderText
@@ -67,9 +67,11 @@ const ClassificationsList: FC<Props> = ({
             />
 
             <div
-                className={classNames('grid grid-cols-3 h-28 text-sm mt-8', {
-                    'disabled-when-animation-mode-is-on': disabled,
-                })}
+                className={classNames(
+                    'grid grid-cols-3 h-28 text-sm',
+                    'mt-0 md:mt-8', // only add top margin space for the desktop view
+                    { 'disabled-when-animation-mode-is-on': disabled }
+                )}
             >
                 {data
                     .filter((d) => d.ClassName !== 'No Data')
@@ -108,13 +110,13 @@ const ClassificationsList: FC<Props> = ({
                                 }}
                             >
                                 <div
-                                    className="w-4 h-4 border-2 border-white rounded-full"
+                                    className="w-4 h-4 shrink-0 border-2 border-white rounded-full"
                                     style={{
                                         background: `rgb(${Red}, ${Green}, ${Blue})`,
                                     }}
                                 ></div>
 
-                                <span className="ml-2 text-xs lg:text-sm">
+                                <span className="ml-2 text-xs 2xl:text-sm">
                                     {ClassName}
                                 </span>
                             </div>

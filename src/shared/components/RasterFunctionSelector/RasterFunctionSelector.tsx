@@ -23,6 +23,10 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 type Props = {
     /**
+     * tooltip text that will be displayed when user hovers the info icon next to the header
+     */
+    headerTooltip: string;
+    /**
      * name of selected raster function
      */
     nameOfSelectedRasterFunction: string;
@@ -47,6 +51,7 @@ type Props = {
 };
 
 export const RasterFunctionSelector: FC<Props> = ({
+    headerTooltip,
     nameOfSelectedRasterFunction,
     rasterFunctionInfo,
     disabled,
@@ -65,10 +70,7 @@ export const RasterFunctionSelector: FC<Props> = ({
             ref={containerRef}
         >
             <div className="text-center mb-3 flex items-center justify-center">
-                <Tooltip
-                    content={`Landsat sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.`}
-                    width={240}
-                >
+                <Tooltip content={headerTooltip} width={240}>
                     <calcite-icon scale="s" icon="information" />
                 </Tooltip>
 
