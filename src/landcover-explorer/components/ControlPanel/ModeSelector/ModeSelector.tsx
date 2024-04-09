@@ -20,15 +20,16 @@ import { useSelector } from 'react-redux';
 import { modeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectMapMode } from '@shared/store/LandcoverExplorer/selectors';
 import { saveMapModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
+import { Button } from '@shared/components/Button';
 
-const BTN_CLASSNAMES =
-    'p-1 mx-2 cursor-pointer uppercase flex items-center border-b';
+// const BTN_CLASSNAMES =
+//     'p-1 mx-2 cursor-pointer uppercase flex items-center border-b';
 
 type Props = {
     disabled?: boolean;
 };
 
-const ModeSelector: FC<Props> = ({ disabled }: Props) => {
+export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
     const dispatch = useDispatch();
 
     const activeMode = useSelector(selectMapMode);
@@ -42,14 +43,38 @@ const ModeSelector: FC<Props> = ({ disabled }: Props) => {
 
     return (
         <div
-            className={classNames(
-                'hidden md:flex justify-center text-xs mt-4',
-                {
-                    'disabled-when-animation-mode-is-on': disabled,
-                }
-            )}
+            className={classNames({
+                'disabled-when-animation-mode-is-on': disabled,
+            })}
         >
-            <div
+            <div className={classNames('relative mb-1')}>
+                <Button
+                    // fullHeight={true}
+                    appearance={isStepBtnActive ? 'solid' : 'transparent'}
+                    scale="s"
+                    decorativeIndicator={isStepBtnActive ? 'left' : null}
+                    onClickHandler={() => {
+                        dispatch(modeChanged('step'));
+                    }}
+                >
+                    <span className="uppercase">Animate</span>
+                </Button>
+            </div>
+
+            <div className={classNames('relative mb-1')}>
+                <Button
+                    // fullHeight={true}
+                    appearance={isSwipeBtnActive ? 'solid' : 'transparent'}
+                    scale="s"
+                    decorativeIndicator={isSwipeBtnActive ? 'left' : null}
+                    onClickHandler={() => {
+                        dispatch(modeChanged('swipe'));
+                    }}
+                >
+                    <span className="uppercase">Swipe</span>
+                </Button>
+            </div>
+            {/* <div
                 className={classNames(BTN_CLASSNAMES, {
                     'opacity-50': !isStepBtnActive,
                     'border-custom-light-blue-80': isStepBtnActive,
@@ -97,9 +122,7 @@ const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                     <path fill="none" d="M0 0h16v16H0z" />
                 </svg>
                 <span className="ml-1">swipe mode</span>
-            </div>
+            </div> */}
         </div>
     );
 };
-
-export default ModeSelector;

@@ -74,9 +74,9 @@ const AboutLandcoverExplorer = () => {
                             ArcGIS Living Atlas of the World
                         </a>{' '}
                         provides a detailed, accurate, and timely LULC map of
-                        the world. The data is the result of a three-way
-                        collaboration among Esri, Impact Observatory, and
-                        Microsoft. For more information about the data, see{' '}
+                        the world. The data is the result of a collaboration
+                        between Esri and Impact Observatory. For more
+                        information about the data, see{' '}
                         <a
                             className="underline"
                             href="https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d"
@@ -140,7 +140,7 @@ const AboutLandcoverExplorer = () => {
                             <span className="font-bold">
                                 Sentinel-2 10m Land Use/Land Cover{' '}
                             </span>{' '}
-                            – Esri, Impact Observatory, and Microsoft
+                            – Esri and Impact Observatory
                         </p>
                         <p>
                             This work is licensed under a Creative Commons by

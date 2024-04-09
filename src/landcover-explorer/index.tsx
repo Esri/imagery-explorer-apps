@@ -21,7 +21,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { getLandsatcoverExplorerStore } from './store';
 import AppLayout from './components/AppLayout/AppLayout';
 import { loadServiceInfo } from '@shared/services/sentinel-2-10m-landcover/loadServiceInfo';
-import { initEsriOAuth } from './utils/esriOAuth';
+import { initEsriOAuth } from '../shared/utils/esri-oauth';
 import { APP_ID } from './constants';
 import { ErrorPage } from '@shared/components/ErrorPage';
 

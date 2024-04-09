@@ -29,6 +29,19 @@ type Props = {
     onChange: (speed: number) => void;
 };
 
+type AnimationSpeedSliderProps = {
+    /**
+     * current animation speed in millisecond
+     */
+    speedInMilliseonds: number;
+    /**
+     * Emits when user selects a new speed
+     * @param val
+     * @returns
+     */
+    speedOnChange: (val: number) => void;
+};
+
 // /**
 //  * Maximum Animation Speed in Milliseconds
 //  */
@@ -38,6 +51,29 @@ type Props = {
  * list of animation speed options
  */
 const SPEEDS = [2000, 1000, 800, 500, 400, 200, 100, 20, 0];
+
+const useSpeedSliderSteps = () => {
+    /**
+     * setps that will be used by the animation slider
+     *
+     * @eample `[0, 1/8, 2/8, 3/8, 4/8, 5/8, 6/8, 7/8, 1]`
+     */
+    const steps = useMemo(() => {
+        let step = 0;
+        const interval = 1 / (SPEEDS.length - 1);
+
+        const output: number[] = [];
+
+        while (step <= 1) {
+            output.push(step);
+            step += interval;
+        }
+
+        return output;
+    }, []);
+
+    return steps;
+};
 
 /**
  * Calculates the position of a slider thumb based on the given animation speed.
@@ -85,36 +121,44 @@ const getAnimationSpeedBySliderThumbPosition = (position: number): number => {
 };
 
 /**
+ * A simple slider that will be used to control the speed of Animation
+ * @param param0
+ * @returns
+ */
+export const AnimationSpeedSlider: FC<AnimationSpeedSliderProps> = ({
+    speedInMilliseonds,
+    speedOnChange,
+}) => {
+    const steps = useSpeedSliderSteps();
+
+    return (
+        <Slider
+            steps={steps}
+            value={getSliderThumbPositionByAnimationSpeed(speedInMilliseonds)} // 0.5 as the mid point of the slider, which is equivelant to 1 second per frame
+            onChange={(newThumbPosition) => {
+                // console.log(newThumbPosition, getAnimationSpeedBySliderThumbPosition(newThumbPosition));
+
+                const newAnimationSpeed =
+                    getAnimationSpeedBySliderThumbPosition(newThumbPosition);
+
+                speedOnChange(newAnimationSpeed);
+            }}
+        />
+    );
+};
+
+/**
  * A slider component to control the speed of animation
  * @param param0
  * @returns
  */
 export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
-    /**
-     * setps that will be used by the animation slider
-     *
-     * @eample `[0, 1/8, 2/8, 3/8, 4/8, 5/8, 6/8, 7/8, 1]`
-     */
-    const steps = useMemo(() => {
-        let step = 0;
-        const interval = 1 / (SPEEDS.length - 1);
-
-        const output: number[] = [];
-
-        while (step <= 1) {
-            output.push(step);
-            step += interval;
-        }
-
-        return output;
-    }, []);
-
     return (
         <div
             // id="cloud-filter-container"
             className="flex-grow pl-1 pr-2 pt-2"
         >
-            <Slider
+            {/* <Slider
                 steps={steps}
                 value={getSliderThumbPositionByAnimationSpeed(speed)} // 0.5 as the mid point of the slider, which is equivelant to 1 second per frame
                 onChange={(newThumbPosition) => {
@@ -127,6 +171,11 @@ export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
 
                     onChange(newAnimationSpeed);
                 }}
+            /> */}
+
+            <AnimationSpeedSlider
+                speedInMilliseonds={speed}
+                speedOnChange={onChange}
             />
 
             <div className="text-xs text-center mt-1">

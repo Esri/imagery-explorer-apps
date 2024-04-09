@@ -13,12 +13,23 @@
  * limitations under the License.
  */
 
-import './style.css';
+import './TimeSliderWidget.css';
 import React, { useRef, useEffect, FC, useMemo } from 'react';
 // import ISlider from '@arcgis/core/widgets/Slider';
 import TimeSlider from '@arcgis/core/widgets/TimeSlider';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import classNames from 'classnames';
+import { useSelector, batch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {
+    selectIsSentinel2LayerOutOfVisibleRange,
+    selectMapMode,
+    // selectShouldShowSentinel2Layer,
+    selectYear,
+} from '@shared/store/LandcoverExplorer/selectors';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 
 type TimeSliderMode = 'time-window' | 'instant';
 
@@ -55,6 +66,49 @@ type Props = {
      * selected year
      */
     selectedYear?: number;
+};
+
+export const TimeSliderWidgetContainer = () => {
+    const dispatch = useDispatch();
+
+    const animationMode = useSelector(selectAnimationStatus);
+
+    const mode = useSelector(selectMapMode);
+
+    const years = getAvailableYears();
+
+    const isSentinel2LayerOutOfVisibleRange = useSelector(
+        selectIsSentinel2LayerOutOfVisibleRange
+    );
+
+    const year = useSelector(selectYear);
+
+    const timeStepSliderVisibility =
+        mode === 'step' && isSentinel2LayerOutOfVisibleRange === false;
+
+    return (
+        <div
+            className={classNames('w-full', {
+                'pointer-events-none': animationMode !== null,
+            })}
+        >
+            <TimeSliderWidget
+                mode="instant"
+                years={years}
+                initialTimeExtent={{
+                    start: new Date(year, 0, 1),
+                    end: new Date(year, 0, 1),
+                }}
+                visible={timeStepSliderVisibility}
+                timeExtentOnChange={(startYear) => {
+                    batch(() => {
+                        dispatch(yearUpdated(startYear));
+                    });
+                }}
+                selectedYear={year}
+            />
+        </div>
+    );
 };
 
 const TimeSliderWidget: FC<Props> = ({
@@ -169,5 +223,3 @@ const TimeSliderWidget: FC<Props> = ({
         ></div>
     );
 };
-
-export default TimeSliderWidget;

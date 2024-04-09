@@ -68,7 +68,7 @@ const Sentinel2LayerRasterFunctionsList: FC<Props> = ({
                         <div
                             key={name}
                             className={classNames(
-                                'flex items-center mx-6 mb-2 cursor-pointer',
+                                'flex items-center mx-3 2xl:mx-6 mb-2 cursor-pointer',
                                 {
                                     'opacity-50':
                                         selectedRasterFunction &&
@@ -86,7 +86,9 @@ const Sentinel2LayerRasterFunctionsList: FC<Props> = ({
                             }}
                         >
                             <img src={thumbnail} />
-                            <span className="ml-2">{label}</span>
+                            <span className="ml-2 text-xs 2xl:text-sm">
+                                {label}
+                            </span>
                         </div>
                     );
                 })}

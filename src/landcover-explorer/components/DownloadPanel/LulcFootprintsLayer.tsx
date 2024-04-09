@@ -115,7 +115,7 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
         popupDiv.innerHTML = `
             <div class="text-custom-light-blue">
                 <div class="my-2">
-                    <p>Approximate Size: ${size} MB</p>
+                    <p>Estimated Size: ${size} MB</p>
                 </div>
                 <div class='flex'>
                     <div class='mt-2 ml-1'>
@@ -152,7 +152,7 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
             location: mapPoint,
             // features: featureSet.features,
             // featureMenuOpen: true
-            title: 'Download',
+            title: 'Download GeoTIFF',
             content: getMainContent(graphic),
         });
 

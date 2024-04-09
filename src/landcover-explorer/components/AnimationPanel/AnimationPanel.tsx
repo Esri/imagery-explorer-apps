@@ -15,7 +15,10 @@
 
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationSpeed,
+    selectAnimationStatus,
+} from '@shared/store/UI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
@@ -34,6 +37,7 @@ import { AnimationDownloadPanel } from '@shared/components/AnimationDownloadPane
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 import { CloseButton } from '@shared/components/CloseButton';
+import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 
 type Props = {
     mapView?: IMapView;
@@ -50,6 +54,12 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
 
     const frameData4DownloadJob: AnimationFrameData[] =
         useFrameDataForDownloadJob({ mediaLayerElements, mapView });
+
+    const animationSpeed = useSelector(selectAnimationSpeed);
+
+    const shouldShowSentinel2Layer = useSelector(
+        selectShouldShowSentinel2Layer
+    );
 
     useMediaLayerAnimation(mediaLayerElements);
 
@@ -124,14 +134,17 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
                 }}
             />
 
-            {/* <AnimationDownloadPanel
+            <AnimationDownloadPanel
                 frameData4DownloadJob={frameData4DownloadJob}
-                animationSpeed={1000}
+                animationSpeed={animationSpeed}
                 mapViewWindowSize={{
                     width: mapView.width,
                     height: mapView.height,
                 }}
-            /> */}
+                authoringAppName={
+                    shouldShowSentinel2Layer ? 'sentinel2' : 'landcover'
+                }
+            />
         </div>
     );
 };

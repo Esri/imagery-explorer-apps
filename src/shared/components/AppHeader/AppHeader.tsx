@@ -112,7 +112,9 @@ const AppHeader: FC<Props> = ({ title }) => {
                 )}
             >
                 <div className="flex h-full items-center">
-                    <span>{title}</span>
+                    <div className="flex-grow">
+                        <span className="text-sm md:text-lg">{title}</span>
+                    </div>
 
                     <div
                         className="cursor-pointer ml-2 flex items-center"

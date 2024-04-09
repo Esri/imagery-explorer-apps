@@ -20,58 +20,67 @@ import { useDispatch, useSelector } from 'react-redux';
 // import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
 import LayerSelector from './LayerSelector/LayerSelectorContainer';
-import TimeSlider from './TimeSlider/TimeSliderContainer';
+import { TimeSelector } from './TimeSelector';
 import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
-import Tooltip from './Tooltip/TooltipContainer';
-import ToggleButton from './ToggleButton/ToggleButtonContainer';
+// import Tooltip from './Tooltip/TooltipContainer';
+// import ToggleButton from './ToggleButton/ToggleButtonContainer';
 // import { selectShouldHideControlPanel } from '@shared/store/LandcoverUI/selectors';
 import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
-import { selectHideBottomPanel } from '@shared/store/UI/selectors';
+// import { selectHideBottomPanel } from '@shared/store/UI/selectors';
+import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
+import { ModeSelector } from './ModeSelector';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
+import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
 
 const ControlPanel = () => {
     // const dispatch = useDispatch();
 
-    const hideControlPanel = useSelector(selectHideBottomPanel);
+    // const hideControlPanel = useSelector(selectHideBottomPanel);
 
     const shouldShowSentinel2Layer = useSelector(
         selectShouldShowSentinel2Layer
     );
 
-    return (
-        <>
-            {hideControlPanel === false && (
-                <div className="control-panel absolute bottom-0 left-0 w-full h-bottom-panel-height z-10">
-                    <div className="theme-background absolute top-0 left-0 w-full h-full"></div>
-                    <div className="control-panel-top-shadow absolute top-0 left-0 w-full"></div>
-
-                    <div className="relative w-full h-full p-2 pt-6 xl:flex text-custom-light-blue justify-around z-10 overflow-y-auto xl:overflow-y-unset">
-                        <div className="flex">
-                            <LayerSelector />
-                            <TimeSlider />
-                        </div>
-
-                        <div className="flex flex-col-reverse md:flex-row pb-6 md:pb-0">
-                            {shouldShowSentinel2Layer === false && (
-                                <ClassificationsList />
-                            )}
-
-                            {shouldShowSentinel2Layer && (
-                                <Sentinel2LayerRasterFunctionsList />
-                            )}
-
-                            <LandCoverGraph />
-                        </div>
+    if (IS_MOBILE_DEVICE) {
+        return (
+            <BottomPanel>
+                <div className="mx-auto">
+                    <div className="pt-4">
+                        <TimeSelectorHeader />
+                        <TimeSliderWidgetContainer />
                     </div>
-
-                    <Tooltip />
-
-                    {/* <ActionBar /> */}
+                    <ClassificationsList />
+                    <LandCoverGraph />
                 </div>
-            )}
+            </BottomPanel>
+        );
+    }
 
-            <ToggleButton />
-        </>
+    return (
+        <BottomPanel>
+            <div className="relative w-full h-full p-2 flex text-custom-light-blue justify-between">
+                <div className="flex">
+                    <LayerSelector />
+                    <ModeSelector />
+                </div>
+
+                <div className="flex flex-grow justify-center shrink-0">
+                    <TimeSelector />
+
+                    {shouldShowSentinel2Layer === false && (
+                        <ClassificationsList />
+                    )}
+
+                    {shouldShowSentinel2Layer && (
+                        <Sentinel2LayerRasterFunctionsList />
+                    )}
+
+                    <LandCoverGraph />
+                </div>
+            </div>
+        </BottomPanel>
     );
 };
 

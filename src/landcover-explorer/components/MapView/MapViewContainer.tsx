@@ -57,6 +57,10 @@ import {
 import MapView from '@shared/components/MapView/MapView';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 import SearchWidget from '@shared/components/MapView/SearchWidget';
+import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
+import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
+import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
+import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
@@ -160,9 +164,19 @@ const MapViewContainer = () => {
 
                 <ReferenceLayers />
 
-                <CustomMapArrtribution atrribution="Sentinel-2 10m Land Use/Land Cover data by Impact Observatory, Microsoft, and Esri" />
+                <CustomMapArrtribution atrribution="Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory" />
 
                 <AnimationPanel />
+
+                <MapActionButtonsGroup>
+                    <Zoom2NativeScale
+                        nativeScale={37795}
+                        tooltip={"Zoom to Land cover layer's native resolution"}
+                    />
+                    {/* <ZoomToExtent /> */}
+                    <ScreenshotWidget />
+                    <CopyLinkWidget />
+                </MapActionButtonsGroup>
             </MapView>
 
             <ReferenceLayersToggleControl />

@@ -12,7 +12,7 @@
             "title": "Esri | Sentinel-2 Land Cover Explorer",
             "webmapId": "f8770e0adc5c41038026494b871ceb99",
             "description": "This application displays the land use/land cover (LULC) timeseries layer derived from ESA Sentinel-2 imagery at 10m resolution. ",
-            "animationMetadataSources": "Esri, Impact Observatory, Microsoft",
+            "animationMetadataSources": "Esri, Impact Observatory",
             "pathname": "/landcoverexplorer",
             "entrypoint": "/src/landcover-explorer/index.tsx"
         },

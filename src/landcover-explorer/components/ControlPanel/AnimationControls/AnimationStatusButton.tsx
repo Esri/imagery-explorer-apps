@@ -64,7 +64,7 @@ const CloseButton = (
     </svg>
 );
 
-const AnimationButton = () => {
+export const AnimationStatusButton = () => {
     const dispatch = useDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
@@ -116,4 +116,4 @@ const AnimationButton = () => {
     );
 };
 
-export default AnimationButton;
+export default AnimationStatusButton;
