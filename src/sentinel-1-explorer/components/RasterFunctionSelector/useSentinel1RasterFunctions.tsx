@@ -22,6 +22,7 @@ import {
 import { RasterFunctionInfo } from '@typing/imagery-service';
 
 import PlaceholderThumbnail from './thumbnails/placeholder.jpg';
+import CompositeLegend from './legends/SARCompositeLegend.png';
 
 const Sentinel1RendererThumbnailByName: Record<Sentinel1FunctionName, string> =
     {
@@ -32,7 +33,7 @@ const Sentinel1RendererThumbnailByName: Record<Sentinel1FunctionName, string> =
     };
 
 const Sentinel1RendererLegendByName: Record<Sentinel1FunctionName, string> = {
-    'Sentinel-1 RGB dB DRA': null,
+    'Sentinel-1 RGB dB DRA': CompositeLegend,
     'Sentinel-1 RTC VH dB with DRA': null,
     'Sentinel-1 RTC VV dB with DRA': null,
 };
