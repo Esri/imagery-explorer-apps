@@ -60,7 +60,10 @@ const Map = () => {
                 <MapPopUpAnchorPoint />
             </GroupLayer>
             <SwipeWidget />
-            <AnimationLayer imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL} />
+            <AnimationLayer
+                imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+                authoringAppName="landsat"
+            />
             <HillshadeLayer />
 
             <MapActionButtonsGroup>
