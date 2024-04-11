@@ -19,17 +19,17 @@ import {
 } from '@shared/services/landsat-level-2/helpers';
 import Point from '@arcgis/core/geometry/Point';
 
-export const getLoadingIndicator = () => {
-    const popupDiv = document.createElement('div');
-    popupDiv.innerHTML = `<calcite-loader scale="s"></calcite-loader>`;
-    return popupDiv;
-};
+// export const getLoadingIndicator = () => {
+//     const popupDiv = document.createElement('div');
+//     popupDiv.innerHTML = `<calcite-loader scale="s"></calcite-loader>`;
+//     return popupDiv;
+// };
 
 export const getMainContent = (values: number[], mapPoint: Point) => {
     const lat = Math.round(mapPoint.latitude * 1000) / 1000;
     const lon = Math.round(mapPoint.longitude * 1000) / 1000;
 
-    const popupDiv = document.createElement('div');
+    // const popupDiv = document.createElement('div');
 
     let surfaceTempInfo = 'No Data';
 
@@ -60,7 +60,7 @@ export const getMainContent = (values: number[], mapPoint: Point) => {
 
     const waterIndex = calcSpectralIndex('water', values).toFixed(3);
 
-    popupDiv.innerHTML = `
+    return `
         <div class='text-custom-light-blue text-xs'>
             <div class='mb-2'>
                 <span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${surfaceTempInfo}</span><br />
@@ -73,6 +73,4 @@ export const getMainContent = (values: number[], mapPoint: Point) => {
             </div>
         </div>
     `;
-
-    return popupDiv;
 };
