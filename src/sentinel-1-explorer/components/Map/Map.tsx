@@ -33,6 +33,7 @@ import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
 import { Sentinel1Layer } from '../Sentinel1Layer';
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
+import { Popup } from '../Popup';
 
 export const Map = () => {
     return (
@@ -65,7 +66,7 @@ export const Map = () => {
                 <CopyLinkWidget />
             </MapActionButtonsGroup>
 
-            {/* <Popup /> */}
+            <Popup />
             <MapMagnifier />
             <CustomMapArrtribution atrribution="THIS IS A PLACEHOLDER TEXT FOR SENTINEL-1 IMAGERY SERVICE" />
         </MapViewContainer>
