@@ -66,7 +66,7 @@ type Props = {
     /**
      * name of the app/service to be added as prefix to the filename of the output .mp4 file
      */
-    authoringAppName?: string;
+    authoringAppName: string;
 };
 
 /**
