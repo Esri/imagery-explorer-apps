@@ -85,7 +85,7 @@ const sentinel1SceneByObjectId: Map<number, Sentinel1Scene> = new Map();
  * @param features - An array of IFeature objects from Sentinel-1 service.
  * @returns An array of Sentinel1Scene objects containing the acquisition date, formatted acquisition date, and other attributes.
  */
-export const getFormattedLandsatScenes = (
+export const getFormattedSentinel1Scenes = (
     features: IFeature[]
 ): Sentinel1Scene[] => {
     return features.map((feature) => {
@@ -176,20 +176,6 @@ export const getSentinel1Scenes = async ({
         spatialRel: 'esriSpatialRelIntersects',
         // geometryType: 'esriGeometryEnvelope',
         geometryType: 'esriGeometryPoint',
-        // inSR: '102100',
-        // outFields: [
-        //     ACQUISITION_DATE,
-        //     CLOUD_COVER,
-        //     NAME,
-        //     BEST,
-        //     SENSORNAME,
-        //     WRS_PATH,
-        //     WRS_ROW,
-        //     CATEGORY,
-        //     LANDSAT_PRODUCT_ID,
-        //     SUNAZIMUTH,
-        //     SUNELEVATION,
-        // ].join(','),
         outFields: '*',
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',
@@ -216,11 +202,11 @@ export const getSentinel1Scenes = async ({
         throw data.error;
     }
 
-    const sentinel1Scenes: Sentinel1Scene[] = getFormattedLandsatScenes(
+    const sentinel1Scenes: Sentinel1Scene[] = getFormattedSentinel1Scenes(
         data?.features || []
     );
 
-    // save the sentinel-1 scenes to `landsatSceneByObjectId` map
+    // save the sentinel-1 scenes to `sentinel1SceneByObjectId` map
     for (const sentinel1Scene of sentinel1Scenes) {
         sentinel1SceneByObjectId.set(sentinel1Scene.objectId, sentinel1Scene);
     }
@@ -237,7 +223,7 @@ export const getSentinel1Scenes = async ({
 export const getSentinel1SceneByObjectId = async (
     objectId: number
 ): Promise<Sentinel1Scene> => {
-    // Check if the landsat scene already exists in the cache
+    // Check if the Sentinel-1 scene already exists in the cache
     if (sentinel1SceneByObjectId.has(objectId)) {
         return sentinel1SceneByObjectId.get(objectId);
     }
@@ -251,7 +237,7 @@ export const getSentinel1SceneByObjectId = async (
         return null;
     }
 
-    const sentinel1Scene: Sentinel1Scene = getFormattedLandsatScenes([
+    const sentinel1Scene: Sentinel1Scene = getFormattedSentinel1Scenes([
         feature,
     ])[0];
 

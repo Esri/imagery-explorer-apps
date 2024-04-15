@@ -26,6 +26,9 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
+import { identify } from '@shared/services/helpers/identify';
+import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
+import { getFormattedSentinel1Scenes } from '@shared/services/sentinel-1/getSentinel1Scenes';
 
 type Props = {
     mapView?: MapView;
@@ -64,24 +67,25 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
 
             controller = new AbortController();
 
-            // const res = await identify({
-            //     point: mapPoint,
-            //     objectId:
-            //         mode !== 'dynamic'
-            //             ? queryParams?.objectIdOfSelectedScene
-            //             : null,
-            //     abortController: controller,
-            // });
+            const res = await identify({
+                serviceURL: SENTINEL_1_SERVICE_URL,
+                point: mapPoint,
+                objectId:
+                    mode !== 'dynamic'
+                        ? queryParams?.objectIdOfSelectedScene
+                        : null,
+                abortController: controller,
+            });
 
             // console.log(res)
 
-            // const features = res?.catalogItems?.features;
+            const features = res?.catalogItems?.features;
 
-            // if (!features.length) {
-            //     throw new Error('cannot find landsat scene');
-            // }
+            if (!features.length) {
+                throw new Error('cannot find sentinel-1 scene');
+            }
 
-            // const sceneData = getFormattedLandsatScenes(features)[0];
+            const sceneData = getFormattedSentinel1Scenes(features)[0];
 
             // const bandValues: number[] =
             //     getPixelValuesFromIdentifyTaskResponse(res);
@@ -91,14 +95,14 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
             // }
             // // console.log(bandValues)
 
-            // const title = `${sceneData.satellite} | ${formatInUTCTimeZone(
-            //     sceneData.acquisitionDate,
-            //     'MMM dd, yyyy'
-            // )}`;
+            const title = `Sentinel-1 | ${formatInUTCTimeZone(
+                sceneData.acquisitionDate,
+                'MMM dd, yyyy'
+            )}`;
 
             setData({
                 // Set the popup's title to the coordinates of the location
-                title: 'Sentinel-1',
+                title,
                 location: mapPoint, // Set the location of the popup to the clicked location
                 content: 'Popup content will be put here',
             });

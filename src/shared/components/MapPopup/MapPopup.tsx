@@ -183,7 +183,7 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
 
             if (error) {
                 console.error(
-                    'failed to open popup for landsat scene',
+                    'failed to open popup for imagery scene',
                     error.message
                 );
 
