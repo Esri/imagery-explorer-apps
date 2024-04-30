@@ -82,6 +82,16 @@ export const saveQueryParams4ScenesInAnimationToHashParams = (
     updateHashParams('animationScenes', encodedData);
 };
 
+export const saveListOfQueryParamsToHashParams = (
+    data: QueryParams4ImageryScene[]
+) => {
+    const encodedData =
+        data && data.length
+            ? data.map((d) => encodeQueryParams4ImageryScene(d)).join(',')
+            : null;
+    updateHashParams('listOfScenes', encodedData);
+};
+
 export const getQueryParams4MainSceneFromHashParams = () => {
     const value = getHashParamValueByKey('mainScene');
     return decodeQueryParams4ImageryScene(value);
@@ -92,9 +102,11 @@ export const getQueryParams4SecondarySceneFromHashParams = () => {
     return decodeQueryParams4ImageryScene(value);
 };
 
-export const getQueryParams4ScenesInAnimationFromHashParams =
+export const getListOfQueryParamsFromHashParams =
     (): QueryParams4ImageryScene[] => {
-        const value = getHashParamValueByKey('animationScenes');
+        const value =
+            getHashParamValueByKey('animationScenes') ||
+            getHashParamValueByKey('listOfScenes');
 
         if (!value) {
             return null;

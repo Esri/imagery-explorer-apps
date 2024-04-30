@@ -40,7 +40,8 @@ let abortController: AbortController = null;
 export const queryAvailableScenes =
     (
         acquisitionDateRange: DateRange,
-        orbitDirection: Sentinel1OrbitDirection
+        orbitDirection: Sentinel1OrbitDirection,
+        dualPolarizationOnly: boolean
     ) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         if (!acquisitionDateRange) {
@@ -63,6 +64,7 @@ export const queryAvailableScenes =
             const scenes = await getSentinel1Scenes({
                 acquisitionDateRange,
                 orbitDirection,
+                dualPolarizationOnly,
                 mapPoint: center,
                 abortController,
             });

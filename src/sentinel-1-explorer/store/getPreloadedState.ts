@@ -23,7 +23,7 @@ import {
     getMapCenterFromHashParams,
     getMaskToolDataFromHashParams,
     getQueryParams4MainSceneFromHashParams,
-    getQueryParams4ScenesInAnimationFromHashParams,
+    getListOfQueryParamsFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
     getSpectralProfileToolDataFromHashParams,
     getTemporalProfileToolDataFromHashParams,
@@ -60,6 +60,10 @@ import { initialUIState, UIState } from '@shared/store/UI/reducer';
 import { initialLandsatState } from '@shared/store/Landsat/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
+import {
+    TemporalCompositeToolState,
+    initialState4TemporalCompositeTool,
+} from '@shared/store/TemporalCompositeTool/reducer';
 // import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 /**
@@ -127,8 +131,7 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
             rasterFunctionName: defaultRasterFunction,
         };
 
-    const queryParams4ScenesInAnimation =
-        getQueryParams4ScenesInAnimationFromHashParams() || [];
+    const listOfQueryParams = getListOfQueryParamsFromHashParams() || [];
 
     const queryParamsById: {
         [key: string]: QueryParams4ImageryScene;
@@ -136,7 +139,7 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
 
     const tool = getHashParamValueByKey('tool') as AnalysisTool;
 
-    for (const queryParams of queryParams4ScenesInAnimation) {
+    for (const queryParams of listOfQueryParams) {
         queryParamsById[queryParams.uniqueId] = queryParams;
     }
 
@@ -148,9 +151,9 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         queryParams4SecondaryScene,
         queryParamsList: {
             byId: queryParamsById,
-            ids: queryParams4ScenesInAnimation.map((d) => d.uniqueId),
-            selectedItemID: queryParams4ScenesInAnimation[0]
-                ? queryParams4ScenesInAnimation[0].uniqueId
+            ids: listOfQueryParams.map((d) => d.uniqueId),
+            selectedItemID: listOfQueryParams[0]
+                ? listOfQueryParams[0].uniqueId
                 : null,
         },
         // idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
@@ -175,6 +178,17 @@ const getPreloadedUIState = (): UIState => {
     return proloadedUIState;
 };
 
+const getPreloadedTemporalCompositeToolState =
+    (): TemporalCompositeToolState => {
+        const proloadedState: TemporalCompositeToolState = {
+            ...initialState4TemporalCompositeTool,
+            rasterFunction:
+                'Sentinel-1 RTC VV dB with DRA' as Sentinel1FunctionName,
+        };
+
+        return proloadedState;
+    };
+
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
 
@@ -185,5 +199,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
             ...initialLandsatState,
         },
         ImageryScenes: getPreloadedImageryScenesState(),
-    };
+        TemporalCompositeTool: getPreloadedTemporalCompositeToolState(),
+    } as PartialRootState;
 };

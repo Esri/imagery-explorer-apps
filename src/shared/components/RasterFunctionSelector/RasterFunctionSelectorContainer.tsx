@@ -27,6 +27,7 @@ import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 
 type Props = {
     /**
@@ -58,6 +59,14 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
     const { rasterFunctionName, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
+    const shouldHide = useMemo(() => {
+        if (mode === 'analysis' && analysisTool === 'temporal composite') {
+            return true;
+        }
+
+        return false;
+    }, [mode, analysisTool]);
+
     const shouldDisable = () => {
         if (mode === 'dynamic') {
             return false;
@@ -78,11 +87,9 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
         ) {
             return true;
         }
-
-        return false;
     };
 
-    if (!data || !data.length) {
+    if (!data || !data.length || shouldHide) {
         return null;
     }
 

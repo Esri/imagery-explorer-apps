@@ -40,7 +40,12 @@ export type AppMode =
 /**
  * the imagery explorer app supports these analysis tools
  */
-export type AnalysisTool = 'mask' | 'trend' | 'spectral' | 'change';
+export type AnalysisTool =
+    | 'mask'
+    | 'trend'
+    | 'spectral'
+    | 'change'
+    | 'temporal composite';
 
 /**
  * Query Params and Rendering Options for a Imagery Scene (e.g. Landsat or Sentinel-2)

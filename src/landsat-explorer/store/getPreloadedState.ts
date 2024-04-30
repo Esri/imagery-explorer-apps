@@ -23,7 +23,7 @@ import {
     getMapCenterFromHashParams,
     getMaskToolDataFromHashParams,
     getQueryParams4MainSceneFromHashParams,
-    getQueryParams4ScenesInAnimationFromHashParams,
+    getListOfQueryParamsFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
     getSpectralProfileToolDataFromHashParams,
     getTemporalProfileToolDataFromHashParams,
@@ -128,7 +128,7 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         };
 
     const queryParams4ScenesInAnimation =
-        getQueryParams4ScenesInAnimationFromHashParams() || [];
+        getListOfQueryParamsFromHashParams() || [];
 
     const queryParamsById: {
         [key: string]: QueryParams4ImageryScene;

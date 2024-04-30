@@ -25,6 +25,7 @@ import {
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 
 type Props = {
     serviceUrl: string;
@@ -48,6 +49,10 @@ const ImageryLayerByObjectID: FC<Props> = ({
 
     const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
 
+    const isTemporalCompositeLayerOn = useSelector(
+        selectIsTemporalCompositeLayerOn
+    );
+
     const getVisibility = () => {
         if (mode === 'dynamic') {
             return true;
@@ -58,8 +63,13 @@ const ImageryLayerByObjectID: FC<Props> = ({
         }
 
         if (mode === 'analysis') {
-            // no need to show landsat layer when user is viewing change layer in the change compare tool
+            // no need to show imagery layer when user is viewing change layer in the change compare tool
             if (analysisTool === 'change' && changeCompareLayerIsOn) {
+                return false;
+            }
+
+            // no need to show imagery layer when user is using the 'temporal composite' tool
+            if (analysisTool === 'temporal composite') {
                 return false;
             }
 

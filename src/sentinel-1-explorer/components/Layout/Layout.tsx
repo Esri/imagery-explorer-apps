@@ -38,6 +38,10 @@ import { SceneInfo } from '../SceneInfo';
 import { Sentinel1FunctionSelector } from '../RasterFunctionSelector';
 import { OrbitDirectionFilter } from '../OrbitDirectionFilter';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
+import { AnalyzeToolSelector4Sentinel1 } from '../AnalyzeToolSelector/AnalyzeToolSelector';
+import { TemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector';
+import { TemporalCompositeTool } from '../TemporalCompositeTool/TemporalCompositeTool';
+import classNames from 'classnames';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -82,15 +86,16 @@ export const Layout = () => {
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
                             <AnimationControl />
-                            {/* <AnalysisToolSelector /> */}
+                            <AnalyzeToolSelector4Sentinel1 />
                         </ContainerOfSecondaryControls>
                     )}
 
-                    {/* {mode === 'analysis' && analysisTool === 'change' && (
-                        <ContainerOfSecondaryControls>
-                            <ChangeCompareLayerSelector />
-                        </ContainerOfSecondaryControls>
-                    )} */}
+                    {mode === 'analysis' &&
+                        analysisTool === 'temporal composite' && (
+                            <ContainerOfSecondaryControls>
+                                <TemporalCompositeLayerSelector />
+                            </ContainerOfSecondaryControls>
+                        )}
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">
@@ -107,14 +112,23 @@ export const Layout = () => {
                                 </Calendar>
                             </div>
 
-                            {/* {mode === 'analysis' && (
-                                <div className="analyze-tool-and-scene-info-container">
-                                    <MaskTool />
+                            {mode === 'analysis' && (
+                                <div
+                                    className={classNames({
+                                        'analyze-tool-and-scene-info-container':
+                                            analysisTool !==
+                                            'temporal composite',
+                                        'analyze-tool-without-scene-info-container':
+                                            analysisTool ===
+                                            'temporal composite',
+                                    })}
+                                >
+                                    {/* <MaskTool />
                                     <TrendTool />
-                                    <SpectralTool />
-                                    <ChangeCompareTool />
+                                    <SpectralTool /> */}
+                                    <TemporalCompositeTool />
                                 </div>
-                            )} */}
+                            )}
 
                             <SceneInfo />
                         </>

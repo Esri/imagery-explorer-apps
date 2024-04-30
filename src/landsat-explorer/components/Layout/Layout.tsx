@@ -28,7 +28,7 @@ import {
     selectAppMode,
 } from '@shared/store/ImageryScene/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
-import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
+
 import { TrendTool } from '../TrendTool';
 import { MaskTool } from '../MaskTool';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
@@ -43,6 +43,7 @@ import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQuery
 import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
+import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -88,7 +89,7 @@ const Layout = () => {
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
                             <AnimationControl />
-                            <AnalysisToolSelector />
+                            <AnalyzeToolSelector4Landsat />
                         </ContainerOfSecondaryControls>
                     )}
 

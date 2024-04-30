@@ -13,14 +13,18 @@
  * limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { queryAvailableScenes } from '@shared/store/Sentinel1/thunks';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+import {
+    selectActiveAnalysisTool,
+    selectAppMode,
+    selectQueryParams4SceneInSelectedMode,
+} from '@shared/store/ImageryScene/selectors';
 import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
@@ -31,6 +35,10 @@ import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors
  */
 export const useQueryAvailableSentinel1Scenes = (): void => {
     const dispatch = useDispatch();
+
+    const mode = useSelector(selectAppMode);
+
+    const analysisTool = useSelector(selectActiveAnalysisTool);
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
 
@@ -45,6 +53,18 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
 
     const orbitDirection = useSelector(selectSentinel1OrbitDirection);
 
+    /**
+     * Indicates if we should only query the sentinel-1 imagery scenes that
+     * support dual polarization: VV and VH
+     */
+    const dualPolarizationOnly = useMemo(() => {
+        if (mode === 'analysis' && analysisTool === 'temporal composite') {
+            return true;
+        }
+
+        return false;
+    }, [mode, analysisTool]);
+
     useEffect(() => {
         if (!center || !acquisitionDateRange) {
             return;
@@ -54,8 +74,20 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
             return;
         }
 
-        dispatch(queryAvailableScenes(acquisitionDateRange, orbitDirection));
-    }, [center, acquisitionDateRange, isAnimationPlaying, orbitDirection]);
+        dispatch(
+            queryAvailableScenes(
+                acquisitionDateRange,
+                orbitDirection,
+                dualPolarizationOnly
+            )
+        );
+    }, [
+        center,
+        acquisitionDateRange,
+        isAnimationPlaying,
+        orbitDirection,
+        dualPolarizationOnly,
+    ]);
 
     return null;
 };

@@ -33,7 +33,7 @@ export {
     saveQueryParams4ScenesInAnimationToHashParams,
     getQueryParams4MainSceneFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
-    getQueryParams4ScenesInAnimationFromHashParams,
+    getListOfQueryParamsFromHashParams,
 } from './queryParams4ImageryScene';
 
 export {
@@ -56,6 +56,7 @@ export type UrlHashParamKey =
     | 'mode' // hash params for app mode
     | 'mainScene' // hash params for query params of the main scene
     | 'secondaryScene' // hash params for query params of the secondary scene
+    | 'listOfScenes' // hash params for query params in list of imagery scene
     | 'animationScenes' // hash params for query params of scenes in the animation mode
     | 'animation' // hash params for animation mode
     | 'animationWindow' // hash params for animation window info that includes map extent and size

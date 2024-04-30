@@ -48,6 +48,7 @@ import { useSelector } from 'react-redux';
 import { selectSpectralProfileToolState } from '@shared/store/SpectralProfileTool/selectors';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectChangeCompareToolState } from '@shared/store/ChangeCompareTool/selectors';
+import { saveListOfQueryParamsToHashParams } from '@shared/utils/url-hash-params/queryParams4ImageryScene';
 
 export const useSaveAppState2HashParams = () => {
     const mode = useSelector(selectAppMode);
@@ -66,9 +67,7 @@ export const useSaveAppState2HashParams = () => {
 
     const spectralToolState = useSelector(selectSpectralProfileToolState);
 
-    const queryParams4ScenesInAnimationMode = useSelector(
-        selectListOfQueryParams
-    );
+    const listOfQueryParams = useSelector(selectListOfQueryParams);
 
     const animationStatus = useSelector(selectAnimationStatus);
 
@@ -140,9 +139,17 @@ export const useSaveAppState2HashParams = () => {
 
     useEffect(() => {
         saveQueryParams4ScenesInAnimationToHashParams(
-            mode === 'animate' ? queryParams4ScenesInAnimationMode : null
+            mode === 'animate' ? listOfQueryParams : null
         );
-    }, [mode, queryParams4ScenesInAnimationMode]);
+    }, [mode, listOfQueryParams]);
+
+    useEffect(() => {
+        saveListOfQueryParamsToHashParams(
+            mode === 'analysis' && analysisTool === 'temporal composite'
+                ? listOfQueryParams
+                : null
+        );
+    }, [mode, analysisTool, listOfQueryParams]);
 
     useEffect(() => {
         saveAnimationSpeedToHashParams(

@@ -57,15 +57,31 @@ export const updateQueryParams4SceneInSelectedMode =
             return;
         }
 
-        if (mode === 'analysis' && analysisTool !== 'change') {
+        if (mode === 'analysis') {
+            if (analysisTool === 'change') {
+                if (isSecondarySceneActive) {
+                    dispatch(
+                        queryParams4SecondarySceneChanged(updatedQueryParams)
+                    );
+                } else {
+                    dispatch(queryParams4MainSceneChanged(updatedQueryParams));
+                }
+
+                return;
+            }
+
+            if (analysisTool === 'temporal composite') {
+                dispatch(
+                    queryParams4SelectedItemInListChanged(updatedQueryParams)
+                );
+                return;
+            }
+
             dispatch(queryParams4MainSceneChanged(updatedQueryParams));
             return;
         }
 
-        if (
-            mode === 'swipe' ||
-            (mode === 'analysis' && analysisTool === 'change')
-        ) {
+        if (mode === 'swipe') {
             if (isSecondarySceneActive) {
                 dispatch(queryParams4SecondarySceneChanged(updatedQueryParams));
             } else {
@@ -77,6 +93,7 @@ export const updateQueryParams4SceneInSelectedMode =
 
         if (mode === 'animate' || mode === 'spectral sampling') {
             dispatch(queryParams4SelectedItemInListChanged(updatedQueryParams));
+            return;
         }
     };
 

@@ -43,7 +43,7 @@ type Props = {
  *
  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-MosaicRule.html
  */
-export const getMosaicRule = async (objectId: number): Promise<MosaicRule> => {
+export const getMosaicRule = (objectId: number): MosaicRule => {
     if (!objectId) {
         return null;
     }
@@ -77,7 +77,7 @@ export const useImageryLayerByObjectId = ({
      * initialize imagery layer using mosaic created using the input year
      */
     const init = async () => {
-        const mosaicRule = objectId ? await getMosaicRule(objectId) : null;
+        const mosaicRule = objectId ? getMosaicRule(objectId) : null;
 
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
@@ -120,7 +120,7 @@ export const useImageryLayerByObjectId = ({
                 return;
             }
 
-            layerRef.current.mosaicRule = await getMosaicRule(objectId);
+            layerRef.current.mosaicRule = getMosaicRule(objectId);
         })();
     }, [objectId]);
 
