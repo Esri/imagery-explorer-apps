@@ -64,6 +64,14 @@ import {
     TemporalCompositeToolState,
     initialState4TemporalCompositeTool,
 } from '@shared/store/TemporalCompositeTool/reducer';
+import {
+    ChangeCompareToolState,
+    initialChangeCompareToolState,
+} from '@shared/store/ChangeCompareTool/reducer';
+import {
+    ChangeCompareToolOption4Sentinel1,
+    ChangeCompareToolPixelValueRange4Sentinel1,
+} from '../components/ChangeCompareTool/ChangeCompareToolContainer';
 // import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 /**
@@ -189,6 +197,30 @@ const getPreloadedTemporalCompositeToolState =
         return proloadedState;
     };
 
+const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
+    const changeCompareToolData = getChangeCompareToolDataFromHashParams();
+
+    const selectedOption: ChangeCompareToolOption4Sentinel1 =
+        changeCompareToolData?.selectedOption
+            ? (changeCompareToolData?.selectedOption as ChangeCompareToolOption4Sentinel1)
+            : 'log difference';
+
+    const fullPixelValuesRange =
+        ChangeCompareToolPixelValueRange4Sentinel1[selectedOption];
+
+    const initalState: ChangeCompareToolState = {
+        ...initialChangeCompareToolState,
+    };
+
+    return {
+        ...initalState,
+        ...changeCompareToolData,
+        selectedOption,
+        fullPixelValuesRange,
+        selectedRange: fullPixelValuesRange,
+    };
+};
+
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
 
@@ -200,5 +232,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         },
         ImageryScenes: getPreloadedImageryScenesState(),
         TemporalCompositeTool: getPreloadedTemporalCompositeToolState(),
+        ChangeCompareTool: getPreloadedChangeCompareToolState(),
     } as PartialRootState;
 };

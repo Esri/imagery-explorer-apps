@@ -91,8 +91,10 @@ const SENTINEL1_RASTER_FUNCTIONS = [
     'Sentinel-1 RTC VV dB with DRA',
     'Sentinel-1 RTC VH dB with DRA',
     'Sentinel-1 SWI Raw',
-    'Sentinel-1 DpRVIc Raw with Control',
+    'Sentinel-1 DpRVIc Raw',
     'Sentinel-1 Water Anomaly Index Raw',
+    'Sentinel-1 RTC Despeckle VV Amplitude',
+    'Sentinel-1 RTC Despeckle VH Amplitude',
 ] as const;
 
 export type Sentinel1FunctionName = (typeof SENTINEL1_RASTER_FUNCTIONS)[number];
@@ -131,7 +133,7 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         label: 'SWI ',
     },
     {
-        name: 'Sentinel-1 DpRVIc Raw with Control',
+        name: 'Sentinel-1 DpRVIc Raw',
         description:
             'Dual-pol Radar Vegetation Index for GRD SAR data computed as ((VH/VV) * ((VH/VV) + 3)) / ((VH/VV) + 1) ^ 2.',
         label: 'DpRVIc ',
@@ -141,5 +143,15 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         description:
             'Water Anomaly Index that is used for oil detection but can also be used to detect other pullutants and natural phenomena such as industrial pollutants, sewage, red ocean tides, seaweed blobs, and more computed as Ln (0.01 / (0.01 + VV * 2)).',
         label: 'Water Anomaly',
+    },
+    {
+        name: 'Sentinel-1 RTC Despeckle VV Amplitude',
+        description: 'VV data in Amplitude scale for computational analysis',
+        label: 'VV Amplitude',
+    },
+    {
+        name: 'Sentinel-1 RTC Despeckle VH Amplitude',
+        description: 'VH data in Amplitude scale for computational analysis',
+        label: 'VH Amplitude',
     },
 ];

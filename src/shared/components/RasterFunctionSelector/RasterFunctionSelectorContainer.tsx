@@ -87,6 +87,8 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
         ) {
             return true;
         }
+
+        return false;
     };
 
     if (!data || !data.length || shouldHide) {

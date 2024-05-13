@@ -29,9 +29,11 @@ const Sentinel1RendererThumbnailByName: Record<Sentinel1FunctionName, string> =
         'Sentinel-1 RGB dB DRA': PlaceholderThumbnail,
         'Sentinel-1 RTC VH dB with DRA': PlaceholderThumbnail,
         'Sentinel-1 RTC VV dB with DRA': PlaceholderThumbnail,
-        'Sentinel-1 DpRVIc Raw with Control': PlaceholderThumbnail,
+        'Sentinel-1 DpRVIc Raw': PlaceholderThumbnail,
         'Sentinel-1 SWI Raw': PlaceholderThumbnail,
         'Sentinel-1 Water Anomaly Index Raw': PlaceholderThumbnail,
+        'Sentinel-1 RTC Despeckle VH Amplitude': PlaceholderThumbnail,
+        'Sentinel-1 RTC Despeckle VV Amplitude': PlaceholderThumbnail,
         // 'NDMI Colorized': LandsatNDMIThumbnail,
     };
 
@@ -39,9 +41,11 @@ const Sentinel1RendererLegendByName: Record<Sentinel1FunctionName, string> = {
     'Sentinel-1 RGB dB DRA': CompositeLegend,
     'Sentinel-1 RTC VH dB with DRA': null,
     'Sentinel-1 RTC VV dB with DRA': null,
-    'Sentinel-1 DpRVIc Raw with Control': null,
+    'Sentinel-1 DpRVIc Raw': null,
     'Sentinel-1 SWI Raw': null,
     'Sentinel-1 Water Anomaly Index Raw': null,
+    'Sentinel-1 RTC Despeckle VH Amplitude': null,
+    'Sentinel-1 RTC Despeckle VV Amplitude': null,
 };
 
 export const getSentinel1RasterFunctionInfo = (): RasterFunctionInfo[] => {

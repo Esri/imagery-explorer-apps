@@ -35,6 +35,7 @@ import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeW
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 import { Popup } from '../Popup';
 import { TemporalCompositeLayer } from '../TemporalCompositeLayer';
+import { ChangeCompareLayer4Sentinel1 } from '../ChangeCompareLayer';
 
 export const Map = () => {
     return (
@@ -45,7 +46,7 @@ export const Map = () => {
                 index={1}
             >
                 <Sentinel1Layer />
-                {/* <MaskLayer /> */}
+                <ChangeCompareLayer4Sentinel1 />
                 <TemporalCompositeLayer />
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />

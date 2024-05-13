@@ -16,9 +16,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectSpectralIndex4ChangeCompareTool = createSelector(
-    (state: RootState) => state.ChangeCompareTool.spectralIndex,
-    (spectralIndex) => spectralIndex
+export const selectSelectedOption4ChangeCompareTool = createSelector(
+    (state: RootState) => state.ChangeCompareTool.selectedOption,
+    (selectedOption) => selectedOption
 );
 
 export const selectChangeCompareLayerIsOn = createSelector(
@@ -29,6 +29,11 @@ export const selectChangeCompareLayerIsOn = createSelector(
 export const selectUserSelectedRangeInChangeCompareTool = createSelector(
     (state: RootState) => state.ChangeCompareTool.selectedRange,
     (selectedRange) => selectedRange
+);
+
+export const selectFullPixelValuesRangeInChangeCompareTool = createSelector(
+    (state: RootState) => state.ChangeCompareTool.fullPixelValuesRange,
+    (fullPixelValuesRange) => fullPixelValuesRange
 );
 
 export const selectChangeCompareToolState = createSelector(

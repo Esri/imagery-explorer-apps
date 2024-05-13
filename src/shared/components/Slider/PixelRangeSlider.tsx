@@ -19,6 +19,7 @@ import SliderWidget from '@arcgis/core/widgets/Slider';
 // import './PixelRangeSlider.css';
 import './Slider.css';
 import classNames from 'classnames';
+import { nanoid } from 'nanoid';
 
 type Props = {
     /**
@@ -76,8 +77,22 @@ export const PixelRangeSlider: FC<Props> = ({
 
     const sliderRef = useRef<SliderWidget>();
 
+    const getTickConfigs = () => {
+        return [
+            {
+                mode: 'count',
+                values: countOfTicks,
+            },
+            {
+                mode: 'position',
+                values: tickLabels, //[-1, -0.5, 0, 0.5, 1],
+                labelsVisible: true,
+            },
+        ] as __esri.TickConfig[];
+    };
+
     const init = async () => {
-        sliderRef.current = new SliderWidget({
+        const widget = new SliderWidget({
             container: containerRef.current,
             min,
             max,
@@ -88,19 +103,11 @@ export const PixelRangeSlider: FC<Props> = ({
                 labels: false,
                 rangeLabels: false,
             },
-            tickConfigs: [
-                {
-                    mode: 'count',
-                    values: countOfTicks,
-                },
-                {
-                    mode: 'position',
-                    values: tickLabels, //[-1, -0.5, 0, 0.5, 1],
-                    labelsVisible: true,
-                },
-            ],
+            tickConfigs: getTickConfigs(),
             // layout: 'vertical',
         });
+
+        sliderRef.current = widget;
 
         sliderRef.current.on('thumb-drag', (evt) => {
             // const { value, index } = evt;
@@ -181,6 +188,18 @@ export const PixelRangeSlider: FC<Props> = ({
 
         addTooltipTextAttribute();
     }, [values]);
+
+    useEffect(() => {
+        if (!sliderRef.current) {
+            return;
+        }
+
+        sliderRef.current.min = min;
+        sliderRef.current.max = max;
+        sliderRef.current.values = values;
+        sliderRef.current.steps = steps;
+        sliderRef.current.tickConfigs = getTickConfigs();
+    }, [min, max, values, steps, countOfTicks, tickLabels]);
 
     return (
         <div

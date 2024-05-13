@@ -26,9 +26,10 @@ import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { ChangeLayer } from './ChangeLayer';
 import {
     selectChangeCompareLayerIsOn,
-    selectSpectralIndex4ChangeCompareTool,
+    selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
+import { SpectralIndex } from '@typing/imagery-service';
 
 type Props = {
     mapView?: MapView;
@@ -38,7 +39,9 @@ type Props = {
 export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const mode = useSelector(selectAppMode);
 
-    const spectralIndex = useSelector(selectSpectralIndex4ChangeCompareTool);
+    const spectralIndex = useSelector(
+        selectSelectedOption4ChangeCompareTool
+    ) as SpectralIndex;
 
     const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
 

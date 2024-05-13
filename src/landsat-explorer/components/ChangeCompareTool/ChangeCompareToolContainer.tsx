@@ -17,11 +17,11 @@ import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
     selectedRangeUpdated,
-    spectralIndex4ChangeCompareToolChanged,
+    selectedOption4ChangeCompareToolChanged,
 } from '@shared/store/ChangeCompareTool/reducer';
 import {
     selectChangeCompareLayerIsOn,
-    selectSpectralIndex4ChangeCompareTool,
+    selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
@@ -42,7 +42,7 @@ export const ChangeCompareToolContainer = () => {
     );
 
     const selectedSpectralIndex = useSelector(
-        selectSpectralIndex4ChangeCompareTool
+        selectSelectedOption4ChangeCompareTool
     );
 
     const isChangeLayerOn = useSelector(selectChangeCompareLayerIsOn);
@@ -75,7 +75,7 @@ export const ChangeCompareToolContainer = () => {
                 }
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
-                        spectralIndex4ChangeCompareToolChanged(
+                        selectedOption4ChangeCompareToolChanged(
                             val as SpectralIndex
                         )
                     );

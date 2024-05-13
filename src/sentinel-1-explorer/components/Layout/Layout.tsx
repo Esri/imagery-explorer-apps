@@ -41,7 +41,9 @@ import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecon
 import { AnalyzeToolSelector4Sentinel1 } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { TemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector';
 import { TemporalCompositeTool } from '../TemporalCompositeTool/TemporalCompositeTool';
+import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import classNames from 'classnames';
+import { ChangeCompareTool4Sentinel1 } from '../ChangeCompareTool';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -96,6 +98,12 @@ export const Layout = () => {
                                 <TemporalCompositeLayerSelector />
                             </ContainerOfSecondaryControls>
                         )}
+
+                    {mode === 'analysis' && analysisTool === 'change' && (
+                        <ContainerOfSecondaryControls>
+                            <ChangeCompareLayerSelector />
+                        </ContainerOfSecondaryControls>
+                    )}
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">
@@ -126,6 +134,7 @@ export const Layout = () => {
                                     {/* <MaskTool />
                                     <TrendTool />
                                     <SpectralTool /> */}
+                                    <ChangeCompareTool4Sentinel1 />
                                     <TemporalCompositeTool />
                                 </div>
                             )}

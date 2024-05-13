@@ -24,6 +24,8 @@ import {
     Sentinel1Scene,
 } from '@typing/imagery-service';
 
+export type Sentinel1PolarizationFilter = 'VV' | 'VH';
+
 export type Sentinel1State = {
     /**
      * Sentinel-1 scenes that intersect with center point of map view and were acquired during the input year.
@@ -35,6 +37,10 @@ export type Sentinel1State = {
         objectIds?: number[];
     };
     orbitDirection: Sentinel1OrbitDirection;
+    /**
+     * The polarization filter that allows user to switch between VV and VH
+     */
+    polarizationFilter: Sentinel1PolarizationFilter;
 };
 
 export const initialSentinel1State: Sentinel1State = {
@@ -43,6 +49,7 @@ export const initialSentinel1State: Sentinel1State = {
         objectIds: [],
     },
     orbitDirection: 'Descending',
+    polarizationFilter: 'VV',
 };
 
 const slice = createSlice({
@@ -77,11 +84,21 @@ const slice = createSlice({
         ) => {
             state.orbitDirection = action.payload;
         },
+        polarizationFilterChanged: (
+            state,
+            action: PayloadAction<Sentinel1PolarizationFilter>
+        ) => {
+            state.polarizationFilter = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { sentinel1ScenesUpdated, orbitDirectionChanged } = slice.actions;
+export const {
+    sentinel1ScenesUpdated,
+    orbitDirectionChanged,
+    polarizationFilterChanged,
+} = slice.actions;
 
 export default reducer;

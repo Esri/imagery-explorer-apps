@@ -25,3 +25,8 @@ export const selectSentinel1OrbitDirection = createSelector(
     (state: RootState) => state.Sentinel1.orbitDirection,
     (orbitDirection) => orbitDirection
 );
+
+export const selectPolarizationFilter = createSelector(
+    (state: RootState) => state.Sentinel1.polarizationFilter,
+    (polarizationFilter) => polarizationFilter
+);
