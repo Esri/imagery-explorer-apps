@@ -30,7 +30,7 @@ const encodeTemporalProfileToolData = (data: TrendToolState): string => {
     }
 
     const {
-        spectralIndex,
+        selectedIndex,
         acquisitionMonth,
         queryLocation,
         acquisitionYear,
@@ -42,7 +42,7 @@ const encodeTemporalProfileToolData = (data: TrendToolState): string => {
     }
 
     return [
-        spectralIndex,
+        selectedIndex,
         acquisitionMonth,
         // samplingTemporalResolution,
         encodeQueryLocation(queryLocation),
@@ -57,7 +57,7 @@ const decodeTemporalProfileToolData = (val: string): TrendToolState => {
     }
 
     const [
-        spectralIndex,
+        selectedOption,
         acquisitionMonth,
         // samplingTemporalResolution,
         queryLocation,
@@ -67,7 +67,7 @@ const decodeTemporalProfileToolData = (val: string): TrendToolState => {
 
     return {
         ...initialTrendToolState,
-        spectralIndex: spectralIndex as SpectralIndex,
+        selectedIndex: selectedOption as SpectralIndex,
         acquisitionMonth: +acquisitionMonth,
         acquisitionYear: acquisitionYear ? +acquisitionYear : getCurrentYear(),
         option: option ? (option as TrendToolOption) : 'year-to-year',

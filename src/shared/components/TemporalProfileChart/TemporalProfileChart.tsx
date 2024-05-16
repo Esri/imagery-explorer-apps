@@ -14,9 +14,9 @@
  */
 
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { LineChartBasic } from '@vannizhang/react-d3-charts';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+// import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import {
     formattedDateString2Unixtimestamp,
     getMonthFromFormattedDateString,
@@ -27,13 +27,13 @@ import { DATE_FORMAT } from '@shared/constants/UI';
 import { TemporalProfileData } from '@typing/imagery-service';
 import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
-import {
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-level-2/config';
-import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
+// import {
+//     LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+//     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+//     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+//     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+// } from '@shared/services/landsat-level-2/config';
+// import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
 // import { selectTrendToolOption } from '@shared/store/TrendTool/selectors';
 // import { getMonthAbbreviation } from '@shared/utils/date-time/getMonthName';
 import { TrendToolOption } from '@shared/store/TrendTool/reducer';
@@ -43,13 +43,13 @@ import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone
 
 type Props = {
     /**
-     * data that will be used to plot the trend chart
+     * data that will be used to plot the Line chart for the Temporal Profile Tool
      */
-    data: TemporalProfileData[];
+    chartData: LineChartDataItem[];
     /**
-     * user selected spectral index
+     * custom domain for the Y-Scale of the Line chart
      */
-    spectralIndex: SpectralIndex;
+    customDomain4YScale: number[];
     /**
      * user selected trend tool option
      */
@@ -66,68 +66,9 @@ type Props = {
     onClickHandler: (index: number) => void;
 };
 
-/**
- * Converts Landsat temporal profile data to chart data.
- * @param temporalProfileData - Array of temporal profile data.
- * @param spectralIndex - Spectral index to calculate the value for each data point.
- * @param month2month - if true, user is trying to plot month to month trend line for a selected year.
- * @returns An array of QuickD3ChartDataItem objects representing the chart data.
- *
- */
-export const convertLandsatTemporalProfileData2ChartData = (
-    temporalProfileData: TemporalProfileData[],
-    spectralIndex: SpectralIndex,
-    month2month?: boolean
-): LineChartDataItem[] => {
-    const data = temporalProfileData.map((d) => {
-        const { acquisitionDate, values } = d;
-
-        // calculate the spectral index that will be used as the y value for each chart vertex
-        let y = calcSpectralIndex(spectralIndex, values);
-
-        let yMin = -1;
-        let yMax = 1;
-
-        // justify the y value for surface temperature index to make it not go below the hardcoded y min
-        if (
-            spectralIndex === 'temperature farhenheit' ||
-            spectralIndex === 'temperature celcius'
-        ) {
-            yMin =
-                spectralIndex === 'temperature farhenheit'
-                    ? LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT
-                    : LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
-
-            yMax =
-                spectralIndex === 'temperature farhenheit'
-                    ? LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT
-                    : LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS;
-        }
-
-        // y should not go below y min
-        y = Math.max(y, yMin);
-
-        // y should not go beyond y max
-        y = Math.min(y, yMax);
-
-        const tooltip = `${formatInUTCTimeZone(
-            acquisitionDate,
-            'LLL yyyy'
-        )}: ${y.toFixed(2)}`;
-
-        return {
-            x: month2month ? d.acquisitionMonth : d.acquisitionDate,
-            y,
-            tooltip,
-        };
-    });
-
-    return data;
-};
-
 export const TemporalProfileChart: FC<Props> = ({
-    data,
-    spectralIndex,
+    chartData,
+    customDomain4YScale,
     trendToolOption,
     acquisitionYear,
     selectedAcquisitionDate,
@@ -137,12 +78,6 @@ export const TemporalProfileChart: FC<Props> = ({
 
     // const queryParams4SelectedScene =
     //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
-
-    const chartData = convertLandsatTemporalProfileData2ChartData(
-        data,
-        spectralIndex,
-        trendToolOption === 'month-to-month'
-    );
 
     const customDomain4XScale = useMemo(() => {
         if (!chartData.length) {
@@ -172,38 +107,6 @@ export const TemporalProfileChart: FC<Props> = ({
 
         return [xMin, xMax];
     }, [chartData, selectedAcquisitionDate, trendToolOption]);
-
-    const customDomain4YScale = useMemo(() => {
-        const yValues = chartData.map((d) => d.y);
-
-        // boundary of y axis, for spectral index, the boundary should be -1 and 1
-        let yUpperLimit = 1;
-        let yLowerLimit = -1;
-
-        // temperature is handled differently as we display the actual values in the chart
-        if (spectralIndex === 'temperature farhenheit') {
-            yLowerLimit = LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT;
-            yUpperLimit = LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT;
-        }
-
-        if (spectralIndex === 'temperature celcius') {
-            yLowerLimit = LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
-            yUpperLimit = LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS;
-        }
-
-        // get min and max from the data
-        let ymin = Math.min(...yValues);
-        let ymax = Math.max(...yValues);
-
-        // get range between min and max from the data
-        const yRange = ymax - ymin;
-
-        // adjust ymin and ymax to add 10% buffer to it, but also need to make sure it fits in the upper and lower limit
-        ymin = Math.max(yLowerLimit, ymin - yRange * 0.1);
-        ymax = Math.min(yUpperLimit, ymax + yRange * 0.1);
-
-        return [ymin, ymax];
-    }, [chartData]);
 
     const trendLineData = useMemo(() => {
         if (!chartData || !chartData.length) {

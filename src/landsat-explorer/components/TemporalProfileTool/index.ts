@@ -13,5 +13,5 @@
  * limitations under the License.
  */
 
-export { TrendToolContainer as TrendTool } from './TrendToolContainer';
-export { TrendChartContainer as TrendChart } from './TrendChartContainer';
+export { LandsatTemporalProfileTool as TrendTool } from './LandsatTemporalProfileTool';
+export { LandsatTemporalProfileChart as TrendChart } from './LandsatTemporalProfileChart';

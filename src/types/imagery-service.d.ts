@@ -51,6 +51,12 @@ export type SpectralIndex =
     | 'temperature farhenheit'
     | 'temperature celcius';
 
+/**
+ * Name of Radar Index for SAR image (e.g. Sentinel-1)
+ */
+export type RadarIndex = 'water' | 'water anomaly';
+// | 'vegetation'
+
 export type LandsatScene = {
     objectId: number;
     /**

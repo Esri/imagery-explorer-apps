@@ -29,7 +29,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
 
-import { TrendTool } from '../TrendTool';
+import { TrendTool } from '../TemporalProfileTool';
 import { MaskTool } from '../MaskTool';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';

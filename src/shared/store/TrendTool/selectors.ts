@@ -39,9 +39,9 @@ export const selectTrendToolData = createSelector(
     }
 );
 
-export const selectSpectralIndex4TrendTool = createSelector(
-    (state: RootState) => state.TrendTool.spectralIndex,
-    (spectralIndex) => spectralIndex
+export const selectSelectedIndex4TrendTool = createSelector(
+    (state: RootState) => state.TrendTool.selectedIndex,
+    (selectedOption) => selectedOption
 );
 
 export const selectTrendToolOption = createSelector(
@@ -57,4 +57,9 @@ export const selectTrendToolState = createSelector(
 export const selectIsLoadingData4TrendingTool = createSelector(
     (state: RootState) => state.TrendTool.loading,
     (loading) => loading
+);
+
+export const selectError4TemporalProfileTool = createSelector(
+    (state: RootState) => state.TrendTool.error,
+    (error) => error
 );

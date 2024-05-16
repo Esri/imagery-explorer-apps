@@ -19,13 +19,13 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { SpectralIndex } from '@typing/imagery-service';
+import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 
 export type ChangeCompareToolState = {
     /**
      * user selected option that will be used to create raster function to compare change between two imagery scenes
      */
-    selectedOption: SpectralIndex | string;
+    selectedOption: SpectralIndex | RadarIndex | string;
     /**
      * if true, the change compare layer is visible in the map
      */
@@ -53,7 +53,7 @@ const slice = createSlice({
     reducers: {
         selectedOption4ChangeCompareToolChanged: (
             state,
-            action: PayloadAction<SpectralIndex | string>
+            action: PayloadAction<SpectralIndex | RadarIndex>
         ) => {
             state.selectedOption = action.payload;
         },

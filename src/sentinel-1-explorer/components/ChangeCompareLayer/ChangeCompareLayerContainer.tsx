@@ -56,9 +56,9 @@ const InputRasterFunctionName: Record<
     Sentinel1FunctionName
 > = {
     'log difference': null,
-    'water anomaly index': 'Sentinel-1 Water Anomaly Index Raw',
+    'water anomaly': 'Water Anomaly Index Raw',
     // vegetation: 'Sentinel-1 DpRVIc Raw',
-    water: 'Sentinel-1 Water Anomaly Index Raw',
+    water: 'SWI Raw',
 };
 
 export const ChangeCompareLayerContainer: FC<Props> = ({

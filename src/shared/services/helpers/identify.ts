@@ -15,12 +15,12 @@
 
 import { Geometry, Point } from '@arcgis/core/geometry';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
-import { getMosaicRuleByObjectId } from './getMosaicRuleByObjectId';
+import { getMosaicRuleByObjectIds } from './getMosaicRuleByObjectId';
 
 /**
  * Parameters for the Identify Task
  */
-type IdentifyTaskParams = {
+export type IdentifyTaskParams = {
     /**
      * URL of the imagery service
      */
@@ -30,9 +30,9 @@ type IdentifyTaskParams = {
      */
     point: Point;
     /**
-     * Object ID of the imagery scene
+     * Object IDs of the imagery scenes
      */
-    objectId?: number;
+    objectIds?: number[];
     /**
      * Abort controller to be used to cancel the identify task
      */
@@ -44,7 +44,7 @@ type IdentifyTaskParams = {
  * @param param0 - IdentifyTaskParams object containing parameters for the identify task
  * @returns Promise of IdentifyTaskResponse containing the result of the identify task
  */
-type IdentifyTaskResponse = {
+export type IdentifyTaskResponse = {
     catalogItems: {
         features: IFeature[];
         geometryType: string;
@@ -66,22 +66,23 @@ type IdentifyTaskResponse = {
 export const identify = async ({
     serviceURL,
     point,
-    objectId,
+    objectIds,
     abortController,
 }: IdentifyTaskParams): Promise<IdentifyTaskResponse> => {
-    const mosaicRule = objectId
-        ? getMosaicRuleByObjectId(objectId)
-        : {
-              ascending: true,
-              mosaicMethod: 'esriMosaicAttribute',
-              mosaicOperation: 'MT_FIRST',
-              sortField: 'best',
-              sortValue: '0',
-          };
+    const mosaicRule =
+        objectIds && objectIds.length
+            ? getMosaicRuleByObjectIds(objectIds)
+            : {
+                  ascending: true,
+                  mosaicMethod: 'esriMosaicAttribute',
+                  mosaicOperation: 'MT_FIRST',
+                  sortField: 'best',
+                  sortValue: '0',
+              };
 
     const params = new URLSearchParams({
         f: 'json',
-        maxItemCount: '1',
+        // maxItemCount: '1',
         returnGeometry: 'false',
         returnCatalogItems: 'true',
         geometryType: 'esriGeometryPoint',

@@ -23,7 +23,11 @@ import {
     getCurrentMonth,
     getCurrentYear,
 } from '@shared/utils/date-time/getCurrentDateTime';
-import { TemporalProfileData, SpectralIndex } from '@typing/imagery-service';
+import {
+    TemporalProfileData,
+    SpectralIndex,
+    RadarIndex,
+} from '@typing/imagery-service';
 import { Point } from '@arcgis/core/geometry';
 
 /**
@@ -52,9 +56,9 @@ export type TrendToolState = {
      */
     acquisitionYear: number;
     /**
-     * user selected spectral index to be used in the Temporal trend tool
+     * user selected spectral index or radar index that will be used to fetch/create Trend Profile data that will be used in the Temporal trend tool
      */
-    spectralIndex: SpectralIndex;
+    selectedIndex: SpectralIndex | RadarIndex;
     /**
      * imagery temporal trend data
      */
@@ -68,6 +72,10 @@ export type TrendToolState = {
      * if ture, it is in process of loading data to render trend tool
      */
     loading: boolean;
+    /**
+     * message from the error that was caught while fetch the temporal profile data
+     */
+    error: string;
 };
 
 export const initialTrendToolState: TrendToolState = {
@@ -75,12 +83,13 @@ export const initialTrendToolState: TrendToolState = {
     queryLocation: null,
     acquisitionMonth: getCurrentMonth(),
     acquisitionYear: getCurrentYear(),
-    spectralIndex: 'moisture',
+    selectedIndex: 'moisture',
     temporalProfileData: {
         byObjectId: {},
         objectIds: [],
     },
     loading: false,
+    error: null,
 };
 
 const slice = createSlice({
@@ -125,11 +134,11 @@ const slice = createSlice({
                 byObjectId,
             };
         },
-        spectralIndex4TrendToolChanged: (
+        selectedIndex4TrendToolChanged: (
             state,
-            action: PayloadAction<SpectralIndex>
+            action: PayloadAction<SpectralIndex | RadarIndex>
         ) => {
-            state.spectralIndex = action.payload;
+            state.selectedIndex = action.payload;
         },
         trendToolOptionChanged: (
             state,
@@ -139,6 +148,9 @@ const slice = createSlice({
         },
         trendToolIsLoadingChanged: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
+        },
+        errorChanged: (state, action: PayloadAction<string>) => {
+            state.error = action.payload;
         },
     },
 });
@@ -150,9 +162,10 @@ export const {
     acquisitionMonth4TrendToolChanged,
     acquisitionYear4TrendToolChanged,
     trendToolDataUpdated,
-    spectralIndex4TrendToolChanged,
+    selectedIndex4TrendToolChanged,
     trendToolOptionChanged,
     trendToolIsLoadingChanged,
+    errorChanged,
 } = slice.actions;
 
 export default reducer;

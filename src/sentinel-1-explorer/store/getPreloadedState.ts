@@ -72,6 +72,11 @@ import {
     ChangeCompareToolOption4Sentinel1,
     ChangeCompareToolPixelValueRange4Sentinel1,
 } from '../components/ChangeCompareTool/ChangeCompareToolContainer';
+import {
+    TrendToolState,
+    initialTrendToolState,
+} from '@shared/store/TrendTool/reducer';
+import { RadarIndex } from '@typing/imagery-service';
 // import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 /**
@@ -221,6 +226,17 @@ const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
     };
 };
 
+const getPreloadedTrendToolState = (): TrendToolState => {
+    // const maskToolData = getMaskToolDataFromHashParams();
+    const trendToolData = getTemporalProfileToolDataFromHashParams();
+
+    return {
+        ...initialTrendToolState,
+        ...trendToolData,
+        selectedIndex: trendToolData?.selectedIndex || ('water' as RadarIndex),
+    };
+};
+
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
 
@@ -233,5 +249,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         ImageryScenes: getPreloadedImageryScenesState(),
         TemporalCompositeTool: getPreloadedTemporalCompositeToolState(),
         ChangeCompareTool: getPreloadedChangeCompareToolState(),
+        TrendTool: getPreloadedTrendToolState(),
     } as PartialRootState;
 };

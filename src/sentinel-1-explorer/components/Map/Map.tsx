@@ -36,10 +36,18 @@ import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 import { Popup } from '../Popup';
 import { TemporalCompositeLayer } from '../TemporalCompositeLayer';
 import { ChangeCompareLayer4Sentinel1 } from '../ChangeCompareLayer';
+import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
+import { useDispatch } from 'react-redux';
 
 export const Map = () => {
+    const dispatch = useDispatch();
+
     return (
-        <MapViewContainer>
+        <MapViewContainer
+            mapOnClick={(point) => {
+                dispatch(updateQueryLocation4TrendTool(point));
+            }}
+        >
             <GroupLayer
                 // this group layer should be added at index of one so that the
                 // hillsahde/terrain layer can be added on top of it with blend mode applied

@@ -52,6 +52,8 @@ export const SENTINEL_1_SERVICE_URL_PROD =
 
 /**
  * Service URL to be used in DEV enviroment
+ *
+ * @see https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer/
  */
 export const SENTINEL_1_SERVICE_URL_DEV =
     serviceConfig.development || SENTINEL_1_ORIGINAL_SERVICE_URL;
@@ -90,9 +92,9 @@ const SENTINEL1_RASTER_FUNCTIONS = [
     // 'Sentinel-1 RGB dB',
     'Sentinel-1 RTC VV dB with DRA',
     'Sentinel-1 RTC VH dB with DRA',
-    'Sentinel-1 SWI Raw',
-    'Sentinel-1 DpRVIc Raw',
-    'Sentinel-1 Water Anomaly Index Raw',
+    'SWI Raw',
+    // 'Sentinel-1 DpRVIc Raw',
+    'Water Anomaly Index Raw',
     'Sentinel-1 RTC Despeckle VV Amplitude',
     'Sentinel-1 RTC Despeckle VH Amplitude',
 ] as const;
@@ -127,19 +129,19 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         label: 'VH dB',
     },
     {
-        name: 'Sentinel-1 SWI Raw',
+        name: 'SWI Raw',
         description:
             'Sentinel-1 Water Index for extracting water bodies and monitoring droughts computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
         label: 'SWI ',
     },
+    // {
+    //     name: 'Sentinel-1 DpRVIc Raw',
+    //     description:
+    //         'Dual-pol Radar Vegetation Index for GRD SAR data computed as ((VH/VV) * ((VH/VV) + 3)) / ((VH/VV) + 1) ^ 2.',
+    //     label: 'DpRVIc ',
+    // },
     {
-        name: 'Sentinel-1 DpRVIc Raw',
-        description:
-            'Dual-pol Radar Vegetation Index for GRD SAR data computed as ((VH/VV) * ((VH/VV) + 3)) / ((VH/VV) + 1) ^ 2.',
-        label: 'DpRVIc ',
-    },
-    {
-        name: 'Sentinel-1 Water Anomaly Index Raw',
+        name: 'Water Anomaly Index Raw',
         description:
             'Water Anomaly Index that is used for oil detection but can also be used to detect other pullutants and natural phenomena such as industrial pollutants, sewage, red ocean tides, seaweed blobs, and more computed as Ln (0.01 / (0.01 + VV * 2)).',
         label: 'Water Anomaly',

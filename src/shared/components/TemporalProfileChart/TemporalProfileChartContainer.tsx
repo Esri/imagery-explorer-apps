@@ -16,15 +16,15 @@
 import {
     selectTrendToolData,
     selectQueryLocation4TrendTool,
-    selectSpectralIndex4TrendTool,
     selectAcquisitionYear4TrendTool,
     selectTrendToolOption,
     selectIsLoadingData4TrendingTool,
+    selectError4TemporalProfileTool,
 } from '@shared/store/TrendTool/selectors';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { TemporalProfileChart } from './TrendChart';
+import { TemporalProfileChart } from './TemporalProfileChart';
 import {
     updateAcquisitionDate,
     updateObjectIdOfSelectedScene,
@@ -33,8 +33,23 @@ import {
 import { centerChanged } from '@shared/store/Map/reducer';
 import { batch } from 'react-redux';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
+import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 
-export const TrendChartContainer = () => {
+type Props = {
+    /**
+     * data that will be used to plot the Line chart for the Temporal Profile Tool
+     */
+    chartData: LineChartDataItem[];
+    /**
+     * custom domain for the Y-Scale of the Line chart
+     */
+    customDomain4YScale: number[];
+};
+
+export const TemporalProfileChartContainer: FC<Props> = ({
+    chartData,
+    customDomain4YScale,
+}) => {
     const dispatch = useDispatch();
 
     const queryLocation = useSelector(selectQueryLocation4TrendTool);
@@ -43,13 +58,13 @@ export const TrendChartContainer = () => {
 
     const temporalProfileData = useSelector(selectTrendToolData);
 
-    const spectralIndex = useSelector(selectSpectralIndex4TrendTool);
-
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
     const trendToolOption = useSelector(selectTrendToolOption);
 
     const isLoading = useSelector(selectIsLoadingData4TrendingTool);
+
+    const error = useSelector(selectError4TemporalProfileTool);
 
     const message = useMemo(() => {
         if (isLoading) {
@@ -72,10 +87,18 @@ export const TrendChartContainer = () => {
         );
     }
 
+    if (error) {
+        return (
+            <div className="text-center pt-8">
+                <span className="opacity-50 text-sm">{error}</span>
+            </div>
+        );
+    }
+
     return (
         <TemporalProfileChart
-            data={temporalProfileData}
-            spectralIndex={spectralIndex}
+            chartData={chartData}
+            customDomain4YScale={customDomain4YScale}
             trendToolOption={trendToolOption}
             acquisitionYear={acquisitionYear}
             selectedAcquisitionDate={queryParams4MainScene?.acquisitionDate}

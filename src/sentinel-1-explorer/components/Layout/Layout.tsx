@@ -38,12 +38,13 @@ import { SceneInfo } from '../SceneInfo';
 import { Sentinel1FunctionSelector } from '../RasterFunctionSelector';
 import { OrbitDirectionFilter } from '../OrbitDirectionFilter';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
-import { AnalyzeToolSelector4Sentinel1 } from '../AnalyzeToolSelector/AnalyzeToolSelector';
+import { Sentinel1AnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { TemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector';
 import { TemporalCompositeTool } from '../TemporalCompositeTool/TemporalCompositeTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import classNames from 'classnames';
 import { ChangeCompareTool4Sentinel1 } from '../ChangeCompareTool';
+import { Sentinel1TemporalProfileTool } from '../TemporalProfileTool';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -88,7 +89,7 @@ export const Layout = () => {
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
                             <AnimationControl />
-                            <AnalyzeToolSelector4Sentinel1 />
+                            <Sentinel1AnalyzeToolSelector />
                         </ContainerOfSecondaryControls>
                     )}
 
@@ -132,10 +133,10 @@ export const Layout = () => {
                                     })}
                                 >
                                     {/* <MaskTool />
-                                    <TrendTool />
                                     <SpectralTool /> */}
                                     <ChangeCompareTool4Sentinel1 />
                                     <TemporalCompositeTool />
+                                    <Sentinel1TemporalProfileTool />
                                 </div>
                             )}
 

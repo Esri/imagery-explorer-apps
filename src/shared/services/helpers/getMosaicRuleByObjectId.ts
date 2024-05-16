@@ -13,11 +13,20 @@
  * limitations under the License.
  */
 
-export const getMosaicRuleByObjectId = (objectId: number) => {
+// export const getMosaicRuleByObjectId = (objectId: number) => {
+//     return {
+//         ascending: false,
+//         lockRasterIds: [objectId],
+//         mosaicMethod: 'esriMosaicLockRaster',
+//         where: `objectid in (${objectId})`,
+//     };
+// };
+
+export const getMosaicRuleByObjectIds = (objectIds: number[]) => {
     return {
         ascending: false,
-        lockRasterIds: [objectId],
+        lockRasterIds: objectIds,
         mosaicMethod: 'esriMosaicLockRaster',
-        where: `objectid in (${objectId})`,
+        where: `objectid in (${objectIds.join(',')})`,
     };
 };

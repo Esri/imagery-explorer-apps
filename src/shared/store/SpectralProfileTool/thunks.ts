@@ -26,7 +26,7 @@ import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
 } from '../ImageryScene/selectors';
-import { getPixelValues } from '@shared/services/landsat-level-2/identify';
+import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
 
 let abortController: AbortController = null;
 
@@ -69,9 +69,9 @@ export const updateSpectralProfileData =
         dispatch(errorChanged(null));
 
         try {
-            const bandValues = await getPixelValues({
+            const bandValues = await getLandsatPixelValues({
                 point: queryLocation,
-                objectId: objectIdOfSelectedScene,
+                objectIds: [objectIdOfSelectedScene],
                 abortController,
             });
 

@@ -67,7 +67,7 @@ type Props = {
     trendOptionOnChange: (option: TrendToolOption) => void;
 };
 
-export const TrendToolControls = ({
+export const TemporalProfileToolControls = ({
     acquisitionMonth,
     acquisitionYear,
     selectedTrendOption,

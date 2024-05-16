@@ -70,9 +70,9 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
             const res = await identify({
                 serviceURL: SENTINEL_1_SERVICE_URL,
                 point: mapPoint,
-                objectId:
+                objectIds:
                     mode !== 'dynamic'
-                        ? queryParams?.objectIdOfSelectedScene
+                        ? [queryParams?.objectIdOfSelectedScene]
                         : null,
                 abortController: controller,
             });

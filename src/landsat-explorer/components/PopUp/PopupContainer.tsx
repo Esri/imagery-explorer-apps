@@ -29,13 +29,12 @@ import {
 // import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getMainContent } from './helper';
 // import { watch } from '@arcgis/core/core/reactiveUtils';
-import {
-    getPixelValuesFromIdentifyTaskResponse,
-    identify,
-} from '@shared/services/landsat-level-2/identify';
 import { getFormattedLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
+import { identify } from '@shared/services/helpers/identify';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import { getPixelValuesFromIdentifyTaskResponse } from '@shared/services/helpers/getPixelValuesFromIdentifyTaskResponse';
 // import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {
@@ -76,10 +75,11 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
             controller = new AbortController();
 
             const res = await identify({
+                serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
                 point: mapPoint,
-                objectId:
+                objectIds:
                     mode !== 'dynamic'
-                        ? queryParams?.objectIdOfSelectedScene
+                        ? [queryParams?.objectIdOfSelectedScene]
                         : null,
                 abortController: controller,
             });

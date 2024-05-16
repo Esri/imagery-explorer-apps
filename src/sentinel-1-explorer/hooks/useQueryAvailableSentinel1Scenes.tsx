@@ -53,17 +53,17 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
 
     const orbitDirection = useSelector(selectSentinel1OrbitDirection);
 
-    /**
-     * Indicates if we should only query the sentinel-1 imagery scenes that
-     * support dual polarization: VV and VH
-     */
-    const dualPolarizationOnly = useMemo(() => {
-        if (mode === 'analysis' && analysisTool === 'temporal composite') {
-            return true;
-        }
+    // /**
+    //  * Indicates if we should only query the sentinel-1 imagery scenes that
+    //  * support dual polarization: VV and VH
+    //  */
+    // const dualPolarizationOnly = useMemo(() => {
+    //     if (mode === 'analysis' && analysisTool === 'temporal composite') {
+    //         return true;
+    //     }
 
-        return false;
-    }, [mode, analysisTool]);
+    //     return false;
+    // }, [mode, analysisTool]);
 
     useEffect(() => {
         if (!center || !acquisitionDateRange) {
@@ -77,8 +77,8 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         dispatch(
             queryAvailableScenes(
                 acquisitionDateRange,
-                orbitDirection,
-                dualPolarizationOnly
+                orbitDirection
+                // dualPolarizationOnly
             )
         );
     }, [
@@ -86,7 +86,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         acquisitionDateRange,
         isAnimationPlaying,
         orbitDirection,
-        dualPolarizationOnly,
+        // dualPolarizationOnly,
     ]);
 
     return null;

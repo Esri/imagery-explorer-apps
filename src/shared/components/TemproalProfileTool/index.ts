@@ -13,4 +13,5 @@
  * limitations under the License.
  */
 
-export { TrendToolControls } from './TrendToolControls';
+export { TemporalProfileToolControlsContainer as TemporalProfileToolControls } from './TemporalProfileToolControlsContainer';
+export { TemporalProfileToolHeader } from './TemporalProfileToolHeader';

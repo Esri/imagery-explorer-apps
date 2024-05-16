@@ -41,15 +41,12 @@ import { useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { PolarizationFilter } from './PolarizationFilter';
+import { RadarIndex } from '@typing/imagery-service';
 
 /**
  * the index that user can select for the Change Compare Tool
  */
-export type ChangeCompareToolOption4Sentinel1 =
-    | 'log difference'
-    // | 'vegetation'
-    | 'water anomaly index'
-    | 'water';
+export type ChangeCompareToolOption4Sentinel1 = RadarIndex | 'log difference';
 
 const ChangeCompareToolOptions: {
     value: ChangeCompareToolOption4Sentinel1;
@@ -61,7 +58,7 @@ const ChangeCompareToolOptions: {
     },
     // { value: 'vegetation', label: ' Dual-pol Radar Vegetation Index' },
     {
-        value: 'water anomaly index',
+        value: 'water anomaly',
         label: 'Water Anomaly Index',
     },
     {
@@ -85,7 +82,7 @@ export const ChangeCompareToolPixelValueRange4Sentinel1: Record<
      * For Water Anomaly Index, we can use a input range of -2 to 0. Typically, oil appears within the range of -1 to 0.
      * The full pixel range of the change compare results is -2 to 2
      */
-    'water anomaly index': [-2, 2],
+    'water anomaly': [-2, 2],
 };
 
 export const ChangeCompareToolContainer = () => {

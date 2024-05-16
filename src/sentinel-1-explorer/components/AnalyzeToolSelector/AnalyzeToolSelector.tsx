@@ -4,6 +4,11 @@ import { AnalyzeToolSelectorData } from '@shared/components/AnalysisToolSelector
 
 const data: AnalyzeToolSelectorData[] = [
     {
+        tool: 'trend',
+        title: 'Temporal',
+        subtitle: 'profile',
+    },
+    {
         tool: 'change',
         title: 'Change',
         subtitle: 'detecion',
@@ -15,6 +20,6 @@ const data: AnalyzeToolSelectorData[] = [
     },
 ];
 
-export const AnalyzeToolSelector4Sentinel1 = () => {
+export const Sentinel1AnalyzeToolSelector = () => {
     return <AnalysisToolSelector data={data} />;
 };

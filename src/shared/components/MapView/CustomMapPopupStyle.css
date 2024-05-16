@@ -34,6 +34,11 @@
     border-block-end: none;
 }
 
+.esri-popup__main-container .header-content {
+    background: red;
+}
+
+
 /* .esri-popup__header-container--button:hover,
 .esri-popup__button:hover {
     @apply bg-custom-background-95;
