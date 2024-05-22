@@ -16,16 +16,16 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectSpectralIndex4MaskTool = createSelector(
-    (state: RootState) => state.MaskTool.spectralIndex,
-    (spectralIndex) => spectralIndex
+export const selectSelectedIndex4MaskTool = createSelector(
+    (state: RootState) => state.MaskTool.selectedIndex,
+    (selectedIndex) => selectedIndex
 );
 
 export const selectMaskOptions = createSelector(
-    (state: RootState) => state.MaskTool.spectralIndex,
-    (state: RootState) => state.MaskTool.maskOptionsBySpectralIndex,
-    (spectralIndex, maskOptionsBySpectralIndex) =>
-        maskOptionsBySpectralIndex[spectralIndex]
+    (state: RootState) => state.MaskTool.selectedIndex,
+    (state: RootState) => state.MaskTool.maskOptionsBySelectedIndex,
+    (selectedIndex, maskOptionsBySpectralIndex) =>
+        maskOptionsBySpectralIndex[selectedIndex]
 );
 
 export const selectMaskLayerOpcity = createSelector(

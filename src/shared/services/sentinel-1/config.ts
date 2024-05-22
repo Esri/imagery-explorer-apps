@@ -88,15 +88,19 @@ export const FIELD_NAMES = {
  * List of Raster Functions for the Sentinel-1 service
  */
 const SENTINEL1_RASTER_FUNCTIONS = [
-    'Sentinel-1 RGB dB DRA',
+    'False Color dB with DRA',
     // 'Sentinel-1 RGB dB',
-    'Sentinel-1 RTC VV dB with DRA',
-    'Sentinel-1 RTC VH dB with DRA',
-    'SWI Raw',
+    'VV dB with Despeckle and DRA',
+    'VH dB with Despeckle and DRA',
+    'SWI Colorized',
     // 'Sentinel-1 DpRVIc Raw',
+    'Water Anomaly Index Colorized',
+    'SWI Raw',
     'Water Anomaly Index Raw',
-    'Sentinel-1 RTC Despeckle VV Amplitude',
-    'Sentinel-1 RTC Despeckle VH Amplitude',
+    'VV Amplitude with Despeckle',
+    'VH Amplitude with Despeckle',
+    // This RFT creates a two-band raster including VV and VH polarization in power scale, with a despeckling filter applied
+    'VV and VH Power with Despeckle',
 ] as const;
 
 export type Sentinel1FunctionName = (typeof SENTINEL1_RASTER_FUNCTIONS)[number];
@@ -111,49 +115,70 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
     label: string;
 }[] = [
     {
-        name: 'Sentinel-1 RGB dB DRA',
+        name: 'False Color dB with DRA',
         description:
-            'RGB color composite of VV,VH,VV/VH in dB scale with a dynamic stretch applied for visualization only',
+            'RGB false color composite of VV, VH, VV/VH in dB scale with a dynamic stretch applied for visualization only.',
         label: 'RGB dB DRA',
     },
     {
-        name: 'Sentinel-1 RTC VV dB with DRA',
+        name: 'VV dB with Despeckle and DRA',
         description:
-            'VV data in dB scale with a dynamic stretch applied for visualization only',
+            'VV data in dB scale with a 7x7 Refined Lee despeckling filter and a dynamic stretch applied for visualization only.',
         label: 'VV dB',
     },
     {
-        name: 'Sentinel-1 RTC VH dB with DRA',
+        name: 'VH dB with Despeckle and DRA',
         description:
-            'VH data in dB scale with a dynamic stretch applied for visualization only',
+            'VH data in dB scale with a 7x7 Refined Lee despeckling filter and a dynamic stretch applied for visualization only.',
         label: 'VH dB',
     },
     {
-        name: 'SWI Raw',
+        name: 'SWI Colorized',
         description:
-            'Sentinel-1 Water Index for extracting water bodies and monitoring droughts computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
+            'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
         label: 'SWI ',
     },
-    // {
-    //     name: 'Sentinel-1 DpRVIc Raw',
-    //     description:
-    //         'Dual-pol Radar Vegetation Index for GRD SAR data computed as ((VH/VV) * ((VH/VV) + 3)) / ((VH/VV) + 1) ^ 2.',
-    //     label: 'DpRVIc ',
-    // },
     {
-        name: 'Water Anomaly Index Raw',
+        name: 'Water Anomaly Index Colorized',
         description:
-            'Water Anomaly Index that is used for oil detection but can also be used to detect other pullutants and natural phenomena such as industrial pollutants, sewage, red ocean tides, seaweed blobs, and more computed as Ln (0.01 / (0.01 + VV * 2)).',
+            'Water Anomaly Index with a color map. Increased water anomalies are indicated by bright yellow, orange and red colors. Computed as Ln (0.01 / (0.01 + VV * 2)).',
         label: 'Water Anomaly',
     },
-    {
-        name: 'Sentinel-1 RTC Despeckle VV Amplitude',
-        description: 'VV data in Amplitude scale for computational analysis',
-        label: 'VV Amplitude',
-    },
-    {
-        name: 'Sentinel-1 RTC Despeckle VH Amplitude',
-        description: 'VH data in Amplitude scale for computational analysis',
-        label: 'VH Amplitude',
-    },
+    // {
+    //     name: 'SWI Raw',
+    //     description:
+    //         'Sentinel-1 Water Index with a 7x7 Refined Lee despeckling filter for extracting water bodies and monitoring droughts. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
+    //     label: 'SWI',
+    // },
+    // {
+    //     name: 'Water Anomaly Index Raw',
+    //     description:
+    //         'Water Anomaly Index with a 7x7 Refined Lee despeckling filter for detecting water pollutants and natural phenomena. For example oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more. Computed as Ln (0.01 / (0.01 + VV * 2)).',
+    //     label: 'Water Anomaly',
+    // },
+    // {
+    //     name: 'VV Amplitude with Despeckle',
+    //     description: 'VV data in Amplitude scale for computational analysis',
+    //     label: 'VV Amplitude',
+    // },
+    // {
+    //     name: 'VH Amplitude with Despeckle',
+    //     description: 'VH data in Amplitude scale for computational analysis',
+    //     label: 'VH Amplitude',
+    // },
 ];
+
+/**
+ * For the Water Index (SWI), we have selected a input range of -0.3 to 1, though it may need adjustment.
+ */
+export const SENTINEL1_WATER_INDEX_PIXEL_RANGE: number[] = [-0.5, 1];
+
+/**
+ * For Water Anomaly Index, we can use a input range of -2 to 0. Typically, oil appears within the range of -1 to 0.
+ */
+export const SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE: number[] = [-2, 0];
+
+/**
+ * For both ship and urban detection, we can use range of 0 to 1 for the threshold slider
+ */
+export const SENTINEL1_SHIP_AND_URBAN_INDEX_PIXEL_RANGE: number[] = [0, 1];

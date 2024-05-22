@@ -19,7 +19,7 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { SpectralIndex } from '@typing/imagery-service';
+import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 
 export type MaskOptions = {
     selectedRange: number[];
@@ -29,17 +29,20 @@ export type MaskOptions = {
     color: number[];
 };
 
-type MaskOptionsBySpectralIndex = Record<SpectralIndex, MaskOptions>;
+type MaskOptionsBySpectralIndex = Record<
+    SpectralIndex | RadarIndex,
+    MaskOptions
+>;
 
 export type MaskToolState = {
     /**
-     * user selected spectral index to be used in the mask tool
+     * user selected spectral/radar index to be used in the mask tool
      */
-    spectralIndex: SpectralIndex;
+    selectedIndex: SpectralIndex | RadarIndex;
     /**
-     * maks tool options by spectral index name
+     * maks tool options by use selected index name
      */
-    maskOptionsBySpectralIndex: MaskOptionsBySpectralIndex;
+    maskOptionsBySelectedIndex: MaskOptionsBySpectralIndex;
     /**
      * opacity of the mask layer
      */
@@ -51,10 +54,10 @@ export type MaskToolState = {
 };
 
 export const initialMaskToolState: MaskToolState = {
-    spectralIndex: 'water',
+    selectedIndex: 'water',
     maskLayerOpacity: 1,
     shouldClipMaskLayer: false,
-    maskOptionsBySpectralIndex: {
+    maskOptionsBySelectedIndex: {
         moisture: {
             selectedRange: [0, 1],
             color: [89, 255, 252],
@@ -78,6 +81,18 @@ export const initialMaskToolState: MaskToolState = {
             selectedRange: [0, 60], // default range should be between 0-60 celcius degrees
             color: [251, 182, 100],
         },
+        'water anomaly': {
+            selectedRange: [0, 1],
+            color: [255, 214, 102],
+        },
+        ship: {
+            selectedRange: [0.3, 1],
+            color: [255, 0, 21],
+        },
+        urban: {
+            selectedRange: [0.2, 1],
+            color: [255, 0, 21],
+        },
     },
 };
 
@@ -85,15 +100,15 @@ const slice = createSlice({
     name: 'MaskTool',
     initialState: initialMaskToolState,
     reducers: {
-        spectralIndex4MaskToolChanged: (
+        selectedIndex4MaskToolChanged: (
             state,
-            action: PayloadAction<SpectralIndex>
+            action: PayloadAction<SpectralIndex | RadarIndex>
         ) => {
-            state.spectralIndex = action.payload;
+            state.selectedIndex = action.payload;
         },
         maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
-            const spectralIndex = state.spectralIndex;
-            state.maskOptionsBySpectralIndex[spectralIndex] = action.payload;
+            const selectedIndex = state.selectedIndex;
+            state.maskOptionsBySelectedIndex[selectedIndex] = action.payload;
         },
         maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
             state.maskLayerOpacity = action.payload;
@@ -108,7 +123,7 @@ const { reducer } = slice;
 
 export const {
     // activeAnalysisToolChanged,
-    spectralIndex4MaskToolChanged,
+    selectedIndex4MaskToolChanged,
     maskOptionsChanged,
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,

@@ -111,8 +111,8 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
         if (selectedOption === 'log difference') {
             const rasterFunction: Sentinel1FunctionName =
                 polarizationFilter === 'VV'
-                    ? 'Sentinel-1 RTC Despeckle VV Amplitude'
-                    : 'Sentinel-1 RTC Despeckle VH Amplitude';
+                    ? 'VV Amplitude with Despeckle'
+                    : 'VH Amplitude with Despeckle';
 
             return log10({
                 raster: divide({
@@ -177,7 +177,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
             serviceURL={SENTINEL_1_SERVICE_URL}
             rasterFunction={rasterFunction}
             visible={isVisible}
-            pixelValueRange={selectedRange}
+            selectedPixelValueRange={selectedRange}
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
         />

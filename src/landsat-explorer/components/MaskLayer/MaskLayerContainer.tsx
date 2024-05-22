@@ -21,7 +21,7 @@ import {
     selectMaskOptions,
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
-    selectSpectralIndex4MaskTool,
+    selectSelectedIndex4MaskTool,
 } from '@shared/store/MaskTool/selectors';
 import {
     selectActiveAnalysisTool,
@@ -29,6 +29,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import { SpectralIndex } from '@typing/imagery-service';
 
 type Props = {
     mapView?: MapView;
@@ -38,7 +39,9 @@ type Props = {
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const mode = useSelector(selectAppMode);
 
-    const spectralIndex = useSelector(selectSpectralIndex4MaskTool);
+    const spectralIndex = useSelector(
+        selectSelectedIndex4MaskTool
+    ) as SpectralIndex;
 
     const { selectedRange, color } = useSelector(selectMaskOptions);
 

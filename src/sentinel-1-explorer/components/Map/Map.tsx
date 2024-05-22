@@ -38,6 +38,7 @@ import { TemporalCompositeLayer } from '../TemporalCompositeLayer';
 import { ChangeCompareLayer4Sentinel1 } from '../ChangeCompareLayer';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { useDispatch } from 'react-redux';
+import { Sentinel1MaskLayer } from '../MaskLayer';
 
 export const Map = () => {
     const dispatch = useDispatch();
@@ -54,6 +55,7 @@ export const Map = () => {
                 index={1}
             >
                 <Sentinel1Layer />
+                <Sentinel1MaskLayer />
                 <ChangeCompareLayer4Sentinel1 />
                 <TemporalCompositeLayer />
                 <AnalysisToolQueryLocation />

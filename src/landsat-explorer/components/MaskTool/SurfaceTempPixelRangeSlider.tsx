@@ -14,7 +14,7 @@
  */
 
 import {
-    selectSpectralIndex4MaskTool,
+    selectSelectedIndex4MaskTool,
     selectMaskOptions,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
@@ -34,7 +34,7 @@ import {
 export const SurfaceTempCelsiusPixelRangeSlider = () => {
     const dispatch = useDispatch();
 
-    const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
+    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
     const maskOptions = useSelector(selectMaskOptions);
 
@@ -61,7 +61,7 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
 export const SurfaceTempFarhenheitPixelRangeSlider = () => {
     const dispatch = useDispatch();
 
-    const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
+    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
     const maskOptions = useSelector(selectMaskOptions);
 

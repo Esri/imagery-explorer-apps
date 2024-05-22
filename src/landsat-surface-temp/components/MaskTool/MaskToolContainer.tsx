@@ -17,9 +17,9 @@ import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 // import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@shared/components/MaskTool/PixelRangeSlider';
 // import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
 import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
-import { spectralIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
+import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
-    selectSpectralIndex4MaskTool,
+    selectSelectedIndex4MaskTool,
     selectMaskOptions,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
@@ -54,7 +54,7 @@ export const MaskToolContainer = () => {
 
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
+    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -85,7 +85,7 @@ export const MaskToolContainer = () => {
                 tooltipText={MASK_TOOL_HEADER_TOOLTIP}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
-                        spectralIndex4MaskToolChanged(val as SpectralIndex)
+                        selectedIndex4MaskToolChanged(val as SpectralIndex)
                     );
                 }}
             />

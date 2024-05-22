@@ -57,7 +57,6 @@ import { initialUIState, UIState } from '@shared/store/UI/reducer';
 //     ChangeCompareToolState,
 //     initialChangeCompareToolState,
 // } from '@shared/store/ChangeCompareTool/reducer';
-import { initialLandsatState } from '@shared/store/Landsat/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
 import {
@@ -77,6 +76,10 @@ import {
     initialTrendToolState,
 } from '@shared/store/TrendTool/reducer';
 import { RadarIndex } from '@typing/imagery-service';
+import {
+    MaskToolState,
+    initialMaskToolState,
+} from '@shared/store/MaskTool/reducer';
 // import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 /**
@@ -127,7 +130,7 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     }
 
     const defaultRasterFunction: Sentinel1FunctionName =
-        'Sentinel-1 RGB dB DRA';
+        'False Color dB with DRA';
 
     // Attempt to extract query parameters from the URL hash.
     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
@@ -237,18 +240,25 @@ const getPreloadedTrendToolState = (): TrendToolState => {
     };
 };
 
+const getPreloadedMaskToolState = (): MaskToolState => {
+    const maskToolData = getMaskToolDataFromHashParams();
+
+    return {
+        ...initialMaskToolState,
+        ...maskToolData,
+    };
+};
+
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
 
     return {
         Map: getPreloadedMapState(),
         UI: getPreloadedUIState(),
-        Landsat: {
-            ...initialLandsatState,
-        },
         ImageryScenes: getPreloadedImageryScenesState(),
         TemporalCompositeTool: getPreloadedTemporalCompositeToolState(),
         ChangeCompareTool: getPreloadedChangeCompareToolState(),
         TrendTool: getPreloadedTrendToolState(),
+        MaskTool: getPreloadedMaskToolState(),
     } as PartialRootState;
 };

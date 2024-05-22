@@ -14,3 +14,4 @@
  */
 
 export { RenderingControlsContainer as MaskLayerRenderingControls } from './RenderingControlsContainer';
+export { WarningMessage as MaskToolWarnigMessage } from './WarningMessage';

@@ -60,19 +60,19 @@ export const ChangeCompareToolControls: FC<Props> = ({
     const getPixelRangeSlider = () => {
         const [min, max] = fullPixelValueRange;
 
-        const fullRange = Math.abs(max - min);
+        // const fullRange = Math.abs(max - min);
 
-        const countOfTicks = fullRange / 0.25 + 1;
+        // const countOfTicks = fullRange / 0.25 + 1;
 
-        const oneFourthOfFullRange = fullRange / 4;
+        // const oneFourthOfFullRange = fullRange / 4;
 
-        const tickLabels: number[] = [
-            min,
-            min + oneFourthOfFullRange,
-            min + oneFourthOfFullRange * 2,
-            min + oneFourthOfFullRange * 3,
-            max,
-        ];
+        // const tickLabels: number[] = [
+        //     min,
+        //     min + oneFourthOfFullRange,
+        //     min + oneFourthOfFullRange * 2,
+        //     min + oneFourthOfFullRange * 3,
+        //     max,
+        // ];
 
         // console.log(min, max, fullRange, countOfTicks, tickLabels);
 
@@ -85,8 +85,6 @@ export const ChangeCompareToolControls: FC<Props> = ({
                 min={min}
                 max={max}
                 steps={0.05}
-                tickLabels={tickLabels}
-                countOfTicks={countOfTicks}
                 showSliderTooltip={true}
             />
         );

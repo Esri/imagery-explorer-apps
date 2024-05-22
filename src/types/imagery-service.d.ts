@@ -54,7 +54,7 @@ export type SpectralIndex =
 /**
  * Name of Radar Index for SAR image (e.g. Sentinel-1)
  */
-export type RadarIndex = 'water' | 'water anomaly';
+export type RadarIndex = 'water' | 'water anomaly' | 'ship' | 'urban';
 // | 'vegetation'
 
 export type LandsatScene = {

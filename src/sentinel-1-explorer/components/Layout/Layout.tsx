@@ -45,6 +45,7 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import classNames from 'classnames';
 import { ChangeCompareTool4Sentinel1 } from '../ChangeCompareTool';
 import { Sentinel1TemporalProfileTool } from '../TemporalProfileTool';
+import { Sentinel1MaskTool } from '../MaskTool';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -132,8 +133,7 @@ export const Layout = () => {
                                             'temporal composite',
                                     })}
                                 >
-                                    {/* <MaskTool />
-                                    <SpectralTool /> */}
+                                    <Sentinel1MaskTool />
                                     <ChangeCompareTool4Sentinel1 />
                                     <TemporalCompositeTool />
                                     <Sentinel1TemporalProfileTool />

@@ -58,6 +58,32 @@ type Props = {
     valuesOnChange: (vals: number[]) => void;
 };
 
+const getTickLabels = (min: number, max: number) => {
+    const fullRange = Math.abs(max - min);
+
+    const oneFourthOfFullRange = fullRange / 4;
+
+    const tickLabels: number[] = [
+        min,
+        min + oneFourthOfFullRange,
+        min + oneFourthOfFullRange * 2,
+        min + oneFourthOfFullRange * 3,
+        max,
+    ];
+
+    return tickLabels;
+};
+
+const getCountOfTicks = (min: number, max: number) => {
+    const fullRange = Math.abs(max - min);
+
+    const countOfTicks = fullRange / 0.25 + 1;
+
+    // console.log(fullRange, countOfTicks);
+
+    return countOfTicks;
+};
+
 /**
  * A slider component to select fixel range of the mask layer for selected Imagery scene
  * @param param0
@@ -68,8 +94,8 @@ export const PixelRangeSlider: FC<Props> = ({
     min = -1,
     max = 1,
     steps = 0.05,
-    countOfTicks = 0,
-    tickLabels = [],
+    countOfTicks,
+    tickLabels,
     showSliderTooltip,
     valuesOnChange,
 }) => {
@@ -77,15 +103,15 @@ export const PixelRangeSlider: FC<Props> = ({
 
     const sliderRef = useRef<SliderWidget>();
 
-    const getTickConfigs = () => {
+    const getTickConfigs = (min: number, max: number) => {
         return [
             {
                 mode: 'count',
-                values: countOfTicks,
+                values: countOfTicks || getCountOfTicks(min, max),
             },
             {
                 mode: 'position',
-                values: tickLabels, //[-1, -0.5, 0, 0.5, 1],
+                values: tickLabels || getTickLabels(min, max), //[-1, -0.5, 0, 0.5, 1],
                 labelsVisible: true,
             },
         ] as __esri.TickConfig[];
@@ -103,7 +129,7 @@ export const PixelRangeSlider: FC<Props> = ({
                 labels: false,
                 rangeLabels: false,
             },
-            tickConfigs: getTickConfigs(),
+            tickConfigs: getTickConfigs(min, max),
             // layout: 'vertical',
         });
 
@@ -198,7 +224,7 @@ export const PixelRangeSlider: FC<Props> = ({
         sliderRef.current.max = max;
         sliderRef.current.values = values;
         sliderRef.current.steps = steps;
-        sliderRef.current.tickConfigs = getTickConfigs();
+        sliderRef.current.tickConfigs = getTickConfigs(min, max);
     }, [min, max, values, steps, countOfTicks, tickLabels]);
 
     return (

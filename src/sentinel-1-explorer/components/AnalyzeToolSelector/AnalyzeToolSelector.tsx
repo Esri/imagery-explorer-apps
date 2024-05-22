@@ -4,6 +4,11 @@ import { AnalyzeToolSelectorData } from '@shared/components/AnalysisToolSelector
 
 const data: AnalyzeToolSelectorData[] = [
     {
+        tool: 'mask',
+        title: 'Index',
+        subtitle: 'mask',
+    },
+    {
         tool: 'trend',
         title: 'Temporal',
         subtitle: 'profile',

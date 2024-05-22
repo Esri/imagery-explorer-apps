@@ -42,11 +42,18 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { PolarizationFilter } from './PolarizationFilter';
 import { RadarIndex } from '@typing/imagery-service';
+import {
+    SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE,
+    SENTINEL1_WATER_INDEX_PIXEL_RANGE,
+} from '@shared/services/sentinel-1/config';
 
 /**
  * the index that user can select for the Change Compare Tool
  */
-export type ChangeCompareToolOption4Sentinel1 = RadarIndex | 'log difference';
+export type ChangeCompareToolOption4Sentinel1 =
+    | 'water anomaly'
+    | 'water'
+    | 'log difference';
 
 const ChangeCompareToolOptions: {
     value: ChangeCompareToolOption4Sentinel1;
@@ -59,13 +66,23 @@ const ChangeCompareToolOptions: {
     // { value: 'vegetation', label: ' Dual-pol Radar Vegetation Index' },
     {
         value: 'water anomaly',
-        label: 'Water Anomaly Index',
+        label: 'Water Anomaly',
     },
     {
         value: 'water',
-        label: 'Sentinel-1 Water Index (SWI)',
+        label: 'SWI',
     },
 ];
+
+const [
+    SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE_MIN,
+    SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE_MAX,
+] = SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE;
+
+const [
+    SENTINEL1_WATER_INDEX_PIXEL_RANGE_MIN,
+    SENTINEL1_WATER_INDEX_PIXEL_RANGE_MAX,
+] = SENTINEL1_WATER_INDEX_PIXEL_RANGE;
 
 export const ChangeCompareToolPixelValueRange4Sentinel1: Record<
     ChangeCompareToolOption4Sentinel1,
@@ -77,12 +94,22 @@ export const ChangeCompareToolPixelValueRange4Sentinel1: Record<
      * For the Water Index (SWI), we have selected a input range of -0.3 to 1, though it may need adjustment.
      * The SWI index is not well-documented with a specific range of values.
      */
-    water: [-1.5, 1.5],
+    water: [
+        SENTINEL1_WATER_INDEX_PIXEL_RANGE_MIN -
+            SENTINEL1_WATER_INDEX_PIXEL_RANGE_MAX,
+        SENTINEL1_WATER_INDEX_PIXEL_RANGE_MAX -
+            SENTINEL1_WATER_INDEX_PIXEL_RANGE_MIN,
+    ],
     /**
      * For Water Anomaly Index, we can use a input range of -2 to 0. Typically, oil appears within the range of -1 to 0.
      * The full pixel range of the change compare results is -2 to 2
      */
-    'water anomaly': [-2, 2],
+    'water anomaly': [
+        SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE_MIN -
+            SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE_MAX,
+        SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE_MAX -
+            SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE_MIN,
+    ],
 };
 
 export const ChangeCompareToolContainer = () => {

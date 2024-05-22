@@ -1,5 +1,8 @@
 .esri-popup__main-container {
     --calcite-ui-foreground-1: var(--custom-background);
+    --calcite-color-foreground-1: var(--custom-background);
+    --calcite-color-border-3: var(--custom-light-blue-50);
+    --calcite-color-text-2: var(--custom-light-blue);
 }
 
 .esri-popup__main-container .esri-features__content-feature{
@@ -19,7 +22,7 @@
 
 .esri-widget__heading {
     font-size: 12px !important;
-    color: var(--custom-light-blue);;
+    color: var(--custom-light-blue);
 }
 
 .esri-popup__main-container calcite-action[title="Dock"] {
@@ -33,11 +36,6 @@
 .esri-popup__main-container .header {
     border-block-end: none;
 }
-
-.esri-popup__main-container .header-content {
-    background: red;
-}
-
 
 /* .esri-popup__header-container--button:hover,
 .esri-popup__button:hover {

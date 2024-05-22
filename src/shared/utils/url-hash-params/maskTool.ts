@@ -27,16 +27,16 @@ export const encodeMaskToolData = (data: MaskToolState): string => {
     }
 
     const {
-        spectralIndex,
+        selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
-        maskOptionsBySpectralIndex,
+        maskOptionsBySelectedIndex,
     } = data;
 
-    const maskOptions = maskOptionsBySpectralIndex[spectralIndex];
+    const maskOptions = maskOptionsBySelectedIndex[selectedIndex];
 
     return [
-        spectralIndex,
+        selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
         maskOptions?.color,
@@ -50,7 +50,7 @@ export const decodeMaskToolData = (val: string): MaskToolState => {
     }
 
     const [
-        spectralIndex,
+        selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
         color,
@@ -63,17 +63,17 @@ export const decodeMaskToolData = (val: string): MaskToolState => {
                   color: color.split(',').map((d) => +d),
                   selectedRange: selectedRange.split(',').map((d) => +d),
               }
-            : initialMaskToolState.maskOptionsBySpectralIndex[
-                  spectralIndex as SpectralIndex
+            : initialMaskToolState.maskOptionsBySelectedIndex[
+                  selectedIndex as SpectralIndex
               ];
 
     return {
-        spectralIndex: spectralIndex as SpectralIndex,
+        selectedIndex: selectedIndex as SpectralIndex,
         shouldClipMaskLayer: shouldClipMaskLayer === 'true',
         maskLayerOpacity: +maskLayerOpacity,
-        maskOptionsBySpectralIndex: {
-            ...initialMaskToolState.maskOptionsBySpectralIndex,
-            [spectralIndex]: maskOptionForSelectedSpectralIndex,
+        maskOptionsBySelectedIndex: {
+            ...initialMaskToolState.maskOptionsBySelectedIndex,
+            [selectedIndex]: maskOptionForSelectedSpectralIndex,
         },
     };
 };

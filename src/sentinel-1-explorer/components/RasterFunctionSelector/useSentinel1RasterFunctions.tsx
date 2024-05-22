@@ -24,36 +24,39 @@ import { RasterFunctionInfo } from '@typing/imagery-service';
 import PlaceholderThumbnail from './thumbnails/placeholder.jpg';
 import CompositeLegend from './legends/SARCompositeLegend.png';
 
-const Sentinel1RendererThumbnailByName: Record<Sentinel1FunctionName, string> =
-    {
-        'Sentinel-1 RGB dB DRA': PlaceholderThumbnail,
-        'Sentinel-1 RTC VH dB with DRA': PlaceholderThumbnail,
-        'Sentinel-1 RTC VV dB with DRA': PlaceholderThumbnail,
-        // 'Sentinel-1 DpRVIc Raw': PlaceholderThumbnail,
-        'SWI Raw': PlaceholderThumbnail,
-        'Water Anomaly Index Raw': PlaceholderThumbnail,
-        'Sentinel-1 RTC Despeckle VH Amplitude': PlaceholderThumbnail,
-        'Sentinel-1 RTC Despeckle VV Amplitude': PlaceholderThumbnail,
-        // 'NDMI Colorized': LandsatNDMIThumbnail,
-    };
+const Sentinel1RendererThumbnailByName: Partial<
+    Record<Sentinel1FunctionName, string>
+> = {
+    'False Color dB with DRA': PlaceholderThumbnail,
+    'VV dB with Despeckle and DRA': PlaceholderThumbnail,
+    'VH dB with Despeckle and DRA': PlaceholderThumbnail,
+    // 'Sentinel-1 DpRVIc Raw': PlaceholderThumbnail,
+    'Water Anomaly Index Colorized': PlaceholderThumbnail,
+    'SWI Colorized': PlaceholderThumbnail,
+    // 'Sentinel-1 RTC Despeckle VH Amplitude': PlaceholderThumbnail,
+    // 'Sentinel-1 RTC Despeckle VV Amplitude': PlaceholderThumbnail,
+    // 'NDMI Colorized': LandsatNDMIThumbnail,
+};
 
-const Sentinel1RendererLegendByName: Record<Sentinel1FunctionName, string> = {
-    'Sentinel-1 RGB dB DRA': CompositeLegend,
-    'Sentinel-1 RTC VH dB with DRA': null,
-    'Sentinel-1 RTC VV dB with DRA': null,
-    // 'Sentinel-1 DpRVIc Raw': null,
-    'SWI Raw': null,
-    'Water Anomaly Index Raw': null,
-    'Sentinel-1 RTC Despeckle VH Amplitude': null,
-    'Sentinel-1 RTC Despeckle VV Amplitude': null,
+const Sentinel1RendererLegendByName: Partial<
+    Record<Sentinel1FunctionName, string>
+> = {
+    'False Color dB with DRA': CompositeLegend,
+    // 'Sentinel-1 RTC VH dB with DRA': null,
+    // 'Sentinel-1 RTC VV dB with DRA': null,
+    // // 'Sentinel-1 DpRVIc Raw': null,
+    // 'SWI Raw': null,
+    // 'Water Anomaly Index Raw': null,
+    // 'Sentinel-1 RTC Despeckle VH Amplitude': null,
+    // 'Sentinel-1 RTC Despeckle VV Amplitude': null,
 };
 
 export const getSentinel1RasterFunctionInfo = (): RasterFunctionInfo[] => {
-    return SENTINEL1_RASTER_FUNCTION_INFOS.map((d) => {
+    return SENTINEL1_RASTER_FUNCTION_INFOS.slice(0, 5).map((d) => {
         const name: Sentinel1FunctionName = d.name as Sentinel1FunctionName;
 
-        const thumbnail = Sentinel1RendererThumbnailByName[name];
-        const legend = Sentinel1RendererLegendByName[name];
+        const thumbnail = Sentinel1RendererThumbnailByName[name] || null;
+        const legend = Sentinel1RendererLegendByName[name] || null;
 
         return {
             ...d,
