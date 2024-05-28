@@ -13,8 +13,11 @@
  * limitations under the License.
  */
 
+import { Button } from '@shared/components/Button';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
+import { Tooltip } from '@shared/components/Tooltip';
 import { Sentinel1OrbitDirection } from '@typing/imagery-service';
+import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
 
 type Props = {
@@ -43,13 +46,36 @@ export const OrbitDirectionFilter: FC<Props> = ({
     }, [selectedOrbitDirection]);
 
     return (
-        <div>
-            <Dropdown
+        <div className="flex items-center">
+            {/* <Dropdown
                 data={data}
                 onChange={(val) => {
                     orbitDirectionOnChange(val as Sentinel1OrbitDirection);
                 }}
-            />
+            /> */}
+            <div className="flex items-center mr-1">
+                <calcite-icon scale="s" icon="information" />
+            </div>
+
+            {data.map((d) => {
+                return (
+                    <div
+                        key={d.value}
+                        onClick={() => {
+                            orbitDirectionOnChange(
+                                d.value as Sentinel1OrbitDirection
+                            );
+                        }}
+                        className={classNames('px-2 mx-1 cursor-pointer', {
+                            'bg-custom-light-blue-90': d.selected === true,
+                            'text-custom-background': d.selected === true,
+                            'bg-custom-light-blue-5': d.selected === false,
+                        })}
+                    >
+                        <span className="text-xs">{d.value}</span>
+                    </div>
+                );
+            })}
         </div>
     );
 };
