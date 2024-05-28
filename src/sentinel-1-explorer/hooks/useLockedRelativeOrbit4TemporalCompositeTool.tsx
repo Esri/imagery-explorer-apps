@@ -19,6 +19,7 @@ import {
     selectActiveAnalysisTool,
     selectAppMode,
     selectListOfQueryParams,
+    selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
@@ -36,6 +37,8 @@ export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
+    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+
     const listOfQueryParams = useSelector(selectListOfQueryParams);
 
     const [sentinel1Scene, setSentinel1Scene] = useState<Sentinel1Scene>();
@@ -50,7 +53,7 @@ export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
             analysisTool !== 'temporal composite' ||
             !sentinel1Scene
         ) {
-            return undefined;
+            return null;
         }
 
         return sentinel1Scene?.relativeOrbit;
@@ -63,7 +66,7 @@ export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
     useEffect(() => {
         (async () => {
             if (mode !== 'analysis' || analysisTool !== 'temporal composite') {
-                return setSentinel1Scene(undefined);
+                return setSentinel1Scene(null);
             }
 
             let objectIdOfSelectedScene: number = null;
@@ -76,9 +79,9 @@ export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
                 }
             }
 
-            // if no items in the list has object id selected, then set the sentinel1 scene to undefined
+            // if no items in the list has object id selected, then set the sentinel1 scene to null
             if (!objectIdOfSelectedScene) {
-                return setSentinel1Scene(undefined);
+                return setSentinel1Scene(null);
             }
 
             // Fetch the selected Sentinel-1 scene data
@@ -88,7 +91,7 @@ export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
 
             setSentinel1Scene(data);
         })();
-    }, [listOfQueryParams, mode, analysisTool]);
+    }, [queryParams?.objectIdOfSelectedScene, mode, analysisTool]);
 
     return relativeOrbit;
 };
