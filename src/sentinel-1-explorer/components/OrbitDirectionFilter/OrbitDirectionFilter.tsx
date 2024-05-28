@@ -72,7 +72,7 @@ export const OrbitDirectionFilter: FC<Props> = ({
                             'bg-custom-light-blue-5': d.selected === false,
                         })}
                     >
-                        <span className="text-xs">{d.value}</span>
+                        <span className="text-xs uppercase">{d.value}</span>
                     </div>
                 );
             })}
