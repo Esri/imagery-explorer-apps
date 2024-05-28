@@ -82,7 +82,8 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         );
     }, [
         center,
-        acquisitionDateRange,
+        acquisitionDateRange?.startDate,
+        acquisitionDateRange?.endDate,
         isAnimationPlaying,
         orbitDirection,
         relativeOrbitOfSentinelScene4TemporalCompositeTool,
