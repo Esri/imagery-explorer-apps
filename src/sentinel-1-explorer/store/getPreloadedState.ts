@@ -196,10 +196,12 @@ const getPreloadedUIState = (): UIState => {
 
 const getPreloadedTemporalCompositeToolState =
     (): TemporalCompositeToolState => {
+        const rasterFunction: Sentinel1FunctionName =
+            'VV dB with Despeckle and DRA';
+
         const proloadedState: TemporalCompositeToolState = {
             ...initialState4TemporalCompositeTool,
-            rasterFunction:
-                'Sentinel-1 RTC VV dB with DRA' as Sentinel1FunctionName,
+            rasterFunction: rasterFunction,
         };
 
         return proloadedState;

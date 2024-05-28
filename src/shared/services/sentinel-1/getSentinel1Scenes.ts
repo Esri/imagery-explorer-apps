@@ -36,10 +36,10 @@ type GetSentinel1ScenesParams = {
      * orbit direction
      */
     orbitDirection: Sentinel1OrbitDirection;
-    // /**
-    //  * If ture, we should only get scenes that has dual polarization (VV+VH)
-    //  */
-    // dualPolarizationOnly?: boolean;
+    /**
+     * the relative orbits of sentinel-1 scenes
+     */
+    relativeOrbit?: string;
     /**
      * acquisition date range.
      *
@@ -141,7 +141,7 @@ export const getSentinel1Scenes = async ({
     // acquisitionYear,
     acquisitionDateRange,
     orbitDirection,
-    // dualPolarizationOnly,
+    relativeOrbit,
     acquisitionMonth,
     acquisitionDate,
     abortController,
@@ -170,9 +170,9 @@ export const getSentinel1Scenes = async ({
         whereClauses.push(`(${ORBIT_DIRECTION} = '${orbitDirection}')`);
     }
 
-    // if (dualPolarizationOnly) {
-    //     whereClauses.push(`(${POLARIZATION_TYPE} = 'Dual')`);
-    // }
+    if (relativeOrbit) {
+        whereClauses.push(`(${RELATIVE_ORBIT} = ${relativeOrbit})`);
+    }
 
     // we should only include scenes with dual polarization
     whereClauses.push(`(${POLARIZATION_TYPE} = 'Dual')`);

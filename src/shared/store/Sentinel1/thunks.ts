@@ -32,15 +32,19 @@ import { convert2ImageryScenes } from '@shared/services/sentinel-1/covert2Imager
 import { deduplicateListOfImageryScenes } from '@shared/services/helpers/deduplicateListOfScenes';
 
 let abortController: AbortController = null;
+
 /**
  * Query Sentinel-1 Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
- * @param year use selected acquisition year
+ * @param acquisitionDateRange user selected acquisition date range
+ * @param orbitDirection user selected orbit direction
+ * @param relativeOrbit relative orbit of sentinel-1 scenes
  * @returns
  */
 export const queryAvailableScenes =
     (
         acquisitionDateRange: DateRange,
-        orbitDirection: Sentinel1OrbitDirection
+        orbitDirection: Sentinel1OrbitDirection,
+        relativeOrbit?: string
         // dualPolarizationOnly: boolean
     ) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
@@ -64,7 +68,7 @@ export const queryAvailableScenes =
             const scenes = await getSentinel1Scenes({
                 acquisitionDateRange,
                 orbitDirection,
-                // dualPolarizationOnly,
+                relativeOrbit,
                 mapPoint: center,
                 abortController,
             });

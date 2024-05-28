@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
@@ -23,9 +23,13 @@ import { queryAvailableScenes } from '@shared/store/Sentinel1/thunks';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectListOfQueryParams,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
+import { Sentinel1Scene } from '@typing/imagery-service';
+import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
+import { useLockedRelativeOrbit4TemporalCompositeTool } from './useLockedRelativeOrbit4TemporalCompositeTool';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
 /**
@@ -53,17 +57,11 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
 
     const orbitDirection = useSelector(selectSentinel1OrbitDirection);
 
-    // /**
-    //  * Indicates if we should only query the sentinel-1 imagery scenes that
-    //  * support dual polarization: VV and VH
-    //  */
-    // const dualPolarizationOnly = useMemo(() => {
-    //     if (mode === 'analysis' && analysisTool === 'temporal composite') {
-    //         return true;
-    //     }
-
-    //     return false;
-    // }, [mode, analysisTool]);
+    /**
+     * relative orbit to be used by the temporal composite tool
+     */
+    const relativeOrbitOfSentinelScene4TemporalCompositeTool =
+        useLockedRelativeOrbit4TemporalCompositeTool();
 
     useEffect(() => {
         if (!center || !acquisitionDateRange) {
@@ -77,7 +75,8 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         dispatch(
             queryAvailableScenes(
                 acquisitionDateRange,
-                orbitDirection
+                orbitDirection,
+                relativeOrbitOfSentinelScene4TemporalCompositeTool
                 // dualPolarizationOnly
             )
         );
@@ -86,6 +85,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         acquisitionDateRange,
         isAnimationPlaying,
         orbitDirection,
+        relativeOrbitOfSentinelScene4TemporalCompositeTool,
         // dualPolarizationOnly,
     ]);
 

@@ -37,13 +37,18 @@ export const TemporalCompositeTool = () => {
     const listOfQueryParams = useSelector(selectListOfQueryParams);
 
     const rasterFunctionDropdownOptions: DropdownData[] = useMemo(() => {
+        const VVdBRasterFunction: Sentinel1FunctionName =
+            'VV dB with Despeckle and DRA';
+        const VHdBRasterFunction: Sentinel1FunctionName =
+            'VV dB with Despeckle and DRA';
+
         const data = [
             {
-                value: 'Sentinel-1 RTC VV dB with DRA' as Sentinel1FunctionName,
+                value: VVdBRasterFunction,
                 label: 'V V dB',
             },
             {
-                value: 'Sentinel-1 RTC VH dB with DRA' as Sentinel1FunctionName,
+                value: VHdBRasterFunction,
                 label: 'V H dB',
             },
         ];

@@ -51,7 +51,7 @@ export const initiateImageryScenes4TemporalCompositeTool =
                 ? listOfQueryParams[0]
                 : {
                       ...DefaultQueryParams4ImageryScene,
-                      rasterFunctionName: '' as Sentinel1FunctionName,
+                      rasterFunctionName: '',
                       uniqueId: nanoid(5),
                   };
 
@@ -60,7 +60,7 @@ export const initiateImageryScenes4TemporalCompositeTool =
                 ? listOfQueryParams[1]
                 : {
                       ...DefaultQueryParams4ImageryScene,
-                      rasterFunctionName: '' as Sentinel1FunctionName,
+                      rasterFunctionName: '',
                       uniqueId: nanoid(5),
                   };
 
@@ -69,7 +69,7 @@ export const initiateImageryScenes4TemporalCompositeTool =
                 ? listOfQueryParams[2]
                 : {
                       ...DefaultQueryParams4ImageryScene,
-                      rasterFunctionName: '' as Sentinel1FunctionName,
+                      rasterFunctionName: '',
                       uniqueId: nanoid(5),
                   };
 
