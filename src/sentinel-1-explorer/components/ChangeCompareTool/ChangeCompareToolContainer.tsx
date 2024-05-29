@@ -46,6 +46,7 @@ import {
     SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE,
     SENTINEL1_WATER_INDEX_PIXEL_RANGE,
 } from '@shared/services/sentinel-1/config';
+import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
 
 /**
  * the index that user can select for the Change Compare Tool
@@ -120,6 +121,8 @@ export const ChangeCompareToolContainer = () => {
     const selectedOption: ChangeCompareToolOption4Sentinel1 = useSelector(
         selectSelectedOption4ChangeCompareTool
     ) as ChangeCompareToolOption4Sentinel1;
+
+    useSyncCalendarDateRange();
 
     useEffect(() => {
         const pixelValuesRange =

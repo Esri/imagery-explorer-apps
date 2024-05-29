@@ -1,3 +1,4 @@
+import { syncImageryScenesDateRangeForChangeCompareTool } from '@shared/store/ChangeCompareTool/thunks';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -51,6 +52,12 @@ export const useSyncCalendarDateRange = () => {
 
         dispatch(
             syncImageryScenesDateRangeForTemporalCompositeTool(
+                queryParams?.acquisitionDateRange
+            )
+        );
+
+        dispatch(
+            syncImageryScenesDateRangeForChangeCompareTool(
                 queryParams?.acquisitionDateRange
             )
         );
