@@ -118,7 +118,19 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         name: 'False Color dB with DRA',
         description:
             'RGB false color composite of VV, VH, VV/VH in dB scale with a dynamic stretch applied for visualization only.',
-        label: 'RGB dB DRA',
+        label: 'False Color',
+    },
+    {
+        name: 'SWI Colorized',
+        description:
+            'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
+        label: 'Water Index ',
+    },
+    {
+        name: 'Water Anomaly Index Colorized',
+        description:
+            'Water Anomaly Index with a color map. Increased water anomalies are indicated by bright yellow, orange and red colors. Computed as Ln (0.01 / (0.01 + VV * 2)).',
+        label: 'Water Anomaly',
     },
     {
         name: 'VV dB with Despeckle and DRA',
@@ -131,18 +143,6 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         description:
             'VH data in dB scale with a 7x7 Refined Lee despeckling filter and a dynamic stretch applied for visualization only.',
         label: 'VH dB',
-    },
-    {
-        name: 'SWI Colorized',
-        description:
-            'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
-        label: 'SAR Water Index ',
-    },
-    {
-        name: 'Water Anomaly Index Colorized',
-        description:
-            'Water Anomaly Index with a color map. Increased water anomalies are indicated by bright yellow, orange and red colors. Computed as Ln (0.01 / (0.01 + VV * 2)).',
-        label: 'Water Anomaly',
     },
     // {
     //     name: 'SWI Raw',
