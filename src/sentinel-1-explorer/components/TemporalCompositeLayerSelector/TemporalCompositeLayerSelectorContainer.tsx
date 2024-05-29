@@ -13,6 +13,7 @@ import {
 import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { isTemporalCompositeLayerOnUpdated } from '@shared/store/TemporalCompositeTool/reducer';
 import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
+import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
 
 export const TemporalCompositeLayerSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -40,6 +41,8 @@ export const TemporalCompositeLayerSelectorContainer = () => {
 
         return false;
     }, [listOfQueryParams]);
+
+    useSyncCalendarDateRange();
 
     useEffect(() => {
         dispatch(initiateImageryScenes4TemporalCompositeTool(true));

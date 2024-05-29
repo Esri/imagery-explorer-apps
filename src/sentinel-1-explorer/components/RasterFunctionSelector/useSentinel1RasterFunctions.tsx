@@ -25,6 +25,7 @@ import PlaceholderThumbnail from './thumbnails/placeholder.jpg';
 import Render_VV_VH from './thumbnails/Render_VV_VH.jpg';
 import Render_WaterAnomaly from './thumbnails/Render_WaterAnomaly.jpg';
 import Render_WaterIndex from './thumbnails/Render_WaterIndex.jpg';
+import Render_FalseColor from './thumbnails/Render_FalseColor.jpg';
 
 import SAR_FalseColorComposite_Legend from './legends/SAR_FalseColorComposite_Legend.png';
 import SAR_SingleBandV2_Legend from './legends/SAR_SingleBandV2_Legend.png';
@@ -33,7 +34,7 @@ import SAR_WaterAnomaly_Legend from './legends/SAR_WaterAnomaly_Legend.png';
 const Sentinel1RendererThumbnailByName: Partial<
     Record<Sentinel1FunctionName, string>
 > = {
-    'False Color dB with DRA': PlaceholderThumbnail,
+    'False Color dB with DRA': Render_FalseColor,
     'VV dB with Despeckle and DRA': Render_VV_VH,
     'VH dB with Despeckle and DRA': Render_VV_VH,
     // 'Sentinel-1 DpRVIc Raw': PlaceholderThumbnail,

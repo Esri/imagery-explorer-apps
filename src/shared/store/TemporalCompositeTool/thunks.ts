@@ -21,13 +21,18 @@ import {
     queryParamsListChanged,
 } from '../ImageryScene/reducer';
 import {
+    selectIdOfSelectedItemInListOfQueryParams,
     selectListOfQueryParams,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
     selectSelectedItemFromListOfQueryParams,
 } from '../ImageryScene/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
+// import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
+import { DateRange } from '@typing/shared';
+import { getDateRangeForPast12Month } from '@shared/utils/date-time/getTimeRange';
+
+const DATE_RANGE_OF_PAST_12_MONTH = getDateRangeForPast12Month();
 
 // let abortController: AbortController = null;
 
@@ -110,6 +115,59 @@ export const swapImageryScenesInTemporalCompositeTool =
             queryParamsListChanged({
                 queryParams,
                 selectedItemID: queryParams4SecondaryScene.uniqueId,
+            })
+        );
+    };
+
+/**
+ * This thunk function updates the query parameters of Imagery Scenes for the Temporal Composite Tool
+ * to sync with the default acquisition date range (past 12 months) using the updated date range
+ * provided by the user.
+ *
+ * This is done to prevent the calendar from jumping between the "past 12 months" and a selected year,
+ * which might cause confusion for users. In other words, we want imagery scenes used by Temporal Composite Tool that don't have a
+ * user-selected acquisition date range to inherit the date range that the user selected for other imagery scenes.
+ *
+ * @param updatedDateRange - The new date range to apply to imagery scenes with the default date range.
+ */
+export const syncImageryScenesDateRangeForTemporalCompositeTool =
+    (updatedDateRange: DateRange) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const storeState = getState();
+
+        // Get the current list of query parameters from the store
+        const listOfQueryParams = selectListOfQueryParams(storeState);
+
+        const selectedItemID =
+            selectIdOfSelectedItemInListOfQueryParams(storeState);
+
+        // Initialize an array to hold the updated list of query parameters
+        const updatedListOfQueryParams: QueryParams4ImageryScene[] = [];
+
+        for (const queryParams of listOfQueryParams) {
+            // Create a copy of the current query parameters
+            const updatedQueryParams = { ...queryParams };
+
+            const { acquisitionDateRange } = updatedQueryParams;
+
+            // If the acquisition date range matches the default "past 12 months" date range,
+            // update it to the new date range provided by the user
+            if (
+                acquisitionDateRange.startDate ===
+                    DATE_RANGE_OF_PAST_12_MONTH.startDate &&
+                acquisitionDateRange.endDate ===
+                    DATE_RANGE_OF_PAST_12_MONTH.endDate
+            ) {
+                updatedQueryParams.acquisitionDateRange = updatedDateRange;
+            }
+
+            updatedListOfQueryParams.push(updatedQueryParams);
+        }
+
+        dispatch(
+            queryParamsListChanged({
+                queryParams: updatedListOfQueryParams,
+                selectedItemID,
             })
         );
     };
