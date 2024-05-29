@@ -22,17 +22,23 @@ import {
 import { RasterFunctionInfo } from '@typing/imagery-service';
 
 import PlaceholderThumbnail from './thumbnails/placeholder.jpg';
-import CompositeLegend from './legends/SARCompositeLegend.png';
+import Render_VV_VH from './thumbnails/Render_VV_VH.jpg';
+import Render_WaterAnomaly from './thumbnails/Render_WaterAnomaly.jpg';
+import Render_WaterIndex from './thumbnails/Render_WaterIndex.jpg';
+
+import SAR_FalseColorComposite_Legend from './legends/SAR_FalseColorComposite_Legend.png';
+import SAR_SingleBandV2_Legend from './legends/SAR_SingleBandV2_Legend.png';
+import SAR_WaterAnomaly_Legend from './legends/SAR_WaterAnomaly_Legend.png';
 
 const Sentinel1RendererThumbnailByName: Partial<
     Record<Sentinel1FunctionName, string>
 > = {
     'False Color dB with DRA': PlaceholderThumbnail,
-    'VV dB with Despeckle and DRA': PlaceholderThumbnail,
-    'VH dB with Despeckle and DRA': PlaceholderThumbnail,
+    'VV dB with Despeckle and DRA': Render_VV_VH,
+    'VH dB with Despeckle and DRA': Render_VV_VH,
     // 'Sentinel-1 DpRVIc Raw': PlaceholderThumbnail,
-    'Water Anomaly Index Colorized': PlaceholderThumbnail,
-    'SWI Colorized': PlaceholderThumbnail,
+    'Water Anomaly Index Colorized': Render_WaterAnomaly,
+    'SWI Colorized': Render_WaterIndex,
     // 'Sentinel-1 RTC Despeckle VH Amplitude': PlaceholderThumbnail,
     // 'Sentinel-1 RTC Despeckle VV Amplitude': PlaceholderThumbnail,
     // 'NDMI Colorized': LandsatNDMIThumbnail,
@@ -41,14 +47,10 @@ const Sentinel1RendererThumbnailByName: Partial<
 const Sentinel1RendererLegendByName: Partial<
     Record<Sentinel1FunctionName, string>
 > = {
-    'False Color dB with DRA': CompositeLegend,
-    // 'Sentinel-1 RTC VH dB with DRA': null,
-    // 'Sentinel-1 RTC VV dB with DRA': null,
-    // // 'Sentinel-1 DpRVIc Raw': null,
-    // 'SWI Raw': null,
-    // 'Water Anomaly Index Raw': null,
-    // 'Sentinel-1 RTC Despeckle VH Amplitude': null,
-    // 'Sentinel-1 RTC Despeckle VV Amplitude': null,
+    'False Color dB with DRA': SAR_FalseColorComposite_Legend,
+    'VH dB with Despeckle and DRA': SAR_SingleBandV2_Legend,
+    'VV dB with Despeckle and DRA': SAR_SingleBandV2_Legend,
+    'Water Anomaly Index Colorized': SAR_WaterAnomaly_Legend,
 };
 
 export const getSentinel1RasterFunctionInfo = (): RasterFunctionInfo[] => {
