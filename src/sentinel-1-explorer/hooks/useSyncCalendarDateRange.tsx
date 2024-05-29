@@ -54,5 +54,5 @@ export const useSyncCalendarDateRange = () => {
                 queryParams?.acquisitionDateRange
             )
         );
-    }, [queryParams.acquisitionDateRange]);
+    }, [queryParams?.acquisitionDateRange]);
 };
