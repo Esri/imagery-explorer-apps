@@ -136,7 +136,7 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         name: 'SWI Colorized',
         description:
             'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
-        label: 'SWI ',
+        label: 'SAR Water Index ',
     },
     {
         name: 'Water Anomaly Index Colorized',

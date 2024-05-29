@@ -30,6 +30,7 @@ import Render_FalseColor from './thumbnails/Render_FalseColor.jpg';
 import SAR_FalseColorComposite_Legend from './legends/SAR_FalseColorComposite_Legend.png';
 import SAR_SingleBandV2_Legend from './legends/SAR_SingleBandV2_Legend.png';
 import SAR_WaterAnomaly_Legend from './legends/SAR_WaterAnomaly_Legend.png';
+import SAR_WaterIndex_Legend from './legends/SAR_WaterIndex_Legend.png';
 
 const Sentinel1RendererThumbnailByName: Partial<
     Record<Sentinel1FunctionName, string>
@@ -52,6 +53,7 @@ const Sentinel1RendererLegendByName: Partial<
     'VH dB with Despeckle and DRA': SAR_SingleBandV2_Legend,
     'VV dB with Despeckle and DRA': SAR_SingleBandV2_Legend,
     'Water Anomaly Index Colorized': SAR_WaterAnomaly_Legend,
+    'SWI Colorized': SAR_WaterIndex_Legend,
 };
 
 export const getSentinel1RasterFunctionInfo = (): RasterFunctionInfo[] => {
