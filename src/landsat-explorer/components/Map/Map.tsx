@@ -16,7 +16,7 @@
 import React, { FC } from 'react';
 import MapViewContainer from '@shared/components/MapView/MapViewContainer';
 import { LandsatLayer } from '../LandsatLayer';
-import { SwipeWidget } from '../SwipeWidget';
+// import { SwipeWidget } from '../SwipeWidget';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { MaskLayer } from '../MaskLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
@@ -36,6 +36,7 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/co
 import { useDispatch } from 'react-redux';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
+import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -59,7 +60,10 @@ const Map = () => {
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
             </GroupLayer>
-            <SwipeWidget />
+            {/* <SwipeWidget /> */}
+            <SwipeWidget4ImageryLayers
+                serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            />
             <AnimationLayer
                 imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
                 authoringAppName="landsat"

@@ -27,7 +27,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import {
     getExtentOfLandsatSceneByObjectId,
-    getLandsatFeatureByObjectId,
+    // getLandsatFeatureByObjectId,
 } from '@shared/services/landsat-level-2/getLandsatScenes';
 
 type Props = {

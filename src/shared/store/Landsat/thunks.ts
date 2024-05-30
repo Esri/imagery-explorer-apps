@@ -14,11 +14,7 @@
  */
 
 import { batch } from 'react-redux';
-import {
-    // getLandsatFeatureByObjectId,
-    // getLandsatSceneByObjectId,
-    getLandsatScenes,
-} from '@shared/services/landsat-level-2/getLandsatScenes';
+import { getLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import { landsatScenesUpdated } from './reducer';
@@ -35,6 +31,7 @@ import {
 } from '../ImageryScene/reducer';
 import { DateRange } from '@typing/shared';
 import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
+import { deduplicateListOfImageryScenes } from '@shared/services/helpers/deduplicateListOfScenes';
 
 let abortController: AbortController = null;
 /**
@@ -66,7 +63,7 @@ export const queryAvailableScenes =
             );
 
             // get scenes that were acquired within the acquisition year
-            const scenes = await getLandsatScenes({
+            const landsatScenes = await getLandsatScenes({
                 acquisitionDateRange,
                 mapPoint: center,
                 abortController,
@@ -122,39 +119,39 @@ export const queryAvailableScenes =
             //     }
             // }
 
-            // sort scenes uing acquisition date in an ascending order
-            // which is necessary for us to select between two overlapping scenes in step below
-            scenes.sort((a, b) => a.acquisitionDate - b.acquisitionDate);
+            // // sort scenes uing acquisition date in an ascending order
+            // // which is necessary for us to select between two overlapping scenes in step below
+            // scenes.sort((a, b) => a.acquisitionDate - b.acquisitionDate);
 
-            const landsatScenes: LandsatScene[] = [];
+            // const landsatScenes: LandsatScene[] = [];
 
-            for (const currScene of scenes) {
-                // Get the last Landsat scene in the 'landsatScenes' array
-                const prevScene = landsatScenes[landsatScenes.length - 1];
+            // for (const currScene of scenes) {
+            //     // Get the last Landsat scene in the 'landsatScenes' array
+            //     const prevScene = landsatScenes[landsatScenes.length - 1];
 
-                // Check if there is a previous scene and its acquisition date matches the current scene.
-                // We aim to keep only one Landsat scene for each day. When there are two scenes acquired on the same date,
-                // we prioritize keeping the currently selected scene or the one acquired later.
-                if (
-                    prevScene &&
-                    prevScene.formattedAcquisitionDate ===
-                        currScene.formattedAcquisitionDate
-                ) {
-                    // Check if the previous scene is the currently selected scene
-                    // Skip the current iteration if the previous scene is the selected scene
-                    if (prevScene.objectId === objectIdOfSelectedScene) {
-                        continue;
-                    }
+            //     // Check if there is a previous scene and its acquisition date matches the current scene.
+            //     // We aim to keep only one Landsat scene for each day. When there are two scenes acquired on the same date,
+            //     // we prioritize keeping the currently selected scene or the one acquired later.
+            //     if (
+            //         prevScene &&
+            //         prevScene.formattedAcquisitionDate ===
+            //             currScene.formattedAcquisitionDate
+            //     ) {
+            //         // Check if the previous scene is the currently selected scene
+            //         // Skip the current iteration if the previous scene is the selected scene
+            //         if (prevScene.objectId === objectIdOfSelectedScene) {
+            //             continue;
+            //         }
 
-                    // Remove the previous scene from 'landsatScenes' as it was acquired before the current scene
-                    landsatScenes.pop();
-                }
+            //         // Remove the previous scene from 'landsatScenes' as it was acquired before the current scene
+            //         landsatScenes.pop();
+            //     }
 
-                landsatScenes.push(currScene);
-            }
+            //     landsatScenes.push(currScene);
+            // }
 
             // convert list of Landsat scenes to list of imagery scenes
-            const imageryScenes: ImageryScene[] = landsatScenes.map(
+            let imageryScenes: ImageryScene[] = landsatScenes.map(
                 (landsatScene: LandsatScene) => {
                     const {
                         objectId,
@@ -180,6 +177,11 @@ export const queryAvailableScenes =
 
                     return imageryScene;
                 }
+            );
+
+            imageryScenes = deduplicateListOfImageryScenes(
+                imageryScenes,
+                objectIdOfSelectedScene
             );
 
             batch(() => {

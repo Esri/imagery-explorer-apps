@@ -13,39 +13,43 @@
  * limitations under the License.
  */
 
-import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
-import {
-    selectedRangeUpdated,
-    selectedOption4ChangeCompareToolChanged,
-} from '@shared/store/ChangeCompareTool/reducer';
-import {
-    selectChangeCompareLayerIsOn,
-    selectSelectedOption4ChangeCompareTool,
-    selectUserSelectedRangeInChangeCompareTool,
-} from '@shared/store/ChangeCompareTool/selectors';
+// import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
+// // import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import {
+//     // selectedRangeUpdated,
+//     selectedOption4ChangeCompareToolChanged,
+// } from '@shared/store/ChangeCompareTool/reducer';
+// import {
+//     selectChangeCompareLayerIsOn,
+//     selectSelectedOption4ChangeCompareTool,
+//     selectUserSelectedRangeInChangeCompareTool,
+// } from '@shared/store/ChangeCompareTool/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getChangeCompareLayerColorrampAsCSSGradient } from '../ChangeLayer/helpers';
+// import { getChangeCompareLayerColorrampAsCSSGradient } from '../ChangeLayer/helpers';
+import {
+    ChangeCompareToolHeader,
+    ChangeCompareToolControls,
+} from '@shared/components/ChangeCompareTool';
 
 export const ChangeCompareToolContainer = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const selectedRange = useSelector(
-        selectUserSelectedRangeInChangeCompareTool
-    );
+    // const selectedRange = useSelector(
+    //     selectUserSelectedRangeInChangeCompareTool
+    // );
 
-    const selectedSpectralIndex = useSelector(
-        selectSelectedOption4ChangeCompareTool
-    );
+    // const selectedSpectralIndex = useSelector(
+    //     selectSelectedOption4ChangeCompareTool
+    // );
 
-    const isChangeLayerOn = useSelector(selectChangeCompareLayerIsOn);
+    // const isChangeLayerOn = useSelector(selectChangeCompareLayerIsOn);
 
     if (tool !== 'change') {
         return null;
@@ -53,7 +57,25 @@ export const ChangeCompareToolContainer = () => {
 
     return (
         <div className={classNames('w-full h-full')}>
-            <AnalysisToolHeader
+            <ChangeCompareToolHeader
+                options={[
+                    {
+                        value: 'water' as SpectralIndex,
+                        label: 'WATER INDEX',
+                    },
+                    {
+                        value: 'vegetation' as SpectralIndex,
+                        label: 'VEGETATION INDEX',
+                    },
+                    {
+                        value: 'moisture' as SpectralIndex,
+                        label: 'MOISTURE INDEX',
+                    },
+                ]}
+            />
+            <ChangeCompareToolControls />
+
+            {/* <AnalysisToolHeader
                 title="Change"
                 dropdownListOptions={[
                     {
@@ -80,9 +102,8 @@ export const ChangeCompareToolContainer = () => {
                         )
                     );
                 }}
-            />
-
-            {isChangeLayerOn ? (
+            /> */}
+            {/* {isChangeLayerOn ? (
                 <div className={classNames('w-full h-[0px] pt-[50px]')}>
                     <div className="w-full">
                         <div
@@ -128,7 +149,7 @@ export const ChangeCompareToolContainer = () => {
                         VIEW CHANGE.
                     </p>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

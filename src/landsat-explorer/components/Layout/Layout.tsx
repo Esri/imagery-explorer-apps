@@ -44,6 +44,7 @@ import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
 import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
+import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -52,8 +53,10 @@ const Layout = () => {
 
     const dynamicModeOn = mode === 'dynamic';
 
-    const shouldShowSecondaryControls =
-        mode === 'swipe' || mode === 'animate' || mode === 'analysis';
+    // const shouldShowSecondaryControls =
+    //     mode === 'swipe' || mode === 'animate' || mode === 'analysis';
+
+    const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
     /**
      * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
