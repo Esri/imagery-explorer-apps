@@ -44,11 +44,16 @@ type Props = {
      * The URL of the Imagery Service that will be used to provide image for theframes of Animation Layer
      */
     imageryServiceUrl: string;
+    /**
+     * name of the app/service to be added as prefix to the filename of the output .mp4 file
+     */
+    authoringAppName: string;
     mapView?: MapView;
 };
 
 export const AnimationLayer: FC<Props> = ({
     imageryServiceUrl,
+    authoringAppName,
     mapView,
 }: Props) => {
     const dispatch = useDispatch();
@@ -203,6 +208,7 @@ export const AnimationLayer: FC<Props> = ({
             <AnimationDownloadPanel
                 frameData4DownloadJob={frameData4DownloadJob}
                 animationSpeed={animationSpeed}
+                authoringAppName={authoringAppName}
                 mapViewWindowSize={{
                     width: mapView.width,
                     height: mapView.height,

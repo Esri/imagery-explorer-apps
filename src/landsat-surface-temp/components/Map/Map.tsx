@@ -23,7 +23,7 @@ import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer
 
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { ZoomToExtent } from '@landsat-explorer/components/ZoomToExtent';
-import { Popup } from '@landsat-explorer/components/PopUp/PopUp';
+import { Popup } from '@landsat-explorer/components/PopUp/';
 import { MaskLayer } from '@landsat-explorer/components/MaskLayer';
 import { LandsatLayer } from '../LandsatLayer';
 import { SwipeWidget } from '../SwipeWidget';

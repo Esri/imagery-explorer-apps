@@ -28,7 +28,14 @@
     "type": "git",
     "url": "git+https://github.com/Esri/imagery-explorer-apps.git"
   },
-  "keywords": ["landsat", "remote-sensing", "sentinel-2", "landcover", "remote-sensing", "living-atlas"],
+  "keywords": [
+    "landsat",
+    "remote-sensing",
+    "sentinel-2",
+    "landcover",
+    "remote-sensing",
+    "living-atlas"
+  ],
   "author": "ArcGIS Living Atlas of the World",
   "license": "ISC",
   "bugs": {
@@ -100,12 +107,12 @@
     "webpack-dev-server": "^4.9.3"
   },
   "dependencies": {
-    "@arcgis/core": "^4.29.0",
+    "@arcgis/core": "^4.29.10",
     "@esri/arcgis-rest-feature-service": "^4.0.4",
     "@reduxjs/toolkit": "1.8",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
-    "@vannizhang/images-to-video-converter-client": "^1.1.10",
+    "@vannizhang/images-to-video-converter-client": "^1.1.13",
     "@vannizhang/react-d3-charts": "^1.0.28",
     "classnames": "^2.2.6",
     "date-fns": "^2.30.0",
