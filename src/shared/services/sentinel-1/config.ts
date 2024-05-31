@@ -90,8 +90,8 @@ export const FIELD_NAMES = {
 const SENTINEL1_RASTER_FUNCTIONS = [
     'False Color dB with DRA',
     // 'Sentinel-1 RGB dB',
-    'VV dB with Despeckle and DRA',
-    'VH dB with Despeckle and DRA',
+    'VV dB Colorized',
+    'VH dB Colorized',
     'SWI Colorized',
     // 'Sentinel-1 DpRVIc Raw',
     'Water Anomaly Index Colorized',
@@ -133,13 +133,13 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
         label: 'Water Anomaly',
     },
     {
-        name: 'VV dB with Despeckle and DRA',
+        name: 'VV dB Colorized',
         description:
             'VV data in dB scale with a 7x7 Refined Lee despeckling filter and a dynamic stretch applied for visualization only.',
         label: 'VV dB',
     },
     {
-        name: 'VH dB with Despeckle and DRA',
+        name: 'VH dB Colorized',
         description:
             'VH data in dB scale with a 7x7 Refined Lee despeckling filter and a dynamic stretch applied for visualization only.',
         label: 'VH dB',
