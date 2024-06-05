@@ -4,9 +4,17 @@ export const calcRadarIndex = (
     indexName: RadarIndex,
     bandValues: number[]
 ): number => {
-    const [VV, VH] = bandValues;
+    let [VV, VH] = bandValues;
 
     let value = 0;
+
+    // The raw pixel values are in Power Scale already
+    // For SWI, we will need to convert the Power Scale to dB and then calculate the index
+    // @see https://github.com/vannizhang/imagery-explorer-apps-private/issues/28
+    if (indexName === 'water') {
+        VV = 10 * Math.log10(VV);
+        VH = 10 * Math.log10(VH);
+    }
 
     // Calculate the value based on the input radar index
     if (indexName === 'water') {

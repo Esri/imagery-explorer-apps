@@ -119,8 +119,10 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
 
     const initGroupLayer4MaskAndWaterLandLayers = () => {
         groupLayer4MaskAndWaterLandLayersRef.current = new GroupLayer({
-            blendMode: shouldClip ? 'destination-atop' : null,
+            blendMode: shouldClip && isVisible ? 'destination-atop' : 'normal',
+            visible: isVisible,
         });
+
         groupLayer.add(groupLayer4MaskAndWaterLandLayersRef.current);
     };
 
@@ -133,10 +135,19 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
             return;
         }
 
-        groupLayer4MaskAndWaterLandLayersRef.current.blendMode = shouldClip
-            ? 'destination-atop'
-            : 'normal';
-    }, [shouldClip]);
+        // Set blend mode to 'destination-atop' only when shouldClip is true and the mask layer is on.
+        // If the mask layer is off and the blend mode remains 'destination-atop', the underlying Sentinel-1 Layer becomes invisible.
+        groupLayer4MaskAndWaterLandLayersRef.current.blendMode =
+            shouldClip && isVisible ? 'destination-atop' : 'normal';
+    }, [shouldClip, isVisible]);
+
+    useEffect(() => {
+        if (!groupLayer4MaskAndWaterLandLayersRef.current) {
+            return;
+        }
+
+        groupLayer4MaskAndWaterLandLayersRef.current.visible = isVisible;
+    }, [isVisible]);
 
     if (!groupLayer4MaskAndWaterLandLayersRef.current) {
         return null;
