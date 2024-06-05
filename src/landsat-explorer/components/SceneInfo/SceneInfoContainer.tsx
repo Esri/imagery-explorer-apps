@@ -55,12 +55,13 @@ export const SceneInfoContainer = () => {
             // therefore we need to split it into two separate rows
             {
                 name: 'Scene ID',
-                value: name.slice(0, 17),
+                value: name, //name.slice(0, 17),
+                clickToCopy: true,
             },
-            {
-                name: '',
-                value: name.slice(17),
-            },
+            // {
+            //     name: '',
+            //     value: name.slice(17),
+            // },
             {
                 name: 'Satellite',
                 value: satellite,

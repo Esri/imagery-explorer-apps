@@ -29,20 +29,24 @@ export type SceneInfoTableData = {
      * value of the field
      */
     value: string;
+    /**
+     * if true, user can click to copy this value
+     */
+    clickToCopy?: boolean;
 };
 
 type Props = {
     data: SceneInfoTableData[];
 };
 
-const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value }) => {
+const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
     return (
         <>
-            <div className="text-right pr-2">
+            <div className="text-right pr-2 leading-none">
                 <span className="text-custom-light-blue-50">{name}</span>
             </div>
 
-            <div title={value}>
+            <div title={value} className="relative leading-none">
                 <span className="inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis">
                     {value}
                 </span>
@@ -74,13 +78,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
                 data-element="scene-info-table" // this [data-element] attribute will be used to monitor the health of the app
             >
                 {data.map((d: SceneInfoTableData) => {
-                    return (
-                        <SceneInfoRow
-                            key={generateUID()}
-                            name={d.name}
-                            value={d.value}
-                        />
-                    );
+                    return <SceneInfoRow key={generateUID()} {...d} />;
                 })}
             </div>
         );
