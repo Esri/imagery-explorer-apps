@@ -89,13 +89,13 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
 
             const sceneData = getFormattedSentinel1Scenes(features)[0];
 
-            const bandValues: number[] =
-                getPixelValuesFromIdentifyTaskResponse(res);
+            // const bandValues: number[] =
+            //     getPixelValuesFromIdentifyTaskResponse(res);
 
-            if (!bandValues) {
-                throw new Error('identify task does not return band values');
-            }
-            // console.log(bandValues)
+            // if (!bandValues) {
+            //     throw new Error('identify task does not return band values');
+            // }
+            // // console.log(bandValues)
 
             const title = `Sentinel-1 | ${formatInUTCTimeZone(
                 sceneData.acquisitionDate,
@@ -106,7 +106,7 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
                 // Set the popup's title to the coordinates of the location
                 title,
                 location: mapPoint, // Set the location of the popup to the clicked location
-                content: getMainContent(bandValues, mapPoint),
+                content: getMainContent(mapPoint),
             });
         } catch (error: any) {
             setData({
