@@ -42,8 +42,10 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value }) => {
                 <span className="text-custom-light-blue-50">{name}</span>
             </div>
 
-            <div>
-                <span>{value}</span>
+            <div title={value}>
+                <span className="inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis">
+                    {value}
+                </span>
             </div>
         </>
     );

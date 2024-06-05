@@ -49,16 +49,16 @@ export const SceneInfoContainer = () => {
             // therefore we need to split it into two separate rows
             {
                 name: 'Scene ID',
-                value: name.slice(0, 22),
+                value: name, //name.slice(0, 22),
             },
-            {
-                name: '',
-                value: name.slice(22, 44),
-            },
-            {
-                name: '',
-                value: name.slice(44),
-            },
+            // {
+            //     name: '',
+            //     value: name.slice(22, 44),
+            // },
+            // {
+            //     name: '',
+            //     value: name.slice(44),
+            // },
             {
                 name: 'Sensor',
                 value: sensor,
