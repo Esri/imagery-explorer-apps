@@ -90,6 +90,50 @@ export const ChangeCompareToolControls: FC<Props> = ({
         );
     };
 
+    const getLegendLabelText = () => {
+        if (!legendLabelText?.length) {
+            return null;
+        }
+
+        let content: JSX.Element = null;
+
+        if (legendLabelText.length === 2) {
+            content = (
+                <div className="flex items-center text-xs">
+                    <div className="w-1/2">
+                        <span>{legendLabelText[0] || 'decrease'}</span>
+                    </div>
+
+                    <div className="w-1/2 text-right">
+                        <span>{legendLabelText[1] || 'increase'}</span>
+                    </div>
+                </div>
+            );
+        }
+
+        if (legendLabelText.length === 3) {
+            content = (
+                <div className="flex items-center text-xs">
+                    <div className="w-1/3">
+                        <span>{legendLabelText[0] || 'decrease'}</span>
+                    </div>
+                    <div className="w-1/3 text-center">
+                        <span>{legendLabelText[1] || 'no change'}</span>
+                    </div>
+                    <div className="w-1/3 text-right">
+                        <span>{legendLabelText[2] || 'increase'}</span>
+                    </div>
+                </div>
+            );
+        }
+
+        if (!content) {
+            return null;
+        }
+
+        return <div className="w-full mt-12">{content}</div>;
+    };
+
     if (tool !== 'change') {
         return null;
     }
@@ -118,20 +162,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
             </div>
 
             {getPixelRangeSlider()}
-
-            <div className="w-full mt-12">
-                <div className="flex items-center text-xs">
-                    <div className="w-1/3">
-                        <span>{legendLabelText[0] || 'decrease'}</span>
-                    </div>
-                    <div className="w-1/3 text-center">
-                        <span>{legendLabelText[1] || 'no change'}</span>
-                    </div>
-                    <div className="w-1/3 text-right">
-                        <span>{legendLabelText[2] || 'increase'}</span>
-                    </div>
-                </div>
-            </div>
+            {getLegendLabelText()}
         </div>
     );
 };

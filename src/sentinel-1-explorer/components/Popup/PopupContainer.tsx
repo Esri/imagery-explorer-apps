@@ -29,6 +29,8 @@ import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
 import { identify } from '@shared/services/helpers/identify';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 import { getFormattedSentinel1Scenes } from '@shared/services/sentinel-1/getSentinel1Scenes';
+import { getPixelValuesFromIdentifyTaskResponse } from '@shared/services/helpers/getPixelValuesFromIdentifyTaskResponse';
+import { getMainContent } from './helper';
 
 type Props = {
     mapView?: MapView;
@@ -87,13 +89,13 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
 
             const sceneData = getFormattedSentinel1Scenes(features)[0];
 
-            // const bandValues: number[] =
-            //     getPixelValuesFromIdentifyTaskResponse(res);
+            const bandValues: number[] =
+                getPixelValuesFromIdentifyTaskResponse(res);
 
-            // if (!bandValues) {
-            //     throw new Error('identify task does not return band values');
-            // }
-            // // console.log(bandValues)
+            if (!bandValues) {
+                throw new Error('identify task does not return band values');
+            }
+            // console.log(bandValues)
 
             const title = `Sentinel-1 | ${formatInUTCTimeZone(
                 sceneData.acquisitionDate,
@@ -104,7 +106,7 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
                 // Set the popup's title to the coordinates of the location
                 title,
                 location: mapPoint, // Set the location of the popup to the clicked location
-                content: 'Popup content will be put here',
+                content: getMainContent(bandValues, mapPoint),
             });
         } catch (error: any) {
             setData({

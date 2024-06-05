@@ -120,7 +120,7 @@ export const Sentinel1MaskTool = () => {
                     },
                     {
                         value: 'urban' as RadarIndex,
-                        label: 'Urban',
+                        label: 'Built-up',
                     },
                 ]}
                 selectedValue={selectedIndex}

@@ -70,7 +70,7 @@ export const Map = () => {
 
             <MapActionButtonsGroup>
                 <Zoom2NativeScale
-                    nativeScale={1000000}
+                    nativeScale={37795}
                     tooltip={"Zoom to Sentinel-1's native resolution"}
                 />
                 {/* <ZoomToExtent /> */}

@@ -34,7 +34,10 @@ import {
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
-import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import {
+    selectIsAnimationPlaying,
+    selectShouldHideCloudCoverInfo,
+} from '@shared/store/UI/selectors';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import {
     // acquisitionYearChanged,
@@ -63,13 +66,13 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    // const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
     const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
-    const cloudCoverThreshold = useSelector(selectCloudCover);
+    // const cloudCoverThreshold = useSelector(selectCloudCover);
 
     const acquisitionYear = useAcquisitionYear();
 
@@ -110,15 +113,19 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
      */
     const shouldBeDisabled = useShouldDisableCalendar();
 
+    const shouldHideCloudCoverInfo = useSelector(
+        selectShouldHideCloudCoverInfo
+    );
+
     // /**
     //  * This custom hook is triggered whenever the user-selected acquisition date changes.
     //  * It updates the user-selected year based on the year from the selected acquisition date.
     //  */
     // useUpdateAcquisitionYear();
 
-    const shouldShowCloudFilter = useMemo(() => {
-        return APP_NAME === 'landsat' || APP_NAME === 'landsat-surface-temp';
-    }, []);
+    // const shouldShowCloudFilter = useMemo(() => {
+    //     return APP_NAME === 'landsat' || APP_NAME === 'landsat-surface-temp';
+    // }, []);
 
     return (
         <div
@@ -160,19 +167,6 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
 
                 {/* {APP_NAME === 'landsat' && <LandsatMissionFilter />} */}
                 {children}
-
-                {shouldShowCloudFilter && (
-                    <CloudFilter
-                        cloudCoverage={cloudCoverThreshold}
-                        disabled={
-                            cloudCoverThreshold === undefined ||
-                            isAnimationPlaying
-                        }
-                        onChange={(newValue) => {
-                            dispatch(cloudCoverChanged(newValue));
-                        }}
-                    />
-                )}
             </div>
 
             <Calendar
@@ -181,6 +175,7 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
                 dateRange={acquisitionDateRange || getDateRangeForPast12Month()}
                 selectedAcquisitionDate={selectedAcquisitionDate}
                 availableScenes={formattedScenes}
+                shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
 

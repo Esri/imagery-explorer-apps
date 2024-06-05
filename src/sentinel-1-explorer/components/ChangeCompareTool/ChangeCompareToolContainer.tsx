@@ -36,7 +36,7 @@ import { selectSelectedOption4ChangeCompareTool } from '@shared/store/ChangeComp
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 // import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -122,6 +122,14 @@ export const ChangeCompareToolContainer = () => {
         selectSelectedOption4ChangeCompareTool
     ) as ChangeCompareToolOption4Sentinel1;
 
+    const legendLabelText = useMemo(() => {
+        if (selectedOption === 'log difference') {
+            return ['lower backscatter', 'higher backscatter'];
+        }
+
+        return ['decrease', '', 'increase'];
+    }, [selectedOption]);
+
     useSyncCalendarDateRange();
 
     useEffect(() => {
@@ -144,9 +152,7 @@ export const ChangeCompareToolContainer = () => {
     return (
         <div className={classNames('relative w-full h-full')}>
             <ChangeCompareToolHeader options={ChangeCompareToolOptions} />
-            <ChangeCompareToolControls
-                legendLabelText={['smoother', '', 'rougher']}
-            />
+            <ChangeCompareToolControls legendLabelText={legendLabelText} />
             {selectedOption === 'log difference' && (
                 <div className="absolute bottom-6 w-full">
                     <PolarizationFilter />

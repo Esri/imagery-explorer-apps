@@ -45,6 +45,7 @@ import { LandsatInterestingPlaces } from '../InterestingPlaces';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
 import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
+import { CloudFilter } from '@shared/components/CloudFilter';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -114,6 +115,7 @@ const Layout = () => {
                             <div className="ml-2 3xl:ml-0">
                                 <Calendar>
                                     <LandsatMissionFilter />
+                                    <CloudFilter />
                                 </Calendar>
                             </div>
 
