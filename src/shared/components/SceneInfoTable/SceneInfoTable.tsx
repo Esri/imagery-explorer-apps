@@ -46,7 +46,7 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
                 <span className="text-custom-light-blue-50">{name}</span>
             </div>
 
-            <div title={value} className="relative leading-none">
+            <div className="relative leading-none">
                 <span className="inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis">
                     {value}
                 </span>
