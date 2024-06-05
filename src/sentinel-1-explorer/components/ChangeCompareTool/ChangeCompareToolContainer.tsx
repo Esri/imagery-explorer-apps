@@ -71,7 +71,7 @@ const ChangeCompareToolOptions: {
     },
     {
         value: 'water',
-        label: 'SWI',
+        label: 'Water Index',
     },
 ];
 
