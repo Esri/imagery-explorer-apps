@@ -8,7 +8,8 @@ import { IFeature } from '@esri/arcgis-rest-feature-service';
  */
 export const getFeatureByObjectId = async (
     serviceUrl: string,
-    objectId: number
+    objectId: number,
+    abortController?: AbortController
 ): Promise<IFeature> => {
     const queryParams = new URLSearchParams({
         f: 'json',
@@ -17,7 +18,9 @@ export const getFeatureByObjectId = async (
         outFields: '*',
     });
 
-    const res = await fetch(`${serviceUrl}/query?${queryParams.toString()}`);
+    const res = await fetch(`${serviceUrl}/query?${queryParams.toString()}`, {
+        signal: abortController?.signal,
+    });
 
     if (!res.ok) {
         throw new Error('failed to query ' + serviceUrl);
