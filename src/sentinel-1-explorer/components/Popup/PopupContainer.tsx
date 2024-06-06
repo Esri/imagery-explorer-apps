@@ -29,8 +29,7 @@ import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
 import { identify } from '@shared/services/helpers/identify';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 import { getFormattedSentinel1Scenes } from '@shared/services/sentinel-1/getSentinel1Scenes';
-import { getPixelValuesFromIdentifyTaskResponse } from '@shared/services/helpers/getPixelValuesFromIdentifyTaskResponse';
-import { getMainContent } from './helper';
+import { getPopUpContentWithLocationInfo } from '@shared/components/MapPopup/helper';
 
 type Props = {
     mapView?: MapView;
@@ -106,7 +105,7 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
                 // Set the popup's title to the coordinates of the location
                 title,
                 location: mapPoint, // Set the location of the popup to the clicked location
-                content: getMainContent(mapPoint),
+                content: getPopUpContentWithLocationInfo(mapPoint, ''),
             });
         } catch (error: any) {
             setData({

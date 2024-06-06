@@ -39,9 +39,9 @@ export type MapPopupData = {
      */
     title: string;
     /**
-     * html string of the popup content
+     * popup content
      */
-    content: string;
+    content: string | HTMLDivElement;
     /**
      * point of the popup anchor location
      */
