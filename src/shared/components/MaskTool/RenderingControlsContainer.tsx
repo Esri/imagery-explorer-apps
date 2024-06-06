@@ -21,7 +21,8 @@ import {
 } from '@shared/store/MaskTool/reducer';
 import {
     selectMaskLayerOpcity,
-    selectMaskOptions,
+    selectMaskLayerPixelColor,
+    selectMaskLayerPixelValueRange,
     selectShouldClipMaskLayer,
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskColor } from '@shared/store/MaskTool/thunks';
@@ -31,10 +32,7 @@ import { useDispatch } from 'react-redux';
 export const RenderingControlsContainer = () => {
     const dispatch = useDispatch();
 
-    /**
-     * options for selected spectral index
-     */
-    const maskOptions = useSelector(selectMaskOptions);
+    const pixelColor = useSelector(selectMaskLayerPixelColor);
 
     /**
      * opacity of the mask layer
@@ -50,7 +48,7 @@ export const RenderingControlsContainer = () => {
         <RenderingControls
             transparence={1 - opacity}
             shouldClip={shouldClip}
-            color={maskOptions.color}
+            color={pixelColor}
             colorOnChange={(color) => {
                 dispatch(updateMaskColor(color));
             }}

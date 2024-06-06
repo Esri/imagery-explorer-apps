@@ -21,11 +21,18 @@ export const selectSelectedIndex4MaskTool = createSelector(
     (selectedIndex) => selectedIndex
 );
 
-export const selectMaskOptions = createSelector(
+export const selectMaskLayerPixelValueRange = createSelector(
     (state: RootState) => state.MaskTool.selectedIndex,
-    (state: RootState) => state.MaskTool.maskOptionsBySelectedIndex,
-    (selectedIndex, maskOptionsBySpectralIndex) =>
-        maskOptionsBySpectralIndex[selectedIndex]
+    (state: RootState) => state.MaskTool.pixelValueRangeBySelectedIndex,
+    (selectedIndex, pixelValueRangeBySelectedIndex) =>
+        pixelValueRangeBySelectedIndex[selectedIndex]
+);
+
+export const selectMaskLayerPixelColor = createSelector(
+    (state: RootState) => state.MaskTool.selectedIndex,
+    (state: RootState) => state.MaskTool.pixelColorBySelectedIndex,
+    (selectedIndex, pixelColorBySelectedIndex) =>
+        pixelColorBySelectedIndex[selectedIndex] || [255, 255, 255]
 );
 
 export const selectMaskLayerOpcity = createSelector(

@@ -20,10 +20,10 @@ import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
 import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
     selectSelectedIndex4MaskTool,
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { updateSelectedRange } from '@shared/store/MaskTool/thunks';
+import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';

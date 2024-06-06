@@ -23,10 +23,10 @@ import {
 import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
     selectSelectedIndex4MaskTool,
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { updateSelectedRange } from '@shared/store/MaskTool/thunks';
+import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -51,7 +51,7 @@ export const MaskToolContainer = () => {
 
     const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskOptions);
+    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -142,7 +142,9 @@ export const MaskToolContainer = () => {
                                     min={-1}
                                     max={1}
                                     valuesOnChange={(values) => {
-                                        dispatch(updateSelectedRange(values));
+                                        dispatch(
+                                            updateMaskLayerSelectedRange(values)
+                                        );
                                     }}
                                     countOfTicks={17}
                                     tickLabels={[-1, -0.5, 0, 0.5, 1]}

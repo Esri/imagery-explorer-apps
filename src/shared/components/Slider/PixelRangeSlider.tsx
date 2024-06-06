@@ -107,11 +107,17 @@ export const PixelRangeSlider: FC<Props> = ({
         return [
             {
                 mode: 'count',
-                values: countOfTicks || getCountOfTicks(min, max),
+                values:
+                    countOfTicks !== undefined
+                        ? countOfTicks
+                        : getCountOfTicks(min, max),
             },
             {
                 mode: 'position',
-                values: tickLabels || getTickLabels(min, max), //[-1, -0.5, 0, 0.5, 1],
+                values:
+                    tickLabels && tickLabels.length
+                        ? tickLabels
+                        : getTickLabels(min, max), //[-1, -0.5, 0, 0.5, 1],
                 labelsVisible: true,
             },
         ] as __esri.TickConfig[];
@@ -220,11 +226,13 @@ export const PixelRangeSlider: FC<Props> = ({
             return;
         }
 
+        const tickConfigs = getTickConfigs(min, max);
+
         sliderRef.current.min = min;
         sliderRef.current.max = max;
         sliderRef.current.values = values;
         sliderRef.current.steps = steps;
-        sliderRef.current.tickConfigs = getTickConfigs(min, max);
+        sliderRef.current.tickConfigs = tickConfigs;
     }, [min, max, values, steps, countOfTicks, tickLabels]);
 
     return (

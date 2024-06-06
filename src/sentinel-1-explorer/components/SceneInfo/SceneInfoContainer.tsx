@@ -50,6 +50,7 @@ export const SceneInfoContainer = () => {
             {
                 name: 'Scene ID',
                 value: name, //name.slice(0, 22),
+                clickToCopy: true,
             },
             // {
             //     name: '',
@@ -83,7 +84,7 @@ export const SceneInfoContainer = () => {
                 name: 'Relative Orbit',
                 value: relativeOrbit,
             },
-        ];
+        ] as SceneInfoTableData[];
     }, [data]);
 
     if (mode === 'dynamic' || mode === 'analysis') {

@@ -14,7 +14,7 @@
  */
 
 import configureAppStore from '@shared/store/configureStore';
-import { getPreloadedState } from './getPreloadedState';
+import { getPreloadedState } from './getPreloadedState4Sentinel1Explorer';
 
 export const getSentinel1ExplorerStore = async () => {
     const preloadedState = await getPreloadedState();

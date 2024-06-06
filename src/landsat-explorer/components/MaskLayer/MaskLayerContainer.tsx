@@ -18,10 +18,11 @@ import React, { FC, useEffect, useMemo } from 'react';
 // import { MaskLayer } from './MaskLayer';
 import { useSelector } from 'react-redux';
 import {
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
     selectSelectedIndex4MaskTool,
+    selectMaskLayerPixelColor,
 } from '@shared/store/MaskTool/selectors';
 import {
     selectActiveAnalysisTool,
@@ -33,7 +34,13 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import {
+    LANDSAT_LEVEL_2_SERVICE_URL,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+} from '@shared/services/landsat-level-2/config';
 
 type Props = {
     mapView?: MapView;
@@ -64,7 +71,9 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
-    const { selectedRange, color } = useSelector(selectMaskOptions);
+    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+
+    const pixelColor = useSelector(selectMaskLayerPixelColor);
 
     const opacity = useSelector(selectMaskLayerOpcity);
 
@@ -92,8 +101,22 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     }, [spectralIndex]);
 
     const fullPixelValueRange = useMemo(() => {
+        if (spectralIndex === 'temperature celcius') {
+            return [
+                LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+                LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+            ];
+        }
+
+        if (spectralIndex === 'temperature farhenheit') {
+            return [
+                LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+                LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+            ];
+        }
+
         return [-1, 1];
-    }, []);
+    }, [spectralIndex]);
 
     // return (
     //     <MaskLayer
@@ -119,7 +142,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             visible={isVisible}
             selectedPixelValueRange={selectedRange}
             fullPixelValueRange={fullPixelValueRange}
-            pixelColor={color}
+            pixelColor={pixelColor}
             opacity={opacity}
             blendMode={shouldClip ? 'destination-atop' : 'normal'}
         />

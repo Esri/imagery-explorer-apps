@@ -15,10 +15,10 @@
 
 import { Point } from '@arcgis/core/geometry';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-import { MaskOptions, maskOptionsChanged } from './reducer';
+import { maskLayerPixelColorChanged, pixelValueRangeChanged } from './reducer';
 import {
     // selectActiveAnalysisTool,
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     // selectSamplingTemporalResolution,
 } from './selectors';
 
@@ -27,30 +27,23 @@ import {
  * @param values updated range of the mask layer
  * @returns void
  */
-export const updateSelectedRange =
+export const updateMaskLayerSelectedRange =
     (values: number[]) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const maskOptions = selectMaskOptions(getState());
+        const pixelValueRangeData = selectMaskLayerPixelValueRange(getState());
 
         const selectedRange = [...values];
 
-        const updatedMaskOptions = {
-            ...maskOptions,
+        const updatedPixelValueRange = {
+            ...pixelValueRangeData,
             selectedRange,
         };
 
-        dispatch(maskOptionsChanged(updatedMaskOptions));
+        dispatch(pixelValueRangeChanged(updatedPixelValueRange));
     };
 
 export const updateMaskColor =
     (color: number[]) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const maskOptions = selectMaskOptions(getState());
-
-        const updatedMaskOptions = {
-            ...maskOptions,
-            color,
-        };
-
-        dispatch(maskOptionsChanged(updatedMaskOptions));
+        dispatch(maskLayerPixelColorChanged(color));
     };

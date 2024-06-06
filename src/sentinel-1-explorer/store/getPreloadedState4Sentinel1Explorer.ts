@@ -41,22 +41,6 @@ import {
 } from '@shared/store/ImageryScene/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { initialUIState, UIState } from '@shared/store/UI/reducer';
-// import {
-//     MaskToolState,
-//     initialMaskToolState,
-// } from '@shared/store/MaskTool/reducer';
-// import {
-//     TrendToolState,
-//     initialTrendToolState,
-// } from '@shared/store/TrendTool/reducer';
-// import {
-//     initialSpectralProfileToolState,
-//     SpectralProfileToolState,
-// } from '@shared/store/SpectralProfileTool/reducer';
-// import {
-//     ChangeCompareToolState,
-//     initialChangeCompareToolState,
-// } from '@shared/store/ChangeCompareTool/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
 import {
@@ -79,6 +63,8 @@ import { RadarIndex } from '@typing/imagery-service';
 import {
     MaskToolState,
     initialMaskToolState,
+    MaskToolPixelValueRangeBySpectralIndex,
+    DefaultPixelValueRangeBySelectedIndex,
 } from '@shared/store/MaskTool/reducer';
 // import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
@@ -243,7 +229,34 @@ const getPreloadedTrendToolState = (): TrendToolState => {
 };
 
 const getPreloadedMaskToolState = (): MaskToolState => {
-    const maskToolData = getMaskToolDataFromHashParams();
+    const pixelValueRangeDataForSentinel1Explorer: MaskToolPixelValueRangeBySpectralIndex =
+        {
+            ...DefaultPixelValueRangeBySelectedIndex,
+            water: {
+                selectedRange: [0.25, 1],
+            },
+            'water anomaly': {
+                selectedRange: [-1, 0],
+            },
+            ship: {
+                selectedRange: [0.3, 1],
+            },
+            urban: {
+                selectedRange: [0.15, 1],
+            },
+        };
+
+    const maskToolData = getMaskToolDataFromHashParams(
+        pixelValueRangeDataForSentinel1Explorer
+    );
+
+    if (!maskToolData) {
+        return {
+            ...initialMaskToolState,
+            pixelValueRangeBySelectedIndex:
+                pixelValueRangeDataForSentinel1Explorer,
+        };
+    }
 
     return {
         ...initialMaskToolState,

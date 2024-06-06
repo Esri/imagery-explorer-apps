@@ -21,18 +21,16 @@ import {
 } from '@reduxjs/toolkit';
 import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 
-export type MaskOptions = {
+export type MaskLayerPixelValueRangeData = {
     selectedRange: number[];
-    /**
-     * color array in RGB format
-     */
-    color: number[];
 };
 
-type MaskOptionsBySpectralIndex = Record<
+export type MaskToolPixelValueRangeBySpectralIndex = Record<
     SpectralIndex | RadarIndex,
-    MaskOptions
+    MaskLayerPixelValueRangeData
 >;
+
+type PixelColorBySpectralIndex = Record<SpectralIndex | RadarIndex, number[]>;
 
 export type MaskToolState = {
     /**
@@ -40,9 +38,13 @@ export type MaskToolState = {
      */
     selectedIndex: SpectralIndex | RadarIndex;
     /**
-     * maks tool options by use selected index name
+     * Mask Layer Pixel Value range by index name
      */
-    maskOptionsBySelectedIndex: MaskOptionsBySpectralIndex;
+    pixelValueRangeBySelectedIndex: MaskToolPixelValueRangeBySpectralIndex;
+    /**
+     * Maksk Layer pixel color by index name
+     */
+    pixelColorBySelectedIndex: PixelColorBySpectralIndex;
     /**
      * opacity of the mask layer
      */
@@ -53,46 +55,56 @@ export type MaskToolState = {
     shouldClipMaskLayer: boolean;
 };
 
-export const initialMaskToolState: MaskToolState = {
-    selectedIndex: 'water',
-    maskLayerOpacity: 1,
-    shouldClipMaskLayer: false,
-    maskOptionsBySelectedIndex: {
+export const DefaultPixelValueRangeBySelectedIndex: MaskToolPixelValueRangeBySpectralIndex =
+    {
         moisture: {
             selectedRange: [0, 1],
-            color: [89, 255, 252],
+            // color: [89, 255, 252],
         },
         vegetation: {
             selectedRange: [0, 1],
-            color: [115, 255, 132],
+            // color: [115, 255, 132],
         },
         water: {
             selectedRange: [0, 1],
-            color: [89, 214, 255],
+            // color: [89, 214, 255],
         },
         'temperature farhenheit': {
             // selectedRange: [30, 140],
             // the mask layer throws error when using farhenheit as input unit,
             // therefore we will just use celsius degrees in the selectedRange
             selectedRange: [0, 60],
-            color: [251, 182, 100],
+            // color: [251, 182, 100],
         },
         'temperature celcius': {
             selectedRange: [0, 60], // default range should be between 0-60 celcius degrees
-            color: [251, 182, 100],
+            // color: [251, 182, 100],
         },
         'water anomaly': {
-            selectedRange: [0, 1],
-            color: [255, 214, 102],
+            selectedRange: [-1, 0],
         },
         ship: {
-            selectedRange: [0.3, 1],
-            color: [255, 0, 21],
+            selectedRange: [0, 1],
         },
         urban: {
-            selectedRange: [0.2, 1],
-            color: [255, 0, 21],
+            selectedRange: [0, 1],
         },
+    };
+
+export const initialMaskToolState: MaskToolState = {
+    selectedIndex: 'water',
+    maskLayerOpacity: 1,
+    shouldClipMaskLayer: false,
+    pixelValueRangeBySelectedIndex: DefaultPixelValueRangeBySelectedIndex,
+    pixelColorBySelectedIndex: {
+        moisture: [89, 255, 252],
+        vegetation: [115, 255, 132],
+        water: [89, 214, 255],
+        'temperature farhenheit': [251, 182, 100],
+        'temperature celcius': [251, 182, 100],
+        'water anomaly': [255, 214, 102],
+        ship: [255, 0, 21],
+        urban: [255, 0, 21],
     },
 };
 
@@ -106,9 +118,20 @@ const slice = createSlice({
         ) => {
             state.selectedIndex = action.payload;
         },
-        maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
+        pixelValueRangeChanged: (
+            state,
+            action: PayloadAction<MaskLayerPixelValueRangeData>
+        ) => {
             const selectedIndex = state.selectedIndex;
-            state.maskOptionsBySelectedIndex[selectedIndex] = action.payload;
+            state.pixelValueRangeBySelectedIndex[selectedIndex] =
+                action.payload;
+        },
+        maskLayerPixelColorChanged: (
+            state,
+            action: PayloadAction<number[]>
+        ) => {
+            const selectedIndex = state.selectedIndex;
+            state.pixelColorBySelectedIndex[selectedIndex] = action.payload;
         },
         maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
             state.maskLayerOpacity = action.payload;
@@ -124,9 +147,10 @@ const { reducer } = slice;
 export const {
     // activeAnalysisToolChanged,
     selectedIndex4MaskToolChanged,
-    maskOptionsChanged,
+    pixelValueRangeChanged,
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
+    maskLayerPixelColorChanged,
 } = slice.actions;
 
 export default reducer;

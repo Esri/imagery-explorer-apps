@@ -25,9 +25,10 @@ import React, {
  */
 import {
     selectSelectedIndex4MaskTool,
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
+    selectMaskLayerPixelColor,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
 import { useSelector } from 'react-redux';
@@ -72,7 +73,9 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
         selectSelectedIndex4MaskTool
     ) as RadarIndex;
 
-    const { selectedRange, color } = useSelector(selectMaskOptions);
+    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+
+    const pixelColor = useSelector(selectMaskLayerPixelColor);
 
     const opacity = useSelector(selectMaskLayerOpcity);
 
@@ -166,7 +169,7 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
                 selectedPixelValueRange4Band2={selectedPixelValueRange4Band2}
                 fullPixelValueRange={fullPixelValueRange}
                 opacity={opacity}
-                pixelColor={color}
+                pixelColor={pixelColor}
             />
 
             <WaterLandMaskLayer

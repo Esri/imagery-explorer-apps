@@ -13,9 +13,10 @@
  * limitations under the License.
  */
 
+import { delay } from '@shared/utils/snippets/delay';
 import classNames from 'classnames';
 import { generateUID } from 'helper-toolkit-ts';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 /**
  * data for a single row in Scene Info Table
@@ -40,16 +41,71 @@ type Props = {
 };
 
 const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
+    const [hasCopied2Clipboard, setHasCopied2Clipboard] =
+        useState<boolean>(false);
+
+    const valueOnClickHandler = async () => {
+        if (!clickToCopy) {
+            return;
+        }
+
+        await navigator.clipboard.writeText(value);
+
+        setHasCopied2Clipboard(true);
+
+        await delay(2000);
+
+        setHasCopied2Clipboard(false);
+    };
+
     return (
         <>
-            <div className="text-right pr-2 leading-none">
+            <div
+                className="text-right pr-2"
+                style={{
+                    lineHeight: 1.15,
+                }}
+            >
                 <span className="text-custom-light-blue-50">{name}</span>
             </div>
 
-            <div className="relative leading-none">
-                <span className="inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis">
+            <div
+                className="relative group"
+                style={{
+                    lineHeight: 1.15,
+                }}
+                onClick={valueOnClickHandler}
+            >
+                <span
+                    className={classNames(
+                        'inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis',
+                        {
+                            'cursor-pointer': clickToCopy,
+                        }
+                    )}
+                >
                     {value}
                 </span>
+
+                {clickToCopy && (
+                    <div
+                        className={`
+                                absolute bottom-[25px] left-[-50px] w-[200px] p-1 text-xs z-50
+                                bg-custom-background border border-custom-light-blue-50  
+                                hidden group-hover:block break-words
+                            `}
+                    >
+                        <p>{value}</p>
+                        <div className="mt-1 flex items-center">
+                            {/* <calcite-icon icon="copy-to-clipboard" scale="s" style={{opacity: .75}}></calcite-icon> */}
+                            <span>
+                                {hasCopied2Clipboard
+                                    ? `Copied to clipboard`
+                                    : 'Click to copy to clipboard.'}
+                            </span>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

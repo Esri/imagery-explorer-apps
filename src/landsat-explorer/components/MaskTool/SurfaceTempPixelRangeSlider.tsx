@@ -15,10 +15,10 @@
 
 import {
     selectSelectedIndex4MaskTool,
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { updateSelectedRange } from '@shared/store/MaskTool/thunks';
+import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -36,7 +36,7 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
 
     const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskOptions);
+    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
 
     if (selectedSpectralIndex !== 'temperature celcius') {
         return null;
@@ -49,7 +49,7 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
             max={LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS}
             steps={1}
             valuesOnChange={(values) => {
-                dispatch(updateSelectedRange(values));
+                dispatch(updateMaskLayerSelectedRange(values));
             }}
             countOfTicks={0}
             tickLabels={[-30, -15, 0, 15, 30, 45, 60, 75, 90]}
@@ -63,7 +63,7 @@ export const SurfaceTempFarhenheitPixelRangeSlider = () => {
 
     const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskOptions);
+    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
 
     const rangeValues = useMemo(() => {
         return [
@@ -87,7 +87,7 @@ export const SurfaceTempFarhenheitPixelRangeSlider = () => {
                     Math.trunc(((value - 32) * 5) / 9)
                 );
 
-                dispatch(updateSelectedRange(values));
+                dispatch(updateMaskLayerSelectedRange(values));
             }}
             countOfTicks={0}
             tickLabels={[-20, 0, 30, 60, 90, 120, 150, 180]}

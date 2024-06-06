@@ -16,6 +16,8 @@
 import {
     MaskToolState,
     initialMaskToolState,
+    MaskToolPixelValueRangeBySpectralIndex,
+    DefaultPixelValueRangeBySelectedIndex,
 } from '@shared/store/MaskTool/reducer';
 import { SpectralIndex } from '@typing/imagery-service';
 import { debounce } from '../snippets/debounce';
@@ -30,21 +32,33 @@ export const encodeMaskToolData = (data: MaskToolState): string => {
         selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
-        maskOptionsBySelectedIndex,
+        pixelValueRangeBySelectedIndex,
+        pixelColorBySelectedIndex,
     } = data;
 
-    const maskOptions = maskOptionsBySelectedIndex[selectedIndex];
+    const pixelValueRange = pixelValueRangeBySelectedIndex[selectedIndex];
+
+    const pixelColor = pixelColorBySelectedIndex[selectedIndex];
 
     return [
         selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
-        maskOptions?.color,
-        maskOptions?.selectedRange,
+        pixelColor,
+        pixelValueRange?.selectedRange,
     ].join('|');
 };
 
-export const decodeMaskToolData = (val: string): MaskToolState => {
+/**
+ * Decode mask tool data from URL hash parameters
+ * @param val - A string from URL hash parameters
+ * @param pixelValueRangeData - Optional custom pixel value range data to override the default values
+ * @returns MaskToolState to be used by the Redux store, or null if the input value is empty
+ */
+export const decodeMaskToolData = (
+    val: string,
+    pixelValueRangeData?: MaskToolPixelValueRangeBySpectralIndex
+): MaskToolState => {
     if (!val) {
         return null;
     }
@@ -57,24 +71,32 @@ export const decodeMaskToolData = (val: string): MaskToolState => {
         selectedRange,
     ] = val.split('|');
 
-    const maskOptionForSelectedSpectralIndex =
-        color && selectedRange
-            ? {
-                  color: color.split(',').map((d) => +d),
-                  selectedRange: selectedRange.split(',').map((d) => +d),
-              }
-            : initialMaskToolState.maskOptionsBySelectedIndex[
-                  selectedIndex as SpectralIndex
-              ];
+    const pixelValueRangeBySelectedIndex = pixelValueRangeData
+        ? { ...pixelValueRangeData }
+        : { ...DefaultPixelValueRangeBySelectedIndex };
+
+    if (selectedRange) {
+        pixelValueRangeBySelectedIndex[selectedIndex as SpectralIndex] = {
+            selectedRange: selectedRange.split(',').map((d) => +d),
+        };
+    }
+
+    const pixelColorBySelectedIndex = {
+        ...initialMaskToolState.pixelColorBySelectedIndex,
+    };
+
+    if (color) {
+        pixelColorBySelectedIndex[selectedIndex as SpectralIndex] = color
+            .split(',')
+            .map((d) => +d);
+    }
 
     return {
         selectedIndex: selectedIndex as SpectralIndex,
         shouldClipMaskLayer: shouldClipMaskLayer === 'true',
         maskLayerOpacity: +maskLayerOpacity,
-        maskOptionsBySelectedIndex: {
-            ...initialMaskToolState.maskOptionsBySelectedIndex,
-            [selectedIndex]: maskOptionForSelectedSpectralIndex,
-        },
+        pixelValueRangeBySelectedIndex,
+        pixelColorBySelectedIndex,
     };
 };
 
@@ -82,7 +104,14 @@ export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
     updateHashParams('mask', encodeMaskToolData(data));
 }, 500);
 
-export const getMaskToolDataFromHashParams = (): MaskToolState => {
+/**
+ *
+ * @param pixelValueRangeData custom pixel value range data to override the default values
+ * @returns
+ */
+export const getMaskToolDataFromHashParams = (
+    pixelValueRangeData?: MaskToolPixelValueRangeBySpectralIndex
+): MaskToolState => {
     const value = getHashParamValueByKey('mask');
-    return decodeMaskToolData(value);
+    return decodeMaskToolData(value, pixelValueRangeData);
 };

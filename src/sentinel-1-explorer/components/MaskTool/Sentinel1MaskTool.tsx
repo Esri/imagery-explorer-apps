@@ -23,10 +23,10 @@ import {
 import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
     selectSelectedIndex4MaskTool,
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { updateSelectedRange } from '@shared/store/MaskTool/thunks';
+import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -58,7 +58,7 @@ export const Sentinel1MaskTool = () => {
 
     const selectedIndex = useSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskOptions);
+    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -93,9 +93,9 @@ export const Sentinel1MaskTool = () => {
             : 0.05;
     }, [selectedIndex]);
 
-    useEffect(() => {
-        dispatch(updateSelectedRange(fullPixelValueRange));
-    }, [fullPixelValueRange]);
+    // useEffect(() => {
+    //     dispatch(updateMaskLayerSelectedRange (fullPixelValueRange));
+    // }, [fullPixelValueRange]);
 
     if (tool !== 'mask') {
         return null;
@@ -142,7 +142,7 @@ export const Sentinel1MaskTool = () => {
                             steps={steps}
                             countOfTicks={countOfTicks}
                             valuesOnChange={(values) => {
-                                dispatch(updateSelectedRange(values));
+                                dispatch(updateMaskLayerSelectedRange(values));
                             }}
                             showSliderTooltip={true}
                         />
