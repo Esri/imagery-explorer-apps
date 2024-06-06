@@ -49,3 +49,13 @@ export const selectMaskToolState = createSelector(
     (state: RootState) => state.MaskTool,
     (maskTool) => maskTool
 );
+
+export const selectTotalAreaOfMaskLayer = createSelector(
+    (state: RootState) => state.MaskTool.totalAreaInSqKm,
+    (totalAreaInSqKm) => totalAreaInSqKm
+);
+
+export const selectPercentOfPixelsInSelectedRange = createSelector(
+    (state: RootState) => state.MaskTool.percentOfPixelsInSelectedRange,
+    (percentOfPixelsInSelectedRange) => percentOfPixelsInSelectedRange
+);

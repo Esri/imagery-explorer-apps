@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 import { clip, planarArea } from '@arcgis/core/geometry/geometryEngineAsync.js';
 import { Polygon } from '@arcgis/core/geometry';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
+import { useDispatch } from 'react-redux';
+import { totalAreaInSqKmChanged } from '@shared/store/MaskTool/reducer';
 
 const featureByObjectId: Map<number, IFeature> = new Map();
 
@@ -25,6 +27,8 @@ export const useCalcMaskLayerTotalArea = (
     imageryServiceURL: string,
     mapView: MapView
 ) => {
+    const dispatch = useDispatch();
+
     const mode = useSelector(selectAppMode);
 
     const analyzeTool = useSelector(selectActiveAnalysisTool);
@@ -72,8 +76,9 @@ export const useCalcMaskLayerTotalArea = (
 
             // calculate area of clipped geometry in sq kilometeres
             const area = await planarArea(clipped, 'square-kilometers');
+            // console.log(area);
 
-            console.log(area);
+            dispatch(totalAreaInSqKmChanged(area));
         } catch (err) {
             console.log('failed to calculate area of mask layer', err);
         }

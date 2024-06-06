@@ -53,6 +53,14 @@ export type MaskToolState = {
      * if true, mask layer should be used to clip the imagery scene
      */
     shouldClipMaskLayer: boolean;
+    /**
+     * total area of the Mask layer in square kilometers
+     */
+    totalAreaInSqKm: number;
+    /**
+     * percent of pixels of the Mask layer that are with in the selected pixel value range
+     */
+    percentOfPixelsInSelectedRange: number;
 };
 
 export const DefaultPixelValueRangeBySelectedIndex: MaskToolPixelValueRangeBySpectralIndex =
@@ -106,6 +114,8 @@ export const initialMaskToolState: MaskToolState = {
         ship: [255, 0, 21],
         urban: [255, 0, 21],
     },
+    totalAreaInSqKm: 0,
+    percentOfPixelsInSelectedRange: 0,
 };
 
 const slice = createSlice({
@@ -139,6 +149,15 @@ const slice = createSlice({
         shouldClipMaskLayerToggled: (state, action: PayloadAction<boolean>) => {
             state.shouldClipMaskLayer = !state.shouldClipMaskLayer;
         },
+        totalAreaInSqKmChanged: (state, action: PayloadAction<number>) => {
+            state.totalAreaInSqKm = action.payload;
+        },
+        percentOfPixelsInSelectedRangeChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.percentOfPixelsInSelectedRange = action.payload;
+        },
     },
 });
 
@@ -151,6 +170,8 @@ export const {
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
     maskLayerPixelColorChanged,
+    totalAreaInSqKmChanged,
+    percentOfPixelsInSelectedRangeChanged,
 } = slice.actions;
 
 export default reducer;
