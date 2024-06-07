@@ -16,6 +16,7 @@
 import { Geometry, Point } from '@arcgis/core/geometry';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { getMosaicRuleByObjectIds } from './getMosaicRuleByObjectId';
+import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 
 /**
  * Parameters for the Identify Task
@@ -33,6 +34,19 @@ export type IdentifyTaskParams = {
      * Object IDs of the imagery scenes
      */
     objectIds?: number[];
+    /**
+     * Raster Function that will be used as rendering rule
+     */
+    rasterFunction?: RasterFunction;
+    /**
+     * the resoultion of the map view, it is the size of one pixel in map units.
+     * The value of resolution can be found by dividing the extent width by the view's width.
+     */
+    resolution?: number;
+    /**
+     * specify the number of catalog items that will be returned
+     */
+    maxItemCount?: number;
     /**
      * Abort controller to be used to cancel the identify task
      */
@@ -67,6 +81,9 @@ export const identify = async ({
     serviceURL,
     point,
     objectIds,
+    rasterFunction,
+    resolution,
+    maxItemCount,
     abortController,
 }: IdentifyTaskParams): Promise<IdentifyTaskResponse> => {
     const mosaicRule =
@@ -95,6 +112,29 @@ export const identify = async ({
         }),
         mosaicRule: JSON.stringify(mosaicRule),
     });
+
+    if (rasterFunction) {
+        const renderingRule = rasterFunction.toJSON();
+
+        params.append('renderingRules', JSON.stringify(renderingRule));
+    }
+
+    if (resolution) {
+        const pixelSize = JSON.stringify({
+            x: resolution,
+            y: resolution,
+            spatialReference: {
+                wkid: 102100,
+                latestWkid: 3857,
+            },
+        });
+
+        params.append('pixelSize', JSON.stringify(pixelSize));
+    }
+
+    if (maxItemCount) {
+        params.append('maxItemCount', maxItemCount.toString());
+    }
 
     const requestURL = `${serviceURL}/identify?${params.toString()}`;
 

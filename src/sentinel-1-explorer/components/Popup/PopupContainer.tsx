@@ -27,9 +27,13 @@ import {
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
 import { identify } from '@shared/services/helpers/identify';
-import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
+import {
+    SENTINEL_1_SERVICE_URL,
+    Sentinel1FunctionName,
+} from '@shared/services/sentinel-1/config';
 import { getFormattedSentinel1Scenes } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { getPopUpContentWithLocationInfo } from '@shared/components/MapPopup/helper';
+import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 
 type Props = {
     mapView?: MapView;
@@ -75,6 +79,8 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
                     mode !== 'dynamic'
                         ? [queryParams?.objectIdOfSelectedScene]
                         : null,
+                maxItemCount: 1,
+                resolution: mapView.resolution,
                 abortController: controller,
             });
 
