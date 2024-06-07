@@ -51,6 +51,11 @@ export {
     getSpectralProfileToolDataFromHashParams,
 } from './spectralTool';
 
+export {
+    saveTemporalCompositeToolStateToHashParams,
+    getTemporalCompositeToolDataFromHashParams,
+} from './temporalCompositeTool';
+
 export type UrlHashParamKey =
     | 'mapCenter' // hash params for map center
     | 'mode' // hash params for app mode
@@ -65,6 +70,7 @@ export type UrlHashParamKey =
     | 'trend' // hash params for trend tool
     | 'spectral' // hash params for spectral profile tool
     | 'change' // hash params for spectral profile tool
+    | 'composite' // hash params for temporal composite tool
     | 'hideTerrain' // hash params for terrain layer
     | 'hideMapLabels' // hash params for map labels layer
     | 'hideBasemap' // hash params for map labels layer

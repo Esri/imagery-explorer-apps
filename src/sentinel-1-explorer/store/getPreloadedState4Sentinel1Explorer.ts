@@ -27,6 +27,7 @@ import {
     getQueryParams4SecondarySceneFromHashParams,
     getSpectralProfileToolDataFromHashParams,
     getTemporalProfileToolDataFromHashParams,
+    getTemporalCompositeToolDataFromHashParams,
 } from '@shared/utils/url-hash-params';
 import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
 // import { initialUIState, UIState } from './UI/reducer';
@@ -183,11 +184,14 @@ const getPreloadedUIState = (): UIState => {
 
 const getPreloadedTemporalCompositeToolState =
     (): TemporalCompositeToolState => {
-        const rasterFunction: Sentinel1FunctionName = 'VV dB Colorized';
+        const data = getTemporalCompositeToolDataFromHashParams();
+
+        const defaultRasterFunction: Sentinel1FunctionName = 'VV dB Colorized';
 
         const proloadedState: TemporalCompositeToolState = {
             ...initialState4TemporalCompositeTool,
-            rasterFunction: rasterFunction,
+            ...data,
+            rasterFunction: data.rasterFunction || defaultRasterFunction,
         };
 
         return proloadedState;

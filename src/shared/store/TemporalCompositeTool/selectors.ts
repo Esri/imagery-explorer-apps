@@ -26,3 +26,8 @@ export const selectRasterFunction4TemporalCompositeTool = createSelector(
     (state: RootState) => state.TemporalCompositeTool.rasterFunction,
     (rasterFunction) => rasterFunction
 );
+
+export const selectTemporalCompositeToolState = createSelector(
+    (state: RootState) => state.TemporalCompositeTool,
+    (TemporalCompositeTool) => TemporalCompositeTool
+);

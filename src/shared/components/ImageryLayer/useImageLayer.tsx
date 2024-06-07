@@ -129,8 +129,6 @@ export const useImageryLayerByObjectId = ({
             return;
         }
 
-        console.log(visible);
-
         layerRef.current.visible = visible;
     }, [visible]);
 
