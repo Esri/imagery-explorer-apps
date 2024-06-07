@@ -38,7 +38,7 @@ export const TemporalCompositeTool = () => {
 
     const rasterFunctionDropdownOptions: DropdownData[] = useMemo(() => {
         const VVdBRasterFunction: Sentinel1FunctionName = 'VV dB Colorized';
-        const VHdBRasterFunction: Sentinel1FunctionName = 'VV dB Colorized';
+        const VHdBRasterFunction: Sentinel1FunctionName = 'VH dB Colorized';
 
         const data = [
             {
