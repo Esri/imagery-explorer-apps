@@ -82,6 +82,7 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
                         ? [queryParams?.objectIdOfSelectedScene]
                         : null,
                 abortController: controller,
+                maxItemCount: 1,
             });
 
             // console.log(res)
