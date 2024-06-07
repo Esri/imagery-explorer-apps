@@ -229,7 +229,9 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         // behavior in order to display your own popup
         mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
-        mapView.popup.collapseEnabled = false;
+        mapView.popup.visibleElements = {
+            collapseButton: false,
+        };
 
         mapView.on('click', async (evt) => {
             mapViewOnClickHandlerRef.current(evt.mapPoint, evt.x);

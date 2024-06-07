@@ -66,9 +66,7 @@ const MapView: React.FC<Props> = ({
                 lods: TileInfo.create().lods,
                 snapToZoom: false,
             },
-            popup: {
-                autoOpenEnabled: false,
-            },
+            popupEnabled: false,
         });
 
         mapViewRef.current.when(() => {
