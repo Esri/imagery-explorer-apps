@@ -123,11 +123,23 @@ export const ChangeCompareToolContainer = () => {
     ) as ChangeCompareToolOption4Sentinel1;
 
     const legendLabelText = useMemo(() => {
-        if (selectedOption === 'log difference') {
-            return ['lower backscatter', 'higher backscatter'];
-        }
+        // if (selectedOption === 'log difference') {
+        //     return ['lower backscatter', 'higher backscatter'];
+        // }
 
         return ['decrease', '', 'increase'];
+    }, [selectedOption]);
+
+    const legendTitle = useMemo(() => {
+        if (selectedOption === 'log difference') {
+            return 'Backscatter';
+        }
+
+        const data = ChangeCompareToolOptions.find(
+            (d) => d.value === selectedOption
+        );
+
+        return data?.label || selectedOption;
     }, [selectedOption]);
 
     useSyncCalendarDateRange();
@@ -152,7 +164,10 @@ export const ChangeCompareToolContainer = () => {
     return (
         <div className={classNames('relative w-full h-full')}>
             <ChangeCompareToolHeader options={ChangeCompareToolOptions} />
-            <ChangeCompareToolControls legendLabelText={legendLabelText} />
+            <ChangeCompareToolControls
+                legendTitle={legendTitle}
+                legendLabelText={legendLabelText}
+            />
             {selectedOption === 'log difference' && (
                 <div className="absolute bottom-6 w-full">
                     <PolarizationFilter />

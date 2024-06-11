@@ -35,12 +35,17 @@ import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
 
 type Props = {
     /**
+     * Title of the object that users compares for (e.g., 'water', 'backscatter' and etc) that will be placed on top of the pixel range selector.
+     */
+    legendTitle?: string;
+    /**
      * the label text to be placed at the bottom of the pixel range selector. e.g. `['decrease', 'no change', 'increase']`
      */
     legendLabelText?: string[];
 };
 
 export const ChangeCompareToolControls: FC<Props> = ({
+    legendTitle,
     legendLabelText = [],
 }: Props) => {
     const dispatch = useDispatch();
@@ -151,7 +156,13 @@ export const ChangeCompareToolControls: FC<Props> = ({
 
     return (
         <div className={classNames('w-full h-[0px] pt-[50px]')}>
-            <div className="w-full">
+            <div className="relative w-full">
+                {legendTitle && (
+                    <div className="absolute top-[-28px] w-full text-center ">
+                        <span className="text-xs">{legendTitle}</span>
+                    </div>
+                )}
+
                 <div
                     className="w-full h-2"
                     style={{
