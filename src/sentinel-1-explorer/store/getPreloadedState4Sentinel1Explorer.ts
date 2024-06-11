@@ -191,7 +191,7 @@ const getPreloadedTemporalCompositeToolState =
         const proloadedState: TemporalCompositeToolState = {
             ...initialState4TemporalCompositeTool,
             ...data,
-            rasterFunction: data.rasterFunction || defaultRasterFunction,
+            rasterFunction: data?.rasterFunction || defaultRasterFunction,
         };
 
         return proloadedState;

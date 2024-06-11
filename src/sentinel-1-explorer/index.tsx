@@ -52,6 +52,7 @@ import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/con
             </ReduxProvider>
         );
     } catch (err) {
+        console.log(err);
         root.render(<ErrorPage error={err} />);
     }
 })();
