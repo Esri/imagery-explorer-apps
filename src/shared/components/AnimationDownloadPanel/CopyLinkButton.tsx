@@ -22,7 +22,7 @@ export const CopyLinkButton = () => {
 
     return (
         <div
-            className={classNames('absolute top-1 right-32', 'cursor-pointer')}
+            className={classNames('cursor-pointer')}
             onClick={() => {
                 dispatch(copyAnimationLink());
             }}

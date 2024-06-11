@@ -29,7 +29,7 @@ export const CopiedLinkMessage = () => {
     return (
         <div
             className={classNames(
-                'absolute top-0 right-0 w-[220px] h-[72px] px-4',
+                'absolute top-0 right-0 w-[260px] h-[72px] px-4',
                 'flex items-center',
                 'theme-background text-xs'
             )}
