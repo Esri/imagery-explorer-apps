@@ -31,14 +31,14 @@ type Props = {
     imageryServiceUrl: string;
     mapView?: MapView;
     animationStatus: AnimationStatus;
-    QueryParams4ImageryScenes: QueryParams4ImageryScene[];
+    queryParams4ImageryScenes: QueryParams4ImageryScene[];
 };
 
 const useMediaLayerImageElement = ({
     imageryServiceUrl,
     mapView,
     animationStatus,
-    QueryParams4ImageryScenes,
+    queryParams4ImageryScenes,
 }: Props) => {
     const [imageElements, setImageElements] = useState<ImageElement[]>(null);
 
@@ -49,6 +49,11 @@ const useMediaLayerImageElement = ({
     const loadFrameData = async () => {
         if (!mapView) {
             return;
+        }
+
+        // call abort so all pending requests can be cancelled
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
         }
 
         // use a new abort controller so the pending requests can be cancelled
@@ -76,19 +81,21 @@ const useMediaLayerImageElement = ({
             const { xmin, ymin, xmax, ymax } = extent;
 
             // get images via export image request
-            const requests = QueryParams4ImageryScenes.filter(
-                (queryParam) => queryParam.objectIdOfSelectedScene !== null
-            ).map((queryParam) => {
-                return exportImage({
-                    serviceUrl: imageryServiceUrl,
-                    extent,
-                    width,
-                    height,
-                    objectId: queryParam.objectIdOfSelectedScene,
-                    rasterFunctionName: queryParam.rasterFunctionName,
-                    abortController: abortControllerRef.current,
+            const requests = queryParams4ImageryScenes
+                .filter(
+                    (queryParam) => queryParam.objectIdOfSelectedScene !== null
+                )
+                .map((queryParam) => {
+                    return exportImage({
+                        serviceUrl: imageryServiceUrl,
+                        extent,
+                        width,
+                        height,
+                        objectId: queryParam.objectIdOfSelectedScene,
+                        rasterFunctionName: queryParam.rasterFunctionName,
+                        abortController: abortControllerRef.current,
+                    });
                 });
-            });
 
             const responses = await Promise.all(requests);
 

@@ -85,7 +85,7 @@ export const AnimationLayer: FC<Props> = ({
         imageryServiceUrl,
         mapView,
         animationStatus,
-        QueryParams4ImageryScenes: sortedQueryParams4ScenesInAnimationMode,
+        queryParams4ImageryScenes: sortedQueryParams4ScenesInAnimationMode,
     });
 
     /**
