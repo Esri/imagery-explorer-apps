@@ -61,22 +61,27 @@ const useMediaLayerImageElement = ({
         abortControllerRef.current = new AbortController();
 
         try {
-            // Attempt to retrieve animation window information from the URL hash parameters. This occurs when
-            // a user opens the application via a link shared by others. This is necessary to ensure
-            // that all users who access the application through the same link consistently send identical
-            // `exportImage` requests, thereby enhancing the likelihood of utilizing cached responses
-            // from the CDN servers rather than the ArcGIS Image Server.
-            const animationWindowInfoFromHashParams =
-                getAnimationWindowInfoFromHashParams();
+            // // Attempt to retrieve animation window information from the URL hash parameters. This occurs when
+            // // a user opens the application via a link shared by others. This is necessary to ensure
+            // // that all users who access the application through the same link consistently send identical
+            // // `exportImage` requests, thereby enhancing the likelihood of utilizing cached responses
+            // // from the CDN servers rather than the ArcGIS Image Server.
+            // const animationWindowInfoFromHashParams =
+            //     getAnimationWindowInfoFromHashParams();
 
             // console.log(animationWindowInfoFromHashParams);
 
-            let { extent, width, height } =
-                animationWindowInfoFromHashParams || {};
+            // let { extent, width, height } =
+            //     animationWindowInfoFromHashParams || {};
 
-            extent = extent || getNormalizedExtent(mapView.extent);
-            width = width || mapView.width;
-            height = height || mapView.height;
+            // extent = extent || getNormalizedExtent(mapView.extent);
+            // width = width || mapView.width;
+            // height = height || mapView.height;
+
+            const extent = getNormalizedExtent(mapView.extent);
+            const width = mapView.width;
+            const height = mapView.height;
+            // console.log('calling loading animation frame data', width, height)
 
             const { xmin, ymin, xmax, ymax } = extent;
 
@@ -143,6 +148,19 @@ const useMediaLayerImageElement = ({
             loadFrameData();
         }
     }, [animationStatus]);
+
+    // If the map view's height changes while loading animation frames,
+    // call loadFrameData again to re-fetch the animation frame images to cover the entire map.
+    useEffect(() => {
+        // No need to call loadFrameData if it is not currently loading data.
+        // If the map view's height changes during animation,
+        // the animation layer will reset the status to 'loading', triggering this hook to re-fetch images.
+        if (animationStatus !== 'loading') {
+            return;
+        }
+
+        loadFrameData();
+    }, [mapView?.height]);
 
     return imageElements;
 };
