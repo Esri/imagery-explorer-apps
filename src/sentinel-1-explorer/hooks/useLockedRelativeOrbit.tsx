@@ -19,25 +19,33 @@ import {
     selectActiveAnalysisTool,
     selectAppMode,
     selectListOfQueryParams,
+    selectQueryParams4MainScene,
     selectQueryParams4SceneInSelectedMode,
+    selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 
 /**
- * Custom hook that returns the relative orbit to be used by the temporal composite tool.
- * The temporal composite tool requires all three scenes selected by the user to have the same relative orbit.
+ * Custom hook that returns the relative orbit to be used by the different Analyze tools (e.g. temporal composite and change compare).
+ * These tools require all scenes selected by the user to have the same relative orbit.
  * This hook tries to find the first scene that the user has selected and uses the relative orbit of that scene to
  * query the rest of the scenes.
  *
  * @returns {string | undefined} Relative orbit of the selected Sentinel-1 scene, or undefined if not applicable.
  */
-export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
+export const useLockedRelativeOrbit = () => {
     const mode = useSelector(selectAppMode);
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+
+    const queryParamsOfMainScene = useSelector(selectQueryParams4MainScene);
+
+    const queryParamsOfSecondaryScene = useSelector(
+        selectQueryParams4SecondaryScene
+    );
 
     const listOfQueryParams = useSelector(selectListOfQueryParams);
 
@@ -45,13 +53,16 @@ export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
 
     /**
      * useMemo hook to compute the relative orbit based on the mode, active analysis tool, and selected Sentinel-1 scene.
-     * The relative orbit is only relevant when the mode is 'analysis' and the analysis tool is 'temporal composite'.
+     * The relative orbit is only relevant when the mode is 'analysis' and the analysis tool is 'temporal composite' or 'change compare'.
      */
     const relativeOrbit: string = useMemo(() => {
+        if (mode !== 'analysis' || !sentinel1Scene) {
+            return null;
+        }
+
         if (
-            mode !== 'analysis' ||
-            analysisTool !== 'temporal composite' ||
-            !sentinel1Scene
+            analysisTool !== 'temporal composite' &&
+            analysisTool !== 'change'
         ) {
             return null;
         }
@@ -65,18 +76,35 @@ export const useLockedRelativeOrbit4TemporalCompositeTool = () => {
      */
     useEffect(() => {
         (async () => {
-            if (mode !== 'analysis' || analysisTool !== 'temporal composite') {
+            if (mode !== 'analysis') {
                 return setSentinel1Scene(null);
             }
 
+            if (
+                analysisTool !== 'temporal composite' &&
+                analysisTool !== 'change'
+            ) {
+                return setSentinel1Scene(null);
+            }
+
+            // object id of the first scene that the user has selected
+            // the relative orbit of this scene will be used to query subsequent scenes
+            // so that we can gurantee that all scenes used in the 'temporal composite' and 'change compare' tool are
+            // acquired from the same relative orbit
             let objectIdOfSelectedScene: number = null;
 
-            // Find the first item in the list that has an associated object ID
-            for (const item of listOfQueryParams) {
-                if (item.objectIdOfSelectedScene) {
-                    objectIdOfSelectedScene = item.objectIdOfSelectedScene;
-                    break;
+            if (analysisTool === 'temporal composite') {
+                // Find the first item in the list that has an associated object ID
+                for (const item of listOfQueryParams) {
+                    if (item.objectIdOfSelectedScene) {
+                        objectIdOfSelectedScene = item.objectIdOfSelectedScene;
+                        break;
+                    }
                 }
+            } else if (analysisTool === 'change') {
+                objectIdOfSelectedScene =
+                    queryParamsOfMainScene?.objectIdOfSelectedScene ||
+                    queryParamsOfSecondaryScene?.objectIdOfSelectedScene;
             }
 
             // if no items in the list has object id selected, then set the sentinel1 scene to null

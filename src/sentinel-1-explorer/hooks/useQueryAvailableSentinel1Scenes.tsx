@@ -29,7 +29,7 @@ import {
 import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
-import { useLockedRelativeOrbit4TemporalCompositeTool } from './useLockedRelativeOrbit4TemporalCompositeTool';
+import { useLockedRelativeOrbit } from './useLockedRelativeOrbit';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
 /**
@@ -58,10 +58,10 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
     const orbitDirection = useSelector(selectSentinel1OrbitDirection);
 
     /**
-     * relative orbit to be used by the temporal composite tool
+     * Locked relative orbit to be used by the Analyze tools to ensure all Sentinel-1
+     * scenes selected by the user to have the same relative orbit.
      */
-    const relativeOrbitOfSentinelScene4TemporalCompositeTool =
-        useLockedRelativeOrbit4TemporalCompositeTool();
+    const lockedRelativeOrbitOfSentinelScene = useLockedRelativeOrbit();
 
     useEffect(() => {
         if (!center || !acquisitionDateRange) {
@@ -76,7 +76,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
             queryAvailableScenes(
                 acquisitionDateRange,
                 orbitDirection,
-                relativeOrbitOfSentinelScene4TemporalCompositeTool
+                lockedRelativeOrbitOfSentinelScene
                 // dualPolarizationOnly
             )
         );
@@ -86,7 +86,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         acquisitionDateRange?.endDate,
         isAnimationPlaying,
         orbitDirection,
-        relativeOrbitOfSentinelScene4TemporalCompositeTool,
+        lockedRelativeOrbitOfSentinelScene,
         // dualPolarizationOnly,
     ]);
 
