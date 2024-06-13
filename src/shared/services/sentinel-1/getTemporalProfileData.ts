@@ -117,10 +117,21 @@ const getSentinel1ScenesToSample = (
 
     const candidates: Sentinel1Scene[] = [scenes[0]];
 
+    const { relativeOrbit, orbitDirection } = scenes[0];
+
     for (let i = 1; i < scenes.length; i++) {
         const prevScene = candidates[candidates.length - 1];
 
         const currentScene = scenes[i];
+
+        // skip if the relative orbit and orbit direction of the current scene
+        // is not the same as the first scene
+        if (
+            currentScene.relativeOrbit !== relativeOrbit ||
+            currentScene.orbitDirection !== orbitDirection
+        ) {
+            continue;
+        }
 
         // If an acquisition month is provided, only keep scenes from that month.
         if (
