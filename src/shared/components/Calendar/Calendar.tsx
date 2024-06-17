@@ -41,10 +41,10 @@ export type FormattedImageryScene = {
      * date in format of (YYYY-MM-DD)
      */
     formattedAcquisitionDate: string;
-    /**
-     * if true, this date should be rendered using the style of cloudy day
-     */
-    isCloudy: boolean;
+    // /**
+    //  * if true, this date should be rendered using the style of cloudy day
+    //  */
+    // isCloudy: boolean;
     /**
      * percent of cloud coverage of the selected Imagery Scene acquired on this day
      */
@@ -53,6 +53,10 @@ export type FormattedImageryScene = {
      * name of the satellite (e.g., `Landsat-7`)
      */
     satellite: string;
+    /**
+     * Flag indicating if the imagery scene does not meet all user-selected criteria
+     */
+    doesNotMeetCriteria: boolean;
 };
 
 type CalendarProps = {
@@ -174,15 +178,15 @@ const MonthGrid: FC<MonthGridProps> = ({
                         'border-custom-calendar-border-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            dataOfImageryScene?.isCloudy === true,
+                            dataOfImageryScene?.doesNotMeetCriteria === true,
                         'bg-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            dataOfImageryScene?.isCloudy === false,
+                            dataOfImageryScene?.doesNotMeetCriteria === false,
                         'border-custom-calendar-background-available':
                             isSelected === false &&
                             hasAvailableData &&
-                            dataOfImageryScene?.isCloudy === false,
+                            dataOfImageryScene?.doesNotMeetCriteria === false,
                     })}
                     style={{
                         // why do not use drop-shadow? It seems the drop shadow get applied to child elements,

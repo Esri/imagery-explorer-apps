@@ -72,14 +72,6 @@ export type QueryParams4ImageryScene = {
      * unique id of the query params that is associated with this Imagery Scene
      */
     uniqueId?: string;
-    // /**
-    //  * This property represents the acquisition year inherited from the previously selected item in the listOfQueryParams.
-    //  *
-    //  * Normally, the current year is used as the default acquisition year for new query parameters.
-    //  * However, to enhance the user experience in animation mode, we retain the acquisition year from the previous frame.
-    //  * This ensures a seamless workflow, allowing users to seamlessly continue their work on the same year as the prior animation frame.
-    //  */
-    // inheritedAcquisitionYear?: number;
     /**
      * User selected acquisition date range that will be used to query available imagery scenes.
      */
@@ -117,6 +109,10 @@ export type ImageryScene = {
      * percent of cloud cover, the value ranges from 0 - 1
      */
     cloudCover: number;
+    /**
+     * Flag indicating if the imagery scene does not meet all user-selected criteria
+     */
+    doesNotMeetCriteria?: boolean;
 };
 
 export type ImageryScenesState = {
@@ -168,10 +164,12 @@ export type ImageryScenesState = {
      * user selected cloud coverage threshold, the value ranges from 0 to 1
      */
     cloudCover: number;
-    // /**
-    //  * user selected acquisiton year that will be used to find list of available imagery scenes
-    //  */
-    // acquisitionYear: number;
+    /**
+     * Flag indicating whether the scene should be forcibly reselected.
+     * If true, the default logic (inside of `useFindSelectedSceneByDate` custom hook) of keeping with the currently selected scene
+     * will be overridden, and the scene will be reselected from the new list of scenes.
+     */
+    shouldForceSceneReselection: boolean;
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -202,7 +200,7 @@ export const initialImagerySceneState: ImageryScenesState = {
         objectIds: [],
     },
     cloudCover: 0.5,
-    // acquisitionYear: getCurrentYear(),
+    shouldForceSceneReselection: false,
 };
 
 const slice = createSlice({
@@ -308,6 +306,12 @@ const slice = createSlice({
                 byObjectId,
             };
         },
+        shouldForceSceneReselectionUpdated: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.shouldForceSceneReselection = action.payload;
+        },
     },
 });
 
@@ -325,7 +329,7 @@ export const {
     cloudCoverChanged,
     activeAnalysisToolChanged,
     availableImageryScenesUpdated,
-    // acquisitionYearChanged,
+    shouldForceSceneReselectionUpdated,
 } = slice.actions;
 
 export default reducer;

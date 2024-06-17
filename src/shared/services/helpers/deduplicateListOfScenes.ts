@@ -26,14 +26,30 @@ export const deduplicateListOfImageryScenes = (
         // Get the last imagery scene in the array
         const prevScene = output[output.length - 1];
 
-        // Check if there is a previous scene and its acquisition date matches the current scene.
+        // Check if there is a previous scene and if its acquisition date matches the current scene.
         // We aim to keep only one imagery scene for each day. When there are two scenes acquired on the same date,
-        // we prioritize keeping the currently selected scene or the one acquired later.
+        // we prioritize keeping the scene that meets all filter criteria, the currently selected scene, or the one acquired later.
         if (
             prevScene &&
             prevScene.formattedAcquisitionDate ===
                 currScene.formattedAcquisitionDate
         ) {
+            // Prioritize retaining scenes that meet all filter criteria
+            // even if there is a selected scene acquired on the same day
+            if (
+                prevScene.doesNotMeetCriteria !== currScene.doesNotMeetCriteria
+            ) {
+                // Remove the previous scene and use the current scene if the previous one does not meet all filter criteria
+                // even if it is currently selected
+                if (prevScene.doesNotMeetCriteria) {
+                    output.pop();
+                    output.push(currScene);
+                }
+
+                // If the previous scene meets all filter criteria, keep it and skip the current scene
+                continue;
+            }
+
             // Check if the previous scene is the currently selected scene
             // Skip the current iteration if the previous scene is the selected scene
             if (prevScene.objectId === objectIdOfSelectedScene) {

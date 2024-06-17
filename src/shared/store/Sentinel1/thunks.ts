@@ -30,23 +30,32 @@ import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors
 import { getSentinel1Scenes } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { convert2ImageryScenes } from '@shared/services/sentinel-1/covert2ImageryScenes';
 import { deduplicateListOfImageryScenes } from '@shared/services/helpers/deduplicateListOfScenes';
+import { selectSentinel1OrbitDirection } from './selectors';
+
+type QueryAvailableSentinel1ScenesParams = {
+    /**
+     * user selected date range to query sentinel-1 scenes
+     */
+    acquisitionDateRange: DateRange;
+    /**
+     * relative orbit of the sentinel-1 scenes to query
+     */
+    relativeOrbit?: string;
+};
 
 let abortController: AbortController = null;
 
 /**
  * Query Sentinel-1 Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
  * @param acquisitionDateRange user selected acquisition date range
- * @param orbitDirection user selected orbit direction
  * @param relativeOrbit relative orbit of sentinel-1 scenes
  * @returns
  */
-export const queryAvailableScenes =
-    (
-        acquisitionDateRange: DateRange,
-        orbitDirection: Sentinel1OrbitDirection,
-        relativeOrbit?: string
-        // dualPolarizationOnly: boolean
-    ) =>
+export const queryAvailableSentinel1Scenes =
+    ({
+        acquisitionDateRange,
+        relativeOrbit,
+    }: QueryAvailableSentinel1ScenesParams) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         if (!acquisitionDateRange) {
             return;
@@ -58,23 +67,30 @@ export const queryAvailableScenes =
 
         abortController = new AbortController();
 
+        const storeState = getState();
+
         try {
             const { objectIdOfSelectedScene, acquisitionDate } =
-                selectQueryParams4SceneInSelectedMode(getState()) || {};
+                selectQueryParams4SceneInSelectedMode(storeState) || {};
+
+            const orbitDirection = selectSentinel1OrbitDirection(storeState);
 
             const center = selectMapCenter(getState());
 
             // get scenes that were acquired within the acquisition year
             const scenes = await getSentinel1Scenes({
                 acquisitionDateRange,
-                orbitDirection,
+                // orbitDirection,
                 relativeOrbit,
                 mapPoint: center,
                 abortController,
             });
 
             // convert list of Sentinel-1 scenes to list of imagery scenes
-            let imageryScenes: ImageryScene[] = convert2ImageryScenes(scenes);
+            let imageryScenes: ImageryScene[] = convert2ImageryScenes(
+                scenes,
+                orbitDirection
+            );
 
             // deduplicates the list based on acquisition date, keeping only one scene per day
             imageryScenes = deduplicateListOfImageryScenes(

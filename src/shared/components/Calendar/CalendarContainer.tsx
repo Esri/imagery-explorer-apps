@@ -35,17 +35,17 @@ import {
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
 import {
-    selectIsAnimationPlaying,
+    // selectIsAnimationPlaying,
     selectShouldHideCloudCoverInfo,
 } from '@shared/store/UI/selectors';
-import { CloudFilter } from '@shared/components/CloudFilter';
-import {
-    // acquisitionYearChanged,
-    cloudCoverChanged,
-} from '@shared/store/ImageryScene/reducer';
+// import { CloudFilter } from '@shared/components/CloudFilter';
+// import {
+//     // acquisitionYearChanged,
+//     cloudCoverChanged,
+// } from '@shared/store/ImageryScene/reducer';
 // import { LandsatMissionFilter } from '../LandsatMissionFilter';
-import { APP_NAME } from '@shared/config';
-import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
+// import { APP_NAME } from '@shared/config';
+// import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
@@ -55,6 +55,7 @@ import {
 } from '@shared/utils/date-time/getTimeRange';
 import { useAcquisitionYear } from './useAcquisitionYear';
 import { batch } from 'react-redux';
+import { useFindSelectedSceneByDate } from '@shared/hooks/useFindSelectedSceneByDate';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
 type Props = {

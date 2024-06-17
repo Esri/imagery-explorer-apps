@@ -19,7 +19,7 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { queryAvailableScenes } from '@shared/store/Sentinel1/thunks';
+import { queryAvailableSentinel1Scenes } from '@shared/store/Sentinel1/thunks';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -30,6 +30,8 @@ import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { useLockedRelativeOrbit } from './useLockedRelativeOrbit';
+import { shouldForceSceneReselectionUpdated } from '@shared/store/ImageryScene/reducer';
+import { usePrevious } from '@shared/hooks/usePrevious';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
 /**
@@ -57,6 +59,8 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
 
     const orbitDirection = useSelector(selectSentinel1OrbitDirection);
 
+    const previousOrbitDirection = usePrevious(orbitDirection);
+
     /**
      * Locked relative orbit to be used by the Analyze tools to ensure all Sentinel-1
      * scenes selected by the user to have the same relative orbit.
@@ -72,13 +76,18 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
             return;
         }
 
+        // Set `shouldForceSceneReselection` to true when the user makes a new selection of the orbit direction filter.
+        // This will force the `useFindSelectedSceneByDate` custom hook to disregard the currently selected scene and
+        // select a new scene based on the current state of all filters.
+        if (orbitDirection !== previousOrbitDirection) {
+            dispatch(shouldForceSceneReselectionUpdated(true));
+        }
+
         dispatch(
-            queryAvailableScenes(
+            queryAvailableSentinel1Scenes({
                 acquisitionDateRange,
-                orbitDirection,
-                lockedRelativeOrbitOfSentinelScene
-                // dualPolarizationOnly
-            )
+                relativeOrbit: lockedRelativeOrbitOfSentinelScene,
+            })
         );
     }, [
         center,

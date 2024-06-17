@@ -14,14 +14,16 @@
  */
 
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, batch } from 'react-redux';
 import {
     selectAvailableScenes,
     selectQueryParams4SceneInSelectedMode,
+    selectShouldForceSceneReselection,
 } from '@shared/store/ImageryScene/selectors';
 import { useDispatch } from 'react-redux';
 import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import { shouldForceSceneReselectionUpdated } from '@shared/store/ImageryScene/reducer';
 
 /**
  * This custom hooks tries to find the selected scene that was acquired from the selected acquisition date
@@ -40,6 +42,10 @@ export const useFindSelectedSceneByDate = (): void => {
      */
     const availableScenes = useSelector(selectAvailableScenes);
 
+    const shouldForceSceneReselection = useSelector(
+        selectShouldForceSceneReselection
+    );
+
     useEffect(() => {
         // It is unnecessary to update the object ID of the selected scene while the animation is playing.
         // This is because the available scenes associated with each animation frame do not get updated during animation playback.
@@ -55,10 +61,10 @@ export const useFindSelectedSceneByDate = (): void => {
             return;
         }
 
-        // We want to maintain the selected imagery scene as locked, in other words,
-        // once a scene is chosen, it will remain locked until the user explicitly removes the
+        // We want to maintain the selected imagery scene as locked as long as the `shouldForceSceneReselection` flag is set to false,
+        // in other words, once a scene is chosen, it will remain locked until the user explicitly removes the
         // selected date from the calendar or removes the object Id of the selected scene.
-        if (objectIdOfSelectedScene) {
+        if (objectIdOfSelectedScene && shouldForceSceneReselection === false) {
             return;
         }
 
@@ -68,8 +74,12 @@ export const useFindSelectedSceneByDate = (): void => {
             (d) => d.formattedAcquisitionDate === acquisitionDate
         );
 
-        dispatch(
-            updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
-        );
+        batch(() => {
+            dispatch(
+                updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
+            );
+
+            dispatch(shouldForceSceneReselectionUpdated(false));
+        });
     }, [availableScenes, acquisitionDate, objectIdOfSelectedScene]);
 };

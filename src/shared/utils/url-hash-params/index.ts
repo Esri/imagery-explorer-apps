@@ -74,7 +74,8 @@ export type UrlHashParamKey =
     | 'hideTerrain' // hash params for terrain layer
     | 'hideMapLabels' // hash params for map labels layer
     | 'hideBasemap' // hash params for map labels layer
-    | 'tool'; // hash params for active analysis tool
+    | 'tool' // hash params for active analysis tool
+    | 'sentinel1'; // hash params for Sentinel-1 scenes
 
 const getHashParams = () => {
     return new URLSearchParams(window.location.hash.slice(1));

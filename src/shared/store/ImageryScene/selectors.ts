@@ -138,3 +138,8 @@ export const selectAvailableScenes = createSelector(
         return objectIds.map((objectId) => byObjectId[objectId]);
     }
 );
+
+export const selectShouldForceSceneReselection = createSelector(
+    (state: RootState) => state.ImageryScenes.shouldForceSceneReselection,
+    (shouldForceSceneReselection) => shouldForceSceneReselection
+);

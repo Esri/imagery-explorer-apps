@@ -30,3 +30,8 @@ export const selectPolarizationFilter = createSelector(
     (state: RootState) => state.Sentinel1.polarizationFilter,
     (polarizationFilter) => polarizationFilter
 );
+
+export const selectSentinel1State = createSelector(
+    (state: RootState) => state.Sentinel1,
+    (Sentinel1) => Sentinel1
+);

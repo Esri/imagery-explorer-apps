@@ -46,6 +46,7 @@ import classNames from 'classnames';
 import { ChangeCompareTool4Sentinel1 } from '../ChangeCompareTool';
 import { Sentinel1TemporalProfileTool } from '../TemporalProfileTool';
 import { Sentinel1MaskTool } from '../MaskTool';
+import { useSaveSentinel1State2HashParams } from '../../hooks/saveSentinel1State2HashParams';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -62,7 +63,15 @@ export const Layout = () => {
      */
     useQueryAvailableSentinel1Scenes();
 
+    /**
+     * save common, app-wide state to URL hash params
+     */
     useSaveAppState2HashParams();
+
+    /**
+     * save sentinel1-explorer related state to URL hash params
+     */
+    useSaveSentinel1State2HashParams();
 
     if (IS_MOBILE_DEVICE) {
         return (

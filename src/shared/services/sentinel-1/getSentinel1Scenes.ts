@@ -35,7 +35,7 @@ type GetSentinel1ScenesParams = {
     /**
      * orbit direction
      */
-    orbitDirection: Sentinel1OrbitDirection;
+    orbitDirection?: Sentinel1OrbitDirection;
     /**
      * the relative orbits of sentinel-1 scenes
      */
@@ -166,8 +166,10 @@ export const getSentinel1Scenes = async ({
     //     whereClauses.push(`(${MONTH} = ${acquisitionMonth})`);
     // }
 
-    if (ORBIT_DIRECTION) {
+    if (orbitDirection) {
         whereClauses.push(`(${ORBIT_DIRECTION} = '${orbitDirection}')`);
+    } else {
+        whereClauses.push(`(${ORBIT_DIRECTION} is NOT NULL)`);
     }
 
     if (relativeOrbit) {

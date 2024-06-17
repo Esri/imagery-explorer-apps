@@ -48,7 +48,7 @@ export const initialSentinel1State: Sentinel1State = {
         byObjectId: {},
         objectIds: [],
     },
-    orbitDirection: 'Descending',
+    orbitDirection: 'Ascending',
     polarizationFilter: 'VV',
 };
 

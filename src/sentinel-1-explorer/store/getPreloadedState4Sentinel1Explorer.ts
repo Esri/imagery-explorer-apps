@@ -67,6 +67,11 @@ import {
     MaskToolPixelValueRangeBySpectralIndex,
     DefaultPixelValueRangeBySelectedIndex,
 } from '@shared/store/MaskTool/reducer';
+import {
+    initialSentinel1State,
+    Sentinel1State,
+} from '@shared/store/Sentinel1/reducer';
+import { getSentinel1StateFromHashParams } from '@shared/utils/url-hash-params/sentinel1';
 // import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 /**
@@ -268,6 +273,16 @@ const getPreloadedMaskToolState = (): MaskToolState => {
     };
 };
 
+const getPreloadedSentinel1State = (): Sentinel1State => {
+    // const maskToolData = getMaskToolDataFromHashParams();
+    const sentinel1State = getSentinel1StateFromHashParams();
+
+    return {
+        ...initialSentinel1State,
+        orbitDirection: sentinel1State?.orbitDirection || 'Ascending',
+    } as Sentinel1State;
+};
+
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
 
@@ -279,5 +294,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         ChangeCompareTool: getPreloadedChangeCompareToolState(),
         TrendTool: getPreloadedTrendToolState(),
         MaskTool: getPreloadedMaskToolState(),
+        Sentinel1: getPreloadedSentinel1State(),
     } as PartialRootState;
 };

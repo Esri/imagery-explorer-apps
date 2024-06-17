@@ -158,8 +158,17 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
 
         const n = pixels[0].length;
 
+        // total number of pixels with in the selected scenes
+        let totalPixels = n;
+        // total number of visible pixels that with in the selected pixel range
+        let visiblePixels = n;
+
+        let containsPixelsOutsideOfSelectedScene = true;
+
+        // Initialize the mask if it doesn't exist, indicating all pixels are within the selected scene.
         if (!pixelBlock.mask) {
             pixelBlock.mask = new Uint8Array(n);
+            containsPixelsOutsideOfSelectedScene = false;
         }
 
         const pr = new Uint8Array(n);
@@ -192,6 +201,14 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
                 maxValOfFulRange
             );
 
+            // Decrease the total pixel count if the pixel is outside the selected scene.
+            if (
+                containsPixelsOutsideOfSelectedScene &&
+                pixelBlock.mask[i] === 0
+            ) {
+                totalPixels--;
+            }
+
             // If the adjusted pixel value is outside the selected range, or if the original pixel value is 0, hide this pixel.
             // A pixel value of 0 typically indicates it is outside the extent of the selected imagery scene.
             if (
@@ -200,6 +217,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
                 band1[i] === 0
             ) {
                 pixelBlock.mask[i] = 0;
+                visiblePixels--;
                 continue;
             }
 
@@ -228,6 +246,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
                         maxValSelectedPixelRange4Band2)
             ) {
                 pixelBlock.mask[i] = 0;
+                visiblePixels--;
                 continue;
             }
 
@@ -251,6 +270,10 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
         }
 
         pixelBlock.pixels = [pr, pg, pb];
+
+        // percentage of visible pixels
+        const pctVisiblePixels = visiblePixels / totalPixels;
+        // console.log(pctVisiblePixels)
 
         pixelBlock.pixelType = 'u8';
     };

@@ -1,8 +1,12 @@
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
-import { Sentinel1Scene } from '@typing/imagery-service';
+import {
+    Sentinel1OrbitDirection,
+    Sentinel1Scene,
+} from '@typing/imagery-service';
 
 export const convert2ImageryScenes = (
-    scenes: Sentinel1Scene[]
+    scenes: Sentinel1Scene[],
+    userSelectedOrbitDirection: Sentinel1OrbitDirection
 ): ImageryScene[] => {
     // convert list of Landsat scenes to list of imagery scenes
     const imageryScenes: ImageryScene[] = scenes.map(
@@ -14,7 +18,11 @@ export const convert2ImageryScenes = (
                 acquisitionDate,
                 acquisitionYear,
                 acquisitionMonth,
+                orbitDirection,
             } = landsatScene;
+
+            const doesNotMeetCriteria =
+                userSelectedOrbitDirection !== orbitDirection;
 
             const imageryScene: ImageryScene = {
                 objectId,
@@ -24,6 +32,7 @@ export const convert2ImageryScenes = (
                 acquisitionYear,
                 acquisitionMonth,
                 cloudCover: 0,
+                doesNotMeetCriteria,
                 satellite: 'Sentinel-1',
             };
 
