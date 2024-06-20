@@ -65,3 +65,8 @@ export const selectMapPopupAnchorLocation = createSelector(
     (state: RootState) => state.Map.popupAnchorLocation,
     (popupAnchorLocation) => popupAnchorLocation
 );
+
+export const selectIsMapUpdating = createSelector(
+    (state: RootState) => state.Map.isUpadting,
+    (isUpadting) => isUpadting
+);

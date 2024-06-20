@@ -97,8 +97,8 @@ export const decodeMaskToolData = (
         maskLayerOpacity: +maskLayerOpacity,
         pixelValueRangeBySelectedIndex,
         pixelColorBySelectedIndex,
-        totalAreaInSqKm: 0,
-        percentOfPixelsInSelectedRange: 0,
+        totalVisibleAreaInSqKm: 0,
+        countOfVisiblePixels: 0,
     };
 };
 

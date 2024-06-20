@@ -46,7 +46,9 @@ import {
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { Sentinel1PixelValueRangeByIndex } from '../MaskTool/Sentinel1MaskTool';
 import { WaterLandMaskLayer } from './WaterLandMaskLayer';
-import { useCalcMaskLayerTotalArea } from '@shared/hooks/useCalcMaskLayerTotalArea';
+import { useDispatch } from 'react-redux';
+import { countOfVisiblePixelsChanged } from '@shared/store/MaskTool/reducer';
+import { useCalculateMaskArea } from '@shared/hooks/useCalculateMaskLayerArea';
 
 type Props = {
     mapView?: MapView;
@@ -66,6 +68,8 @@ const RasterFunctionNameByIndx: Record<RadarIndex, Sentinel1FunctionName> = {
 };
 
 export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
+    const dispatach = useDispatch();
+
     const mode = useSelector(selectAppMode);
 
     const groupLayer4MaskAndWaterLandLayersRef = useRef<GroupLayer>();
@@ -130,7 +134,11 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
         groupLayer.add(groupLayer4MaskAndWaterLandLayersRef.current);
     };
 
-    useCalcMaskLayerTotalArea(SENTINEL_1_SERVICE_URL, mapView);
+    useCalculateMaskArea({
+        objectId: objectIdOfSelectedScene,
+        serviceURL: SENTINEL_1_SERVICE_URL,
+        pixelSize: mapView.resolution,
+    });
 
     useEffect(() => {
         initGroupLayer4MaskAndWaterLandLayers();
@@ -173,6 +181,9 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
                 fullPixelValueRange={fullPixelValueRange}
                 opacity={opacity}
                 pixelColor={pixelColor}
+                countOfPixelsOnChange={(totalPixels, visiblePixels) => {
+                    dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                }}
             />
 
             <WaterLandMaskLayer

@@ -7,13 +7,18 @@ import { IExtent } from '@esri/arcgis-rest-feature-service';
  */
 export const getExtentByObjectId = async (
     serviceUrl: string,
-    objectId: number
+    objectId: number,
+    outputSpatialReference?: number
 ): Promise<IExtent> => {
     const queryParams = new URLSearchParams({
         f: 'json',
         returnExtentOnly: 'true',
         objectIds: objectId.toString(),
     });
+
+    if (outputSpatialReference) {
+        queryParams.append('outSR', outputSpatialReference.toString());
+    }
 
     const res = await fetch(`${serviceUrl}/query?${queryParams.toString()}`);
 

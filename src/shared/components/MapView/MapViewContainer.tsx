@@ -32,7 +32,11 @@ import {
 import EventHandlers from './EventHandlers';
 import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
-import { centerChanged, zoomChanged } from '../../store/Map/reducer';
+import {
+    centerChanged,
+    isUpdatingChanged,
+    zoomChanged,
+} from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
 // import { queryLocation4TrendToolChanged } from '@shared/store/TrendTool/reducer';
@@ -111,6 +115,10 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
         // adding this class will hide map zoom widget when animation mode is on
         document.body.classList.toggle('hide-map-control', isAnimationPlaying);
     }, [isAnimationPlaying]);
+
+    useEffect(() => {
+        dispatch(isUpdatingChanged(isUpdating));
+    }, [isUpdating]);
 
     return (
         <div

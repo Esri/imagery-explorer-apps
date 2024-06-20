@@ -72,6 +72,16 @@ type Props = {
      * @returns The RGB color as an array of numbers
      */
     getPixelColor?: (val: number, pixelValueRange: number[]) => number[];
+    /**
+     * Emits when percent of visible pixels changes
+     * @param totalPixels total number of pixels of the mask layer
+     * @param visiblePixels total number of visible pixels (within the user selected pixel value range) of the mask layer
+     * @returns
+     */
+    countOfPixelsOnChange?: (
+        totalPixels: number,
+        visiblePixels: number
+    ) => void;
 };
 
 type PixelData = {
@@ -92,6 +102,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
     opacity,
     pixelColor,
     getPixelColor,
+    countOfPixelsOnChange,
 }) => {
     const layerRef = useRef<ImageryLayer>();
 
@@ -271,11 +282,13 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
 
         pixelBlock.pixels = [pr, pg, pb];
 
-        // percentage of visible pixels
-        const pctVisiblePixels = visiblePixels / totalPixels;
-        // console.log(pctVisiblePixels)
-
         pixelBlock.pixelType = 'u8';
+
+        if (countOfPixelsOnChange) {
+            // const pctOfVisiblePixels = visiblePixels / totalPixels;
+            // console.log(pctVisiblePixels)
+            countOfPixelsOnChange(totalPixels, visiblePixels);
+        }
     };
 
     useEffect(() => {

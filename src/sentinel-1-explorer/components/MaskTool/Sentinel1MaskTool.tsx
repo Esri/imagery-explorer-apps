@@ -19,6 +19,7 @@ import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import {
     MaskLayerRenderingControls,
     MaskToolWarnigMessage,
+    MaskLayerVisibleAreaInfo,
 } from '@shared/components/MaskTool';
 import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
@@ -134,7 +135,9 @@ export const Sentinel1MaskTool = () => {
                 <MaskToolWarnigMessage />
             ) : (
                 <>
-                    <div className={classNames('w-full h-[120px]')}>
+                    <div className={classNames('relative w-full h-[120px]')}>
+                        <MaskLayerVisibleAreaInfo />
+
                         <PixelRangeSlider
                             values={maskOptions.selectedRange}
                             min={fullPixelValueRange[0]}

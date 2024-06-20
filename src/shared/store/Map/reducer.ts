@@ -67,6 +67,10 @@ export type MapState = {
      * anchor location of the map popup windown
      */
     popupAnchorLocation: Point;
+    /**
+     *	Indicates whether the map is being updated by additional data requests to the network, or by processing received data.
+     */
+    isUpadting: boolean;
 };
 
 export const initialMapState: MapState = {
@@ -80,6 +84,7 @@ export const initialMapState: MapState = {
     showBasemap: true,
     swipeWidgetHanlderPosition: 50,
     popupAnchorLocation: null,
+    isUpadting: false,
 };
 
 const slice = createSlice({
@@ -119,6 +124,9 @@ const slice = createSlice({
         popupAnchorLocationChanged: (state, action: PayloadAction<Point>) => {
             state.popupAnchorLocation = action.payload;
         },
+        isUpdatingChanged: (state, action: PayloadAction<boolean>) => {
+            state.isUpadting = action.payload;
+        },
     },
 });
 
@@ -135,6 +143,7 @@ export const {
     showBasemapToggled,
     swipeWidgetHanlderPositionChanged,
     popupAnchorLocationChanged,
+    isUpdatingChanged,
 } = slice.actions;
 
 export default reducer;

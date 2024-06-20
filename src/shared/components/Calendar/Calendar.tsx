@@ -221,10 +221,9 @@ const MonthGrid: FC<MonthGridProps> = ({
                                 ? dataOfImageryScene?.customTooltipText.map(
                                       (text) => {
                                           return (
-                                              <>
+                                              <div key={text}>
                                                   <span>{text}</span>
-                                                  <br />
-                                              </>
+                                              </div>
                                           );
                                       }
                                   )
