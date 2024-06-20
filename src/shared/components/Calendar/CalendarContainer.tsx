@@ -34,10 +34,10 @@ import {
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
-import {
-    // selectIsAnimationPlaying,
-    selectShouldHideCloudCoverInfo,
-} from '@shared/store/UI/selectors';
+// import {
+//     // selectIsAnimationPlaying,
+//     selectShouldHideCloudCoverInfo,
+// } from '@shared/store/UI/selectors';
 // import { CloudFilter } from '@shared/components/CloudFilter';
 // import {
 //     // acquisitionYearChanged,
@@ -114,10 +114,6 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
      */
     const shouldBeDisabled = useShouldDisableCalendar();
 
-    const shouldHideCloudCoverInfo = useSelector(
-        selectShouldHideCloudCoverInfo
-    );
-
     // /**
     //  * This custom hook is triggered whenever the user-selected acquisition date changes.
     //  * It updates the user-selected year based on the year from the selected acquisition date.
@@ -176,7 +172,7 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
                 dateRange={acquisitionDateRange || getDateRangeForPast12Month()}
                 selectedAcquisitionDate={selectedAcquisitionDate}
                 availableScenes={formattedScenes}
-                shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
+                // shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
 

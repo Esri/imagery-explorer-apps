@@ -173,6 +173,9 @@ export const queryAvailableScenes =
                         acquisitionMonth,
                         cloudCover,
                         satellite,
+                        customTooltipText: [
+                            `${Math.ceil(cloudCover * 100)}% Cloudy`,
+                        ],
                     };
 
                     return imageryScene;

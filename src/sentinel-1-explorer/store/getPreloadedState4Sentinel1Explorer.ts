@@ -175,8 +175,6 @@ const getPreloadedUIState = (): UIState => {
 
     const proloadedUIState: UIState = {
         ...initialUIState,
-        hideCloudCoverInfo: true,
-        // nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
     };
 
     if (animationSpeed) {

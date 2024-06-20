@@ -10,7 +10,7 @@ export const convert2ImageryScenes = (
 ): ImageryScene[] => {
     // convert list of Landsat scenes to list of imagery scenes
     const imageryScenes: ImageryScene[] = scenes.map(
-        (landsatScene: Sentinel1Scene) => {
+        (scene: Sentinel1Scene) => {
             const {
                 objectId,
                 name,
@@ -19,7 +19,7 @@ export const convert2ImageryScenes = (
                 acquisitionYear,
                 acquisitionMonth,
                 orbitDirection,
-            } = landsatScene;
+            } = scene;
 
             const doesNotMeetCriteria =
                 userSelectedOrbitDirection !== orbitDirection;
@@ -34,6 +34,7 @@ export const convert2ImageryScenes = (
                 cloudCover: 0,
                 doesNotMeetCriteria,
                 satellite: 'Sentinel-1',
+                customTooltipText: [orbitDirection],
             };
 
             return imageryScene;

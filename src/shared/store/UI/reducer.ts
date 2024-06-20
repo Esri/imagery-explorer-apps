@@ -84,10 +84,6 @@ export type UIState = {
      * if true, show Save Webmap Panel
      */
     showSaveWebMapPanel?: boolean;
-    /**
-     * if true, hide information from UI components (e.g. calendar tooltip) that is related to cloud cover of an imagery scene.
-     */
-    hideCloudCoverInfo?: boolean;
 };
 
 export const initialUIState: UIState = {
@@ -102,7 +98,6 @@ export const initialUIState: UIState = {
     nameOfSelectedInterestingPlace: '',
     showDownloadPanel: false,
     showSaveWebMapPanel: false,
-    hideCloudCoverInfo: false,
 };
 
 const slice = createSlice({

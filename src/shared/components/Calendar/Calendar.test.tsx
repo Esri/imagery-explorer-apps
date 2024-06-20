@@ -28,7 +28,6 @@ describe('test Calendar component', () => {
                 }}
                 selectedAcquisitionDate="2024-01-13"
                 availableScenes={[]}
-                shouldHideCloudCoverInfo={false}
                 onSelect={(val) => {
                     console.log(val);
                 }}

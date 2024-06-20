@@ -41,14 +41,6 @@ export type FormattedImageryScene = {
      * date in format of (YYYY-MM-DD)
      */
     formattedAcquisitionDate: string;
-    // /**
-    //  * if true, this date should be rendered using the style of cloudy day
-    //  */
-    // isCloudy: boolean;
-    /**
-     * percent of cloud coverage of the selected Imagery Scene acquired on this day
-     */
-    cloudCover: number;
     /**
      * name of the satellite (e.g., `Landsat-7`)
      */
@@ -57,6 +49,10 @@ export type FormattedImageryScene = {
      * Flag indicating if the imagery scene does not meet all user-selected criteria
      */
     doesNotMeetCriteria: boolean;
+    /**
+     * custom text to be displayed in the calendar component
+     */
+    customTooltipText?: string[];
 };
 
 type CalendarProps = {
@@ -74,10 +70,6 @@ type CalendarProps = {
      * so that the user can know there are available data on these days
      */
     availableScenes?: FormattedImageryScene[];
-    /**
-     * if true, hide cloud cover info in Calendar tooltip
-     */
-    shouldHideCloudCoverInfo: boolean;
     /**
      * Fires when user select a new acquisition date
      * @param date date string in format of (YYYY-MM-DD)
@@ -103,10 +95,6 @@ type MonthGridProps = Omit<CalendarProps, 'dateRange'> & {
      * number of days in this month
      */
     days: number;
-    /**
-     * if true, hide cloud cover info in Calendar tooltip
-     */
-    shouldHideCloudCoverInfo: boolean;
 };
 
 const MonthGrid: FC<MonthGridProps> = ({
@@ -116,7 +104,7 @@ const MonthGrid: FC<MonthGridProps> = ({
     days,
     selectedAcquisitionDate,
     availableScenes,
-    shouldHideCloudCoverInfo,
+    // shouldHideCloudCoverInfo,
     onSelect,
 }: MonthGridProps) => {
     const dataOfImagerySceneByAcquisitionDate = useMemo(() => {
@@ -229,11 +217,18 @@ const MonthGrid: FC<MonthGridProps> = ({
                                 )}
                             </span>
                             <br />
-                            {shouldHideCloudCoverInfo === false && (
-                                <span>
-                                    {dataOfImageryScene.cloudCover}% Cloudy
-                                </span>
-                            )}
+                            {dataOfImageryScene?.customTooltipText
+                                ? dataOfImageryScene?.customTooltipText.map(
+                                      (text) => {
+                                          return (
+                                              <>
+                                                  <span>{text}</span>
+                                                  <br />
+                                              </>
+                                          );
+                                      }
+                                  )
+                                : null}
                         </div>
                     )}
                 </div>
@@ -262,7 +257,7 @@ const Calendar: FC<CalendarProps> = ({
     dateRange,
     selectedAcquisitionDate,
     availableScenes,
-    shouldHideCloudCoverInfo,
+    // shouldHideCloudCoverInfo,
     onSelect,
 }: CalendarProps) => {
     const { startDate, endDate } = dateRange;
@@ -290,7 +285,7 @@ const Calendar: FC<CalendarProps> = ({
                     days={getNumberOfDays(year, month)}
                     selectedAcquisitionDate={selectedAcquisitionDate}
                     availableScenes={availableScenes}
-                    shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
+                    // shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
                     onSelect={onSelect}
                 />
             );
@@ -309,7 +304,7 @@ const Calendar: FC<CalendarProps> = ({
                     days={getNumberOfDays(startYear, month)}
                     selectedAcquisitionDate={selectedAcquisitionDate}
                     availableScenes={availableScenes}
-                    shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
+                    // shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
                     onSelect={onSelect}
                 />
             );
@@ -325,7 +320,7 @@ const Calendar: FC<CalendarProps> = ({
                     days={getNumberOfDays(endYear, month)}
                     selectedAcquisitionDate={selectedAcquisitionDate}
                     availableScenes={availableScenes}
-                    shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
+                    // shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
                     onSelect={onSelect}
                 />
             );

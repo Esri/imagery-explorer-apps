@@ -75,8 +75,3 @@ export const selectAnimationLinkIsCopied = createSelector(
     (state: RootState) => state.UI.animationLinkIsCopied,
     (animationLinkIsCopied) => animationLinkIsCopied
 );
-
-export const selectShouldHideCloudCoverInfo = createSelector(
-    (state: RootState) => state.UI.hideCloudCoverInfo,
-    (hideCloudCoverInfo) => hideCloudCoverInfo
-);

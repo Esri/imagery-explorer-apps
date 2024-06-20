@@ -54,6 +54,7 @@ export const useFormattedScenes = (): FormattedImageryScene[] => {
                 cloudCover,
                 satellite,
                 doesNotMeetCriteria,
+                customTooltipText,
             } = scene;
 
             const doestNotMeetCloudTreshold = cloudCover > cloudCoverThreshold;
@@ -64,9 +65,9 @@ export const useFormattedScenes = (): FormattedImageryScene[] => {
                 // isCloudy: cloudCover > cloudCoverThreshold,
                 doesNotMeetCriteria:
                     doesNotMeetCriteria || doestNotMeetCloudTreshold,
-                cloudCover: Math.ceil(cloudCover * 100),
                 satellite,
-            };
+                customTooltipText,
+            } as FormattedImageryScene;
         });
     }, [isAnimationPlaying, availableScenes, cloudCoverThreshold]);
 

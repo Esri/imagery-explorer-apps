@@ -113,6 +113,10 @@ export type ImageryScene = {
      * Flag indicating if the imagery scene does not meet all user-selected criteria
      */
     doesNotMeetCriteria?: boolean;
+    /**
+     * custom text to be displayed in the calendar component
+     */
+    customTooltipText?: string[];
 };
 
 export type ImageryScenesState = {
