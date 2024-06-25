@@ -14,11 +14,16 @@
  */
 
 import MapView from '@arcgis/core/views/MapView';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 // import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 import ImageryLayerByObjectID from '@shared/components/ImageryLayer/ImageryLayerByObjectID';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import {
+    LANDSAT_LEVEL_2_SERVICE_SORT_FIELD,
+    LANDSAT_LEVEL_2_SERVICE_SORT_VALUE,
+    LANDSAT_LEVEL_2_SERVICE_URL,
+} from '@shared/services/landsat-level-2/config';
+import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
 
 type Props = {
     mapView?: MapView;
@@ -91,10 +96,21 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
 
     // return null;
 
+    const defaultMosaicRule = useMemo(() => {
+        return new MosaicRule({
+            ascending: true,
+            method: 'attribute',
+            operation: 'first',
+            sortField: LANDSAT_LEVEL_2_SERVICE_SORT_FIELD,
+            sortValue: LANDSAT_LEVEL_2_SERVICE_SORT_VALUE,
+        });
+    }, []);
+
     return (
         <ImageryLayerByObjectID
             groupLayer={groupLayer}
             serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            defaultMosaicRule={defaultMosaicRule}
         />
     );
 };

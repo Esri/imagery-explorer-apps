@@ -338,3 +338,7 @@ export const LANDSAT_BAND_NAMES = [
     'Surface Temperature (Kelvin)',
     'Surface Temperature QA',
 ];
+
+export const LANDSAT_LEVEL_2_SERVICE_SORT_FIELD = 'best';
+
+export const LANDSAT_LEVEL_2_SERVICE_SORT_VALUE = '0';

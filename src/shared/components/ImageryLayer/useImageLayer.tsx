@@ -34,6 +34,10 @@ type Props = {
      * visibility of the imagery layer
      */
     visible?: boolean;
+    /**
+     * the mosaic rule that will be used to render the imagery layer in Dynamic mode
+     */
+    defaultMosaicRule?: MosaicRule;
 };
 
 /**
@@ -57,16 +61,6 @@ export const getLockRasterMosaicRule = (objectId: number): MosaicRule => {
     });
 };
 
-export const getMosaicRuleForDynamicMode = (): MosaicRule => {
-    return new MosaicRule({
-        ascending: true,
-        method: 'attribute',
-        operation: 'first',
-        sortField: 'best',
-        sortValue: '-99999999',
-    });
-};
-
 /**
  * A custom React hook that returns an Imagery Layer instance .
  * The hook also updates the Imagery Layer when the input parameters are changed.
@@ -78,6 +72,7 @@ export const useImageryLayerByObjectId = ({
     visible,
     rasterFunction,
     objectId,
+    defaultMosaicRule,
 }: Props) => {
     const layerRef = useRef<ImageryLayer>();
 
@@ -89,7 +84,7 @@ export const useImageryLayerByObjectId = ({
     const init = async () => {
         const mosaicRule = objectId
             ? getLockRasterMosaicRule(objectId)
-            : getMosaicRuleForDynamicMode();
+            : defaultMosaicRule;
 
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
@@ -134,7 +129,7 @@ export const useImageryLayerByObjectId = ({
 
             layerRef.current.mosaicRule = objectId
                 ? getLockRasterMosaicRule(objectId)
-                : getMosaicRuleForDynamicMode();
+                : defaultMosaicRule;
         })();
     }, [objectId]);
 

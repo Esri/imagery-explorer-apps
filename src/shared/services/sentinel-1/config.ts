@@ -182,3 +182,7 @@ export const SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE: number[] = [-2, 0];
  * For both ship and urban detection, we can use range of 0 to 1 for the threshold slider
  */
 export const SENTINEL1_SHIP_AND_URBAN_INDEX_PIXEL_RANGE: number[] = [0, 1];
+
+export const SENTINEL1_SERVICE_SORT_FIELD = 'best';
+
+export const SENTINEL1_SERVICE_SORT_VALUE = '-99999999';

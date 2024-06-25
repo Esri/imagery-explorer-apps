@@ -14,11 +14,16 @@
  */
 
 import MapView from '@arcgis/core/views/MapView';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 // import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
-import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
+import {
+    SENTINEL1_SERVICE_SORT_FIELD,
+    SENTINEL1_SERVICE_SORT_VALUE,
+    SENTINEL_1_SERVICE_URL,
+} from '@shared/services/sentinel-1/config';
 import ImageryLayerByObjectID from '@shared/components/ImageryLayer/ImageryLayerByObjectID';
+import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
 
 type Props = {
     mapView?: MapView;
@@ -26,10 +31,21 @@ type Props = {
 };
 
 export const Sentinel1Layer: FC<Props> = ({ mapView, groupLayer }: Props) => {
+    const defaultMosaicRule = useMemo(() => {
+        return new MosaicRule({
+            ascending: true,
+            method: 'attribute',
+            operation: 'first',
+            sortField: SENTINEL1_SERVICE_SORT_FIELD,
+            sortValue: SENTINEL1_SERVICE_SORT_VALUE,
+        });
+    }, []);
+
     return (
         <ImageryLayerByObjectID
             groupLayer={groupLayer}
             serviceUrl={SENTINEL_1_SERVICE_URL}
+            defaultMosaicRule={defaultMosaicRule}
         />
     );
 };

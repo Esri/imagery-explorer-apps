@@ -26,17 +26,23 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
+import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
 
 type Props = {
     serviceUrl: string;
     mapView?: MapView;
     groupLayer?: GroupLayer;
+    /**
+     * the mosaic rule that will be used for the imagery layer in Dynamic mode
+     */
+    defaultMosaicRule: MosaicRule;
 };
 
 const ImageryLayerByObjectID: FC<Props> = ({
     serviceUrl,
     mapView,
     groupLayer,
+    defaultMosaicRule,
 }: Props) => {
     const mode = useSelector(selectAppMode);
 
@@ -102,6 +108,7 @@ const ImageryLayerByObjectID: FC<Props> = ({
         visible: getVisibility(),
         rasterFunction: rasterFunctionName,
         objectId: getObjectId(),
+        defaultMosaicRule,
     });
 
     useEffect(() => {
