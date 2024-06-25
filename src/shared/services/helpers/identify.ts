@@ -94,7 +94,7 @@ export const identify = async ({
                   mosaicMethod: 'esriMosaicAttribute',
                   mosaicOperation: 'MT_FIRST',
                   sortField: 'best',
-                  sortValue: '0',
+                  sortValue: '-99999999',
               };
 
     const params = new URLSearchParams({

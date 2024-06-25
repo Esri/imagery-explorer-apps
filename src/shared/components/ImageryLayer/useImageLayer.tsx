@@ -57,6 +57,16 @@ export const getLockRasterMosaicRule = (objectId: number): MosaicRule => {
     });
 };
 
+export const getMosaicRuleForDynamicMode = (): MosaicRule => {
+    return new MosaicRule({
+        ascending: true,
+        method: 'attribute',
+        operation: 'first',
+        sortField: 'best',
+        sortValue: '-99999999',
+    });
+};
+
 /**
  * A custom React hook that returns an Imagery Layer instance .
  * The hook also updates the Imagery Layer when the input parameters are changed.
@@ -77,7 +87,9 @@ export const useImageryLayerByObjectId = ({
      * initialize imagery layer using mosaic created using the input year
      */
     const init = async () => {
-        const mosaicRule = objectId ? getLockRasterMosaicRule(objectId) : null;
+        const mosaicRule = objectId
+            ? getLockRasterMosaicRule(objectId)
+            : getMosaicRuleForDynamicMode();
 
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
@@ -120,7 +132,9 @@ export const useImageryLayerByObjectId = ({
                 return;
             }
 
-            layerRef.current.mosaicRule = getLockRasterMosaicRule(objectId);
+            layerRef.current.mosaicRule = objectId
+                ? getLockRasterMosaicRule(objectId)
+                : getMosaicRuleForDynamicMode();
         })();
     }, [objectId]);
 
