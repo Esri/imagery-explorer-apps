@@ -37,3 +37,23 @@ export const getLockRasterMosaicRule = (objectIds: number[]) => {
         where: `objectid in (${objectIds.join(',')})`,
     };
 };
+
+/**
+ * Orders rasters based on the absolute distance between their values of an attribute and a base value.
+ * @param objectIds
+ * @returns
+ *
+ * @see https://developers.arcgis.com/rest/services-reference/enterprise/mosaic-rules/#lockraster
+ */
+export const getByAttributeMosaicRule = (
+    sortField: string,
+    sortValue: string
+) => {
+    return {
+        ascending: true,
+        mosaicMethod: 'esriMosaicAttribute',
+        mosaicOperation: 'MT_FIRST',
+        sortField,
+        sortValue,
+    };
+};

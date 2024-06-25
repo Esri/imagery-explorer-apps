@@ -31,9 +31,13 @@ export type IdentifyTaskParams = {
      */
     point: Point;
     /**
-     * Object IDs of the imagery scenes
+     * Object IDs of the imagery scenes that will be used to create a Lock Raster mosaic rule
      */
     objectIds?: number[];
+    /**
+     * A custom mosaic rule to be used when object Ids are not provided
+     */
+    customMosaicRule?: any;
     /**
      * Raster Function that will be used as rendering rule
      */
@@ -81,6 +85,7 @@ export const identify = async ({
     serviceURL,
     point,
     objectIds,
+    customMosaicRule,
     rasterFunction,
     resolution,
     maxItemCount,
@@ -89,13 +94,7 @@ export const identify = async ({
     const mosaicRule =
         objectIds && objectIds.length
             ? getLockRasterMosaicRule(objectIds)
-            : {
-                  ascending: true,
-                  mosaicMethod: 'esriMosaicAttribute',
-                  mosaicOperation: 'MT_FIRST',
-                  sortField: 'best',
-                  sortValue: '-99999999',
-              };
+            : customMosaicRule;
 
     const params = new URLSearchParams({
         f: 'json',
@@ -110,7 +109,7 @@ export const identify = async ({
             x: point.longitude,
             y: point.latitude,
         }),
-        mosaicRule: JSON.stringify(mosaicRule),
+        // mosaicRule: JSON.stringify(mosaicRule),
     });
 
     if (rasterFunction) {
@@ -134,6 +133,10 @@ export const identify = async ({
 
     if (maxItemCount) {
         params.append('maxItemCount', maxItemCount.toString());
+    }
+
+    if (mosaicRule) {
+        params.append('mosaicRule', JSON.stringify(mosaicRule));
     }
 
     const requestURL = `${serviceURL}/identify?${params.toString()}`;
