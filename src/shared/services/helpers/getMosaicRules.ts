@@ -22,7 +22,14 @@
 //     };
 // };
 
-export const getMosaicRuleByObjectIds = (objectIds: number[]) => {
+/**
+ * Get mosaic rule that only displays the selected rasters.
+ * @param objectIds
+ * @returns
+ *
+ * @see https://developers.arcgis.com/rest/services-reference/enterprise/mosaic-rules/#lockraster
+ */
+export const getLockRasterMosaicRule = (objectIds: number[]) => {
     return {
         ascending: false,
         lockRasterIds: objectIds,

@@ -14,7 +14,7 @@
  */
 
 import IExtent from '@arcgis/core/geometry/Extent';
-import { getMosaicRuleByObjectIds } from './getMosaicRuleByObjectId';
+import { getLockRasterMosaicRule } from './getMosaicRules';
 
 type ExportImageParams = {
     /**
@@ -62,7 +62,7 @@ export const exportImage = async ({
         imageSR: '102100',
         format: 'jpgpng',
         size: `${width},${height}`,
-        mosaicRule: JSON.stringify(getMosaicRuleByObjectIds([objectId])),
+        mosaicRule: JSON.stringify(getLockRasterMosaicRule([objectId])),
         renderingRule: JSON.stringify({ rasterFunction: rasterFunctionName }),
     });
 

@@ -15,7 +15,7 @@
 
 import { Geometry, Point } from '@arcgis/core/geometry';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
-import { getMosaicRuleByObjectIds } from './getMosaicRuleByObjectId';
+import { getLockRasterMosaicRule } from './getMosaicRules';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 
 /**
@@ -88,7 +88,7 @@ export const identify = async ({
 }: IdentifyTaskParams): Promise<IdentifyTaskResponse> => {
     const mosaicRule =
         objectIds && objectIds.length
-            ? getMosaicRuleByObjectIds(objectIds)
+            ? getLockRasterMosaicRule(objectIds)
             : {
                   ascending: true,
                   mosaicMethod: 'esriMosaicAttribute',
