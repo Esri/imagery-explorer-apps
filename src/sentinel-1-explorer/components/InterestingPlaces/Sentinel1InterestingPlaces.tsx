@@ -18,5 +18,5 @@ import { data } from './data';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 
 export const Sentinel1InterestingPlaces = () => {
-    return <InterestingPlaces data={data} />;
+    return <InterestingPlaces data={data} isThreeColumnGrid={true} />;
 };
