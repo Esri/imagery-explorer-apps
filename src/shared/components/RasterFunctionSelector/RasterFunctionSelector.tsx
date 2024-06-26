@@ -77,7 +77,7 @@ export const RasterFunctionSelector: FC<Props> = ({
                 <span className="uppercase ml-2 text-sm">Renderer</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-[5px] max-h-[155px] pr-1 overflow-x-hidden overflow-y-auto fancy-scrollbar">
+            <div className="flex flex-wrap max-w-[310px] justify-center gap-[5px] max-h-[155px] pr-1 overflow-x-hidden overflow-y-auto fancy-scrollbar">
                 {rasterFunctionInfo.map((d) => {
                     const { name, thumbnail, label } = d;
 
