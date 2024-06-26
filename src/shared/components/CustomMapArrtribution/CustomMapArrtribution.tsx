@@ -13,8 +13,15 @@
  * limitations under the License.
  */
 
+import { useSelector } from 'react-redux';
 import './style.css';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import {
+    selectMapResolution,
+    selectMapScale,
+} from '@shared/store/Map/selectors';
+import { numberWithCommas } from 'helper-toolkit-ts';
+import classNames from 'classnames';
 
 type Props = {
     /**
@@ -30,24 +37,55 @@ type Props = {
  * @returns
  */
 const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
-    const toggleEsriAttribution = () => {
+    const mapScale = useSelector(selectMapScale);
+    const resolution = useSelector(selectMapResolution);
+
+    const [shouldShowEsriAttribution, setShouldShowEsriAttribution] =
+        useState<boolean>(false);
+
+    // const toggleEsriAttribution = () => {
+    //     const element = document.querySelector('.esri-attribution');
+    //     element.classList.toggle('show');
+    // };
+
+    useEffect(() => {
         const element = document.querySelector('.esri-attribution');
-        element.classList.toggle('show');
-    };
+        element.classList.toggle('show', shouldShowEsriAttribution);
+    }, [shouldShowEsriAttribution]);
 
     return (
         <div
-            className="absolute left-0 bottom-0 custom-attribution-text hover:opacity-0"
-            onMouseEnter={toggleEsriAttribution}
-            onMouseOut={toggleEsriAttribution}
+            className={classNames(
+                'absolute left-0 bottom-0 w-full flex justify-between',
+                {
+                    'opacity-0': shouldShowEsriAttribution,
+                }
+            )}
         >
-            <div className="pointer-events-none">
-                <span>
-                    Powered by Esri
-                    {'  |  '}
-                    {atrribution}
-                </span>
+            <div
+                className="custom-attribution-text"
+                onMouseEnter={setShouldShowEsriAttribution.bind(null, true)}
+                onMouseOut={setShouldShowEsriAttribution.bind(null, false)}
+            >
+                <div className="pointer-events-none">
+                    <span>
+                        Powered by Esri
+                        {'  |  '}
+                        {atrribution}
+                    </span>
+                </div>
             </div>
+
+            {mapScale !== null && resolution !== null && (
+                <div className="custom-attribution-text">
+                    <div className="pointer-events-none pr-10">
+                        <span>
+                            1:{numberWithCommas(+mapScale.toFixed(0))} | 1px:{' '}
+                            {resolution.toFixed(0)}m
+                        </span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
