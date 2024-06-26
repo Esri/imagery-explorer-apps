@@ -14,4 +14,4 @@
  */
 
 export { Sentinel1InterestingPlaces } from './Sentinel1InterestingPlaces';
-export { data as landsatInterestingPlaces } from './data';
+export { data as sentinel1InterestingPlaces } from './data';

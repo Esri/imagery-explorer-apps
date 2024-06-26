@@ -72,27 +72,28 @@ import {
     Sentinel1State,
 } from '@shared/store/Sentinel1/reducer';
 import { getSentinel1StateFromHashParams } from '@shared/utils/url-hash-params/sentinel1';
-// import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
+import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
+import { sentinel1InterestingPlaces } from '../components/InterestingPlaces/';
 
 /**
  * Map location info that contains center and zoom info from URL Hash Params
  */
 const mapLocationFromHashParams = getMapCenterFromHashParams();
 
-// /**
-//  * Use the location of a randomly selected interesting place if there is no map location info
-//  * found in the URL hash params.
-//  */
-// const randomInterestingPlace = !mapLocationFromHashParams
-//     ? getRandomElement([])
-//     : null;
+/**
+ * Use the location of a randomly selected interesting place if there is no map location info
+ * found in the URL hash params.
+ */
+const randomInterestingPlace = !mapLocationFromHashParams
+    ? getRandomElement(sentinel1InterestingPlaces)
+    : null;
 
 const getPreloadedMapState = (): MapState => {
-    const mapLocation = mapLocationFromHashParams;
+    let mapLocation = mapLocationFromHashParams;
 
-    // if (!mapLocation) {
-    //     mapLocation = randomInterestingPlace?.location;
-    // }
+    if (!mapLocation) {
+        mapLocation = randomInterestingPlace?.location;
+    }
 
     // show map labels if there is no `hideMapLabels` in hash params
     const showMapLabel = getHashParamValueByKey('hideMapLabels') === null;
@@ -129,8 +130,8 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     // which will serve as the map center.
     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
         ...DefaultQueryParams4ImageryScene,
-        rasterFunctionName: defaultRasterFunction,
-        // randomInterestingPlace?.renderer || defaultRasterFunction,
+        rasterFunctionName:
+            randomInterestingPlace?.renderer || defaultRasterFunction,
     };
 
     const queryParams4SecondaryScene =
@@ -175,6 +176,7 @@ const getPreloadedUIState = (): UIState => {
 
     const proloadedUIState: UIState = {
         ...initialUIState,
+        nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
     };
 
     if (animationSpeed) {
