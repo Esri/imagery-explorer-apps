@@ -52,12 +52,12 @@ Before running the application, update the `landsat-level-2` URLs in the [`confi
 
 To run and test the app on your local machine:
 ```sh
-npm run start-landsat
+npm run start:landsat
 ```
 
 To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landsat` directory.
 ```sh
-npm run build-landsat
+npm run build:landsat
 ```
 
 ### Resources
@@ -91,12 +91,12 @@ The Sentinel-2 Land Cover Explorer app provides dynamic visual and statistical c
 ### Usage
 To run and test the app on your local machine:
 ```sh
-npm run start-landcover
+npm run start:landcover
 ```
 
 To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landcover-explorer` directory.
 ```sh
-npm run build-landcover
+npm run build:landcover
 ```
 
 ### Resources
