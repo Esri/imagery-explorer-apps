@@ -1,7 +1,11 @@
 import type { PlaywrightTestConfig, } from "@playwright/test";
 import { devices } from "@playwright/test";
+import { config } from "dotenv";
+config({
+    path: '../.env'
+})
 
-export const DEV_SERVER_URL = 'https://esri-qdegtg6faf.arcgis.com:8080/'
+export const DEV_SERVER_URL = process.env.WEBPACK_DEV_SERVER_HOSTNAME || 'https://localhost:8080'
 
 export const baseConfig:PlaywrightTestConfig = {
     testDir: './',

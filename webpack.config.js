@@ -1,5 +1,6 @@
+require('dotenv').config({ path: './.env' }); 
+
 const path = require('path');
-const os = require('os');
 const package = require('./package.json');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -9,16 +10,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-const computerName = os.hostname();
-
-/**
- * the App ID and some of the proxy service URLs of the app only works with `arcgis.com` domain, 
- * therefore we need to run the webpack dev server using the host name below `${computerName}.arcgis.com` instead of `localhost`.
- */
-const hostname = computerName.includes('Esri') 
-    ? `${computerName}.arcgis.com` 
-    : 'localhost';
 
 const config = require('./src/config.json');
 
@@ -67,7 +58,7 @@ module.exports =  (env, options)=> {
         mode: options.mode,
         devServer: {
             server: 'https',
-            host: hostname,
+            host: process.env.WEBPACK_DEV_SERVER_HOSTNAME || 'localhost',
             allowedHosts: "all",
             port: 8080
         },

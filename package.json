@@ -81,6 +81,7 @@
     "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.6",
     "css-minimizer-webpack-plugin": "^3.0.1",
+    "dotenv": "^16.4.5",
     "eslint": "8.54",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
