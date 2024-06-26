@@ -47,6 +47,7 @@ import { ChangeCompareTool4Sentinel1 } from '../ChangeCompareTool';
 import { Sentinel1TemporalProfileTool } from '../TemporalProfileTool';
 import { Sentinel1MaskTool } from '../MaskTool';
 import { useSaveSentinel1State2HashParams } from '../../hooks/saveSentinel1State2HashParams';
+import { Sentinel1InterestingPlaces } from '../InterestingPlaces';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -80,7 +81,7 @@ export const Layout = () => {
                 <BottomPanel>
                     <div className="mx-auto">
                         <DynamicModeInfo />
-                        {/* <LandsatInterestingPlaces /> */}
+                        <Sentinel1InterestingPlaces />
                         <Sentinel1FunctionSelector />
                     </div>
                 </BottomPanel>
@@ -121,7 +122,7 @@ export const Layout = () => {
                     {dynamicModeOn ? (
                         <>
                             <DynamicModeInfo />
-                            {/* <LandsatInterestingPlaces /> */}
+                            <Sentinel1InterestingPlaces />
                         </>
                     ) : (
                         <>
