@@ -35,6 +35,8 @@ import { batch } from 'react-redux';
 import {
     centerChanged,
     isUpdatingChanged,
+    resolutionUpdated,
+    scaleUpdated,
     zoomChanged,
 } from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
@@ -131,7 +133,7 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                 {children}
 
                 <EventHandlers
-                    onStationary={(center, zoom, extent) => {
+                    onStationary={(center, zoom, extent, resolution, scale) => {
                         // console.log('map view is stationary', center, zoom, extent);
 
                         batch(() => {
@@ -142,6 +144,8 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                                 ])
                             );
                             dispatch(zoomChanged(zoom));
+                            dispatch(resolutionUpdated(resolution));
+                            dispatch(scaleUpdated(scale));
                         });
                     }}
                     onClickHandler={(point) => {

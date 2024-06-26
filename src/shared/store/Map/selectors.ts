@@ -41,6 +41,11 @@ export const selectMapResolution = createSelector(
     (resolution) => resolution
 );
 
+export const selectMapScale = createSelector(
+    (state: RootState) => state.Map.scale,
+    (scale) => scale
+);
+
 export const selectShowMapLabel = createSelector(
     (state: RootState) => state.Map.showMapLabel,
     (showMapLabel) => showMapLabel

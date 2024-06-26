@@ -39,6 +39,10 @@ export type MapState = {
      */
     zoom: number;
     /**
+     * map scale
+     */
+    scale: number;
+    /**
      * Represents the size of one pixel in map units.
      * The value of resolution can be found by dividing the extent width by the view's width.
      */
@@ -78,6 +82,7 @@ export const initialMapState: MapState = {
     center: MAP_CENTER,
     zoom: MAP_ZOOM,
     resolution: null,
+    scale: null,
     extent: null,
     showMapLabel: true,
     showTerrain: true,
@@ -102,6 +107,9 @@ const slice = createSlice({
         },
         resolutionUpdated: (state, action: PayloadAction<number>) => {
             state.resolution = action.payload;
+        },
+        scaleUpdated: (state, action: PayloadAction<number>) => {
+            state.scale = action.payload;
         },
         extentUpdated: (state, action: PayloadAction<Extent>) => {
             state.extent = action.payload;
@@ -137,6 +145,7 @@ export const {
     centerChanged,
     zoomChanged,
     resolutionUpdated,
+    scaleUpdated,
     extentUpdated,
     showMapLabelToggled,
     showTerrainToggled,
