@@ -18,7 +18,7 @@ import { TIER, getServiceConfig } from '@shared/config';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
 const serviceConfig = getServiceConfig('landsat-level-2');
-console.log('landsat-level-2 service config', serviceConfig);
+// console.log('landsat-level-2 service config', serviceConfig);
 //
 // const serviceUrls = {
 //     development:

@@ -17,7 +17,7 @@
 import { TIER, getServiceConfig } from '@shared/config';
 
 const serviceConfig = getServiceConfig('sentinel-1');
-console.log('sentinel-1 service config', serviceConfig);
+// console.log('sentinel-1 service config', serviceConfig);
 
 // const serviceUrls = {
 //     development:

@@ -42,7 +42,7 @@ export const useCalculatePixelArea = ({
                 objectId
             );
 
-            const area = calculatePixelArea(pixelWidth, pixelHeigh, lat);
+            const area = calculatePixelArea(pixelWidth, lat);
 
             setPixelAreaInSqMeter(area);
         })();

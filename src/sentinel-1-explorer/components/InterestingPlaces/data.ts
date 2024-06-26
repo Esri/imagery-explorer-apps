@@ -15,7 +15,7 @@
 
 import Singapre from './thumbnails/Singapre.jpg';
 import Amazon from './thumbnails/Amazon.jpg';
-import CraterLake from './thumbnails/CraterLake.jpg';
+import CraterLake from './thumbnails/CraterLakeAlt.jpg';
 import Garig from './thumbnails/Garig.jpg';
 import Richat from './thumbnails/Richat.jpg';
 import Torshavn from './thumbnails/Torshavn.jpg';
