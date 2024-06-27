@@ -80,7 +80,7 @@ export const Map = () => {
 
             <Popup />
             <MapMagnifier />
-            <CustomMapArrtribution atrribution="THIS IS A PLACEHOLDER TEXT FOR SENTINEL-1 IMAGERY SERVICE" />
+            <CustomMapArrtribution atrribution="Sentinel-1 imagery courtesy of European Space Agency, European Commission, and Microsoft" />
         </MapViewContainer>
     );
 };
