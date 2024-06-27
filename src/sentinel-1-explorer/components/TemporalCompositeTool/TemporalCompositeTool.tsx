@@ -20,6 +20,7 @@ import { TemproalCompositeToolControls } from './Controls';
 import { DropdownData } from '@shared/components/Dropdown';
 import { initialChangeCompareToolState } from '@shared/store/ChangeCompareTool/reducer';
 import { initiateImageryScenes4TemporalCompositeTool } from '@shared/store/TemporalCompositeTool/thunks';
+import { Tooltip } from '@shared/components/Tooltip';
 
 export const TemporalCompositeTool = () => {
     const dispatch = useDispatch();
@@ -65,8 +66,17 @@ export const TemporalCompositeTool = () => {
 
     return (
         <div className={classNames('w-full h-full')}>
-            <div className="w-full text-center">
-                <h3 className="uppercase">Composite</h3>
+            <div className="flex w-full justify-center">
+                <Tooltip
+                    content={
+                        'View changes over time for up to three selected images at once. Each selected image is used as an individual band in a dynamically generated three band RGB composite image. Color variations in the resulting composite image represent changes in the land cover over time. For example, elements with a high backscatter in the scene used as the red band will have a stronger red hue in the composite image. Elements with a high backscatter in the red scene and the blue scene, and low backscatter in the green scene, will appear purple. And so on. Areas with more consistent backscatter, meaning little to no change over time, will appear as shades of gray.'
+                    }
+                    width={400}
+                >
+                    <calcite-icon scale="s" icon="information" />
+                </Tooltip>
+
+                <span className="uppercase text-sm ml-1">Composite</span>
             </div>
 
             <div className="flex">
