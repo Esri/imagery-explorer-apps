@@ -53,9 +53,17 @@ export const OrbitDirectionFilter: FC<Props> = ({
                     orbitDirectionOnChange(val as Sentinel1OrbitDirection);
                 }}
             /> */}
-            <div className="flex items-center mr-1">
-                <calcite-icon scale="s" icon="information" />
-            </div>
+
+            <Tooltip
+                content={
+                    'Sentinel-1 imagery is collected day and night, on both the light and dark sides of the Earth. As the satellite travels around the Earth, it naturally alternates orbit directions. The pass from north to south is Descending and the pass from south to north is Ascending. Orbit direction should be considered when comparing different images of the same location. For many applications, it is best to select images with the same orbit direction.'
+                }
+                width={280}
+            >
+                <div className="flex items-center mr-1">
+                    <calcite-icon scale="s" icon="information" />
+                </div>
+            </Tooltip>
 
             {data.map((d) => {
                 return (
