@@ -27,11 +27,11 @@ import {
     selectAppMode,
 } from '@shared/store/ImageryScene/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
-import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
+// import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
+// import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 import { appConfig } from '@shared/config';
 import { useQueryAvailableSentinel1Scenes } from '../../hooks/useQueryAvailableSentinel1Scenes';
 import { SceneInfo } from '../SceneInfo';
@@ -48,6 +48,7 @@ import { Sentinel1TemporalProfileTool } from '../TemporalProfileTool';
 import { Sentinel1MaskTool } from '../MaskTool';
 import { useSaveSentinel1State2HashParams } from '../../hooks/saveSentinel1State2HashParams';
 import { Sentinel1InterestingPlaces } from '../InterestingPlaces';
+import { Sentinel1DynamicModeInfo } from '../Sentinel1DynamicModeInfo/Sentinel1DynamicModeInfo';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -80,7 +81,7 @@ export const Layout = () => {
                 <AppHeader title={appConfig.title} />
                 <BottomPanel>
                     <div className="mx-auto">
-                        <DynamicModeInfo />
+                        <Sentinel1DynamicModeInfo />
                         <Sentinel1InterestingPlaces />
                         <Sentinel1FunctionSelector />
                     </div>
@@ -121,7 +122,7 @@ export const Layout = () => {
                 <div className="flex flex-grow justify-center shrink-0">
                     {dynamicModeOn ? (
                         <>
-                            <DynamicModeInfo />
+                            <Sentinel1DynamicModeInfo />
                             <Sentinel1InterestingPlaces />
                         </>
                     ) : (

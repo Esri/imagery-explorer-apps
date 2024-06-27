@@ -13,20 +13,43 @@
  * limitations under the License.
  */
 
-import { APP_NAME } from '@shared/config';
-import React from 'react';
-import LandsatInfo from './LandsatInfo';
-import { Sentinel1Info } from './Sentinel1Info';
+// import { APP_NAME } from '@shared/config';
+import React, { FC } from 'react';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { modeChanged } from '@shared/store/ImageryScene/reducer';
+import { useDispatch } from 'react-redux';
 
-export const DynamicModeInfo = () => {
+type Props = {
+    content: string;
+};
+
+export const DynamicModeInfo: FC<Props> = ({ content }) => {
+    const dispatch = useDispatch();
+
+    const openFindASceneMode = () => {
+        dispatch(modeChanged('find a scene'));
+    };
+
     return (
         <div className="max-w-sm ml-4 2xl:ml-10">
             <div className="text-center mb-3">
                 <span className="uppercase text-sm">Dynamic View</span>
             </div>
 
-            {APP_NAME === 'landsat' && <LandsatInfo />}
-            {APP_NAME === 'sentinel1-explorer' && <Sentinel1Info />}
+            <p className="text-sm opacity-80">{content}</p>
+
+            {IS_MOBILE_DEVICE === false ? (
+                <p className="text-sm opacity-80 mt-2">
+                    To select an individual scene for a specific date, try the{' '}
+                    <span
+                        className="underline cursor-pointer hover:opacity-100"
+                        onClick={openFindASceneMode}
+                    >
+                        FIND A SCENE
+                    </span>{' '}
+                    mode.
+                </p>
+            ) : null}
         </div>
     );
 };
