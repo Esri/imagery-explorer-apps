@@ -35,6 +35,10 @@ type Props = {
      */
     headerTooltip: string;
     /**
+     * The width of header tooltip container in px. The default width is 240px and this value can be used to override that value
+     */
+    widthOfTooltipContainer?: number;
+    /**
      * list of raster functions of the imagery service
      */
     data: RasterFunctionInfo[];
@@ -42,6 +46,7 @@ type Props = {
 
 export const RasterFunctionSelectorContainer: FC<Props> = ({
     headerTooltip,
+    widthOfTooltipContainer,
     data,
 }) => {
     const dispatch = useDispatch();
@@ -105,6 +110,7 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
             rasterFunctionInfo={data}
             nameOfSelectedRasterFunction={rasterFunctionName}
             disabled={shouldDisable()}
+            widthOfTooltipContainer={widthOfTooltipContainer}
             onChange={(rasterFunctionName) => {
                 dispatch(updateRasterFunctionName(rasterFunctionName));
             }}
