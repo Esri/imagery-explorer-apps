@@ -19,15 +19,15 @@ import {
     TemporalProfileToolHeader,
 } from '@shared/components/TemproalProfileTool';
 // import { getProfileData } from '@shared/services/landsat-2/getProfileData';
-import {
-    // acquisitionMonth4TrendToolChanged,
-    // // samplingTemporalResolutionChanged,
-    // trendToolDataUpdated,
-    selectedIndex4TrendToolChanged,
-    // queryLocation4TrendToolChanged,
-    // trendToolOptionChanged,
-    // acquisitionYear4TrendToolChanged,
-} from '@shared/store/TrendTool/reducer';
+// import {
+//     // acquisitionMonth4TrendToolChanged,
+//     // // samplingTemporalResolutionChanged,
+//     // trendToolDataUpdated,
+//     selectedIndex4TrendToolChanged,
+//     // queryLocation4TrendToolChanged,
+//     // trendToolOptionChanged,
+//     // acquisitionYear4TrendToolChanged,
+// } from '@shared/store/TrendTool/reducer';
 // import {
 //     selectAcquisitionMonth4TrendTool,
 //     // selectActiveAnalysisTool,
@@ -78,7 +78,7 @@ export const Sentinel1TemporalProfileTool = () => {
     // const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
     //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const error = useSelector(selectError4TemporalProfileTool);
+    // const error = useSelector(selectError4TemporalProfileTool);
 
     /**
      * this function will be invoked by the updateTemporalProfileToolData thunk function
@@ -158,7 +158,7 @@ export const Sentinel1TemporalProfileTool = () => {
                         label: 'water anomaly',
                     },
                 ]}
-                tooltipText={`The scenes from the selected time interval will be sampled to show a temporal trend for the selected point and category.`}
+                tooltipText={`The most recent scene within each month in the selected time interval will be sampled to show a temporal profile and trend for the selected point and category.`}
             />
 
             <div className="w-full h-[120px] my-2">
