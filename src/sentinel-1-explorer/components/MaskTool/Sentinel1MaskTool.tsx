@@ -125,7 +125,7 @@ export const Sentinel1MaskTool = () => {
                     },
                 ]}
                 selectedValue={selectedIndex}
-                tooltipText={''}
+                tooltipText={`Radar backscatter values can be used to compute a variety of indices. Different thresholds can be applied to these SAR indices to mask and highlight different characteristics of the Earth's surface.`}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(selectedIndex4MaskToolChanged(val as RadarIndex));
                 }}
