@@ -75,6 +75,14 @@ export type MapState = {
      *	Indicates whether the map is being updated by additional data requests to the network, or by processing received data.
      */
     isUpadting: boolean;
+    /**
+     * total visible area of the Imagery layer (with pixel filters) in square kilometers
+     */
+    totalVisibleAreaInSqKm: number;
+    /**
+     * total number of visible pixels of the Imagery layer (with pixel filters)
+     */
+    countOfVisiblePixels: number;
 };
 
 export const initialMapState: MapState = {
@@ -90,6 +98,8 @@ export const initialMapState: MapState = {
     swipeWidgetHanlderPosition: 50,
     popupAnchorLocation: null,
     isUpadting: false,
+    totalVisibleAreaInSqKm: null,
+    countOfVisiblePixels: 0,
 };
 
 const slice = createSlice({
@@ -135,6 +145,15 @@ const slice = createSlice({
         isUpdatingChanged: (state, action: PayloadAction<boolean>) => {
             state.isUpadting = action.payload;
         },
+        totalVisibleAreaInSqKmChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.totalVisibleAreaInSqKm = action.payload;
+        },
+        countOfVisiblePixelsChanged: (state, action: PayloadAction<number>) => {
+            state.countOfVisiblePixels = action.payload;
+        },
     },
 });
 
@@ -153,6 +172,8 @@ export const {
     swipeWidgetHanlderPositionChanged,
     popupAnchorLocationChanged,
     isUpdatingChanged,
+    totalVisibleAreaInSqKmChanged,
+    countOfVisiblePixelsChanged,
 } = slice.actions;
 
 export default reducer;

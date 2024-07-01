@@ -32,12 +32,9 @@ import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
+import { TotalVisibleAreaInfo } from '../TotalAreaInfo/TotalAreaInfo';
 
 type Props = {
-    /**
-     * Title of the object that users compares for (e.g., 'water', 'backscatter' and etc) that will be placed on top of the pixel range selector.
-     */
-    legendTitle?: string;
     /**
      * the label text to be placed at the bottom of the pixel range selector. e.g. `['decrease', 'no change', 'increase']`
      */
@@ -45,7 +42,6 @@ type Props = {
 };
 
 export const ChangeCompareToolControls: FC<Props> = ({
-    legendTitle,
     legendLabelText = [],
 }: Props) => {
     const dispatch = useDispatch();
@@ -155,14 +151,13 @@ export const ChangeCompareToolControls: FC<Props> = ({
     }
 
     return (
-        <div className={classNames('w-full h-[0px] pt-[50px]')}>
-            <div className="relative w-full">
-                {legendTitle && (
-                    <div className="absolute top-[-28px] w-full text-center ">
-                        <span className="text-xs">{legendTitle}</span>
-                    </div>
-                )}
+        <div className={classNames('relative w-full h-[0px] pt-[50px]')}>
+            <div className="absolute top-3 w-full text-right ">
+                {/* <span className="text-xs">{legendTitle}</span> */}
+                <TotalVisibleAreaInfo label={`Estimated Change Area`} />
+            </div>
 
+            <div className="relative w-full">
                 <div
                     className="w-full h-2"
                     style={{

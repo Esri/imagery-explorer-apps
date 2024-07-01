@@ -19,7 +19,7 @@ import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import {
     MaskLayerRenderingControls,
     MaskToolWarnigMessage,
-    MaskLayerVisibleAreaInfo,
+    // MaskLayerVisibleAreaInfo,
 } from '@shared/components/MaskTool';
 import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
@@ -44,6 +44,7 @@ import {
     SENTINEL1_WATER_INDEX_PIXEL_RANGE,
     SENTINEL1_SHIP_AND_URBAN_INDEX_PIXEL_RANGE,
 } from '@shared/services/sentinel-1/config';
+import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 
 export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
     water: SENTINEL1_WATER_INDEX_PIXEL_RANGE,
@@ -136,7 +137,9 @@ export const Sentinel1MaskTool = () => {
             ) : (
                 <>
                     <div className={classNames('relative w-full h-[120px]')}>
-                        <MaskLayerVisibleAreaInfo />
+                        <div className="absolute top-3 right-0">
+                            <TotalVisibleAreaInfo label="Estimated Mask Area" />
+                        </div>
 
                         <PixelRangeSlider
                             values={maskOptions.selectedRange}

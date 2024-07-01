@@ -45,6 +45,9 @@ import {
     minus,
 } from '@arcgis/core/layers/support/rasterFunctionUtils';
 import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
+import { useDispatch } from 'react-redux';
+import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
+import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
 
 type Props = {
     mapView?: MapView;
@@ -65,7 +68,9 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const mode = useSelector(selectAppMode);
+    // const mode = useSelector(selectAppMode);
+
+    const dispatach = useDispatch();
 
     const selectedOption: ChangeCompareToolOption4Sentinel1 = useSelector(
         selectSelectedOption4ChangeCompareTool
@@ -170,6 +175,14 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
         polarizationFilter,
     ]);
 
+    useCalculateTotalAreaByPixelsCount({
+        objectId:
+            queryParams4SceneA?.objectIdOfSelectedScene ||
+            queryParams4SceneB?.objectIdOfSelectedScene,
+        serviceURL: SENTINEL_1_SERVICE_URL,
+        pixelSize: mapView.resolution,
+    });
+
     return (
         <ImageryLayerWithPixelFilter
             mapView={mapView}
@@ -180,6 +193,9 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
             selectedPixelValueRange={selectedRange}
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
+            countOfPixelsOnChange={(totalPixels, visiblePixels) => {
+                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+            }}
         />
     );
 };

@@ -50,12 +50,12 @@ export const selectMaskToolState = createSelector(
     (maskTool) => maskTool
 );
 
-export const selectMaskLayerVisibleArea = createSelector(
-    (state: RootState) => state.MaskTool.totalVisibleAreaInSqKm,
-    (totalVisibleAreaInSqKm) => totalVisibleAreaInSqKm
-);
+// export const selectMaskLayerVisibleArea = createSelector(
+//     (state: RootState) => state.MaskTool.totalVisibleAreaInSqKm,
+//     (totalVisibleAreaInSqKm) => totalVisibleAreaInSqKm
+// );
 
-export const selectCountOfVisiblePixels = createSelector(
-    (state: RootState) => state.MaskTool.countOfVisiblePixels,
-    (countOfVisiblePixels) => countOfVisiblePixels
-);
+// export const selectCountOfVisiblePixels = createSelector(
+//     (state: RootState) => state.MaskTool.countOfVisiblePixels,
+//     (countOfVisiblePixels) => countOfVisiblePixels
+// );

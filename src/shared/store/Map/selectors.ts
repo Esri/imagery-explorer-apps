@@ -75,3 +75,13 @@ export const selectIsMapUpdating = createSelector(
     (state: RootState) => state.Map.isUpadting,
     (isUpadting) => isUpadting
 );
+
+export const selectTotalVisibleArea = createSelector(
+    (state: RootState) => state.Map.totalVisibleAreaInSqKm,
+    (totalVisibleAreaInSqKm) => totalVisibleAreaInSqKm
+);
+
+export const selectCountOfVisiblePixels = createSelector(
+    (state: RootState) => state.Map.countOfVisiblePixels,
+    (countOfVisiblePixels) => countOfVisiblePixels
+);

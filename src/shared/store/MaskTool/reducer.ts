@@ -53,14 +53,14 @@ export type MaskToolState = {
      * if true, mask layer should be used to clip the imagery scene
      */
     shouldClipMaskLayer: boolean;
-    /**
-     * total visible area of the Mask layer in square kilometers
-     */
-    totalVisibleAreaInSqKm: number;
-    /**
-     * total number of visible pixels
-     */
-    countOfVisiblePixels: number;
+    // /**
+    //  * total visible area of the Mask layer in square kilometers
+    //  */
+    // totalVisibleAreaInSqKm: number;
+    // /**
+    //  * total number of visible pixels
+    //  */
+    // countOfVisiblePixels: number;
 };
 
 export const DefaultPixelValueRangeBySelectedIndex: MaskToolPixelValueRangeBySpectralIndex =
@@ -114,8 +114,8 @@ export const initialMaskToolState: MaskToolState = {
         ship: [255, 0, 21],
         urban: [255, 0, 21],
     },
-    totalVisibleAreaInSqKm: null,
-    countOfVisiblePixels: 0,
+    // totalVisibleAreaInSqKm: null,
+    // countOfVisiblePixels: 0,
 };
 
 const slice = createSlice({
@@ -149,15 +149,15 @@ const slice = createSlice({
         shouldClipMaskLayerToggled: (state, action: PayloadAction<boolean>) => {
             state.shouldClipMaskLayer = !state.shouldClipMaskLayer;
         },
-        totalVisibleAreaInSqKmChanged: (
-            state,
-            action: PayloadAction<number>
-        ) => {
-            state.totalVisibleAreaInSqKm = action.payload;
-        },
-        countOfVisiblePixelsChanged: (state, action: PayloadAction<number>) => {
-            state.countOfVisiblePixels = action.payload;
-        },
+        // totalVisibleAreaInSqKmChanged: (
+        //     state,
+        //     action: PayloadAction<number>
+        // ) => {
+        //     state.totalVisibleAreaInSqKm = action.payload;
+        // },
+        // countOfVisiblePixelsChanged: (state, action: PayloadAction<number>) => {
+        //     state.countOfVisiblePixels = action.payload;
+        // },
     },
 });
 
@@ -170,8 +170,8 @@ export const {
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
     maskLayerPixelColorChanged,
-    totalVisibleAreaInSqKmChanged,
-    countOfVisiblePixelsChanged,
+    // totalVisibleAreaInSqKmChanged,
+    // countOfVisiblePixelsChanged,
 } = slice.actions;
 
 export default reducer;

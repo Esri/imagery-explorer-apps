@@ -47,6 +47,7 @@ import {
     SENTINEL1_WATER_INDEX_PIXEL_RANGE,
 } from '@shared/services/sentinel-1/config';
 import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
+import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 
 /**
  * the index that user can select for the Change Compare Tool
@@ -164,10 +165,9 @@ export const ChangeCompareToolContainer = () => {
     return (
         <div className={classNames('relative w-full h-full')}>
             <ChangeCompareToolHeader options={ChangeCompareToolOptions} />
-            <ChangeCompareToolControls
-                legendTitle={legendTitle}
-                legendLabelText={legendLabelText}
-            />
+
+            <ChangeCompareToolControls legendLabelText={legendLabelText} />
+
             {selectedOption === 'log difference' && (
                 <div className="absolute bottom-6 w-full">
                     <PolarizationFilter />
