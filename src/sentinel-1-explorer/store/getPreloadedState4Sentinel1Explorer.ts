@@ -137,7 +137,7 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     const queryParams4SecondaryScene =
         getQueryParams4SecondarySceneFromHashParams() || {
             ...DefaultQueryParams4ImageryScene,
-            rasterFunctionName: defaultRasterFunction,
+            rasterFunctionName: null,
         };
 
     const listOfQueryParams = getListOfQueryParamsFromHashParams() || [];

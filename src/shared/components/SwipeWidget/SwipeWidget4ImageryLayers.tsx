@@ -14,7 +14,7 @@
  */
 
 import MapView from '@arcgis/core/views/MapView';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useSelector } from 'react-redux';
 import {
@@ -26,6 +26,10 @@ import {
 import { useDispatch } from 'react-redux';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useImageryLayerByObjectId } from '../ImageryLayer/useImageLayer';
+import {
+    QueryParams4ImageryScene,
+    queryParams4SecondarySceneChanged,
+} from '@shared/store/ImageryScene/reducer';
 
 type Props = {
     /**
@@ -48,6 +52,19 @@ export const SwipeWidget4ImageryLayers: FC<Props> = ({
     const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
 
     // const isSwipeWidgetVisible = appMode === 'swipe';
+
+    useEffect(() => {
+        // If a raster function is not explicitly selected for the imagery scene on the right side,
+        // we want it to inherit the raster function from the main scene on the left side.
+        if (!queryParams4RightSide?.rasterFunctionName) {
+            const updatedQueryParams: QueryParams4ImageryScene = {
+                ...queryParams4RightSide,
+                rasterFunctionName: queryParams4LeftSide.rasterFunctionName,
+            };
+
+            dispatch(queryParams4SecondarySceneChanged(updatedQueryParams));
+        }
+    }, [queryParams4RightSide?.rasterFunctionName]);
 
     const leadingLayer = useImageryLayerByObjectId({
         url: serviceUrl,

@@ -19,10 +19,10 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
+// import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 import {
     getDateRangeForPast12Month,
-    getDateRangeForYear,
+    // getDateRangeForYear,
 } from '@shared/utils/date-time/getTimeRange';
 import { DateRange } from '@typing/shared';
 
