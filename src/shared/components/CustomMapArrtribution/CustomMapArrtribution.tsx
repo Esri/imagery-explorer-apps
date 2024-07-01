@@ -81,7 +81,7 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
                     <div className="pointer-events-none pr-10">
                         <span>
                             1:{numberWithCommas(+mapScale.toFixed(0))} | 1px:{' '}
-                            {resolution.toFixed(0)}m
+                            {numberWithCommas(+resolution.toFixed(0))}m
                         </span>
                     </div>
                 </div>
