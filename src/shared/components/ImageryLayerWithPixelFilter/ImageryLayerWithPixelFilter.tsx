@@ -323,18 +323,18 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
         layerRef.current.opacity = opacity;
     }, [opacity]);
 
-    useEffect(() => {
-        if (!layerRef.current) {
-            return;
-        }
+    // useEffect(() => {
+    //     if (!layerRef.current) {
+    //         return;
+    //     }
 
-        layerRef.current.visible = visible;
+    //     layerRef.current.visible = visible;
 
-        // if (visible) {
-        //     // reorder it to make sure it is the top most layer on the map
-        //     groupLayer.reorder(layerRef.current, mapView.map.layers.length - 1);
-        // }
-    }, [visible]);
+    //     // if (visible) {
+    //     //     // reorder it to make sure it is the top most layer on the map
+    //     //     groupLayer.reorder(layerRef.current, mapView.map.layers.length - 1);
+    //     // }
+    // }, [visible]);
 
     useEffect(() => {
         selectedRangeRef.current = selectedPixelValueRange;
@@ -342,7 +342,13 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
         fullPixelValueRangeRef.current = fullPixelValueRange;
         pixelColorRef.current = pixelColor;
 
-        if (layerRef.current) {
+        if (!layerRef.current) {
+            return;
+        }
+
+        layerRef.current.visible = visible;
+
+        if (visible) {
             layerRef.current.redraw();
         }
     }, [
@@ -350,6 +356,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
         selectedPixelValueRange4Band2,
         fullPixelValueRange,
         pixelColor,
+        visible,
     ]);
 
     useEffect(() => {
