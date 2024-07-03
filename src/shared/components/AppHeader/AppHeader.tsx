@@ -18,7 +18,10 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { shouldShowAboutThisAppToggled } from '../../store/UI/reducer';
+import {
+    shouldShowAboutThisAppToggled,
+    showDocPanelToggled,
+} from '../../store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { APP_NAME, AppName } from '@shared/config';
@@ -31,6 +34,10 @@ type Props = {
      * title of the explorer app
      */
     title: string;
+    /**
+     * if true, show the doc button that allows user to launch the doc panel
+     */
+    showDocButton?: boolean;
 };
 
 const IMAGERY_EXPLORER_APPS: {
@@ -55,7 +62,7 @@ const IMAGERY_EXPLORER_APPS: {
     },
 ];
 
-const AppHeader: FC<Props> = ({ title }) => {
+const AppHeader: FC<Props> = ({ title, showDocButton }) => {
     const dispatch = useDispatch();
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
@@ -136,6 +143,17 @@ const AppHeader: FC<Props> = ({ title }) => {
                     </div>
                 </div>
             </div>
+
+            {showDocButton && (
+                <div
+                    className="h-app-header-size w-app-header-size  theme-background cursor-pointer border-l border-custom-light-blue-50 pl-2 flex items-center"
+                    onClick={() => {
+                        dispatch(showDocPanelToggled());
+                    }}
+                >
+                    <calcite-icon icon="open-book" />
+                </div>
+            )}
 
             {showImageryExplorerAppsList && (
                 <div

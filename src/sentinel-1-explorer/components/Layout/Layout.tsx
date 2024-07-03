@@ -49,6 +49,7 @@ import { Sentinel1MaskTool } from '../MaskTool';
 import { useSaveSentinel1State2HashParams } from '../../hooks/saveSentinel1State2HashParams';
 import { Sentinel1InterestingPlaces } from '../InterestingPlaces';
 import { Sentinel1DynamicModeInfo } from '../Sentinel1DynamicModeInfo/Sentinel1DynamicModeInfo';
+import { Sentinel1DocPanel } from '../DocPanel';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -78,7 +79,7 @@ export const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appConfig.title} />
+                <AppHeader title={appConfig.title} showDocButton={true} />
                 <BottomPanel>
                     <div className="mx-auto">
                         <Sentinel1DynamicModeInfo />
@@ -86,13 +87,14 @@ export const Layout = () => {
                         <Sentinel1FunctionSelector />
                     </div>
                 </BottomPanel>
+                <Sentinel1DocPanel />
             </>
         );
     }
 
     return (
         <>
-            <AppHeader title={appConfig.title} />
+            <AppHeader title={appConfig.title} showDocButton={true} />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />
@@ -158,6 +160,7 @@ export const Layout = () => {
                     <Sentinel1FunctionSelector />
                 </div>
             </BottomPanel>
+            <Sentinel1DocPanel />
         </>
     );
 };

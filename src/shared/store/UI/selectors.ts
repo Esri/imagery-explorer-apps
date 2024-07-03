@@ -75,3 +75,8 @@ export const selectAnimationLinkIsCopied = createSelector(
     (state: RootState) => state.UI.animationLinkIsCopied,
     (animationLinkIsCopied) => animationLinkIsCopied
 );
+
+export const selectShouldShowDocPanel = createSelector(
+    (state: RootState) => state.UI.showDocPanel,
+    (showDocPanel) => showDocPanel
+);

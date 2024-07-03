@@ -84,6 +84,10 @@ export type UIState = {
      * if true, show Save Webmap Panel
      */
     showSaveWebMapPanel?: boolean;
+    /**
+     * if true, show Documentation Panel
+     */
+    showDocPanel?: boolean;
 };
 
 export const initialUIState: UIState = {
@@ -98,6 +102,7 @@ export const initialUIState: UIState = {
     nameOfSelectedInterestingPlace: '',
     showDownloadPanel: false,
     showSaveWebMapPanel: false,
+    showDocPanel: false,
 };
 
 const slice = createSlice({
@@ -153,6 +158,9 @@ const slice = createSlice({
         showSaveWebMapPanelToggled: (state) => {
             state.showSaveWebMapPanel = !state.showSaveWebMapPanel;
         },
+        showDocPanelToggled: (state) => {
+            state.showDocPanel = !state.showDocPanel;
+        },
     },
 });
 
@@ -171,6 +179,7 @@ export const {
     nameOfSelectedInterestingPlaceChanged,
     showDownloadPanelToggled,
     showSaveWebMapPanelToggled,
+    showDocPanelToggled,
 } = slice.actions;
 
 export default reducer;
