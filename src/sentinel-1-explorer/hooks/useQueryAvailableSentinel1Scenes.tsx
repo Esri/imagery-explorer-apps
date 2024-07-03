@@ -65,7 +65,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
      * Locked relative orbit to be used by the Analyze tools to ensure all Sentinel-1
      * scenes selected by the user to have the same relative orbit.
      */
-    const lockedRelativeOrbitOfSentinelScene = useLockedRelativeOrbit();
+    const { lockedRelativeOrbit } = useLockedRelativeOrbit();
 
     useEffect(() => {
         if (!center || !acquisitionDateRange) {
@@ -86,7 +86,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         dispatch(
             queryAvailableSentinel1Scenes({
                 acquisitionDateRange,
-                relativeOrbit: lockedRelativeOrbitOfSentinelScene,
+                relativeOrbit: lockedRelativeOrbit,
             })
         );
     }, [
@@ -95,7 +95,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         acquisitionDateRange?.endDate,
         isAnimationPlaying,
         orbitDirection,
-        lockedRelativeOrbitOfSentinelScene,
+        lockedRelativeOrbit,
         // dualPolarizationOnly,
     ]);
 

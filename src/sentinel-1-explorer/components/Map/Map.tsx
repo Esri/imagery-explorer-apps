@@ -39,6 +39,7 @@ import { ChangeCompareLayer4Sentinel1 } from '../ChangeCompareLayer';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { useDispatch } from 'react-redux';
 import { Sentinel1MaskLayer } from '../MaskLayer';
+import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootprintLayer';
 
 export const Map = () => {
     const dispatch = useDispatch();
@@ -54,6 +55,7 @@ export const Map = () => {
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
                 index={1}
             >
+                <LockedRelativeOrbitFootprintLayer />
                 <Sentinel1Layer />
                 <Sentinel1MaskLayer />
                 <ChangeCompareLayer4Sentinel1 />

@@ -27,7 +27,7 @@ import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 
 /**
- * Custom hook that returns the relative orbit to be used by the different Analyze tools (e.g. temporal composite and change compare).
+ * Custom hook that returns the relative orbit (and the associated sentinel 1 scene) to be used by the different Analyze tools (e.g. temporal composite and change compare).
  * These tools require all scenes selected by the user to have the same relative orbit.
  * This hook tries to find the first scene that the user has selected and uses the relative orbit of that scene to
  * query the rest of the scenes.
@@ -55,7 +55,7 @@ export const useLockedRelativeOrbit = () => {
      * useMemo hook to compute the relative orbit based on the mode, active analysis tool, and selected Sentinel-1 scene.
      * The relative orbit is only relevant when the mode is 'analysis' and the analysis tool is 'temporal composite' or 'change compare'.
      */
-    const relativeOrbit: string = useMemo(() => {
+    const lockedRelativeOrbit: string = useMemo(() => {
         if (mode !== 'analysis' || !sentinel1Scene) {
             return null;
         }
@@ -121,5 +121,8 @@ export const useLockedRelativeOrbit = () => {
         })();
     }, [queryParams?.objectIdOfSelectedScene, mode, analysisTool]);
 
-    return relativeOrbit;
+    return {
+        lockedRelativeOrbit,
+        sentinel1Scene,
+    };
 };
