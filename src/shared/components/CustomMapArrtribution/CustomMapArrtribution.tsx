@@ -77,7 +77,7 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
             </div>
 
             {mapScale !== null && resolution !== null && (
-                <div className="custom-attribution-text">
+                <div className="hidden md:block custom-attribution-text">
                     <div className="pointer-events-none pr-10">
                         <span>
                             1:{numberWithCommas(+mapScale.toFixed(0))} | 1px:{' '}
