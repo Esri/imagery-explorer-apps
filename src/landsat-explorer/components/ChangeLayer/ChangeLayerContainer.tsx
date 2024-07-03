@@ -39,6 +39,9 @@ import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { getPixelColor4ChangeCompareLayer } from '@shared/components/ChangeCompareTool/helpers';
 import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
+import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
+import { useDispatch } from 'react-redux';
+import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 
 type Props = {
     mapView?: MapView;
@@ -153,6 +156,8 @@ export const getRasterFunction4ChangeLayer = async (
 };
 
 export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
+    const dispatach = useDispatch();
+
     const mode = useSelector(selectAppMode);
 
     const spectralIndex = useSelector(
@@ -231,6 +236,14 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     //     />
     // );
 
+    useCalculateTotalAreaByPixelsCount({
+        objectId:
+            queryParams4SceneA?.objectIdOfSelectedScene ||
+            queryParams4SceneB?.objectIdOfSelectedScene,
+        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        pixelSize: mapView.resolution,
+    });
+
     return (
         <ImageryLayerWithPixelFilter
             mapView={mapView}
@@ -241,6 +254,9 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             selectedPixelValueRange={selectedRange}
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
+            countOfPixelsOnChange={(totalPixels, visiblePixels) => {
+                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+            }}
         />
     );
 };
