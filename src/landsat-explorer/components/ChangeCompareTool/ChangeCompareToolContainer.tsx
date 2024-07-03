@@ -36,20 +36,10 @@ import {
     ChangeCompareToolControls,
 } from '@shared/components/ChangeCompareTool';
 
+const LEGEND_LABEL_TEXT = ['decrease', 'no change', 'increase'];
+
 export const ChangeCompareToolContainer = () => {
-    // const dispatch = useDispatch();
-
     const tool = useSelector(selectActiveAnalysisTool);
-
-    // const selectedRange = useSelector(
-    //     selectUserSelectedRangeInChangeCompareTool
-    // );
-
-    // const selectedSpectralIndex = useSelector(
-    //     selectSelectedOption4ChangeCompareTool
-    // );
-
-    // const isChangeLayerOn = useSelector(selectChangeCompareLayerIsOn);
 
     if (tool !== 'change') {
         return null;
@@ -73,83 +63,7 @@ export const ChangeCompareToolContainer = () => {
                     },
                 ]}
             />
-            <ChangeCompareToolControls />
-
-            {/* <AnalysisToolHeader
-                title="Change"
-                dropdownListOptions={[
-                    {
-                        value: 'water' as SpectralIndex,
-                        label: 'WATER INDEX',
-                    },
-                    {
-                        value: 'vegetation' as SpectralIndex,
-                        label: 'VEGETATION INDEX',
-                    },
-                    {
-                        value: 'moisture' as SpectralIndex,
-                        label: 'MOISTURE INDEX',
-                    },
-                ]}
-                selectedValue={selectedSpectralIndex}
-                tooltipText={
-                    'Compare and report changes between two selected images. Change is always calculated and reported chronologically from oldest to newest.'
-                }
-                dropdownMenuSelectedItemOnChange={(val) => {
-                    dispatch(
-                        selectedOption4ChangeCompareToolChanged(
-                            val as SpectralIndex
-                        )
-                    );
-                }}
-            /> */}
-            {/* {isChangeLayerOn ? (
-                <div className={classNames('w-full h-[0px] pt-[50px]')}>
-                    <div className="w-full">
-                        <div
-                            className="w-full h-2"
-                            style={{
-                                background:
-                                    getChangeCompareLayerColorrampAsCSSGradient(),
-                            }}
-                        ></div>
-                    </div>
-
-                    <PixelRangeSlider
-                        values={selectedRange}
-                        valuesOnChange={(vals: number[]) => {
-                            dispatch(selectedRangeUpdated(vals));
-                        }}
-                        min={-2}
-                        max={2}
-                        steps={0.1}
-                        tickLabels={[-2, -1, 0, 1, 2]}
-                        countOfTicks={17}
-                        showSliderTooltip={true}
-                    />
-
-                    <div className="w-full mt-12">
-                        <div className="flex items-center text-xs">
-                            <div className="w-1/3">
-                                <span>decrease</span>
-                            </div>
-                            <div className="w-1/3 text-center">
-                                <span>no change</span>
-                            </div>
-                            <div className="w-1/3 text-right">
-                                <span>increase</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ) : (
-                <div className="mt-10 text-center">
-                    <p className="text-sm opacity-50 ">
-                        Select two scenes, SCENE A and SCENE B, and then click
-                        VIEW CHANGE.
-                    </p>
-                </div>
-            )} */}
+            <ChangeCompareToolControls legendLabelText={LEGEND_LABEL_TEXT} />
         </div>
     );
 };
