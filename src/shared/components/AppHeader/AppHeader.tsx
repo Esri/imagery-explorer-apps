@@ -48,6 +48,11 @@ const IMAGERY_EXPLORER_APPS: {
         title: 'Landsat Explorer',
         url: '/landsatexplorer',
     },
+    {
+        appName: 'sentinel1-explorer',
+        title: 'Sentinel-1 Explorer',
+        url: '/sentinel1explorer',
+    },
 ];
 
 const AppHeader: FC<Props> = ({ title }) => {
