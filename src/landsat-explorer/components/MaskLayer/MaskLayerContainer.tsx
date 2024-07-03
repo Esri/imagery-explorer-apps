@@ -41,6 +41,9 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
+import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
+import { useDispatch } from 'react-redux';
+import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 
 type Props = {
     mapView?: MapView;
@@ -65,6 +68,8 @@ export const getRasterFunctionBySpectralIndex = (
 };
 
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
+    const dispatach = useDispatch();
+
     const mode = useSelector(selectAppMode);
 
     const spectralIndex = useSelector(
@@ -118,19 +123,11 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         return [-1, 1];
     }, [spectralIndex]);
 
-    // return (
-    //     <MaskLayer
-    //         mapView={mapView}
-    //         groupLayer={groupLayer}
-    //         spectralIndex={spectralIndex}
-    //         objectId={objectIdOfSelectedScene}
-    //         visible={isVisible}
-    //         selectedRange={selectedRange}
-    //         color={color}
-    //         opacity={opacity}
-    //         shouldClip={shouldClip}
-    //     />
-    // );
+    useCalculateTotalAreaByPixelsCount({
+        objectId: objectIdOfSelectedScene,
+        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        pixelSize: mapView.resolution,
+    });
 
     return (
         <ImageryLayerWithPixelFilter
@@ -145,6 +142,9 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             pixelColor={pixelColor}
             opacity={opacity}
             blendMode={shouldClip ? 'destination-atop' : 'normal'}
+            countOfPixelsOnChange={(totalPixels, visiblePixels) => {
+                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+            }}
         />
     );
 };

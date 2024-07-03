@@ -43,6 +43,7 @@ import {
     SurfaceTempCelsiusPixelRangeSlider,
     SurfaceTempFarhenheitPixelRangeSlider,
 } from './SurfaceTempPixelRangeSlider';
+import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -126,7 +127,11 @@ export const MaskToolContainer = () => {
                 <MaskToolWarnigMessage />
             ) : (
                 <>
-                    <div className={classNames('w-full h-[120px]')}>
+                    <div className={classNames('relative w-full h-[120px]')}>
+                        <div className="absolute top-3 right-0">
+                            <TotalVisibleAreaInfo label="Estimated Mask Area" />
+                        </div>
+
                         {selectedSpectralIndex === 'temperature celcius' && (
                             <SurfaceTempCelsiusPixelRangeSlider />
                         )}
