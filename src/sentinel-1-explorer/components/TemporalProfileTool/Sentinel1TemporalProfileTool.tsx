@@ -73,10 +73,10 @@ export const Sentinel1TemporalProfileTool = () => {
 
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const orbitDirection = useSelector(selectSentinel1OrbitDirection);
+    // const orbitDirection = useSelector(selectSentinel1OrbitDirection);
 
-    // const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
-    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    const { objectIdOfSelectedScene } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     // const error = useSelector(selectError4TemporalProfileTool);
 
@@ -116,7 +116,7 @@ export const Sentinel1TemporalProfileTool = () => {
             const data: TemporalProfileData[] =
                 await getSentinel1TemporalProfileData({
                     queryLocation,
-                    orbitDirection,
+                    objectId: objectIdOfSelectedScene,
                     acquisitionMonth,
                     acquisitionYear,
                     abortController,
@@ -124,7 +124,7 @@ export const Sentinel1TemporalProfileTool = () => {
 
             return data;
         },
-        [orbitDirection]
+        [objectIdOfSelectedScene]
     );
 
     /**

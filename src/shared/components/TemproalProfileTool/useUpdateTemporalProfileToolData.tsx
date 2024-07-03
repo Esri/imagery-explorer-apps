@@ -28,7 +28,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
-    // selectQueryParams4SceneInSelectedMode,
+    selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 // import { SpectralIndex } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
@@ -58,6 +58,9 @@ export const useUpdateTemporalProfileToolData = (
     const selectedTrendToolOption = useSelector(selectTrendToolOption);
 
     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+
+    const { objectIdOfSelectedScene } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const updateTrendToolDataDebounced = useCallback(
         debounce(() => {
@@ -90,6 +93,7 @@ export const useUpdateTemporalProfileToolData = (
         tool,
         selectedTrendToolOption,
         missionsToBeExcluded,
+        objectIdOfSelectedScene,
     ]);
 
     // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
@@ -111,5 +115,6 @@ export const useUpdateTemporalProfileToolData = (
         tool,
         selectedTrendToolOption,
         missionsToBeExcluded,
+        objectIdOfSelectedScene,
     ]);
 };

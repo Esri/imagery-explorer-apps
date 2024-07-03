@@ -4,7 +4,10 @@ import {
     Sentinel1Scene,
     TemporalProfileData,
 } from '@typing/imagery-service';
-import { getSentinel1Scenes } from './getSentinel1Scenes';
+import {
+    getSentinel1SceneByObjectId,
+    getSentinel1Scenes,
+} from './getSentinel1Scenes';
 import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
 // import { splitObjectIdsToSeparateGroups } from '../helpers/splitObjectIdsToSeparateGroups';
 // import { identify } from '../helpers/identify';
@@ -22,9 +25,13 @@ type GetSentinel1TemporalProfileDataOptions = {
      */
     acquisitionYear: number;
     /**
-     * orbit direction
+     * object id of selected sentinel-1 scene
      */
-    orbitDirection: Sentinel1OrbitDirection;
+    objectId: number;
+    // /**
+    //  * orbit direction
+    //  */
+    // orbitDirection: Sentinel1OrbitDirection;
     /**
      * abortController that will be used to cancel the pending requests
      */
@@ -33,7 +40,8 @@ type GetSentinel1TemporalProfileDataOptions = {
 
 export const getSentinel1TemporalProfileData = async ({
     queryLocation,
-    orbitDirection,
+    // orbitDirection,
+    objectId,
     acquisitionMonth,
     acquisitionYear,
     abortController,
@@ -41,6 +49,10 @@ export const getSentinel1TemporalProfileData = async ({
     const { x, y } = queryLocation;
 
     let sentinel1Scenes: Sentinel1Scene[] = [];
+
+    // get data of selected sentinel-1 scene and use the orbit direction of this scene to query temporal profile data
+    const selectedScene = await getSentinel1SceneByObjectId(objectId);
+    const orbitDirection = selectedScene.orbitDirection;
 
     if (acquisitionMonth) {
         // query Sentinel-1 scenes based on input location and acquisition month to show "year-to-year" trend

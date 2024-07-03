@@ -125,6 +125,8 @@ export const updateTemporalProfileToolData =
                 );
 
             dispatch(trendToolDataUpdated(data));
+
+            dispatch(trendToolIsLoadingChanged(false));
         } catch (err) {
             // no need to throw the error
             // is caused by the user aborting the pending query
@@ -139,9 +141,9 @@ export const updateTemporalProfileToolData =
                         'failed to fetch data for temporal profile tool'
                 )
             );
-            // throw err;
-        } finally {
+
             dispatch(trendToolIsLoadingChanged(false));
+            // throw err;
         }
     };
 
