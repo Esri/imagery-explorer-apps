@@ -239,7 +239,8 @@ export const getSentinel1Scenes = async ({
  * @returns The formatted Sentinel-11 Scene corresponding to the objectId
  */
 export const getSentinel1SceneByObjectId = async (
-    objectId: number
+    objectId: number,
+    abortController?: AbortController
 ): Promise<Sentinel1Scene> => {
     // Check if the Sentinel-1 scene already exists in the cache
     if (sentinel1SceneByObjectId.has(objectId)) {
@@ -248,7 +249,8 @@ export const getSentinel1SceneByObjectId = async (
 
     const feature = await getFeatureByObjectId(
         SENTINEL_1_SERVICE_URL,
-        objectId
+        objectId,
+        abortController
     );
 
     if (!feature) {
