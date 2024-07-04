@@ -78,7 +78,7 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
     const openPopupRef = useRef<MapViewOnClickHandler>();
 
     const closePopUp = (message: string) => {
-        console.log('calling closePopUp', message);
+        // console.log('calling closePopUp', message);
 
         mapView.closePopup();
 

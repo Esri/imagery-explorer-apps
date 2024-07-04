@@ -103,6 +103,6 @@ export const queryAvailableSentinel1Scenes =
                 dispatch(availableImageryScenesUpdated(imageryScenes));
             });
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     };

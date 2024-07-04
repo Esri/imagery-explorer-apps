@@ -79,7 +79,10 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         // Set `shouldForceSceneReselection` to true when the user makes a new selection of the orbit direction filter.
         // This will force the `useFindSelectedSceneByDate` custom hook to disregard the currently selected scene and
         // select a new scene based on the current state of all filters.
-        if (orbitDirection !== previousOrbitDirection) {
+        if (
+            previousOrbitDirection &&
+            orbitDirection !== previousOrbitDirection
+        ) {
             dispatch(shouldForceSceneReselectionUpdated(true));
         }
 
