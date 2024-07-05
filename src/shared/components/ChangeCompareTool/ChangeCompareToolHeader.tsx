@@ -39,9 +39,16 @@ type Props = {
         value: SpectralIndex | string;
         label: string;
     }[];
+    /**
+     * tooltip text for the info icon of the Change Compare tool
+     */
+    tooltipText?: string;
 };
 
-export const ChangeCompareToolHeader: FC<Props> = ({ options }: Props) => {
+export const ChangeCompareToolHeader: FC<Props> = ({
+    options,
+    tooltipText,
+}: Props) => {
     const dispatch = useDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
@@ -58,6 +65,7 @@ export const ChangeCompareToolHeader: FC<Props> = ({ options }: Props) => {
             dropdownListOptions={options}
             selectedValue={selectedOption}
             tooltipText={
+                tooltipText ||
                 'Compare and report changes between two selected images. Change is always calculated and reported chronologically from oldest to newest.'
             }
             dropdownMenuSelectedItemOnChange={(val) => {

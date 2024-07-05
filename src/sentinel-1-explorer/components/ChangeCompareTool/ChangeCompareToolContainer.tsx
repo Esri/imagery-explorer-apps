@@ -164,11 +164,15 @@ export const ChangeCompareToolContainer = () => {
 
     return (
         <div className={classNames('relative w-full h-full')}>
-            <ChangeCompareToolHeader options={ChangeCompareToolOptions} />
+            <ChangeCompareToolHeader
+                options={ChangeCompareToolOptions}
+                tooltipText="Compare and report changes between two selected images. Change is always calculated and reported chronologically from oldest to newest. The result of the calculation shows where and how values have changed over time. Specific types of change can be observed by selecting an index. All changes between the selected images can be observed by selecting the Log Difference option which includes all differences in backscatter."
+            />
 
             <ChangeCompareToolControls
                 legendLabelText={legendLabelText}
                 comparisonTopic={comparisonTopic}
+                preselectionText="Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE. The orbit direction is locked with the first selection for consistency and more reliable change results."
             />
 
             {selectedOption === 'log difference' && (

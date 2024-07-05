@@ -44,11 +44,17 @@ type Props = {
      * It will be displayed along with the Estimated area info.
      */
     comparisonTopic?: string;
+    /**
+     * The preselection dialogue text message will be displayed when the change layer is not turned on.
+     * This text provide user instruction about how to use this tool
+     */
+    preselectionText?: string;
 };
 
 export const ChangeCompareToolControls: FC<Props> = ({
     legendLabelText = [],
     comparisonTopic,
+    preselectionText,
 }: Props) => {
     const dispatch = useDispatch();
 
@@ -147,10 +153,10 @@ export const ChangeCompareToolControls: FC<Props> = ({
 
     if (!isChangeLayerOn) {
         return (
-            <div className="mt-10 text-center">
+            <div className="mt-6 text-center">
                 <p className="text-sm opacity-50 ">
-                    Select two scenes, SCENE A and SCENE B, and then click VIEW
-                    CHANGE.
+                    {preselectionText ||
+                        'Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE.'}
                 </p>
             </div>
         );
