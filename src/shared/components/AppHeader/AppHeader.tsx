@@ -102,6 +102,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton }) => {
                 onClick={() => {
                     dispatch(shouldShowAboutThisAppToggled());
                 }}
+                title="About this app"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
