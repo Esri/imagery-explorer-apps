@@ -8,6 +8,7 @@ import { getFeatureByObjectId } from '@shared/services/helpers/getFeatureById';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 import { useSelector } from 'react-redux';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+import { selectLockedRelativeOrbit } from '@shared/store/Sentinel1/selectors';
 
 type Props = {
     mapView?: MapView;
@@ -21,8 +22,8 @@ export const LockedRelativeOrbitFootprintLayerContainer: FC<Props> = ({
     /**
      * Locked relative orbit to be used by the different Analyze tools (e.g. temporal composite and change compare)
      */
-    const { lockedRelativeOrbit, objectIdOfSceneWithLockedRelativeOrbit } =
-        useLockedRelativeOrbit();
+    const { relativeOrbit, objectId } =
+        useSelector(selectLockedRelativeOrbit) || {};
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -35,21 +36,18 @@ export const LockedRelativeOrbitFootprintLayerContainer: FC<Props> = ({
             return false;
         }
 
-        return lockedRelativeOrbit !== null;
-    }, [lockedRelativeOrbit, objectIdOfSelectedScene]);
+        return relativeOrbit !== undefined;
+    }, [relativeOrbit, objectIdOfSelectedScene]);
 
     useEffect(() => {
         (async () => {
-            const feature = objectIdOfSceneWithLockedRelativeOrbit
-                ? await getFeatureByObjectId(
-                      SENTINEL_1_SERVICE_URL,
-                      objectIdOfSceneWithLockedRelativeOrbit
-                  )
+            const feature = objectId
+                ? await getFeatureByObjectId(SENTINEL_1_SERVICE_URL, objectId)
                 : null;
 
             setFootPrintFeature(feature);
         })();
-    }, [objectIdOfSceneWithLockedRelativeOrbit]);
+    }, [objectId]);
 
     return (
         <LockedRelativeOrbitFootprintLayer

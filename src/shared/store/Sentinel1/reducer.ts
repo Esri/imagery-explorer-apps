@@ -26,6 +26,11 @@ import {
 
 export type Sentinel1PolarizationFilter = 'VV' | 'VH';
 
+export type LockedRelativeOrbitInfo = {
+    relativeOrbit: string;
+    objectId: number;
+};
+
 export type Sentinel1State = {
     /**
      * Sentinel-1 scenes that intersect with center point of map view and were acquired during the input year.
@@ -41,6 +46,10 @@ export type Sentinel1State = {
      * The polarization filter that allows user to switch between VV and VH
      */
     polarizationFilter: Sentinel1PolarizationFilter;
+    /**
+     * the relative orbit that will be used to lock the scene selection to make sure the Analyze tools like Change Compare or Temporal Composite always use scenes have the same relative orbit
+     */
+    lockedRelativeOrbit: LockedRelativeOrbitInfo;
 };
 
 export const initialSentinel1State: Sentinel1State = {
@@ -50,6 +59,7 @@ export const initialSentinel1State: Sentinel1State = {
     },
     orbitDirection: 'Ascending',
     polarizationFilter: 'VV',
+    lockedRelativeOrbit: null,
 };
 
 const slice = createSlice({
@@ -90,6 +100,12 @@ const slice = createSlice({
         ) => {
             state.polarizationFilter = action.payload;
         },
+        lockedRelativeOrbitChanged: (
+            state,
+            action: PayloadAction<LockedRelativeOrbitInfo>
+        ) => {
+            state.lockedRelativeOrbit = action.payload;
+        },
     },
 });
 
@@ -99,6 +115,7 @@ export const {
     sentinel1ScenesUpdated,
     orbitDirectionChanged,
     polarizationFilterChanged,
+    lockedRelativeOrbitChanged,
 } = slice.actions;
 
 export default reducer;

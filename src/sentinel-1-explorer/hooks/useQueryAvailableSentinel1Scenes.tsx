@@ -26,7 +26,10 @@ import {
     selectListOfQueryParams,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
-import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
+import {
+    selectLockedRelativeOrbit,
+    selectSentinel1OrbitDirection,
+} from '@shared/store/Sentinel1/selectors';
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { useLockedRelativeOrbit } from './useLockedRelativeOrbit';
@@ -61,11 +64,13 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
 
     const previousOrbitDirection = usePrevious(orbitDirection);
 
+    const { relativeOrbit } = useSelector(selectLockedRelativeOrbit) || {};
+
     /**
-     * Locked relative orbit to be used by the Analyze tools to ensure all Sentinel-1
+     * This custom hook helps to determine the Locked relative orbit to be used by the Analyze tools to ensure all Sentinel-1
      * scenes selected by the user to have the same relative orbit.
      */
-    const { lockedRelativeOrbit } = useLockedRelativeOrbit();
+    useLockedRelativeOrbit();
 
     useEffect(() => {
         if (!center || !acquisitionDateRange) {
@@ -89,7 +94,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         dispatch(
             queryAvailableSentinel1Scenes({
                 acquisitionDateRange,
-                relativeOrbit: lockedRelativeOrbit,
+                relativeOrbit,
             })
         );
     }, [
@@ -98,7 +103,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         acquisitionDateRange?.endDate,
         isAnimationPlaying,
         orbitDirection,
-        lockedRelativeOrbit,
+        relativeOrbit,
         // dualPolarizationOnly,
     ]);
 

@@ -25,16 +25,23 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
+import {
+    lockedRelativeOrbitChanged,
+    LockedRelativeOrbitInfo,
+} from '@shared/store/Sentinel1/reducer';
+import { useDispatch } from 'react-redux';
 
 /**
- * Custom hook that returns the relative orbit (and the object Id of associated sentinel 1 scene) to be used by the different Analyze tools (e.g. temporal composite and change compare).
+ * Custom hook that determines the relative orbit (and the object Id of associated sentinel 1 scene) to be used by the different Analyze tools (e.g. temporal composite and change compare).
  * These tools require all scenes selected by the user to have the same relative orbit.
  * This hook tries to find the first scene that the user has selected and uses the relative orbit of that scene to
  * query the rest of the scenes.
  *
- * @returns {string | undefined} Relative orbit of the selected Sentinel-1 scene, or undefined if not applicable.
+ * @returns void
  */
 export const useLockedRelativeOrbit = () => {
+    const dispatch = useDispatch();
+
     const mode = useSelector(selectAppMode);
 
     const analysisTool = useSelector(selectActiveAnalysisTool);
@@ -55,7 +62,7 @@ export const useLockedRelativeOrbit = () => {
      * useMemo hook to compute the relative orbit based on the mode, active analysis tool, and selected Sentinel-1 scene.
      * The relative orbit is only relevant when the mode is 'analysis' and the analysis tool is 'temporal composite' or 'change compare'.
      */
-    const lockedRelativeOrbit: string = useMemo(() => {
+    const lockedRelativeOrbit: LockedRelativeOrbitInfo = useMemo(() => {
         if (mode !== 'analysis' || !sentinel1Scene) {
             return null;
         }
@@ -67,7 +74,16 @@ export const useLockedRelativeOrbit = () => {
             return null;
         }
 
-        return sentinel1Scene?.relativeOrbit;
+        if (!sentinel1Scene) {
+            return null;
+        }
+
+        const { relativeOrbit, objectId } = sentinel1Scene;
+
+        return {
+            relativeOrbit,
+            objectId,
+        };
     }, [mode, analysisTool, sentinel1Scene]);
 
     /**
@@ -121,8 +137,12 @@ export const useLockedRelativeOrbit = () => {
         })();
     }, [queryParams?.objectIdOfSelectedScene, mode, analysisTool]);
 
-    return {
-        lockedRelativeOrbit,
-        objectIdOfSceneWithLockedRelativeOrbit: sentinel1Scene?.objectId,
-    };
+    useEffect(() => {
+        dispatch(lockedRelativeOrbitChanged(lockedRelativeOrbit));
+    }, [lockedRelativeOrbit]);
+
+    // return {
+    //     lockedRelativeOrbit,
+    //     objectIdOfSceneWithLockedRelativeOrbit: sentinel1Scene?.objectId,
+    // };
 };

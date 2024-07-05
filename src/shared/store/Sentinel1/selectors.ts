@@ -35,3 +35,8 @@ export const selectSentinel1State = createSelector(
     (state: RootState) => state.Sentinel1,
     (Sentinel1) => Sentinel1
 );
+
+export const selectLockedRelativeOrbit = createSelector(
+    (state: RootState) => state.Sentinel1.lockedRelativeOrbit,
+    (lockedRelativeOrbit) => lockedRelativeOrbit
+);
