@@ -176,21 +176,60 @@ export const Sentinel1DocPanel = () => {
                             include the phase portion of the SAR data, which
                             includes the measurement of time it takes to
                             transmit and receive the microwave signals. Instead,
-                            the image only provides the amplitude information
-                            described above in terms of the amount of energy
-                            returned from the transmitted signals.
+                            the imagery provides only the amplitude, the amount
+                            of energy returned from the transmitted signals.
                         </p>
 
                         <p className="mb-4">
-                            The imagery here has a Radiometric Terrain
-                            Correction (RTC) applied making it a mapping
-                            friendly product ready for certain types of
+                            The imagery provided here is Radiometrically Terrain
+                            Corrected (RTC), making it a mapping friendly
+                            product ready for certain types of visualization and
                             analysis. These include applications such as
                             flooding, change detection, agriculture, water
                             quality, deforestation, and more.
                         </p>
 
-                        <p>
+                        <div className="mb-4">
+                            <p className="mb-2">
+                                When visualizing the Sentinel-1 RTC imagery,
+                                consider the following general guidelines:
+                            </p>
+
+                            <ol className="list-disc list-inside">
+                                <li>
+                                    Smoother surfaces = Lower backscatter =
+                                    Darker pixels
+                                </li>
+                                <li>
+                                    Rougher surfaces = Higher backscatter =
+                                    Brighter pixels
+                                </li>
+                                <li>
+                                    Water bodies/wet soils = Lower backscatter =
+                                    Darker pixels
+                                </li>
+                                <li>
+                                    Vertical objects = Higher backscatter =
+                                    Brighter pixels
+                                </li>
+                                <li>
+                                    Thicker vegetation = Lower backscatter =
+                                    Darker pixels
+                                </li>
+                            </ol>
+                        </div>
+
+                        <p className="mb-4">
+                            In some cases, multiple factors need to be
+                            considered simultaneously. For example, water bodies
+                            generally have greater signal reflectivity away from
+                            the sensor, resulting in lower backscatter and a
+                            darker appearance. However, a rough water surface
+                            will result in higher backscatter and appear
+                            brighter than a smooth water surface.
+                        </p>
+
+                        <p className="mb-4">
                             As noted in the previous section, Sentinel-1 is dual
                             polarized. Each polarization, VV and VH, are stored
                             as separate bands in the RTC image product, where
@@ -198,8 +237,8 @@ export const Sentinel1DocPanel = () => {
                             used independently or in conjunction with one
                             another, for visualization and analysis. VH signals
                             are most prevalent in areas of volume scattering.
-                            This makes it useful in determining land cover types
-                            such as forested vs non-forested areas.
+                            This makes the VH useful in determining certain land
+                            cover types such as forested vs non-forested areas.
                         </p>
                     </div>
 
