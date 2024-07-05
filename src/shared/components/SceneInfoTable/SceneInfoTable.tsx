@@ -17,6 +17,7 @@ import { delay } from '@shared/utils/snippets/delay';
 import classNames from 'classnames';
 import { generateUID } from 'helper-toolkit-ts';
 import React, { FC, useState } from 'react';
+import { Tooltip } from '../Tooltip';
 
 /**
  * data for a single row in Scene Info Table
@@ -58,6 +59,42 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
         setHasCopied2Clipboard(false);
     };
 
+    const getContentOfValueField = () => {
+        const valueField = (
+            <span
+                className={classNames(
+                    'inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis',
+                    {
+                        'cursor-pointer': clickToCopy,
+                    }
+                )}
+            >
+                {value}
+            </span>
+        );
+
+        if (!clickToCopy) {
+            return valueField;
+        }
+
+        const tooltipContent = `
+            <p class="break-words mb-1">${value}</p>
+            <p>
+                ${
+                    hasCopied2Clipboard
+                        ? `Copied to clipboard`
+                        : 'Click to copy to clipboard.'
+                }
+            </p>
+        `;
+
+        return (
+            <Tooltip content={tooltipContent} width={200}>
+                {valueField}
+            </Tooltip>
+        );
+    };
+
     return (
         <>
             <div
@@ -76,36 +113,7 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
                 }}
                 onClick={valueOnClickHandler}
             >
-                <span
-                    className={classNames(
-                        'inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis',
-                        {
-                            'cursor-pointer': clickToCopy,
-                        }
-                    )}
-                >
-                    {value}
-                </span>
-
-                {clickToCopy && (
-                    <div
-                        className={`
-                                absolute bottom-[25px] left-[-50px] w-[200px] p-1 text-xs z-50
-                                bg-custom-background border border-custom-light-blue-50  
-                                hidden group-hover:block break-words
-                            `}
-                    >
-                        <p>{value}</p>
-                        <div className="mt-1 flex items-center">
-                            {/* <calcite-icon icon="copy-to-clipboard" scale="s" style={{opacity: .75}}></calcite-icon> */}
-                            <span>
-                                {hasCopied2Clipboard
-                                    ? `Copied to clipboard`
-                                    : 'Click to copy to clipboard.'}
-                            </span>
-                        </div>
-                    </div>
-                )}
+                {getContentOfValueField()}
             </div>
         </>
     );
