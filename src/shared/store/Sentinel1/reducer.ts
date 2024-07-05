@@ -27,8 +27,8 @@ import {
 export type Sentinel1PolarizationFilter = 'VV' | 'VH';
 
 export type LockedRelativeOrbitInfo = {
-    relativeOrbit: string;
-    objectId: number;
+    lockedRelativeOrbit: string;
+    objectIdOfSceneWithLockedRelativeOrbit: number;
 };
 
 export type Sentinel1State = {
@@ -49,7 +49,7 @@ export type Sentinel1State = {
     /**
      * the relative orbit that will be used to lock the scene selection to make sure the Analyze tools like Change Compare or Temporal Composite always use scenes have the same relative orbit
      */
-    lockedRelativeOrbit: LockedRelativeOrbitInfo;
+    lockedRelativeOrbitInfo: LockedRelativeOrbitInfo;
 };
 
 export const initialSentinel1State: Sentinel1State = {
@@ -59,7 +59,7 @@ export const initialSentinel1State: Sentinel1State = {
     },
     orbitDirection: 'Ascending',
     polarizationFilter: 'VV',
-    lockedRelativeOrbit: null,
+    lockedRelativeOrbitInfo: null,
 };
 
 const slice = createSlice({
@@ -100,11 +100,11 @@ const slice = createSlice({
         ) => {
             state.polarizationFilter = action.payload;
         },
-        lockedRelativeOrbitChanged: (
+        lockedRelativeOrbitInfoChanged: (
             state,
             action: PayloadAction<LockedRelativeOrbitInfo>
         ) => {
-            state.lockedRelativeOrbit = action.payload;
+            state.lockedRelativeOrbitInfo = action.payload;
         },
     },
 });
@@ -115,7 +115,7 @@ export const {
     sentinel1ScenesUpdated,
     orbitDirectionChanged,
     polarizationFilterChanged,
-    lockedRelativeOrbitChanged,
+    lockedRelativeOrbitInfoChanged,
 } = slice.actions;
 
 export default reducer;

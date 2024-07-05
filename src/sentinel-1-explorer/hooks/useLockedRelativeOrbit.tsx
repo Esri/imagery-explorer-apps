@@ -26,7 +26,7 @@ import {
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import {
-    lockedRelativeOrbitChanged,
+    lockedRelativeOrbitInfoChanged,
     LockedRelativeOrbitInfo,
 } from '@shared/store/Sentinel1/reducer';
 import { useDispatch } from 'react-redux';
@@ -81,8 +81,8 @@ export const useLockedRelativeOrbit = () => {
         const { relativeOrbit, objectId } = sentinel1Scene;
 
         return {
-            relativeOrbit,
-            objectId,
+            lockedRelativeOrbit: relativeOrbit,
+            objectIdOfSceneWithLockedRelativeOrbit: objectId,
         };
     }, [mode, analysisTool, sentinel1Scene]);
 
@@ -138,7 +138,7 @@ export const useLockedRelativeOrbit = () => {
     }, [queryParams?.objectIdOfSelectedScene, mode, analysisTool]);
 
     useEffect(() => {
-        dispatch(lockedRelativeOrbitChanged(lockedRelativeOrbit));
+        dispatch(lockedRelativeOrbitInfoChanged(lockedRelativeOrbit));
     }, [lockedRelativeOrbit]);
 
     // return {

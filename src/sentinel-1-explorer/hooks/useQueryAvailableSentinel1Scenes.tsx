@@ -64,7 +64,8 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
 
     const previousOrbitDirection = usePrevious(orbitDirection);
 
-    const { relativeOrbit } = useSelector(selectLockedRelativeOrbit) || {};
+    const { lockedRelativeOrbit } =
+        useSelector(selectLockedRelativeOrbit) || {};
 
     /**
      * This custom hook helps to determine the Locked relative orbit to be used by the Analyze tools to ensure all Sentinel-1
@@ -94,7 +95,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         dispatch(
             queryAvailableSentinel1Scenes({
                 acquisitionDateRange,
-                relativeOrbit,
+                relativeOrbit: lockedRelativeOrbit,
             })
         );
     }, [
@@ -103,7 +104,7 @@ export const useQueryAvailableSentinel1Scenes = (): void => {
         acquisitionDateRange?.endDate,
         isAnimationPlaying,
         orbitDirection,
-        relativeOrbit,
+        lockedRelativeOrbit,
         // dualPolarizationOnly,
     ]);
 

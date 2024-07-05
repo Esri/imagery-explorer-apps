@@ -22,7 +22,7 @@ export const LockedRelativeOrbitFootprintLayerContainer: FC<Props> = ({
     /**
      * Locked relative orbit to be used by the different Analyze tools (e.g. temporal composite and change compare)
      */
-    const { relativeOrbit, objectId } =
+    const { lockedRelativeOrbit, objectIdOfSceneWithLockedRelativeOrbit } =
         useSelector(selectLockedRelativeOrbit) || {};
 
     const { objectIdOfSelectedScene } =
@@ -36,18 +36,21 @@ export const LockedRelativeOrbitFootprintLayerContainer: FC<Props> = ({
             return false;
         }
 
-        return relativeOrbit !== undefined;
-    }, [relativeOrbit, objectIdOfSelectedScene]);
+        return lockedRelativeOrbit !== undefined;
+    }, [lockedRelativeOrbit, objectIdOfSelectedScene]);
 
     useEffect(() => {
         (async () => {
-            const feature = objectId
-                ? await getFeatureByObjectId(SENTINEL_1_SERVICE_URL, objectId)
+            const feature = objectIdOfSceneWithLockedRelativeOrbit
+                ? await getFeatureByObjectId(
+                      SENTINEL_1_SERVICE_URL,
+                      objectIdOfSceneWithLockedRelativeOrbit
+                  )
                 : null;
 
             setFootPrintFeature(feature);
         })();
-    }, [objectId]);
+    }, [objectIdOfSceneWithLockedRelativeOrbit]);
 
     return (
         <LockedRelativeOrbitFootprintLayer
