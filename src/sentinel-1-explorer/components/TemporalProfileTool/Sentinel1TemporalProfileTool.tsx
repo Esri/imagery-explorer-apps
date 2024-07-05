@@ -158,7 +158,7 @@ export const Sentinel1TemporalProfileTool = () => {
                         label: 'water anomaly',
                     },
                 ]}
-                tooltipText={`The most recent scene within each month in the selected time interval will be sampled to show a temporal profile and trend for the selected point and category.`}
+                tooltipText={`The most recent scene within each month in the selected time interval, and with the same orbit direction, will be sampled to show a temporal profile and trend for the selected point and category.`}
             />
 
             <div className="w-full h-[120px] my-2">
