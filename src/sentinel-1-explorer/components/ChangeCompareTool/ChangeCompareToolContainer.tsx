@@ -131,7 +131,7 @@ export const ChangeCompareToolContainer = () => {
         return ['decrease', '', 'increase'];
     }, [selectedOption]);
 
-    const legendTitle = useMemo(() => {
+    const comparisonTopic = useMemo(() => {
         if (selectedOption === 'log difference') {
             return 'Backscatter';
         }
@@ -166,7 +166,10 @@ export const ChangeCompareToolContainer = () => {
         <div className={classNames('relative w-full h-full')}>
             <ChangeCompareToolHeader options={ChangeCompareToolOptions} />
 
-            <ChangeCompareToolControls legendLabelText={legendLabelText} />
+            <ChangeCompareToolControls
+                legendLabelText={legendLabelText}
+                comparisonTopic={comparisonTopic}
+            />
 
             {selectedOption === 'log difference' && (
                 <div className="absolute bottom-6 w-full">

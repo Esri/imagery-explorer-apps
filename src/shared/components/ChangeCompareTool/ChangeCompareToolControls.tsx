@@ -39,10 +39,16 @@ type Props = {
      * the label text to be placed at the bottom of the pixel range selector. e.g. `['decrease', 'no change', 'increase']`
      */
     legendLabelText?: string[];
+    /**
+     * The selected parameter for comparison, such as 'Water Index' or 'Log Difference'.
+     * It will be displayed along with the Estimated area info.
+     */
+    comparisonTopic?: string;
 };
 
 export const ChangeCompareToolControls: FC<Props> = ({
     legendLabelText = [],
+    comparisonTopic,
 }: Props) => {
     const dispatch = useDispatch();
 
@@ -154,7 +160,13 @@ export const ChangeCompareToolControls: FC<Props> = ({
         <div className={classNames('relative w-full h-[0px] pt-[50px]')}>
             <div className="absolute top-3 w-full text-right ">
                 {/* <span className="text-xs">{legendTitle}</span> */}
-                <TotalVisibleAreaInfo label={`Estimated Change Area`} />
+                <TotalVisibleAreaInfo
+                    label={
+                        comparisonTopic
+                            ? `Est. Change Area (${comparisonTopic})`
+                            : `Estimated Change Area`
+                    }
+                />
             </div>
 
             <div className="relative w-full">
