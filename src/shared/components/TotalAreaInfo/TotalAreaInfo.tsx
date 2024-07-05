@@ -42,7 +42,7 @@ export const TotalVisibleAreaInfo: FC<Props> = ({ label }: Props) => {
                 </div>
             ) : (
                 <p>
-                    {label}: {getFormattedArea()} Sq.Km
+                    {label}: {getFormattedArea()} km²
                 </p>
             )}
         </div>

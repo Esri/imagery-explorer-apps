@@ -136,11 +136,13 @@ export const ChangeCompareToolContainer = () => {
             return 'Backscatter';
         }
 
-        const data = ChangeCompareToolOptions.find(
-            (d) => d.value === selectedOption
-        );
+        return '';
 
-        return data?.label || selectedOption;
+        // const data = ChangeCompareToolOptions.find(
+        //     (d) => d.value === selectedOption
+        // );
+
+        // return data?.label || selectedOption;
     }, [selectedOption]);
 
     useSyncCalendarDateRange();
