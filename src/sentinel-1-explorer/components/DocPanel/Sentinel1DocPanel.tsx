@@ -40,7 +40,8 @@ export const Sentinel1DocPanel = () => {
                         <h4 className="text-lg mb-2">Coverage</h4>
 
                         <p>
-                            Total coverage is global. However, in December 2021,
+                            Total coverage is global and includes imagery from
+                            2014 to present. However, in December 2021,
                             Sentinel-1B experienced a power anomaly resulting in
                             permanent loss of data transmission. From 2022-2024,
                             the mission has continued with a single satellite,
@@ -167,7 +168,7 @@ export const Sentinel1DocPanel = () => {
                     </div>
 
                     <div className="mb-8">
-                        <h4 className="text-lg mb-2">Image interpretation</h4>
+                        <h4 className="text-lg mb-2">Image Interpretation</h4>
 
                         <p className="mb-4">
                             The Sentinel-1 imagery available in ArcGIS Living

@@ -38,6 +38,10 @@ type Props = {
      * if true, show the doc button that allows user to launch the doc panel
      */
     showDocButton?: boolean;
+    /**
+     * tooltip text for the open documentation button
+     */
+    docButtonTooltip?: string;
 };
 
 const IMAGERY_EXPLORER_APPS: {
@@ -62,7 +66,7 @@ const IMAGERY_EXPLORER_APPS: {
     },
 ];
 
-const AppHeader: FC<Props> = ({ title, showDocButton }) => {
+const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
     const dispatch = useDispatch();
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
@@ -151,6 +155,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton }) => {
                     onClick={() => {
                         dispatch(showDocPanelToggled());
                     }}
+                    title={docButtonTooltip || ''}
                 >
                     <calcite-icon icon="open-book" />
                 </div>

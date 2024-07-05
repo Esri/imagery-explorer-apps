@@ -94,7 +94,11 @@ export const Layout = () => {
 
     return (
         <>
-            <AppHeader title={appConfig.title} showDocButton={true} />
+            <AppHeader
+                title={appConfig.title}
+                showDocButton={true}
+                docButtonTooltip="Learn more about Sentinel-1 SAR imagery"
+            />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />
