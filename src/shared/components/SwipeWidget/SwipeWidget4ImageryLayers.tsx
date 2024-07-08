@@ -54,6 +54,11 @@ export const SwipeWidget4ImageryLayers: FC<Props> = ({
     // const isSwipeWidgetVisible = appMode === 'swipe';
 
     useEffect(() => {
+        // should only sync the renderer of right side when swipe widget is on
+        if (!isSwipeWidgetVisible) {
+            return;
+        }
+
         // If a raster function is not explicitly selected for the imagery scene on the right side,
         // we want it to inherit the raster function from the main scene on the left side.
         if (!queryParams4RightSide?.rasterFunctionName) {
@@ -64,7 +69,7 @@ export const SwipeWidget4ImageryLayers: FC<Props> = ({
 
             dispatch(queryParams4SecondarySceneChanged(updatedQueryParams));
         }
-    }, [queryParams4RightSide?.rasterFunctionName]);
+    }, [queryParams4RightSide?.rasterFunctionName, isSwipeWidgetVisible]);
 
     const leadingLayer = useImageryLayerByObjectId({
         url: serviceUrl,
