@@ -29,7 +29,7 @@ export const CloseButton: FC<Props> = ({ onClick }: Props) => {
                 viewBox="0 0 32 32"
                 height="64"
                 width="64"
-                className="absolute top-1 right-1 cursor-pointer with-drop-shadow"
+                className="fixed top-1 right-1 cursor-pointer with-drop-shadow"
                 onClick={onClick}
             >
                 <path
