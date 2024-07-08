@@ -48,6 +48,7 @@ import {
 } from '@shared/services/sentinel-1/config';
 import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
+import { usePrevious } from '@shared/hooks/usePrevious';
 
 /**
  * the index that user can select for the Change Compare Tool
@@ -123,6 +124,8 @@ export const ChangeCompareToolContainer = () => {
         selectSelectedOption4ChangeCompareTool
     ) as ChangeCompareToolOption4Sentinel1;
 
+    const selectedOptionPreviousVal = usePrevious(selectedOption);
+
     const legendLabelText = useMemo(() => {
         // if (selectedOption === 'log difference') {
         //     return ['lower backscatter', 'higher backscatter'];
@@ -148,12 +151,20 @@ export const ChangeCompareToolContainer = () => {
     useSyncCalendarDateRange();
 
     useEffect(() => {
+        // If the previous value of the selected option is null, do not update the pixel range.
+        // This ensures pixel range values are updated only when the user manually selects a new option.
+        if (!selectedOptionPreviousVal) {
+            return;
+        }
+
         const pixelValuesRange =
             ChangeCompareToolPixelValueRange4Sentinel1[
                 selectedOption as ChangeCompareToolOption4Sentinel1
             ];
 
-        // update pxiel values range based on user selected option
+        // Update the pixel values range based on the user-selected option.
+        // Both the full and selected ranges need to be updated because each option has a significantly
+        // different range. The current selected range might fall outside the full range of the new selection.
         if (pixelValuesRange) {
             dispatch(fullPixelValuesRangeUpdated(pixelValuesRange));
             dispatch(selectedRangeUpdated(pixelValuesRange));

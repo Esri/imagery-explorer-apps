@@ -222,7 +222,8 @@ const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
         ...changeCompareToolData,
         selectedOption,
         fullPixelValuesRange,
-        selectedRange: fullPixelValuesRange,
+        selectedRange:
+            changeCompareToolData?.selectedRange || fullPixelValuesRange,
     };
 };
 
