@@ -97,7 +97,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
                 }}
                 min={min}
                 max={max}
-                steps={0.05}
+                steps={0.01}
                 showSliderTooltip={true}
             />
         );
