@@ -105,7 +105,7 @@ export const useSaveAppState2HashParams = () => {
         }
 
         saveQueryParams4SecondarySceneToHashParams(queryParams);
-    }, [mode, queryParams4SecondaryScene]);
+    }, [mode, analysisTool, queryParams4SecondaryScene]);
 
     useEffect(() => {
         saveMaskToolToHashParams(
