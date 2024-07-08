@@ -2,6 +2,7 @@ import { DocPanel } from '@shared/components/DocPanel/DocPanel';
 import React from 'react';
 import Fig1 from './img/fig1.jpg';
 import Fig2 from './img/fig2.jpg';
+import DataAcquisitionFig1 from './img/data-acquisition-fig1.jpg';
 
 export const Sentinel1DocPanel = () => {
     return (
@@ -58,21 +59,43 @@ export const Sentinel1DocPanel = () => {
                         <p className="mb-4">
                             Sentinel-1 active sensors collect data leveraging
                             C-Band synthetic aperture radar (SAR). The sensors
-                            collect data by actively sending and receiving radar
-                            signals that echo off the Earth’s surface. The
-                            echoes returned to the sensor are known as
+                            collect data by actively sending and receiving
+                            microwave signals that echo off the Earth’s surface.
+                            The echoes returned to the sensor are known as
                             backscatter. Measurements of this backscatter
                             provides information about the characteristics of
                             the surface at any given location. More on
                             backscatter below.
                         </p>
 
-                        <p>
-                            Because radar signals are not dependent upon solar
-                            illumination and are unimpeded by clouds, haze, and
-                            smoke, Sentinel-1 collects imagery of the Earth’s
-                            surface day and night and in all weather conditions.
+                        <p className="">
+                            Because microwave signals are not dependent upon
+                            solar illumination and are unimpeded by clouds,
+                            haze, and smoke, Sentinel-1 collects imagery of the
+                            Earth’s surface day and night and in all weather
+                            conditions.
                         </p>
+
+                        <div className="my-6 text-center">
+                            <img
+                                src={DataAcquisitionFig1}
+                                className="w-auto mx-auto mt-2"
+                            />
+
+                            <p className="italic mt-2 text-xs">
+                                Figure 1. Sentinel-1 leverages light energy in
+                                the microwave portion of the electromagnetic
+                                spectrum. Source EMS Image:{' '}
+                                <a
+                                    className=" underline"
+                                    target="_blank"
+                                    href="https://webbtelescope.org/contents/media/images/4182-Image"
+                                    rel="noreferrer"
+                                >
+                                    NASA, ESA, CSA, Joseph Olmsted (STScI)
+                                </a>
+                            </p>
+                        </div>
                     </div>
 
                     <div className="mb-8">
