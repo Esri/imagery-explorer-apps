@@ -1,4 +1,5 @@
 import {
+    Sentinel1PolarizationFilter,
     Sentinel1State,
     initialSentinel1State,
 } from '@shared/store/Sentinel1/reducer';
@@ -10,9 +11,9 @@ const encodeSentinel1Data = (data: Sentinel1State): string => {
         return null;
     }
 
-    const { orbitDirection } = data;
+    const { orbitDirection, polarizationFilter } = data;
 
-    return [orbitDirection].join('|');
+    return [orbitDirection, polarizationFilter].join('|');
 };
 
 const decodeSentinel1Data = (val: string): Sentinel1State => {
@@ -20,11 +21,12 @@ const decodeSentinel1Data = (val: string): Sentinel1State => {
         return null;
     }
 
-    const [orbitDirection] = val.split('|');
+    const [orbitDirection, polarizationFilter] = val.split('|');
 
     return {
         ...initialSentinel1State,
         orbitDirection: orbitDirection as Sentinel1OrbitDirection,
+        polarizationFilter: polarizationFilter as Sentinel1PolarizationFilter,
     };
 };
 

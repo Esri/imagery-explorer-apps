@@ -280,6 +280,7 @@ const getPreloadedSentinel1State = (): Sentinel1State => {
     return {
         ...initialSentinel1State,
         orbitDirection: sentinel1State?.orbitDirection || 'Ascending',
+        polarizationFilter: sentinel1State?.polarizationFilter || 'VV',
     } as Sentinel1State;
 };
 
