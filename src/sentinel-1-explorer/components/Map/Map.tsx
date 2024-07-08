@@ -24,7 +24,6 @@ import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2Nativ
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 // import { ChangeLayer } from '../ChangeLayer';
-// import { ZoomToExtent } from '../ZoomToExtent';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
@@ -40,6 +39,7 @@ import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { useDispatch } from 'react-redux';
 import { Sentinel1MaskLayer } from '../MaskLayer';
 import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootprintLayer';
+import { ZoomToExtent } from '@shared/components/ZoomToExtent';
 
 export const Map = () => {
     const dispatch = useDispatch();
@@ -75,7 +75,7 @@ export const Map = () => {
                     nativeScale={37795}
                     tooltip={"Zoom to Sentinel-1's native resolution"}
                 />
-                {/* <ZoomToExtent /> */}
+                <ZoomToExtent serviceUrl={SENTINEL_1_SERVICE_URL} />
                 <ScreenshotWidget />
                 <CopyLinkWidget />
             </MapActionButtonsGroup>

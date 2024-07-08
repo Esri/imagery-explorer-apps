@@ -1,101 +1,101 @@
-/* Copyright 2024 Esri
- *
- * Licensed under the Apache License Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// /* Copyright 2024 Esri
+//  *
+//  * Licensed under the Apache License Version 2.0 (the "License");
+//  * you may not use this file except in compliance with the License.
+//  * You may obtain a copy of the License at
+//  *
+//  *     http://www.apache.org/licenses/LICENSE-2.0
+//  *
+//  * Unless required by applicable law or agreed to in writing, software
+//  * distributed under the License is distributed on an "AS IS" BASIS,
+//  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  * See the License for the specific language governing permissions and
+//  * limitations under the License.
+//  */
 
-import React, { FC, useMemo, useState } from 'react';
-import {
-    selectAnimationStatus,
-    selectIsAnimationPlaying,
-} from '@shared/store/UI/selectors';
-import MapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
-import { ZoomToExtent } from '@shared/components/ZoomToExtent/ZoomToExtent';
-import {
-    selectAppMode,
-    selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/ImageryScene/selectors';
-import {
-    getExtentOfLandsatSceneByObjectId,
-    // getLandsatFeatureByObjectId,
-} from '@shared/services/landsat-level-2/getLandsatScenes';
+// import React, { FC, useMemo, useState } from 'react';
+// import {
+//     selectAnimationStatus,
+//     selectIsAnimationPlaying,
+// } from '@shared/store/UI/selectors';
+// import MapView from '@arcgis/core/views/MapView';
+// import { useSelector } from 'react-redux';
+// import { ZoomToExtent } from '@shared/components/ZoomToExtent/ZoomToExtent';
+// import {
+//     selectAppMode,
+//     selectQueryParams4SceneInSelectedMode,
+// } from '@shared/store/ImageryScene/selectors';
+// import {
+//     getExtentOfLandsatSceneByObjectId,
+//     // getLandsatFeatureByObjectId,
+// } from '@shared/services/landsat-level-2/getLandsatScenes';
 
-type Props = {
-    mapView?: MapView;
-};
+// type Props = {
+//     mapView?: MapView;
+// };
 
-export const ZoomToExtentContainer: FC<Props> = ({ mapView }) => {
-    // const animationStatus = useSelector(selectAnimationStatus);
+// export const ZoomToExtentContainer: FC<Props> = ({ mapView }) => {
+//     // const animationStatus = useSelector(selectAnimationStatus);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+//     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
-    const mode = useSelector(selectAppMode);
+//     const mode = useSelector(selectAppMode);
 
-    const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+//     const { objectIdOfSelectedScene } =
+//         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const [isLoadingExtent, setIsLoadingExtent] = useState<boolean>(false);
+//     const [isLoadingExtent, setIsLoadingExtent] = useState<boolean>(false);
 
-    const disabled = useMemo(() => {
-        if (mode === 'dynamic') {
-            return false;
-        }
+//     const disabled = useMemo(() => {
+//         if (mode === 'dynamic') {
+//             return false;
+//         }
 
-        // zoom button should be disabled not in dynamic mode and there is no selected scene
-        if (!objectIdOfSelectedScene) {
-            return true;
-        }
+//         // zoom button should be disabled not in dynamic mode and there is no selected scene
+//         if (!objectIdOfSelectedScene) {
+//             return true;
+//         }
 
-        return false;
-    }, [mode, objectIdOfSelectedScene, isLoadingExtent]);
+//         return false;
+//     }, [mode, objectIdOfSelectedScene, isLoadingExtent]);
 
-    const zoomToExtentOfSelectedScene = async () => {
-        if (!objectIdOfSelectedScene) {
-            return;
-        }
+//     const zoomToExtentOfSelectedScene = async () => {
+//         if (!objectIdOfSelectedScene) {
+//             return;
+//         }
 
-        setIsLoadingExtent(true);
+//         setIsLoadingExtent(true);
 
-        try {
-            const extent = await getExtentOfLandsatSceneByObjectId(
-                objectIdOfSelectedScene
-            );
-            mapView.extent = extent as any;
-        } catch (err) {
-            console.log(err);
-        }
+//         try {
+//             const extent = await getExtentOfLandsatSceneByObjectId(
+//                 objectIdOfSelectedScene
+//             );
+//             mapView.extent = extent as any;
+//         } catch (err) {
+//             console.log(err);
+//         }
 
-        setIsLoadingExtent(false);
-    };
+//         setIsLoadingExtent(false);
+//     };
 
-    return (
-        <ZoomToExtent
-            disabled={disabled}
-            hidden={isAnimationPlaying}
-            showLoadingIndicator={isLoadingExtent}
-            tooltip={'Zoom to Extent'}
-            onClick={() => {
-                if (!mapView) {
-                    return;
-                }
+//     return (
+//         <ZoomToExtent
+//             disabled={disabled}
+//             hidden={isAnimationPlaying}
+//             showLoadingIndicator={isLoadingExtent}
+//             tooltip={'Zoom to Extent'}
+//             onClick={() => {
+//                 if (!mapView) {
+//                     return;
+//                 }
 
-                if (mode === 'dynamic') {
-                    mapView.zoom = 3;
-                    return;
-                }
+//                 if (mode === 'dynamic') {
+//                     mapView.zoom = 3;
+//                     return;
+//                 }
 
-                zoomToExtentOfSelectedScene();
-            }}
-        />
-    );
-};
+//                 zoomToExtentOfSelectedScene();
+//             }}
+//         />
+//     );
+// };
