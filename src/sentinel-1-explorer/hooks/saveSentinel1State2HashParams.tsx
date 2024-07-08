@@ -1,4 +1,5 @@
 import {
+    selectPolarizationFilter,
     selectSentinel1OrbitDirection,
     selectSentinel1State,
 } from '@shared/store/Sentinel1/selectors';
@@ -9,9 +10,11 @@ import { useSelector } from 'react-redux';
 export const useSaveSentinel1State2HashParams = () => {
     const orbitDirection = useSelector(selectSentinel1OrbitDirection);
 
+    const polarizationFilter = useSelector(selectPolarizationFilter);
+
     const sentinel1State = useSelector(selectSentinel1State);
 
     useEffect(() => {
         saveSentinel1StateToHashParams(sentinel1State);
-    }, [orbitDirection]);
+    }, [orbitDirection, polarizationFilter]);
 };
