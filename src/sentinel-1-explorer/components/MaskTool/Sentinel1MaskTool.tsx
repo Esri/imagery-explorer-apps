@@ -89,11 +89,11 @@ export const Sentinel1MaskTool = () => {
         return undefined;
     }, [selectedIndex]);
 
-    const steps = useMemo(() => {
-        return selectedIndex === 'ship' || selectedIndex === 'urban'
-            ? 0.01
-            : 0.05;
-    }, [selectedIndex]);
+    // const steps = useMemo(() => {
+    //     return selectedIndex === 'ship' || selectedIndex === 'urban'
+    //         ? 0.01
+    //         : 0.05;
+    // }, [selectedIndex]);
 
     // useEffect(() => {
     //     dispatch(updateMaskLayerSelectedRange (fullPixelValueRange));
@@ -145,7 +145,7 @@ export const Sentinel1MaskTool = () => {
                             values={maskOptions.selectedRange}
                             min={fullPixelValueRange[0]}
                             max={fullPixelValueRange[1]}
-                            steps={steps}
+                            steps={0.01}
                             countOfTicks={countOfTicks}
                             valuesOnChange={(values) => {
                                 dispatch(updateMaskLayerSelectedRange(values));
