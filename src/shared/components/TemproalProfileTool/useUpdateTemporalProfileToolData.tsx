@@ -93,7 +93,7 @@ export const useUpdateTemporalProfileToolData = (
         tool,
         selectedTrendToolOption,
         missionsToBeExcluded,
-        objectIdOfSelectedScene,
+        // objectIdOfSelectedScene,
     ]);
 
     // triggered when user selects a new acquisition year that will be used to draw the "month-to-month" trend data
@@ -115,6 +115,6 @@ export const useUpdateTemporalProfileToolData = (
         tool,
         selectedTrendToolOption,
         missionsToBeExcluded,
-        objectIdOfSelectedScene,
+        // objectIdOfSelectedScene,
     ]);
 };
