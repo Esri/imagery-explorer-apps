@@ -1,14 +1,3 @@
-import GroupLayer from '@arcgis/core/layers/GroupLayer';
-import MapView from '@arcgis/core/views/MapView';
-import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
-import React, {
-    FC,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
 /* Copyright 2024 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
@@ -23,6 +12,19 @@ import React, {
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import MapView from '@arcgis/core/views/MapView';
+import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
+import React, {
+    FC,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
+
 import {
     selectSelectedIndex4MaskTool,
     selectMaskLayerPixelValueRange,
