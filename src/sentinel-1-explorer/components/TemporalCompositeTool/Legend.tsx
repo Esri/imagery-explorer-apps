@@ -108,43 +108,61 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Red') {
             return [
-                `Rough in ${formattedDateRedBand};`,
-                `Smooth in ${formattedDateGreenBand} and ${formattedDateBlueBand}`,
+                `High backscatter:`,
+                `${formattedDateRedBand}`,
+                `Low backscatter:`,
+                `${formattedDateGreenBand}`,
+                `${formattedDateBlueBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Green') {
             return [
-                `Rough in ${formattedDateGreenBand};`,
-                `Smooth in ${formattedDateRedBand} and ${formattedDateBlueBand}`,
+                `High backscatter:`,
+                ` ${formattedDateGreenBand}`,
+                `Low backscatter:`,
+                `${formattedDateRedBand}`,
+                `${formattedDateBlueBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Blue') {
             return [
-                `Rough in ${formattedDateBlueBand};`,
-                `Smooth in ${formattedDateRedBand} and ${formattedDateGreenBand}`,
+                `High backscatter:`,
+                `${formattedDateBlueBand}`,
+                `Low backscatter:`,
+                `${formattedDateRedBand}`,
+                `${formattedDateGreenBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Yellow') {
             return [
-                `Rough in ${formattedDateRedBand} and ${formattedDateGreenBand};`,
-                `Smooth in ${formattedDateBlueBand}`,
+                `High backscatter:`,
+                `${formattedDateRedBand}`,
+                `${formattedDateGreenBand}`,
+                `Low backscatter:`,
+                `${formattedDateBlueBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Magenta') {
             return [
-                `Rough in ${formattedDateRedBand} and ${formattedDateBlueBand};`,
-                `Smooth in ${formattedDateGreenBand}`,
+                `High backscatter: `,
+                `${formattedDateRedBand}`,
+                `${formattedDateBlueBand}`,
+                `Low backscatter: `,
+                `${formattedDateGreenBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Cyan') {
             return [
-                `Rough in ${formattedDateGreenBand} and ${formattedDateBlueBand};`,
-                `Smooth in ${formattedDateRedBand}`,
+                `High backscatter:`,
+                ` ${formattedDateGreenBand}`,
+                `${formattedDateBlueBand}`,
+                `Low backscatter:`,
+                `${formattedDateRedBand}`,
             ];
         }
 
@@ -244,21 +262,29 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
             </div>
 
             <p className="text-xs opacity-50">
-                Generally, lighter colors are rougher surfaces and darker colors
-                are smoother
+                Lighter colors are higher overall backscatter and darker colors
+                are lower.
             </p>
 
             {tooltipData && tooltipContent && (
                 <div
-                    className="fixed bg-custom-background border border-custom-light-blue-50 max-w-[250px] px-2 text-left leading-none"
+                    className="fixed bg-custom-background border border-custom-light-blue-50 max-w-[250px] px-2 py-1 text-left leading-none"
                     style={{
                         left: tooltipData.posX + 10,
                         top: tooltipData.posY - 30,
                     }}
                 >
-                    <span className="text-xs">{tooltipContent[0]}</span>
+                    {/* <span className="text-xs">{tooltipContent[0]}</span>
                     <br />
-                    <span className="text-xs">{tooltipContent[1]}</span>
+                    <span className="text-xs">{tooltipContent[1]}</span> */}
+                    {tooltipContent.map((text, index) => {
+                        const key = `${text}-${index}`;
+                        return (
+                            <p key={key} className="text-xs">
+                                {text}
+                            </p>
+                        );
+                    })}
                 </div>
             )}
         </div>
