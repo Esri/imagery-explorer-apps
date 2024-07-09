@@ -108,9 +108,9 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Red') {
             return [
-                `High backscatter:`,
+                `Higher backscatter:`,
                 `${formattedDateRedBand}`,
-                `Low backscatter:`,
+                `Lower backscatter:`,
                 `${formattedDateGreenBand}`,
                 `${formattedDateBlueBand}`,
             ];
@@ -118,9 +118,9 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Green') {
             return [
-                `High backscatter:`,
+                `Higher backscatter:`,
                 ` ${formattedDateGreenBand}`,
-                `Low backscatter:`,
+                `Lower backscatter:`,
                 `${formattedDateRedBand}`,
                 `${formattedDateBlueBand}`,
             ];
@@ -128,9 +128,9 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Blue') {
             return [
-                `High backscatter:`,
+                `Higher backscatter:`,
                 `${formattedDateBlueBand}`,
-                `Low backscatter:`,
+                `Lower backscatter:`,
                 `${formattedDateRedBand}`,
                 `${formattedDateGreenBand}`,
             ];
@@ -138,30 +138,30 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Yellow') {
             return [
-                `High backscatter:`,
+                `Higher backscatter:`,
                 `${formattedDateRedBand}`,
                 `${formattedDateGreenBand}`,
-                `Low backscatter:`,
+                `Lower backscatter:`,
                 `${formattedDateBlueBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Magenta') {
             return [
-                `High backscatter: `,
+                `Higher backscatter: `,
                 `${formattedDateRedBand}`,
                 `${formattedDateBlueBand}`,
-                `Low backscatter: `,
+                `Lower backscatter: `,
                 `${formattedDateGreenBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Cyan') {
             return [
-                `High backscatter:`,
+                `Higher backscatter:`,
                 ` ${formattedDateGreenBand}`,
                 `${formattedDateBlueBand}`,
-                `Low backscatter:`,
+                `Lower backscatter:`,
                 `${formattedDateRedBand}`,
             ];
         }
