@@ -50,6 +50,7 @@ import { useSaveSentinel1State2HashParams } from '../../hooks/saveSentinel1State
 import { Sentinel1InterestingPlaces } from '../InterestingPlaces';
 import { Sentinel1DynamicModeInfo } from '../Sentinel1DynamicModeInfo/Sentinel1DynamicModeInfo';
 import { Sentinel1DocPanel } from '../DocPanel';
+import { useSyncRenderers } from '@shared/hooks/useSyncRenderers';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -75,6 +76,11 @@ export const Layout = () => {
      * save sentinel1-explorer related state to URL hash params
      */
     useSaveSentinel1State2HashParams();
+
+    /**
+     * This custom hook syncs the renderer of the secondary imagery scene with the main scene
+     */
+    useSyncRenderers();
 
     if (IS_MOBILE_DEVICE) {
         return (
