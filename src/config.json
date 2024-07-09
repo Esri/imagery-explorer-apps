@@ -19,7 +19,7 @@
         "sentinel1-explorer": {
             "title": "Esri | Sentinel-1 Explorer",
             "webmapId": "260548c9e7934ef5b20a5f48467a3c1d",
-            "description": "",
+            "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-1 provides",
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel1explorer",
             "entrypoint": "/src/sentinel-1-explorer/index.tsx"
