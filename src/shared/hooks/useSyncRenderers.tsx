@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectIsSecondarySceneActive,
     selectIsSwipeModeOn,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
@@ -52,16 +53,23 @@ export const useSyncRenderers = () => {
         selectQueryParams4SecondaryScene
     );
 
+    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
+
     /**
      * Determines whether the renderer should be synchronized based on the current mode
      * and visibility of the swipe widget.
      */
     const shouldSync = useMemo(() => {
+        // only sync it when secondary scene is active
+        if (!isSecondarySceneActive) {
+            return false;
+        }
+
         return (
             isSwipeWidgetVisible ||
             (mode === 'analysis' && analyzeTool === 'change')
         );
-    }, [isSwipeWidgetVisible, mode, analyzeTool]);
+    }, [isSwipeWidgetVisible, mode, analyzeTool, isSecondarySceneActive]);
 
     useEffect(() => {
         if (!shouldSync) {
