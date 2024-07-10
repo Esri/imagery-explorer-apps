@@ -102,6 +102,7 @@ npm run build:landcover
 
 ### Resources
 - [Global Land Cover Revealed](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/global-land-cover-revealed/)
+- [Sentinel-2 10m Land Use/Land Cover Time Series](https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d)
 
 ## Sentinel-1 Explorer
 
@@ -145,6 +146,10 @@ To build the app, you can run the command below, this will place all files neede
 ```sh
 npm run build:sentinel1
 ```
+
+### Resources
+- [Sentinel-1 Explorer: Observing Earth in a different light](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/sentinel-1-explorer-observing-earth-in-a-different-light/)
+- [ Sentinel-1 RTC imagery from Living Atlas](https://www.arcgis.com/home/item.html?id=ca91605a3261409aa984f01f7d065fbc)
 
 ### Sentinel-1 RTC Imagery Service Licensing
 - Sentinel-1 RTC Source Imagery – The source imagery is hosted on Microsoft Planetary Computer under an open [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).

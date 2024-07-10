@@ -27,6 +27,7 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 import { getTimeExtentOfSentinel1Service } from '@shared/services/sentinel-1/getTimeExtent';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/config';
+import { Sentinel1DocPanel } from './components/DocPanel';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -47,6 +48,7 @@ import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/con
                         <Map />
                         <Layout />
                         <AboutSentinel1Explorer />
+                        <Sentinel1DocPanel />
                     </ErrorBoundary>
                 </AppContextProvider>
             </ReduxProvider>
