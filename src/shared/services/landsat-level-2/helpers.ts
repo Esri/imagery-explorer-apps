@@ -243,14 +243,14 @@ export const parseLandsatInfo = (productId: string): LandsatProductInfo => {
     };
 };
 
-export const getMosaicRuleByObjectId = (objectId: number) => {
-    return {
-        ascending: false,
-        lockRasterIds: [objectId],
-        mosaicMethod: 'esriMosaicLockRaster',
-        where: `objectid in (${objectId})`,
-    };
-};
+// export const getMosaicRuleByObjectId = (objectId: number) => {
+//     return {
+//         ascending: false,
+//         lockRasterIds: [objectId],
+//         mosaicMethod: 'esriMosaicLockRaster',
+//         where: `objectid in (${objectId})`,
+//     };
+// };
 
 export const getBandIndexesBySpectralIndex = (
     spectralIndex: SpectralIndex

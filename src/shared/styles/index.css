@@ -33,6 +33,10 @@
     .analyze-tool-and-scene-info-container {
         @apply w-analysis-tool-container-width mx-10 3xl:mx-16;
     }
+
+    .analyze-tool-without-scene-info-container {
+        @apply w-[520px] mx-10 3xl:mx-16;
+    }
 }
 
 #root .esri-view-root {

@@ -20,7 +20,7 @@ import {
     acquisitionMonth4TrendToolChanged,
     // samplingTemporalResolutionChanged,
     // trendToolDataUpdated,
-    spectralIndex4TrendToolChanged,
+    selectedIndex4TrendToolChanged,
     // queryLocation4TrendToolChanged,
     // trendToolOptionChanged,
     acquisitionYear4TrendToolChanged,
@@ -31,13 +31,13 @@ import {
     // selectSamplingTemporalResolution,
     // selectTrendToolData,
     selectQueryLocation4TrendTool,
-    selectSpectralIndex4TrendTool,
+    selectSelectedIndex4TrendTool,
     // selectAcquisitionYear4TrendTool,
     selectTrendToolOption,
     // selectIsLoadingData4TrendingTool,
 } from '@shared/store/TrendTool/selectors';
-import { updateTrendToolData } from '@shared/store/TrendTool/thunks';
-import React, { useEffect, useState } from 'react';
+import { updateTemporalProfileToolData } from '@shared/store/TrendTool/thunks';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 // import { TemporalProfileChart } from './TrendChart';
@@ -53,26 +53,31 @@ import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
 } from '@shared/store/ImageryScene/selectors';
-import { SpectralIndex } from '@typing/imagery-service';
+import { SpectralIndex, TemporalProfileData } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
-import { TrendChart } from '@landsat-explorer/components/TrendTool';
+import { TrendChart } from '@landsat-explorer/components/TemporalProfileTool';
+import { useUpdateTemporalProfileToolData } from '@shared/components/TemproalProfileTool/useUpdateTemporalProfileToolData';
+import { Point } from '@arcgis/core/geometry';
+import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
+import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { useSyncSelectedYearAndMonth4TemporalProfileTool } from '@shared/components/TemproalProfileTool/useSyncSelectedYearAndMonth';
 
 export const TrendToolContainer = () => {
     const dispatch = useDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    // const queryLocation = useSelector(selectQueryLocation4TrendTool);
 
-    const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
+    // const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
 
     // const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
 
-    const selectedTrendToolOption = useSelector(selectTrendToolOption);
+    // const selectedTrendToolOption = useSelector(selectTrendToolOption);
 
     // const temporalProfileData = useSelector(selectTrendToolData);
 
-    const spectralIndex = useSelector(selectSpectralIndex4TrendTool);
+    const spectralIndex = useSelector(selectSelectedIndex4TrendTool);
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
@@ -82,48 +87,94 @@ export const TrendToolContainer = () => {
 
     // const trendToolOption = useSelector(selectTrendToolOption);
 
-    useEffect(() => {
-        if (!queryParams4MainScene?.acquisitionDate) {
-            return;
-        }
+    const intersectWithImageryScene = useCallback(
+        async (
+            queryLocation: Point,
+            objectId: number,
+            abortController: AbortController
+        ) => {
+            const res = await intersectWithLandsatScene(
+                queryLocation,
+                objectId,
+                abortController
+            );
 
-        const month = getMonthFromFormattedDateString(
-            queryParams4MainScene?.acquisitionDate
-        );
+            return res;
+        },
+        []
+    );
 
-        const year = getYearFromFormattedDateString(
-            queryParams4MainScene?.acquisitionDate
-        );
+    const fetchTemporalProfileData = useCallback(
+        async (
+            queryLocation: Point,
+            acquisitionMonth: number,
+            acquisitionYear: number,
+            abortController: AbortController
+        ) => {
+            // console.log('calling fetchTemporalProfileData for landsat')
 
-        dispatch(acquisitionMonth4TrendToolChanged(month));
+            const data: TemporalProfileData[] = await getDataForTrendTool({
+                queryLocation,
+                acquisitionMonth,
+                acquisitionYear,
+                abortController,
+                missionsToBeExcluded,
+            });
 
-        dispatch(acquisitionYear4TrendToolChanged(year));
-    }, [queryParams4MainScene?.acquisitionDate]);
+            return data;
+        },
+        [missionsToBeExcluded]
+    );
 
-    // triggered when user selects a new acquisition month that will be used to draw the "year-to-year" trend data
-    useEffect(() => {
-        (async () => {
-            if (tool !== 'trend') {
-                return;
-            }
+    // useEffect(() => {
+    //     if (!queryParams4MainScene?.acquisitionDate) {
+    //         return;
+    //     }
 
-            if (selectedTrendToolOption !== 'year-to-year') {
-                return;
-            }
+    //     const month = getMonthFromFormattedDateString(
+    //         queryParams4MainScene?.acquisitionDate
+    //     );
 
-            try {
-                await dispatch(updateTrendToolData());
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-    }, [
-        queryLocation,
-        tool,
-        acquisitionMonth,
-        selectedTrendToolOption,
-        missionsToBeExcluded,
-    ]);
+    //     const year = getYearFromFormattedDateString(
+    //         queryParams4MainScene?.acquisitionDate
+    //     );
+
+    //     dispatch(acquisitionMonth4TrendToolChanged(month));
+
+    //     dispatch(acquisitionYear4TrendToolChanged(year));
+    // }, [queryParams4MainScene?.acquisitionDate]);
+
+    // // triggered when user selects a new acquisition month that will be used to draw the "year-to-year" trend data
+    // useEffect(() => {
+    //     (async () => {
+    //         if (tool !== 'trend') {
+    //             return;
+    //         }
+
+    //         if (selectedTrendToolOption !== 'year-to-year') {
+    //             return;
+    //         }
+
+    //         // try {
+    //         //     await dispatch(updateTemporalProfileToolData());
+    //         // } catch (err) {
+    //         //     console.log(err);
+    //         // }
+    //     })();
+    // }, [
+    //     queryLocation,
+    //     tool,
+    //     acquisitionMonth,
+    //     selectedTrendToolOption,
+    //     missionsToBeExcluded,
+    // ]);
+
+    useSyncSelectedYearAndMonth4TemporalProfileTool();
+
+    useUpdateTemporalProfileToolData(
+        fetchTemporalProfileData,
+        intersectWithImageryScene
+    );
 
     if (tool !== 'trend') {
         return null;
@@ -146,7 +197,7 @@ export const TrendToolContainer = () => {
                 selectedValue={spectralIndex}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
-                        spectralIndex4TrendToolChanged(val as SpectralIndex)
+                        selectedIndex4TrendToolChanged(val as SpectralIndex)
                     );
                 }}
                 tooltipText={`The least-cloudy scene from the selected month will be sampled across all years of the imagery archive.`}

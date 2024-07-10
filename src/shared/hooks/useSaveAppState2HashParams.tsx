@@ -42,12 +42,15 @@ import {
     saveAnimationSpeedToHashParams,
     saveSpectralProfileToolStateToHashParams,
     saveChangeCompareToolStateToHashParams,
+    saveTemporalCompositeToolStateToHashParams,
 } from '@shared/utils/url-hash-params';
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSpectralProfileToolState } from '@shared/store/SpectralProfileTool/selectors';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectChangeCompareToolState } from '@shared/store/ChangeCompareTool/selectors';
+import { saveListOfQueryParamsToHashParams } from '@shared/utils/url-hash-params/queryParams4ImageryScene';
+import { selectTemporalCompositeToolState } from '@shared/store/TemporalCompositeTool/selectors';
 
 export const useSaveAppState2HashParams = () => {
     const mode = useSelector(selectAppMode);
@@ -66,9 +69,7 @@ export const useSaveAppState2HashParams = () => {
 
     const spectralToolState = useSelector(selectSpectralProfileToolState);
 
-    const queryParams4ScenesInAnimationMode = useSelector(
-        selectListOfQueryParams
-    );
+    const listOfQueryParams = useSelector(selectListOfQueryParams);
 
     const animationStatus = useSelector(selectAnimationStatus);
 
@@ -81,6 +82,10 @@ export const useSaveAppState2HashParams = () => {
     const showBasemap = useSelector(selectShowBasemap);
 
     const changeCompareToolState = useSelector(selectChangeCompareToolState);
+
+    const temporalCompositeToolState = useSelector(
+        selectTemporalCompositeToolState
+    );
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -100,7 +105,7 @@ export const useSaveAppState2HashParams = () => {
         }
 
         saveQueryParams4SecondarySceneToHashParams(queryParams);
-    }, [mode, queryParams4SecondaryScene]);
+    }, [mode, analysisTool, queryParams4SecondaryScene]);
 
     useEffect(() => {
         saveMaskToolToHashParams(
@@ -140,9 +145,25 @@ export const useSaveAppState2HashParams = () => {
 
     useEffect(() => {
         saveQueryParams4ScenesInAnimationToHashParams(
-            mode === 'animate' ? queryParams4ScenesInAnimationMode : null
+            mode === 'animate' ? listOfQueryParams : null
         );
-    }, [mode, queryParams4ScenesInAnimationMode]);
+    }, [mode, listOfQueryParams]);
+
+    useEffect(() => {
+        saveListOfQueryParamsToHashParams(
+            mode === 'analysis' && analysisTool === 'temporal composite'
+                ? listOfQueryParams
+                : null
+        );
+    }, [mode, analysisTool, listOfQueryParams]);
+
+    useEffect(() => {
+        saveTemporalCompositeToolStateToHashParams(
+            mode === 'analysis' && analysisTool === 'temporal composite'
+                ? temporalCompositeToolState
+                : null
+        );
+    }, [mode, analysisTool, temporalCompositeToolState]);
 
     useEffect(() => {
         saveAnimationSpeedToHashParams(

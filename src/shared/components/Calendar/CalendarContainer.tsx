@@ -34,15 +34,18 @@ import {
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
-import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { CloudFilter } from '@shared/components/CloudFilter';
-import {
-    // acquisitionYearChanged,
-    cloudCoverChanged,
-} from '@shared/store/ImageryScene/reducer';
+// import {
+//     // selectIsAnimationPlaying,
+//     selectShouldHideCloudCoverInfo,
+// } from '@shared/store/UI/selectors';
+// import { CloudFilter } from '@shared/components/CloudFilter';
+// import {
+//     // acquisitionYearChanged,
+//     cloudCoverChanged,
+// } from '@shared/store/ImageryScene/reducer';
 // import { LandsatMissionFilter } from '../LandsatMissionFilter';
-import { APP_NAME } from '@shared/config';
-import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
+// import { APP_NAME } from '@shared/config';
+// import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
@@ -52,6 +55,7 @@ import {
 } from '@shared/utils/date-time/getTimeRange';
 import { useAcquisitionYear } from './useAcquisitionYear';
 import { batch } from 'react-redux';
+import { useFindSelectedSceneByDate } from '@shared/hooks/useFindSelectedSceneByDate';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
 type Props = {
@@ -63,13 +67,13 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    // const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
     const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
-    const cloudCoverThreshold = useSelector(selectCloudCover);
+    // const cloudCoverThreshold = useSelector(selectCloudCover);
 
     const acquisitionYear = useAcquisitionYear();
 
@@ -116,9 +120,9 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
     //  */
     // useUpdateAcquisitionYear();
 
-    const shouldShowCloudFilter = useMemo(() => {
-        return APP_NAME === 'landsat' || APP_NAME === 'landsat-surface-temp';
-    }, []);
+    // const shouldShowCloudFilter = useMemo(() => {
+    //     return APP_NAME === 'landsat' || APP_NAME === 'landsat-surface-temp';
+    // }, []);
 
     return (
         <div
@@ -160,19 +164,6 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
 
                 {/* {APP_NAME === 'landsat' && <LandsatMissionFilter />} */}
                 {children}
-
-                {shouldShowCloudFilter && (
-                    <CloudFilter
-                        cloudCoverage={cloudCoverThreshold}
-                        disabled={
-                            cloudCoverThreshold === undefined ||
-                            isAnimationPlaying
-                        }
-                        onChange={(newValue) => {
-                            dispatch(cloudCoverChanged(newValue));
-                        }}
-                    />
-                )}
             </div>
 
             <Calendar
@@ -181,6 +172,7 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
                 dateRange={acquisitionDateRange || getDateRangeForPast12Month()}
                 selectedAcquisitionDate={selectedAcquisitionDate}
                 availableScenes={formattedScenes}
+                // shouldHideCloudCoverInfo={shouldHideCloudCoverInfo}
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
 

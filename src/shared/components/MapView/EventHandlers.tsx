@@ -26,7 +26,13 @@ type Props = {
      * @param zoom
      * @returns
      */
-    onStationary?: (center: Point, zoom: number, extent: Extent) => void;
+    onStationary?: (
+        center: Point,
+        zoom: number,
+        extent: Extent,
+        resolution: number,
+        scale: number
+    ) => void;
     /**
      * fires when user clicks on the map
      * @param point
@@ -56,7 +62,9 @@ const EventHandlers: FC<Props> = ({
                         onStationary(
                             mapView.center,
                             mapView.zoom,
-                            mapView.extent
+                            mapView.extent,
+                            mapView.resolution,
+                            mapView.scale
                         );
                     }
                 }

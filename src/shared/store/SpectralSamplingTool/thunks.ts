@@ -29,7 +29,7 @@ import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
 } from './selectors';
-import { getPixelValues } from '@shared/services/landsat-level-2/identify';
+import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
 import { queryParamsListChanged } from '../ImageryScene/reducer';
 
 let abortController: AbortController = null;
@@ -139,10 +139,11 @@ export const updateLocationOfSpectralSamplingPoint =
         abortController = new AbortController();
 
         try {
-            const bandValues = await getPixelValues({
+            const bandValues = await getLandsatPixelValues({
                 point,
-                objectId:
+                objectIds: [
                     queryParamsOfSelectedSpectralSamplingPoint.objectIdOfSelectedScene,
+                ],
                 abortController,
             });
 

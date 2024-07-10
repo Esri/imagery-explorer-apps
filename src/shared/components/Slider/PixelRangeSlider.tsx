@@ -19,6 +19,7 @@ import SliderWidget from '@arcgis/core/widgets/Slider';
 // import './PixelRangeSlider.css';
 import './Slider.css';
 import classNames from 'classnames';
+import { nanoid } from 'nanoid';
 
 type Props = {
     /**
@@ -57,6 +58,32 @@ type Props = {
     valuesOnChange: (vals: number[]) => void;
 };
 
+const getTickLabels = (min: number, max: number) => {
+    const fullRange = Math.abs(max - min);
+
+    const oneFourthOfFullRange = fullRange / 4;
+
+    const tickLabels: number[] = [
+        min,
+        min + oneFourthOfFullRange,
+        min + oneFourthOfFullRange * 2,
+        min + oneFourthOfFullRange * 3,
+        max,
+    ];
+
+    return tickLabels;
+};
+
+const getCountOfTicks = (min: number, max: number) => {
+    const fullRange = Math.abs(max - min);
+
+    const countOfTicks = fullRange / 0.25 + 1;
+
+    // console.log(fullRange, countOfTicks);
+
+    return countOfTicks;
+};
+
 /**
  * A slider component to select fixel range of the mask layer for selected Imagery scene
  * @param param0
@@ -67,8 +94,8 @@ export const PixelRangeSlider: FC<Props> = ({
     min = -1,
     max = 1,
     steps = 0.05,
-    countOfTicks = 0,
-    tickLabels = [],
+    countOfTicks,
+    tickLabels,
     showSliderTooltip,
     valuesOnChange,
 }) => {
@@ -76,8 +103,28 @@ export const PixelRangeSlider: FC<Props> = ({
 
     const sliderRef = useRef<SliderWidget>();
 
+    const getTickConfigs = (min: number, max: number) => {
+        return [
+            {
+                mode: 'count',
+                values:
+                    countOfTicks !== undefined
+                        ? countOfTicks
+                        : getCountOfTicks(min, max),
+            },
+            {
+                mode: 'position',
+                values:
+                    tickLabels && tickLabels.length
+                        ? tickLabels
+                        : getTickLabels(min, max), //[-1, -0.5, 0, 0.5, 1],
+                labelsVisible: true,
+            },
+        ] as __esri.TickConfig[];
+    };
+
     const init = async () => {
-        sliderRef.current = new SliderWidget({
+        const widget = new SliderWidget({
             container: containerRef.current,
             min,
             max,
@@ -88,19 +135,11 @@ export const PixelRangeSlider: FC<Props> = ({
                 labels: false,
                 rangeLabels: false,
             },
-            tickConfigs: [
-                {
-                    mode: 'count',
-                    values: countOfTicks,
-                },
-                {
-                    mode: 'position',
-                    values: tickLabels, //[-1, -0.5, 0, 0.5, 1],
-                    labelsVisible: true,
-                },
-            ],
+            tickConfigs: getTickConfigs(min, max),
             // layout: 'vertical',
         });
+
+        sliderRef.current = widget;
 
         sliderRef.current.on('thumb-drag', (evt) => {
             // const { value, index } = evt;
@@ -181,6 +220,20 @@ export const PixelRangeSlider: FC<Props> = ({
 
         addTooltipTextAttribute();
     }, [values]);
+
+    useEffect(() => {
+        if (!sliderRef.current) {
+            return;
+        }
+
+        const tickConfigs = getTickConfigs(min, max);
+
+        sliderRef.current.min = min;
+        sliderRef.current.max = max;
+        sliderRef.current.values = values;
+        sliderRef.current.steps = steps;
+        sliderRef.current.tickConfigs = tickConfigs;
+    }, [min, max, values, steps, countOfTicks, tickLabels]);
 
     return (
         <div

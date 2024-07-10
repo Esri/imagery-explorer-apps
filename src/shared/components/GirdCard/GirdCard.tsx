@@ -53,7 +53,12 @@ export const GirdCard: FC<Props> = ({
 }) => {
     return (
         <div
-            className={classNames('relative w-24 h-12 bg-cover cursor-pointer')}
+            className={classNames(
+                'relative w-24 h-12 bg-cover cursor-pointer',
+                {
+                    'drop-shadow-custom-light-blue': selected,
+                }
+            )}
             style={{
                 background: `url(${thumbnail})`,
             }}
@@ -65,7 +70,7 @@ export const GirdCard: FC<Props> = ({
                 className={classNames('absolute top-0 left-0 w-full h-full', {
                     'border-2': selected,
                     'border-custom-light-blue': selected,
-                    'drop-shadow-custom-light-blue': selected,
+                    // 'drop-shadow-custom-light-blue': selected,
                 })}
                 style={{
                     background: `linear-gradient(0deg, rgba(2,28,36,1) 0%, rgba(2,28,36,0.6) 30%, rgba(2,28,36,0) 50%, rgba(2,28,36,0) 100%)`,

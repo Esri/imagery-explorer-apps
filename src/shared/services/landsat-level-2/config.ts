@@ -18,6 +18,14 @@ import { TIER, getServiceConfig } from '@shared/config';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
 const serviceConfig = getServiceConfig('landsat-level-2');
+// console.log('landsat-level-2 service config', serviceConfig);
+//
+// const serviceUrls = {
+//     development:
+//         'https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer',
+//     production:
+//         'https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer',
+// };
 
 /**
  * Landsat 8 and 9 multispectral and multitemporal atmospherically corrected imagery with on-the-fly renderings and indices for visualization and analysis.
@@ -40,13 +48,13 @@ const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL =
  * Service URL to be used in PROD enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_PROD =
-    serviceConfig?.production || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
+    serviceConfig.production || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
 
 /**
  * Service URL to be used in DEV enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
-    serviceConfig?.development || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
+    serviceConfig.development || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
@@ -330,3 +338,7 @@ export const LANDSAT_BAND_NAMES = [
     'Surface Temperature (Kelvin)',
     'Surface Temperature QA',
 ];
+
+export const LANDSAT_LEVEL_2_SERVICE_SORT_FIELD = 'best';
+
+export const LANDSAT_LEVEL_2_SERVICE_SORT_VALUE = '0';

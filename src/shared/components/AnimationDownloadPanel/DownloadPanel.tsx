@@ -35,6 +35,7 @@ import {
 } from '@vannizhang/images-to-video-converter-client';
 import { CopyLinkButton } from './CopyLinkButton';
 import { CopiedLinkMessage } from './CopiedLinkMessage';
+import { PlayPauseButton } from './PlayPauseButton';
 
 // /**
 //  * This object contains the data for each animation frame.
@@ -171,8 +172,12 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 {/* Download Button that opens the Download Animation Panel */}
                 {shouldShowDownloadPanel === false && (
                     <>
-                        <OpenDownloadPanelButton />
-                        <CopyLinkButton />
+                        <div className=" absolute top-1 right-16 flex items-center">
+                            <CopyLinkButton />
+                            <OpenDownloadPanelButton />
+                            <PlayPauseButton />
+                        </div>
+
                         <CopiedLinkMessage />
                     </>
                 )}

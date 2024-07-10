@@ -41,6 +41,11 @@ export const selectMapResolution = createSelector(
     (resolution) => resolution
 );
 
+export const selectMapScale = createSelector(
+    (state: RootState) => state.Map.scale,
+    (scale) => scale
+);
+
 export const selectShowMapLabel = createSelector(
     (state: RootState) => state.Map.showMapLabel,
     (showMapLabel) => showMapLabel
@@ -64,4 +69,19 @@ export const selectSwipeWidgetHandlerPosition = createSelector(
 export const selectMapPopupAnchorLocation = createSelector(
     (state: RootState) => state.Map.popupAnchorLocation,
     (popupAnchorLocation) => popupAnchorLocation
+);
+
+export const selectIsMapUpdating = createSelector(
+    (state: RootState) => state.Map.isUpadting,
+    (isUpadting) => isUpadting
+);
+
+export const selectTotalVisibleArea = createSelector(
+    (state: RootState) => state.Map.totalVisibleAreaInSqKm,
+    (totalVisibleAreaInSqKm) => totalVisibleAreaInSqKm
+);
+
+export const selectCountOfVisiblePixels = createSelector(
+    (state: RootState) => state.Map.countOfVisiblePixels,
+    (countOfVisiblePixels) => countOfVisiblePixels
 );

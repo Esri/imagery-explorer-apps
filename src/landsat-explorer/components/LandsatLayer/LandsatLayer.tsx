@@ -14,17 +14,16 @@
  */
 
 import MapView from '@arcgis/core/views/MapView';
-import React, { FC, useEffect } from 'react';
-import useLandsatLayer from './useLandsatLayer';
-import { useSelector } from 'react-redux';
-import {
-    selectQueryParams4SceneInSelectedMode,
-    selectAppMode,
-    selectActiveAnalysisTool,
-} from '@shared/store/ImageryScene/selectors';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import React, { FC, useEffect, useMemo } from 'react';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
-import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+// import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+import ImageryLayerByObjectID from '@shared/components/ImageryLayer/ImageryLayerByObjectID';
+import {
+    LANDSAT_LEVEL_2_SERVICE_SORT_FIELD,
+    LANDSAT_LEVEL_2_SERVICE_SORT_VALUE,
+    LANDSAT_LEVEL_2_SERVICE_URL,
+} from '@shared/services/landsat-level-2/config';
+import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
 
 type Props = {
     mapView?: MapView;
@@ -32,70 +31,88 @@ type Props = {
 };
 
 const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
-    const mode = useSelector(selectAppMode);
+    // const mode = useSelector(selectAppMode);
 
-    const { rasterFunctionName, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    // const { rasterFunctionName, objectIdOfSelectedScene } =
+    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    // const animationStatus = useSelector(selectAnimationStatus);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    // const analysisTool = useSelector(selectActiveAnalysisTool);
 
-    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+    // const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
 
-    const getVisibility = () => {
-        if (mode === 'dynamic') {
-            return true;
-        }
+    // const getVisibility = () => {
+    //     if (mode === 'dynamic') {
+    //         return true;
+    //     }
 
-        if (mode === 'find a scene' || mode === 'spectral sampling') {
-            return objectIdOfSelectedScene !== null;
-        }
+    //     if (mode === 'find a scene' || mode === 'spectral sampling') {
+    //         return objectIdOfSelectedScene !== null;
+    //     }
 
-        if (mode === 'analysis') {
-            // no need to show landsat layer when user is viewing change layer in the change compare tool
-            if (analysisTool === 'change' && changeCompareLayerIsOn) {
-                return false;
-            }
+    //     if (mode === 'analysis') {
+    //         // no need to show landsat layer when user is viewing change layer in the change compare tool
+    //         if (analysisTool === 'change' && changeCompareLayerIsOn) {
+    //             return false;
+    //         }
 
-            return objectIdOfSelectedScene !== null;
-        }
+    //         return objectIdOfSelectedScene !== null;
+    //     }
 
-        // when in animate mode, only need to show landsat layer if animation is not playing
-        if (
-            mode === 'animate' &&
-            objectIdOfSelectedScene &&
-            animationStatus === null
-        ) {
-            return true;
-        }
+    //     // when in animate mode, only need to show landsat layer if animation is not playing
+    //     if (
+    //         mode === 'animate' &&
+    //         objectIdOfSelectedScene &&
+    //         animationStatus === null
+    //     ) {
+    //         return true;
+    //     }
 
-        return false;
-    };
+    //     return false;
+    // };
 
-    const getObjectId = () => {
-        // should ignore the object id of selected scene if in dynamic mode,
-        if (mode === 'dynamic') {
-            return null;
-        }
+    // const getObjectId = () => {
+    //     // should ignore the object id of selected scene if in dynamic mode,
+    //     if (mode === 'dynamic') {
+    //         return null;
+    //     }
 
-        return objectIdOfSelectedScene;
-    };
+    //     return objectIdOfSelectedScene;
+    // };
 
-    const layer = useLandsatLayer({
-        visible: getVisibility(),
-        rasterFunction: rasterFunctionName,
-        objectId: getObjectId(),
-    });
+    // const layer = useLandsatLayer({
+    //     visible: getVisibility(),
+    //     rasterFunction: rasterFunctionName,
+    //     objectId: getObjectId(),
+    // });
 
-    useEffect(() => {
-        if (groupLayer && layer) {
-            groupLayer.add(layer);
-            groupLayer.reorder(layer, 0);
-        }
-    }, [groupLayer, layer]);
+    // useEffect(() => {
+    //     if (groupLayer && layer) {
+    //         groupLayer.add(layer);
+    //         groupLayer.reorder(layer, 0);
+    //     }
+    // }, [groupLayer, layer]);
 
-    return null;
+    // return null;
+
+    const defaultMosaicRule = useMemo(() => {
+        return new MosaicRule({
+            ascending: true,
+            method: 'attribute',
+            operation: 'first',
+            sortField: LANDSAT_LEVEL_2_SERVICE_SORT_FIELD,
+            sortValue: LANDSAT_LEVEL_2_SERVICE_SORT_VALUE,
+        });
+    }, []);
+
+    return (
+        <ImageryLayerByObjectID
+            groupLayer={groupLayer}
+            serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            defaultMosaicRule={defaultMosaicRule}
+        />
+    );
 };
 
 export default LandsatLayer;

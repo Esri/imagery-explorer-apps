@@ -16,7 +16,7 @@
 import React, { FC } from 'react';
 import MapViewContainer from '@shared/components/MapView/MapViewContainer';
 import { LandsatLayer } from '../LandsatLayer';
-import { SwipeWidget } from '../SwipeWidget';
+// import { SwipeWidget } from '../SwipeWidget';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { MaskLayer } from '../MaskLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
@@ -26,7 +26,6 @@ import { Popup } from '../PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 import { ChangeLayer } from '../ChangeLayer';
-import { ZoomToExtent } from '../ZoomToExtent';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
@@ -36,6 +35,8 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/co
 import { useDispatch } from 'react-redux';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
+import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
+import { ZoomToExtent } from '@shared/components/ZoomToExtent';
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -59,7 +60,10 @@ const Map = () => {
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
             </GroupLayer>
-            <SwipeWidget />
+            {/* <SwipeWidget /> */}
+            <SwipeWidget4ImageryLayers
+                serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            />
             <AnimationLayer
                 imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
                 authoringAppName="landsat"
@@ -71,7 +75,7 @@ const Map = () => {
                     nativeScale={113386}
                     tooltip={"Zoom to Landsat's native resolution"}
                 />
-                <ZoomToExtent />
+                <ZoomToExtent serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL} />
                 <ScreenshotWidget />
                 <CopyLinkWidget />
             </MapActionButtonsGroup>

@@ -27,12 +27,17 @@ import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 
 type Props = {
     /**
      * tooltip text that will be displayed when user hovers the info icon next to the header
      */
     headerTooltip: string;
+    /**
+     * The width of header tooltip container in px. The default width is 240px and this value can be used to override that value
+     */
+    widthOfTooltipContainer?: number;
     /**
      * list of raster functions of the imagery service
      */
@@ -41,6 +46,7 @@ type Props = {
 
 export const RasterFunctionSelectorContainer: FC<Props> = ({
     headerTooltip,
+    widthOfTooltipContainer,
     data,
 }) => {
     const dispatch = useDispatch();
@@ -57,6 +63,14 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
 
     const { rasterFunctionName, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
+
+    const shouldHide = useMemo(() => {
+        if (mode === 'analysis' && analysisTool === 'temporal composite') {
+            return true;
+        }
+
+        return false;
+    }, [mode, analysisTool]);
 
     const shouldDisable = () => {
         if (mode === 'dynamic') {
@@ -82,7 +96,7 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
         return false;
     };
 
-    if (!data || !data.length) {
+    if (!data || !data.length || shouldHide) {
         return null;
     }
 
@@ -96,6 +110,7 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
             rasterFunctionInfo={data}
             nameOfSelectedRasterFunction={rasterFunctionName}
             disabled={shouldDisable()}
+            widthOfTooltipContainer={widthOfTooltipContainer}
             onChange={(rasterFunctionName) => {
                 dispatch(updateRasterFunctionName(rasterFunctionName));
             }}

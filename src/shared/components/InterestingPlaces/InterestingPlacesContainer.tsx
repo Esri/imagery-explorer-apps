@@ -32,9 +32,16 @@ type Props = {
      * list of interesting place data
      */
     data: InterestingPlaceData[];
+    /**
+     * if true, use 3 columns grid instead of 4 columns
+     */
+    isThreeColumnGrid?: boolean;
 };
 
-export const InterestingPlacesContainer: FC<Props> = ({ data }) => {
+export const InterestingPlacesContainer: FC<Props> = ({
+    data,
+    isThreeColumnGrid,
+}) => {
     const dispatch = useDispatch();
 
     const nameOfSelectedInterestingPlace = useSelector(
@@ -74,6 +81,7 @@ export const InterestingPlacesContainer: FC<Props> = ({ data }) => {
         <InterestingPlaces
             data={data}
             nameOfSelectedPlace={nameOfSelectedInterestingPlace}
+            isThreeColumnGrid={isThreeColumnGrid}
             onChange={(name) => {
                 dispatch(nameOfSelectedInterestingPlaceChanged(name));
             }}

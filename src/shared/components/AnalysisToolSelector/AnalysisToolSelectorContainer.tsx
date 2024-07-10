@@ -19,11 +19,31 @@ import {
     selectActiveAnalysisTool,
     selectAppMode,
 } from '@shared/store/ImageryScene/selectors';
-import React from 'react';
+import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { AnalysisTool } from '@shared/store/ImageryScene/reducer';
 
-export const AnalysisToolSelectorContainer = () => {
+export type AnalyzeToolSelectorData = {
+    /**
+     * analzye tool
+     */
+    tool: AnalysisTool;
+    /**
+     * title of the tool
+     */
+    title: string;
+    /**
+     * sub title to be displayed in another line
+     */
+    subtitle: string;
+};
+
+type Props = {
+    data: AnalyzeToolSelectorData[];
+};
+
+export const AnalysisToolSelectorContainer: FC<Props> = ({ data }) => {
     const dispatch = useDispatch();
 
     const mode = useSelector(selectAppMode);
@@ -36,6 +56,7 @@ export const AnalysisToolSelectorContainer = () => {
 
     return (
         <AnalysisToolSelector
+            data={data}
             selectedTool={analysisTool}
             onChange={(tool) => {
                 dispatch(activeAnalysisToolChanged(tool));

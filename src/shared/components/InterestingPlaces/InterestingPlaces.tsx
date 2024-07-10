@@ -23,6 +23,10 @@ import { InterestingPlaceData } from '@typing/shared';
 type Props = {
     data: InterestingPlaceData[];
     nameOfSelectedPlace: string;
+    /**
+     * if true, use 3 columns grid instead of 4 columns
+     */
+    isThreeColumnGrid?: boolean;
     onChange: (name: string) => void;
     /**
      * Emits when user move mouse over/out an interesting place card
@@ -35,6 +39,7 @@ type Props = {
 export const InterestingPlaces: FC<Props> = ({
     data,
     nameOfSelectedPlace,
+    isThreeColumnGrid,
     onChange,
     onHover,
 }) => {
@@ -56,8 +61,10 @@ export const InterestingPlaces: FC<Props> = ({
 
             <div
                 className={classNames('grid gap-[5px] pr-1', {
-                    'grid-cols-4': IS_MOBILE_DEVICE === false,
-                    'grid-cols-3': IS_MOBILE_DEVICE === true,
+                    'grid-cols-4':
+                        IS_MOBILE_DEVICE === false && !isThreeColumnGrid,
+                    'grid-cols-3':
+                        IS_MOBILE_DEVICE === true || isThreeColumnGrid,
                 })}
             >
                 {data.map((d) => {

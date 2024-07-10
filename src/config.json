@@ -16,6 +16,14 @@
             "pathname": "/landcoverexplorer",
             "entrypoint": "/src/landcover-explorer/index.tsx"
         },
+        "sentinel1-explorer": {
+            "title": "Esri | Sentinel-1 Explorer",
+            "webmapId": "260548c9e7934ef5b20a5f48467a3c1d",
+            "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-1 provides",
+            "animationMetadataSources": "Esri, European Space Agency",
+            "pathname": "/sentinel1explorer",
+            "entrypoint": "/src/sentinel-1-explorer/index.tsx"
+        },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
@@ -35,6 +43,10 @@
         "landsat-level-2": {
             "development": "https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer",
             "production": "https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer"
+        },
+        "sentinel-1": {
+            "development": "https://utility.arcgis.com/usrsvcs/servers/ae20c269388b4ea3acac60b9bf2a319f/rest/services/Sentinel1RTC/ImageServer",
+            "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
         }
     }
 }

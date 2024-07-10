@@ -5,6 +5,7 @@ This repository contains a collection of Imagery Explorer web applications devel
 - [Getting Started](#getting-started)
 - [Landsat Explorer](#landsat-explorer)
 - [Sentinel-2 Landcover Explorer](#sentinel-2-land-cover-explorer)
+- [Sentinel-1 Explorer](#sentinel-1-explorer)
 
 ## Getting Started
 Before you begin, make sure you have a fresh version of [Node.js](https://nodejs.org/en/) and NPM installed. The current Long Term Support (LTS) release is an ideal starting point.
@@ -52,12 +53,12 @@ Before running the application, update the `landsat-level-2` URLs in the [`confi
 
 To run and test the app on your local machine:
 ```sh
-npm run start-landsat
+npm run start:landsat
 ```
 
 To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landsat` directory.
 ```sh
-npm run build-landsat
+npm run build:landsat
 ```
 
 ### Resources
@@ -91,16 +92,64 @@ The Sentinel-2 Land Cover Explorer app provides dynamic visual and statistical c
 ### Usage
 To run and test the app on your local machine:
 ```sh
-npm run start-landcover
+npm run start:landcover
 ```
 
 To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landcover-explorer` directory.
 ```sh
-npm run build-landcover
+npm run build:landcover
 ```
 
 ### Resources
 - [Global Land Cover Revealed](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/global-land-cover-revealed/)
+
+## Sentinel-1 Explorer
+
+Sentinel-1 SAR imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.
+
+Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-1 provides.
+
+[View it live](https://livingatlas.arcgis.com/sentinel1explorer/)
+
+![App](./public/thumbnails/sentinel1-explorer.jpg)
+
+### Features:
+- Visual exploration of a Dynamic global mosaic of the best available Sentinel-1 scenes.
+- On-the-fly multispectral band combinations and indices for visualization and analysis.
+- Interactive Find a Scene by location, sensor, time, and cloud cover.
+- Visual change by time, and comparison of different renderings, with Swipe and Animation modes.
+- Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
+
+### Usage
+Before running the application, update the `"sentinel-1` URLs in the [`config.json`](./src/config.json) to use the URL of your service proxy for [Sentinel-1 RTC](https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer). 
+
+[`config.json`](./src/config.json):
+```js
+{
+    //...
+    "services": {
+        "sentinel-1": {
+            "development": "URL_OF_YOUR_PROXY_SERVICE_FOR_SENTINEL_1",
+            "production": "URL_OF_YOUR_PROXY_SERVICE_FOR_SENTINEL_1"
+        }
+    }
+}
+```
+
+To run and test the app on your local machine:
+```sh
+npm run start:sentinel1
+```
+
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/sentinel1-explorer` directory.
+```sh
+npm run build:sentinel1
+```
+
+### Sentinel-1 RTC Imagery Service Licensing
+- Sentinel-1 RTC Source Imagery – The source imagery is hosted on Microsoft Planetary Computer under an open [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
+- Sentinel-1 RTC Image Service - This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
+
 
 ## Issues
 Find a bug or want to request a new feature?  Please let us know by submitting an issue.

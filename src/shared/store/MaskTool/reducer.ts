@@ -19,27 +19,32 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { SpectralIndex } from '@typing/imagery-service';
+import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 
-export type MaskOptions = {
+export type MaskLayerPixelValueRangeData = {
     selectedRange: number[];
-    /**
-     * color array in RGB format
-     */
-    color: number[];
 };
 
-type MaskOptionsBySpectralIndex = Record<SpectralIndex, MaskOptions>;
+export type MaskToolPixelValueRangeBySpectralIndex = Record<
+    SpectralIndex | RadarIndex,
+    MaskLayerPixelValueRangeData
+>;
+
+type PixelColorBySpectralIndex = Record<SpectralIndex | RadarIndex, number[]>;
 
 export type MaskToolState = {
     /**
-     * user selected spectral index to be used in the mask tool
+     * user selected spectral/radar index to be used in the mask tool
      */
-    spectralIndex: SpectralIndex;
+    selectedIndex: SpectralIndex | RadarIndex;
     /**
-     * maks tool options by spectral index name
+     * Mask Layer Pixel Value range by index name
      */
-    maskOptionsBySpectralIndex: MaskOptionsBySpectralIndex;
+    pixelValueRangeBySelectedIndex: MaskToolPixelValueRangeBySpectralIndex;
+    /**
+     * Maksk Layer pixel color by index name
+     */
+    pixelColorBySelectedIndex: PixelColorBySpectralIndex;
     /**
      * opacity of the mask layer
      */
@@ -48,52 +53,95 @@ export type MaskToolState = {
      * if true, mask layer should be used to clip the imagery scene
      */
     shouldClipMaskLayer: boolean;
+    // /**
+    //  * total visible area of the Mask layer in square kilometers
+    //  */
+    // totalVisibleAreaInSqKm: number;
+    // /**
+    //  * total number of visible pixels
+    //  */
+    // countOfVisiblePixels: number;
 };
 
-export const initialMaskToolState: MaskToolState = {
-    spectralIndex: 'water',
-    maskLayerOpacity: 1,
-    shouldClipMaskLayer: false,
-    maskOptionsBySpectralIndex: {
+export const DefaultPixelValueRangeBySelectedIndex: MaskToolPixelValueRangeBySpectralIndex =
+    {
         moisture: {
             selectedRange: [0, 1],
-            color: [89, 255, 252],
+            // color: [89, 255, 252],
         },
         vegetation: {
             selectedRange: [0, 1],
-            color: [115, 255, 132],
+            // color: [115, 255, 132],
         },
         water: {
             selectedRange: [0, 1],
-            color: [89, 214, 255],
+            // color: [89, 214, 255],
         },
         'temperature farhenheit': {
             // selectedRange: [30, 140],
             // the mask layer throws error when using farhenheit as input unit,
             // therefore we will just use celsius degrees in the selectedRange
             selectedRange: [0, 60],
-            color: [251, 182, 100],
+            // color: [251, 182, 100],
         },
         'temperature celcius': {
             selectedRange: [0, 60], // default range should be between 0-60 celcius degrees
-            color: [251, 182, 100],
+            // color: [251, 182, 100],
         },
+        'water anomaly': {
+            selectedRange: [-1, 0],
+        },
+        ship: {
+            selectedRange: [0, 1],
+        },
+        urban: {
+            selectedRange: [0, 1],
+        },
+    };
+
+export const initialMaskToolState: MaskToolState = {
+    selectedIndex: 'water',
+    maskLayerOpacity: 1,
+    shouldClipMaskLayer: false,
+    pixelValueRangeBySelectedIndex: DefaultPixelValueRangeBySelectedIndex,
+    pixelColorBySelectedIndex: {
+        moisture: [89, 255, 252],
+        vegetation: [115, 255, 132],
+        water: [89, 214, 255],
+        'temperature farhenheit': [251, 182, 100],
+        'temperature celcius': [251, 182, 100],
+        'water anomaly': [255, 214, 102],
+        ship: [255, 0, 21],
+        urban: [255, 0, 21],
     },
+    // totalVisibleAreaInSqKm: null,
+    // countOfVisiblePixels: 0,
 };
 
 const slice = createSlice({
     name: 'MaskTool',
     initialState: initialMaskToolState,
     reducers: {
-        spectralIndex4MaskToolChanged: (
+        selectedIndex4MaskToolChanged: (
             state,
-            action: PayloadAction<SpectralIndex>
+            action: PayloadAction<SpectralIndex | RadarIndex>
         ) => {
-            state.spectralIndex = action.payload;
+            state.selectedIndex = action.payload;
         },
-        maskOptionsChanged: (state, action: PayloadAction<MaskOptions>) => {
-            const spectralIndex = state.spectralIndex;
-            state.maskOptionsBySpectralIndex[spectralIndex] = action.payload;
+        pixelValueRangeChanged: (
+            state,
+            action: PayloadAction<MaskLayerPixelValueRangeData>
+        ) => {
+            const selectedIndex = state.selectedIndex;
+            state.pixelValueRangeBySelectedIndex[selectedIndex] =
+                action.payload;
+        },
+        maskLayerPixelColorChanged: (
+            state,
+            action: PayloadAction<number[]>
+        ) => {
+            const selectedIndex = state.selectedIndex;
+            state.pixelColorBySelectedIndex[selectedIndex] = action.payload;
         },
         maskLayerOpacityChanged: (state, action: PayloadAction<number>) => {
             state.maskLayerOpacity = action.payload;
@@ -101,6 +149,15 @@ const slice = createSlice({
         shouldClipMaskLayerToggled: (state, action: PayloadAction<boolean>) => {
             state.shouldClipMaskLayer = !state.shouldClipMaskLayer;
         },
+        // totalVisibleAreaInSqKmChanged: (
+        //     state,
+        //     action: PayloadAction<number>
+        // ) => {
+        //     state.totalVisibleAreaInSqKm = action.payload;
+        // },
+        // countOfVisiblePixelsChanged: (state, action: PayloadAction<number>) => {
+        //     state.countOfVisiblePixels = action.payload;
+        // },
     },
 });
 
@@ -108,10 +165,13 @@ const { reducer } = slice;
 
 export const {
     // activeAnalysisToolChanged,
-    spectralIndex4MaskToolChanged,
-    maskOptionsChanged,
+    selectedIndex4MaskToolChanged,
+    pixelValueRangeChanged,
     maskLayerOpacityChanged,
     shouldClipMaskLayerToggled,
+    maskLayerPixelColorChanged,
+    // totalVisibleAreaInSqKmChanged,
+    // countOfVisiblePixelsChanged,
 } = slice.actions;
 
 export default reducer;

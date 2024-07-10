@@ -13,8 +13,11 @@
  * limitations under the License.
  */
 
+import { delay } from '@shared/utils/snippets/delay';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import { generateUID } from 'helper-toolkit-ts';
+import React, { FC, useState } from 'react';
+import { Tooltip } from '../Tooltip';
 
 /**
  * data for a single row in Scene Info Table
@@ -28,21 +31,89 @@ export type SceneInfoTableData = {
      * value of the field
      */
     value: string;
+    /**
+     * if true, user can click to copy this value
+     */
+    clickToCopy?: boolean;
 };
 
 type Props = {
     data: SceneInfoTableData[];
 };
 
-const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value }) => {
+const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
+    const [hasCopied2Clipboard, setHasCopied2Clipboard] =
+        useState<boolean>(false);
+
+    const valueOnClickHandler = async () => {
+        if (!clickToCopy) {
+            return;
+        }
+
+        await navigator.clipboard.writeText(value);
+
+        setHasCopied2Clipboard(true);
+
+        await delay(2000);
+
+        setHasCopied2Clipboard(false);
+    };
+
+    const getContentOfValueField = () => {
+        const valueField = (
+            <span
+                className={classNames(
+                    'inline-block max-w-[170px] overflow-hidden whitespace-nowrap text-ellipsis',
+                    {
+                        'cursor-pointer': clickToCopy,
+                    }
+                )}
+            >
+                {value}
+            </span>
+        );
+
+        if (!clickToCopy) {
+            return valueField;
+        }
+
+        const tooltipContent = `
+            <p class="break-words mb-1">${value}</p>
+            <p>
+                ${
+                    hasCopied2Clipboard
+                        ? `Copied to clipboard`
+                        : 'Click to copy to clipboard.'
+                }
+            </p>
+        `;
+
+        return (
+            <Tooltip content={tooltipContent} width={200}>
+                {valueField}
+            </Tooltip>
+        );
+    };
+
     return (
         <>
-            <div className="text-right pr-2">
+            <div
+                className="text-right pr-2"
+                style={{
+                    lineHeight: 1.15,
+                }}
+            >
                 <span className="text-custom-light-blue-50">{name}</span>
             </div>
 
-            <div>
-                <span>{value}</span>
+            <div
+                className="relative group"
+                style={{
+                    lineHeight: 1.15,
+                }}
+                onClick={valueOnClickHandler}
+            >
+                {getContentOfValueField()}
             </div>
         </>
     );
@@ -71,13 +142,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
                 data-element="scene-info-table" // this [data-element] attribute will be used to monitor the health of the app
             >
                 {data.map((d: SceneInfoTableData) => {
-                    return (
-                        <SceneInfoRow
-                            key={d.name}
-                            name={d.name}
-                            value={d.value}
-                        />
-                    );
+                    return <SceneInfoRow key={generateUID()} {...d} />;
                 })}
             </div>
         );

@@ -38,14 +38,21 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         }
 
         if (mode === 'analysis') {
-            if (activeAnalysisTool !== 'change') {
-                return queryParams4MainScene;
+            // when in 'change compare' tool, we need to find the query params based on selected scene
+            if (activeAnalysisTool === 'change') {
+                return isSecondarySceneActive
+                    ? queryParams4SecondaryScene
+                    : queryParams4MainScene;
             }
 
-            // when in 'change compare' tool, we need to find the query params based on selected scene
-            return isSecondarySceneActive
-                ? queryParams4SecondaryScene
-                : queryParams4MainScene;
+            // For the 'temporal composite' tool, there are three items in queryParamsList that represent the imagery scenes
+            // to be used for the red, green, and blue bands in that respective order.
+            // The queryParamsList and selectedItemID are configured by the `initiateImageryScenes4TemporalCompositeTool` thunk function.
+            if (activeAnalysisTool === 'temporal composite') {
+                return queryParamsList.byId[selectedItemID] || null;
+            }
+
+            return queryParams4MainScene;
         }
 
         if (mode === 'swipe') {
@@ -130,4 +137,9 @@ export const selectAvailableScenes = createSelector(
         const { objectIds, byObjectId } = availableImageryScenes;
         return objectIds.map((objectId) => byObjectId[objectId]);
     }
+);
+
+export const selectShouldForceSceneReselection = createSelector(
+    (state: RootState) => state.ImageryScenes.shouldForceSceneReselection,
+    (shouldForceSceneReselection) => shouldForceSceneReselection
 );

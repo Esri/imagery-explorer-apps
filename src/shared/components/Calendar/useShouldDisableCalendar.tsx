@@ -23,6 +23,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 
 /**
  * This custom hook returns a boolean value that indicates if the Calendar component should be disabled.
@@ -39,6 +40,10 @@ export const useShouldDisableCalendar = () => {
 
     const isChangeCompareLayerOn = useSelector(selectChangeCompareLayerIsOn);
 
+    const isTemporalCompositeLayerOn = useSelector(
+        selectIsTemporalCompositeLayerOn
+    );
+
     const shouldBeDisabled = useMemo(() => {
         if (!queryParams || isAnimationPlaying) {
             return true;
@@ -49,6 +54,11 @@ export const useShouldDisableCalendar = () => {
             return isChangeCompareLayerOn;
         }
 
+        // calendar should be disabled when user is viewing the combined result of temporal composite layer
+        if (mode === 'analysis' && analysisTool === 'temporal composite') {
+            return isTemporalCompositeLayerOn;
+        }
+
         return false;
     }, [
         queryParams,
@@ -56,6 +66,7 @@ export const useShouldDisableCalendar = () => {
         mode,
         analysisTool,
         isChangeCompareLayerOn,
+        isTemporalCompositeLayerOn,
     ]);
 
     return shouldBeDisabled;

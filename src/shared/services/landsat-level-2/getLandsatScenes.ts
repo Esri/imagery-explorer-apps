@@ -21,6 +21,9 @@ import { getFormatedDateString } from '@shared/utils/date-time/formatDateString'
 import { LandsatScene } from '@typing/imagery-service';
 import { DateRange } from '@typing/shared';
 import { Point } from '@arcgis/core/geometry';
+import { getFeatureByObjectId } from '../helpers/getFeatureById';
+import { getExtentByObjectId } from '../helpers/getExtentById';
+import { intersectWithImageryScene } from '../helpers/intersectWithImageryScene';
 
 type GetLandsatScenesParams = {
     /**
@@ -300,32 +303,38 @@ export const getLandsatSceneByObjectId = async (
 export const getLandsatFeatureByObjectId = async (
     objectId: number
 ): Promise<IFeature> => {
-    const queryParams = new URLSearchParams({
-        f: 'json',
-        returnGeometry: 'true',
-        objectIds: objectId.toString(),
-        outFields: '*',
-    });
+    // const queryParams = new URLSearchParams({
+    //     f: 'json',
+    //     returnGeometry: 'true',
+    //     objectIds: objectId.toString(),
+    //     outFields: '*',
+    // });
 
-    const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`
+    // const res = await fetch(
+    //     `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`
+    // );
+
+    // if (!res.ok) {
+    //     throw new Error('failed to query Landsat-2 service');
+    // }
+
+    // const data = await res.json();
+
+    // if (data.error) {
+    //     throw data.error;
+    // }
+
+    // if (!data?.features || !data.features.length) {
+    //     return null;
+    // }
+
+    // return data?.features[0] as IFeature;
+
+    const feature = await getFeatureByObjectId(
+        LANDSAT_LEVEL_2_SERVICE_URL,
+        objectId
     );
-
-    if (!res.ok) {
-        throw new Error('failed to query Landsat-2 service');
-    }
-
-    const data = await res.json();
-
-    if (data.error) {
-        throw data.error;
-    }
-
-    if (!data?.features || !data.features.length) {
-        return null;
-    }
-
-    return data?.features[0] as IFeature;
+    return feature;
 };
 
 /**
@@ -336,31 +345,37 @@ export const getLandsatFeatureByObjectId = async (
 export const getExtentOfLandsatSceneByObjectId = async (
     objectId: number
 ): Promise<IExtent> => {
-    const queryParams = new URLSearchParams({
-        f: 'json',
-        returnExtentOnly: 'true',
-        objectIds: objectId.toString(),
-    });
+    // const queryParams = new URLSearchParams({
+    //     f: 'json',
+    //     returnExtentOnly: 'true',
+    //     objectIds: objectId.toString(),
+    // });
 
-    const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`
+    // const res = await fetch(
+    //     `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`
+    // );
+
+    // if (!res.ok) {
+    //     throw new Error('failed to query Landsat-2 service');
+    // }
+
+    // const data = await res.json();
+
+    // if (data.error) {
+    //     throw data.error;
+    // }
+
+    // if (!data?.extent) {
+    //     return null;
+    // }
+
+    // return data?.extent as IExtent;
+
+    const extent = await getExtentByObjectId(
+        LANDSAT_LEVEL_2_SERVICE_URL,
+        objectId
     );
-
-    if (!res.ok) {
-        throw new Error('failed to query Landsat-2 service');
-    }
-
-    const data = await res.json();
-
-    if (data.error) {
-        throw data.error;
-    }
-
-    if (!data?.extent) {
-        return null;
-    }
-
-    return data?.extent as IExtent;
+    return extent;
 };
 
 /**
@@ -374,36 +389,45 @@ export const intersectWithLandsatScene = async (
     objectId: number,
     abortController?: AbortController
 ) => {
-    const geometry = JSON.stringify({
-        spatialReference: {
-            wkid: 4326,
-        },
-        x: point.longitude,
-        y: point.latitude,
+    // const geometry = JSON.stringify({
+    //     spatialReference: {
+    //         wkid: 4326,
+    //     },
+    //     x: point.longitude,
+    //     y: point.latitude,
+    // });
+
+    // const queryParams = new URLSearchParams({
+    //     f: 'json',
+    //     returnCountOnly: 'true',
+    //     returnGeometry: 'false',
+    //     objectIds: objectId.toString(),
+    //     geometry,
+    //     spatialRel: 'esriSpatialRelIntersects',
+    //     geometryType: 'esriGeometryPoint',
+    // });
+
+    // const res = await fetch(
+    //     `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`,
+    //     {
+    //         signal: abortController.signal,
+    //     }
+    // );
+
+    // if (!res.ok) {
+    //     throw new Error('failed to query Landsat-2 service');
+    // }
+
+    // const data = await res.json();
+
+    // return data?.count && data?.count > 0;
+
+    const res = await intersectWithImageryScene({
+        serviceUrl: LANDSAT_LEVEL_2_SERVICE_URL,
+        objectId,
+        point,
+        abortController,
     });
 
-    const queryParams = new URLSearchParams({
-        f: 'json',
-        returnCountOnly: 'true',
-        returnGeometry: 'false',
-        objectIds: objectId.toString(),
-        geometry,
-        spatialRel: 'esriSpatialRelIntersects',
-        geometryType: 'esriGeometryPoint',
-    });
-
-    const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${queryParams.toString()}`,
-        {
-            signal: abortController.signal,
-        }
-    );
-
-    if (!res.ok) {
-        throw new Error('failed to query Landsat-2 service');
-    }
-
-    const data = await res.json();
-
-    return data?.count && data?.count > 0;
+    return res;
 };

@@ -39,9 +39,9 @@ export type MapPopupData = {
      */
     title: string;
     /**
-     * html string of the popup content
+     * popup content
      */
-    content: string;
+    content: string | HTMLDivElement;
     /**
      * point of the popup anchor location
      */
@@ -78,7 +78,7 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
     const openPopupRef = useRef<MapViewOnClickHandler>();
 
     const closePopUp = (message: string) => {
-        console.log('calling closePopUp', message);
+        // console.log('calling closePopUp', message);
 
         mapView.closePopup();
 
@@ -124,8 +124,11 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
         // behavior in order to display your own popup
         mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
-        mapView.popup.collapseEnabled = false;
+        // mapView.popup.collapseEnabled = false;
         mapView.popup.alignment = 'bottom-right';
+        mapView.popup.visibleElements = {
+            collapseButton: false,
+        };
 
         mapView.on('click', (evt) => {
             openPopupRef.current(evt.mapPoint, evt.x);
@@ -183,7 +186,7 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
 
             if (error) {
                 console.error(
-                    'failed to open popup for landsat scene',
+                    'failed to open popup for imagery scene',
                     error.message
                 );
 

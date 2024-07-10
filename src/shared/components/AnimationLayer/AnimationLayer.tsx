@@ -85,7 +85,7 @@ export const AnimationLayer: FC<Props> = ({
         imageryServiceUrl,
         mapView,
         animationStatus,
-        QueryParams4ImageryScenes: sortedQueryParams4ScenesInAnimationMode,
+        queryParams4ImageryScenes: sortedQueryParams4ScenesInAnimationMode,
     });
 
     /**
@@ -151,16 +151,26 @@ export const AnimationLayer: FC<Props> = ({
         // it is still there, therefore we just use this temporary solution so TypeScript won't throw error
         const source = mediaLayerRef.current.source as any;
 
-        if (!mediaLayerElements) {
-            // animation is not started or just stopped
-            // just clear all elements in media layer
-            source.elements.removeAll();
-        } else {
+        // clear existing elements bofore adding new list of elements to media layer
+        source.elements.removeAll();
+
+        if (mediaLayerElements) {
             source.elements.addMany(mediaLayerElements);
             // media layer elements are ready, change animation mode to playing to start the animation
             dispatch(animationStatusChanged('playing'));
         }
     }, [mediaLayerElements, mapView]);
+
+    // If the map view's height changes during an animation,
+    // set the animation status to 'loading' so the useMediaLayerImageElement hook
+    // can re-fetch the animation frame images to cover the entire map.
+    useEffect(() => {
+        if (!animationStatus || animationStatus === 'loading') {
+            return;
+        }
+
+        dispatch(animationStatusChanged('loading'));
+    }, [mapView?.height]);
 
     useEffect(() => {
         // We only need to save animation window information when the animation is in progress.

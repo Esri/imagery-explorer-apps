@@ -28,13 +28,13 @@ import {
     selectAppMode,
 } from '@shared/store/ImageryScene/selectors';
 import { AnimationControl } from '@shared/components/AnimationControl';
-import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
-import { TrendTool } from '../TrendTool';
+
+import { TrendTool } from '../TemporalProfileTool';
 import { MaskTool } from '../MaskTool';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
+// import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { ChangeCompareTool } from '../ChangeCompareTool';
@@ -43,6 +43,10 @@ import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQuery
 import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
 import { LandsatMissionFilter } from '../LandsatMissionFilter';
+import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
+import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
+import { CloudFilter } from '@shared/components/CloudFilter';
+import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamicModeInfo';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -51,8 +55,10 @@ const Layout = () => {
 
     const dynamicModeOn = mode === 'dynamic';
 
-    const shouldShowSecondaryControls =
-        mode === 'swipe' || mode === 'animate' || mode === 'analysis';
+    // const shouldShowSecondaryControls =
+    //     mode === 'swipe' || mode === 'animate' || mode === 'analysis';
+
+    const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
     /**
      * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
@@ -68,7 +74,7 @@ const Layout = () => {
                 <AppHeader title={appConfig.title} />
                 <BottomPanel>
                     <div className="mx-auto">
-                        <DynamicModeInfo />
+                        <LandsatDynamicModeInfo />
                         <LandsatInterestingPlaces />
                         <LandsatRasterFunctionSelector />
                     </div>
@@ -88,7 +94,7 @@ const Layout = () => {
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
                             <AnimationControl />
-                            <AnalysisToolSelector />
+                            <AnalyzeToolSelector4Landsat />
                         </ContainerOfSecondaryControls>
                     )}
 
@@ -102,7 +108,7 @@ const Layout = () => {
                 <div className="flex flex-grow justify-center shrink-0">
                     {dynamicModeOn ? (
                         <>
-                            <DynamicModeInfo />
+                            <LandsatDynamicModeInfo />
                             <LandsatInterestingPlaces />
                         </>
                     ) : (
@@ -110,6 +116,7 @@ const Layout = () => {
                             <div className="ml-2 3xl:ml-0">
                                 <Calendar>
                                     <LandsatMissionFilter />
+                                    <CloudFilter />
                                 </Calendar>
                             </div>
 

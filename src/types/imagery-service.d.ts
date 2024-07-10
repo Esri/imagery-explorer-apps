@@ -51,6 +51,12 @@ export type SpectralIndex =
     | 'temperature farhenheit'
     | 'temperature celcius';
 
+/**
+ * Name of Radar Index for SAR image (e.g. Sentinel-1)
+ */
+export type RadarIndex = 'water' | 'water anomaly' | 'ship' | 'urban';
+// | 'vegetation'
+
 export type LandsatScene = {
     objectId: number;
     /**
@@ -167,4 +173,47 @@ export type TemporalProfileData = {
 type ImageryServiceTimeExtentData = {
     start: number;
     end: number;
+};
+
+export type Sentinel1OrbitDirection = 'Ascending' | 'Descending';
+
+export type Sentinel1Scene = {
+    objectId: number;
+    /**
+     * product name
+     * @example S1A_IW_GRDH_1SDV_20141003T040550_20141003T040619_002660_002F64_EC04
+     */
+    name: string;
+    /**
+     * name of the sensor
+     */
+    sensor: string;
+    /**
+     * orbit direction of the sentinel-1 imagery scene
+     */
+    orbitDirection: Sentinel1OrbitDirection;
+    /**
+     * single polarisation (HH or VV) or dual polarisation (HH+HV or VV+VH)
+     */
+    polarizationType: string;
+
+    absoluteOrbit: string;
+
+    relativeOrbit: string;
+    /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * acquisitionDate in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * year when this scene was acquired
+     */
+    acquisitionYear: number;
+    /**
+     * month when this scene was acquired
+     */
+    acquisitionMonth: number;
 };

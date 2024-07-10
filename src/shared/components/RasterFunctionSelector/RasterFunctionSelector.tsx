@@ -39,6 +39,10 @@ type Props = {
      */
     disabled: boolean;
     /**
+     * The width of header tooltip container in px. The default width is 240px and this value can be used to override that value
+     */
+    widthOfTooltipContainer?: number;
+    /**
      * Fires when user selects a new raster function
      * @param name name of new raster function
      * @returns
@@ -55,6 +59,7 @@ export const RasterFunctionSelector: FC<Props> = ({
     nameOfSelectedRasterFunction,
     rasterFunctionInfo,
     disabled,
+    widthOfTooltipContainer,
     onChange,
     itemOnHover,
 }) => {
@@ -70,14 +75,17 @@ export const RasterFunctionSelector: FC<Props> = ({
             ref={containerRef}
         >
             <div className="text-center mb-3 flex items-center justify-center">
-                <Tooltip content={headerTooltip} width={240}>
+                <Tooltip
+                    content={headerTooltip}
+                    width={widthOfTooltipContainer || 240}
+                >
                     <calcite-icon scale="s" icon="information" />
                 </Tooltip>
 
                 <span className="uppercase ml-2 text-sm">Renderer</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-[5px] h-[155px] pr-1 overflow-x-hidden overflow-y-auto fancy-scrollbar">
+            <div className="flex flex-wrap max-w-[310px] justify-center gap-[5px] max-h-[155px] pr-1 overflow-x-hidden overflow-y-auto fancy-scrollbar">
                 {rasterFunctionInfo.map((d) => {
                     const { name, thumbnail, label } = d;
 

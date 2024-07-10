@@ -23,7 +23,7 @@ export const OpenDownloadPanelButton = () => {
 
     return (
         <div
-            className={classNames('absolute top-1 right-16', 'cursor-pointer')}
+            className={classNames('cursor-pointer')}
             onClick={() => {
                 dispatch(showDownloadAnimationPanelChanged(true));
             }}

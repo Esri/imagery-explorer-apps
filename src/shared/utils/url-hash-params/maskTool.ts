@@ -16,6 +16,8 @@
 import {
     MaskToolState,
     initialMaskToolState,
+    MaskToolPixelValueRangeBySpectralIndex,
+    DefaultPixelValueRangeBySelectedIndex,
 } from '@shared/store/MaskTool/reducer';
 import { SpectralIndex } from '@typing/imagery-service';
 import { debounce } from '../snippets/debounce';
@@ -27,54 +29,76 @@ export const encodeMaskToolData = (data: MaskToolState): string => {
     }
 
     const {
-        spectralIndex,
+        selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
-        maskOptionsBySpectralIndex,
+        pixelValueRangeBySelectedIndex,
+        pixelColorBySelectedIndex,
     } = data;
 
-    const maskOptions = maskOptionsBySpectralIndex[spectralIndex];
+    const pixelValueRange = pixelValueRangeBySelectedIndex[selectedIndex];
+
+    const pixelColor = pixelColorBySelectedIndex[selectedIndex];
 
     return [
-        spectralIndex,
+        selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
-        maskOptions?.color,
-        maskOptions?.selectedRange,
+        pixelColor,
+        pixelValueRange?.selectedRange,
     ].join('|');
 };
 
-export const decodeMaskToolData = (val: string): MaskToolState => {
+/**
+ * Decode mask tool data from URL hash parameters
+ * @param val - A string from URL hash parameters
+ * @param pixelValueRangeData - Optional custom pixel value range data to override the default values
+ * @returns MaskToolState to be used by the Redux store, or null if the input value is empty
+ */
+export const decodeMaskToolData = (
+    val: string,
+    pixelValueRangeData?: MaskToolPixelValueRangeBySpectralIndex
+): MaskToolState => {
     if (!val) {
         return null;
     }
 
     const [
-        spectralIndex,
+        selectedIndex,
         shouldClipMaskLayer,
         maskLayerOpacity,
         color,
         selectedRange,
     ] = val.split('|');
 
-    const maskOptionForSelectedSpectralIndex =
-        color && selectedRange
-            ? {
-                  color: color.split(',').map((d) => +d),
-                  selectedRange: selectedRange.split(',').map((d) => +d),
-              }
-            : initialMaskToolState.maskOptionsBySpectralIndex[
-                  spectralIndex as SpectralIndex
-              ];
+    const pixelValueRangeBySelectedIndex = pixelValueRangeData
+        ? { ...pixelValueRangeData }
+        : { ...DefaultPixelValueRangeBySelectedIndex };
+
+    if (selectedRange) {
+        pixelValueRangeBySelectedIndex[selectedIndex as SpectralIndex] = {
+            selectedRange: selectedRange.split(',').map((d) => +d),
+        };
+    }
+
+    const pixelColorBySelectedIndex = {
+        ...initialMaskToolState.pixelColorBySelectedIndex,
+    };
+
+    if (color) {
+        pixelColorBySelectedIndex[selectedIndex as SpectralIndex] = color
+            .split(',')
+            .map((d) => +d);
+    }
 
     return {
-        spectralIndex: spectralIndex as SpectralIndex,
+        selectedIndex: selectedIndex as SpectralIndex,
         shouldClipMaskLayer: shouldClipMaskLayer === 'true',
         maskLayerOpacity: +maskLayerOpacity,
-        maskOptionsBySpectralIndex: {
-            ...initialMaskToolState.maskOptionsBySpectralIndex,
-            [spectralIndex]: maskOptionForSelectedSpectralIndex,
-        },
+        pixelValueRangeBySelectedIndex,
+        pixelColorBySelectedIndex,
+        // totalVisibleAreaInSqKm: 0,
+        // countOfVisiblePixels: 0,
     };
 };
 
@@ -82,7 +106,14 @@ export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
     updateHashParams('mask', encodeMaskToolData(data));
 }, 500);
 
-export const getMaskToolDataFromHashParams = (): MaskToolState => {
+/**
+ *
+ * @param pixelValueRangeData custom pixel value range data to override the default values
+ * @returns
+ */
+export const getMaskToolDataFromHashParams = (
+    pixelValueRangeData?: MaskToolPixelValueRangeBySpectralIndex
+): MaskToolState => {
     const value = getHashParamValueByKey('mask');
-    return decodeMaskToolData(value);
+    return decodeMaskToolData(value, pixelValueRangeData);
 };

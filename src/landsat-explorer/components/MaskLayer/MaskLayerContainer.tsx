@@ -14,14 +14,15 @@
  */
 
 import MapView from '@arcgis/core/views/MapView';
-import React, { FC, useMemo } from 'react';
-import { MaskLayer } from './MaskLayer';
+import React, { FC, useEffect, useMemo } from 'react';
+// import { MaskLayer } from './MaskLayer';
 import { useSelector } from 'react-redux';
 import {
-    selectMaskOptions,
+    selectMaskLayerPixelValueRange,
     selectShouldClipMaskLayer,
     selectMaskLayerOpcity,
-    selectSpectralIndex4MaskTool,
+    selectSelectedIndex4MaskTool,
+    selectMaskLayerPixelColor,
 } from '@shared/store/MaskTool/selectors';
 import {
     selectActiveAnalysisTool,
@@ -29,18 +30,55 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import { SpectralIndex } from '@typing/imagery-service';
+import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
+import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
+import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import {
+    LANDSAT_LEVEL_2_SERVICE_URL,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+} from '@shared/services/landsat-level-2/config';
+import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
+import { useDispatch } from 'react-redux';
+import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 
 type Props = {
     mapView?: MapView;
     groupLayer?: GroupLayer;
 };
 
+export const getRasterFunctionBySpectralIndex = (
+    spectralIndex: SpectralIndex
+): RasterFunction => {
+    if (!spectralIndex) {
+        return null;
+    }
+
+    return new RasterFunction({
+        functionName: 'BandArithmetic',
+        outputPixelType: 'f32',
+        functionArguments: {
+            Method: 0,
+            BandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+        },
+    });
+};
+
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
+    const dispatach = useDispatch();
+
     const mode = useSelector(selectAppMode);
 
-    const spectralIndex = useSelector(selectSpectralIndex4MaskTool);
+    const spectralIndex = useSelector(
+        selectSelectedIndex4MaskTool
+    ) as SpectralIndex;
 
-    const { selectedRange, color } = useSelector(selectMaskOptions);
+    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+
+    const pixelColor = useSelector(selectMaskLayerPixelColor);
 
     const opacity = useSelector(selectMaskLayerOpcity);
 
@@ -63,17 +101,50 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         return true;
     }, [mode, anailysisTool, objectIdOfSelectedScene]);
 
+    const rasterFunction = useMemo(() => {
+        return getRasterFunctionBySpectralIndex(spectralIndex);
+    }, [spectralIndex]);
+
+    const fullPixelValueRange = useMemo(() => {
+        if (spectralIndex === 'temperature celcius') {
+            return [
+                LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+                LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+            ];
+        }
+
+        if (spectralIndex === 'temperature farhenheit') {
+            return [
+                LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+                LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+            ];
+        }
+
+        return [-1, 1];
+    }, [spectralIndex]);
+
+    useCalculateTotalAreaByPixelsCount({
+        objectId: objectIdOfSelectedScene,
+        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        pixelSize: mapView.resolution,
+    });
+
     return (
-        <MaskLayer
-            mapView={mapView}
+        <ImageryLayerWithPixelFilter
+            serviceURL={LANDSAT_LEVEL_2_SERVICE_URL}
+            // mapView={mapView}
             groupLayer={groupLayer}
-            spectralIndex={spectralIndex}
             objectId={objectIdOfSelectedScene}
+            rasterFunction={rasterFunction}
             visible={isVisible}
-            selectedRange={selectedRange}
-            color={color}
+            selectedPixelValueRange={selectedRange}
+            fullPixelValueRange={fullPixelValueRange}
+            pixelColor={pixelColor}
             opacity={opacity}
-            shouldClip={shouldClip}
+            blendMode={shouldClip ? 'destination-atop' : 'normal'}
+            countOfPixelsOnChange={(totalPixels, visiblePixels) => {
+                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+            }}
         />
     );
 };

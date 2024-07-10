@@ -19,13 +19,13 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { SpectralIndex } from '@typing/imagery-service';
+import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 
 export type ChangeCompareToolState = {
     /**
-     * use selected spectral index
+     * user selected option that will be used to create raster function to compare change between two imagery scenes
      */
-    spectralIndex: SpectralIndex;
+    selectedOption: SpectralIndex | RadarIndex | string;
     /**
      * if true, the change compare layer is visible in the map
      */
@@ -34,23 +34,28 @@ export type ChangeCompareToolState = {
      * user selected pixel value range, the full range of pixel values of change compare layer should be between -2 and 2
      */
     selectedRange: number[];
+    /**
+     * the full range of pixel values
+     */
+    fullPixelValuesRange: number[];
 };
 
 export const initialChangeCompareToolState: ChangeCompareToolState = {
-    spectralIndex: 'vegetation',
+    selectedOption: 'vegetation',
     changeCompareLayerIsOn: false,
     selectedRange: [-2, 2],
+    fullPixelValuesRange: [-2, 2],
 };
 
 const slice = createSlice({
     name: 'ChangeCompareTool',
     initialState: initialChangeCompareToolState,
     reducers: {
-        spectralIndex4ChangeCompareToolChanged: (
+        selectedOption4ChangeCompareToolChanged: (
             state,
-            action: PayloadAction<SpectralIndex>
+            action: PayloadAction<SpectralIndex | RadarIndex>
         ) => {
-            state.spectralIndex = action.payload;
+            state.selectedOption = action.payload;
         },
         changeCompareLayerIsOnUpdated: (
             state,
@@ -61,15 +66,22 @@ const slice = createSlice({
         selectedRangeUpdated: (state, action: PayloadAction<number[]>) => {
             state.selectedRange = action.payload;
         },
+        fullPixelValuesRangeUpdated: (
+            state,
+            action: PayloadAction<number[]>
+        ) => {
+            state.fullPixelValuesRange = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
 export const {
-    spectralIndex4ChangeCompareToolChanged,
+    selectedOption4ChangeCompareToolChanged,
     changeCompareLayerIsOnUpdated,
     selectedRangeUpdated,
+    fullPixelValuesRangeUpdated,
 } = slice.actions;
 
 export default reducer;

@@ -1,12 +1,13 @@
 .custom-attribution-text {
+    position: relative;
     font-size: 12px;
     line-height: 16px;
     padding: 0 5px;
     background-color: rgba(36,36,36,.8);
-    display: flex;
+    /* display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
     color: rgba(255,255,255,.7);
 }
 

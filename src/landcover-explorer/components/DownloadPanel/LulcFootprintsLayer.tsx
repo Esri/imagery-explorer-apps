@@ -54,7 +54,7 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
         // behavior in order to display your own popup
         mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
-        mapView.popup.collapseEnabled = false;
+        // mapView.popup.collapseEnabled = false;
 
         addEventHandlers();
     };

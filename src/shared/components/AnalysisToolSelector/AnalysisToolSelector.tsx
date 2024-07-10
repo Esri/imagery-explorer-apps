@@ -17,46 +17,22 @@ import React, { FC } from 'react';
 import { Button } from '../Button';
 import classNames from 'classnames';
 import { AnalysisTool } from '@shared/store/ImageryScene/reducer';
-
-const AnalysisTools: {
-    tool: AnalysisTool;
-    title: string;
-    subtitle: string;
-}[] = [
-    {
-        tool: 'mask',
-        title: 'Index',
-        subtitle: 'mask',
-    },
-    {
-        tool: 'trend',
-        title: 'Temporal',
-        subtitle: 'profile',
-    },
-    {
-        tool: 'spectral',
-        title: 'Spectral',
-        subtitle: 'profile',
-    },
-    {
-        tool: 'change',
-        title: 'Change',
-        subtitle: 'detection',
-    },
-];
+import { AnalyzeToolSelectorData } from './AnalysisToolSelectorContainer';
 
 type Props = {
+    data: AnalyzeToolSelectorData[];
     selectedTool: AnalysisTool;
     onChange: (tool: AnalysisTool) => void;
 };
 
 export const AnalysisToolSelector: FC<Props> = ({
+    data,
     selectedTool,
     onChange,
 }: Props) => {
     return (
         <>
-            {AnalysisTools.map(({ tool, title, subtitle }) => (
+            {data.map(({ tool, title, subtitle }) => (
                 <div key={tool} className={classNames('relative mb-1')}>
                     <Button
                         // fullHeight={true}

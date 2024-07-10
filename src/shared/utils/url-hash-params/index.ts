@@ -33,7 +33,7 @@ export {
     saveQueryParams4ScenesInAnimationToHashParams,
     getQueryParams4MainSceneFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
-    getQueryParams4ScenesInAnimationFromHashParams,
+    getListOfQueryParamsFromHashParams,
 } from './queryParams4ImageryScene';
 
 export {
@@ -51,11 +51,17 @@ export {
     getSpectralProfileToolDataFromHashParams,
 } from './spectralTool';
 
+export {
+    saveTemporalCompositeToolStateToHashParams,
+    getTemporalCompositeToolDataFromHashParams,
+} from './temporalCompositeTool';
+
 export type UrlHashParamKey =
     | 'mapCenter' // hash params for map center
     | 'mode' // hash params for app mode
     | 'mainScene' // hash params for query params of the main scene
     | 'secondaryScene' // hash params for query params of the secondary scene
+    | 'listOfScenes' // hash params for query params in list of imagery scene
     | 'animationScenes' // hash params for query params of scenes in the animation mode
     | 'animation' // hash params for animation mode
     | 'animationWindow' // hash params for animation window info that includes map extent and size
@@ -64,10 +70,12 @@ export type UrlHashParamKey =
     | 'trend' // hash params for trend tool
     | 'spectral' // hash params for spectral profile tool
     | 'change' // hash params for spectral profile tool
+    | 'composite' // hash params for temporal composite tool
     | 'hideTerrain' // hash params for terrain layer
     | 'hideMapLabels' // hash params for map labels layer
     | 'hideBasemap' // hash params for map labels layer
-    | 'tool'; // hash params for active analysis tool
+    | 'tool' // hash params for active analysis tool
+    | 'sentinel1'; // hash params for Sentinel-1 scenes
 
 const getHashParams = () => {
     return new URLSearchParams(window.location.hash.slice(1));

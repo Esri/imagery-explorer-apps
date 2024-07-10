@@ -16,16 +16,23 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectSpectralIndex4MaskTool = createSelector(
-    (state: RootState) => state.MaskTool.spectralIndex,
-    (spectralIndex) => spectralIndex
+export const selectSelectedIndex4MaskTool = createSelector(
+    (state: RootState) => state.MaskTool.selectedIndex,
+    (selectedIndex) => selectedIndex
 );
 
-export const selectMaskOptions = createSelector(
-    (state: RootState) => state.MaskTool.spectralIndex,
-    (state: RootState) => state.MaskTool.maskOptionsBySpectralIndex,
-    (spectralIndex, maskOptionsBySpectralIndex) =>
-        maskOptionsBySpectralIndex[spectralIndex]
+export const selectMaskLayerPixelValueRange = createSelector(
+    (state: RootState) => state.MaskTool.selectedIndex,
+    (state: RootState) => state.MaskTool.pixelValueRangeBySelectedIndex,
+    (selectedIndex, pixelValueRangeBySelectedIndex) =>
+        pixelValueRangeBySelectedIndex[selectedIndex]
+);
+
+export const selectMaskLayerPixelColor = createSelector(
+    (state: RootState) => state.MaskTool.selectedIndex,
+    (state: RootState) => state.MaskTool.pixelColorBySelectedIndex,
+    (selectedIndex, pixelColorBySelectedIndex) =>
+        pixelColorBySelectedIndex[selectedIndex] || [255, 255, 255]
 );
 
 export const selectMaskLayerOpcity = createSelector(
@@ -42,3 +49,13 @@ export const selectMaskToolState = createSelector(
     (state: RootState) => state.MaskTool,
     (maskTool) => maskTool
 );
+
+// export const selectMaskLayerVisibleArea = createSelector(
+//     (state: RootState) => state.MaskTool.totalVisibleAreaInSqKm,
+//     (totalVisibleAreaInSqKm) => totalVisibleAreaInSqKm
+// );
+
+// export const selectCountOfVisiblePixels = createSelector(
+//     (state: RootState) => state.MaskTool.countOfVisiblePixels,
+//     (countOfVisiblePixels) => countOfVisiblePixels
+// );

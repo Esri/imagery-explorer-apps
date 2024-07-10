@@ -16,14 +16,17 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 // import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@shared/components/MaskTool/PixelRangeSlider';
 // import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
-import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
-import { spectralIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
-    selectSpectralIndex4MaskTool,
-    selectMaskOptions,
+    MaskLayerRenderingControls,
+    MaskToolWarnigMessage,
+} from '@shared/components/MaskTool';
+import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
+import {
+    selectSelectedIndex4MaskTool,
+    selectMaskLayerPixelValueRange,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { updateSelectedRange } from '@shared/store/MaskTool/thunks';
+import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -40,15 +43,16 @@ import {
     SurfaceTempCelsiusPixelRangeSlider,
     SurfaceTempFarhenheitPixelRangeSlider,
 } from './SurfaceTempPixelRangeSlider';
+import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const selectedSpectralIndex = useSelector(selectSpectralIndex4MaskTool);
+    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskOptions);
+    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -76,7 +80,7 @@ export const MaskToolContainer = () => {
     //     }
 
     //     if (spectralIndex) {
-    //         dispatch(spectralIndex4MaskToolChanged(spectralIndex));
+    //         dispatch(selectedIndex4MaskToolChanged(spectralIndex));
     //     }
     // }, [queryParams4MainScene?.rasterFunctionName]);
 
@@ -114,25 +118,20 @@ export const MaskToolContainer = () => {
                 tooltipText={MASK_TOOL_HEADER_TOOLTIP}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
-                        spectralIndex4MaskToolChanged(val as SpectralIndex)
+                        selectedIndex4MaskToolChanged(val as SpectralIndex)
                     );
                 }}
             />
 
             {shouldBeDisabled ? (
-                <div
-                    className={classNames(
-                        'w-full mt-10 flex justify-center text-center text-sm is-disabled'
-                    )}
-                >
-                    <p>
-                        Select a scene to calculate a mask for the selected
-                        index.
-                    </p>
-                </div>
+                <MaskToolWarnigMessage />
             ) : (
                 <>
-                    <div className={classNames('w-full h-[120px]')}>
+                    <div className={classNames('relative w-full h-[120px]')}>
+                        <div className="absolute top-3 right-0">
+                            <TotalVisibleAreaInfo label="Estimated Mask Area" />
+                        </div>
+
                         {selectedSpectralIndex === 'temperature celcius' && (
                             <SurfaceTempCelsiusPixelRangeSlider />
                         )}
@@ -148,7 +147,9 @@ export const MaskToolContainer = () => {
                                     min={-1}
                                     max={1}
                                     valuesOnChange={(values) => {
-                                        dispatch(updateSelectedRange(values));
+                                        dispatch(
+                                            updateMaskLayerSelectedRange(values)
+                                        );
                                     }}
                                     countOfTicks={17}
                                     tickLabels={[-1, -0.5, 0, 0.5, 1]}

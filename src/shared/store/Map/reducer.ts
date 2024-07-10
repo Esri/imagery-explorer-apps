@@ -39,6 +39,10 @@ export type MapState = {
      */
     zoom: number;
     /**
+     * map scale
+     */
+    scale: number;
+    /**
      * Represents the size of one pixel in map units.
      * The value of resolution can be found by dividing the extent width by the view's width.
      */
@@ -67,6 +71,18 @@ export type MapState = {
      * anchor location of the map popup windown
      */
     popupAnchorLocation: Point;
+    /**
+     *	Indicates whether the map is being updated by additional data requests to the network, or by processing received data.
+     */
+    isUpadting: boolean;
+    /**
+     * total visible area of the Imagery layer (with pixel filters) in square kilometers
+     */
+    totalVisibleAreaInSqKm: number;
+    /**
+     * total number of visible pixels of the Imagery layer (with pixel filters)
+     */
+    countOfVisiblePixels: number;
 };
 
 export const initialMapState: MapState = {
@@ -74,12 +90,16 @@ export const initialMapState: MapState = {
     center: MAP_CENTER,
     zoom: MAP_ZOOM,
     resolution: null,
+    scale: null,
     extent: null,
     showMapLabel: true,
     showTerrain: true,
     showBasemap: true,
     swipeWidgetHanlderPosition: 50,
     popupAnchorLocation: null,
+    isUpadting: false,
+    totalVisibleAreaInSqKm: null,
+    countOfVisiblePixels: 0,
 };
 
 const slice = createSlice({
@@ -97,6 +117,9 @@ const slice = createSlice({
         },
         resolutionUpdated: (state, action: PayloadAction<number>) => {
             state.resolution = action.payload;
+        },
+        scaleUpdated: (state, action: PayloadAction<number>) => {
+            state.scale = action.payload;
         },
         extentUpdated: (state, action: PayloadAction<Extent>) => {
             state.extent = action.payload;
@@ -119,6 +142,18 @@ const slice = createSlice({
         popupAnchorLocationChanged: (state, action: PayloadAction<Point>) => {
             state.popupAnchorLocation = action.payload;
         },
+        isUpdatingChanged: (state, action: PayloadAction<boolean>) => {
+            state.isUpadting = action.payload;
+        },
+        totalVisibleAreaInSqKmChanged: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.totalVisibleAreaInSqKm = action.payload;
+        },
+        countOfVisiblePixelsChanged: (state, action: PayloadAction<number>) => {
+            state.countOfVisiblePixels = action.payload;
+        },
     },
 });
 
@@ -129,12 +164,16 @@ export const {
     centerChanged,
     zoomChanged,
     resolutionUpdated,
+    scaleUpdated,
     extentUpdated,
     showMapLabelToggled,
     showTerrainToggled,
     showBasemapToggled,
     swipeWidgetHanlderPositionChanged,
     popupAnchorLocationChanged,
+    isUpdatingChanged,
+    totalVisibleAreaInSqKmChanged,
+    countOfVisiblePixelsChanged,
 } = slice.actions;
 
 export default reducer;

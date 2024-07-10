@@ -53,15 +53,21 @@ export const useFormattedScenes = (): FormattedImageryScene[] => {
                 // isCloudy,
                 cloudCover,
                 satellite,
+                doesNotMeetCriteria,
+                customTooltipText,
             } = scene;
+
+            const doestNotMeetCloudTreshold = cloudCover > cloudCoverThreshold;
 
             return {
                 formattedAcquisitionDate,
                 acquisitionDate,
-                isCloudy: cloudCover > cloudCoverThreshold,
-                cloudCover: Math.ceil(cloudCover * 100),
+                // isCloudy: cloudCover > cloudCoverThreshold,
+                doesNotMeetCriteria:
+                    doesNotMeetCriteria || doestNotMeetCloudTreshold,
                 satellite,
-            };
+                customTooltipText,
+            } as FormattedImageryScene;
         });
     }, [isAnimationPlaying, availableScenes, cloudCoverThreshold]);
 

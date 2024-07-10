@@ -13,4 +13,4 @@
  * limitations under the License.
  */
 
-export { CloudFilter } from './CloudFilter';
+export { CloudFilterContainer as CloudFilter } from './CloudFilterContainer';

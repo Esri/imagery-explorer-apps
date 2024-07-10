@@ -35,8 +35,8 @@ const decodeMapCenter = (value: string) => {
 export const encodeMapCenter = (center: number[], zoom: number) => {
     const [longitude, latitude] = center;
 
-    const value = `${longitude.toFixed(3)},${latitude.toFixed(
-        3
+    const value = `${longitude.toFixed(5)},${latitude.toFixed(
+        5
     )},${zoom.toFixed(3)}`;
 
     return value;

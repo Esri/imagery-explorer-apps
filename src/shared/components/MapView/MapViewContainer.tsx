@@ -32,7 +32,13 @@ import {
 import EventHandlers from './EventHandlers';
 import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
-import { centerChanged, zoomChanged } from '../../store/Map/reducer';
+import {
+    centerChanged,
+    isUpdatingChanged,
+    resolutionUpdated,
+    scaleUpdated,
+    zoomChanged,
+} from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
 // import { queryLocation4TrendToolChanged } from '@shared/store/TrendTool/reducer';
@@ -112,6 +118,10 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
         document.body.classList.toggle('hide-map-control', isAnimationPlaying);
     }, [isAnimationPlaying]);
 
+    useEffect(() => {
+        dispatch(isUpdatingChanged(isUpdating));
+    }, [isUpdating]);
+
     return (
         <div
             className={classNames('absolute top-0 left-0 w-full', {
@@ -123,7 +133,7 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                 {children}
 
                 <EventHandlers
-                    onStationary={(center, zoom, extent) => {
+                    onStationary={(center, zoom, extent, resolution, scale) => {
                         // console.log('map view is stationary', center, zoom, extent);
 
                         batch(() => {
@@ -134,6 +144,8 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                                 ])
                             );
                             dispatch(zoomChanged(zoom));
+                            dispatch(resolutionUpdated(resolution));
+                            dispatch(scaleUpdated(scale));
                         });
                     }}
                     onClickHandler={(point) => {

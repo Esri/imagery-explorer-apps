@@ -18,7 +18,10 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { shouldShowAboutThisAppToggled } from '../../store/UI/reducer';
+import {
+    shouldShowAboutThisAppToggled,
+    showDocPanelToggled,
+} from '../../store/UI/reducer';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { APP_NAME, AppName } from '@shared/config';
@@ -31,6 +34,14 @@ type Props = {
      * title of the explorer app
      */
     title: string;
+    /**
+     * if true, show the doc button that allows user to launch the doc panel
+     */
+    showDocButton?: boolean;
+    /**
+     * tooltip text for the open documentation button
+     */
+    docButtonTooltip?: string;
 };
 
 const IMAGERY_EXPLORER_APPS: {
@@ -48,9 +59,14 @@ const IMAGERY_EXPLORER_APPS: {
         title: 'Landsat Explorer',
         url: '/landsatexplorer',
     },
+    {
+        appName: 'sentinel1-explorer',
+        title: 'Sentinel-1 Explorer',
+        url: '/sentinel1explorer',
+    },
 ];
 
-const AppHeader: FC<Props> = ({ title }) => {
+const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
     const dispatch = useDispatch();
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
@@ -90,6 +106,7 @@ const AppHeader: FC<Props> = ({ title }) => {
                 onClick={() => {
                     dispatch(shouldShowAboutThisAppToggled());
                 }}
+                title="About this app"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -130,43 +147,61 @@ const AppHeader: FC<Props> = ({ title }) => {
                         )}
                     </div>
                 </div>
-
-                {showImageryExplorerAppsList && (
-                    <div
-                        className={classNames(
-                            'absolute left-0 top-app-header-size theme-background w-full border-t border-custom-light-blue-50'
-                        )}
-                    >
-                        <div className="px-2 py-2 text-xs text-custom-light-blue-50">
-                            <span>Image Explorer Apps</span>
-                        </div>
-
-                        {IMAGERY_EXPLORER_APPS
-                            // should not show current app in the list
-                            .filter((d) => d.appName !== APP_NAME)
-                            .map((d) => {
-                                return (
-                                    <span
-                                        key={d.title}
-                                        // href={d.url}
-                                        // target="_blank"
-                                        title={`Launch the ${d.title} in a new tab`}
-                                        // rel="noreferrer"
-                                        onClick={launchImageryExplorerApp.bind(
-                                            null,
-                                            d.url
-                                        )}
-                                    >
-                                        <div className="w-full px-2 py-1 text-xs cursor-pointer flex items-center">
-                                            <span className="">{d.title}</span>
-                                            {/* <calcite-icon icon="launch" scale="s" /> */}
-                                        </div>
-                                    </span>
-                                );
-                            })}
-                    </div>
-                )}
             </div>
+
+            {showDocButton && (
+                <div
+                    className="h-app-header-size w-app-header-size  theme-background cursor-pointer border-l border-custom-light-blue-50 pl-2 flex items-center"
+                    onClick={() => {
+                        dispatch(showDocPanelToggled());
+                    }}
+                    title={docButtonTooltip || ''}
+                >
+                    <calcite-icon icon="open-book" />
+                </div>
+            )}
+
+            {showImageryExplorerAppsList && (
+                <div
+                    className={classNames(
+                        'absolute left-0 md:left-app-header-size top-app-header-size theme-background w-full md:w-[300px] border-t border-custom-light-blue-50'
+                    )}
+                >
+                    <div className="px-2 py-2 text-xs text-custom-light-blue-50">
+                        <span>Image Explorer Apps</span>
+                    </div>
+
+                    {IMAGERY_EXPLORER_APPS
+                        // should not show current app in the list
+                        .filter((d) => d.appName !== APP_NAME)
+                        .map((d) => {
+                            return (
+                                <span
+                                    key={d.title}
+                                    // href={d.url}
+                                    // target="_blank"
+                                    title={`Launch the ${d.title} in a new tab`}
+                                    // rel="noreferrer"
+                                    onClick={launchImageryExplorerApp.bind(
+                                        null,
+                                        d.url
+                                    )}
+                                >
+                                    <div className="w-full px-2 py-1 text-xs cursor-pointer flex items-center">
+                                        <calcite-icon
+                                            icon="launch"
+                                            scale="s"
+                                            style={{ opacity: '.5' }}
+                                        />
+                                        <span className="ml-2 text-lg">
+                                            {d.title}
+                                        </span>
+                                    </div>
+                                </span>
+                            );
+                        })}
+                </div>
+            )}
         </div>
     );
 };
