@@ -49,7 +49,7 @@ import { Sentinel1MaskTool } from '../MaskTool';
 import { useSaveSentinel1State2HashParams } from '../../hooks/saveSentinel1State2HashParams';
 import { Sentinel1InterestingPlaces } from '../InterestingPlaces';
 import { Sentinel1DynamicModeInfo } from '../Sentinel1DynamicModeInfo/Sentinel1DynamicModeInfo';
-import { Sentinel1DocPanel } from '../DocPanel';
+// import { Sentinel1DocPanel } from '../DocPanel';
 import { useSyncRenderers } from '@shared/hooks/useSyncRenderers';
 
 export const Layout = () => {
@@ -93,7 +93,6 @@ export const Layout = () => {
                         <Sentinel1FunctionSelector />
                     </div>
                 </BottomPanel>
-                <Sentinel1DocPanel />
             </>
         );
     }
@@ -170,7 +169,6 @@ export const Layout = () => {
                     <Sentinel1FunctionSelector />
                 </div>
             </BottomPanel>
-            <Sentinel1DocPanel />
         </>
     );
 };
