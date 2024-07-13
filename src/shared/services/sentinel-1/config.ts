@@ -117,19 +117,19 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
     {
         name: 'False Color dB with DRA',
         description:
-            'RGB false color composite of VV, VH, VV/VH in dB scale with a dynamic stretch applied for visualization only.',
+            'VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth’s surface. VV is particularly good for are good for characterizing soil and water surfaces while VH for canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. The RGB image is composited as follows: Red=VV, Green=VH, B=VV/VH in decibel (dB) scale .',
         label: 'False Color',
     },
     {
         name: 'VV dB Colorized',
         description:
-            'VV data in dB scale with a 7x7 Refined Lee despeckling filter and a dynamic stretch applied for visualization only.',
+            'VV refers to a signal sent in a vertical orientation and returned in a vertical orientation. VV signals are strongest when they reflect off and return from vertically oriented surface features and are good for characterizing soil and water surfaces. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. This is a single band renderer with a color ramp applied for visualization.',
         label: 'Colorized VV',
     },
     {
         name: 'VH dB Colorized',
         description:
-            'VH data in dB scale with a 7x7 Refined Lee despeckling filter and a dynamic stretch applied for visualization only.',
+            'VH refers to a signal sent in a vertical orientation and returned in a horizontal orientation. This cross polarization typically occurs with volumetric targets such as tree canopies. VH signals are strongest when they reflect off and return from horizontally oriented surface features and are good for helping to distinguish canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. This is a single band renderer with a color ramp applied for visualization.',
         label: 'Colorized VH',
     },
     {
@@ -141,7 +141,7 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
     {
         name: 'Water Anomaly Index Colorized',
         description:
-            'Water Anomaly Index with a color map. Increased water anomalies are indicated by bright yellow, orange and red colors. Computed as Ln (0.01 / (0.01 + VV * 2)).',
+            'A water anomaly index with a color map applied. Increased water anomalies are indicated by bright red, orange, and yellow colors. Water anomalies can include oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more. Computed as Ln(0.01/(0.01 + VV*2)).',
         label: 'Water Anomaly',
     },
     // {
