@@ -158,31 +158,31 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     {
         name: 'Natural Color with DRA',
         description:
-            'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied dynamic range adjustment applied.',
+            'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.',
         label: 'Natural Color',
     },
     {
         name: 'Color Infrared with DRA',
         description:
-            'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
+            'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
         label: 'Color IR',
     },
     {
         name: 'Short-wave Infrared with DRA',
         description:
-            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied dynamic range adjustment applied.',
+            'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.',
         label: 'Short-wave IR',
     },
     {
         name: 'Agriculture with DRA',
         description:
-            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
+            'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
         label: 'Agriculture',
     },
     {
         name: 'Bathymetric with DRA',
         description:
-            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied dynamic range adjustment applied. Useful in bathymetric mapping applications.',
+            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applications.',
         label: 'Bathymetric',
     },
     {
