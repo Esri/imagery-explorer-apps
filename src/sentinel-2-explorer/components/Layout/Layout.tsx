@@ -34,7 +34,6 @@ import { AnimationControl } from '@shared/components/AnimationControl';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-// import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
 // import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { appConfig } from '@shared/config';
@@ -44,7 +43,7 @@ import { appConfig } from '@shared/config';
 // import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 import { CloudFilter } from '@shared/components/CloudFilter';
-// import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamicModeInfo';
+import { Sentinel2DynamicModeInfo } from '../Sentinel2DynamicModeInfo/Sentinel2DynamicModeInfo';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -69,8 +68,8 @@ const Layout = () => {
                 <AppHeader title={appConfig.title} />
                 <BottomPanel>
                     <div className="mx-auto">
-                        {/* <LandsatDynamicModeInfo />
-                        <LandsatInterestingPlaces />
+                        <Sentinel2DynamicModeInfo />
+                        {/* <LandsatInterestingPlaces />
                         <LandsatRasterFunctionSelector /> */}
                     </div>
                 </BottomPanel>
@@ -103,8 +102,8 @@ const Layout = () => {
                 <div className="flex flex-grow justify-center shrink-0">
                     {dynamicModeOn ? (
                         <>
-                            {/* <LandsatDynamicModeInfo />
-                            <LandsatInterestingPlaces /> */}
+                            <Sentinel2DynamicModeInfo />
+                            {/* <LandsatInterestingPlaces /> */}
                         </>
                     ) : (
                         <>
