@@ -140,6 +140,39 @@ export type LandsatScene = {
     sunAzimuth: number;
 };
 
+export type Sentinel2Scene = {
+    objectId: number;
+    /**
+     * Sentinel-2 product name
+     * @example Ov_i05_L02_R00000016_C00000004
+     */
+    name: string;
+    /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * acquisitionDate in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * year when this scene was acquired
+     */
+    acquisitionYear: number;
+    /**
+     * month when this scene was acquired
+     */
+    acquisitionMonth: number;
+    /**
+     * percent of cloud cover, the value ranges from 0 - 1
+     */
+    cloudCover: number;
+    /**
+     * percent of cloud cover ranges rounded to integers that ranges from 0 - 100
+     */
+    formattedCloudCover: number;
+};
+
 /**
  * Temporal Profile/Trend Data sampled at user selected location
  */

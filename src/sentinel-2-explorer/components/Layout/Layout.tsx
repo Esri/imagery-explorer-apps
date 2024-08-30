@@ -45,6 +45,7 @@ import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecon
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { Sentinel2DynamicModeInfo } from '../Sentinel2DynamicModeInfo/Sentinel2DynamicModeInfo';
 import { Sentinel2RasterFunctionSelector } from '../RasterFunctionSelector';
+import { useQueryAvailableSentinel2Scenes } from '../../hooks/useQueryAvailableLandsatScenes';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -55,11 +56,11 @@ const Layout = () => {
 
     const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
-    // /**
-    //  * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
-    //  * changes, it will dispatch the query that finds the available landsat scenes.
-    //  */
-    // useQueryAvailableLandsatScenes();
+    /**
+     * This custom hook gets invoked whenever the acquisition year, map center
+     * changes, it will dispatch the query that finds the available sentinel-2 scenes.
+     */
+    useQueryAvailableSentinel2Scenes();
 
     useSaveAppState2HashParams();
 

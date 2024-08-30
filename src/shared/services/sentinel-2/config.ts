@@ -53,7 +53,7 @@ export const SENTINEL_2_SERVICE_URL_DEV =
 
 /**
  * A proxy imagery service which has embedded credential that points to the sentinel-2 imagery service
- * @see https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer
+ * @see https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer
  */
 export const SENTINEL_2_SERVICE_URL =
     TIER === 'development'
@@ -69,6 +69,7 @@ export const FIELD_NAMES = {
     NAME: 'name',
     ACQUISITION_DATE: 'acquisitiondate',
     CLOUD_COVER: 'cloudcover',
+    CATEGORY: 'category',
 };
 
 /**
