@@ -21,12 +21,13 @@ import { Provider as ReduxProvider } from 'react-redux';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
+import { getSentinel2ExplorerStore } from './store';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
     try {
-        // const store = await getSentinel1ExplorerStore();
+        const store = await getSentinel2ExplorerStore();
 
         // const timeExtent = await getTimeExtentOfSentinel1Service();
         // // console.log(timeExtent);
