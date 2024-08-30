@@ -37,7 +37,6 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 // import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { appConfig } from '@shared/config';
-// import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 // import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 // import { LandsatInterestingPlaces } from '../InterestingPlaces';
 // import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
@@ -47,6 +46,7 @@ import { Sentinel2DynamicModeInfo } from '../Sentinel2DynamicModeInfo/Sentinel2D
 import { Sentinel2RasterFunctionSelector } from '../RasterFunctionSelector';
 import { useQueryAvailableSentinel2Scenes } from '../../hooks/useQueryAvailableLandsatScenes';
 import { SceneInfo } from '../SceneInfo';
+import { Sentinel2AnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -91,7 +91,7 @@ const Layout = () => {
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector />
                             <AnimationControl />
-                            {/* <AnalyzeToolSelector4Landsat /> */}
+                            <Sentinel2AnalyzeToolSelector />
                         </ContainerOfSecondaryControls>
                     )}
 
