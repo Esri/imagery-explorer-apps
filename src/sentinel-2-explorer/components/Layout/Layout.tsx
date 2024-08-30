@@ -46,6 +46,7 @@ import { CloudFilter } from '@shared/components/CloudFilter';
 import { Sentinel2DynamicModeInfo } from '../Sentinel2DynamicModeInfo/Sentinel2DynamicModeInfo';
 import { Sentinel2RasterFunctionSelector } from '../RasterFunctionSelector';
 import { useQueryAvailableSentinel2Scenes } from '../../hooks/useQueryAvailableLandsatScenes';
+import { SceneInfo } from '../SceneInfo';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -124,7 +125,7 @@ const Layout = () => {
                                 </div>
                             )}
 
-                            {/* <SceneInfo /> */}
+                            <SceneInfo />
                         </>
                     )}
 

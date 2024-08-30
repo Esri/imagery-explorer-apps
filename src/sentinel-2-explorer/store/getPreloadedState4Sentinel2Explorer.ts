@@ -55,6 +55,7 @@ import {
     initialMaskToolState,
 } from '@shared/store/MaskTool/reducer';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
+import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
 
 /**
  * Map location info that contains center and zoom info from URL Hash Params
@@ -103,16 +104,16 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         mode = 'dynamic';
     }
 
-    // const defaultRasterFunction: Sentinel1FunctionName =
-    //     'False Color dB with DRA';
+    const defaultRasterFunction: Sentinel2FunctionName =
+        'Natural Color with DRA';
 
     // Attempt to extract query parameters from the URL hash.
     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
     // which will serve as the map center.
     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
         ...DefaultQueryParams4ImageryScene,
-        // rasterFunctionName:
-        //     randomInterestingPlace?.renderer || defaultRasterFunction,
+        rasterFunctionName: defaultRasterFunction,
+        // randomInterestingPlace?.renderer || defaultRasterFunction,
     };
 
     const queryParams4SecondaryScene =
