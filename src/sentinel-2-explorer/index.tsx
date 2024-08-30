@@ -22,6 +22,10 @@ import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { getSentinel2ExplorerStore } from './store';
+import { getTimeExtentOfSentinel2Service } from '@shared/services/sentinel-2/getTimeExtent';
+import { SENTINEL2_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-2/config';
+import Map from './components/Map/Map';
+import Layout from './components/Layout/Layout';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -29,26 +33,22 @@ import { getSentinel2ExplorerStore } from './store';
     try {
         const store = await getSentinel2ExplorerStore();
 
-        // const timeExtent = await getTimeExtentOfSentinel1Service();
-        // // console.log(timeExtent);
+        const timeExtent = await getTimeExtentOfSentinel2Service();
+        // console.log(timeExtent);
 
-        // root.render(
-        //     <ReduxProvider store={store}>
-        //         <AppContextProvider
-        //             timeExtent={timeExtent}
-        //             rasterFunctionInfo={SENTINEL1_RASTER_FUNCTION_INFOS}
-        //         >
-        //             <ErrorBoundary>
-        //                 <Map />
-        //                 <Layout />
-        //                 <AboutSentinel1Explorer />
-        //                 <Sentinel1DocPanel />
-        //             </ErrorBoundary>
-        //         </AppContextProvider>
-        //     </ReduxProvider>
-        // );
-
-        root.render(<h1>Sentinel2 Explorer</h1>);
+        root.render(
+            <ReduxProvider store={store}>
+                <AppContextProvider
+                    timeExtent={timeExtent}
+                    rasterFunctionInfo={SENTINEL2_RASTER_FUNCTION_INFOS}
+                >
+                    <ErrorBoundary>
+                        <Map />
+                        <Layout />
+                    </ErrorBoundary>
+                </AppContextProvider>
+            </ReduxProvider>
+        );
     } catch (err) {
         console.log(err);
         root.render(<ErrorPage error={err} />);
