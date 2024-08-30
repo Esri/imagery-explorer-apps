@@ -21,7 +21,7 @@ import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { AnalysisToolQueryLocation } from '@shared/components/AnalysisToolQueryLocation';
 import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
-// import { Popup } from '../PopUp';
+import { Popup } from '../PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
@@ -74,7 +74,7 @@ const Map = () => {
                 <CopyLinkWidget />
             </MapActionButtonsGroup>
 
-            {/* <Popup /> */}
+            <Popup />
             <MapMagnifier />
             <CustomMapArrtribution atrribution="Custom Attribution for Sentinel-2 Imagery service" />
         </MapViewContainer>
