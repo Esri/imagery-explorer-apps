@@ -44,6 +44,7 @@ import { appConfig } from '@shared/config';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { Sentinel2DynamicModeInfo } from '../Sentinel2DynamicModeInfo/Sentinel2DynamicModeInfo';
+import { Sentinel2RasterFunctionSelector } from '../RasterFunctionSelector';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -69,8 +70,8 @@ const Layout = () => {
                 <BottomPanel>
                     <div className="mx-auto">
                         <Sentinel2DynamicModeInfo />
-                        {/* <LandsatInterestingPlaces />
-                        <LandsatRasterFunctionSelector /> */}
+                        {/* <LandsatInterestingPlaces /> */}
+                        <Sentinel2RasterFunctionSelector />
                     </div>
                 </BottomPanel>
             </>
@@ -126,7 +127,7 @@ const Layout = () => {
                         </>
                     )}
 
-                    {/* <LandsatRasterFunctionSelector /> */}
+                    <Sentinel2RasterFunctionSelector />
                 </div>
             </BottomPanel>
         </>
