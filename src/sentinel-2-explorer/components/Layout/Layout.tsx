@@ -47,6 +47,7 @@ import { Sentinel2RasterFunctionSelector } from '../RasterFunctionSelector';
 import { useQueryAvailableSentinel2Scenes } from '../../hooks/useQueryAvailableLandsatScenes';
 import { SceneInfo } from '../SceneInfo';
 import { Sentinel2AnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
+import { Sentinel2MaskTool } from '../MaskTool';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -118,8 +119,8 @@ const Layout = () => {
 
                             {mode === 'analysis' && (
                                 <div className="analyze-tool-and-scene-info-container">
-                                    {/* <MaskTool />
-                                    <TrendTool />
+                                    <Sentinel2MaskTool />
+                                    {/* <TrendTool />
                                     <SpectralTool />
                                     <ChangeCompareTool /> */}
                                 </div>
