@@ -258,15 +258,15 @@ export const getBandIndexesBySpectralIndex = (
     return BandIndexesLookup[spectralIndex];
 };
 
-export const getRasterFunctionBySpectralIndex = (
-    spectralIndex: SpectralIndex
-) => {
-    return {
-        rasterFunction: 'BandArithmetic',
-        rasterFunctionArguments: {
-            Method: 0,
-            BandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
-        },
-        outputPixelType: 'F32',
-    };
-};
+// export const getRasterFunctionBySpectralIndex = (
+//     spectralIndex: SpectralIndex
+// ) => {
+//     return {
+//         rasterFunction: 'BandArithmetic',
+//         rasterFunctionArguments: {
+//             Method: 0,
+//             BandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+//         },
+//         outputPixelType: 'F32',
+//     };
+// };
