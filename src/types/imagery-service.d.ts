@@ -49,7 +49,9 @@ export type SpectralIndex =
     | 'vegetation'
     | 'moisture'
     | 'temperature farhenheit'
-    | 'temperature celcius';
+    | 'temperature celcius'
+    | 'urban'
+    | 'burn';
 
 /**
  * Name of Radar Index for SAR image (e.g. Sentinel-1)

@@ -97,6 +97,9 @@ export const DefaultPixelValueRangeBySelectedIndex: MaskToolPixelValueRangeBySpe
         urban: {
             selectedRange: [0, 1],
         },
+        burn: {
+            selectedRange: [0, 1],
+        },
     };
 
 export const initialMaskToolState: MaskToolState = {
@@ -113,6 +116,7 @@ export const initialMaskToolState: MaskToolState = {
         'water anomaly': [255, 214, 102],
         ship: [255, 0, 21],
         urban: [255, 0, 21],
+        burn: [0, 0, 0],
     },
     // totalVisibleAreaInSqKm: null,
     // countOfVisiblePixels: 0,

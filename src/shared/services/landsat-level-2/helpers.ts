@@ -69,7 +69,7 @@ type LandsatProductInfo = {
  * @see https://pro.arcgis.com/en/pro-app/3.0/help/analysis/raster-functions/band-arithmetic-function.htm
  * @see https://www.esri.com/about/newsroom/arcuser/spectral-library/
  */
-const BandIndexesLookup: Record<SpectralIndex, string> = {
+const BandIndexesLookup: Partial<Record<SpectralIndex, string>> = {
     /**
      * The Normalized Difference Moisture Index (NDMI) is sensitive to the moisture levels in vegetation.
      * It is used to monitor droughts as well as monitor fuel levels in fire-prone areas.
