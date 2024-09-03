@@ -44,6 +44,7 @@ import {
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
 import { useDispatch } from 'react-redux';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
+import { useMaskLayerVisibility } from '@shared/components/MaskLayer/useMaskLayerVisibility';
 
 type Props = {
     mapView?: MapView;
@@ -70,8 +71,6 @@ export const getRasterFunctionBySpectralIndex = (
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const dispatach = useDispatch();
 
-    const mode = useSelector(selectAppMode);
-
     const spectralIndex = useSelector(
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
@@ -87,19 +86,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
-
-    const isVisible = useMemo(() => {
-        if (mode !== 'analysis' || anailysisTool !== 'mask') {
-            return false;
-        }
-
-        if (!objectIdOfSelectedScene) {
-            return false;
-        }
-
-        return true;
-    }, [mode, anailysisTool, objectIdOfSelectedScene]);
+    const isVisible = useMaskLayerVisibility();
 
     const rasterFunction = useMemo(() => {
         return getRasterFunctionBySpectralIndex(spectralIndex);

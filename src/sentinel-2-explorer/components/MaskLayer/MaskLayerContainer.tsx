@@ -39,6 +39,7 @@ import { useDispatch } from 'react-redux';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { getBandIndexesBySpectralIndex } from '@shared/services/sentinel-2/helpers';
+import { useMaskLayerVisibility } from '@shared/components/MaskLayer/useMaskLayerVisibility';
 
 type Props = {
     mapView?: MapView;
@@ -47,8 +48,6 @@ type Props = {
 
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const dispatach = useDispatch();
-
-    const mode = useSelector(selectAppMode);
 
     const spectralIndex = useSelector(
         selectSelectedIndex4MaskTool
@@ -65,19 +64,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
-
-    const isVisible = useMemo(() => {
-        if (mode !== 'analysis' || anailysisTool !== 'mask') {
-            return false;
-        }
-
-        if (!objectIdOfSelectedScene) {
-            return false;
-        }
-
-        return true;
-    }, [mode, anailysisTool, objectIdOfSelectedScene]);
+    const isVisible = useMaskLayerVisibility();
 
     const rasterFunction = useMemo(() => {
         if (!spectralIndex) {
