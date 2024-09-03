@@ -6,9 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## Sentinel-2 Explorer
+
 ### Added
+
 ### Changed
+
 ### Fixed
+
+### Removed
+
+
+## Shared
+
+### Added
+
+### Changed
+- add `useMaskLayerVisibility` custom hook
+
+### Fixed
+
 ### Removed
 
 ## 2024 July Release

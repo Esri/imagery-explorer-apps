@@ -16,13 +16,6 @@ import React, { FC, useEffect, useMemo } from 'react';
 // import { MaskLayer } from './MaskLayer';
 import { useSelector } from 'react-redux';
 import {
-    selectMaskLayerPixelValueRange,
-    selectShouldClipMaskLayer,
-    selectMaskLayerOpcity,
-    selectSelectedIndex4MaskTool,
-    selectMaskLayerPixelColor,
-} from '@shared/store/MaskTool/selectors';
-import {
     selectActiveAnalysisTool,
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
