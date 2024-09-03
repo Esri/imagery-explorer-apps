@@ -36,6 +36,7 @@ import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeW
 import { ZoomToExtent } from '@shared/components/ZoomToExtent';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { Sentinel2Layer } from '../Sentinel2Layer';
+import { Sentinel2MaskLayer } from '../MaskLayer';
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const Map = () => {
                 index={1}
             >
                 <Sentinel2Layer />
-                {/* <MaskLayer /> */}
+                <Sentinel2MaskLayer />
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
             </GroupLayer>
