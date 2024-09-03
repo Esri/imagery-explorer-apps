@@ -66,7 +66,7 @@ const Map = () => {
 
             <MapActionButtonsGroup>
                 <Zoom2NativeScale
-                    nativeScale={113386}
+                    nativeScale={37795}
                     tooltip={"Zoom to Sentinel-2's native resolution"}
                 />
                 <ZoomToExtent serviceUrl={SENTINEL_2_SERVICE_URL} />
