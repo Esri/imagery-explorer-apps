@@ -48,6 +48,7 @@ import { useQueryAvailableSentinel2Scenes } from '../../hooks/useQueryAvailableL
 import { SceneInfo } from '../SceneInfo';
 import { Sentinel2AnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { Sentinel2MaskTool } from '../MaskTool';
+import { Sentinel2ChangeCompareTool } from '../ChangeCompareTool';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -121,8 +122,8 @@ const Layout = () => {
                                 <div className="analyze-tool-and-scene-info-container">
                                     <Sentinel2MaskTool />
                                     {/* <TrendTool />
-                                    <SpectralTool />
-                                    <ChangeCompareTool /> */}
+                                    <SpectralTool /> */}
+                                    <Sentinel2ChangeCompareTool />
                                 </div>
                             )}
 
