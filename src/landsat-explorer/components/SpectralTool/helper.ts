@@ -20,6 +20,7 @@ import {
     SpectralProfileDataByFeatureOfInterest,
 } from './config';
 import { SpectralProfileFeatureOfInterest } from '@shared/components/SpectralProfileTool';
+import { normalizeBandValue } from '@shared/components/SpectralProfileTool/helpers';
 
 /**
  * given an array of band values, find the feature of interest that is most similar to it
@@ -60,14 +61,6 @@ export const findMostSimilarFeatureOfInterest = (
     return output;
 };
 
-const normalizeBandValue = (value: number): number => {
-    // band value should never go above 1
-    value = Math.min(value, 1);
-    // band value should never go below 0
-    value = Math.max(value, 0);
-    return value;
-};
-
 /**
  * Converts an array of Landsat Band Values to an array of LineChartDataItem objects.
  *
@@ -87,7 +80,7 @@ export const formatLandsatBandValuesAsLineChartDataItems = (
     return bandValues.slice(0, 7).map((val, index) => {
         return {
             x: index,
-            y: normalizeBandValue(val),
+            y: normalizeBandValue(val, 0, 1),
         } as LineChartDataItem;
     });
 };

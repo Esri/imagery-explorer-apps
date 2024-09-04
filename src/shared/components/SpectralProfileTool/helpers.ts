@@ -29,3 +29,22 @@ export const getFillColorByFeatureOfInterest = (
         'var(--custom-light-blue-90)'
     );
 };
+
+/**
+ * Get normalized band value to ensure it fits into the range of lower and upper end
+ * @param value band value to normalize
+ * @param lowerEnd min value of the value range
+ * @param upperEnd max value of the value range
+ * @returns {number} normalized value
+ */
+export const normalizeBandValue = (
+    value: number,
+    lowerEnd: number,
+    upperEnd: number
+): number => {
+    // band value should never go above upperEnd
+    value = Math.min(value, upperEnd);
+    // band value should never go below lowerEnd
+    value = Math.max(value, lowerEnd);
+    return value;
+};
