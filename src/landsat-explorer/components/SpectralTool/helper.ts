@@ -13,30 +13,31 @@
  * limitations under the License.
  */
 
-// import { SpectralProfileFeatureOfInterest } from './SpectralToolContainer';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
+
 import {
-    FeatureOfInterests,
-    SpectralProfileDataByFeatureOfInterest,
-} from './config';
-import { SpectralProfileFeatureOfInterest } from '@shared/components/SpectralProfileTool';
+    SpectralProfileDataByLandCoverType,
+    LandCoverType,
+} from '@shared/components/SpectralProfileTool';
 import { normalizeBandValue } from '@shared/components/SpectralProfileTool/helpers';
 
 /**
- * given an array of band values, find the feature of interest that is most similar to it
- * @param bandValues
- * @returns
+ * given an array of band values from user selected location and the spectral data lookup table,
+ * find the land cover type that is most similar to it.
+ *
+ * @param {number[]} bandValues band value from user selected location
+ * @param {Spectr} spectralProfileData lookup table that provide typical spectral profile data for different land cover types
+ * @returns {LandCoverType} name of the land cover type (feature of interest) that has the spectral profile that is most similar to the into band values
  */
-export const findMostSimilarFeatureOfInterest = (
-    bandValues: number[]
-): SpectralProfileFeatureOfInterest => {
+export const findMostSimilarLandCoverType = (
+    bandValues: number[],
+    spectralProfileData: SpectralProfileDataByLandCoverType
+): LandCoverType => {
     // let minSumOfDifferences = Infinity;
     let minSumOfSquaredDifferences = Infinity;
-    let output: SpectralProfileFeatureOfInterest = null;
+    let output: LandCoverType = null;
 
-    for (const [key, value] of Object.entries(
-        SpectralProfileDataByFeatureOfInterest
-    )) {
+    for (const [landCoverType, value] of Object.entries(spectralProfileData)) {
         // let sumOfDiff = 0;
         let sumOfSquaredDiff = 0;
 
@@ -54,7 +55,7 @@ export const findMostSimilarFeatureOfInterest = (
 
         if (sumOfSquaredDiff < minSumOfSquaredDifferences) {
             minSumOfSquaredDifferences = sumOfSquaredDiff;
-            output = key as SpectralProfileFeatureOfInterest;
+            output = landCoverType as LandCoverType;
         }
     }
 

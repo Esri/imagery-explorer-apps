@@ -32,14 +32,15 @@ import { useSelector } from 'react-redux';
 import {
     SpectralProfileChart,
     SpectralProfileChartLegend,
-    SpectralProfileFeatureOfInterest,
+    LandCoverType,
 } from '@shared/components/SpectralProfileTool';
-import { findMostSimilarFeatureOfInterest } from './helper';
-import { FeatureOfInterests } from './config';
+import { findMostSimilarLandCoverType } from './helper';
 import { useSpectralProfileChartData } from './useSpectralProfileChartData';
 import { debounce } from '@shared/utils/snippets/debounce';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
-import { getFillColorByFeatureOfInterest } from '@shared/components/SpectralProfileTool/helpers';
+import { getFillColorByLandCoverType } from '@shared/components/SpectralProfileTool/helpers';
+import { ListOfLandCoverTypes } from '@shared/components/SpectralProfileTool/config';
+import { LandsatSpectralProfileData } from './config';
 
 export const SpectralToolContainer = () => {
     const dispatch = useDispatch();
@@ -59,12 +60,12 @@ export const SpectralToolContainer = () => {
         selectError4SpectralProfileTool
     );
 
-    const [selectedFeatureOfInterest, setSelectedFeatureOfInterest] =
-        useState<SpectralProfileFeatureOfInterest>();
+    const [selectedLandCoverType, setSelectedLandCoverType] =
+        useState<LandCoverType>();
 
     const chartData = useSpectralProfileChartData(
         spectralProfileData,
-        selectedFeatureOfInterest
+        selectedLandCoverType
     );
 
     const spectralProfileToolMessage = useMemo(() => {
@@ -124,10 +125,12 @@ export const SpectralToolContainer = () => {
             return;
         }
 
-        const mostSimilarFeatureOfInterest =
-            findMostSimilarFeatureOfInterest(spectralProfileData);
+        const mostSimilarLandCoverType = findMostSimilarLandCoverType(
+            spectralProfileData,
+            LandsatSpectralProfileData
+        );
 
-        setSelectedFeatureOfInterest(mostSimilarFeatureOfInterest);
+        setSelectedLandCoverType(mostSimilarLandCoverType);
     }, [spectralProfileData]);
 
     if (tool !== 'spectral') {
@@ -145,19 +148,17 @@ export const SpectralToolContainer = () => {
         >
             <AnalysisToolHeader
                 title="Profile"
-                dropdownListOptions={FeatureOfInterests.map(
-                    (featureOfInterest) => {
+                dropdownListOptions={ListOfLandCoverTypes.map(
+                    (landCoverType) => {
                         return {
-                            value: featureOfInterest,
+                            value: landCoverType,
                         };
                     }
                 )}
-                selectedValue={selectedFeatureOfInterest}
+                selectedValue={selectedLandCoverType}
                 tooltipText={`The spectral reflectance of different materials on the Earth's surface is variable. Spectral profiles can be used to identify different land cover types.`}
                 dropdownMenuSelectedItemOnChange={(val) => {
-                    setSelectedFeatureOfInterest(
-                        val as SpectralProfileFeatureOfInterest
-                    );
+                    setSelectedLandCoverType(val as LandCoverType);
                 }}
             />
 
@@ -165,17 +166,15 @@ export const SpectralToolContainer = () => {
                 <>
                     <div className="w-full h-[120px] my-2">
                         <SpectralProfileChart
-                            // featureOfInterest={selectedFeatureOfInterest}
-                            // data={spectralProfileData}
                             chartData={chartData}
                             bottomAxisTickText={LANDSAT_BAND_NAMES.slice(0, 7)}
                         />
                     </div>
 
                     <SpectralProfileChartLegend
-                        featureOfInterestName={selectedFeatureOfInterest}
-                        featureOfInterestFillColor={getFillColorByFeatureOfInterest(
-                            selectedFeatureOfInterest
+                        featureOfInterestName={selectedLandCoverType}
+                        featureOfInterestFillColor={getFillColorByLandCoverType(
+                            selectedLandCoverType
                         )}
                     />
                 </>

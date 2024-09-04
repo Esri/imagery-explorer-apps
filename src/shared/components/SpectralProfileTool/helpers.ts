@@ -1,9 +1,6 @@
-import { SpectralProfileFeatureOfInterest } from './config';
+import { LandCoverType } from './config';
 
-export const FILL_COLOR_BY_FEATURE_OF_INTEREST: Record<
-    SpectralProfileFeatureOfInterest,
-    string
-> = {
+const FILL_COLOR_BY_LAND_COVER_TYPE: Record<LandCoverType, string> = {
     Cloud: '#888888',
     'Clear Water': '#0079F2',
     'Turbid Water': '#76B5E2',
@@ -17,15 +14,15 @@ export const FILL_COLOR_BY_FEATURE_OF_INTEREST: Record<
 };
 
 /**
- * Get fill color that will be used to render the stroke line by featureOfInterest.
- * @param FeatureOfInterests
+ * Get fill color that will be used to render the stroke line by land cover type.
+ * @param {LandCoverType} landCoverType user selected land cover type
  * @returns hex color string
  */
-export const getFillColorByFeatureOfInterest = (
-    FeatureOfInterests: SpectralProfileFeatureOfInterest
+export const getFillColorByLandCoverType = (
+    landCoverType: LandCoverType
 ): string => {
     return (
-        FILL_COLOR_BY_FEATURE_OF_INTEREST[FeatureOfInterests] ||
+        FILL_COLOR_BY_LAND_COVER_TYPE[landCoverType] ||
         'var(--custom-light-blue-90)'
     );
 };
