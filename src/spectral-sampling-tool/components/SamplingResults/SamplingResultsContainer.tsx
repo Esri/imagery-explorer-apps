@@ -16,8 +16,8 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import { useChartData } from './useChartData';
-import { SpectralProfileChart } from '@landsat-explorer/components/SpectralTool/SpectralProfileChart';
-import { Button } from '@shared/components/Button';
+import { SpectralProfileChart } from '@shared/components/SpectralProfileTool';
+// import { Button } from '@shared/components/Button';
 import { SaveSamplingResults } from './SaveSamplingResults';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 

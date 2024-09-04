@@ -29,7 +29,7 @@ import classNames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { SpectralProfileChart } from './SpectralProfileChart';
+import { SpectralProfileChart } from '@shared/components/SpectralProfileTool';
 import { findMostSimilarFeatureOfInterest } from './helper';
 import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
 import { FeatureOfInterests, SpectralProfileFeatureOfInterest } from './config';
