@@ -1,3 +1,3 @@
 export { SpectralProfileChart } from './SpectralProfileChart';
 export { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
-export { SpectralProfileFeatureOfInterest } from './config';
+export type { SpectralProfileFeatureOfInterest } from './config';
