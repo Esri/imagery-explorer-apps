@@ -19,6 +19,7 @@ import { useChartData } from './useChartData';
 import { SpectralProfileChart } from '@landsat-explorer/components/SpectralTool/SpectralProfileChart';
 import { Button } from '@shared/components/Button';
 import { SaveSamplingResults } from './SaveSamplingResults';
+import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 
 export const SamplingResultsContainer = () => {
     const chartData = useChartData();
@@ -45,7 +46,10 @@ export const SamplingResultsContainer = () => {
             ) : (
                 <>
                     <div className="w-full h-[150px] my-2">
-                        <SpectralProfileChart chartData={chartData} />
+                        <SpectralProfileChart
+                            chartData={chartData}
+                            bottomAxisTickText={LANDSAT_BAND_NAMES.slice(0, 7)}
+                        />
                     </div>
 
                     <SaveSamplingResults />

@@ -16,7 +16,6 @@
 import { MultipleLinesChart } from '@vannizhang/react-d3-charts';
 import React, { FC, useMemo } from 'react';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
-import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 
 type Props = {
     /**
@@ -24,9 +23,16 @@ type Props = {
      * for spectral profile tool
      */
     chartData: LineGroupData[];
+    /**
+     * tick lable text for the bottom axis of the chart
+     */
+    bottomAxisTickText: string[];
 };
 
-export const SpectralProfileChart: FC<Props> = ({ chartData }) => {
+export const SpectralProfileChart: FC<Props> = ({
+    chartData,
+    bottomAxisTickText,
+}) => {
     if (!chartData || !chartData.length) {
         return null;
     }
@@ -59,8 +65,9 @@ export const SpectralProfileChart: FC<Props> = ({ chartData }) => {
                     numberOfTicks: 7,
                     tickFormatFunction: (val: number | string, index) => {
                         // console.log(val, index)
-                        const ticks = LANDSAT_BAND_NAMES.slice(0, 7);
-                        return ticks[val as number];
+                        return (
+                            bottomAxisTickText[val as number] || val.toString()
+                        );
                     },
                 }}
                 margin={{

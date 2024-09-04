@@ -35,6 +35,7 @@ import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
 import { FeatureOfInterests, SpectralProfileFeatureOfInterest } from './config';
 import { useSpectralProfileChartData } from './useSpectralProfileChartData';
 import { debounce } from '@shared/utils/snippets/debounce';
+import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 
 export const SpectralToolContainer = () => {
     const dispatch = useDispatch();
@@ -163,6 +164,7 @@ export const SpectralToolContainer = () => {
                             // featureOfInterest={selectedFeatureOfInterest}
                             // data={spectralProfileData}
                             chartData={chartData}
+                            bottomAxisTickText={LANDSAT_BAND_NAMES.slice(0, 7)}
                         />
                     </div>
 
