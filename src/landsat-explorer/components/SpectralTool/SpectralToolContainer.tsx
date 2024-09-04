@@ -32,12 +32,13 @@ import { useSelector } from 'react-redux';
 import {
     SpectralProfileChart,
     SpectralProfileChartLegend,
+    SpectralProfileFeatureOfInterest,
 } from '@shared/components/SpectralProfileTool';
 import {
     findMostSimilarFeatureOfInterest,
     getFillColorByFeatureOfInterest,
 } from './helper';
-import { FeatureOfInterests, SpectralProfileFeatureOfInterest } from './config';
+import { FeatureOfInterests } from './config';
 import { useSpectralProfileChartData } from './useSpectralProfileChartData';
 import { debounce } from '@shared/utils/snippets/debounce';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';

@@ -12,20 +12,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
-
 import React, { FC, useMemo } from 'react';
 // import { SpectralProfileFeatureOfInterest } from './SpectralToolContainer';
 import {
     SpectralProfileDataByFeatureOfInterest,
-    SpectralProfileFeatureOfInterest,
+    // SpectralProfileFeatureOfInterest,
 } from './config';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import {
     formatLandsatBandValuesAsLineChartDataItems,
     getFillColorByFeatureOfInterest,
 } from './helper';
+import { SpectralProfileFeatureOfInterest } from '@shared/components/SpectralProfileTool';
 
 /**
  * This is a custom hook that convert the band values from user selected location and

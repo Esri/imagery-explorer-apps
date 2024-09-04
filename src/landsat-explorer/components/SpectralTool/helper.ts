@@ -18,8 +18,8 @@ import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/ty
 import {
     FeatureOfInterests,
     SpectralProfileDataByFeatureOfInterest,
-    SpectralProfileFeatureOfInterest,
 } from './config';
+import { SpectralProfileFeatureOfInterest } from '@shared/components/SpectralProfileTool';
 
 /**
  * given an array of band values, find the feature of interest that is most similar to it
