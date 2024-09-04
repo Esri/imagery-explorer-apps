@@ -33,8 +33,8 @@ import {
     SpectralProfileChart,
     SpectralProfileChartLegend,
     LandCoverType,
+    useGenerateSpectralProfileChartData,
 } from '@shared/components/SpectralProfileTool';
-import { useSpectralProfileChartData } from './useSpectralProfileChartData';
 import { debounce } from '@shared/utils/snippets/debounce';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import {
@@ -65,8 +65,9 @@ export const SpectralToolContainer = () => {
     const [selectedLandCoverType, setSelectedLandCoverType] =
         useState<LandCoverType>();
 
-    const chartData = useSpectralProfileChartData(
+    const chartData = useGenerateSpectralProfileChartData(
         spectralProfileData,
+        LandsatSpectralProfileData[selectedLandCoverType],
         selectedLandCoverType
     );
 

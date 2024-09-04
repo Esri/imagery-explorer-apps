@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { formatLandsatBandValuesAsLineChartDataItems } from '@landsat-explorer/components/SpectralTool/helper';
+import { formatBandValuesAsLineChartDataItems } from '@shared/components/SpectralProfileTool/helpers';
 import {
     selectIdOfItem2Highlight,
     selectSelectedSpectralSamplingPointData,
@@ -52,7 +52,7 @@ export const useChartData = () => {
         const output: LineGroupData[] = samplingPointsData
             .filter((d) => d.location && d.bandValues)
             .map((d, index) => {
-                const values = formatLandsatBandValuesAsLineChartDataItems(
+                const values = formatBandValuesAsLineChartDataItems(
                     d.bandValues
                 );
 
@@ -77,9 +77,7 @@ export const useChartData = () => {
             output.push({
                 fill: 'var(--custom-light-blue-90)',
                 key: 'average',
-                values: formatLandsatBandValuesAsLineChartDataItems(
-                    averageBandValues
-                ),
+                values: formatBandValuesAsLineChartDataItems(averageBandValues),
                 dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
             });
         }

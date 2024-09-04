@@ -1,3 +1,4 @@
+import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LandCoverType, SpectralProfileDataByLandCoverType } from './config';
 
 const FILL_COLOR_BY_LAND_COVER_TYPE: Record<LandCoverType, string> = {
@@ -89,4 +90,31 @@ export const findMostSimilarLandCoverType = (
     }
 
     return output;
+};
+
+/**
+ * Converts an array of band values to an array of LineChartDataItem objects.
+ *
+ * This function processes an array of numeric band values, selecting up to a specified maximum number of bands.
+ * It normalizes the values to ensure they fall within the range of 0 to 1, and then maps each band value to
+ * a LineChartDataItem object with `x` and `y` coordinates, where `x` represents the band index and `y` the normalized value.
+ *
+ * @param {number[]} bandValues - An array of numeric values representing imagery band values.
+ * @param {number} length - The number of band values to include in the output array.
+ * @returns {LineChartDataItem[]} An array of LineChartDataItem objects with normalized x and y values.
+ */
+export const formatBandValuesAsLineChartDataItems = (
+    bandValues: number[],
+    length?: number
+) => {
+    if (!bandValues || !bandValues.length) {
+        return [];
+    }
+
+    return bandValues.slice(0, length).map((val, index) => {
+        return {
+            x: index,
+            y: normalizeBandValue(val, 0, 1),
+        } as LineChartDataItem;
+    });
 };
