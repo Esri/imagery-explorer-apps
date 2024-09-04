@@ -15,52 +15,7 @@
 
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 
-import {
-    SpectralProfileDataByLandCoverType,
-    LandCoverType,
-} from '@shared/components/SpectralProfileTool';
 import { normalizeBandValue } from '@shared/components/SpectralProfileTool/helpers';
-
-/**
- * given an array of band values from user selected location and the spectral data lookup table,
- * find the land cover type that is most similar to it.
- *
- * @param {number[]} bandValues band value from user selected location
- * @param {Spectr} spectralProfileData lookup table that provide typical spectral profile data for different land cover types
- * @returns {LandCoverType} name of the land cover type (feature of interest) that has the spectral profile that is most similar to the into band values
- */
-export const findMostSimilarLandCoverType = (
-    bandValues: number[],
-    spectralProfileData: SpectralProfileDataByLandCoverType
-): LandCoverType => {
-    // let minSumOfDifferences = Infinity;
-    let minSumOfSquaredDifferences = Infinity;
-    let output: LandCoverType = null;
-
-    for (const [landCoverType, value] of Object.entries(spectralProfileData)) {
-        // let sumOfDiff = 0;
-        let sumOfSquaredDiff = 0;
-
-        const len = Math.min(bandValues.length, value.length);
-
-        for (let i = 0; i < len; i++) {
-            const diff = Math.abs(bandValues[i] - value[i]);
-            // sumOfDiff += diff;
-
-            // By squaring the differences, larger deviations from the expected values will have a
-            // more significant impact on the total difference.
-            // Therefore, it might provide a more accurate measure of similarity between spectral profiles.
-            sumOfSquaredDiff += diff * diff;
-        }
-
-        if (sumOfSquaredDiff < minSumOfSquaredDifferences) {
-            minSumOfSquaredDifferences = sumOfSquaredDiff;
-            output = landCoverType as LandCoverType;
-        }
-    }
-
-    return output;
-};
 
 /**
  * Converts an array of Landsat Band Values to an array of LineChartDataItem objects.

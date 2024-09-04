@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { formatLandsatBandValuesAsLineChartDataItems } from '@landsat-explorer/components/SpectralTool/helper';
 import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,

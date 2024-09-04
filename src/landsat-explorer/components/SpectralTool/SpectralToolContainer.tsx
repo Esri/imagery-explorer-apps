@@ -34,11 +34,13 @@ import {
     SpectralProfileChartLegend,
     LandCoverType,
 } from '@shared/components/SpectralProfileTool';
-import { findMostSimilarLandCoverType } from './helper';
 import { useSpectralProfileChartData } from './useSpectralProfileChartData';
 import { debounce } from '@shared/utils/snippets/debounce';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
-import { getFillColorByLandCoverType } from '@shared/components/SpectralProfileTool/helpers';
+import {
+    getFillColorByLandCoverType,
+    findMostSimilarLandCoverType,
+} from '@shared/components/SpectralProfileTool/helpers';
 import { ListOfLandCoverTypes } from '@shared/components/SpectralProfileTool/config';
 import { LandsatSpectralProfileData } from './config';
 
