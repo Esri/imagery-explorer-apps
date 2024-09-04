@@ -14,12 +14,17 @@
  */
 
 import React, { FC } from 'react';
-// import { SpectralProfileFeatureOfInterest } from './SpectralToolContainer';
-import { SpectralProfileFeatureOfInterest } from './config';
-import { getFillColorByFeatureOfInterest } from './helper';
 
 type Props = {
-    featureOfInterest: SpectralProfileFeatureOfInterest;
+    /**
+     * Name of the matched or user-selected feature of interest to be displayed along with the
+     * spectral profile fetched from the selected location.
+     */
+    featureOfInterestName: string;
+    /**
+     * Fill color of the matched or user-selected feature of interest.
+     */
+    featureOfInterestFillColor: string;
 };
 
 type LegendItemProps = {
@@ -58,9 +63,10 @@ const LegendItem: FC<LegendItemProps> = ({ label, fill, strokeDasharray }) => {
 };
 
 export const SpectralProfileChartLegend: FC<Props> = ({
-    featureOfInterest,
+    featureOfInterestName,
+    featureOfInterestFillColor,
 }) => {
-    if (!featureOfInterest) {
+    if (!featureOfInterestName) {
         return null;
     }
 
@@ -72,8 +78,8 @@ export const SpectralProfileChartLegend: FC<Props> = ({
             />
 
             <LegendItem
-                label={'Spectral profile of ' + featureOfInterest}
-                fill={getFillColorByFeatureOfInterest(featureOfInterest)} //"var(--custom-light-blue-50)"
+                label={'Spectral profile of ' + featureOfInterestName}
+                fill={featureOfInterestFillColor} //"var(--custom-light-blue-50)"
                 strokeDasharray="3 1"
             />
         </div>
