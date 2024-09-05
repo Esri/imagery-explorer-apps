@@ -14,20 +14,14 @@
  */
 
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import {
-    selectActiveAnalysisTool,
-    selectQueryParams4SceneInSelectedMode,
-} from '@shared/store/ImageryScene/selectors';
+import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import {
     selectData4SpectralProfileTool,
     selectError4SpectralProfileTool,
     selectIsLoadingData4SpectralProfileTool,
-    selectQueryLocation4SpectralProfileTool,
 } from '@shared/store/SpectralProfileTool/selectors';
-import { updateSpectralProfileData } from '@shared/store/SpectralProfileTool/thunks';
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
     SpectralProfileChart,
@@ -35,7 +29,6 @@ import {
     LandCoverType,
     useGenerateSpectralProfileChartData,
 } from '@shared/components/SpectralProfileTool';
-import { debounce } from '@shared/utils/snippets/debounce';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import {
     getFillColorByLandCoverType,
@@ -43,16 +36,13 @@ import {
 } from '@shared/components/SpectralProfileTool/helpers';
 import { ListOfLandCoverTypes } from '@shared/components/SpectralProfileTool/config';
 import { LandsatSpectralProfileData } from './config';
+import { Point } from '@arcgis/core/geometry';
+import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
+import { useFetchSpectralProfileToolData } from '@shared/components/SpectralProfileTool/useUpdateSpectralProfileToolData';
+import { FetchPixelValuesFuncParams } from '@shared/store/SpectralProfileTool/thunks';
 
 export const SpectralToolContainer = () => {
-    const dispatch = useDispatch();
-
     const tool = useSelector(selectActiveAnalysisTool);
-
-    const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
-
-    const queryLocation = useSelector(selectQueryLocation4SpectralProfileTool);
 
     const isLoading = useSelector(selectIsLoadingData4SpectralProfileTool);
 
@@ -99,29 +89,24 @@ export const SpectralToolContainer = () => {
         return true;
     }, [isLoading, error4SpectralProfileTool, spectralProfileData]);
 
-    const updateSpectralProfileDataDebounced = useCallback(
-        debounce(async () => {
-            dispatch(updateSpectralProfileData());
-        }, 200),
+    const fetchLandsatPixelValuesFunc = useCallback(
+        async ({
+            point,
+            objectIds,
+            abortController,
+        }: FetchPixelValuesFuncParams) => {
+            const res: number[] = await getLandsatPixelValues({
+                point,
+                objectIds,
+                abortController,
+            });
+
+            return res;
+        },
         []
     );
 
-    // triggers when user selects a new query location
-    useEffect(() => {
-        (async () => {
-            if (tool !== 'spectral') {
-                return;
-            }
-
-            // When the user selects a new acquisition date from the calendar,
-            // the currently selected imagery scene is deselected first,
-            // followed by the selection of a new scene. These two actions occur sequentially,
-            // potentially causing `updateSpectralProfileData` to be called twice in rapid succession,
-            // resulting in unnecessary network requests being triggered. To mitigate this issue,
-            // we need to debounce the `updateSpectralProfileData` function with a 200 ms delay.
-            updateSpectralProfileDataDebounced();
-        })();
-    }, [queryLocation, objectIdOfSelectedScene]);
+    useFetchSpectralProfileToolData(fetchLandsatPixelValuesFunc);
 
     useEffect(() => {
         if (!spectralProfileData || !spectralProfileData.length) {

@@ -26,7 +26,19 @@ import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
 } from '../ImageryScene/selectors';
-import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
+
+export type FetchPixelValuesFuncParams = {
+    point: Point;
+    objectIds: number[];
+    abortController: AbortController;
+};
+
+/**
+ * Type definition for an async function that retrieves the pixel band values from user-selected location.
+ */
+export type FetchPixelValuesFunc = (
+    params: FetchPixelValuesFuncParams
+) => Promise<number[]>;
 
 let abortController: AbortController = null;
 
@@ -43,7 +55,8 @@ export const updateQueryLocation4SpectralProfileTool =
     };
 
 export const updateSpectralProfileData =
-    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+    (fetchPixelValuesFunc: FetchPixelValuesFunc) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const rootState = getState();
 
         const queryLocation =
@@ -69,7 +82,7 @@ export const updateSpectralProfileData =
         dispatch(errorChanged(null));
 
         try {
-            const bandValues = await getLandsatPixelValues({
+            const bandValues = await fetchPixelValuesFunc({
                 point: queryLocation,
                 objectIds: [objectIdOfSelectedScene],
                 abortController,
