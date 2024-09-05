@@ -21,7 +21,7 @@ import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToN
 /**
  * Parameters for the Get Pixel Values
  */
-type GetPixelValuesParams = {
+export type GetPixelValuesParams = {
     /**
      * URL of the imagery service
      */

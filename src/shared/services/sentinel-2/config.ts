@@ -157,3 +157,5 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
 export const SENTINEL2_SERVICE_SORT_FIELD = 'best';
 
 export const SENTINEL2_SERVICE_SORT_VALUE = '0';
+
+export const SENTINEL2_BAND_NAMES: string[] = [];

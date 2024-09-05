@@ -12,51 +12,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { Point } from '@arcgis/core/geometry';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import {
     getPixelValues,
     GetPixelValuesParams,
 } from '../helpers/getPixelValues';
+import { SENTINEL_2_SERVICE_URL } from './config';
 
 type Params = Omit<GetPixelValuesParams, 'serviceURL'>;
+
 /**
  * Run identify task to get values of the pixel that intersects with the input point from the scene with input object id.
  * @param param0
  * @returns
  */
-export const getLandsatPixelValues = async ({
+export const getSentinel2PixelValues = async ({
     point,
     objectIds,
     abortController,
 }: Params): Promise<number[]> => {
-    // const res = await identify({
-    //     serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
-    //     point,
-    //     objectIds,
-    //     abortController,
-    // });
-
-    // if (
-    //     res?.catalogItems?.features &&
-    //     res?.catalogItems?.features.length === 0
-    // ) {
-    //     throw new Error(
-    //         'Failed to fetch pixel values. Please select a location inside of the selected landsat scene.'
-    //     );
-    // }
-
-    // const bandValues = getPixelValuesFromIdentifyTaskResponse(res);
-
-    // if (!bandValues) {
-    //     throw new Error('Identify task does not return band values');
-    // }
-
-    // return bandValues;
-
     const res = await getPixelValues({
-        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        serviceURL: SENTINEL_2_SERVICE_URL,
         point,
         objectIds,
         abortController,
@@ -65,7 +40,7 @@ export const getLandsatPixelValues = async ({
 
     if (!res.length) {
         throw new Error(
-            'Failed to fetch pixel values. Please select a location inside of the selected landsat scene.'
+            'Failed to fetch pixel values. Please select a location inside of the selected sentinel-2 scene.'
         );
     }
 

@@ -17,22 +17,23 @@ import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SpectralProfileTool } from '@shared/components/SpectralProfileTool';
-import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
-import { LandsatSpectralProfileData } from './config';
+import { Sentinel2SpectralProfileData } from './config';
 import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
 import { useFetchSpectralProfileToolData } from '@shared/components/SpectralProfileTool/useUpdateSpectralProfileToolData';
 import { FetchPixelValuesFuncParams } from '@shared/store/SpectralProfileTool/thunks';
+import { SENTINEL2_BAND_NAMES } from '@shared/services/sentinel-2/config';
+import { getSentinel2PixelValues } from '@shared/services/sentinel-2/getSentinel2PixelValues';
 
-export const LandsatSpectralProfileTool = () => {
+export const Sentinel2SpectralProfileTool = () => {
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const fetchLandsatPixelValuesFunc = useCallback(
+    const fetchSentinel2PixelValuesFunc = useCallback(
         async ({
             point,
             objectIds,
             abortController,
         }: FetchPixelValuesFuncParams) => {
-            const res: number[] = await getLandsatPixelValues({
+            const res: number[] = await getSentinel2PixelValues({
                 point,
                 objectIds,
                 abortController,
@@ -43,7 +44,7 @@ export const LandsatSpectralProfileTool = () => {
         []
     );
 
-    useFetchSpectralProfileToolData(fetchLandsatPixelValuesFunc);
+    useFetchSpectralProfileToolData(fetchSentinel2PixelValuesFunc);
 
     if (tool !== 'spectral') {
         return null;
@@ -51,8 +52,8 @@ export const LandsatSpectralProfileTool = () => {
 
     return (
         <SpectralProfileTool
-            spectralProfileDataByLandCoverTypes={LandsatSpectralProfileData}
-            bandNames={LANDSAT_BAND_NAMES.slice(0, 7)}
+            spectralProfileDataByLandCoverTypes={Sentinel2SpectralProfileData}
+            bandNames={SENTINEL2_BAND_NAMES}
         />
     );
 };
