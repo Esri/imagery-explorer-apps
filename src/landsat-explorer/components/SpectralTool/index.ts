@@ -13,4 +13,4 @@
  * limitations under the License.
  */
 
-export { SpectralToolContainer as SpectralTool } from './SpectralToolContainer';
+export { LandsatSpectralProfileTool } from './SpectralToolContainer';

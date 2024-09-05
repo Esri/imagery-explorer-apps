@@ -23,55 +23,15 @@ import {
 import classNames from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-    SpectralProfileChart,
-    SpectralProfileChartLegend,
-    LandCoverType,
-    useGenerateSpectralProfileChartData,
-    SpectralProfileToolMessage,
-} from '@shared/components/SpectralProfileTool';
+import { SpectralProfileTool } from '@shared/components/SpectralProfileTool';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
-import {
-    getFillColorByLandCoverType,
-    findMostSimilarLandCoverType,
-} from '@shared/components/SpectralProfileTool/helpers';
-import { ListOfLandCoverTypes } from '@shared/components/SpectralProfileTool/config';
 import { LandsatSpectralProfileData } from './config';
 import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
 import { useFetchSpectralProfileToolData } from '@shared/components/SpectralProfileTool/useUpdateSpectralProfileToolData';
 import { FetchPixelValuesFuncParams } from '@shared/store/SpectralProfileTool/thunks';
 
-export const SpectralToolContainer = () => {
+export const LandsatSpectralProfileTool = () => {
     const tool = useSelector(selectActiveAnalysisTool);
-
-    const isLoading = useSelector(selectIsLoadingData4SpectralProfileTool);
-
-    const spectralProfileData = useSelector(selectData4SpectralProfileTool);
-
-    const error4SpectralProfileTool = useSelector(
-        selectError4SpectralProfileTool
-    );
-
-    const [selectedLandCoverType, setSelectedLandCoverType] =
-        useState<LandCoverType>();
-
-    const chartData = useGenerateSpectralProfileChartData(
-        spectralProfileData,
-        LandsatSpectralProfileData[selectedLandCoverType],
-        selectedLandCoverType
-    );
-
-    const shouldShowChart = useMemo(() => {
-        if (isLoading || error4SpectralProfileTool) {
-            return false;
-        }
-
-        if (!spectralProfileData || !spectralProfileData.length) {
-            return false;
-        }
-
-        return true;
-    }, [isLoading, error4SpectralProfileTool, spectralProfileData]);
 
     const fetchLandsatPixelValuesFunc = useCallback(
         async ({
@@ -92,60 +52,14 @@ export const SpectralToolContainer = () => {
 
     useFetchSpectralProfileToolData(fetchLandsatPixelValuesFunc);
 
-    useEffect(() => {
-        if (!spectralProfileData || !spectralProfileData.length) {
-            return;
-        }
-
-        const mostSimilarLandCoverType = findMostSimilarLandCoverType(
-            spectralProfileData,
-            LandsatSpectralProfileData
-        );
-
-        setSelectedLandCoverType(mostSimilarLandCoverType);
-    }, [spectralProfileData]);
-
     if (tool !== 'spectral') {
         return null;
     }
 
     return (
-        <div className={classNames('w-full h-full')}>
-            <AnalysisToolHeader
-                title="Profile"
-                dropdownListOptions={ListOfLandCoverTypes.map(
-                    (landCoverType) => {
-                        return {
-                            value: landCoverType,
-                        };
-                    }
-                )}
-                selectedValue={selectedLandCoverType}
-                tooltipText={`The spectral reflectance of different materials on the Earth's surface is variable. Spectral profiles can be used to identify different land cover types.`}
-                dropdownMenuSelectedItemOnChange={(val) => {
-                    setSelectedLandCoverType(val as LandCoverType);
-                }}
-            />
-
-            {shouldShowChart && (
-                <>
-                    <div className="w-full h-[120px] my-2">
-                        <SpectralProfileChart
-                            chartData={chartData}
-                            bottomAxisTickText={LANDSAT_BAND_NAMES.slice(0, 7)}
-                        />
-                    </div>
-
-                    <SpectralProfileChartLegend
-                        featureOfInterestName={selectedLandCoverType}
-                        featureOfInterestFillColor={getFillColorByLandCoverType(
-                            selectedLandCoverType
-                        )}
-                    />
-                </>
-            )}
-
-            <SpectralProfileToolMessage />
-        </div>
+        <SpectralProfileTool
+            spectralProfileDataByLandCoverTypes={LandsatSpectralProfileData}
+            bandNames={LANDSAT_BAND_NAMES.slice(0, 7)}
+        />
     );
 };

@@ -14,7 +14,10 @@
  */
 import React, { FC, useMemo } from 'react';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
-import { LandCoverType } from '@shared/components/SpectralProfileTool';
+import {
+    LandCoverType,
+    SpectralProfileDataByLandCoverType,
+} from '@shared/components/SpectralProfileTool';
 import {
     formatBandValuesAsLineChartDataItems,
     getFillColorByLandCoverType,
@@ -30,26 +33,29 @@ import {
  * taking the minimum of the available bands from both sources.
  *
  * @param {number[]} bandValuesFromSelectedLocation - Array of band values from the user-selected location.
- * @param {number[]} bandValuesFromSelectedLandCoverType - Array of band values from the matched or user-selected land cover type.
+ * @param {spectralProfileDataByLandCoverTypes} spectralProfileDataByLandCoverTypes -  Lookup table that contains spectral profile data for different land cover types.
  * @param {LandCoverType} landCoverType - The name of the matched or user-selected land cover type to be displayed in the Spectral Profile Chart.
  *
  * @returns {LineGroupData[]} An array of LineGroupData objects for populating the Spectral Profile Chart.
  */
 export const useGenerateSpectralProfileChartData = (
     bandValuesFromSelectedLocation: number[],
-    bandValuesFromSelectedLandCoverType: number[],
+    spectralProfileDataByLandCoverTypes: SpectralProfileDataByLandCoverType,
     landCoverType: LandCoverType
 ) => {
     const chartData: LineGroupData[] = useMemo(() => {
         if (
             !bandValuesFromSelectedLocation ||
-            !bandValuesFromSelectedLandCoverType ||
+            !spectralProfileDataByLandCoverTypes ||
             !bandValuesFromSelectedLocation?.length ||
-            !bandValuesFromSelectedLandCoverType?.length ||
+            !spectralProfileDataByLandCoverTypes[landCoverType] ||
             !landCoverType
         ) {
             return [];
         }
+
+        const bandValuesFromSelectedLandCoverType =
+            spectralProfileDataByLandCoverTypes[landCoverType];
 
         // The band values from the selected location may contain more data than necessary for display.
         // To ensure only the required number of band values are used, calculate the appropriate length
@@ -86,7 +92,7 @@ export const useGenerateSpectralProfileChartData = (
         ];
     }, [
         bandValuesFromSelectedLocation,
-        bandValuesFromSelectedLandCoverType,
+        spectralProfileDataByLandCoverTypes,
         landCoverType,
     ]);
 
