@@ -28,6 +28,7 @@ import {
     SpectralProfileChartLegend,
     LandCoverType,
     useGenerateSpectralProfileChartData,
+    SpectralProfileToolMessage,
 } from '@shared/components/SpectralProfileTool';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import {
@@ -36,7 +37,6 @@ import {
 } from '@shared/components/SpectralProfileTool/helpers';
 import { ListOfLandCoverTypes } from '@shared/components/SpectralProfileTool/config';
 import { LandsatSpectralProfileData } from './config';
-import { Point } from '@arcgis/core/geometry';
 import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
 import { useFetchSpectralProfileToolData } from '@shared/components/SpectralProfileTool/useUpdateSpectralProfileToolData';
 import { FetchPixelValuesFuncParams } from '@shared/store/SpectralProfileTool/thunks';
@@ -60,22 +60,6 @@ export const SpectralToolContainer = () => {
         LandsatSpectralProfileData[selectedLandCoverType],
         selectedLandCoverType
     );
-
-    const spectralProfileToolMessage = useMemo(() => {
-        if (isLoading) {
-            return 'fetching spectral profile data';
-        }
-
-        if (error4SpectralProfileTool) {
-            return error4SpectralProfileTool;
-        }
-
-        if (!spectralProfileData.length) {
-            return 'Select a scene and click on the map to identify the spectral profile for the point of interest.';
-        }
-
-        return '';
-    }, [isLoading, error4SpectralProfileTool, spectralProfileData]);
 
     const shouldShowChart = useMemo(() => {
         if (isLoading || error4SpectralProfileTool) {
@@ -126,14 +110,7 @@ export const SpectralToolContainer = () => {
     }
 
     return (
-        <div
-            className={classNames(
-                'w-full h-full'
-                // {
-                //     'is-disabled': !objectIdOfSelectedScene || !queryLocation,
-                // }
-            )}
-        >
+        <div className={classNames('w-full h-full')}>
             <AnalysisToolHeader
                 title="Profile"
                 dropdownListOptions={ListOfLandCoverTypes.map(
@@ -168,14 +145,7 @@ export const SpectralToolContainer = () => {
                 </>
             )}
 
-            {spectralProfileToolMessage && (
-                <div className="w-full mt-10 flex justify-center text-center">
-                    {isLoading && <calcite-loader inline />}
-                    <p className="text-sm opacity-50">
-                        {spectralProfileToolMessage}
-                    </p>
-                </div>
-            )}
+            <SpectralProfileToolMessage />
         </div>
     );
 };
