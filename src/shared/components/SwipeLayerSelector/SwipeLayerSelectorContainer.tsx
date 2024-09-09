@@ -25,6 +25,7 @@ import { useDispatch } from 'react-redux';
 import { SwipeLayerSelector } from './SwipeLayerSelector';
 import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 import { swapMainAndSecondaryScenes } from '@shared/store/ImageryScene/thunks';
+import { AutoSwipeControls } from './AutoSwipeControls';
 
 export const SwipeLayerSelectorContainer = () => {
     const dispatch = useDispatch();
@@ -42,17 +43,32 @@ export const SwipeLayerSelectorContainer = () => {
     }
 
     return (
-        <SwipeLayerSelector
-            selectedSide={isSecondarySceneActive ? 'right' : 'left'}
-            queryParams4SceneOnLeft={queryParams4LeftSide}
-            queryParams4SceneOnRight={queryParams4RightSide}
-            onChange={(value) => {
-                const isSecondarySceneActive = value === 'right';
-                dispatch(isSecondarySceneActiveToggled(isSecondarySceneActive));
-            }}
-            swapButtonOnClick={() => {
-                dispatch(swapMainAndSecondaryScenes());
-            }}
-        />
+        <>
+            <div
+                className="w-full"
+                style={{
+                    height: `calc(100% - 30px)`,
+                }}
+            >
+                <SwipeLayerSelector
+                    selectedSide={isSecondarySceneActive ? 'right' : 'left'}
+                    queryParams4SceneOnLeft={queryParams4LeftSide}
+                    queryParams4SceneOnRight={queryParams4RightSide}
+                    onChange={(value) => {
+                        const isSecondarySceneActive = value === 'right';
+                        dispatch(
+                            isSecondarySceneActiveToggled(
+                                isSecondarySceneActive
+                            )
+                        );
+                    }}
+                    swapButtonOnClick={() => {
+                        dispatch(swapMainAndSecondaryScenes());
+                    }}
+                />
+            </div>
+
+            <AutoSwipeControls />
+        </>
     );
 };

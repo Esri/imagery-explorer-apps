@@ -20,7 +20,7 @@ import { AnimationSpeedControl } from './AnimationSpeedControl';
 
 const ICON_SIZE = 22;
 
-const StartPlayButton = (
+export const StartPlayButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -35,7 +35,7 @@ const StartPlayButton = (
     </svg>
 );
 
-const ContinuePlayButton = (
+export const ContinuePlayButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ const ContinuePlayButton = (
     </svg>
 );
 
-const PauseButton = (
+export const PauseButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -65,7 +65,7 @@ const PauseButton = (
     </svg>
 );
 
-const CloseButton = (
+export const CloseButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

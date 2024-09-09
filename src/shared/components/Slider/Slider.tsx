@@ -23,6 +23,10 @@ type Props = {
      * value of the slider thumb
      */
     value: number;
+    /**
+     * Steps on the slider that restrict user input to specific values,
+     * the slider thumbs may only be moved to the positions specified in the array.
+     */
     steps?: number[];
     /**
      * if true, should show slider tooltip when hover over the slider handlers
@@ -57,11 +61,16 @@ export const Slider: FC<Props> = ({
     const sliderRef = useRef<SliderWidget>();
 
     const init = async () => {
+        steps = steps || [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+
+        const min = steps[0];
+        const max = steps[steps.length - 1];
+
         sliderRef.current = new SliderWidget({
             container: containerRef.current,
-            min: 0,
-            max: 1,
-            steps: steps || [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            min,
+            max,
+            steps: steps,
             values: [value],
             snapOnClickEnabled: false,
             visibleElements: {

@@ -85,3 +85,13 @@ export const selectCountOfVisiblePixels = createSelector(
     (state: RootState) => state.Map.countOfVisiblePixels,
     (countOfVisiblePixels) => countOfVisiblePixels
 );
+
+export const selectAutoSwipeStatus = createSelector(
+    (state: RootState) => state.Map.autoSwipeStatus,
+    (autoSwipeStatus) => autoSwipeStatus
+);
+
+export const selectAutoSwipeSpeed = createSelector(
+    (state: RootState) => state.Map.autoSwipeSpeed,
+    (autoSwipeSpeed) => autoSwipeSpeed
+);

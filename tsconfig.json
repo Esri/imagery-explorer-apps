@@ -13,6 +13,7 @@
         "esModuleInterop": true ,
         // "suppressImplicitAnyIndexErrors": true,
         "downlevelIteration": true,
+        "isolatedModules": true,
         "typeRoots": [  
             "./src/types", 
             "./node_modules/@types"

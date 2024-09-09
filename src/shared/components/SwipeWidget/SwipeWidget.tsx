@@ -20,6 +20,7 @@ import Swipe from '@arcgis/core/widgets/Swipe';
 import MapView from '@arcgis/core/views/MapView';
 import { watch } from '@arcgis/core/core/reactiveUtils';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
+import { useAutoSwipe } from './useAutoSwipe';
 
 type Props = {
     /**
@@ -54,6 +55,8 @@ const SwipeWidget: FC<Props> = ({
     referenceInfoOnToggle,
 }: Props) => {
     const swipeWidgetRef = useRef<Swipe>();
+
+    useAutoSwipe(swipeWidgetRef.current);
 
     const init = async () => {
         // this swipe widget layers should be added at index of one so that the
