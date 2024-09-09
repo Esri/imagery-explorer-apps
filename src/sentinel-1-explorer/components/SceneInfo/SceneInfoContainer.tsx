@@ -13,21 +13,29 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
     SceneInfoTable,
     SceneInfoTableData,
 } from '@shared/components/SceneInfoTable';
-import { useDataFromSelectedSentinel1Scene } from './useDataFromSelectedSentinel1Scene';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
+import { Sentinel1Scene } from '@typing/imagery-service';
+import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 
 export const SceneInfoContainer = () => {
     const mode = useSelector(selectAppMode);
 
-    const data = useDataFromSelectedSentinel1Scene();
+    const fetchSceneByObjectId = useCallback(async (objectId: number) => {
+        const res = await getSentinel1SceneByObjectId(objectId);
+        return res;
+    }, []);
+
+    const data =
+        useDataFromSelectedImageryScene<Sentinel1Scene>(fetchSceneByObjectId);
 
     const tableData: SceneInfoTableData[] = useMemo(() => {
         if (!data) {
