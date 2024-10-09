@@ -93,7 +93,17 @@ export const updateHashParams = (key: UrlHashParamKey, value: string) => {
         hashParams.set(key, value);
     }
 
-    window.location.hash = hashParams.toString();
+    // window.location.hash = hashParams.toString();
+
+    // Get the current URL without the hash
+    const baseUrl = window.location.href.split('#')[0];
+
+    const newHash = hashParams.toString();
+
+    const newUrl = `${baseUrl}#${newHash}`;
+
+    // Update the URL using replaceState
+    window.history.replaceState(null, '', newUrl);
 };
 
 export const getHashParamValueByKey = (key: UrlHashParamKey): string => {
