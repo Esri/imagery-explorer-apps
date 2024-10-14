@@ -327,7 +327,7 @@ export const LANDSAT_MISSIONS = [4, 5, 7, 8, 9];
  * Name of Multispectral Bands of Landsat Level-2 service
  */
 export const LANDSAT_BAND_NAMES = [
-    'Costal',
+    'Coastal',
     'Blue',
     'Green',
     'Red',
