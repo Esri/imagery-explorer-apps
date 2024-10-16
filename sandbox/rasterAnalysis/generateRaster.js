@@ -34,32 +34,32 @@ const submitNewJob = async({
             "rasterFunctionArguments": {
                 "ClippingType": "1",
                 "ClippingGeometry": {
-                    "xmin": -12583429.576139491,
-                    "ymin": 3900032.88035888,
-                    "xmax": -12545688.793423735,
-                    "ymax": 3910963.375403645,
-                    "spatialReference": {
-                        "wkid": 102100,
-                        "latestWkid": 3857,
-                        "xyTolerance": 0.001,
-                        "zTolerance": 0.001,
-                        "mTolerance": 0.001,
-                        "falseX": -20037700,
-                        "falseY": -30241100,
-                        "xyUnits": 10000,
-                        "falseZ": -100000,
-                        "zUnits": 10000,
-                        "falseM": -100000,
-                        "mUnits": 10000
+                    "xmin":-13049612.365756018,
+                    "ymin":3855701.538507286,
+                    "xmax":-13030741.974398142,
+                    "ymax":3859867.356548822,
+                    "spatialReference":{
+                        "wkid":102100,
+                        "latestWkid":3857,
+                        "xyTolerance":0.001,
+                        "zTolerance":0.001,
+                        "mTolerance":0.001,
+                        "falseX":-20037700,
+                        "falseY":-30241100,
+                        "xyUnits":10000,
+                        "falseZ":-100000,
+                        "zUnits":10000,
+                        "falseM":-100000,
+                        "mUnits":10000
                     }
                 },
                 "clippingMethod": "byExtent",
                 "valueLayer": {
                     "url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
                     "name":"LandsatC2L2",
-                    "renderingRule":{
-                        "rasterFunction":"Natural Color with DRA"
-                    },
+                    // "renderingRule":{
+                    //     "rasterFunction":"Natural Color with DRA"
+                    // },
                     "mosaicRule":{
                         "mosaicMethod":"esriMosaicAttribute",
                         "sortField":"best",
@@ -74,9 +74,9 @@ const submitNewJob = async({
             "raster": {
                 "url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
                 "name": "LandsatC2L2",
-                "renderingRule": {
-                    "rasterFunction": "Natural Color with DRA"
-                },
+                // "renderingRule": {
+                //     "rasterFunction": "Natural Color with DRA"
+                // },
                 "mosaicRule": {
                     "mosaicMethod": "esriMosaicAttribute",
                     "sortField": "best",
@@ -95,6 +95,21 @@ const submitNewJob = async({
             "itemProperties": {
                 "itemId": createServiceResponse.itemId
             }
+        }),
+        context: JSON.stringify({
+            "extent":{
+                "xmin":-13049612.365756018,
+                "ymin":3855701.538507286,
+                "xmax":-13030741.974398142,
+                "ymax":3859867.356548822,
+                "spatialReference":{
+                    "wkid":102100,
+                    "latestWkid":3857,
+                    "xyTolerance":0.001,
+                    "zTolerance":0.001,
+                    "mTolerance":0.001,"falseX":-20037700,"falseY":-30241100,"xyUnits":10000,"falseZ":-100000,"zUnits":10000,"falseM":-100000,"mUnits":10000
+                }
+            }
         })
     })
 
@@ -107,10 +122,6 @@ const submitNewJob = async({
 
     if(data.error){
         throw data.error
-    }
-
-    if(!data?.success){
-        throw data
     }
 
     return data;
@@ -213,7 +224,7 @@ const submitNewJob = async({
 const checkJobStatus = async(jobId, token)=>{
 
     const requestURL = RASTER_ANALYSIS_ROOT + `/GenerateRaster/jobs/${jobId}?f=json&token=${token}`;
-    // console.log(requestURL)
+    console.log('requestURL for checkJobStatus', requestURL)
 
     const res = await fetch(requestURL)
     
@@ -240,10 +251,10 @@ const start = async()=>{
             createServiceResponse,
             token
         })
-        console.log(generateRasterNewJob)
+        console.log('generateRasterNewJobRes', generateRasterNewJobRes)
 
         const checkJobStatusRes = await checkJobStatus(generateRasterNewJobRes.jobId, token);
-        console.log(checkJobStatusRes)
+        console.log('checkJobStatusRes', checkJobStatusRes)
 
     } catch(err){
         console.log(err);
