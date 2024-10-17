@@ -66,16 +66,18 @@ export const useGenerateSpectralProfileChartData = (
         );
 
         const lineChartData4SelectedLocation =
-            formatBandValuesAsLineChartDataItems(
-                bandValuesFromSelectedLocation,
-                length
-            );
+            formatBandValuesAsLineChartDataItems({
+                bandValues: bandValuesFromSelectedLocation,
+                title: 'Selected Location',
+                length,
+            });
 
         const lineChartData4SelectedLandCoverType =
-            formatBandValuesAsLineChartDataItems(
-                bandValuesFromSelectedLandCoverType,
-                length
-            );
+            formatBandValuesAsLineChartDataItems({
+                bandValues: bandValuesFromSelectedLandCoverType,
+                title: landCoverType,
+                length,
+            });
 
         return [
             {

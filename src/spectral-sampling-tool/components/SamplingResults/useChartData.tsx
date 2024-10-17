@@ -52,9 +52,9 @@ export const useChartData = () => {
         const output: LineGroupData[] = samplingPointsData
             .filter((d) => d.location && d.bandValues)
             .map((d, index) => {
-                const values = formatBandValuesAsLineChartDataItems(
-                    d.bandValues
-                );
+                const values = formatBandValuesAsLineChartDataItems({
+                    bandValues: d.bandValues,
+                });
 
                 return {
                     fill:
@@ -77,7 +77,9 @@ export const useChartData = () => {
             output.push({
                 fill: 'var(--custom-light-blue-90)',
                 key: 'average',
-                values: formatBandValuesAsLineChartDataItems(averageBandValues),
+                values: formatBandValuesAsLineChartDataItems({
+                    bandValues: averageBandValues,
+                }),
                 dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
             });
         }

@@ -1,6 +1,23 @@
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LandCoverType, SpectralProfileDataByLandCoverType } from './config';
 
+type FormatBandValuesAsLineChartDataItemsParams = {
+    /**
+     * An array of numeric values representing the imagery band values.
+     */
+    bandValues: number[];
+    /**
+     * The title for this series of LineChartDataItem objects.
+     * If provided, the title will appear in the tooltip text.
+     */
+    title?: string;
+    /**
+     * The maximum number of band values to include in the output array.
+     * If not specified, all band values will be used.
+     */
+    length?: number;
+};
+
 const FILL_COLOR_BY_LAND_COVER_TYPE: Record<LandCoverType, string> = {
     Cloud: '#888888',
     'Clear Water': '#0079F2',
@@ -93,28 +110,40 @@ export const findMostSimilarLandCoverType = (
 };
 
 /**
- * Converts an array of band values to an array of LineChartDataItem objects.
+ * Converts an array of band values into an array of LineChartDataItem objects.
  *
- * This function processes an array of numeric band values, selecting up to a specified maximum number of bands.
- * It normalizes the values to ensure they fall within the range of 0 to 1, and then maps each band value to
- * a LineChartDataItem object with `x` and `y` coordinates, where `x` represents the band index and `y` the normalized value.
+ * This function processes an array of numeric band values, optionally limiting the number
+ * of values based on the specified length. It normalizes each value to a range between 0 and 1,
+ * and maps each value to a LineChartDataItem object, where the `x` property represents the band's index
+ * and the `y` property represents the normalized value. Optionally includes a title in the tooltip text.
  *
- * @param {number[]} bandValues - An array of numeric values representing imagery band values.
- * @param {number} length - The number of band values to include in the output array.
- * @returns {LineChartDataItem[]} An array of LineChartDataItem objects with normalized x and y values.
+ * @param {FormatBandValuesAsLineChartDataItemsParams} params - The input parameters, including band values and optional title and length.
+ * @returns {LineChartDataItem[]} An array of LineChartDataItem objects with `x`, `y` coordinates and tooltips.
  */
-export const formatBandValuesAsLineChartDataItems = (
-    bandValues: number[],
-    length?: number
-) => {
+export const formatBandValuesAsLineChartDataItems = ({
+    bandValues,
+    title,
+    length,
+}: FormatBandValuesAsLineChartDataItemsParams) => {
     if (!bandValues || !bandValues.length) {
         return [];
     }
 
-    return bandValues.slice(0, length).map((val, index) => {
+    if (length !== undefined) {
+        bandValues = bandValues.slice(0, length);
+    }
+
+    return bandValues.map((val, index) => {
+        const normalizedY = normalizeBandValue(val, 0, 1);
+
+        const tooltipText = title
+            ? `${title}: ${normalizedY.toFixed(3)}`
+            : normalizedY.toFixed(3);
+
         return {
             x: index,
-            y: normalizeBandValue(val, 0, 1),
+            y: normalizedY,
+            tooltip: tooltipText,
         } as LineChartDataItem;
     });
 };
