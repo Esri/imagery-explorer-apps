@@ -105,7 +105,7 @@ const submitNewJob = async ({
 			"rasterFunctionArguments": {
 				"ClippingType": "1",
 				"ClippingGeometry": CLIPPING_GEOM,
-				// "clippingMethod": "byExtent",
+				"extent": EXTENT_OF_CLIPPING_GEOM, 
 				"valueLayer": {
 					"url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
 					"name": "LandsatC2L2",
