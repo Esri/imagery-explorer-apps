@@ -17,7 +17,7 @@ const generateToken = async()=>{
         // Figured out this workaround to use the referrer as client and pass an arbitary referrer URL... 
         'client': 'referer',
         'referer': 'https://www.arcgis.com', 
-        'expiration': '15',
+        'expiration': '60',
         'f': 'json',
     })
 

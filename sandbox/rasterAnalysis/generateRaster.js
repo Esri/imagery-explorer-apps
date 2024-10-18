@@ -39,17 +39,7 @@ const CLIPPING_GEOM = {
 	],
 	"spatialReference": {
 		"wkid": 102100,
-		"latestWkid": 3857,
-		"xyTolerance": 0.001,
-		"zTolerance": 0.001,
-		"mTolerance": 0.001,
-		"falseX": -20037700,
-		"falseY": -30241100,
-		"xyUnits": 10000,
-		"falseZ": -100000,
-		"zUnits": 10000,
-		"falseM": -100000,
-		"mUnits": 10000
+		"latestWkid": 3857
 	}
 }
 
@@ -60,17 +50,7 @@ const EXTENT_OF_CLIPPING_GEOM = {
 	"ymax": 4058763.9095999971,
 	"spatialReference": {
 		"wkid": 102100,
-		"latestWkid": 3857,
-		"xyTolerance": 0.001,
-		"zTolerance": 0.001,
-		"mTolerance": 0.001,
-		"falseX": -20037700,
-		"falseY": -30241100,
-		"xyUnits": 10000,
-		"falseZ": -100000,
-		"zUnits": 10000,
-		"falseM": -100000,
-		"mUnits": 10000
+		"latestWkid": 3857
 	}
 }
 
@@ -95,46 +75,98 @@ const submitNewJob = async ({
 	createServiceResponse
 }) => {
 	const requestURL = RASTER_ANALYSIS_ROOT + "/GenerateRaster/submitJob";
+	console.log(requestURL)
 
 	const params = new URLSearchParams({
 		f: "json",
 		token,
 		outputType: 'dynamicLayer',
+		// rasterFunction: JSON.stringify({
+		// 	"rasterFunction": "Clip",
+		// 	"rasterFunctionArguments": {
+		// 		"ClippingType": "1",
+		// 		"ClippingGeometry": CLIPPING_GEOM,
+		// 		"extent": EXTENT_OF_CLIPPING_GEOM, 
+		// 		"valueLayer": {
+		// 			"url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
+		// 			"name": "LandsatC2L2",
+		// 			// "renderingRule":{
+		// 			//     "rasterFunction":"Natural Color with DRA"
+		// 			// },
+		// 			"mosaicRule": {
+		// 				"ascending": false,
+		// 				"lockRasterIds": [OBJECTID],
+		// 				"mosaicMethod": "esriMosaicLockRaster",
+		// 				"where": `objectid in (${OBJECTID})`
+		// 			}
+		// 		}
+		// 	}
+		// }),
 		rasterFunction: JSON.stringify({
-			"rasterFunction": "Clip",
-			"rasterFunctionArguments": {
-				"ClippingType": "1",
-				"ClippingGeometry": CLIPPING_GEOM,
-				"extent": EXTENT_OF_CLIPPING_GEOM, 
-				"valueLayer": {
-					"url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
-					"name": "LandsatC2L2",
-					// "renderingRule":{
-					//     "rasterFunction":"Natural Color with DRA"
-					// },
+			"name": "Clip",
+			"description": "Sets the extent of a raster using coordinates or another dataset.",
+			"function": {
+			  "type": "ClipFunction",
+			  "pixelType": "UNKNOWN",
+			  "name": "Clip",
+			  "description": "Sets the extent of a raster using coordinates or another dataset."
+			},
+			"arguments": {
+			  "Raster": {
+				"name": "Raster",
+				"isPublic": false,
+				"isDataset": true,
+				"value": {
+				  	"url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
+				  	"name": "LandsatC2L2",
 					"mosaicRule": {
 						"ascending": false,
 						"lockRasterIds": [OBJECTID],
 						"mosaicMethod": "esriMosaicLockRaster",
 						"where": `objectid in (${OBJECTID})`
 					}
-				}
-			}
-		}),
-		functionArguments: JSON.stringify({
-			"raster": {
-				"url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
-				"name": "LandsatC2L2",
-				// "renderingRule": {
-				//     "rasterFunction": "Natural Color with DRA"
-				// },
-				"mosaicRule": {
-					"ascending": false,
-					"lockRasterIds": [OBJECTID],
-					"mosaicMethod": "esriMosaicLockRaster",
-					"where": `objectid in (${OBJECTID})`
-				}
-			}
+				},
+				"type": "RasterFunctionVariable"
+			  },
+			  "ClippingType": {
+				"name": "ClippingType",
+				"isPublic": false,
+				"isDataset": false,
+				"value": 1,
+				"type": "RasterFunctionVariable"
+			  },
+			  "ClippingRaster": {
+				"name": "ClippingRaster",
+				"isPublic": false,
+				"isDataset": true,
+				"type": "RasterFunctionVariable"
+			  },
+			  "ClippingGeometry": {
+				"name": "ClippingGeometry",
+				"isPublic": false,
+				"isDataset": false,
+				"value": CLIPPING_GEOM,
+				"type": "RasterFunctionVariable"
+			  },
+			//   "Extent": {
+			// 	"name": "Extent",
+			// 	"isPublic": false,
+			// 	"isDataset": false,
+			// 	"value": EXTENT_OF_CLIPPING_GEOM,
+			// 	"type": "RasterFunctionVariable"
+			//   },
+			  "UseInputFeatureGeometry": {
+				"name": "UseInputFeatureGeometry",
+				"isPublic": false,
+				"isDataset": false,
+				"type": "RasterFunctionVariable"
+			  },
+			  "type": "ClipFunctionArguments"
+			},
+			"functionType": 0,
+			"thumbnail": "",
+			"thumbnailEx": "",
+			"help": ""
 		}),
 		OutputName: JSON.stringify({
 			"serviceProperties": {
@@ -146,9 +178,9 @@ const submitNewJob = async ({
 				"itemId": createServiceResponse.itemId
 			}
 		}),
-		context: JSON.stringify({
-			"geometry": CLIPPING_GEOM
-		})
+		// context: JSON.stringify({
+		// 	"geometry": CLIPPING_GEOM
+		// })
 	})
 
 	const res = await fetch(requestURL, {
