@@ -1,0 +1,68 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Intro to ImageryLayer | Sample | ArcGIS Maps SDK for JavaScript 4.30</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.30/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/ImageryLayer",
+        "esri/layers/support/rasterFunctionUtils"
+      ], (Map, MapView, ImageryLayer, rasterFunctionUtils) => {
+        /********************
+         * Create image layer
+         ********************/
+
+        const layer = new ImageryLayer({
+            url: "https://iservicesdev.arcgis.com/LkFyxb9zDq7vAOAm/arcgis/rest/services/Landsat_Level2_456/ImageServer",
+            format: "jpgpng", // server exports in either jpg or png format,
+            rasterFunction: rasterFunctionUtils.remap({
+                rangeMaps: [
+                    { range: [-1, 0], output: null }, // assign null to those pixels that have value below 0
+                    { range: [0, 1], output: 1 } // assign 1 to those pixels that have value above 0
+                ],
+                raster: rasterFunctionUtils.bandArithmeticCustom({
+                    bandIndexes: "(B3-B6)/(B3+B6)" // calculate water index
+                })
+            })
+        });
+
+        /**************************
+         * Add image layer to map
+         *************************/
+
+        const map = new Map({
+          basemap: "satellite",
+          layers: [layer]
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-117.1611, 32.7157],
+          zoom: 12
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
