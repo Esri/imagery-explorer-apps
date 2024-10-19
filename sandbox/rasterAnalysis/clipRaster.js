@@ -317,11 +317,11 @@ const start = async () => {
 		const createServiceResponse = await createHostedImageryService(serviceName, token)
 		// console.log(createServiceResponse)
 
-		const generateRasterNewJobRes = await submitNewJob({
+		const clipRasterNewJobRes = await submitNewJob({
 			createServiceResponse,
 			token
 		})
-		console.log('generateRasterNewJobRes', generateRasterNewJobRes)
+		console.log('clipRasterNewJobRes', clipRasterNewJobRes)
 
 		const checkJobStatusRes = await checkJobStatus(generateRasterNewJobRes.jobId, token);
 		console.log('checkJobStatusRes', checkJobStatusRes)
