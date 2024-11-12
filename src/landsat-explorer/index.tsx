@@ -27,15 +27,22 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
+import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
+import { initEsriOAuth } from '@shared/utils/esri-oauth';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
+
+    await initEsriOAuth({
+        appId: appConfig.appId,
+        portalUrl: AGOL_PORTAL_ROOT,
+    });
 
     try {
         const store = await getLandsatExplorerStore();
 
         const timeExtent = await getTimeExtentOfLandsatService();
-        console.log(timeExtent);
+        // console.log(timeExtent);
 
         root.render(
             <ReduxProvider store={store}>

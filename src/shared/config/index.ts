@@ -28,6 +28,11 @@ type AppConfig = {
      * Sources information to be added to output MP4 file
      */
     animationMetadataSources?: string;
+    /**
+     * App id to be used to create the OAuthInfo object
+     * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+     */
+    appId: string;
 };
 
 /**
@@ -51,11 +56,22 @@ export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
  */
 export const appConfig: AppConfig = config.apps[APP_NAME];
 
+/**
+ * Tier of the app (production or development)
+ */
 export const TIER =
     window.location.host === 'livingatlas.arcgis.com' ||
     window.location.host === 'livingatlasstg.arcgis.com'
         ? 'production'
         : 'development';
+
+/**
+ * Root URL of the ArcGIS Online portal
+ */
+export const AGOL_PORTAL_ROOT =
+    TIER === 'production'
+        ? `https://www.arcgis.com`
+        : `https://devext.arcgis.com`;
 
 /**
  * Get imagery service config by name

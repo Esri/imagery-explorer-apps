@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowSavePanel } from '@shared/store/UI/selectors';
 import { CloseButton } from '../CloseButton';
 import { showSavePanelToggled } from '@shared/store/UI/reducer';
+import { isAnonymouns, signIn } from '@shared/utils/esri-oauth';
 
 export const SavePanelContainer = () => {
     const dispatch = useDispatch();
 
     const shouldShowSavePanel = useSelector(selectShowSavePanel);
+
+    useEffect(() => {
+        if (!shouldShowSavePanel) {
+            return;
+        }
+
+        if (isAnonymouns()) {
+            signIn();
+        }
+    }, [shouldShowSavePanel]);
 
     if (!shouldShowSavePanel) {
         return null;

@@ -6,7 +6,8 @@
             "description": "Landsat multispectral imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.",
             "animationMetadataSources": "Esri, USGS, NASA",
             "pathname": "/landsatexplorer",
-            "entrypoint": "/src/landsat-explorer/index.tsx"
+            "entrypoint": "/src/landsat-explorer/index.tsx",
+            "appId": "LAWwebsite"
         },
         "landcover-explorer": {
             "title": "Esri | Sentinel-2 Land Cover Explorer",
@@ -14,7 +15,8 @@
             "description": "This application displays the land use/land cover (LULC) timeseries layer derived from ESA Sentinel-2 imagery at 10m resolution. ",
             "animationMetadataSources": "Esri, Impact Observatory",
             "pathname": "/landcoverexplorer",
-            "entrypoint": "/src/landcover-explorer/index.tsx"
+            "entrypoint": "/src/landcover-explorer/index.tsx",
+            "appId": "S2LCX"
         },
         "sentinel1-explorer": {
             "title": "Esri | Sentinel-1 Explorer",
@@ -22,7 +24,8 @@
             "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-1 provides",
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel1explorer",
-            "entrypoint": "/src/sentinel-1-explorer/index.tsx"
+            "entrypoint": "/src/sentinel-1-explorer/index.tsx",
+            "appId": ""
         },
         "sentinel2-explorer": {
             "title": "Esri | Sentinel-2 Explorer",
@@ -30,21 +33,24 @@
             "description": "",
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel2explorer",
-            "entrypoint": "/src/sentinel-2-explorer/index.tsx"
+            "entrypoint": "/src/sentinel-2-explorer/index.tsx",
+            "appId": ""
         },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
             "description": "",
             "pathname": "/",
-            "entrypoint": "/src/spectral-sampling-tool/index.tsx"
+            "entrypoint": "/src/spectral-sampling-tool/index.tsx",
+            "appId": ""
         },
         "landsat-surface-temp": {
             "title": "Landsat Surface Temperature",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
             "description": "Explore Landsat surface temperature archive",
             "pathname": "/landsat-surface-temp",
-            "entrypoint": "/src/landsat-surface-temp/index.tsx"
+            "entrypoint": "/src/landsat-surface-temp/index.tsx",
+            "appId": ""
         }
     },
     "services": {

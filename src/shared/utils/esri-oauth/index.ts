@@ -24,10 +24,10 @@ type Props = {
     portalUrl?: string;
 };
 
-type OAuthResponse = {
-    credential: Credential;
-    portal: Portal;
-};
+// type OAuthResponse = {
+//     credential: Credential;
+//     portal: Portal;
+// };
 
 // type IPlatformSelfResponse = {
 //     expires_in: number;
@@ -51,7 +51,7 @@ let credential: Credential = null;
 export const initEsriOAuth = async ({
     appId,
     portalUrl = 'https://www.arcgis.com',
-}: Props): Promise<OAuthResponse> => {
+}: Props): Promise<void> => {
     try {
         // const platformSelfResponse = await platformSelf(appId, portalUrl);
 
@@ -93,10 +93,10 @@ export const initEsriOAuth = async ({
         console.log('anomynous user');
     }
 
-    return {
-        credential,
-        portal: userPortal,
-    };
+    // return {
+    //     credential,
+    //     portal: userPortal,
+    // };
 };
 
 export const signIn = async (): Promise<void> => {
