@@ -202,6 +202,7 @@ const getPreloadedUIState = (): UIState => {
     const proloadedUIState: UIState = {
         ...initialUIState,
         nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
+        showSavePanel: getHashParamValueByKey('savePanel') === 'true',
     };
 
     if (animationSpeed) {
