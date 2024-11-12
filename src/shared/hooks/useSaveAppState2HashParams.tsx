@@ -31,6 +31,7 @@ import { selectMaskToolState } from '@shared/store/MaskTool/selectors';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
+    selectShowSavePanel,
 } from '@shared/store/UI/selectors';
 import {
     saveMaskToolToHashParams,
@@ -86,6 +87,8 @@ export const useSaveAppState2HashParams = () => {
     const temporalCompositeToolState = useSelector(
         selectTemporalCompositeToolState
     );
+
+    const showSavePanel = useSelector(selectShowSavePanel);
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -187,4 +190,8 @@ export const useSaveAppState2HashParams = () => {
     useEffect(() => {
         updateHashParams('hideTerrain', showTerrain === false ? 'true' : null);
     }, [showTerrain]);
+
+    useEffect(() => {
+        updateHashParams('savePanel', showSavePanel ? 'true' : null);
+    }, [showSavePanel]);
 };
