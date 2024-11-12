@@ -37,6 +37,7 @@ import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { ZoomToExtent } from '@shared/components/ZoomToExtent';
+import { OpenSavePanelButton } from '@shared/components/OpenSavePanelButton';
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const Map = () => {
                 <ZoomToExtent serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL} />
                 <ScreenshotWidget />
                 <CopyLinkWidget />
+                <OpenSavePanelButton />
             </MapActionButtonsGroup>
 
             <Popup />
