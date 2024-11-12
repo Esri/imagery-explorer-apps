@@ -87,6 +87,8 @@ export const initEsriOAuth = async ({
         // Setting authMode to immediate signs the user in once loaded
         userPortal.authMode = 'immediate';
 
+        console.log('userPortal', userPortal);
+
         // Once loaded, user is signed in
         await userPortal.load();
     } catch (err) {
