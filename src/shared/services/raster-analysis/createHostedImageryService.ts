@@ -1,6 +1,6 @@
 import { ICreateServiceResult } from '@esri/arcgis-rest-feature-service';
 import { ARCGIS_REST_API_ROOT } from '@shared/config';
-import { getToken, getUserPortal } from '@shared/utils/esri-oauth';
+import { getUserPortal } from '@shared/utils/esri-oauth';
 import { canPublishContent } from './checkUserRoleAndPrivileges';
 
 /**
@@ -10,6 +10,7 @@ import { canPublishContent } from './checkUserRoleAndPrivileges';
  * It constructs the request parameters and posts them to the appropriate API endpoint.
  *
  * @param {string} serviceName - The name of the imagery service to be created.
+ * @param {string} token - The OAuth token of the authenticated user.
  * @returns {Promise<ICreateServiceResult>} A promise that resolves with the API response object containing details of the created service.
  *
  * Example response from the API:
@@ -31,10 +32,9 @@ import { canPublishContent } from './checkUserRoleAndPrivileges';
  * ```
  */
 export const createHostedImageryService = async (
-    serviceName: string
+    serviceName: string,
+    token: string
 ): Promise<ICreateServiceResult> => {
-    const token = getToken();
-
     const portal = getUserPortal();
 
     const { user } = portal;
