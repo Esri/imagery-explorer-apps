@@ -88,6 +88,10 @@ export type UIState = {
      * if true, show Documentation Panel
      */
     showDocPanel?: boolean;
+    /**
+     * if true, show Save Panel
+     */
+    showSavePanel?: boolean;
 };
 
 export const initialUIState: UIState = {
@@ -103,6 +107,7 @@ export const initialUIState: UIState = {
     showDownloadPanel: false,
     showSaveWebMapPanel: false,
     showDocPanel: false,
+    showSavePanel: false,
 };
 
 const slice = createSlice({
@@ -161,6 +166,9 @@ const slice = createSlice({
         showDocPanelToggled: (state) => {
             state.showDocPanel = !state.showDocPanel;
         },
+        showSavePanelToggled: (state) => {
+            state.showSavePanel = !state.showSavePanel;
+        },
     },
 });
 
@@ -180,6 +188,7 @@ export const {
     showDownloadPanelToggled,
     showSaveWebMapPanelToggled,
     showDocPanelToggled,
+    showSavePanelToggled,
 } = slice.actions;
 
 export default reducer;

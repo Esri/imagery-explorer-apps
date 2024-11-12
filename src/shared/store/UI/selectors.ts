@@ -80,3 +80,8 @@ export const selectShouldShowDocPanel = createSelector(
     (state: RootState) => state.UI.showDocPanel,
     (showDocPanel) => showDocPanel
 );
+
+export const selectShowSavePanel = createSelector(
+    (state: RootState) => state.UI.showSavePanel,
+    (showSavePanel) => showSavePanel
+);
