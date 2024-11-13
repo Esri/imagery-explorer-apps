@@ -72,10 +72,10 @@ export const ZoomToExtentContainer: FC<Props> = ({ serviceUrl, mapView }) => {
         setIsLoadingExtent(true);
 
         try {
-            const extent = await getExtentByObjectId(
+            const extent = await getExtentByObjectId({
                 serviceUrl,
-                objectIdOfSelectedScene
-            );
+                objectId: objectIdOfSelectedScene,
+            });
             mapView.extent = extent as any;
         } catch (err) {
             console.log(err);

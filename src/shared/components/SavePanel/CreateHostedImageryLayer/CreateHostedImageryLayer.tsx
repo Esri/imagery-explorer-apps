@@ -1,6 +1,5 @@
-import { publishImageryScene } from '@shared/services/raster-analysis/publishImageryScene';
+import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
-import { ca } from 'date-fns/locale';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -31,14 +30,14 @@ export const CreateHostedImageryLayer: FC<CreateHostedImageryLayerProps> = ({
 
             setError(null);
 
-            const job = await publishImageryScene({
+            const response = await publishSceneAsHostedImageryLayer({
                 objectId: objectIdOfSelectedScene,
                 outputServiceName:
                     'hosted-imagery-service-' + new Date().getTime(),
                 serviceUrl: imageryServiceURL,
             });
 
-            console.log('Generate Raster Job submitted', job);
+            console.log('Generate Raster Job submitted', response);
         } catch (error) {
             console.error('Error creating hosted imagery layer', error);
 

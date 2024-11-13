@@ -25,7 +25,11 @@ export const getCentroidByObjectId = async (
     serviceUrl: string,
     objectId: number
 ): Promise<number[]> => {
-    const extent = await getExtentByObjectId(serviceUrl, objectId, 4326);
+    const extent = await getExtentByObjectId({
+        serviceUrl,
+        objectId,
+        outputSpatialReference: 4326,
+    });
 
     const { ymax, ymin } = extent;
     let { xmax, xmin } = extent;

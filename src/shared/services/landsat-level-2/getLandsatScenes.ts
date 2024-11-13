@@ -371,10 +371,10 @@ export const getExtentOfLandsatSceneByObjectId = async (
 
     // return data?.extent as IExtent;
 
-    const extent = await getExtentByObjectId(
-        LANDSAT_LEVEL_2_SERVICE_URL,
-        objectId
-    );
+    const extent = await getExtentByObjectId({
+        serviceUrl: LANDSAT_LEVEL_2_SERVICE_URL,
+        objectId,
+    });
     return extent;
 };
 

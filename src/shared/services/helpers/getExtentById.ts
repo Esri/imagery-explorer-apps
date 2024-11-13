@@ -16,15 +16,27 @@
 import { IExtent } from '@esri/arcgis-rest-feature-service';
 
 /**
- * Get the extent of a feature from a imagery service using the object Id as key.
- * @param objectId The unique identifier of the feature
- * @returns IExtent The extent of the feature from the input service
+ * Fetches the extent of a feature by its object ID from a given service URL.
+ *
+ * @param {Object} params - The parameters for the function.
+ * @param {string} params.serviceUrl - The URL of the service to query.
+ * @param {number} params.objectId - The object ID of the feature to query.
+ * @param {number} [params.outputSpatialReference] - The spatial reference for the output extent.
+ * @param {string} [params.token] - The token for authentication if required.
+ * @returns {Promise<IExtent>} A promise that resolves to the extent of the feature.
+ * @throws Will throw an error if the query fails or if the response contains an error.
  */
-export const getExtentByObjectId = async (
-    serviceUrl: string,
-    objectId: number,
-    outputSpatialReference?: number
-): Promise<IExtent> => {
+export const getExtentByObjectId = async ({
+    serviceUrl,
+    objectId,
+    outputSpatialReference,
+    token,
+}: {
+    serviceUrl: string;
+    objectId: number;
+    outputSpatialReference?: number;
+    token?: string;
+}): Promise<IExtent> => {
     const queryParams = new URLSearchParams({
         f: 'json',
         returnExtentOnly: 'true',
@@ -33,6 +45,10 @@ export const getExtentByObjectId = async (
 
     if (outputSpatialReference) {
         queryParams.append('outSR', outputSpatialReference.toString());
+    }
+
+    if (token) {
+        queryParams.append('token', token);
     }
 
     const res = await fetch(`${serviceUrl}/query?${queryParams.toString()}`);

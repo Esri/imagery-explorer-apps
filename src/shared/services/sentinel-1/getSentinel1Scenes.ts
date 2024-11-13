@@ -274,7 +274,10 @@ export const getSentinel1SceneByObjectId = async (
 export const getExtentOfSentinel1SceneByObjectId = async (
     objectId: number
 ): Promise<IExtent> => {
-    const extent = await getExtentByObjectId(SENTINEL_1_SERVICE_URL, objectId);
+    const extent = await getExtentByObjectId({
+        serviceUrl: SENTINEL_1_SERVICE_URL,
+        objectId,
+    });
 
     return extent;
 };

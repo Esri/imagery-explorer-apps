@@ -240,7 +240,10 @@ export const getSentinel2FeatureByObjectId = async (
 export const getExtentOfSentinel2SceneByObjectId = async (
     objectId: number
 ): Promise<IExtent> => {
-    const extent = await getExtentByObjectId(SENTINEL_2_SERVICE_URL, objectId);
+    const extent = await getExtentByObjectId({
+        serviceUrl: SENTINEL_2_SERVICE_URL,
+        objectId,
+    });
     return extent;
 };
 

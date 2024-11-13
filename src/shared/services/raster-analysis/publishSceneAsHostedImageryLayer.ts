@@ -18,8 +18,13 @@ type publishImagerySceneParams = {
     outputServiceName: string;
 };
 
+type PublishImagerySceneResponse = {
+    jobId: string;
+    jobStatus: string;
+};
+
 /**
- * Publishes an imagery scene by creating a hosted imagery service and submitting a generate raster job.
+ * Publishes the selected imagery scene as a hosted imagery service by submitting a generate raster job.
  *
  * @param {Object} params - The parameters for publishing the imagery scene.
  * @param {string} params.serviceUrl - The URL of the imagery service.
@@ -27,11 +32,11 @@ type publishImagerySceneParams = {
  * @param {string} params.outputServiceName - The name of the output imagery service.
  * @returns {Promise<void>} A promise that resolves when the imagery scene has been published.
  */
-export const publishImageryScene = async ({
+export const publishSceneAsHostedImageryLayer = async ({
     serviceUrl,
     objectId,
     outputServiceName,
-}: publishImagerySceneParams): Promise<void> => {
+}: publishImagerySceneParams): Promise<PublishImagerySceneResponse> => {
     if (!serviceUrl || !objectId || !outputServiceName) {
         throw new Error(
             'serviceUrl, objectId, and outputServiceName are required parameters'
@@ -45,7 +50,11 @@ export const publishImageryScene = async ({
         token
     );
 
-    const clippingGeometry = await getExtentByObjectId(serviceUrl, objectId);
+    const clippingGeometry = await getExtentByObjectId({
+        serviceUrl,
+        objectId,
+        token,
+    });
 
     const requestURL =
         RASTER_ANALYSIS_SERVER_ROOT_URL + '/GenerateRaster/submitJob';
@@ -140,5 +149,5 @@ export const publishImageryScene = async ({
         throw data.error;
     }
 
-    return data;
+    return data as PublishImagerySceneResponse;
 };
