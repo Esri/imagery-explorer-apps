@@ -27,6 +27,7 @@ import SpectralSamplingTool from './SpectralSamplingTool/reducer';
 import TemporalCompositeTool from './TemporalCompositeTool/reducer';
 import LandcoverExplorer from './LandcoverExplorer/reducer';
 import Sentinel1 from './Sentinel1/reducer';
+import RasterAnalysisJobs from './RasterAnalysisJobs/reducer';
 
 const reducers = combineReducers({
     Map,
@@ -42,6 +43,7 @@ const reducers = combineReducers({
     ChangeCompareTool,
     SpectralSamplingTool,
     TemporalCompositeTool,
+    RasterAnalysisJobs,
 });
 
 export default reducers;
