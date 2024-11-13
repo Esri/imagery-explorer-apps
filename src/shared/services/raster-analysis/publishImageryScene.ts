@@ -32,6 +32,12 @@ export const publishImageryScene = async ({
     objectId,
     outputServiceName,
 }: publishImagerySceneParams): Promise<void> => {
+    if (!serviceUrl || !objectId || !outputServiceName) {
+        throw new Error(
+            'serviceUrl, objectId, and outputServiceName are required parameters'
+        );
+    }
+
     const token = getToken();
 
     const createServiceResponse = await createHostedImageryService(

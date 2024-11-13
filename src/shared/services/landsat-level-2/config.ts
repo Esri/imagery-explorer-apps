@@ -41,20 +41,23 @@ export const LANDSAT_LEVEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?i
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
  */
-const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL =
+const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD =
     'https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer';
+
+const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV =
+    'https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer';
 
 /**
  * Service URL to be used in PROD enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_PROD =
-    serviceConfig.production || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
+    serviceConfig.production || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in DEV enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
-    serviceConfig.development || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
+    serviceConfig.development || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
@@ -64,6 +67,16 @@ export const LANDSAT_LEVEL_2_SERVICE_URL =
     TIER === 'development'
         ? LANDSAT_LEVEL_2_SERVICE_URL_DEV
         : LANDSAT_LEVEL_2_SERVICE_URL_PROD;
+
+/**
+ * URL of the original Landsat Level-2 service.
+ * This URL requires user authentication and a subscription, so it should not be used directly in the map.
+ * The Raster Analysis service will use this URL to generate raster for the selected landsat scene.
+ */
+export const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL =
+    TIER === 'development'
+        ? LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV
+        : LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Field Names Look-up table for LandsatC2L2 (ImageServer)

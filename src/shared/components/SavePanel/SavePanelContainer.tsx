@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowSavePanel } from '@shared/store/UI/selectors';
 import { CloseButton } from '../CloseButton';
@@ -17,13 +17,25 @@ export type SavePanelOption =
     | 'create hosted imagery layer'
     | 'download imagery scene';
 
-export const SavePanelContainer = () => {
+type SavePanelContainerProps = {
+    /**
+     * URL of the imagery service to be used for the generate and download raster job.
+     *
+     * Please note that this URL should be the actual URL of the imagery service, not the URL of the service proxy used by the app.
+     */
+    imageryServiceURL: string;
+};
+
+export const SavePanelContainer: FC<SavePanelContainerProps> = ({
+    imageryServiceURL,
+}) => {
     const dispatch = useDispatch();
 
     const shouldShowSavePanel = useSelector(selectShowSavePanel);
 
-    const [selectedOption, setSelectedOption] =
-        useState<SavePanelOption>('create web map');
+    const [selectedOption, setSelectedOption] = useState<SavePanelOption>(
+        'create hosted imagery layer'
+    );
 
     useEffect(() => {
         if (!shouldShowSavePanel) {
@@ -59,7 +71,9 @@ export const SavePanelContainer = () => {
                         <CreateWebMappingApplication />
                     )}
                     {selectedOption === 'create hosted imagery layer' && (
-                        <CreateHostedImageryLayer />
+                        <CreateHostedImageryLayer
+                            imageryServiceURL={imageryServiceURL}
+                        />
                     )}
                     {selectedOption === 'download imagery scene' && (
                         <DownloadImageryScene />

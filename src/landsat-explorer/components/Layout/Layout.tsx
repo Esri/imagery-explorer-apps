@@ -47,7 +47,7 @@ import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolS
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamicModeInfo';
-import { SavePanel } from '@shared/components/SavePanel';
+import { LandsatSceneSavePanel } from '../SaveLandsatScenePanel/SaveLandsatScenePanel';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -137,7 +137,7 @@ const Layout = () => {
                     <LandsatRasterFunctionSelector />
                 </div>
             </BottomPanel>
-            <SavePanel />
+            <LandsatSceneSavePanel />
         </>
     );
 };
