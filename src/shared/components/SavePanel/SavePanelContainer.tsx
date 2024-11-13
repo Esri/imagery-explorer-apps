@@ -24,10 +24,15 @@ type SavePanelContainerProps = {
      * Please note that this URL should be the actual URL of the imagery service, not the URL of the service proxy used by the app.
      */
     imageryServiceURL: string;
+    /**
+     * ID of the scene to be used for the generate and download raster job.
+     */
+    sceneId: string;
 };
 
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     imageryServiceURL,
+    sceneId,
 }) => {
     const dispatch = useDispatch();
 
@@ -60,10 +65,12 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             />
 
             <div className="mt-4 mx-auto py-12  max-w-6xl w-full">
-                <SaveOptionSelector
+                <div>{sceneId}</div>
+
+                {/* <SaveOptionSelector
                     selectedOption={selectedOption}
                     selecedOptionChanged={setSelectedOption}
-                />
+                /> */}
 
                 <div className="w-full mt-12">
                     {selectedOption === 'create web map' && <CreateWebMap />}
@@ -73,6 +80,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                     {selectedOption === 'create hosted imagery layer' && (
                         <CreateHostedImageryLayer
                             imageryServiceURL={imageryServiceURL}
+                            sceneId={sceneId}
                         />
                     )}
                     {selectedOption === 'download imagery scene' && (
