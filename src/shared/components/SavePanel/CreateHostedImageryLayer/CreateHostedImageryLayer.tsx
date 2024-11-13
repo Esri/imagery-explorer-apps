@@ -1,3 +1,4 @@
+import { useAsync } from '@shared/hooks/useAsync';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import React, { FC } from 'react';
@@ -16,9 +17,9 @@ export const CreateHostedImageryLayer: FC<CreateHostedImageryLayerProps> = ({
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
-
-    const [error, setError] = React.useState<string | null>(null);
+    const { isLoading, error, execute } = useAsync(
+        publishSceneAsHostedImageryLayer
+    );
 
     const submitJob = async () => {
         if (!objectIdOfSelectedScene) {
@@ -26,11 +27,7 @@ export const CreateHostedImageryLayer: FC<CreateHostedImageryLayerProps> = ({
         }
 
         try {
-            setIsSubmitting(true);
-
-            setError(null);
-
-            const response = await publishSceneAsHostedImageryLayer({
+            const response = await execute({
                 objectId: objectIdOfSelectedScene,
                 outputServiceName:
                     'hosted-imagery-service-' + new Date().getTime(),
@@ -40,11 +37,7 @@ export const CreateHostedImageryLayer: FC<CreateHostedImageryLayerProps> = ({
             console.log('Generate Raster Job submitted', response);
         } catch (error) {
             console.error('Error creating hosted imagery layer', error);
-
-            setError(error?.message || 'unknown error');
         }
-
-        setIsSubmitting(false);
     };
 
     return (
@@ -56,11 +49,11 @@ export const CreateHostedImageryLayer: FC<CreateHostedImageryLayerProps> = ({
                             Failed to publish imagery scene:
                         </span>
                     </p>
-                    <p>{error}</p>
+                    <p>{error?.message}</p>
                 </div>
             )}
 
-            {isSubmitting && (
+            {isLoading && (
                 <div>
                     <calcite-loader></calcite-loader>
                 </div>
