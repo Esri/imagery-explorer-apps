@@ -7,8 +7,10 @@ export const JobListContainer = () => {
     const jobs = useSelector(selectAllRasterAnalysisJobs);
 
     return (
-        <div className="w-full mt-4">
-            <div className="mb-2">Pending Jobs</div>
+        <div className="w-full mt-16">
+            <div className="mb-6 pb-1 border-b border-custom-light-blue-25">
+                <div className="uppercase text-lg">Pending Jobs</div>
+            </div>
 
             <JobList data={jobs} />
         </div>

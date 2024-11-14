@@ -77,6 +77,9 @@ module.exports = {
         '2xl': '1620px',
         '3xl': '1920px'
       },
+      gridTemplateColumns: {
+        "save-option-list": "200px 1fr",
+      }
     },
   },
   variants: {
