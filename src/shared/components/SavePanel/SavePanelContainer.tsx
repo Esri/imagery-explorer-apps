@@ -4,12 +4,11 @@ import { selectShowSavePanel } from '@shared/store/UI/selectors';
 import { CloseButton } from '../CloseButton';
 import { showSavePanelToggled } from '@shared/store/UI/reducer';
 import { isAnonymouns, signIn } from '@shared/utils/esri-oauth';
-import { CreateWebMap } from './CreateWebMap/CreateWebMap';
-import { CreateWebMappingApplication } from './CreateWebMappingApplication/CreateWebMappingApplication';
 import { CreateHostedImageryLayer } from './CreateHostedImageryLayer/CreateHostedImageryLayer';
 import { DownloadImageryScene } from './DownloadImageryScene/DownloadImageryScene';
 import { JobList } from './JobList';
 import { useCheckJobStatus } from './useCheckJobStatus';
+import { Header } from './Header/Header';
 // import { SaveOptionSelector } from './SaveOptionSelector/SaveOptionSelector';
 
 // Define the possible options for the save panel
@@ -65,12 +64,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             />
 
             <div className="mt-4 mx-auto py-12  max-w-6xl w-full">
-                <div>{sceneId}</div>
-
-                {/* <SaveOptionSelector
-                    selectedOption={selectedOption}
-                    selecedOptionChanged={setSelectedOption}
-                /> */}
+                <Header sceneId={sceneId} />
 
                 <div className="w-full mt-12">
                     <CreateHostedImageryLayer
@@ -78,8 +72,6 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                         sceneId={sceneId}
                     />
                     <DownloadImageryScene />
-                    <CreateWebMap />
-                    <CreateWebMappingApplication />
                 </div>
 
                 <JobList />
