@@ -5,7 +5,6 @@ import {
 import { RasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/reducer';
 import { selectPendingRasterAnalysisJobs } from '@shared/store/RasterAnalysisJobs/selectors';
 import { updateRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/thunks';
-import { th } from 'date-fns/locale';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
