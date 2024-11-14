@@ -74,16 +74,11 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 <Header sceneId={sceneId} />
 
                 <div className="w-full mt-12 mx-auto">
-                    {/* <CreateHostedImageryLayer
-                        imageryServiceURL={imageryServiceURL}
-                        sceneId={sceneId}
-                    /> */}
+                    {donwloadOptions?.length ? (
+                        <div>
+                            <SaveOptionsListHeader title="Download" />
 
-                    <div>
-                        <SaveOptionsListHeader title="Download" />
-
-                        {donwloadOptions &&
-                            donwloadOptions.map((option) => {
+                            {donwloadOptions.map((option) => {
                                 const { title, subtitle, description } =
                                     saveOptionInfoLookup[option];
 
@@ -99,28 +94,28 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                     />
                                 );
                             })}
-                    </div>
+                        </div>
+                    ) : null}
 
                     <div>
                         <SaveOptionsListHeader title="Publish" />
 
-                        {publishOptions &&
-                            publishOptions.map((option) => {
-                                const { title, subtitle, description } =
-                                    saveOptionInfoLookup[option];
+                        {publishOptions.map((option) => {
+                            const { title, subtitle, description } =
+                                saveOptionInfoLookup[option];
 
-                                return (
-                                    <SaveOptionButton
-                                        key={option}
-                                        title={title}
-                                        subtitle={subtitle}
-                                        desciprtion={description}
-                                        onClick={() => {
-                                            saveOptionOnClick(option);
-                                        }}
-                                    />
-                                );
-                            })}
+                            return (
+                                <SaveOptionButton
+                                    key={option}
+                                    title={title}
+                                    subtitle={subtitle}
+                                    desciprtion={description}
+                                    onClick={() => {
+                                        saveOptionOnClick(option);
+                                    }}
+                                />
+                            );
+                        })}
                     </div>
                 </div>
 

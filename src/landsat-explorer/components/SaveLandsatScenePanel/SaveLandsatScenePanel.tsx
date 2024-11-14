@@ -11,6 +11,7 @@ import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { useSaveOptions } from './useSaveOptions';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -60,22 +61,7 @@ export const LandsatSceneSavePanel = () => {
         }
     };
 
-    const publishOptions: SaveOption[] = useMemo(() => {
-        const output: SaveOption[] = [
-            SaveOption.SaveWebMappingApp,
-            SaveOption.SaveWebMap,
-        ];
-
-        if (objectIdOfSelectedScene) {
-            output.push(SaveOption.PublishScene);
-        }
-
-        return output;
-    }, [objectIdOfSelectedScene]);
-
-    const donwloadOptions: SaveOption[] = useMemo(() => {
-        return [SaveOption.DownloadIndexMask];
-    }, []);
+    const { publishOptions, donwloadOptions } = useSaveOptions();
 
     return (
         <SavePanel
