@@ -1,7 +1,8 @@
-import { getToken } from '@shared/utils/esri-oauth';
+import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
 import { getExtentByObjectId } from '../helpers/getExtentById';
 import { createHostedImageryService } from './createHostedImageryService';
 import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
+import { canUseRasterAnalysis } from './checkUserRoleAndPrivileges';
 
 type publishImagerySceneParams = {
     /**
@@ -37,13 +38,21 @@ export const publishSceneAsHostedImageryLayer = async ({
     objectId,
     outputServiceName,
 }: publishImagerySceneParams): Promise<PublishImagerySceneResponse> => {
+    const token = getToken();
+
+    const user = getSignedInUser();
+
     if (!serviceUrl || !objectId || !outputServiceName) {
         throw new Error(
             'serviceUrl, objectId, and outputServiceName are required parameters'
         );
     }
 
-    const token = getToken();
+    if (canUseRasterAnalysis(user) === false) {
+        throw new Error(
+            'User does not have the required privileges to use raster analysis'
+        );
+    }
 
     const createServiceResponse = await createHostedImageryService(
         outputServiceName,
