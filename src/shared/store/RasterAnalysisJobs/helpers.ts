@@ -1,19 +1,22 @@
 import { APP_NAME } from '@shared/config';
 import { RasterAnalysisJob } from './reducer';
 import { getSignedInUser } from '@shared/utils/esri-oauth';
-import { RasterAnalysisTaskName } from '@shared/services/raster-analysis/checkJobStatus';
+import {
+    RasterAnalysisJobStatus,
+    RasterAnalysisTaskName,
+} from '@shared/services/raster-analysis/checkJobStatus';
 import { SaveOption } from '@shared/constants/saveOptions';
 
 /**
- * Creates a new raster analysis job with the provided parameters.
+ * Generates a new raster analysis job data object with the provided parameters.
  *
- * @param {Object} params - The parameters for creating the raster analysis job.
+ * @param {Object} params - The parameters for generating the raster analysis job data.
  * - `{string} jobId` - The optional ID of the job.
  * - `{RasterAnalysisJobType} jobType` - The type of the raster analysis job.
  * - `{string} sceneId` - The ID of the scene associated with the job.
- * @returns {RasterAnalysisJob} The newly created raster analysis job.
+ * @returns {RasterAnalysisJob} The newly generated raster analysis job data.
  */
-export const createNewRasterAnalysisJob = ({
+export const generateRasterAnalysisJobData = ({
     jobId,
     jobType,
     taskName,
@@ -29,7 +32,7 @@ export const createNewRasterAnalysisJob = ({
     return {
         jobId,
         jobType,
-        status: 'esriJobSubmitted',
+        status: RasterAnalysisJobStatus.Submitted,
         taskName,
         creator: user?.username || 'anonymous',
         createdAt: Date.now(),

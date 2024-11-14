@@ -5,13 +5,13 @@ import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-l
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import { createClipRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
-import { createNewRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/helpers';
-import { jobAdded } from '@shared/store/RasterAnalysisJobs/reducer';
+import { generateRasterAnalysisJobData } from '@shared/store/RasterAnalysisJobs/helpers';
 import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useSaveOptions } from './useSaveOptions';
+import { addNewRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/thunks';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export const LandsatSceneSavePanel = () => {
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const publishSelectedScene = async () => {
+    const publishSelectedScene = async (saveOption: SaveOption) => {
         if (!objectIdOfSelectedScene) {
             return;
         }
@@ -42,22 +42,25 @@ export const LandsatSceneSavePanel = () => {
         });
         // console.log('Generate Raster Job submitted', response);
 
-        const jobData = createNewRasterAnalysisJob({
+        const jobData = generateRasterAnalysisJobData({
             jobId: response.jobId,
-            jobType: SaveOption.PublishScene,
+            jobType: saveOption,
             taskName: 'GenerateRaster',
             sceneId: landsatScene?.name,
         });
         // console.log('jobData', jobData);
 
-        dispatch(jobAdded(jobData));
+        dispatch(addNewRasterAnalysisJob(jobData));
     };
 
     const saveOptionOnClick = (option: SaveOption) => {
         // console.log('saveOptionOnClick', option);
 
-        if (option === SaveOption.PublishScene) {
-            publishSelectedScene();
+        if (
+            option === SaveOption.PublishScene ||
+            option === SaveOption.PublishIndexMask
+        ) {
+            publishSelectedScene(option);
         }
     };
 

@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
+import { RasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
 
 export const selectAllRasterAnalysisJobs = createSelector(
     (state: RootState) => state.RasterAnalysisJobs.jobs.byId,
@@ -16,10 +17,10 @@ export const selectPendingRasterAnalysisJobs = createSelector(
             .filter((job) => {
                 const status = job.status;
                 return (
-                    status !== 'esriJobSucceeded' &&
-                    status !== 'esriJobFailed' &&
-                    status !== 'esriJobCancelled' &&
-                    status !== 'esriJobTimedOut'
+                    status !== RasterAnalysisJobStatus.Succeeded &&
+                    status !== RasterAnalysisJobStatus.Failed &&
+                    status !== RasterAnalysisJobStatus.Cancelled &&
+                    status !== RasterAnalysisJobStatus.TimedOut
                 );
             });
     }

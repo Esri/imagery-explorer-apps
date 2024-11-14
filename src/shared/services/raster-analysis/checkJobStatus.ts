@@ -6,16 +6,17 @@ import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
  *
  * @see https://developers.arcgis.com/rest/services-reference/enterprise/checking-job-status/
  */
-export type RasterAnalysisJobStatus =
-    | 'esriJobSubmitted'
-    | 'esriJobNew'
-    | 'esriJobWaiting'
-    | 'esriJobExecuting'
-    | 'esriJobSucceeded'
-    | 'esriJobFailed'
-    | 'esriJobTimedOut'
-    | 'esriJobCancelling'
-    | 'esriJobCancelled';
+export enum RasterAnalysisJobStatus {
+    Submitted = 'esriJobSubmitted',
+    New = 'esriJobNew',
+    Waiting = 'esriJobWaiting',
+    Executing = 'esriJobExecuting',
+    Succeeded = 'esriJobSucceeded',
+    Failed = 'esriJobFailed',
+    TimedOut = 'esriJobTimedOut',
+    Cancelling = 'esriJobCancelling',
+    Cancelled = 'esriJobCancelled',
+}
 
 /**
  * Output of the raster analysis job
