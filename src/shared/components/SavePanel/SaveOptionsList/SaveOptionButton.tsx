@@ -10,7 +10,7 @@ type SaveOptionButtonProps = {
 };
 
 export const SAVE_OPTION_ROW_CLASS =
-    'grid grid-cols-save-option-list gap-12 items-center';
+    'w-full grid grid-cols-save-option-list gap-4 md:gap-12 items-center';
 
 export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
     title,
