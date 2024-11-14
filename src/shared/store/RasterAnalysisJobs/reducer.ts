@@ -5,21 +5,12 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { AppName } from '@shared/config';
+import { SaveOption } from '@shared/constants/saveOptions';
 import {
     RasterAnalysisJobOutput,
     RasterAnalysisJobStatus,
     RasterAnalysisTaskName,
 } from '@shared/services/raster-analysis/checkJobStatus';
-
-/**
- * Type of the raster analysis job
- */
-export type RasterAnalysisJobType =
-    | 'publish scene'
-    | 'publish mask index'
-    | 'publish change compare'
-    | 'download mask index'
-    | 'download change compare';
 
 export type RasterAnalysisJob = {
     /**
@@ -29,7 +20,7 @@ export type RasterAnalysisJob = {
     /**
      * type of the job
      */
-    jobType: RasterAnalysisJobType;
+    jobType: SaveOption;
     /**
      * name of the raster analysis task
      */

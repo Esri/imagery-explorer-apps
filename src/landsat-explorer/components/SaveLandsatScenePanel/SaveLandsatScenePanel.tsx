@@ -1,52 +1,77 @@
 import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
 import { SavePanel } from '@shared/components/SavePanel';
-import { SaveOption } from '@shared/components/SavePanel/SavePanelContainer';
+import { SaveOption } from '@shared/constants/saveOptions';
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
+import { createClipRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
+import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+import { createNewRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/helpers';
+import { jobAdded } from '@shared/store/RasterAnalysisJobs/reducer';
+import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export const LandsatSceneSavePanel = () => {
+    const dispatch = useDispatch();
+
     const landsatScene = useSelectedLandsatScene();
 
-    // const submitJob = useCallback(async () => {
-    //     if (!objectIdOfSelectedScene) {
-    //         return;
-    //     }
+    const { objectIdOfSelectedScene } =
+        useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    //     try {
-    //         const response = await publishSceneAsHostedImageryLayer({
-    //             objectId: objectIdOfSelectedScene,
-    //             outputServiceName:
-    //                 'hosted-imagery-service-' + new Date().getTime(),
-    //             serviceUrl: imageryServiceURL,
-    //         });
-    //         // console.log('Generate Raster Job submitted', response);
+    const publishSelectedScene = async () => {
+        if (!objectIdOfSelectedScene) {
+            return;
+        }
 
-    //         const jobData = createNewRasterAnalysisJob({
-    //             jobId: response.jobId,
-    //             jobType: 'publish scene',
-    //             taskName: 'GenerateRaster',
-    //             sceneId,
-    //         });
-    //         // console.log('jobData', jobData);
+        const token = getToken();
 
-    //         dispatch(jobAdded(jobData));
-    //     } catch (error) {
-    //         console.error('Error creating hosted imagery layer', error);
-    //     }
-    // }, [execute, imageryServiceURL, objectIdOfSelectedScene, sceneId]);
+        const rasterFunction = await createClipRasterFunction(
+            LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+            objectIdOfSelectedScene,
+            token
+        );
 
-    const saveOptionOnClick = async (option: SaveOption) => {
-        console.log('saveOptionOnClick', option);
+        const response = await publishSceneAsHostedImageryLayer({
+            objectId: objectIdOfSelectedScene,
+            outputServiceName: 'hosted-imagery-service-' + new Date().getTime(),
+            serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+            rasterFunction,
+        });
+        // console.log('Generate Raster Job submitted', response);
+
+        const jobData = createNewRasterAnalysisJob({
+            jobId: response.jobId,
+            jobType: SaveOption.PublishScene,
+            taskName: 'GenerateRaster',
+            sceneId: landsatScene?.name,
+        });
+        // console.log('jobData', jobData);
+
+        dispatch(jobAdded(jobData));
+    };
+
+    const saveOptionOnClick = (option: SaveOption) => {
+        // console.log('saveOptionOnClick', option);
+
+        if (option === SaveOption.PublishScene) {
+            publishSelectedScene();
+        }
     };
 
     const publishOptions: SaveOption[] = useMemo(() => {
-        return [
+        const output: SaveOption[] = [
             SaveOption.SaveWebMappingApp,
             SaveOption.SaveWebMap,
-            SaveOption.PublishScene,
-            SaveOption.PublishIndexMask,
         ];
-    }, []);
+
+        if (objectIdOfSelectedScene) {
+            output.push(SaveOption.PublishScene);
+        }
+
+        return output;
+    }, [objectIdOfSelectedScene]);
 
     const donwloadOptions: SaveOption[] = useMemo(() => {
         return [SaveOption.DownloadIndexMask];

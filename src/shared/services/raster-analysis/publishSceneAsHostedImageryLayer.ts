@@ -1,5 +1,4 @@
 import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
-import { getExtentByObjectId } from '../helpers/getExtentById';
 import { createHostedImageryService } from './createHostedImageryService';
 import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
 import { canUseRasterAnalysis } from './checkUserRoleAndPrivileges';
@@ -17,6 +16,17 @@ type publishImagerySceneParams = {
      * name of the imagery service to store the output of the generate raster job.
      */
     outputServiceName: string;
+    /**
+     * raster function to be applied to the imagery scene
+     *
+     * @see https://developers.arcgis.com/rest/services-reference/enterprise/raster-function-objects/
+     */
+    rasterFunction: {
+        name: string;
+        description: string;
+        function: any;
+        arguments: any;
+    };
 };
 
 type PublishImagerySceneResponse = {
@@ -31,12 +41,14 @@ type PublishImagerySceneResponse = {
  * @param {string} params.serviceUrl - The URL of the imagery service.
  * @param {number} params.objectId - The ID of the imagery scene to be published.
  * @param {string} params.outputServiceName - The name of the output imagery service.
+ * @param {any} params.rasterFunction - The raster function to be applied to the imagery scene.
  * @returns {Promise<void>} A promise that resolves when the imagery scene has been published.
  */
 export const publishSceneAsHostedImageryLayer = async ({
     serviceUrl,
     objectId,
     outputServiceName,
+    rasterFunction,
 }: publishImagerySceneParams): Promise<PublishImagerySceneResponse> => {
     const token = getToken();
 
@@ -59,12 +71,6 @@ export const publishSceneAsHostedImageryLayer = async ({
         token
     );
 
-    const clippingGeometry = await getExtentByObjectId({
-        serviceUrl,
-        objectId,
-        token,
-    });
-
     const requestURL =
         RASTER_ANALYSIS_SERVER_ROOT_URL + '/GenerateRaster/submitJob';
     // console.log(requestURL)
@@ -73,75 +79,7 @@ export const publishSceneAsHostedImageryLayer = async ({
         f: 'json',
         token,
         outputType: 'dynamicLayer',
-        rasterFunction: JSON.stringify({
-            name: 'Clip',
-            description:
-                'Sets the extent of a raster using coordinates or another dataset.',
-            function: {
-                type: 'ClipFunction',
-                pixelType: 'UNKNOWN',
-                name: 'Clip',
-                description:
-                    'Sets the extent of a raster using coordinates or another dataset.',
-            },
-            arguments: {
-                Raster: {
-                    name: 'Raster',
-                    isPublic: false,
-                    isDataset: true,
-                    value: {
-                        // "url": `https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer?token=${token}`,
-                        url: `${serviceUrl}?token=${token}`,
-                        name: 'LandsatC2L2',
-                        mosaicRule: {
-                            ascending: false,
-                            lockRasterIds: [objectId],
-                            mosaicMethod: 'esriMosaicLockRaster',
-                            where: `objectid in (${objectId})`,
-                        },
-                    },
-                    type: 'RasterFunctionVariable',
-                },
-                ClippingType: {
-                    name: 'ClippingType',
-                    isPublic: false,
-                    isDataset: false,
-                    value: 1,
-                    type: 'RasterFunctionVariable',
-                },
-                ClippingRaster: {
-                    name: 'ClippingRaster',
-                    isPublic: false,
-                    isDataset: true,
-                    type: 'RasterFunctionVariable',
-                },
-                ClippingGeometry: {
-                    name: 'ClippingGeometry',
-                    isPublic: false,
-                    isDataset: false,
-                    value: clippingGeometry,
-                    type: 'RasterFunctionVariable',
-                },
-                // "Extent": {
-                //     "name": "Extent",
-                //     "isPublic": false,
-                //     "isDataset": false,
-                //     "value": clippingGeometry,
-                //     "type": "RasterFunctionVariable"
-                // },
-                UseInputFeatureGeometry: {
-                    name: 'UseInputFeatureGeometry',
-                    isPublic: false,
-                    isDataset: false,
-                    type: 'RasterFunctionVariable',
-                },
-                type: 'ClipFunctionArguments',
-            },
-            functionType: 0,
-            thumbnail: '',
-            thumbnailEx: '',
-            help: '',
-        }),
+        rasterFunction: JSON.stringify(rasterFunction),
         OutputName: JSON.stringify({
             serviceProperties: {
                 name: createServiceResponse.name,

@@ -10,15 +10,10 @@ import { useCheckJobStatus } from './useCheckJobStatus';
 import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
-import { SaveOptionInfoLookup } from './config';
-
-export enum SaveOption {
-    PublishScene = 'Publish Scene',
-    PublishIndexMask = 'Publish Index Mask',
-    DownloadIndexMask = 'Download Index Mask',
-    SaveWebMappingApp = 'Save Web Mapping App',
-    SaveWebMap = 'Save Web Map',
-}
+import {
+    SaveOption,
+    saveOptionInfoLookup,
+} from '@shared/constants/saveOptions';
 
 type SavePanelContainerProps = {
     /**
@@ -90,7 +85,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                         {donwloadOptions &&
                             donwloadOptions.map((option) => {
                                 const { title, subtitle, description } =
-                                    SaveOptionInfoLookup[option];
+                                    saveOptionInfoLookup[option];
 
                                 return (
                                     <SaveOptionButton
@@ -112,7 +107,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                         {publishOptions &&
                             publishOptions.map((option) => {
                                 const { title, subtitle, description } =
-                                    SaveOptionInfoLookup[option];
+                                    saveOptionInfoLookup[option];
 
                                 return (
                                     <SaveOptionButton
