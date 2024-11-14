@@ -7,7 +7,7 @@ import { isAnonymouns, signIn } from '@shared/utils/esri-oauth';
 import { CreateHostedImageryLayer } from './CreateHostedImageryLayer/CreateHostedImageryLayer';
 import { JobList } from './JobList';
 import { useCheckJobStatus } from './useCheckJobStatus';
-import { Header } from './Header/Header';
+import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
 
