@@ -8,7 +8,9 @@ import { CreateWebMap } from './CreateWebMap/CreateWebMap';
 import { CreateWebMappingApplication } from './CreateWebMappingApplication/CreateWebMappingApplication';
 import { CreateHostedImageryLayer } from './CreateHostedImageryLayer/CreateHostedImageryLayer';
 import { DownloadImageryScene } from './DownloadImageryScene/DownloadImageryScene';
-import { SaveOptionSelector } from './SaveOptionSelector/SaveOptionSelector';
+import { JobList } from './JobList';
+import { useCheckJobStatus } from './useCheckJobStatus';
+// import { SaveOptionSelector } from './SaveOptionSelector/SaveOptionSelector';
 
 // Define the possible options for the save panel
 export type SavePanelOption =
@@ -38,9 +40,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
     const shouldShowSavePanel = useSelector(selectShowSavePanel);
 
-    const [selectedOption, setSelectedOption] = useState<SavePanelOption>(
-        'create hosted imagery layer'
-    );
+    useCheckJobStatus();
 
     useEffect(() => {
         if (!shouldShowSavePanel) {
@@ -73,20 +73,16 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 /> */}
 
                 <div className="w-full mt-12">
-                    {selectedOption === 'create web map' && <CreateWebMap />}
-                    {selectedOption === 'create web mapping application' && (
-                        <CreateWebMappingApplication />
-                    )}
-                    {selectedOption === 'create hosted imagery layer' && (
-                        <CreateHostedImageryLayer
-                            imageryServiceURL={imageryServiceURL}
-                            sceneId={sceneId}
-                        />
-                    )}
-                    {selectedOption === 'download imagery scene' && (
-                        <DownloadImageryScene />
-                    )}
+                    <CreateHostedImageryLayer
+                        imageryServiceURL={imageryServiceURL}
+                        sceneId={sceneId}
+                    />
+                    <DownloadImageryScene />
+                    <CreateWebMap />
+                    <CreateWebMappingApplication />
                 </div>
+
+                <JobList />
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import { APP_NAME } from '@shared/config';
 import { RasterAnalysisJob, RasterAnalysisJobType } from './reducer';
 import { getSignedInUser } from '@shared/utils/esri-oauth';
+import { RasterAnalysisTaskName } from '@shared/services/raster-analysis/checkJobStatus';
 
 /**
  * Creates a new raster analysis job with the provided parameters.
@@ -14,10 +15,12 @@ import { getSignedInUser } from '@shared/utils/esri-oauth';
 export const createNewRasterAnalysisJob = ({
     jobId,
     jobType,
+    taskName,
     sceneId,
 }: {
     jobId?: string;
     jobType: RasterAnalysisJobType;
+    taskName: RasterAnalysisTaskName;
     sceneId: string;
 }): RasterAnalysisJob => {
     const user = getSignedInUser();
@@ -25,7 +28,8 @@ export const createNewRasterAnalysisJob = ({
     return {
         jobId,
         jobType,
-        status: 'pending',
+        status: 'esriJobSubmitted',
+        taskName,
         creator: user?.username || 'anonymous',
         createdAt: Date.now(),
         sceneId,

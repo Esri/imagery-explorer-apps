@@ -113,6 +113,13 @@ export const publishSceneAsHostedImageryLayer = async ({
                     value: clippingGeometry,
                     type: 'RasterFunctionVariable',
                 },
+                // "Extent": {
+                //     "name": "Extent",
+                //     "isPublic": false,
+                //     "isDataset": false,
+                //     "value": clippingGeometry,
+                //     "type": "RasterFunctionVariable"
+                // },
                 UseInputFeatureGeometry: {
                     name: 'UseInputFeatureGeometry',
                     isPublic: false,

@@ -47,6 +47,7 @@ export const CreateHostedImageryLayer: FC<CreateHostedImageryLayerProps> = ({
             const jobData = createNewRasterAnalysisJob({
                 jobId: response.jobId,
                 jobType: 'publish scene',
+                taskName: 'GenerateRaster',
                 sceneId,
             });
             // console.log('jobData', jobData);

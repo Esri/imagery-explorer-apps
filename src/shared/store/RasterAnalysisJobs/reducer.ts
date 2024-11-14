@@ -5,6 +5,11 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { AppName } from '@shared/config';
+import {
+    RasterAnalysisJobOutput,
+    RasterAnalysisJobStatus,
+    RasterAnalysisTaskName,
+} from '@shared/services/raster-analysis/checkJobStatus';
 
 /**
  * Type of the raster analysis job
@@ -16,32 +21,6 @@ export type RasterAnalysisJobType =
     | 'download mask index'
     | 'download change compare';
 
-/**
- * Status of the job
- */
-export type RasterAnalysisJobStatus =
-    | 'pending'
-    | 'processing'
-    | 'completed'
-    | 'failed';
-
-/**
- * Output of the raster analysis job
- */
-type RasterAnalysisJobOutput = {
-    jobId: string;
-    jobStause: string;
-    messages: {
-        type: string;
-        description: string;
-    }[];
-    results: {
-        outputRaster: {
-            paramUrl: string;
-        };
-    };
-};
-
 export type RasterAnalysisJob = {
     /**
      * id of the job
@@ -51,6 +30,10 @@ export type RasterAnalysisJob = {
      * type of the job
      */
     jobType: RasterAnalysisJobType;
+    /**
+     * name of the raster analysis task
+     */
+    taskName: RasterAnalysisTaskName;
     /**
      * status of the job
      */
