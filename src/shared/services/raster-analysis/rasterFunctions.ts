@@ -1,25 +1,28 @@
-import { getExtentByObjectId } from '../helpers/getExtentById';
+import { Geometry } from '@arcgis/core/geometry';
 
 /**
- * Get the raster function to clip a raster by a geometry
- * @param serviceUrl service url of the input imagery service
- * @param objectId object id of the imagery scene
- * @param token user token
- * @returns object with the raster function to clip a raster by a geometry
+ * Creates a raster function to clip a raster based on the provided geometry.
  *
- * @see https://developers.arcgis.com/rest/services-reference/enterprise/raster-function-objects/#clip
+ * @param {Object} params - Parameters to define the raster clip function.
+ * @param {string} params.serviceUrl - URL of the imagery service.
+ * @param {number} params.objectId - Object ID of the imagery scene to clip.
+ * @param {string} params.token - User token for authentication.
+ * @param {Geometry} params.clippingGeometry - Geometry object used to clip the raster.
+ * @returns {Promise<Object>} Object representing the raster function for clipping.
+ *
+ * @see {@link https://developers.arcgis.com/rest/services-reference/enterprise/raster-function-objects/#clip}
  */
-export const createClipRasterFunction = async (
-    serviceUrl: string,
-    objectId: number,
-    token: string
-) => {
-    const clippingGeometry = await getExtentByObjectId({
-        serviceUrl,
-        objectId,
-        token,
-    });
-
+export const createClipRasterFunction = async ({
+    serviceUrl,
+    objectId,
+    token,
+    clippingGeometry,
+}: {
+    serviceUrl: string;
+    objectId: number;
+    token: string;
+    clippingGeometry: Geometry;
+}) => {
     return {
         name: 'Clip',
         description:
@@ -90,18 +93,39 @@ export const createClipRasterFunction = async (
     };
 };
 
-export const createMaskIndexRasterFunction = async (
-    serviceUrl: string,
-    objectId: number,
-    token: string,
-    bandIndexes: string,
-    pixelValueRanges: number[]
-) => {
-    const clipRasterFunction = await createClipRasterFunction(
+/**
+ * Creates a raster function to generate a mask or index using clipping and band arithmetic.
+ *
+ * @param {Object} params - Parameters for creating the mask/index function.
+ * @param {string} params.serviceUrl - URL of the imagery service.
+ * @param {number} params.objectId - Object ID of the imagery scene.
+ * @param {string} params.token - User token for authentication.
+ * @param {string} params.bandIndexes - Comma-separated string of band indexes.
+ * @param {number[]} params.pixelValueRange - Array specifying pixel value ranges.
+ * @param {Geometry} params.clippingGeometry - Geometry object used for clipping.
+ * @returns {Promise<Object>} Object representing the mask/index raster function.
+ */
+export const createMaskIndexRasterFunction = async ({
+    serviceUrl,
+    objectId,
+    token,
+    bandIndexes,
+    pixelValueRange,
+    clippingGeometry,
+}: {
+    serviceUrl: string;
+    objectId: number;
+    token: string;
+    bandIndexes: string;
+    pixelValueRange: number[];
+    clippingGeometry: Geometry;
+}) => {
+    const clipRasterFunction = await createClipRasterFunction({
         serviceUrl,
         objectId,
-        token
-    );
+        token,
+        clippingGeometry,
+    });
 
     return {
         name: 'Remap',
@@ -164,7 +188,7 @@ export const createMaskIndexRasterFunction = async (
                 //     0,
                 //     1
                 // ],
-                value: pixelValueRanges,
+                value: pixelValueRange,
                 type: 'RasterFunctionVariable',
             },
             OutputValues: {

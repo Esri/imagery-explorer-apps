@@ -22,6 +22,8 @@ import {
 } from '@shared/store/MaskTool/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { Geometry } from '@arcgis/core/geometry';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -46,20 +48,28 @@ export const LandsatSceneSavePanel = () => {
 
         let rasterFunction: any = null;
 
+        const feature = await getLandsatFeatureByObjectId(
+            objectIdOfSelectedScene
+        );
+
+        const clippingGeometry = feature?.geometry as Geometry;
+
         if (saveOption === SaveOption.PublishScene) {
-            rasterFunction = await createClipRasterFunction(
-                LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                objectIdOfSelectedScene,
-                token
-            );
-        } else if (saveOption === SaveOption.PublishIndexMask) {
-            rasterFunction = await createMaskIndexRasterFunction(
-                LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                objectIdOfSelectedScene,
+            rasterFunction = await createClipRasterFunction({
+                serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                objectId: objectIdOfSelectedScene,
                 token,
-                getBandIndexesBySpectralIndex(spectralIndex),
-                selectedRange
-            );
+                clippingGeometry,
+            });
+        } else if (saveOption === SaveOption.PublishIndexMask) {
+            rasterFunction = await createMaskIndexRasterFunction({
+                serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                objectId: objectIdOfSelectedScene,
+                token,
+                bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+                pixelValueRange: selectedRange,
+                clippingGeometry,
+            });
         }
 
         const response = await publishSceneAsHostedImageryLayer({
