@@ -8,11 +8,11 @@ import { Geometry } from '@arcgis/core/geometry';
  * @param {number} params.objectId - Object ID of the imagery scene to clip.
  * @param {string} params.token - User token for authentication.
  * @param {Geometry} params.clippingGeometry - Geometry object used to clip the raster.
- * @returns {Promise<Object>} Object representing the raster function for clipping.
+ * @returns {Object} Object representing the raster function for clipping.
  *
  * @see {@link https://developers.arcgis.com/rest/services-reference/enterprise/raster-function-objects/#clip}
  */
-export const createClipRasterFunction = async ({
+export const createClipRasterFunction = ({
     serviceUrl,
     objectId,
     token,
@@ -103,9 +103,9 @@ export const createClipRasterFunction = async ({
  * @param {string} params.bandIndexes - Comma-separated string of band indexes.
  * @param {number[]} params.pixelValueRange - Array specifying pixel value ranges.
  * @param {Geometry} params.clippingGeometry - Geometry object used for clipping.
- * @returns {Promise<Object>} Object representing the mask/index raster function.
+ * @returns {Object} Object representing the mask/index raster function.
  */
-export const createMaskIndexRasterFunction = async ({
+export const createMaskIndexRasterFunction = ({
     serviceUrl,
     objectId,
     token,
@@ -120,7 +120,7 @@ export const createMaskIndexRasterFunction = async ({
     pixelValueRange: number[];
     clippingGeometry: Geometry;
 }) => {
-    const clipRasterFunction = await createClipRasterFunction({
+    const clipRasterFunction = createClipRasterFunction({
         serviceUrl,
         objectId,
         token,

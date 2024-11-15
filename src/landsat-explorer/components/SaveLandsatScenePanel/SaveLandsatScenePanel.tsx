@@ -55,14 +55,14 @@ export const LandsatSceneSavePanel = () => {
         const clippingGeometry = feature?.geometry as Geometry;
 
         if (saveOption === SaveOption.PublishScene) {
-            rasterFunction = await createClipRasterFunction({
+            rasterFunction = createClipRasterFunction({
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 objectId: objectIdOfSelectedScene,
                 token,
                 clippingGeometry,
             });
         } else if (saveOption === SaveOption.PublishIndexMask) {
-            rasterFunction = await createMaskIndexRasterFunction({
+            rasterFunction = createMaskIndexRasterFunction({
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 objectId: objectIdOfSelectedScene,
                 token,
