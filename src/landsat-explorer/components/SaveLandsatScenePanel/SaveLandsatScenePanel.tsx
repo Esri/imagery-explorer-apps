@@ -16,6 +16,13 @@ import { useSelector } from 'react-redux';
 import { useSaveOptions } from './useSaveOptions';
 import { addNewRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/thunks';
 
+import {
+    selectMaskLayerPixelValueRange,
+    selectSelectedIndex4MaskTool,
+} from '@shared/store/MaskTool/selectors';
+import { SpectralIndex } from '@typing/imagery-service';
+import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
 
@@ -23,6 +30,12 @@ export const LandsatSceneSavePanel = () => {
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
+
+    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+
+    const spectralIndex = useSelector(
+        selectSelectedIndex4MaskTool
+    ) as SpectralIndex;
 
     const publishSelectedScene = async (saveOption: SaveOption) => {
         if (!objectIdOfSelectedScene) {
@@ -44,8 +57,8 @@ export const LandsatSceneSavePanel = () => {
                 LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 objectIdOfSelectedScene,
                 token,
-                '(B3-B6)/(B3+B6)',
-                [0, 1]
+                getBandIndexesBySpectralIndex(spectralIndex),
+                selectedRange
             );
         }
 
