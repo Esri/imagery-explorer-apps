@@ -3,7 +3,10 @@ import { SavePanel } from '@shared/components/SavePanel';
 import { SaveOption } from '@shared/constants/saveOptions';
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
-import { createClipRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
+import {
+    createClipRasterFunction,
+    createMaskIndexRasterFunction,
+} from '@shared/services/raster-analysis/rasterFunctions';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import { generateRasterAnalysisJobData } from '@shared/store/RasterAnalysisJobs/helpers';
 import { getToken } from '@shared/utils/esri-oauth';
@@ -28,11 +31,23 @@ export const LandsatSceneSavePanel = () => {
 
         const token = getToken();
 
-        const rasterFunction = await createClipRasterFunction(
-            LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-            objectIdOfSelectedScene,
-            token
-        );
+        let rasterFunction: any = null;
+
+        if (saveOption === SaveOption.PublishScene) {
+            rasterFunction = await createClipRasterFunction(
+                LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                objectIdOfSelectedScene,
+                token
+            );
+        } else if (saveOption === SaveOption.PublishIndexMask) {
+            rasterFunction = await createMaskIndexRasterFunction(
+                LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                objectIdOfSelectedScene,
+                token,
+                '(B3-B6)/(B3+B6)',
+                [0, 1]
+            );
+        }
 
         const response = await publishSceneAsHostedImageryLayer({
             objectId: objectIdOfSelectedScene,
