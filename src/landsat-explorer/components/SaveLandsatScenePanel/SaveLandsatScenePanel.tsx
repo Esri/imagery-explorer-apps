@@ -24,6 +24,7 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { Geometry } from '@arcgis/core/geometry';
+import { set } from 'date-fns';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -39,20 +40,27 @@ export const LandsatSceneSavePanel = () => {
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
+    const [jobsWaitingToBeCreated, setJobsWaitingToBeCreated] = useState<
+        SaveOption[]
+    >([]);
+
     const publishSelectedScene = async (saveOption: SaveOption) => {
         if (!objectIdOfSelectedScene) {
             return;
         }
 
-        const token = getToken();
+        // add the save option to the list of jobs waiting to be created
+        setJobsWaitingToBeCreated((prev) => [...prev, saveOption]);
 
-        let rasterFunction: any = null;
+        const token = getToken();
 
         const feature = await getLandsatFeatureByObjectId(
             objectIdOfSelectedScene
         );
 
         const clippingGeometry = feature?.geometry as Geometry;
+
+        let rasterFunction: any = null;
 
         if (saveOption === SaveOption.PublishScene) {
             rasterFunction = createClipRasterFunction({
@@ -89,6 +97,11 @@ export const LandsatSceneSavePanel = () => {
         // console.log('jobData', jobData);
 
         dispatch(addNewRasterAnalysisJob(jobData));
+
+        // remove the save option from the list of jobs waiting to be created
+        setJobsWaitingToBeCreated((prev) =>
+            prev.filter((option) => option !== saveOption)
+        );
     };
 
     const saveOptionOnClick = (option: SaveOption) => {
@@ -109,7 +122,8 @@ export const LandsatSceneSavePanel = () => {
             // imageryServiceURL={LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL}
             sceneId={landsatScene?.name}
             publishOptions={publishOptions}
-            donwloadOptions={donwloadOptions}
+            downloadOptions={donwloadOptions}
+            jobsWaitingToBeCreated={jobsWaitingToBeCreated}
             saveOptionOnClick={saveOptionOnClick}
         />
     );

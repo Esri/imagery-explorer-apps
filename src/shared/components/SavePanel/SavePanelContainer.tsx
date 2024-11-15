@@ -15,9 +15,12 @@ import {
     saveOptionInfoLookup,
 } from '@shared/constants/saveOptions';
 
+/**
+ * Props for the SavePanelContainer component.
+ */
 type SavePanelContainerProps = {
     /**
-     * ID of the scene to be used for the generate and download raster job.
+     * ID of the scene to be used for generating and downloading the raster job.
      */
     sceneId: string;
     /**
@@ -27,10 +30,15 @@ type SavePanelContainerProps = {
     /**
      * Options for downloading the scene.
      */
-    donwloadOptions: SaveOption[];
+    downloadOptions: SaveOption[];
+    /**
+     * Options that are waiting for the job to be created.
+     * This is used to disable options that are currently waiting for the job to be created.
+     */
+    jobsWaitingToBeCreated: SaveOption[];
     /**
      * Emits when a save option is clicked.
-     * @param {SaveOption} option
+     * @param {SaveOption} option - The save option that was clicked.
      * @returns {void}
      */
     saveOptionOnClick: (option: SaveOption) => void;
@@ -39,7 +47,8 @@ type SavePanelContainerProps = {
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     sceneId,
     publishOptions,
-    donwloadOptions,
+    downloadOptions,
+    jobsWaitingToBeCreated,
     saveOptionOnClick,
 }) => {
     const dispatch = useDispatch();
@@ -74,11 +83,11 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 <Header sceneId={sceneId} />
 
                 <div className="w-full mt-12 mx-auto">
-                    {donwloadOptions?.length ? (
+                    {downloadOptions?.length ? (
                         <div>
                             <SaveOptionsListHeader title="Download" />
 
-                            {donwloadOptions.map((option) => {
+                            {downloadOptions.map((option) => {
                                 const { title, subtitle, description } =
                                     saveOptionInfoLookup[option];
 
@@ -88,6 +97,9 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                         title={title}
                                         subtitle={subtitle}
                                         desciprtion={description}
+                                        disabled={jobsWaitingToBeCreated.includes(
+                                            option
+                                        )}
                                         onClick={() => {
                                             saveOptionOnClick(option);
                                         }}
@@ -110,6 +122,9 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                     title={title}
                                     subtitle={subtitle}
                                     desciprtion={description}
+                                    disabled={jobsWaitingToBeCreated.includes(
+                                        option
+                                    )}
                                     onClick={() => {
                                         saveOptionOnClick(option);
                                     }}

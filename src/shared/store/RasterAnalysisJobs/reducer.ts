@@ -14,7 +14,7 @@ import {
 
 export type RasterAnalysisJob = {
     /**
-     * id of the job
+     * id of the raster analysis job
      */
     jobId: string;
     /**
