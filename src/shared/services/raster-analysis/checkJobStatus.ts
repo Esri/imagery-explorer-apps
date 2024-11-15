@@ -1,46 +1,6 @@
 import { getToken } from '@shared/utils/esri-oauth';
 import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
-
-/**
- * Status of the job
- *
- * @see https://developers.arcgis.com/rest/services-reference/enterprise/checking-job-status/
- */
-export enum RasterAnalysisJobStatus {
-    Submitted = 'esriJobSubmitted',
-    New = 'esriJobNew',
-    Waiting = 'esriJobWaiting',
-    Executing = 'esriJobExecuting',
-    Succeeded = 'esriJobSucceeded',
-    Failed = 'esriJobFailed',
-    TimedOut = 'esriJobTimedOut',
-    Cancelling = 'esriJobCancelling',
-    Cancelled = 'esriJobCancelled',
-}
-
-/**
- * Output of the raster analysis job
- */
-export type RasterAnalysisJobOutput = {
-    jobId: string;
-    jobStatus: RasterAnalysisJobStatus;
-    messages: {
-        type: string;
-        description: string;
-    }[];
-    results: {
-        outputRaster: {
-            paramUrl: string;
-        };
-    };
-    progress?: {
-        type: string;
-        message: string;
-        percent: number;
-    };
-};
-
-export type RasterAnalysisTaskName = 'GenerateRaster' | 'DownloadRaster';
+import { RasterAnalysisJobOutput, RasterAnalysisTaskName } from './types';
 
 /**
  * Checks the status of a raster analysis job by its job ID.

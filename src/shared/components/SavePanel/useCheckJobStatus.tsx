@@ -1,7 +1,4 @@
-import {
-    checkRasterAnalysisJobStatus,
-    RasterAnalysisTaskName,
-} from '@shared/services/raster-analysis/checkJobStatus';
+import { checkRasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
 import { RasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/reducer';
 import { selectPendingRasterAnalysisJobs } from '@shared/store/RasterAnalysisJobs/selectors';
 import { updateRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/thunks';

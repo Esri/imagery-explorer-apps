@@ -4,7 +4,7 @@ import { getSignedInUser } from '@shared/utils/esri-oauth';
 import {
     RasterAnalysisJobStatus,
     RasterAnalysisTaskName,
-} from '@shared/services/raster-analysis/checkJobStatus';
+} from '@shared/services/raster-analysis/types';
 import { SaveOption } from '@shared/constants/saveOptions';
 
 /**

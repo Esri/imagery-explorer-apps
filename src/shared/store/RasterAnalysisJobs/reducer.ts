@@ -10,7 +10,7 @@ import {
     RasterAnalysisJobOutput,
     RasterAnalysisJobStatus,
     RasterAnalysisTaskName,
-} from '@shared/services/raster-analysis/checkJobStatus';
+} from '@shared/services/raster-analysis/types';
 
 export type RasterAnalysisJob = {
     /**

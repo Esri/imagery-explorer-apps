@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
-import { RasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
+import { RasterAnalysisJobStatus } from '@shared/services/raster-analysis/types';
 
 export const selectAllRasterAnalysisJobs = createSelector(
     (state: RootState) => state.RasterAnalysisJobs.jobs.byId,
