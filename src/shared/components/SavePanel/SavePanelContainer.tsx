@@ -10,10 +10,8 @@ import { useCheckJobStatus } from './useCheckJobStatus';
 import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
-import {
-    SaveOption,
-    saveOptionInfoLookup,
-} from '@shared/constants/saveOptions';
+import { SaveJobType } from '@shared/store/SaveJobs/reducer';
+import { saveOptionInfoLookup } from './constants';
 
 /**
  * Props for the SavePanelContainer component.
@@ -26,29 +24,23 @@ type SavePanelContainerProps = {
     /**
      * Options for publishing the scene.
      */
-    publishOptions: SaveOption[];
+    publishOptions: SaveJobType[];
     /**
      * Options for downloading the scene.
      */
-    downloadOptions: SaveOption[];
-    /**
-     * Options that are waiting for the job to be created.
-     * This is used to disable options that are currently waiting for the job to be created.
-     */
-    jobsWaitingToBeCreated: SaveOption[];
+    downloadOptions: SaveJobType[];
     /**
      * Emits when a save option is clicked.
      * @param {SaveOption} option - The save option that was clicked.
      * @returns {void}
      */
-    saveOptionOnClick: (option: SaveOption) => void;
+    saveOptionOnClick: (option: SaveJobType) => void;
 };
 
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     sceneId,
     publishOptions,
     downloadOptions,
-    jobsWaitingToBeCreated,
     saveOptionOnClick,
 }) => {
     const dispatch = useDispatch();
@@ -97,9 +89,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                         title={title}
                                         subtitle={subtitle}
                                         desciprtion={description}
-                                        disabled={jobsWaitingToBeCreated.includes(
-                                            option
-                                        )}
+                                        disabled={false}
                                         onClick={() => {
                                             saveOptionOnClick(option);
                                         }}
@@ -122,9 +112,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                     title={title}
                                     subtitle={subtitle}
                                     desciprtion={description}
-                                    disabled={jobsWaitingToBeCreated.includes(
-                                        option
-                                    )}
+                                    disabled={false}
                                     onClick={() => {
                                         saveOptionOnClick(option);
                                     }}

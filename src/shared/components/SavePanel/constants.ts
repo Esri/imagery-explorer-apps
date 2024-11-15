@@ -1,13 +1,4 @@
-/**
- * Enum representing different save options available in the application.
- */
-export enum SaveOption {
-    PublishScene = 'Publish Scene',
-    PublishIndexMask = 'Publish Index Mask',
-    DownloadIndexMask = 'Download Index Mask',
-    SaveWebMappingApp = 'Save Web Mapping App',
-    SaveWebMap = 'Save Web Map',
-}
+import { SaveJobType } from '@shared/store/SaveJobs/reducer';
 
 /**
  * A lookup object that maps save options to their corresponding information.
@@ -16,7 +7,7 @@ export enum SaveOption {
  * @type {Record<SaveOption, { title: string; subtitle: string; description: string }>}
  */
 export const saveOptionInfoLookup: Record<
-    SaveOption,
+    SaveJobType,
     { title: string; subtitle: string; description: string }
 > = {
     'Publish Scene': {

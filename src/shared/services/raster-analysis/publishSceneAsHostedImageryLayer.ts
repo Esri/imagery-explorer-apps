@@ -29,9 +29,26 @@ type publishImagerySceneParams = {
     };
 };
 
+/**
+ * Represents the response from publishing an imagery scene as a hosted imagery layer.
+ *
+ * @property {string} rasterAnalysisJobId - The unique identifier for the raster analysis job.
+ * @property {string} outputServiceUrl - The URL of the output service where the imagery layer is hosted.
+ * @property {string} outputItemId - The unique identifier for the output item.
+ */
 type PublishImagerySceneResponse = {
-    jobId: string;
-    jobStatus: string;
+    /**
+     * The unique identifier for the raster analysis job.
+     */
+    rasterAnalysisJobId: string;
+    /**
+     * The URL of the output service where the imagery layer is hosted.
+     */
+    outputServiceUrl: string;
+    /**
+     * The unique identifier for the output item.
+     */
+    outputItemId: string;
 };
 
 /**
@@ -103,5 +120,9 @@ export const publishSceneAsHostedImageryLayer = async ({
         throw data.error;
     }
 
-    return data as PublishImagerySceneResponse;
+    return {
+        rasterAnalysisJobId: data.jobId,
+        outputServiceUrl: createServiceResponse.serviceurl,
+        outputItemId: createServiceResponse.itemId,
+    };
 };

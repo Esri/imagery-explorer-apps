@@ -1,4 +1,4 @@
-import { SaveOption } from '@shared/constants/saveOptions';
+import { SaveJobType } from '@shared/store/SaveJobs/reducer';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -15,14 +15,14 @@ export const useSaveOptions = () => {
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const publishOptions: SaveOption[] = useMemo(() => {
-        const output: SaveOption[] = [
-            SaveOption.SaveWebMappingApp,
-            SaveOption.SaveWebMap,
+    const publishOptions: SaveJobType[] = useMemo(() => {
+        const output: SaveJobType[] = [
+            SaveJobType.SaveWebMappingApp,
+            SaveJobType.SaveWebMap,
         ];
 
         if (objectIdOfSelectedScene) {
-            output.push(SaveOption.PublishScene);
+            output.push(SaveJobType.PublishScene);
         }
 
         if (
@@ -30,21 +30,21 @@ export const useSaveOptions = () => {
             analyzeTool === 'mask' &&
             objectIdOfSelectedScene
         ) {
-            output.push(SaveOption.PublishIndexMask);
+            output.push(SaveJobType.PublishIndexMask);
         }
 
         return output;
     }, [objectIdOfSelectedScene, mode, analyzeTool]);
 
-    const donwloadOptions: SaveOption[] = useMemo(() => {
-        const output: SaveOption[] = [];
+    const donwloadOptions: SaveJobType[] = useMemo(() => {
+        const output: SaveJobType[] = [];
 
         if (
             mode === 'analysis' &&
             analyzeTool === 'mask' &&
             objectIdOfSelectedScene
         ) {
-            output.push(SaveOption.DownloadIndexMask);
+            output.push(SaveJobType.DownloadIndexMask);
         }
 
         return output;

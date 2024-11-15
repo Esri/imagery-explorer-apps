@@ -1,18 +1,8 @@
-export enum RasterAnalysisJobStatus {
-    Submitted = 'esriJobSubmitted',
-    New = 'esriJobNew',
-    Waiting = 'esriJobWaiting',
-    Executing = 'esriJobExecuting',
-    Succeeded = 'esriJobSucceeded',
-    Failed = 'esriJobFailed',
-    TimedOut = 'esriJobTimedOut',
-    Cancelling = 'esriJobCancelling',
-    Cancelled = 'esriJobCancelled',
-}
+import { SaveJobStatus } from '@shared/store/SaveJobs/reducer';
 
 export type RasterAnalysisJobOutput = {
     jobId: string;
-    jobStatus: RasterAnalysisJobStatus;
+    jobStatus: SaveJobStatus;
     messages: {
         type: string;
         description: string;

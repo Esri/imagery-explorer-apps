@@ -1,12 +1,12 @@
-import { RasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/reducer';
+import { SaveJob } from '@shared/store/SaveJobs/reducer';
 import { da } from 'date-fns/locale';
 import React, { FC } from 'react';
 
 type JobListProps = {
     /**
-     * List of raster analysis jobs to be displayed in the job list.
+     * List of save jobs to be displayed in the job list.
      */
-    data: RasterAnalysisJob[];
+    data: SaveJob[];
 };
 
 export const JobList: FC<JobListProps> = ({ data }) => {
@@ -21,12 +21,12 @@ export const JobList: FC<JobListProps> = ({ data }) => {
             {data.map((job) => {
                 return (
                     <div
-                        key={job.jobId}
+                        key={job.uniqueId}
                         className="flex justify-between items-center my-2"
                     >
                         <div className="grid grid-cols-3 text-custom-light-blue">
                             <div className="">{job.status}</div>
-                            <div className="">{job.jobType}</div>
+                            <div className="">{job.type}</div>
                             <div className="">{job.sceneId}</div>
                         </div>
                     </div>

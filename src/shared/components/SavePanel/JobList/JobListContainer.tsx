@@ -1,7 +1,7 @@
 import React from 'react';
 import { JobList } from './JobList';
 import { useSelector } from 'react-redux';
-import { selectAllRasterAnalysisJobs } from '@shared/store/RasterAnalysisJobs/selectors';
+import { selectAllRasterAnalysisJobs } from '@shared/store/SaveJobs/selectors';
 
 export const JobListContainer = () => {
     const jobs = useSelector(selectAllRasterAnalysisJobs);

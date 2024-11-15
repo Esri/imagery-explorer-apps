@@ -1,7 +1,7 @@
 import { checkRasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
-import { RasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/reducer';
-import { selectPendingRasterAnalysisJobs } from '@shared/store/RasterAnalysisJobs/selectors';
-import { updateRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/thunks';
+import { SaveJob } from '@shared/store/SaveJobs/reducer';
+import { selectPendingRasterAnalysisJobs } from '@shared/store/SaveJobs/selectors';
+import { updateSaveJob } from '@shared/store/SaveJobs/thunks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -17,11 +17,11 @@ export const useCheckJobStatus = () => {
             return;
         }
 
-        const checkJobStatus = async (job: RasterAnalysisJob) => {
+        const checkJobStatus = async (job: SaveJob) => {
             try {
                 const response = await checkRasterAnalysisJobStatus(
-                    job.jobId,
-                    job.taskName
+                    job.rasterAnanlysisJobId,
+                    job.rasterAnalysisTaskName
                 );
                 // Handle the response as needed
                 // console.log(`Status for job ${job.jobId}:`, response);
@@ -36,10 +36,10 @@ export const useCheckJobStatus = () => {
                     output: response,
                 };
 
-                dispatch(updateRasterAnalysisJob(jobWithUpdatedStatus));
+                dispatch(updateSaveJob(jobWithUpdatedStatus));
             } catch (error) {
                 console.error(
-                    `Error checking status for job ${job.jobId}:`,
+                    `Error checking status for job ${job.rasterAnanlysisJobId}:`,
                     error
                 );
             }
@@ -53,7 +53,7 @@ export const useCheckJobStatus = () => {
 
             console.log(
                 'Checking job status for:',
-                pendingJobs.map((job) => job.jobId).join(',')
+                pendingJobs.map((job) => job.rasterAnanlysisJobId).join(',')
             );
 
             pendingJobs.forEach((job) => {

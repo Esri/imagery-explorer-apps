@@ -1,6 +1,5 @@
 import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
 import { SavePanel } from '@shared/components/SavePanel';
-import { SaveOption } from '@shared/constants/saveOptions';
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import {
@@ -8,13 +7,12 @@ import {
     createMaskIndexRasterFunction,
 } from '@shared/services/raster-analysis/rasterFunctions';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
-import { generateRasterAnalysisJobData } from '@shared/store/RasterAnalysisJobs/helpers';
 import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useSaveOptions } from './useSaveOptions';
-import { addNewRasterAnalysisJob } from '@shared/store/RasterAnalysisJobs/thunks';
+import { createNewSaveJob, updateSaveJob } from '@shared/store/SaveJobs/thunks';
 
 import {
     selectMaskLayerPixelValueRange,
@@ -24,7 +22,7 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { Geometry } from '@arcgis/core/geometry';
-import { set } from 'date-fns';
+import { SaveJob, SaveJobType } from '@shared/store/SaveJobs/reducer';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -40,17 +38,10 @@ export const LandsatSceneSavePanel = () => {
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
-    const [jobsWaitingToBeCreated, setJobsWaitingToBeCreated] = useState<
-        SaveOption[]
-    >([]);
-
-    const publishSelectedScene = async (saveOption: SaveOption) => {
+    const publishSelectedScene = async (job: SaveJob) => {
         if (!objectIdOfSelectedScene) {
             return;
         }
-
-        // add the save option to the list of jobs waiting to be created
-        setJobsWaitingToBeCreated((prev) => [...prev, saveOption]);
 
         const token = getToken();
 
@@ -62,14 +53,14 @@ export const LandsatSceneSavePanel = () => {
 
         let rasterFunction: any = null;
 
-        if (saveOption === SaveOption.PublishScene) {
+        if (job.type === SaveJobType.PublishScene) {
             rasterFunction = createClipRasterFunction({
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 objectId: objectIdOfSelectedScene,
                 token,
                 clippingGeometry,
             });
-        } else if (saveOption === SaveOption.PublishIndexMask) {
+        } else if (job.type === SaveJobType.PublishIndexMask) {
             rasterFunction = createMaskIndexRasterFunction({
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 objectId: objectIdOfSelectedScene,
@@ -88,30 +79,32 @@ export const LandsatSceneSavePanel = () => {
         });
         // console.log('Generate Raster Job submitted', response);
 
-        const jobData = generateRasterAnalysisJobData({
-            jobId: response.jobId,
-            jobType: saveOption,
-            taskName: 'GenerateRaster',
-            sceneId: landsatScene?.name,
-        });
-        // console.log('jobData', jobData);
-
-        dispatch(addNewRasterAnalysisJob(jobData));
-
-        // remove the save option from the list of jobs waiting to be created
-        setJobsWaitingToBeCreated((prev) =>
-            prev.filter((option) => option !== saveOption)
+        dispatch(
+            updateSaveJob({
+                ...job,
+                rasterAnanlysisJobId: response.rasterAnalysisJobId,
+                rasterAnalysisTaskName: 'GenerateRaster',
+                outputURL: response.outputServiceUrl,
+                outputItemId: response.outputItemId,
+            })
         );
     };
 
-    const saveOptionOnClick = (option: SaveOption) => {
+    const saveOptionOnClick = async (jobType: SaveJobType) => {
         // console.log('saveOptionOnClick', option);
 
+        const job = await dispatch(
+            createNewSaveJob({
+                jobType,
+                sceneId: landsatScene?.name,
+            })
+        );
+
         if (
-            option === SaveOption.PublishScene ||
-            option === SaveOption.PublishIndexMask
+            jobType === SaveJobType.PublishScene ||
+            jobType === SaveJobType.PublishIndexMask
         ) {
-            publishSelectedScene(option);
+            publishSelectedScene(job);
         }
     };
 
@@ -119,11 +112,9 @@ export const LandsatSceneSavePanel = () => {
 
     return (
         <SavePanel
-            // imageryServiceURL={LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL}
             sceneId={landsatScene?.name}
             publishOptions={publishOptions}
             downloadOptions={donwloadOptions}
-            jobsWaitingToBeCreated={jobsWaitingToBeCreated}
             saveOptionOnClick={saveOptionOnClick}
         />
     );
