@@ -22,7 +22,11 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { Geometry } from '@arcgis/core/geometry';
-import { SaveJob, SaveJobType } from '@shared/store/SaveJobs/reducer';
+import {
+    SaveJob,
+    SaveJobStatus,
+    SaveJobType,
+} from '@shared/store/SaveJobs/reducer';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -45,49 +49,62 @@ export const LandsatSceneSavePanel = () => {
 
         const token = getToken();
 
-        const feature = await getLandsatFeatureByObjectId(
-            objectIdOfSelectedScene
-        );
+        try {
+            const feature = await getLandsatFeatureByObjectId(
+                objectIdOfSelectedScene
+            );
 
-        const clippingGeometry = feature?.geometry as Geometry;
+            const clippingGeometry = feature?.geometry as Geometry;
 
-        let rasterFunction: any = null;
+            let rasterFunction: any = null;
 
-        if (job.type === SaveJobType.PublishScene) {
-            rasterFunction = createClipRasterFunction({
-                serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+            if (job.type === SaveJobType.PublishScene) {
+                rasterFunction = createClipRasterFunction({
+                    serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                    objectId: objectIdOfSelectedScene,
+                    token,
+                    clippingGeometry,
+                });
+            } else if (job.type === SaveJobType.PublishIndexMask) {
+                rasterFunction = createMaskIndexRasterFunction({
+                    serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                    objectId: objectIdOfSelectedScene,
+                    token,
+                    bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+                    pixelValueRange: selectedRange,
+                    clippingGeometry,
+                });
+            }
+
+            const response = await publishSceneAsHostedImageryLayer({
                 objectId: objectIdOfSelectedScene,
-                token,
-                clippingGeometry,
-            });
-        } else if (job.type === SaveJobType.PublishIndexMask) {
-            rasterFunction = createMaskIndexRasterFunction({
+                outputServiceName:
+                    'hosted-imagery-service-' + new Date().getTime(),
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                objectId: objectIdOfSelectedScene,
-                token,
-                bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
-                pixelValueRange: selectedRange,
-                clippingGeometry,
+                rasterFunction,
             });
+            // console.log('Generate Raster Job submitted', response);
+
+            dispatch(
+                updateSaveJob({
+                    ...job,
+                    rasterAnanlysisJobId: response.rasterAnalysisJobId,
+                    rasterAnalysisTaskName: 'GenerateRaster',
+                    outputURL: response.outputServiceUrl,
+                    outputItemId: response.outputItemId,
+                })
+            );
+        } catch (err) {
+            dispatch(
+                updateSaveJob({
+                    ...job,
+                    status: SaveJobStatus.Failed,
+                    errormessage: `Failed to publish scene: ${
+                        err.message || 'unknown error'
+                    }`,
+                })
+            );
         }
-
-        const response = await publishSceneAsHostedImageryLayer({
-            objectId: objectIdOfSelectedScene,
-            outputServiceName: 'hosted-imagery-service-' + new Date().getTime(),
-            serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-            rasterFunction,
-        });
-        // console.log('Generate Raster Job submitted', response);
-
-        dispatch(
-            updateSaveJob({
-                ...job,
-                rasterAnanlysisJobId: response.rasterAnalysisJobId,
-                rasterAnalysisTaskName: 'GenerateRaster',
-                outputURL: response.outputServiceUrl,
-                outputItemId: response.outputItemId,
-            })
-        );
     };
 
     const saveOptionOnClick = async (jobType: SaveJobType) => {

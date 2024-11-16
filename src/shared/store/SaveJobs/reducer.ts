@@ -28,6 +28,7 @@ export enum SaveJobStatus {
     TimedOut = 'esriJobTimedOut',
     Cancelling = 'esriJobCancelling',
     Cancelled = 'esriJobCancelled',
+    Expired = 'esriJobExpired',
 }
 
 export type SaveJob = {
@@ -75,6 +76,10 @@ export type SaveJob = {
      * name of the raster analysis task
      */
     rasterAnalysisTaskName?: RasterAnalysisTaskName;
+    /**
+     * error message of the failed job
+     */
+    errormessage?: string;
 };
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';

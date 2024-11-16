@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 import { SaveJobStatus } from './reducer';
 
-export const selectAllRasterAnalysisJobs = createSelector(
+export const selectAllSaveJobs = createSelector(
     (state: RootState) => state.SaveJobs.jobs.byId,
     (state: RootState) => state.SaveJobs.jobs.allIds,
     (byId, allIds) => allIds.map((id) => byId[id])

@@ -1,4 +1,4 @@
-import { SaveJobType } from '@shared/store/SaveJobs/reducer';
+import { SaveJobStatus, SaveJobType } from '@shared/store/SaveJobs/reducer';
 
 /**
  * A lookup object that maps save options to their corresponding information.
@@ -40,4 +40,25 @@ export const saveOptionInfoLookup: Record<
         description:
             'Create an ArcGIS Online map containing the selected scene as a layer.',
     },
+};
+
+export const saveJobStatusLabels: Record<SaveJobStatus, string> = {
+    [SaveJobStatus.Cancelled]: 'Cancelled',
+    [SaveJobStatus.Cancelling]: 'Cancelled',
+    [SaveJobStatus.Executing]: 'In Progress',
+    [SaveJobStatus.Failed]: 'Failed',
+    [SaveJobStatus.New]: 'In Progress',
+    [SaveJobStatus.Submitted]: 'Pending',
+    [SaveJobStatus.Succeeded]: 'Succeeded',
+    [SaveJobStatus.TimedOut]: 'Timed Out',
+    [SaveJobStatus.Waiting]: 'Timed Out',
+    [SaveJobStatus.Expired]: 'Expired',
+};
+
+export const jobTypeLabels: Record<SaveJobType, string> = {
+    [SaveJobType.PublishScene]: 'Scene as Hosted Imagery',
+    [SaveJobType.PublishIndexMask]: 'Index Mask as Hosted Imagery',
+    [SaveJobType.DownloadIndexMask]: 'Index Mask as GeoTIFF',
+    [SaveJobType.SaveWebMappingApp]: 'Current State as Web Application',
+    [SaveJobType.SaveWebMap]: 'Scene as ArcGIS Online Web Map',
 };

@@ -6,7 +6,7 @@ import { showSavePanelToggled } from '@shared/store/UI/reducer';
 import { isAnonymouns, signIn } from '@shared/utils/esri-oauth';
 // import { CreateHostedImageryLayer } from './CreateHostedImageryLayer/CreateHostedImageryLayer';
 import { JobList } from './JobList';
-import { useCheckJobStatus } from './useCheckJobStatus';
+import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
 import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
