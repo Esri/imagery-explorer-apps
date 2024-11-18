@@ -141,7 +141,7 @@ export const LandsatSceneSavePanel = () => {
                 updateSaveJob({
                     ...job,
                     status: SaveJobStatus.Failed,
-                    errormessage: `Failed to create web mapping app: ${
+                    errormessage: `Failed to create ArcGIS Online item: ${
                         err.message || 'unknown error'
                     }`,
                 })
