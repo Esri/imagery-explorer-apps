@@ -6,6 +6,7 @@ import {
 import { da } from 'date-fns/locale';
 import React, { FC, useMemo } from 'react';
 import { jobTypeLabels, saveJobStatusLabels } from '../constants';
+import { JobStatus } from './JobStatus';
 
 type JobListProps = {
     /**
@@ -37,14 +38,14 @@ export const JobList: FC<JobListProps> = ({ data, deleteButtonOnClick }) => {
     return (
         <div>
             {sortedByCreationTime.map((job) => {
-                const statusLabel = saveJobStatusLabels[job.status];
+                // const statusLabel = saveJobStatusLabels[job.status];
                 const jobTypeLabel = jobTypeLabels[job.type];
 
                 return (
                     <div
                         key={job.uniqueId}
-                        className="w-full grid items-center text-custom-light-blue text-sm my-4"
-                        style={{ gridTemplateColumns: '50px 1fr 200px 32px' }}
+                        className="w-full grid gap-1 items-center text-custom-light-blue text-sm my-4"
+                        style={{ gridTemplateColumns: '50px 1fr 150px 32px' }}
                     >
                         <div className="flex justify-center items-center">
                             {job.status === SaveJobStatus.Succeeded ? (
@@ -64,7 +65,8 @@ export const JobList: FC<JobListProps> = ({ data, deleteButtonOnClick }) => {
                             )}
                         </div>
 
-                        <div className="text-center">{statusLabel}</div>
+                        {/* <div className="text-center">{statusLabel}</div> */}
+                        <JobStatus job={job} />
 
                         <div
                             className="flex justify-center items-center cursor-pointer"
