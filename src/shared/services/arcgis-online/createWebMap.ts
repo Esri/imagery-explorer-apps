@@ -1,7 +1,8 @@
 import { IExtent } from '@esri/arcgis-rest-feature-service';
 import { getToken } from '@shared/utils/esri-oauth';
-import { nanoid } from 'nanoid';
+import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils.js';
 import { addItem } from './addItem';
+import { Extent } from '@arcgis/core/geometry';
 
 type SaveImagerySceneAsWebMapOptions = {
     title: string;
@@ -32,11 +33,15 @@ export const saveImagerySceneAsWebMap = async ({
     objectIdOfSelectedScene,
     mapExtent,
 }: SaveImagerySceneAsWebMapOptions) => {
+    const extentInWGS84 = webMercatorToGeographic(
+        new Extent(mapExtent)
+    ) as Extent;
+
     const requestBody = new URLSearchParams({
         f: 'json',
         extent: JSON.stringify([
-            [-123.96697998042534, 35.097062895501736],
-            [-118.66058349605288, 36.66804940833792],
+            [extentInWGS84.xmin, extentInWGS84.ymin],
+            [extentInWGS84.xmax, extentInWGS84.ymax],
         ]),
         tags: 'Landsat, Landsat-Level-2 Imagery, Remote Sensing',
         title,

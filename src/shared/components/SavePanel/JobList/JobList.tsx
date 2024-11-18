@@ -7,6 +7,8 @@ import { da } from 'date-fns/locale';
 import React, { FC, useMemo } from 'react';
 import { jobTypeLabels, saveJobStatusLabels } from '../constants';
 import { JobStatus } from './JobStatus';
+import { JobInfo } from './JobInfo';
+import { JobIcon } from './JobIcon';
 
 type JobListProps = {
     /**
@@ -39,7 +41,6 @@ export const JobList: FC<JobListProps> = ({ data, deleteButtonOnClick }) => {
         <div>
             {sortedByCreationTime.map((job) => {
                 // const statusLabel = saveJobStatusLabels[job.status];
-                const jobTypeLabel = jobTypeLabels[job.type];
 
                 return (
                     <div
@@ -47,23 +48,9 @@ export const JobList: FC<JobListProps> = ({ data, deleteButtonOnClick }) => {
                         className="w-full grid gap-1 items-center text-custom-light-blue text-sm my-4"
                         style={{ gridTemplateColumns: '50px 1fr 150px 32px' }}
                     >
-                        <div className="flex justify-center items-center">
-                            {job.status === SaveJobStatus.Succeeded ? (
-                                <calcite-icon icon="check" scale="s" />
-                            ) : (
-                                <calcite-loader inline active />
-                            )}
-                        </div>
+                        <JobIcon job={job} />
 
-                        <div>
-                            <div className="">{jobTypeLabel}</div>
-
-                            {job.type !== SaveJobType.SaveWebMappingApp && (
-                                <div className=" italic">
-                                    {job.sceneId || 'No selected scene'}
-                                </div>
-                            )}
-                        </div>
+                        <JobInfo job={job} />
 
                         {/* <div className="text-center">{statusLabel}</div> */}
                         <JobStatus job={job} />

@@ -1,0 +1,35 @@
+import {
+    SaveJob,
+    SaveJobStatus,
+    SaveJobType,
+} from '@shared/store/SaveJobs/reducer';
+import React, { FC, useMemo } from 'react';
+import { jobTypeLabels } from '../constants';
+
+type JobInfoProps = {
+    job: SaveJob;
+};
+
+export const JobInfo: FC<JobInfoProps> = ({ job }) => {
+    const jobTypeLabel = jobTypeLabels[job.type];
+
+    const extraJobInfo = useMemo(() => {
+        if (job.errormessage) {
+            return job.errormessage;
+        }
+
+        if (job.type === SaveJobType.SaveWebMappingApp) {
+            return null;
+        }
+
+        return job.sceneId || 'No selected scene';
+    }, [job]);
+
+    return (
+        <div>
+            <div className="">{jobTypeLabel}</div>
+
+            {extraJobInfo && <div className=" italic">{extraJobInfo}</div>}
+        </div>
+    );
+};

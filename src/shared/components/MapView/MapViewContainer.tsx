@@ -34,6 +34,7 @@ import { useDispatch } from 'react-redux';
 import { batch } from 'react-redux';
 import {
     centerChanged,
+    extentUpdated,
     isUpdatingChanged,
     resolutionUpdated,
     scaleUpdated,
@@ -146,6 +147,7 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                             dispatch(zoomChanged(zoom));
                             dispatch(resolutionUpdated(resolution));
                             dispatch(scaleUpdated(scale));
+                            dispatch(extentUpdated(extent.toJSON()));
                         });
                     }}
                     onClickHandler={(point) => {

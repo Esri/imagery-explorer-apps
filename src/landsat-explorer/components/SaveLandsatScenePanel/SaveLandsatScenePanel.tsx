@@ -30,6 +30,7 @@ import {
 } from '@shared/store/SaveJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
+import { selectMapExtent } from '@shared/store/Map/selectors';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -44,6 +45,8 @@ export const LandsatSceneSavePanel = () => {
     const spectralIndex = useSelector(
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
+
+    const mapExtent = useSelector(selectMapExtent);
 
     const publishSelectedScene = async (job: SaveJob) => {
         if (!objectIdOfSelectedScene) {
@@ -126,7 +129,7 @@ export const LandsatSceneSavePanel = () => {
                           serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                           serviceName: 'LandsatLevel2',
                           objectIdOfSelectedScene: objectIdOfSelectedScene,
-                          mapExtent: null,
+                          mapExtent,
                       });
 
             dispatch(
