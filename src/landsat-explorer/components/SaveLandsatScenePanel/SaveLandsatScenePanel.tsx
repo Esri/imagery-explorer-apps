@@ -23,10 +23,12 @@ import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { Geometry } from '@arcgis/core/geometry';
 import {
+    jobUpdated,
     SaveJob,
     SaveJobStatus,
     SaveJobType,
 } from '@shared/store/SaveJobs/reducer';
+import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -107,6 +109,34 @@ export const LandsatSceneSavePanel = () => {
         }
     };
 
+    const saveCurrentStateAsWebMappingApp = async (job: SaveJob) => {
+        try {
+            const res = await createWebMappingApplication({
+                title: 'Esri Landsat Explorer',
+                snippet: 'A web mapping application for Esri Landsat Explorer',
+                tags: 'Esri Landsat Explorer, Landsat, Landsat-Level-2 Imagery, Remote Sensing',
+            });
+
+            dispatch(
+                updateSaveJob({
+                    ...job,
+                    status: SaveJobStatus.Succeeded,
+                    outputItemId: res.id,
+                })
+            );
+        } catch (err) {
+            dispatch(
+                updateSaveJob({
+                    ...job,
+                    status: SaveJobStatus.Failed,
+                    errormessage: `Failed to create web mapping app: ${
+                        err.message || 'unknown error'
+                    }`,
+                })
+            );
+        }
+    };
+
     const saveOptionOnClick = async (jobType: SaveJobType) => {
         // console.log('saveOptionOnClick', option);
 
@@ -122,6 +152,12 @@ export const LandsatSceneSavePanel = () => {
             jobType === SaveJobType.PublishIndexMask
         ) {
             publishSelectedScene(job);
+            return;
+        }
+
+        if (jobType === SaveJobType.SaveWebMappingApp) {
+            saveCurrentStateAsWebMappingApp(job);
+            return;
         }
     };
 

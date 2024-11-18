@@ -190,8 +190,4 @@ export const useSaveAppState2HashParams = () => {
     useEffect(() => {
         updateHashParams('hideTerrain', showTerrain === false ? 'true' : null);
     }, [showTerrain]);
-
-    useEffect(() => {
-        updateHashParams('savePanel', showSavePanel ? 'true' : null);
-    }, [showSavePanel]);
 };

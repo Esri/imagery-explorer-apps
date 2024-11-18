@@ -62,6 +62,7 @@ import { PartialRootState } from '@shared/store/configureStore';
 import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
+import { getOpenSavePanelFromSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 
 /**
  * Map location info that contains center and zoom info from URL Hash Params
@@ -199,10 +200,12 @@ const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
 const getPreloadedUIState = (): UIState => {
     const animationSpeed = getAnimationSpeedFromHashParams();
 
+    const showSavePanel = getOpenSavePanelFromSessionStorage();
+
     const proloadedUIState: UIState = {
         ...initialUIState,
         nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
-        showSavePanel: getHashParamValueByKey('savePanel') === 'true',
+        showSavePanel,
     };
 
     if (animationSpeed) {

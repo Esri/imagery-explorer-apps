@@ -12,6 +12,7 @@ import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
 import { SaveJobType } from '@shared/store/SaveJobs/reducer';
 import { saveOptionInfoLookup } from './constants';
+import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 
 /**
  * Props for the SavePanelContainer component.
@@ -50,6 +51,8 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     useCheckJobStatus();
 
     useEffect(() => {
+        setOpenSavePanelInSessionStorage(shouldShowSavePanel);
+
         if (!shouldShowSavePanel) {
             return;
         }
