@@ -29,6 +29,7 @@ import {
     SaveJobType,
 } from '@shared/store/SaveJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
+import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -109,13 +110,24 @@ export const LandsatSceneSavePanel = () => {
         }
     };
 
-    const saveCurrentStateAsWebMappingApp = async (job: SaveJob) => {
+    const createNewItemInArcGISOnline = async (job: SaveJob) => {
         try {
-            const res = await createWebMappingApplication({
-                title: 'Esri Landsat Explorer',
-                snippet: 'A web mapping application for Esri Landsat Explorer',
-                tags: 'Esri Landsat Explorer, Landsat, Landsat-Level-2 Imagery, Remote Sensing',
-            });
+            const res =
+                job.type === SaveJobType.SaveWebMappingApp
+                    ? await createWebMappingApplication({
+                          title: 'Esri Landsat Explorer',
+                          snippet:
+                              'A web mapping application for Esri Landsat Explorer',
+                          tags: 'Esri Landsat Explorer, Landsat, Landsat-Level-2 Imagery, Remote Sensing',
+                      })
+                    : await saveImagerySceneAsWebMap({
+                          title: `Landsat Scene (${landsatScene.name})`,
+                          snippet: `Landsat Scene (${landsatScene.name})`,
+                          serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                          serviceName: 'LandsatLevel2',
+                          objectIdOfSelectedScene: objectIdOfSelectedScene,
+                          mapExtent: null,
+                      });
 
             dispatch(
                 updateSaveJob({
@@ -155,8 +167,11 @@ export const LandsatSceneSavePanel = () => {
             return;
         }
 
-        if (jobType === SaveJobType.SaveWebMappingApp) {
-            saveCurrentStateAsWebMappingApp(job);
+        if (
+            jobType === SaveJobType.SaveWebMappingApp ||
+            jobType === SaveJobType.SaveWebMap
+        ) {
+            createNewItemInArcGISOnline(job);
             return;
         }
     };
