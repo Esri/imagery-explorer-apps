@@ -18,6 +18,7 @@ import IdentityManager from '@arcgis/core/identity/IdentityManager';
 import Portal from '@arcgis/core/portal/Portal';
 import Credential from '@arcgis/core/identity/Credential';
 import PortalUser from '@arcgis/core/portal/PortalUser';
+import { AGOL_PORTAL_ROOT } from '@shared/config';
 
 type Props = {
     appId: string;
@@ -133,7 +134,7 @@ export const signOut = async (): Promise<void> => {
 
 export const getPortalBaseUrl = () => {
     if (!userPortal) {
-        return null;
+        return AGOL_PORTAL_ROOT;
     }
 
     const { urlKey, url, customBaseUrl } = userPortal;
@@ -235,4 +236,10 @@ export const revalidateToken = async () => {
         // sign out if user token is invalid, means user has signed out from somewhere else
         signOut();
     }
+};
+
+export const getItemUrl = (itemId: string) => {
+    const portalUrl = getPortalBaseUrl();
+
+    return `${portalUrl}/home/item.html?id=${itemId}`;
 };

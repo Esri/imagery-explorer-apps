@@ -5,6 +5,7 @@ import {
 } from '@shared/store/SaveJobs/reducer';
 import React, { CSSProperties, FC } from 'react';
 import { saveJobStatusLabels } from '../constants';
+import { getItemUrl } from '@shared/utils/esri-oauth';
 
 type JobStatusProps = {
     job: SaveJob;
@@ -39,6 +40,12 @@ export const JobStatus: FC<JobStatusProps> = ({ job }) => {
                         ? 'download-to'
                         : 'launch'
                 }
+                href={
+                    job.type === SaveJobType.DownloadIndexMask
+                        ? job.outputURL
+                        : getItemUrl(job.outputItemId)
+                }
+                target="_blank"
             >
                 {job.type === SaveJobType.DownloadIndexMask
                     ? 'Download'
