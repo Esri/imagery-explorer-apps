@@ -19,9 +19,9 @@ import GroupLayer from '@arcgis/core/layers/GroupLayer';
 // import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
 import ImageryLayerByObjectID from '@shared/components/ImageryLayer/ImageryLayerByObjectID';
 import {
-    LANDSAT_LEVEL_2_SERVICE_SORT_FIELD,
-    LANDSAT_LEVEL_2_SERVICE_SORT_VALUE,
-    LANDSAT_LEVEL_2_SERVICE_URL,
+    EMIT_LEVEL_2a_SERVICE_SORT_FIELD,
+    EMIT_LEVEL_2a_SERVICE_SORT_VALUE,
+    EMIT_LEVEL_2a_SERVICE_URL,
 } from '@shared/services/emit-level-2a/config';
 import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
 
@@ -101,15 +101,15 @@ const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
             ascending: true,
             method: 'attribute',
             operation: 'first',
-            sortField: LANDSAT_LEVEL_2_SERVICE_SORT_FIELD,
-            sortValue: LANDSAT_LEVEL_2_SERVICE_SORT_VALUE,
+            sortField: EMIT_LEVEL_2a_SERVICE_SORT_FIELD,
+            sortValue: EMIT_LEVEL_2a_SERVICE_SORT_VALUE,
         });
     }, []);
 
     return (
         <ImageryLayerByObjectID
             groupLayer={groupLayer}
-            serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            serviceUrl={EMIT_LEVEL_2a_SERVICE_URL}
             defaultMosaicRule={defaultMosaicRule}
         />
     );

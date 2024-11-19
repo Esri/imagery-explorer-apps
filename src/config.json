@@ -37,6 +37,15 @@
             "description": "Explore Landsat surface temperature archive",
             "pathname": "/landsat-surface-temp",
             "entrypoint": "/src/landsat-surface-temp/index.tsx"
+        },
+
+        "emit": {
+            "title": "Esri | EMIT Explorer",
+            "webmapId": "81609bbe235942919ad27c77e42c600e",
+            "description": "EMIT hyperspecrtral imagery.",
+            "animationMetadataSources": "Esri, USGS, NASA",
+            "pathname": "/emitexplorer",
+            "entrypoint": "/src/emit-explorer/index.tsx"
         }
     },
     "services": {
@@ -47,6 +56,11 @@
         "sentinel-1": {
             "development": "https://utility.arcgis.com/usrsvcs/servers/ae20c269388b4ea3acac60b9bf2a319f/rest/services/Sentinel1RTC/ImageServer",
             "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
-        }
+        },
+
+    "EMIT": {
+        "development": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2a_Nubian/ImageServer",
+        "production": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2a_Nubian/ImageServer"
+         }
     }
 }

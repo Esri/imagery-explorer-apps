@@ -13,4 +13,4 @@
  * limitations under the License.
  */
 
-export { RasterFunctionSelectorContainer as LandsatRasterFunctionSelector } from './RasterFunctionSelectorContainer';
+export { RasterFunctionSelectorContainer as EMITRasterFunctionSelector } from './RasterFunctionSelectorContainer';

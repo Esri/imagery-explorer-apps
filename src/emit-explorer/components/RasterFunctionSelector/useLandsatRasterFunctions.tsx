@@ -15,7 +15,7 @@
 
 import React, { useMemo } from 'react';
 import {
-    LANDSAT_RASTER_FUNCTION_INFOS,
+    EMIT_RASTER_FUNCTION_INFOS,
     LandsatRasterFunctionName,
 } from '@shared/services/emit-level-2a/config';
 
@@ -71,7 +71,7 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
 };
 
 export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
-    return LANDSAT_RASTER_FUNCTION_INFOS.map((d) => {
+    return EMIT_RASTER_FUNCTION_INFOS.map((d) => {
         const name: LandsatRasterFunctionName =
             d.name as LandsatRasterFunctionName;
 
