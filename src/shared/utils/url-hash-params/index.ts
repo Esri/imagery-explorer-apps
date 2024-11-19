@@ -77,6 +77,8 @@ export type UrlHashParamKey =
     | 'tool' // hash params for active analysis tool
     | 'sentinel1'; // hash params for Sentinel-1 scenes
 
+// const hashParams = new URLSearchParams(window.location.hash.slice(1));
+
 const getHashParams = () => {
     return new URLSearchParams(window.location.hash.slice(1));
 };
