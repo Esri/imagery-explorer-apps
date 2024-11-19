@@ -13,6 +13,7 @@ import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
 import { SaveJobType } from '@shared/store/SaveJobs/reducer';
 import { saveOptionInfoLookup } from './constants';
 import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
+import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 
 /**
  * Props for the SavePanelContainer component.
@@ -73,6 +74,8 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                     dispatch(showSavePanelToggled());
                 }}
             />
+
+            <SignedUserHeader />
 
             <div className="mt-4 mx-4 md:mx-auto py-12 md:max-w-3xl w-full">
                 <Header sceneId={sceneId} />

@@ -47,5 +47,6 @@ declare namespace JSX {
         'calcite-switch': any;
         'calcite-color-picker': any;
         'calcite-input-text': any;
+        'calcite-avatar': any;
     }
 }
