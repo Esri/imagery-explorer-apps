@@ -1,11 +1,6 @@
-import { IExtent } from '@esri/arcgis-rest-feature-service';
-import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
-import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils.js';
+import { getToken } from '@shared/utils/esri-oauth';
 import { addItem } from './addItem';
-import { Extent } from '@arcgis/core/geometry';
 import { getExtentByObjectId } from '../helpers/getExtentById';
-import { get } from 'http';
-import { canPublishContent } from '../raster-analysis/checkUserRoleAndPrivileges';
 
 type SaveImagerySceneAsWebMapOptions = {
     title: string;
