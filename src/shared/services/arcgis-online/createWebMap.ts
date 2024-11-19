@@ -26,6 +26,10 @@ export const saveImagerySceneAsWebMap = async ({
     serviceName,
     objectIdOfSelectedScene,
 }: SaveImagerySceneAsWebMapOptions) => {
+    if (!objectIdOfSelectedScene) {
+        throw new Error('No selected scene to save');
+    }
+
     const token = getToken();
 
     const extent = await getExtentByObjectId({

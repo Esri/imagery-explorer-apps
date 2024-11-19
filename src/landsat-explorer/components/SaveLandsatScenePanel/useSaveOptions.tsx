@@ -16,12 +16,10 @@ export const useSaveOptions = () => {
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const publishOptions: SaveJobType[] = useMemo(() => {
-        const output: SaveJobType[] = [
-            SaveJobType.SaveWebMappingApp,
-            SaveJobType.SaveWebMap,
-        ];
+        const output: SaveJobType[] = [SaveJobType.SaveWebMappingApp];
 
         if (objectIdOfSelectedScene) {
+            output.push(SaveJobType.SaveWebMap);
             output.push(SaveJobType.PublishScene);
         }
 
