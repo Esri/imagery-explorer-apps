@@ -147,7 +147,7 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                             dispatch(zoomChanged(zoom));
                             dispatch(resolutionUpdated(resolution));
                             dispatch(scaleUpdated(scale));
-                            dispatch(extentUpdated(extent.toJSON()));
+                            // dispatch(extentUpdated(extent.toJSON()));
                         });
                     }}
                     onClickHandler={(point) => {

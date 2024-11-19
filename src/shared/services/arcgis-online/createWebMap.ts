@@ -1,8 +1,11 @@
 import { IExtent } from '@esri/arcgis-rest-feature-service';
-import { getToken } from '@shared/utils/esri-oauth';
+import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
 import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils.js';
 import { addItem } from './addItem';
 import { Extent } from '@arcgis/core/geometry';
+import { getExtentByObjectId } from '../helpers/getExtentById';
+import { get } from 'http';
+import { canPublishContent } from '../raster-analysis/checkUserRoleAndPrivileges';
 
 type SaveImagerySceneAsWebMapOptions = {
     title: string;
@@ -19,10 +22,6 @@ type SaveImagerySceneAsWebMapOptions = {
      * Object ID of the selected imagery scene.
      */
     objectIdOfSelectedScene: number;
-    /**
-     * Extent of the map.
-     */
-    mapExtent: IExtent;
 };
 
 export const saveImagerySceneAsWebMap = async ({
@@ -31,17 +30,21 @@ export const saveImagerySceneAsWebMap = async ({
     serviceUrl,
     serviceName,
     objectIdOfSelectedScene,
-    mapExtent,
 }: SaveImagerySceneAsWebMapOptions) => {
-    const extentInWGS84 = webMercatorToGeographic(
-        new Extent(mapExtent)
-    ) as Extent;
+    const token = getToken();
+
+    const extent = await getExtentByObjectId({
+        serviceUrl,
+        objectId: objectIdOfSelectedScene,
+        token,
+        outputSpatialReference: 4326,
+    });
 
     const requestBody = new URLSearchParams({
         f: 'json',
         extent: JSON.stringify([
-            [extentInWGS84.xmin, extentInWGS84.ymin],
-            [extentInWGS84.xmax, extentInWGS84.ymax],
+            [extent.xmin, extent.ymin],
+            [extent.xmax, extent.ymax],
         ]),
         tags: 'Landsat, Landsat-Level-2 Imagery, Remote Sensing',
         title,
@@ -59,8 +62,8 @@ export const saveImagerySceneAsWebMap = async ({
                         lockRasterIds: [objectIdOfSelectedScene],
                         mosaicMethod: 'esriMosaicLockRaster',
                     },
-                    renderingRule: { rasterFunction: 'Agriculture with DRA' },
                     layerType: 'ArcGISImageServiceLayer',
+                    timeAnimation: false,
                     // "popupInfo": {
                     //   "popupElements": [
                     //     {
@@ -578,41 +581,32 @@ export const saveImagerySceneAsWebMap = async ({
                     // }
                 },
             ],
-            // "baseMap": {
-            //   "baseMapLayers": [
-            //     {
-            //       "id": "World_Hillshade_3805",
-            //       "opacity": 1,
-            //       "title": "World Hillshade",
-            //       "url": "https://servicesdev.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer",
-            //       "visibility": true,
-            //       "layerType": "ArcGISTiledMapServiceLayer"
-            //     },
-            //     {
-            //       "id": "VectorTile_2333",
-            //       "opacity": 1,
-            //       "title": "World Topographic Map",
-            //       "visibility": true,
-            //       "layerType": "VectorTileLayer",
-            //       "styleUrl": "https://cdn.arcgis.com/sharing/rest/content/items/7dc6cea0b1764a1f9af2e679f642f0f5/resources/styles/root.json"
-            //     }
-            //   ],
-            //   "title": "Topographic"
-            // },
+            baseMap: {
+                baseMapLayers: [
+                    // {
+                    //   "id": "World_Hillshade_3805",
+                    //   "opacity": 1,
+                    //   "title": "World Hillshade",
+                    //   "url": "https://servicesdev.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer",
+                    //   "visibility": true,
+                    //   "layerType": "ArcGISTiledMapServiceLayer"
+                    // },
+                    {
+                        id: 'World_Topographic_Map',
+                        opacity: 1,
+                        title: 'World Topographic Map',
+                        visibility: true,
+                        layerType: 'VectorTileLayer',
+                        styleUrl:
+                            'https://cdn.arcgis.com/sharing/rest/content/items/7dc6cea0b1764a1f9af2e679f642f0f5/resources/styles/root.json',
+                    },
+                ],
+                title: 'Topographic',
+            },
             authoringApp: 'Esri Imagery Explorer Apps',
             initialState: {
                 viewpoint: {
-                    // "targetGeometry": {
-                    //   "spatialReference": {
-                    //     "latestWkid": 3857,
-                    //     "wkid": 102100
-                    //   },
-                    //   "xmin": -13799941.086600887,
-                    //   "ymin": 4177079.439617233,
-                    //   "xmax": -13209235.732013328,
-                    //   "ymax": 4392937.607494467
-                    // }
-                    targetGeometry: mapExtent,
+                    targetGeometry: extent,
                 },
             },
             spatialReference: {

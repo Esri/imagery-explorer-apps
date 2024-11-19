@@ -46,8 +46,6 @@ export const LandsatSceneSavePanel = () => {
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
-    const mapExtent = useSelector(selectMapExtent);
-
     const publishSelectedScene = async (job: SaveJob) => {
         if (!objectIdOfSelectedScene) {
             return;
@@ -129,7 +127,6 @@ export const LandsatSceneSavePanel = () => {
                           serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                           serviceName: 'LandsatLevel2',
                           objectIdOfSelectedScene: objectIdOfSelectedScene,
-                          mapExtent,
                       });
 
             dispatch(
