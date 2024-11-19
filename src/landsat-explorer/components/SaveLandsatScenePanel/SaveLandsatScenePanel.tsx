@@ -124,6 +124,11 @@ export const LandsatSceneSavePanel = () => {
                     : await saveImagerySceneAsWebMap({
                           title: `Landsat Scene (${landsatScene.name})`,
                           snippet: `Landsat Scene (${landsatScene.name})`,
+                          tags: [
+                              'Landsat',
+                              'Landsat-Level-2 Imagery',
+                              'Remote Sensing',
+                          ],
                           serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                           serviceName: 'LandsatLevel2',
                           objectIdOfSelectedScene: objectIdOfSelectedScene,

@@ -5,6 +5,7 @@ import { getExtentByObjectId } from '../helpers/getExtentById';
 type SaveImagerySceneAsWebMapOptions = {
     title: string;
     snippet: string;
+    tags: string[];
     /**
      * URL of the original imagery service.
      */
@@ -22,6 +23,7 @@ type SaveImagerySceneAsWebMapOptions = {
 export const saveImagerySceneAsWebMap = async ({
     title,
     snippet,
+    tags,
     serviceUrl,
     serviceName,
     objectIdOfSelectedScene,
@@ -45,7 +47,7 @@ export const saveImagerySceneAsWebMap = async ({
             [extent.xmin, extent.ymin],
             [extent.xmax, extent.ymax],
         ]),
-        tags: 'Landsat, Landsat-Level-2 Imagery, Remote Sensing',
+        tags: tags.join(','), //'Landsat, Landsat-Level-2 Imagery, Remote Sensing',
         title,
         snippet,
         type: 'Web Map',
