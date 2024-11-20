@@ -78,7 +78,7 @@ export const FIELD_NAMES = {
     HIGHPS: 'highps',
     CATEGORY: 'category',
     PRODUCT_NAME: 'ProductName',
-    BEST: 'best',// TO DO LIST
+    BEST: 'best', // TO DO LIST
     /**
      * The Landsat product identifier includes the Collection processing levels, processing date,
      * collection number, and collection tier category: `LXSS_LLLL_PPPRRR_YYYYMMDD_yyyymmdd_CC_TX`
@@ -143,8 +143,7 @@ const EMIT_RASTER_FUNCTIONS = [
     // 'None',
 ] as const;
 
-export type LandsatRasterFunctionName =
-    (typeof EMIT_RASTER_FUNCTIONS)[number];
+export type LandsatRasterFunctionName = (typeof EMIT_RASTER_FUNCTIONS)[number];
 
 /**
  * Landsat-2 Raster Function Infos
@@ -611,7 +610,7 @@ export const EMIT_BAND_NAMES = [
     'band282',
     'band283',
     'band284',
-    'band285'
+    'band285',
 ];
 
 export const EMIT_LEVEL_2a_SERVICE_SORT_FIELD = 'best';

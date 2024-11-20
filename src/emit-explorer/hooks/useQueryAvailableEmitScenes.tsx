@@ -19,8 +19,8 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
-import { queryAvailableScenes } from '@shared/store/Landsat/thunks';
+import { selectLandsatMissionsToBeExcluded } from '@shared/store/emit/selectors';
+import { queryAvailableScenes } from '@shared/store/emit/thunks';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 

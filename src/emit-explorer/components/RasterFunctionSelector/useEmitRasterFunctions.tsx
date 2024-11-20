@@ -35,7 +35,7 @@ import LandsatMNDWILegend from './legends/emit/MNDWI.png';
 import LandsatNDVILegend from './legends/emit/NDVI.png';
 import LandsatNDMILegend from './legends/emit/NDMI.png';
 import LandsatThermalLegend from './legends/emit/Thermal.png';
-import { RasterFunctionInfo } from '@typing/emit-service';
+import { RasterFunctionInfo } from '@typing/imagery-service';
 
 const LandsatRendererThumbnailByName: Record<
     LandsatRasterFunctionName,

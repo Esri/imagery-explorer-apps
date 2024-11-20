@@ -16,7 +16,7 @@
 import React from 'react';
 import { LandsatMissionFilter } from './EmitMissionFilter';
 import { useSelector } from 'react-redux';
-import { selectLandsatMissionsToBeExcluded } from '@shared/store/emit/selectors';       
+import { selectLandsatMissionsToBeExcluded } from '@shared/store/emit/selectors';
 import { useDispatch } from 'react-redux';
 import { missionsToBeExcludedUpdated } from '@shared/store/emit/reducer';
 

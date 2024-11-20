@@ -14,7 +14,7 @@
  */
 
 import { ImageryServiceTimeExtentData } from '@typing/imagery-service';
-import { EMIT_LEVEL_2a_SERVICE_URL } from './config';  
+import { EMIT_LEVEL_2a_SERVICE_URL } from './config';
 import { getTimeExtent } from '../helpers/getTimeExtent';
 
 let timeExtentData: ImageryServiceTimeExtentData = null;
