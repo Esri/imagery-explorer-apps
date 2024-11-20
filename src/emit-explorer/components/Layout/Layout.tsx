@@ -40,7 +40,7 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { EMITRasterFunctionSelector } from '../EmitFunctionSelector';
+import { EMITRasterFunctionSelector } from '../RasterFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
 import { EmitMissionFilter } from '../EmitMissionFilter';
 import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';

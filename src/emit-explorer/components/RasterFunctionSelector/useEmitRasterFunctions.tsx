@@ -70,7 +70,7 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
     'NDMI Colorized': LandsatNDMILegend,
 };
 
-export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
+export const getEmitRasterFunctionInfo = (): RasterFunctionInfo[] => {
     return EMIT_RASTER_FUNCTION_INFOS.map((d) => {
         const name: LandsatRasterFunctionName =
             d.name as LandsatRasterFunctionName;
@@ -90,9 +90,9 @@ export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
-export const useLandsatRasterFunctions = (): RasterFunctionInfo[] => {
+export const useEmitRasterFunctions = (): RasterFunctionInfo[] => {
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        return getLandsatRasterFunctionInfo();
+        return getEmitRasterFunctionInfo();
     }, []);
 
     return rasterFunctionInfosWithThumbnail;
