@@ -25,7 +25,8 @@ module.exports =  (env, options)=> {
     if(!app){
         throw new Error(
             'A valid `app` name is not found in environment variables, '+
-            'try `npm run start-landsat`.\n'
+            'try `npm run start-landsat`.\n',
+            'try `npm run start-emit`.\n'
         )
     }
 
@@ -76,6 +77,7 @@ module.exports =  (env, options)=> {
             alias: {
                 '@shared': path.resolve(__dirname, 'src/shared/'),
                 '@landsat-explorer': path.resolve(__dirname, 'src/landsat-explorer/'),
+                '@emit-explorer': path.resolve(__dirname, 'src/emit-explorer/'),
                 '@landcover-explorer': path.resolve(__dirname, 'src/landcover-explorer/'),
                 '@typing': path.resolve(__dirname, 'src/types/'),
             },
