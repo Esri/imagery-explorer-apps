@@ -188,7 +188,7 @@ export const LandsatSceneSavePanel = () => {
             sceneId={landsatScene?.name}
             publishOptions={publishOptions}
             downloadOptions={donwloadOptions}
-            saveOptionOnClick={saveOptionOnClick}
+            saveButtonOnClick={saveOptionOnClick}
         />
     );
 };

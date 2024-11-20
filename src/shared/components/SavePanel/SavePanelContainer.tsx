@@ -14,6 +14,7 @@ import { SaveJobType } from '@shared/store/SaveJobs/reducer';
 import { saveOptionInfoLookup } from './constants';
 import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
+import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 
 /**
  * Props for the SavePanelContainer component.
@@ -36,18 +37,21 @@ type SavePanelContainerProps = {
      * @param {SaveOption} option - The save option that was clicked.
      * @returns {void}
      */
-    saveOptionOnClick: (option: SaveJobType) => void;
+    saveButtonOnClick: (option: SaveJobType) => void;
 };
 
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     sceneId,
     publishOptions,
     downloadOptions,
-    saveOptionOnClick,
+    saveButtonOnClick,
 }) => {
     const dispatch = useDispatch();
 
     const shouldShowSavePanel = useSelector(selectShowSavePanel);
+
+    const [activeSaveJobDialog, setActiveSaveJobDialog] =
+        useState<SaveJobType>();
 
     useCheckJobStatus();
 
@@ -80,7 +84,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             <div className="mt-4 mx-4 md:mx-auto py-12 md:max-w-3xl w-full">
                 <Header sceneId={sceneId} />
 
-                <div className="w-full mt-12 mx-auto">
+                <div className="relative w-full mt-12 mx-auto">
                     {downloadOptions?.length ? (
                         <div>
                             <SaveOptionsListHeader title="Download" />
@@ -97,7 +101,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                         desciprtion={description}
                                         disabled={false}
                                         onClick={() => {
-                                            saveOptionOnClick(option);
+                                            setActiveSaveJobDialog(option);
                                         }}
                                     />
                                 );
@@ -120,7 +124,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                     desciprtion={description}
                                     disabled={false}
                                     onClick={() => {
-                                        saveOptionOnClick(option);
+                                        setActiveSaveJobDialog(option);
                                     }}
                                 />
                             );
@@ -130,6 +134,16 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
                 <JobList />
             </div>
+
+            {activeSaveJobDialog ? (
+                <SaveJobDialog
+                    closeButtonOnClick={() => setActiveSaveJobDialog(undefined)}
+                    saveButtonOnClick={(title, summary) => {
+                        saveButtonOnClick(activeSaveJobDialog);
+                        setActiveSaveJobDialog(undefined);
+                    }}
+                />
+            ) : null}
         </div>
     );
 };

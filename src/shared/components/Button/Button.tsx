@@ -39,6 +39,10 @@ type Props = {
      */
     decorativeIndicator?: 'left' | 'right';
     /**
+     * If true, the button should be disabled
+     */
+    disabled?: boolean;
+    /**
      * fire when user clicks the button
      * @returns
      */
@@ -51,6 +55,7 @@ export const Button: FC<Props> = ({
     onClickHandler,
     children,
     scale = 'm',
+    disabled,
     decorativeIndicator,
 }: Props) => {
     return (
@@ -71,6 +76,7 @@ export const Button: FC<Props> = ({
                         decorativeIndicator === 'right',
                     'horizontal-indicator-on-left':
                         decorativeIndicator === 'left',
+                    'opacity-50 pointer-events-none': disabled,
                 }
             )}
             onClick={onClickHandler}
