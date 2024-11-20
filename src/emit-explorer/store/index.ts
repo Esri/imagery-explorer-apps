@@ -14,9 +14,9 @@
  */
 
 import configureAppStore from '@shared/store/configureStore';
-import { getPreloadedState } from './getPreloadedState4LandsatExplorer';
+import { getPreloadedState } from './getPreloadedState4EmitExplorer';
 
-export const getLandsatExplorerStore = async () => {
+export const getEmitExplorerStore = async () => {
     const preloadedState = await getPreloadedState();
     return configureAppStore(preloadedState);
 };

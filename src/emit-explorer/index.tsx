@@ -18,7 +18,7 @@ import '@shared/styles/index.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
-import { getLandsatExplorerStore } from './store';
+import { getEmitExplorerStore } from './store';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
@@ -34,7 +34,7 @@ import { EMIT_RASTER_FUNCTION_INFOS } from '@shared/services/emit-level-2a/confi
     const root = createRoot(document.getElementById('root'));
 
     try {
-        const store = await getLandsatExplorerStore();
+        const store = await getEmitExplorerStore();
 
         const timeExtent = await getTimeExtentOfEmitService();
         console.log(timeExtent);
