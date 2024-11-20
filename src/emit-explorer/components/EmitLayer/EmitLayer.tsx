@@ -24,14 +24,13 @@ import {
     EMIT_LEVEL_2a_SERVICE_URL,
 } from '@shared/services/emit-level-2a/config';
 import MosaicRule from '@arcgis/core/layers/support/MosaicRule';
-import { EmitLayer } from '.';
 
 type Props = {
     mapView?: MapView;
     groupLayer?: GroupLayer;
 };
 
-const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
+const EmitLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
     // const mode = useSelector(selectAppMode);
 
     // const { rasterFunctionName, objectIdOfSelectedScene } =

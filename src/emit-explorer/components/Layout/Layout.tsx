@@ -40,13 +40,13 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
+import { EMITRasterFunctionSelector } from '../EmitFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
-import { LandsatMissionFilter } from '../LandsatMissionFilter';
+import { EmitMissionFilter } from '../EmitMissionFilter';
 import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 import { CloudFilter } from '@shared/components/CloudFilter';
-import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamicModeInfo';
+import { EmitDynamicModeInfo } from '../EmitDynamicModeInfo/EmitDynamicModeInfo';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -74,9 +74,9 @@ const Layout = () => {
                 <AppHeader title={appConfig.title} />
                 <BottomPanel>
                     <div className="mx-auto">
-                        <LandsatDynamicModeInfo />
+                        <EmitDynamicModeInfo />
                         <LandsatInterestingPlaces />
-                        <LandsatRasterFunctionSelector />
+                        <EMITRasterFunctionSelector />
                     </div>
                 </BottomPanel>
             </>
@@ -108,14 +108,14 @@ const Layout = () => {
                 <div className="flex flex-grow justify-center shrink-0">
                     {dynamicModeOn ? (
                         <>
-                            <LandsatDynamicModeInfo />
+                            <EmitDynamicModeInfo />
                             <LandsatInterestingPlaces />
                         </>
                     ) : (
                         <>
                             <div className="ml-2 3xl:ml-0">
                                 <Calendar>
-                                    <LandsatMissionFilter />
+                                    <EmitMissionFilter />
                                     <CloudFilter />
                                 </Calendar>
                             </div>
@@ -133,7 +133,7 @@ const Layout = () => {
                         </>
                     )}
 
-                    <LandsatRasterFunctionSelector />
+                    <EMITRasterFunctionSelector />
                 </div>
             </BottomPanel>
         </>

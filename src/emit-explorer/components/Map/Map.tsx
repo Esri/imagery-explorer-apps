@@ -54,16 +54,14 @@ const Map = () => {
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
                 index={1}
             >
-                <LandsatLayer />
+                <EmitLayer />
                 <MaskLayer />
                 <ChangeLayer />
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
             </GroupLayer>
             {/* <SwipeWidget /> */}
-            <SwipeWidget4ImageryLayers
-                serviceUrl={EMIT_LEVEL_2a_SERVICE_URL}
-            />
+            <SwipeWidget4ImageryLayers serviceUrl={EMIT_LEVEL_2a_SERVICE_URL} />
             <AnimationLayer
                 imageryServiceUrl={EMIT_LEVEL_2a_SERVICE_URL}
                 authoringAppName="landsat"
