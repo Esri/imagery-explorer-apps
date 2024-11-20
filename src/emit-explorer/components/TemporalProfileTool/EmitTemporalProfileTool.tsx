@@ -73,7 +73,7 @@ import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTempora
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selectors';
 
-export const LandsatTemporalProfileTool = () => {
+export const EmitTemporalProfileTool = () => {
     const dispatch = useDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);

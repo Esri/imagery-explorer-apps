@@ -25,11 +25,11 @@ import { useSelector } from 'react-redux';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-level-2/config';
+    EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+} from '@shared/services/emit-level-2a/config';
 
 export const SurfaceTempCelsiusPixelRangeSlider = () => {
     const dispatch = useDispatch();
@@ -45,8 +45,8 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
     return (
         <PixelRangeSlider
             values={maskOptions.selectedRange}
-            min={LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS}
-            max={LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS}
+            min={EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS}
+            max={EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS}
             steps={1}
             valuesOnChange={(values) => {
                 dispatch(updateMaskLayerSelectedRange(values));
@@ -79,8 +79,8 @@ export const SurfaceTempFarhenheitPixelRangeSlider = () => {
     return (
         <PixelRangeSlider
             values={rangeValues}
-            min={LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT}
-            max={LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT}
+            min={EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT}
+            max={EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT}
             steps={1}
             valuesOnChange={(values) => {
                 values = values.map((value) =>

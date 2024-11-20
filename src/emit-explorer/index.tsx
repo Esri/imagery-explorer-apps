@@ -22,7 +22,7 @@ import { getLandsatExplorerStore } from './store';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
-import { AboutLandsatExplorer } from './components/About';
+import { AboutEmitExplorer } from './components/About';
 import { ErrorPage } from '@shared/components/ErrorPage';
 //import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import { getTimeExtentOfEmitService } from '@shared/services/emit-level-2a/getTimeExtent';
@@ -48,7 +48,7 @@ import { EMIT_RASTER_FUNCTION_INFOS } from '@shared/services/emit-level-2a/confi
                     <ErrorBoundary>
                         <Map />
                         <Layout />
-                        <AboutLandsatExplorer />
+                        <AboutEmitExplorer />
                     </ErrorBoundary>
                 </AppContextProvider>
             </ReduxProvider>

@@ -36,7 +36,7 @@ import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import { EMIT_LEVEL_2a_SERVICE_URL } from '@shared/services/emit-level-2a/config';
 import { getPixelColor4ChangeCompareLayer } from '@shared/components/ChangeCompareTool/helpers';
 import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
@@ -240,7 +240,7 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         objectId:
             queryParams4SceneA?.objectIdOfSelectedScene ||
             queryParams4SceneB?.objectIdOfSelectedScene,
-        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        serviceURL: EMIT_LEVEL_2a_SERVICE_URL,
         pixelSize: mapView.resolution,
     });
 
@@ -248,7 +248,7 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         <ImageryLayerWithPixelFilter
             mapView={mapView}
             groupLayer={groupLayer}
-            serviceURL={LANDSAT_LEVEL_2_SERVICE_URL}
+            serviceURL={EMIT_LEVEL_2a_SERVICE_URL}
             rasterFunction={rasterFunction}
             visible={isVisible}
             selectedPixelValueRange={selectedRange}

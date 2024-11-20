@@ -15,12 +15,12 @@
 
 import { About } from '@shared/components/About';
 import React from 'react';
-import AboutLandsatExplorerContent from './AboutLandsatExplorerContent';
+import AboutEmitExplorerContent from './AboutEmitExplorerContent';
 
-export const AboutLandsatExplorer = () => {
+export const AboutEmitExplorer = () => {
     return (
         <About>
-            <AboutLandsatExplorerContent />
+            <AboutEmitExplorerContent />
         </About>
     );
 };

@@ -14,7 +14,7 @@
  */
 
 import { FIELD_NAMES } from './config';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
+import { EMIT_LEVEL_2a_SERVICE_URL } from './config';
 import { IExtent, IFeature } from '@esri/arcgis-rest-feature-service';
 import { parseLandsatInfo } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
@@ -245,7 +245,7 @@ export const getLandsatScenes = async ({
     });
 
     const res = await fetch(
-        `${LANDSAT_LEVEL_2_SERVICE_URL}/query?${params.toString()}`,
+        `${EMIT_LEVEL_2a_SERVICE_URL}/query?${params.toString()}`,
         {
             signal: abortController.signal,
         }
@@ -331,7 +331,7 @@ export const getLandsatFeatureByObjectId = async (
     // return data?.features[0] as IFeature;
 
     const feature = await getFeatureByObjectId(
-        LANDSAT_LEVEL_2_SERVICE_URL,
+        EMIT_LEVEL_2a_SERVICE_URL,
         objectId
     );
     return feature;
@@ -372,7 +372,7 @@ export const getExtentOfLandsatSceneByObjectId = async (
     // return data?.extent as IExtent;
 
     const extent = await getExtentByObjectId(
-        LANDSAT_LEVEL_2_SERVICE_URL,
+        EMIT_LEVEL_2a_SERVICE_URL,
         objectId
     );
     return extent;
@@ -423,7 +423,7 @@ export const intersectWithLandsatScene = async (
     // return data?.count && data?.count > 0;
 
     const res = await intersectWithImageryScene({
-        serviceUrl: LANDSAT_LEVEL_2_SERVICE_URL,
+        serviceUrl: EMIT_LEVEL_2a_SERVICE_URL,
         objectId,
         point,
         abortController,

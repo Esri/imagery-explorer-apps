@@ -16,7 +16,7 @@
 import { Point } from '@arcgis/core/geometry';
 import { getLandsatScenes } from './getLandsatScenes';
 import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
+import { EMIT_LEVEL_2a_SERVICE_URL } from './config';
 // import { getSamples, LandsatSampleData } from './getSamples';
 import { checkClearFlagInQABand } from './helpers';
 import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
@@ -118,7 +118,7 @@ export const getDataForTrendTool = async ({
     // // console.log(samplesData);
 
     const pixelValues = await getPixelValues({
-        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        serviceURL: EMIT_LEVEL_2a_SERVICE_URL,
         point: queryLocation,
         objectIds,
         abortController,

@@ -14,7 +14,7 @@
  */
 
 import { Point } from '@arcgis/core/geometry';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
+import { EMIT_LEVEL_2a_SERVICE_URL } from './config';
 import { getPixelValues } from '../helpers/getPixelValues';
 
 type GetPixelValuesParams = {
@@ -58,7 +58,7 @@ export const getLandsatPixelValues = async ({
     // return bandValues;
 
     const res = await getPixelValues({
-        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        serviceURL: EMIT_LEVEL_2a_SERVICE_URL,
         point,
         objectIds,
         abortController,

@@ -15,7 +15,7 @@
 
 import React, { FC } from 'react';
 import MapViewContainer from '@shared/components/MapView/MapViewContainer';
-import { LandsatLayer } from '../LandsatLayer';
+import { EmitLayer } from '../EmitLayer';
 // import { SwipeWidget } from '../SwipeWidget';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { MaskLayer } from '../MaskLayer';
@@ -31,7 +31,7 @@ import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
-import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import { EMIT_LEVEL_2a_SERVICE_URL } from '@shared/services/emit-level-2a/config';
 import { useDispatch } from 'react-redux';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
@@ -62,10 +62,10 @@ const Map = () => {
             </GroupLayer>
             {/* <SwipeWidget /> */}
             <SwipeWidget4ImageryLayers
-                serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+                serviceUrl={EMIT_LEVEL_2a_SERVICE_URL}
             />
             <AnimationLayer
-                imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+                imageryServiceUrl={EMIT_LEVEL_2a_SERVICE_URL}
                 authoringAppName="landsat"
             />
             <HillshadeLayer />
@@ -75,14 +75,14 @@ const Map = () => {
                     nativeScale={113386}
                     tooltip={"Zoom to Landsat's native resolution"}
                 />
-                <ZoomToExtent serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL} />
+                <ZoomToExtent serviceUrl={EMIT_LEVEL_2a_SERVICE_URL} />
                 <ScreenshotWidget />
                 <CopyLinkWidget />
             </MapActionButtonsGroup>
 
             <Popup />
             <MapMagnifier />
-            <CustomMapArrtribution atrribution="Landsat imagery courtesy of USGS, NASA, and Microsoft" />
+            <CustomMapArrtribution atrribution="EMIT imagery courtesy of USGS, NASA, and Microsoft" />
         </MapViewContainer>
     );
 };

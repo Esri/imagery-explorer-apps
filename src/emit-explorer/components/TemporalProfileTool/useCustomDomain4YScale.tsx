@@ -19,11 +19,11 @@ import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/ty
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-level-2/config';
+    EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+} from '@shared/services/emit-level-2a/config';
 
 export const useCustomDomain4YScale = (chartData: LineChartDataItem[]) => {
     const spectralIndex: SpectralIndex = useSelector(
@@ -39,13 +39,13 @@ export const useCustomDomain4YScale = (chartData: LineChartDataItem[]) => {
 
         // temperature is handled differently as we display the actual values in the chart
         if (spectralIndex === 'temperature farhenheit') {
-            yLowerLimit = LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT;
-            yUpperLimit = LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT;
+            yLowerLimit = EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT;
+            yUpperLimit = EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT;
         }
 
         if (spectralIndex === 'temperature celcius') {
-            yLowerLimit = LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
-            yUpperLimit = LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS;
+            yLowerLimit = EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS;
+            yUpperLimit = EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS;
         }
 
         // get min and max from the data

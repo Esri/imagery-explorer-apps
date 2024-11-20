@@ -33,14 +33,14 @@ import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { SpectralIndex } from '@typing/imagery-service';
 import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
-import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import { getBandIndexesBySpectralIndex } from '@shared/services/emit-level-2a/helpers';
 import {
-    LANDSAT_LEVEL_2_SERVICE_URL,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-} from '@shared/services/landsat-level-2/config';
+    EMIT_LEVEL_2a_SERVICE_URL,
+    EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+} from '@shared/services/emit-level-2a/config';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
 import { useDispatch } from 'react-redux';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
@@ -108,15 +108,15 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const fullPixelValueRange = useMemo(() => {
         if (spectralIndex === 'temperature celcius') {
             return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+                EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+                EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS,
             ];
         }
 
         if (spectralIndex === 'temperature farhenheit') {
             return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+                EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+                EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
             ];
         }
 
@@ -125,13 +125,13 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
 
     useCalculateTotalAreaByPixelsCount({
         objectId: objectIdOfSelectedScene,
-        serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
+        serviceURL: EMIT_LEVEL_2a_SERVICE_URL,
         pixelSize: mapView.resolution,
     });
 
     return (
         <ImageryLayerWithPixelFilter
-            serviceURL={LANDSAT_LEVEL_2_SERVICE_URL}
+            serviceURL={EMIT_LEVEL_2a_SERVICE_URL}
             // mapView={mapView}
             groupLayer={groupLayer}
             objectId={objectIdOfSelectedScene}

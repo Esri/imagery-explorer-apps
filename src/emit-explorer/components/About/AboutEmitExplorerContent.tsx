@@ -14,10 +14,10 @@
  */
 
 import { appConfig } from '@shared/config';
-import { LANDSAT_LEVEL_2_ITEM_URL } from '@shared/services/landsat-level-2/config';
+import { EMIT_LEVEL_2a_ITEM_URL } from '@shared/services/emit-level-2a/config';
 import React from 'react';
 
-const AboutLandsatExplorer = () => {
+const AboutEmitExplorer = () => {
     return (
         <div
             className="py-10"
@@ -66,7 +66,7 @@ const AboutLandsatExplorer = () => {
                     the ArcGIS system and used to power this app. For more about
                     the service and the data, see{' '}
                     <a
-                        href={LANDSAT_LEVEL_2_ITEM_URL}
+                        href={EMIT_LEVEL_2a_ITEM_URL}
                         target="_blank"
                         className="underline"
                         rel="noreferrer"
@@ -220,4 +220,4 @@ const AboutLandsatExplorer = () => {
     );
 };
 
-export default AboutLandsatExplorer;
+export default AboutEmitExplorer;

@@ -24,11 +24,11 @@ import { TemporalProfileData } from '@typing/imagery-service';
 import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import {
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-level-2/config';
+    EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+} from '@shared/services/emit-level-2a/config';
 import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
@@ -65,13 +65,13 @@ const convertLandsatTemporalProfileData2ChartData = (
         ) {
             yMin =
                 spectralIndex === 'temperature farhenheit'
-                    ? LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT
-                    : LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS;
+                    ? EMIT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT
+                    : EMIT_SURFACE_TEMPERATURE_MIN_CELSIUS;
 
             yMax =
                 spectralIndex === 'temperature farhenheit'
-                    ? LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT
-                    : LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS;
+                    ? EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT
+                    : EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS;
         }
 
         // y should not go below y min

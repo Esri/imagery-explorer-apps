@@ -18,7 +18,7 @@ import { useTemporalProfileDataAsChartData } from './useTemporalProfileDataAsCha
 import { useCustomDomain4YScale } from './useCustomDomain4YScale';
 import { TemporalProfileChart } from '@shared/components/TemporalProfileChart';
 
-export const LandsatTemporalProfileChart = () => {
+export const EmitTemporalProfileChart = () => {
     const chartData = useTemporalProfileDataAsChartData();
 
     const customDomain4YScale = useCustomDomain4YScale(chartData);
