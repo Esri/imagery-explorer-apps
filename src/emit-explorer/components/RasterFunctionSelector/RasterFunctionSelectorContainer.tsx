@@ -15,10 +15,10 @@
 
 import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
 import React from 'react';
-import { useLandsatRasterFunctions } from './useLandsatRasterFunctions';
+import { useEmitRasterFunctions } from './useEmitRasterFunctions';
 
 export const RasterFunctionSelectorContainer = () => {
-    const data = useLandsatRasterFunctions();
+    const data = useEmitRasterFunctions();
 
     return (
         <RasterFunctionSelector
