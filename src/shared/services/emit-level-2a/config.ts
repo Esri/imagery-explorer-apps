@@ -29,9 +29,9 @@ const serviceConfig = getServiceConfig('landsat-level-2');
 
 /**
  * Landsat 8 and 9 multispectral and multitemporal atmospherically corrected imagery with on-the-fly renderings and indices for visualization and analysis.
- * @see https://wmugeography.maps.arcgis.com/home/item.html?id=4059e2b3a9894f9b80b32438c0c29966
+ * @see https://wmugeography.maps.arcgis.com/home/item.html?id=811ed89d3e3948ae8ba92c9315976fd9
  */
-export const EMIT_LEVEL_2a_ITEM_ID = `246eaf41ada244fda12b4d442036829d`;
+export const EMIT_LEVEL_2a_ITEM_ID = `811ed89d3e3948ae8ba92c9315976fd9`;
 
 /**
  * URL of the Landsat-Level-2 Item on ArcGIS Online
@@ -42,7 +42,7 @@ export const EMIT_LEVEL_2a_ITEM_URL = `https://wmugeography.maps.arcgis.com/home
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
  */
 const EMIT_LEVEL_2a_ORIGINAL_SERVICE_URL =
-    'https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2a_Nubian/ImageServer';
+    'https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2A_mosaic_ANS_AP_to_grid/ImageServer';
 
 /**
  * Service URL to be used in PROD enviroment
@@ -58,7 +58,7 @@ export const EMIT_LEVEL_2a_SERVICE_URL_DEV =
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
- * @see https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2a_Nubian/ImageServer
+ * @see https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2A_mosaic_ANS_AP_to_grid/ImageServer
  */
 export const EMIT_LEVEL_2a_SERVICE_URL =
     TIER === 'development'
@@ -67,7 +67,7 @@ export const EMIT_LEVEL_2a_SERVICE_URL =
 
 /**
  * Field Names Look-up table for LandsatC2L2 (ImageServer)
- * @see https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_Rotated_Mosaic_Arabia/ImageServer
+ * @see https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2A_mosaic_ANS_AP_to_grid/ImageServer
  */
 export const FIELD_NAMES = {
     OBJECTID: 'objectid',

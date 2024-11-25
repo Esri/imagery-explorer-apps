@@ -58,9 +58,9 @@
             "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
         },
 
-    "EMIT": {
-        "development": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2a_Nubian/ImageServer",
-        "production": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2a_Nubian/ImageServer"
-         }
+        "EMIT": {
+            "development": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2A_mosaic_ANS_AP_to_grid/ImageServer",
+            "production": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2A_mosaic_ANS_AP_to_grid/ImageServer"
+        }
     }
 }
