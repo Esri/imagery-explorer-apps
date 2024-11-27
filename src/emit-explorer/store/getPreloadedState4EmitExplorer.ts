@@ -61,7 +61,7 @@ import { initialEmitState } from '@shared/store/Emit/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 import { EmitRasterFunctionName } from '@shared/services/emit-level-2a/config';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
-import { EmitInterestingPlaces } from '@emit-explorer/components/InterestingPlaces';
+import { emitInterestingPlaces } from '@emit-explorer/components/InterestingPlaces';
 
 /**
  * Map location info that contains center and zoom info from URL Hash Params
@@ -73,7 +73,7 @@ const mapLocationFromHashParams = getMapCenterFromHashParams();
  * found in the URL hash params.
  */
 const randomInterestingPlace = !mapLocationFromHashParams
-    ? getRandomElement(EmitInterestingPlaces)
+    ? getRandomElement(emitInterestingPlaces)
     : null;
 
 const getPreloadedMapState = (): MapState => {

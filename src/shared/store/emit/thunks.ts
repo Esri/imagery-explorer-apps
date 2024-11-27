@@ -162,7 +162,7 @@ export const queryAvailableScenes =
                         acquisitionMonth,
                         cloudCover,
                         satellite,
-                    } = EmitScene;
+                    } = emitScene;
 
                     const imageryScene: ImageryScene = {
                         objectId,

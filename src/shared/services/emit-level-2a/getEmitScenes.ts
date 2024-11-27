@@ -119,7 +119,7 @@ export const getFormattedEmitScenes = (
             sensor,
         } = parseEmitInfo(name);
 
-        const EmitScene: EmitScene = {
+        const emitScene: EmitScene = {
             objectId: attributes[OBJECTID],
             // productId,
             acquisitionDate,
@@ -146,7 +146,7 @@ export const getFormattedEmitScenes = (
             toSunZenith: attributes[SUNZENITH],
         };
 
-        return EmitScene;
+        return emitScene;
     });
 };
 

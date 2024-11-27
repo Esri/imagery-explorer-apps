@@ -14,4 +14,4 @@
  */
 
 export { EmitInterestingPlaces } from './EmitInterestingPlaces';
-export { data as EmitInterestingPlaces } from './data';
+export { data as emitInterestingPlaces } from './data';
