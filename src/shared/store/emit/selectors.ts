@@ -25,11 +25,11 @@ import { RootState } from '../configureStore';
 // );
 
 export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Landsat.landsatScenes.byObjectId,
+    (state: RootState) => state.Emit.EmitScenes.byObjectId,
     (byObjectId) => byObjectId
 );
 
-export const selectLandsatMissionsToBeExcluded = createSelector(
-    (state: RootState) => state.Landsat.missionsToBeExcluded,
+export const selectEmitMissionsToBeExcluded = createSelector(
+    (state: RootState) => state.Emit.missionsToBeExcluded,
     (missionsToBeExcluded) => missionsToBeExcluded
 );

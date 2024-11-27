@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { checkClearFlagInQABand, parseLandsatInfo } from './helpers';
+import { checkClearFlagInQABand, parseEmitInfo } from './helpers';
 
 describe('test helper functions for landsat-level-2 service', () => {
     describe('test parseLandsatInfo', () => {
@@ -24,7 +24,7 @@ describe('test helper functions for landsat-level-2 service', () => {
                 collectionNumber,
                 correctionLevel,
                 processingDate,
-            } = parseLandsatInfo('LC08_L1GT_029030_20151209_20160131_01_RT');
+            } = parseEmitInfo('LC08_L1GT_029030_20151209_20160131_01_RT');
 
             expect(sensor).toBe('OLI/TIRS combined');
             expect(collectionCategory).toBe('Real-Time');

@@ -19,8 +19,8 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useDispatch } from 'react-redux';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { selectLandsatMissionsToBeExcluded } from '@shared/store/emit/selectors';
-import { queryAvailableScenes } from '@shared/store/emit/thunks';
+import { selectEmitMissionsToBeExcluded } from '@shared/store/Emit/selectors';
+import { queryAvailableScenes } from '@shared/store/Emit/thunks';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
@@ -29,7 +29,7 @@ import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScen
  * that were acquired within the selected date range and intersect with the center of the map screen
  * @returns
  */
-export const useQueryAvailableLandsatScenes = (): void => {
+export const useQueryAvailableEmitScenes = (): void => {
     const dispatch = useDispatch();
 
     // const acquisitionYear = useSelector(selectAcquisitionYear);
@@ -40,7 +40,7 @@ export const useQueryAvailableLandsatScenes = (): void => {
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useSelector(selectEmitMissionsToBeExcluded);
 
     /**
      * current map center

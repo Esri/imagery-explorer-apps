@@ -14,8 +14,8 @@
  */
 
 import { Point } from '@arcgis/core/geometry';
-import { getLandsatScenes } from './getLandsatScenes';
-import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
+import { getEmitScenes } from './getEmitScenes';
+import { TemporalProfileData, EmitScene } from '@typing/imagery-service';
 import { EMIT_LEVEL_2a_SERVICE_URL } from './config';
 // import { getSamples, LandsatSampleData } from './getSamples';
 import { checkClearFlagInQABand } from './helpers';
@@ -65,11 +65,11 @@ export const getDataForTrendTool = async ({
 }: GetProfileDataOptions): Promise<TemporalProfileData[]> => {
     const { x, y } = queryLocation;
 
-    let landsatScenes: LandsatScene[] = [];
+    let EmitScenes: EmitScene[] = [];
 
     if (acquisitionMonth) {
         // query Landsat scenes based on input location and acquisition month to show "year-to-year" trend
-        landsatScenes = await getLandsatScenes({
+        EmitScenes = await getEmitScenes({
             mapPoint: [x, y],
             acquisitionMonth,
             abortController,
@@ -77,7 +77,7 @@ export const getDataForTrendTool = async ({
         });
     } else if (acquisitionYear) {
         // query Landsat scenes based on input location and acquisition year to show "month-to-month" trend
-        landsatScenes = await getLandsatScenes({
+        EmitScenes = await getEmitScenes({
             mapPoint: [x, y],
             acquisitionDateRange: getDateRangeForYear(acquisitionYear),
             abortController,
@@ -85,15 +85,15 @@ export const getDataForTrendTool = async ({
         });
     }
 
-    if (!landsatScenes.length) {
+    if (!EmitScenes.length) {
         return [];
     }
 
     // refine Landsat scenes based on cloud coverage.
-    const landsatScenesToSample = getLandsatScenesToSample(landsatScenes);
+    const EmitScenesToSample = getEmitScenesToSample(EmitScenes);
 
     // extract object IDs from refined Landsat scenes.
-    const objectIds = landsatScenesToSample.map((d) => d.objectId);
+    const objectIds = EmitScenesToSample.map((d) => d.objectId);
 
     // // divide object IDs into separate groups for parallel fetching.
     // const objectsIdsInSeparateGroups =
@@ -126,7 +126,7 @@ export const getDataForTrendTool = async ({
 
     const temporalProfileData = formatAsTemporalProfileData(
         pixelValues,
-        landsatScenesToSample
+        EmitScenesToSample
     );
 
     // exclude pixels with poor quality using the QA Band.
@@ -148,11 +148,11 @@ export const getDataForTrendTool = async ({
  */
 const formatAsTemporalProfileData = (
     pixelValues: PixelValuesData[],
-    scenes: LandsatScene[]
+    scenes: EmitScene[]
 ): TemporalProfileData[] => {
     const output: TemporalProfileData[] = [];
 
-    const sceneByObjectId = new Map<number, LandsatScene>();
+    const sceneByObjectId = new Map<number, EmitScene>();
 
     for (const scene of scenes) {
         sceneByObjectId.set(scene.objectId, scene);
@@ -197,10 +197,10 @@ const formatAsTemporalProfileData = (
  * @param samplingTemporalResolution landsat scenes
  * @returns LandsatScene[]
  */
-const getLandsatScenesToSample = (
-    scenes: LandsatScene[]
+const getEmitScenesToSample = (
+    scenes: EmitScene[]
     // samplingTemporalResolution: number
-): LandsatScene[] => {
+): EmitScene[] => {
     if (!scenes.length) {
         return [];
     }
@@ -212,7 +212,7 @@ const getLandsatScenesToSample = (
         (scene) => scene.satellite !== 'Landsat 7'
     );
 
-    const candidates: LandsatScene[] = [scenesWithLandsat7Removed[0]];
+    const candidates: EmitScene[] = [scenesWithLandsat7Removed[0]];
 
     for (let i = 1; i < scenesWithLandsat7Removed.length; i++) {
         const prevScene = candidates[candidates.length - 1];

@@ -16,67 +16,67 @@
 import React, { useMemo } from 'react';
 import {
     EMIT_RASTER_FUNCTION_INFOS,
-    LandsatRasterFunctionName,
+    EmitRasterFunctionName,
 } from '@shared/services/emit-level-2a/config';
 
-import LandsatAgricultureThumbnail from './thumbnails/emit/Render_Agriculture.jpg';
-import LandsatBathymetricThumbnail from './thumbnails/emit/Render_Bathymetric.jpg';
-import LandsatColorIRThumbnail from './thumbnails/emit/Render_ColorIR.jpg';
-import LandsatNaturalColorThumbnail from './thumbnails/emit/Render_NaturalColor.jpg';
-import LandsatGeologyThumbnail from './thumbnails/emit/Render_Geology.jpg';
-import LandsatNDVIThumbnail from './thumbnails/emit/Render_NDVI.png';
-import LandsatShortWaveIRThumbnail from './thumbnails/emit/Render_ShortwaveIR.jpg';
-import LandsatThermalThumbnail from './thumbnails/emit/Render_Thermal.png';
-import LandsatMNDWIThumbnail from './thumbnails/emit/Render_MNDWI.png';
-import LandsatNDMIThumbnail from './thumbnails/emit/Render_NDMI.png';
-import LandsatUrbanThumbnail from './thumbnails/emit/Render_Urban.jpg';
+import EmitAgricultureThumbnail from './thumbnails/emit/Render_Agriculture.jpg';
+import EmitBathymetricThumbnail from './thumbnails/emit/Render_Bathymetric.jpg';
+import EmitColorIRThumbnail from './thumbnails/emit/Render_ColorIR.jpg';
+import EmitNaturalColorThumbnail from './thumbnails/emit/Render_NaturalColor.jpg';
+import EmitGeologyThumbnail from './thumbnails/emit/Render_Geology.jpg';
+import EmitNDVIThumbnail from './thumbnails/emit/Render_NDVI.png';
+import EmitShortWaveIRThumbnail from './thumbnails/emit/Render_ShortwaveIR.jpg';
+import EmitThermalThumbnail from './thumbnails/emit/Render_Thermal.png';
+import EmitMNDWIThumbnail from './thumbnails/emit/Render_MNDWI.png';
+import EmitNDMIThumbnail from './thumbnails/emit/Render_NDMI.png';
+import EmitUrbanThumbnail from './thumbnails/emit/Render_Urban.jpg';
 
-import LandsatMNDWILegend from './legends/emit/MNDWI.png';
-import LandsatNDVILegend from './legends/emit/NDVI.png';
-import LandsatNDMILegend from './legends/emit/NDMI.png';
-import LandsatThermalLegend from './legends/emit/Thermal.png';
+import EmitMNDWILegend from './legends/emit/MNDWI.png';
+import EmitNDVILegend from './legends/emit/NDVI.png';
+import EmitNDMILegend from './legends/emit/NDMI.png';
+import EmitThermalLegend from './legends/emit/Thermal.png';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 
-const LandsatRendererThumbnailByName: Record<
-    LandsatRasterFunctionName,
+const EmitRendererThumbnailByName: Record<
+    EmitRasterFunctionName,
     string
 > = {
-    'Agriculture with DRA': LandsatAgricultureThumbnail,
-    'Bathymetric with DRA': LandsatBathymetricThumbnail,
-    'Color Infrared with DRA': LandsatColorIRThumbnail,
-    'Natural Color with DRA': LandsatNaturalColorThumbnail,
-    'Geology with DRA': LandsatGeologyThumbnail,
-    'NDVI Colorized': LandsatNDVIThumbnail,
-    'Short-wave Infrared with DRA': LandsatShortWaveIRThumbnail,
-    'Surface Temperature Colorized (Fahrenheit)': LandsatThermalThumbnail,
-    'Surface Temperature Colorized (Celsius)': LandsatThermalThumbnail,
-    'MNDWI Colorized': LandsatMNDWIThumbnail,
-    'Urban with DRA': LandsatUrbanThumbnail,
-    'NDMI Colorized': LandsatNDMIThumbnail,
+    'Agriculture with DRA': EmitAgricultureThumbnail,
+    'Bathymetric with DRA': EmitBathymetricThumbnail,
+    'Color Infrared with DRA': EmitColorIRThumbnail,
+    'Natural Color with DRA': EmitNaturalColorThumbnail,
+    'Geology with DRA': EmitGeologyThumbnail,
+    'NDVI Colorized': EmitNDVIThumbnail,
+    'Short-wave Infrared with DRA': EmitShortWaveIRThumbnail,
+    'Surface Temperature Colorized (Fahrenheit)': EmitThermalThumbnail,
+    'Surface Temperature Colorized (Celsius)': EmitThermalThumbnail,
+    'MNDWI Colorized': EmitMNDWIThumbnail,
+    'Urban with DRA': EmitUrbanThumbnail,
+    'NDMI Colorized': EmitNDMIThumbnail,
 };
 
-const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
+const EmitRendererLegendByName: Record<EmitRasterFunctionName, string> = {
     'Agriculture with DRA': null,
     'Bathymetric with DRA': null,
     'Color Infrared with DRA': null,
     'Natural Color with DRA': null,
     'Geology with DRA': null,
-    'NDVI Colorized': LandsatNDVILegend,
+    'NDVI Colorized': EmitNDVILegend,
     'Short-wave Infrared with DRA': null,
-    'Surface Temperature Colorized (Fahrenheit)': LandsatThermalLegend,
-    'Surface Temperature Colorized (Celsius)': LandsatThermalLegend,
-    'MNDWI Colorized': LandsatMNDWILegend,
+    'Surface Temperature Colorized (Fahrenheit)': EmitThermalLegend,
+    'Surface Temperature Colorized (Celsius)': EmitThermalLegend,
+    'MNDWI Colorized': EmitMNDWILegend,
     'Urban with DRA': null,
-    'NDMI Colorized': LandsatNDMILegend,
+    'NDMI Colorized': EmitNDMILegend,
 };
 
 export const getEmitRasterFunctionInfo = (): RasterFunctionInfo[] => {
     return EMIT_RASTER_FUNCTION_INFOS.map((d) => {
-        const name: LandsatRasterFunctionName =
-            d.name as LandsatRasterFunctionName;
+        const name: EmitRasterFunctionName =
+            d.name as EmitRasterFunctionName;
 
-        const thumbnail = LandsatRendererThumbnailByName[name];
-        const legend = LandsatRendererLegendByName[name];
+        const thumbnail = EmitRendererThumbnailByName[name];
+        const legend = EmitRendererLegendByName[name];
 
         return {
             ...d,

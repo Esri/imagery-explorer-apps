@@ -140,6 +140,89 @@ export type LandsatScene = {
     sunAzimuth: number;
 };
 
+export type EmitScene = {
+    objectId: number;
+    /**
+     * Landsat product name
+     * @example LC08_L1GT_029030_20151209_20160131_01_RT
+     */
+    name: string;
+    /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * acquisitionDate in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * year when this scene was acquired
+     */
+    acquisitionYear: number;
+    /**
+     * month when this scene was acquired
+     */
+    acquisitionMonth: number;
+    /**
+     * percent of cloud cover, the value ranges from 0 - 1
+     */
+    cloudCover: number;
+    /**
+     * percent of cloud cover ranges rounded to integers that ranges from 0 - 100
+     */
+    formattedCloudCover: number;
+    // /**
+    //  * if true, this scene was acquired during a cloudy day
+    //  */
+    // isCloudy: boolean;
+    /**
+     * name of the satellite (e.g. 'Landsat 8')
+     */
+    satellite: string;
+    /**
+     * Landsat path number
+     * @see https://landsat.gsfc.nasa.gov/about/the-worldwide-reference-system/
+     */
+    path: number;
+    /**
+     * Landsat Row number
+     */
+    row: number;
+    /**
+     * name of the sensor:
+     * - OLI/TIRS combined
+     * - OLI-only
+     * - TIRS-only
+     * - ETM+
+     * - MSS
+     */
+    sensor: string;
+    // /**
+    //  * Collection category:
+    //  * - Real-Time
+    //  * - Tier 1
+    //  * - Tier 2
+    //  */
+    // collectionCategory: string;
+    // /**
+    //  * Collection number (01, 02, …)
+    //  */
+    // collectionNumber: string;
+    /**
+     * Processing correction level (L1TP/L1GT/L1GS)
+     */
+    correctionLevel: string;
+    /**
+     * processing date in unix timestamp
+     */
+    processingDate: number;
+    // category: number;
+    // name: string;
+    // best: number;
+    toSunZenith: number;
+    toSunAzimuth: number;
+};
+
 /**
  * Temporal Profile/Trend Data sampled at user selected location
  */

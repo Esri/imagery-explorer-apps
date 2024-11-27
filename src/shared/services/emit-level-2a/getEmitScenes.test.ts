@@ -14,7 +14,7 @@
  */
 
 import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
-import { getLandsatScenes } from './getLandsatScenes';
+import { getEmitScenes } from './getEmitScenes';
 
 const mockedData = {
     objectIdFieldName: 'objectid',
@@ -58,14 +58,14 @@ const mockedData = {
     exceededTransferLimit: true,
 };
 
-describe('test getLandsatScenes', () => {
-    it('should return formatted landsat scenes', async () => {
+describe('test getEmitScenes', () => {
+    it('should return formatted Emit scenes', async () => {
         global.fetch = jest.fn().mockResolvedValue({
             ok: true,
             json: jest.fn().mockResolvedValue(mockedData),
         });
 
-        const response = await getLandsatScenes({
+        const response = await getEmitScenes({
             acquisitionDateRange: getDateRangeForYear(2022),
             // cloudCover: 0.1,
             mapPoint: [-105, 40],
@@ -86,7 +86,7 @@ describe('test getLandsatScenes', () => {
             json: jest.fn().mockResolvedValue(mockedData),
         });
 
-        const response = await getLandsatScenes({
+        const response = await getEmitScenes({
             acquisitionDateRange: getDateRangeForYear(2022),
             // cloudCover: 0.1,
             mapPoint: [-105, 40],

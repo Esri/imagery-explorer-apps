@@ -18,7 +18,7 @@ import {
     SceneInfoTable,
     SceneInfoTableData,
 } from '@shared/components/SceneInfoTable';
-import { useDataFromSelectedLandsatScene } from './useDataFromSelectedLandsatScene';
+import { useDataFromSelectedEmitScene } from './useDataFromSelectedEmitScene';
 import { DATE_FORMAT } from '@shared/constants/UI';
 import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
@@ -27,7 +27,7 @@ import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone
 export const SceneInfoContainer = () => {
     const mode = useSelector(selectAppMode);
 
-    const data = useDataFromSelectedLandsatScene();
+    const data = useDataFromSelectedEmitScene();
 
     const tableData: SceneInfoTableData[] = useMemo(() => {
         if (!data) {
@@ -35,19 +35,19 @@ export const SceneInfoContainer = () => {
         }
 
         const {
-            satellite,
-            row,
-            path,
+            //satellite,
+            //row,
+            //path,
             acquisitionDate,
-            sensor,
+            //sensor,
             formattedCloudCover,
             // collectionCategory,
             // collectionNumber,
-            correctionLevel,
+            //correctionLevel,
             // processingDate,
             name,
-            sunAzimuth,
-            sunElevation,
+            toSunAzimuth,
+            toSunZenith,
         } = data;
 
         return [
@@ -62,11 +62,11 @@ export const SceneInfoContainer = () => {
             //     name: '',
             //     value: name.slice(17),
             // },
-            {
-                name: 'Satellite',
-                value: satellite,
-            },
-            {
+            //{
+            //    name: 'Satellite',
+            //    value: satellite,
+            //},
+            /**{
                 name: 'Sensor',
                 value: sensor,
             },
@@ -77,7 +77,7 @@ export const SceneInfoContainer = () => {
             {
                 name: 'Path, Row',
                 value: path.toString() + ', ' + row.toString(),
-            },
+            },*/
             // {
             //     name: 'Row',
             //     value: row.toString(),
@@ -87,12 +87,12 @@ export const SceneInfoContainer = () => {
                 value: formatInUTCTimeZone(acquisitionDate, DATE_FORMAT),
             },
             {
-                name: 'Sun Elevation',
-                value: sunElevation.toFixed(3),
+                name: 'Sun Zenith',
+                value: toSunZenith.toFixed(3),
             },
             {
                 name: 'Sun Azimuth',
-                value: sunAzimuth.toFixed(3),
+                value: toSunAzimuth.toFixed(3),
             },
             {
                 name: 'Cloud Cover',

@@ -28,7 +28,7 @@ type GetPixelValuesParams = {
  * @param param0
  * @returns
  */
-export const getLandsatPixelValues = async ({
+export const getEmitPixelValues = async ({
     point,
     objectIds,
     abortController,
@@ -67,7 +67,7 @@ export const getLandsatPixelValues = async ({
 
     if (!res.length) {
         throw new Error(
-            'Failed to fetch pixel values. Please select a location inside of the selected landsat scene.'
+            'Failed to fetch pixel values. Please select a location inside of the selected Emit scene.'
         );
     }
 

@@ -16,16 +16,16 @@
 import { FIELD_NAMES } from './config';
 import { EMIT_LEVEL_2a_SERVICE_URL } from './config';
 import { IExtent, IFeature } from '@esri/arcgis-rest-feature-service';
-import { parseLandsatInfo } from './helpers';
+import { parseEmitInfo } from './helpers';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
-import { LandsatScene } from '@typing/imagery-service';
+import { EmitScene } from '@typing/imagery-service';
 import { DateRange } from '@typing/shared';
 import { Point } from '@arcgis/core/geometry';
 import { getFeatureByObjectId } from '../helpers/getFeatureById';
 import { getExtentByObjectId } from '../helpers/getExtentById';
 import { intersectWithImageryScene } from '../helpers/intersectWithImageryScene';
 
-type GetLandsatScenesParams = {
+type GetEmitScenesParams = {
     /**
      * longitude and latitude (e.g. [-105, 40])
      */
@@ -72,30 +72,25 @@ const {
     CLOUD_COVER,
     CATEGORY,
     NAME,
-    BEST,
     SENSORNAME,
-    WRS_PATH,
-    WRS_ROW,
-    LANDSAT_PRODUCT_ID,
-    MONTH,
+    EMIT_SCENE_ID,
     SUNAZIMUTH,
-    SUNELEVATION,
-    DATASET_ID,
+    SUNZENITH    
 } = FIELD_NAMES;
 
 /**
  * A Map that will be used to retrieve Landsat Scene data using the object Id as key
  */
-const landsatSceneByObjectId: Map<number, LandsatScene> = new Map();
+const emitSceneByObjectId: Map<number, EmitScene> = new Map();
 
 /**
  * Formats the features from Landsat-level-2 service and returns an array of LandsatScene objects.
  * @param features - An array of IFeature objects from Landsat-level-2 service.
  * @returns An array of LandsatScene objects containing the acquisition date, formatted acquisition date, name, cloud cover, and best attributes.
  */
-export const getFormattedLandsatScenes = (
+export const getFormattedEmitScenes = (
     features: IFeature[]
-): LandsatScene[] => {
+): EmitScene[] => {
     return features.map((feature) => {
         const { attributes } = feature;
 
@@ -122,9 +117,9 @@ export const getFormattedLandsatScenes = (
             correctionLevel,
             processingDate,
             sensor,
-        } = parseLandsatInfo(name);
+        } = parseEmitInfo(name);
 
-        const landsatScene: LandsatScene = {
+        const EmitScene: EmitScene = {
             objectId: attributes[OBJECTID],
             // productId,
             acquisitionDate,
@@ -136,9 +131,9 @@ export const getFormattedLandsatScenes = (
                 : 0,
             // best: attributes[BEST],
             // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
-            satellite: `Landsat ${parseInt(name.slice(2, 4))}`,
-            row: attributes[WRS_ROW],
-            path: attributes[WRS_PATH],
+           // satellite: `Emit ${parseInt(name.slice(2, 4))}`,
+           // row: attributes[WRS_ROW],
+            //path: attributes[WRS_PATH],
             // category: attributes[CATEGORY],
             // collectionCategory,
             // collectionNumber,
@@ -147,11 +142,11 @@ export const getFormattedLandsatScenes = (
             sensor,
             acquisitionYear,
             acquisitionMonth,
-            sunAzimuth: attributes[SUNAZIMUTH],
-            sunElevation: attributes[SUNELEVATION],
+            toSunAzimuth: attributes[SUNAZIMUTH],
+            toSunZenith: attributes[SUNZENITH],
         };
 
-        return landsatScene;
+        return EmitScene;
     });
 };
 
@@ -165,7 +160,7 @@ export const getFormattedLandsatScenes = (
  * @returns {Promise} A promise that resolves to an array of LandsatScene objects.
  *
  */
-export const getLandsatScenes = async ({
+export const getEmitScenes = async ({
     mapPoint,
     // acquisitionYear,
     acquisitionDateRange,
@@ -173,7 +168,7 @@ export const getLandsatScenes = async ({
     acquisitionDate,
     missionsToBeExcluded,
     abortController,
-}: GetLandsatScenesParams): Promise<LandsatScene[]> => {
+}: GetEmitScenesParams): Promise<EmitScene[]> => {
     // if (!acquisitionYear && !formattedAcquisitionDate) {
     //     throw new Error(
     //         `acquisitionYear or acquisitionDate is required to query Landsat Scenes`
@@ -193,19 +188,19 @@ export const getLandsatScenes = async ({
             `(${ACQUISITION_DATE} BETWEEN timestamp '${acquisitionDate} 00:00:00' AND timestamp '${acquisitionDate} 23:59:59')`
         );
     }
-
+/** *
     if (acquisitionMonth) {
         whereClauses.push(`(${MONTH} = ${acquisitionMonth})`);
     }
 
     if (missionsToBeExcluded && missionsToBeExcluded.length) {
         const missionNames = missionsToBeExcluded.map(
-            (mission) => `'Landsat${mission}'`
+            (mission) => `'Emit${mission}'`
         );
         whereClauses.push(
             `(${DATASET_ID} NOT IN (${missionNames.join(', ')}))`
         );
-    }
+    }*/
 
     const [longitude, latitude] = mapPoint;
 
@@ -227,14 +222,11 @@ export const getLandsatScenes = async ({
             ACQUISITION_DATE,
             CLOUD_COVER,
             NAME,
-            BEST,
             SENSORNAME,
-            WRS_PATH,
-            WRS_ROW,
             CATEGORY,
-            LANDSAT_PRODUCT_ID,
+            EMIT_SCENE_ID,
             SUNAZIMUTH,
-            SUNELEVATION,
+            SUNZENITH,
         ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',
@@ -261,16 +253,16 @@ export const getLandsatScenes = async ({
         throw data.error;
     }
 
-    const landsatScenes: LandsatScene[] = getFormattedLandsatScenes(
+    const emitScenes: EmitScene[] = getFormattedEmitScenes(
         data?.features || []
     );
 
     // save the landsat scenes to `landsatSceneByObjectId` map
-    for (const landsatScene of landsatScenes) {
-        landsatSceneByObjectId.set(landsatScene.objectId, landsatScene);
+    for (const emitScene of emitScenes) {
+        emitSceneByObjectId.set(emitScene.objectId, emitScene);
     }
 
-    return landsatScenes;
+    return emitScenes;
 };
 
 /**
@@ -279,28 +271,28 @@ export const getLandsatScenes = async ({
  * @param objectId The unique identifier of the feature
  * @returns LandsatScene The formatted Landsat Scene corresponding to the objectId
  */
-export const getLandsatSceneByObjectId = async (
+export const getEmitSceneByObjectId = async (
     objectId: number
-): Promise<LandsatScene> => {
+): Promise<EmitScene> => {
     // Check if the landsat scene already exists in the cache
-    if (landsatSceneByObjectId.has(objectId)) {
-        return landsatSceneByObjectId.get(objectId);
+    if (emitSceneByObjectId.has(objectId)) {
+        return emitSceneByObjectId.get(objectId);
     }
 
-    const feature = await getLandsatFeatureByObjectId(objectId);
+    const feature = await getEmitFeatureByObjectId(objectId);
 
     if (!feature) {
         return null;
     }
 
-    const landsatScene = getFormattedLandsatScenes([feature])[0];
+    const emitScene = getFormattedEmitScenes([feature])[0];
 
-    landsatSceneByObjectId.set(objectId, landsatScene);
+    emitSceneByObjectId.set(objectId, emitScene);
 
-    return landsatScene;
+    return emitScene;
 };
 
-export const getLandsatFeatureByObjectId = async (
+export const getEmitFeatureByObjectId = async (
     objectId: number
 ): Promise<IFeature> => {
     // const queryParams = new URLSearchParams({
@@ -342,7 +334,7 @@ export const getLandsatFeatureByObjectId = async (
  * @param objectId The unique identifier of the feature
  * @returns IExtent The extent of the feature from Landsat-Level-2 service
  */
-export const getExtentOfLandsatSceneByObjectId = async (
+export const getExtentOfEmitSceneByObjectId = async (
     objectId: number
 ): Promise<IExtent> => {
     // const queryParams = new URLSearchParams({
@@ -384,7 +376,7 @@ export const getExtentOfLandsatSceneByObjectId = async (
  * @param objectId Object ID of the Landsat scene to check intersection with.
  * @returns {boolean} Returns true if the input point intersects with the specified Landsat scene, otherwise false.
  */
-export const intersectWithLandsatScene = async (
+export const intersectWithEmitScene = async (
     point: Point,
     objectId: number,
     abortController?: AbortController

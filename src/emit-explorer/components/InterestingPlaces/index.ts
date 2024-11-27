@@ -13,5 +13,5 @@
  * limitations under the License.
  */
 
-export { LandsatInterestingPlaces } from './EmitInterestingPlaces';
+export { EmitInterestingPlaces } from './EmitInterestingPlaces';
 export { data as EmitInterestingPlaces } from './data';

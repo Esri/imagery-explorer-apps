@@ -20,7 +20,7 @@ import {
 } from '@shared/utils/temperature-conversion';
 import { SpectralIndex } from '@typing/imagery-service';
 
-type LandsatProductInfo = {
+type EmitProductInfo = {
     /**
      * name of the sensor:
      * - OLI/TIRS combined
@@ -194,7 +194,7 @@ export const checkClearFlagInQABand = (bandValues: number[]): boolean => {
  * @example LC08_L1GT_029030_20151209_20160131_01_RT
  * @see https://www.usgs.gov/faqs/what-naming-convention-landsat-collections-level-1-scenes
  */
-export const parseLandsatInfo = (productId: string): LandsatProductInfo => {
+export const parseEmitInfo = (productId: string): EmitProductInfo => {
     const [
         LXSS,
         CORRECTION_LEVEL,

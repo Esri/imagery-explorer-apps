@@ -19,13 +19,13 @@ import {
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
-import { selectAvailableScenesByObjectId } from '@shared/store/Landsat/selectors';
-import { LandsatScene } from '@typing/imagery-service';
+import { selectAvailableScenesByObjectId } from '@shared/store/Emit/selectors';
+import { EmitScene } from '@typing/imagery-service';
 import {
     selectAnimationStatus,
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
-import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { getEmitSceneByObjectId } from '@shared/services/emit-level-2a/getEmitScenes';
 
 // /**
 //  * Save/cache Landsat scene data using the object ID as the key.
@@ -39,7 +39,7 @@ import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getL
  * This custom hook returns the data for the selected Landsat Scene.
  * @returns
  */
-export const useDataFromSelectedLandsatScene = () => {
+export const useDataFromSelectedEmitScene = () => {
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
@@ -51,7 +51,7 @@ export const useDataFromSelectedLandsatScene = () => {
 
     const animationPlaying = useSelector(selectIsAnimationPlaying);
 
-    const [landsatScene, setLandsatScene] = useState<LandsatScene>();
+    const [EmitScene, setEmitScene] = useState<EmitScene>();
 
     useEffect(() => {
         (async () => {
@@ -61,16 +61,16 @@ export const useDataFromSelectedLandsatScene = () => {
                 mode === 'analysis'
             ) {
                 // return null;
-                setLandsatScene(null);
+                setEmitScene(null);
                 return;
             }
 
             try {
                 const data =
                     availableScenesByObjectId[objectIdOfSelectedScene] ||
-                    (await getLandsatSceneByObjectId(objectIdOfSelectedScene));
+                    (await getEmitSceneByObjectId(objectIdOfSelectedScene));
 
-                setLandsatScene(data);
+                setEmitScene(data);
             } catch (err) {
                 console.error(err);
             }
@@ -82,5 +82,5 @@ export const useDataFromSelectedLandsatScene = () => {
         animationPlaying,
     ]);
 
-    return landsatScene;
+    return EmitScene;
 };

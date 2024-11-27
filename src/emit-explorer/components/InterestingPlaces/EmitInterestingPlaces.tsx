@@ -17,6 +17,6 @@ import React from 'react';
 import { data } from './data';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
 
-export const LandsatInterestingPlaces = () => {
+export const EmitInterestingPlaces = () => {
     return <InterestingPlaces data={data} />;
 };

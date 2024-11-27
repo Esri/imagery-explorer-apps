@@ -28,7 +28,7 @@ type Props = {
     missionsToBeExcludedOnChange: (missionsToBeExcluded: number[]) => void;
 };
 
-type LandsatMissionFilterButtonProps = {
+type EmitMissionFilterButtonProps = {
     /**
      * title of the button
      */
@@ -62,7 +62,7 @@ type FilterListItemProps = {
 
 const CheckboxSize = 8;
 
-const FilterButton: FC<LandsatMissionFilterButtonProps> = ({
+const FilterButton: FC<EmitMissionFilterButtonProps> = ({
     title,
     expanded,
     onClick,
@@ -129,7 +129,7 @@ const FilterListItem: FC<FilterListItemProps> = ({
     );
 };
 
-export const LandsatMissionFilter: FC<Props> = ({
+export const EmitMissionFilter: FC<Props> = ({
     missionsToBeExcluded,
     missionsToBeExcludedOnChange,
 }: Props) => {
@@ -139,7 +139,7 @@ export const LandsatMissionFilter: FC<Props> = ({
 
     useOnClickOutside(containerRef, setExpanded.bind(null, false));
 
-    const toggleSelectLandsatMission = (mission: number) => {
+    const toggleSelectEmitMission = (mission: number) => {
         const inExclusionListAready = missionsToBeExcluded.includes(mission);
 
         const updatedMissionsToBeExcluded = inExclusionListAready
@@ -156,7 +156,7 @@ export const LandsatMissionFilter: FC<Props> = ({
         missionsToBeExcludedOnChange(updatedMissionsToBeExcluded);
     };
 
-    const toggleSelectAllLandsatMission = () => {
+    const toggleSelectAllEmitMission = () => {
         // clicks on "ALL" button would include all missions if some of the missions
         // are not included. If all missions are already included, then clicks on "ALL" button
         // should deselect all missions.
@@ -205,7 +205,7 @@ export const LandsatMissionFilter: FC<Props> = ({
                             //     null,
                             //     []
                             // )}
-                            onClick={toggleSelectAllLandsatMission}
+                            onClick={toggleSelectAllEmitMission}
                         />
                         {EMIT_MISSIONS.map((mission) => {
                             return (
@@ -217,7 +217,7 @@ export const LandsatMissionFilter: FC<Props> = ({
                                             mission
                                         ) === false
                                     }
-                                    onClick={toggleSelectLandsatMission.bind(
+                                    onClick={toggleSelectEmitMission.bind(
                                         null,
                                         mission
                                     )}

@@ -19,15 +19,15 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { LandsatScene } from '@typing/imagery-service';
+import { EmitScene } from '@typing/imagery-service';
 
-export type LandsatState = {
+export type EmitState = {
     /**
      * Landsat scenes that intersect with center point of map view and were acquired during the input year.
      */
-    landsatScenes?: {
+    EmitScenes?: {
         byObjectId?: {
-            [key: number]: LandsatScene;
+            [key: number]: EmitScene;
         };
         objectIds?: number[];
     };
@@ -37,8 +37,8 @@ export type LandsatState = {
     missionsToBeExcluded: number[];
 };
 
-export const initialLandsatState: LandsatState = {
-    landsatScenes: {
+export const initialEmitState: EmitState = {
+    EmitScenes: {
         byObjectId: {},
         objectIds: [],
     },
@@ -46,17 +46,17 @@ export const initialLandsatState: LandsatState = {
 };
 
 const slice = createSlice({
-    name: 'Landsat',
-    initialState: initialLandsatState,
+    name: 'Emit',
+    initialState: initialEmitState,
     reducers: {
-        landsatScenesUpdated: (
+        EmitScenesUpdated: (
             state,
-            action: PayloadAction<LandsatScene[]>
+            action: PayloadAction<EmitScene[]>
         ) => {
             const objectIds: number[] = [];
 
             const byObjectId: {
-                [key: number]: LandsatScene;
+                [key: number]: EmitScene;
             } = {};
 
             for (const scene of action.payload) {
@@ -66,7 +66,7 @@ const slice = createSlice({
                 byObjectId[objectId] = scene;
             }
 
-            state.landsatScenes = {
+            state.EmitScenes = {
                 objectIds,
                 byObjectId,
             };
@@ -82,7 +82,7 @@ const slice = createSlice({
 
 const { reducer } = slice;
 
-export const { landsatScenesUpdated, missionsToBeExcludedUpdated } =
+export const { EmitScenesUpdated, missionsToBeExcludedUpdated } =
     slice.actions;
 
 export default reducer;

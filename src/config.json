@@ -41,7 +41,7 @@
 
         "emit": {
             "title": "Esri | EMIT Explorer",
-            "webmapId": "81609bbe235942919ad27c77e42c600e",
+            "webmapId": "811ed89d3e3948ae8ba92c9315976fd9",
             "description": "EMIT hyperspecrtral imagery.",
             "animationMetadataSources": "Esri, USGS, NASA",
             "pathname": "/emitexplorer",
@@ -58,7 +58,7 @@
             "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
         },
 
-        "EMIT": {
+        "emit-level-2a": {
             "development": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2A_mosaic_ANS_AP_to_grid/ImageServer",
             "production": "https://www.esrs.wmich.edu/arcgis/rest/services/NASA_EMIT/EMIT_L2A_mosaic_ANS_AP_to_grid/ImageServer"
         }

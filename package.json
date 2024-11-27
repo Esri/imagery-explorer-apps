@@ -19,7 +19,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "e2e:landsat": "npx playwright test --config e2e/playwright.landsat.config.ts",
-    "e2e:sentinel1": "npx playwright test --config e2e/playwright.sentinel1.config.ts"
+    "e2e:sentinel1": "npx playwright test --config e2e/playwright.sentinel1.config.ts",
+    "start:emit": "webpack serve --mode development --open --env app=emit",
+    "build:emit": "webpack --mode production --env app=emit",
+    "e2e:emit": "npx playwright test --config e2e/playwright.emit.config.ts"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,json}": [

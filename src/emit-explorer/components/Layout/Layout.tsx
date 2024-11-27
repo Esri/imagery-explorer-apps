@@ -39,9 +39,9 @@ import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
-import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
+import { useQueryAvailableEmitScenes } from '@emit-explorer/hooks/useQueryAvailableEmitScenes';
 import { EMITRasterFunctionSelector } from '../RasterFunctionSelector';
-import { LandsatInterestingPlaces } from '../InterestingPlaces';
+import { EmitInterestingPlaces } from '../InterestingPlaces';
 import { EmitMissionFilter } from '../EmitMissionFilter';
 import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
@@ -64,7 +64,7 @@ const Layout = () => {
      * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
      * changes, it will dispatch the query that finds the available landsat scenes.
      */
-    useQueryAvailableLandsatScenes();
+    useQueryAvailableEmitScenes();
 
     useSaveAppState2HashParams();
 
@@ -75,7 +75,7 @@ const Layout = () => {
                 <BottomPanel>
                     <div className="mx-auto">
                         <EmitDynamicModeInfo />
-                        <LandsatInterestingPlaces />
+                        <EmitInterestingPlaces />
                         <EMITRasterFunctionSelector />
                     </div>
                 </BottomPanel>
@@ -109,7 +109,7 @@ const Layout = () => {
                     {dynamicModeOn ? (
                         <>
                             <EmitDynamicModeInfo />
-                            <LandsatInterestingPlaces />
+                            <EmitInterestingPlaces />
                         </>
                     ) : (
                         <>

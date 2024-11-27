@@ -57,11 +57,11 @@ import {
     ChangeCompareToolState,
     initialChangeCompareToolState,
 } from '@shared/store/ChangeCompareTool/reducer';
-import { initialLandsatState } from '@shared/store/Landsat/reducer';
+import { initialEmitState } from '@shared/store/Emit/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
-import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import { EmitRasterFunctionName } from '@shared/services/emit-level-2a/config';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
-import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
+import { EmitInterestingPlaces } from '@emit-explorer/components/InterestingPlaces';
 
 /**
  * Map location info that contains center and zoom info from URL Hash Params
@@ -73,7 +73,7 @@ const mapLocationFromHashParams = getMapCenterFromHashParams();
  * found in the URL hash params.
  */
 const randomInterestingPlace = !mapLocationFromHashParams
-    ? getRandomElement(landsatInterestingPlaces)
+    ? getRandomElement(EmitInterestingPlaces)
     : null;
 
 const getPreloadedMapState = (): MapState => {
@@ -109,7 +109,7 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
         mode = 'dynamic';
     }
 
-    const defaultRasterFunction: LandsatRasterFunctionName =
+    const defaultRasterFunction: EmitRasterFunctionName =
         'Natural Color with DRA';
 
     // Attempt to extract query parameters from the URL hash.
@@ -216,8 +216,8 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         Map: getPreloadedMapState(),
         UI: getPreloadedUIState(),
-        Landsat: {
-            ...initialLandsatState,
+        Emit: {
+            ...initialEmitState,
         },
         ImageryScenes: getPreloadedImageryScenesState(),
         TrendTool: getPreloadedTrendToolState(),

@@ -14,12 +14,12 @@
  */
 
 import { batch } from 'react-redux';
-import { getLandsatScenes } from '@shared/services/emit-level-2a/getLandsatScenes';
+import { getEmitScenes } from '@shared/services/emit-level-2a/getEmitScenes';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-import { landsatScenesUpdated } from './reducer';
-import { selectLandsatMissionsToBeExcluded } from './selectors';
-import { LandsatScene } from '@typing/imagery-service';
+import { EmitScenesUpdated } from './reducer';
+import { selectEmitMissionsToBeExcluded } from './selectors';
+import { EmitScene } from '@typing/imagery-service';
 // import {
 //     formattedDateString2Unixtimestamp,
 //     getYearFromFormattedDateString,
@@ -58,12 +58,12 @@ export const queryAvailableScenes =
 
             const center = selectMapCenter(getState());
 
-            const missionsToBeExcluded = selectLandsatMissionsToBeExcluded(
+            const missionsToBeExcluded = selectEmitMissionsToBeExcluded(
                 getState()
             );
 
             // get scenes that were acquired within the acquisition year
-            const landsatScenes = await getLandsatScenes({
+            const emitScenes = await getEmitScenes({
                 acquisitionDateRange,
                 mapPoint: center,
                 abortController,
@@ -151,8 +151,8 @@ export const queryAvailableScenes =
             // }
 
             // convert list of Landsat scenes to list of imagery scenes
-            let imageryScenes: ImageryScene[] = landsatScenes.map(
-                (landsatScene: LandsatScene) => {
+            let imageryScenes: ImageryScene[] = emitScenes.map(
+                (emitScene: EmitScene) => {
                     const {
                         objectId,
                         name,
@@ -162,7 +162,7 @@ export const queryAvailableScenes =
                         acquisitionMonth,
                         cloudCover,
                         satellite,
-                    } = landsatScene;
+                    } = EmitScene;
 
                     const imageryScene: ImageryScene = {
                         objectId,
@@ -188,7 +188,7 @@ export const queryAvailableScenes =
             );
 
             batch(() => {
-                dispatch(landsatScenesUpdated(landsatScenes));
+                dispatch(EmitScenesUpdated(emitScenes));
                 dispatch(availableImageryScenesUpdated(imageryScenes));
             });
         } catch (err) {

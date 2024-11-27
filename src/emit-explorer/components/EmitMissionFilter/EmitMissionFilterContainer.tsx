@@ -14,19 +14,19 @@
  */
 
 import React from 'react';
-import { LandsatMissionFilter } from './EmitMissionFilter';
+import { EmitMissionFilter } from './EmitMissionFilter';
 import { useSelector } from 'react-redux';
-import { selectLandsatMissionsToBeExcluded } from '@shared/store/emit/selectors';
+import { selectEmitMissionsToBeExcluded } from '@shared/store/Emit/selectors';
 import { useDispatch } from 'react-redux';
-import { missionsToBeExcludedUpdated } from '@shared/store/emit/reducer';
+import { missionsToBeExcludedUpdated } from '@shared/store/Emit/reducer';
 
 export const EmitMissionFilterContainer = () => {
     const dispatch = useDispatch();
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useSelector(selectEmitMissionsToBeExcluded);
 
     return (
-        <LandsatMissionFilter
+        <EmitMissionFilter
             missionsToBeExcluded={missionsToBeExcluded}
             missionsToBeExcludedOnChange={(updatedMissionsToBeExcluded) => {
                 dispatch(

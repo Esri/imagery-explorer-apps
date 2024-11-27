@@ -39,6 +39,7 @@ module.exports = {
         "^@shared(.*)$": "<rootDir>/src/shared$1",
     } ,
     globals: {
-        "WEBPACK_DEFINED_APP_NAME": "landsat"
+        "WEBPACK_DEFINED_APP_NAME": "landsat",
+        "WEBPACK_DEFINED_APP_NAME": "emit"
     }
 };
