@@ -30,10 +30,10 @@ import {
     selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
-import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import { getBandIndexesBySpectralIndex } from '@shared/services/emit-level-2a/helpers';
 import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
-import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { getEmitFeatureByObjectId } from '@shared/services/emit-level-2a/getEmitScenes';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { EMIT_LEVEL_2a_SERVICE_URL } from '@shared/services/emit-level-2a/config';
@@ -101,7 +101,7 @@ export const getRasterFunction4ChangeLayer = async (
         const bandIndex = getBandIndexesBySpectralIndex(spectralIndex);
 
         // Retrieve the feature associated with the later acquired Landsat scene.
-        const feature = await getLandsatFeatureByObjectId(
+        const feature = await getEmitFeatureByObjectId(
             queryParams4SceneAcquiredInLaterDate?.objectIdOfSelectedScene
         );
 

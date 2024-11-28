@@ -45,7 +45,7 @@ const AboutEmitExplorer = () => {
                 </p>
 
                 <p className="mb-4">
-                    Landsat Collection 2 Level-2 science products, imagery from
+                    Emit Collection 2 Level-2a science products, imagery from
                     1982 to present, are made publicly available by the USGS.
                     The continuity in this scientific record allows for critical
                     and reliable observation and analysis of Earth processes and
@@ -53,7 +53,7 @@ const AboutEmitExplorer = () => {
                 </p>
 
                 <p className="mb-4">
-                    The Landsat Level-2 multispectral imagery is available in{' '}
+                    The Emit Level-2a multispectral imagery is available in{' '}
                     <a
                         href="https://livingatlas.arcgis.com/en/home/"
                         target="_blank"
@@ -71,7 +71,7 @@ const AboutEmitExplorer = () => {
                         className="underline"
                         rel="noreferrer"
                     >
-                        Landsat Level-2
+                        Emit Level-2a
                     </a>
                     .
                 </p>
@@ -83,7 +83,7 @@ const AboutEmitExplorer = () => {
                 </h3>
 
                 <p className="mb-4">
-                    Landsat multispectral imagery helps to track and document
+                    Emit multispectral imagery helps to track and document
                     land use and land change associated with climate change,
                     urbanization, drought, wildfire, deforestation, and other
                     natural processes and human activity.
@@ -128,7 +128,7 @@ const AboutEmitExplorer = () => {
 
                 <div className="mb-4">
                     <p className="mb-1">
-                        <b className="font-bold">Landsat Level-2 Imagery </b>–
+                        <b className="font-bold">Emit Level-2a Imagery </b>–
                         Esri, USGS, NASA, Microsoft
                     </p>
                     <div className="ml-8 mb-2">
@@ -179,7 +179,7 @@ const AboutEmitExplorer = () => {
 
                 <div className="mb-4">
                     <p className="font-bold mb-1">
-                        Landsat Explorer App - Esri
+                        Emit Explorer App - Esri
                     </p>
                     <p>
                         This app is licensed under the Esri Master License

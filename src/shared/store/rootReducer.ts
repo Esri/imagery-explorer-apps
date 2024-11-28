@@ -23,6 +23,7 @@ import MaskTool from './MaskTool/reducer';
 import SpectralProfileTool from './SpectralProfileTool/reducer';
 import ChangeCompareTool from './ChangeCompareTool/reducer';
 import Landsat from './Landsat/reducer';
+import Emit from './Emit/reducer';
 import SpectralSamplingTool from './SpectralSamplingTool/reducer';
 import TemporalCompositeTool from './TemporalCompositeTool/reducer';
 import LandcoverExplorer from './LandcoverExplorer/reducer';
@@ -34,6 +35,7 @@ const reducers = combineReducers({
     ImageryScenes,
     Sentinel2,
     Landsat,
+    Emit,
     LandcoverExplorer,
     Sentinel1,
     TrendTool,

@@ -14,11 +14,13 @@
  */
 
 import { formatLandsatBandValuesAsLineChartDataItems } from '@landsat-explorer/components/SpectralTool/helper';
+import { formatEmitBandValuesAsLineChartDataItems } from '@emit-explorer/components/SpectralTool/helper';
 import {
     selectIdOfItem2Highlight,
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
 } from '@shared/store/SpectralSamplingTool/selectors';
+
 import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumns';
 // import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';

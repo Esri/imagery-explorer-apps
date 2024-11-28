@@ -68,9 +68,9 @@ import {
     IntersectWithImagerySceneFunc,
 } from '@shared/store/TrendTool/thunks';
 import { Point } from '@arcgis/core/geometry';
-import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getLandsatScenes';
-import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
-import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
+import { intersectWithEmitScene } from '@shared/services/emit-level-2a/getEmitScenes';
+import { getDataForTrendTool } from '@shared/services/emit-level-2a/getTemporalProfileData';
+import { selectEmitMissionsToBeExcluded } from '@shared/store/Emit/selectors';
 import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selectors';
 
 export const EmitTemporalProfileTool = () => {
@@ -78,7 +78,7 @@ export const EmitTemporalProfileTool = () => {
 
     const tool = useSelector(selectActiveAnalysisTool);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useSelector(selectEmitMissionsToBeExcluded);
 
     const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
@@ -93,7 +93,7 @@ export const EmitTemporalProfileTool = () => {
             objectId: number,
             abortController: AbortController
         ) => {
-            const res = await intersectWithLandsatScene(
+            const res = await intersectWithEmitScene(
                 queryLocation,
                 objectId,
                 abortController

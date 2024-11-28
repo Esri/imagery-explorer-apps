@@ -60,10 +60,10 @@ export const getMosaicRule = async (objectId: number): Promise<MosaicRule> => {
  *
  * @returns {IImageryLayer} - The Landsat-2 Imagery Layer.
  */
-const useLandsatLayer = ({ visible, rasterFunction, objectId }: Props) => {
+const useEmitLayer = ({ visible, rasterFunction, objectId }: Props) => {
     const layerRef = useRef<ImageryLayer>();
 
-    const [landsatLayer, setLandsatLayer] = useState<ImageryLayer>();
+    const [EmitLayer, setEmitLayer] = useState<ImageryLayer>();
 
     /**
      * initialize landsat layer using mosaic created using the input year
@@ -82,7 +82,7 @@ const useLandsatLayer = ({ visible, rasterFunction, objectId }: Props) => {
             // blendMode: 'multiply'
         });
 
-        setLandsatLayer(layerRef.current);
+        setEmitLayer(layerRef.current);
     };
 
     useEffect(() => {
@@ -124,7 +124,7 @@ const useLandsatLayer = ({ visible, rasterFunction, objectId }: Props) => {
         layerRef.current.visible = visible;
     }, [visible]);
 
-    return landsatLayer;
+    return EmitLayer;
 };
 
-export default useLandsatLayer;
+export default useEmitLayer;

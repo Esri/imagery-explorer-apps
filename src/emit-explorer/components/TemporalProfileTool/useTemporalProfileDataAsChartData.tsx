@@ -29,7 +29,7 @@ import {
     EMIT_SURFACE_TEMPERATURE_MAX_CELSIUS,
     EMIT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/emit-level-2a/config';
-import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import { calcSpectralIndex } from '@shared/services/emit-level-2a/helpers';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 /**

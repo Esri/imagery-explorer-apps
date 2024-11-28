@@ -73,6 +73,8 @@ const {
     CATEGORY,
     NAME,
     SENSORNAME,
+    WRS_ROW,
+    WRS_PATH,
     EMIT_SCENE_ID,
     SUNAZIMUTH,
     SUNZENITH    
@@ -114,9 +116,9 @@ export const getFormattedEmitScenes = (
         const {
             // collectionCategory,
             // collectionNumber,
-            correctionLevel,
-            processingDate,
-            sensor,
+            // correctionLevel,
+            //processingDate,
+            //sensor,
         } = parseEmitInfo(name);
 
         const emitScene: EmitScene = {
@@ -131,14 +133,14 @@ export const getFormattedEmitScenes = (
                 : 0,
             // best: attributes[BEST],
             // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
-           // satellite: `Emit ${parseInt(name.slice(2, 4))}`,
-           // row: attributes[WRS_ROW],
-            //path: attributes[WRS_PATH],
+            satellite: `Emit ${parseInt(name.slice(2, 4))}`,
+            row: attributes[WRS_ROW],
+            path: attributes[WRS_PATH],
             // category: attributes[CATEGORY],
             // collectionCategory,
             // collectionNumber,
-            correctionLevel,
-            processingDate,
+            //correctionLevel,
+            //processingDate,
             sensor,
             acquisitionYear,
             acquisitionMonth,
@@ -227,6 +229,8 @@ export const getEmitScenes = async ({
             EMIT_SCENE_ID,
             SUNAZIMUTH,
             SUNZENITH,
+            WRS_PATH,
+            WRS_ROW
         ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',
@@ -244,7 +248,7 @@ export const getEmitScenes = async ({
     );
 
     if (!res.ok) {
-        throw new Error('failed to query Landsat-2 service');
+        throw new Error('failed to query Emit-2 service');
     }
 
     const data = await res.json();

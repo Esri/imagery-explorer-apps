@@ -15,8 +15,8 @@
 
 import { checkClearFlagInQABand, parseEmitInfo } from './helpers';
 
-describe('test helper functions for landsat-level-2 service', () => {
-    describe('test parseLandsatInfo', () => {
+describe('test helper functions for emit-level-2a service', () => {
+    describe('test parseEmitInfo', () => {
         it('should return parsed info about a Landsat scene', () => {
             const {
                 sensor,

@@ -16,7 +16,7 @@
 import {
     calcSpectralIndex,
     getValFromThermalBand,
-} from '@shared/services/landsat-level-2/helpers';
+} from '@shared/services/emit-level-2a/helpers';
 import Point from '@arcgis/core/geometry/Point';
 import { getPopUpContentWithLocationInfo } from '@shared/components/MapPopup/helper';
 

@@ -77,14 +77,14 @@ const normalizeBandValue = (value: number): number => {
  * @param bandValues - An array of numeric values representing Landsat band values.
  * @returns An array of LineChartDataItem objects with normalized x and y values.
  */
-export const formatLandsatBandValuesAsLineChartDataItems = (
+export const formatEmitBandValuesAsLineChartDataItems = (
     bandValues: number[]
 ) => {
     if (!bandValues || !bandValues.length) {
         return [];
     }
 
-    return bandValues.slice(0, 7).map((val, index) => {
+    return bandValues.slice(0, 284).map((val, index) => {
         return {
             x: index,
             y: normalizeBandValue(val),

@@ -29,7 +29,7 @@ import {
 // import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getMainContent } from './helper';
 // import { watch } from '@arcgis/core/core/reactiveUtils';
-import { getFormattedLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { getFormattedEmitScenes } from '@shared/services/emit-level-2a/getEmitScenes';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
 import { identify } from '@shared/services/helpers/identify';
@@ -90,10 +90,10 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
             const features = res?.catalogItems?.features;
 
             if (!features.length) {
-                throw new Error('cannot find landsat scene');
+                throw new Error('cannot find emit scene');
             }
 
-            const sceneData = getFormattedLandsatScenes(features)[0];
+            const sceneData = getFormattedEmitScenes(features)[0];
 
             const bandValues: number[] =
                 getPixelValuesFromIdentifyTaskResponse(res);

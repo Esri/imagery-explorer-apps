@@ -23,7 +23,7 @@ import {
 } from './config';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import {
-    formatLandsatBandValuesAsLineChartDataItems,
+    formatEmitBandValuesAsLineChartDataItems,
     getFillColorByFeatureOfInterest,
 } from './helper';
 
@@ -58,7 +58,7 @@ export const useSpectralProfileChartData = (
         //     );
 
         const spectralProfileData4UserSelectedLocation =
-            formatLandsatBandValuesAsLineChartDataItems(data);
+            formatEmitBandValuesAsLineChartDataItems(data);
         // bandValues4UserSelectedLocation.map((val, index) => {
         //     return {
         //         x: index,
@@ -67,7 +67,7 @@ export const useSpectralProfileChartData = (
         // });
 
         const spectralProfileData4SelectedFeatureOfInterest =
-            formatLandsatBandValuesAsLineChartDataItems(
+            formatEmitBandValuesAsLineChartDataItems(
                 SpectralProfileDataByFeatureOfInterest[featureOfInterest]
             );
         // bandValues4SelectedFeatureOfInterest.map((val, index) => {

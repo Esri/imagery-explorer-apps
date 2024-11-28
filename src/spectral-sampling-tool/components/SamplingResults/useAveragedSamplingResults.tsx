@@ -14,6 +14,7 @@
  */
 
 import { formatLandsatBandValuesAsLineChartDataItems } from '@landsat-explorer/components/SpectralTool/helper';
+import { formatEmitBandValuesAsLineChartDataItems } from '@emit-explorer/components/SpectralTool/helper';
 import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,

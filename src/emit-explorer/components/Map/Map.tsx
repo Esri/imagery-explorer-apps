@@ -64,14 +64,14 @@ const Map = () => {
             <SwipeWidget4ImageryLayers serviceUrl={EMIT_LEVEL_2a_SERVICE_URL} />
             <AnimationLayer
                 imageryServiceUrl={EMIT_LEVEL_2a_SERVICE_URL}
-                authoringAppName="landsat"
+                authoringAppName="emit"
             />
             <HillshadeLayer />
 
             <MapActionButtonsGroup>
                 <Zoom2NativeScale
                     nativeScale={113386}
-                    tooltip={"Zoom to Landsat's native resolution"}
+                    tooltip={"Zoom to emit's native resolution"}
                 />
                 <ZoomToExtent serviceUrl={EMIT_LEVEL_2a_SERVICE_URL} />
                 <ScreenshotWidget />
