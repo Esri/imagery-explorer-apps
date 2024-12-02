@@ -26,7 +26,7 @@
         },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",
-            "webmapId": "81609bbe235942919ad27c77e42c600e",
+            "webmapId": "811ed89d3e3948ae8ba92c9315976fd9",
             "description": "",
             "pathname": "/",
             "entrypoint": "/src/spectral-sampling-tool/index.tsx"

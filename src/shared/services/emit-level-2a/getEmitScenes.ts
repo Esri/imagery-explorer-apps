@@ -73,8 +73,8 @@ const {
     CATEGORY,
     NAME,
     SENSORNAME,
-    WRS_ROW,
-    WRS_PATH,
+    //WRS_ROW,
+    //WRS_PATH,
     EMIT_SCENE_ID,
     SUNAZIMUTH,
     SUNZENITH    
@@ -134,18 +134,23 @@ export const getFormattedEmitScenes = (
             // best: attributes[BEST],
             // isCloudy: attributes[CLOUD_COVER] > CLOUDY_THRESHOLD,
             satellite: `Emit ${parseInt(name.slice(2, 4))}`,
-            row: attributes[WRS_ROW],
-            path: attributes[WRS_PATH],
+            //row: attributes[WRS_ROW],
+           // path: attributes[WRS_PATH],
             // category: attributes[CATEGORY],
             // collectionCategory,
             // collectionNumber,
             //correctionLevel,
             //processingDate,
-            sensor,
+            //sensor,
+            path: attributes.PATH || 0,
+            row: attributes.ROW || 0,
+            sensor: attributes.SENSOR || 'DefaultSensor',
             acquisitionYear,
             acquisitionMonth,
             toSunAzimuth: attributes[SUNAZIMUTH],
             toSunZenith: attributes[SUNZENITH],
+            correctionLevel: attributes.correctionLevel || 'Standard', // Add default or extracted value
+            processingDate: attributes.processingDate || new Date().toISOString(), // Add default or extracted value
         };
 
         return emitScene;
@@ -229,8 +234,8 @@ export const getEmitScenes = async ({
             EMIT_SCENE_ID,
             SUNAZIMUTH,
             SUNZENITH,
-            WRS_PATH,
-            WRS_ROW
+            //WRS_PATH,
+            //WRS_ROW
         ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',

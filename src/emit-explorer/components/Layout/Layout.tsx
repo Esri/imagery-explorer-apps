@@ -40,7 +40,7 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
 import { useQueryAvailableEmitScenes } from '@emit-explorer/hooks/useQueryAvailableEmitScenes';
-import { EMITRasterFunctionSelector } from '../RasterFunctionSelector';
+import { EmitRasterFunctionSelector } from '../RasterFunctionSelector';
 import { EmitInterestingPlaces } from '../InterestingPlaces';
 import { EmitMissionFilter } from '../EmitMissionFilter';
 import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
@@ -76,7 +76,7 @@ const Layout = () => {
                     <div className="mx-auto">
                         <EmitDynamicModeInfo />
                         <EmitInterestingPlaces />
-                        <EMITRasterFunctionSelector />
+                        <EmitRasterFunctionSelector />
                     </div>
                 </BottomPanel>
             </>
@@ -133,7 +133,7 @@ const Layout = () => {
                         </>
                     )}
 
-                    <EMITRasterFunctionSelector />
+                    <EmitRasterFunctionSelector />
                 </div>
             </BottomPanel>
         </>

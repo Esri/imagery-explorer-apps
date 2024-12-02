@@ -23,8 +23,10 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 // import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
-import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { LandsatRasterFunctionSelector } from '@landsat-explorer/components/RasterFunctionSelector';
+//import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
+//import { LandsatRasterFunctionSelector } from '@landsat-explorer/components/RasterFunctionSelector';
+import { useQueryAvailableEmitScenes } from '@emit-explorer/hooks/useQueryAvailableEmitScenes';
+import { EmitRasterFunctionSelector } from '@emit-explorer/components/RasterFunctionSelector';
 
 const Layout = () => {
     useSaveAppState2HashParams();
@@ -33,7 +35,7 @@ const Layout = () => {
      * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
      * changes, it will dispatch the query that finds the available landsat scenes.
      */
-    useQueryAvailableLandsatScenes();
+    useQueryAvailableEmitScenes();
 
     return (
         <>
@@ -54,7 +56,7 @@ const Layout = () => {
                         </div>
 
                         <div className="flex shrink-0 ml-4">
-                            <LandsatRasterFunctionSelector />
+                            <EmitRasterFunctionSelector />
                         </div>
                     </>
                 </div>
