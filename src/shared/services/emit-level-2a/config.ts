@@ -85,9 +85,7 @@ export const FIELD_NAMES = {
     SENSORNAME: 'SensorName',
     SHAPE: 'Shape',
     EMIT_SCENE_ID: 'fid'
-    //WRS_PATH: 'ZOrder',//placeholder
-    //WRS_ROW: 'wrs_row'
-
+    
 };
 
 /**
