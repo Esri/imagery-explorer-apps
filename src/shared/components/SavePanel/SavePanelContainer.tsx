@@ -16,6 +16,21 @@ import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 
+export type SaveJobButtonOnClickParams = {
+    /**
+     * The type of job to be saved.
+     */
+    saveJobType: SaveJobType;
+    /**
+     * The title of the job.
+     */
+    title: string;
+    /**
+     * The summary of the job.
+     */
+    summary: string;
+};
+
 /**
  * Props for the SavePanelContainer component.
  */
@@ -33,11 +48,11 @@ type SavePanelContainerProps = {
      */
     downloadOptions: SaveJobType[];
     /**
-     * Emits when a save option is clicked.
-     * @param {SaveOption} option - The save option that was clicked.
+     * Emits when a save button is clicked.
+     * @param {SaveOption} option - The save button that was clicked.
      * @returns {void}
      */
-    saveButtonOnClick: (option: SaveJobType) => void;
+    saveButtonOnClick: (params: SaveJobButtonOnClickParams) => void;
 };
 
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
@@ -90,14 +105,14 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                             <SaveOptionsListHeader title="Download" />
 
                             {downloadOptions.map((option) => {
-                                const { title, subtitle, description } =
+                                const { inputName, outputName, description } =
                                     saveOptionInfoLookup[option];
 
                                 return (
                                     <SaveOptionButton
                                         key={option}
-                                        title={title}
-                                        subtitle={subtitle}
+                                        title={inputName}
+                                        subtitle={'as ' + outputName}
                                         desciprtion={description}
                                         disabled={false}
                                         onClick={() => {
@@ -113,14 +128,14 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                         <SaveOptionsListHeader title="Publish" />
 
                         {publishOptions.map((option) => {
-                            const { title, subtitle, description } =
+                            const { inputName, outputName, description } =
                                 saveOptionInfoLookup[option];
 
                             return (
                                 <SaveOptionButton
                                     key={option}
-                                    title={title}
-                                    subtitle={subtitle}
+                                    title={inputName}
+                                    subtitle={'as ' + outputName}
                                     desciprtion={description}
                                     disabled={false}
                                     onClick={() => {
@@ -137,9 +152,15 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
             {activeSaveJobDialog ? (
                 <SaveJobDialog
+                    saveJobType={activeSaveJobDialog}
                     closeButtonOnClick={() => setActiveSaveJobDialog(undefined)}
                     saveButtonOnClick={(title, summary) => {
-                        saveButtonOnClick(activeSaveJobDialog);
+                        // console.log(title, summary);
+                        saveButtonOnClick({
+                            saveJobType: activeSaveJobDialog,
+                            title,
+                            summary,
+                        });
                         setActiveSaveJobDialog(undefined);
                     }}
                 />

@@ -1,5 +1,8 @@
 import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
-import { SavePanel } from '@shared/components/SavePanel';
+import {
+    SavePanel,
+    SaveJobButtonOnClickParams,
+} from '@shared/components/SavePanel';
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import {
@@ -30,7 +33,6 @@ import {
 } from '@shared/store/SaveJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
-import { selectMapExtent } from '@shared/store/Map/selectors';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -46,7 +48,15 @@ export const LandsatSceneSavePanel = () => {
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
-    const publishSelectedScene = async (job: SaveJob) => {
+    const publishSelectedScene = async ({
+        job,
+        title,
+        snippet,
+    }: {
+        job: SaveJob;
+        title: string;
+        snippet: string;
+    }) => {
         if (!objectIdOfSelectedScene) {
             return;
         }
@@ -82,8 +92,7 @@ export const LandsatSceneSavePanel = () => {
 
             const response = await publishSceneAsHostedImageryLayer({
                 objectId: objectIdOfSelectedScene,
-                outputServiceName:
-                    'hosted-imagery-service-' + new Date().getTime(),
+                outputServiceName: title, //'hosted-imagery-service-' + new Date().getTime(),
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 rasterFunction,
             });
@@ -111,19 +120,26 @@ export const LandsatSceneSavePanel = () => {
         }
     };
 
-    const createNewItemInArcGISOnline = async (job: SaveJob) => {
+    const createNewItemInArcGISOnline = async ({
+        job,
+        title,
+        snippet,
+    }: {
+        job: SaveJob;
+        title: string;
+        snippet: string;
+    }) => {
         try {
             const res =
                 job.type === SaveJobType.SaveWebMappingApp
                     ? await createWebMappingApplication({
-                          title: 'Esri Landsat Explorer',
-                          snippet:
-                              'A web mapping application for Esri Landsat Explorer',
+                          title, // 'Esri Landsat Explorer',
+                          snippet, // 'A web mapping application for Esri Landsat Explorer',
                           tags: 'Esri Landsat Explorer, Landsat, Landsat-Level-2 Imagery, Remote Sensing',
                       })
                     : await saveImagerySceneAsWebMap({
-                          title: `Landsat Scene (${landsatScene.name})`,
-                          snippet: `Landsat Scene (${landsatScene.name})`,
+                          title, // `Landsat Scene (${landsatScene.name})`,
+                          snippet, // `Landsat Scene (${landsatScene.name})`,
                           tags: [
                               'Landsat',
                               'Landsat-Level-2 Imagery',
@@ -154,29 +170,42 @@ export const LandsatSceneSavePanel = () => {
         }
     };
 
-    const saveOptionOnClick = async (jobType: SaveJobType) => {
+    const saveOptionOnClick = async ({
+        saveJobType,
+        title,
+        summary,
+    }: SaveJobButtonOnClickParams) => {
         // console.log('saveOptionOnClick', option);
 
         const job = await dispatch(
             createNewSaveJob({
-                jobType,
+                jobType: saveJobType,
                 sceneId: landsatScene?.name,
             })
         );
 
         if (
-            jobType === SaveJobType.PublishScene ||
-            jobType === SaveJobType.PublishIndexMask
+            saveJobType === SaveJobType.PublishScene ||
+            saveJobType === SaveJobType.PublishIndexMask
         ) {
-            publishSelectedScene(job);
+            publishSelectedScene({
+                job,
+                title: `hosted-imagery-service-${new Date().getTime()}`,
+                snippet:
+                    'Hosted Imagery Service created from Esri Landsat Explorer App',
+            });
             return;
         }
 
         if (
-            jobType === SaveJobType.SaveWebMappingApp ||
-            jobType === SaveJobType.SaveWebMap
+            saveJobType === SaveJobType.SaveWebMappingApp ||
+            saveJobType === SaveJobType.SaveWebMap
         ) {
-            createNewItemInArcGISOnline(job);
+            createNewItemInArcGISOnline({
+                job,
+                title: `Landsat Scene (${landsatScene.name})`,
+                snippet: `Landsat Scene (${landsatScene.name})`,
+            });
             return;
         }
     };
