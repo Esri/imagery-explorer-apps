@@ -35,7 +35,7 @@ export type SaveJob = {
     /**
      * unique id of the job
      */
-    uniqueId: string;
+    id: string;
     /**
      * type of the job
      */
@@ -105,8 +105,8 @@ const slice = createSlice({
     reducers: {
         jobAdded: (state, action: PayloadAction<SaveJob>) => {
             const job = action.payload;
-            state.jobs.byId[job.uniqueId] = job;
-            state.jobs.allIds.push(job.uniqueId);
+            state.jobs.byId[job.id] = job;
+            state.jobs.allIds.push(job.id);
         },
         jobRemoved: (state, action: PayloadAction<string>) => {
             const jobId = action.payload;
@@ -115,8 +115,8 @@ const slice = createSlice({
         },
         jobUpdated: (state, action: PayloadAction<SaveJob>) => {
             const job = action.payload;
-            if (state.jobs.byId[job.uniqueId]) {
-                state.jobs.byId[job.uniqueId] = job;
+            if (state.jobs.byId[job.id]) {
+                state.jobs.byId[job.id] = job;
             }
         },
     },

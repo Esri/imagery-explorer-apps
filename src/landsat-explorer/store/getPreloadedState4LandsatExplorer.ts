@@ -63,6 +63,7 @@ import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/conf
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
 import { getOpenSavePanelFromSessionStorage } from '@shared/utils/session-storage/sessionStorage';
+import { getPreloadedState4SaveJobs } from '@shared/store/SaveJobs/getPreloadedState';
 
 /**
  * Map location info that contains center and zoom info from URL Hash Params
@@ -217,6 +218,8 @@ const getPreloadedUIState = (): UIState => {
 };
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
+    const SaveJobs = await getPreloadedState4SaveJobs();
+
     return {
         Map: getPreloadedMapState(),
         UI: getPreloadedUIState(),
@@ -228,5 +231,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         MaskTool: getPreloadedMaskToolState(),
         SpectralProfileTool: getPreloadedSpectralProfileToolState(),
         ChangeCompareTool: getPreloadedChangeCompareToolState(),
+        SaveJobs,
     };
 };

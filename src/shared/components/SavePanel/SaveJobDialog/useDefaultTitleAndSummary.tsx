@@ -14,9 +14,9 @@ export const useDefaultTitleAndSummary = (
 
     const titleBySaveJobType: Record<SaveJobType, string> = {
         'Save Web Mapping App': `${foramttedTitle} View`,
-        'Save Web Map': `${satellite} Scene: ${formattedSceneId}`,
-        'Publish Scene': `${satellite} Scene: ${formattedSceneId}`,
-        'Publish Index Mask': `${satellite} Index Mask: ${formattedSceneId}`,
+        'Save Web Map': `${satellite} Scene - ${formattedSceneId}`,
+        'Publish Scene': `${satellite} Scene - ${formattedSceneId}`,
+        'Publish Index Mask': `${satellite} Index Mask - ${formattedSceneId}`,
         'Download Index Mask': 'Download Index Mask',
     };
 
