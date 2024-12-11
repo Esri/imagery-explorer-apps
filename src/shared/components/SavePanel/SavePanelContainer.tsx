@@ -153,6 +153,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             {activeSaveJobDialog ? (
                 <SaveJobDialog
                     saveJobType={activeSaveJobDialog}
+                    sceneId={sceneId}
                     closeButtonOnClick={() => setActiveSaveJobDialog(undefined)}
                     saveButtonOnClick={(title, summary) => {
                         // console.log(title, summary);

@@ -21,6 +21,10 @@ type AppConfig = {
      */
     title: string;
     /**
+     * Name of the satellite (e.g., 'Landsat')
+     */
+    satellite: string;
+    /**
      * Item id of the web map to be used in the app
      */
     webmapId: string;

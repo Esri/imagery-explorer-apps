@@ -190,9 +190,8 @@ export const LandsatSceneSavePanel = () => {
         ) {
             publishSelectedScene({
                 job,
-                title: `hosted-imagery-service-${new Date().getTime()}`,
-                snippet:
-                    'Hosted Imagery Service created from Esri Landsat Explorer App',
+                title, //`hosted-imagery-service-${new Date().getTime()}`,
+                snippet: summary, //'Hosted Imagery Service created from Esri Landsat Explorer App',
             });
             return;
         }
@@ -203,8 +202,8 @@ export const LandsatSceneSavePanel = () => {
         ) {
             createNewItemInArcGISOnline({
                 job,
-                title: `Landsat Scene (${landsatScene.name})`,
-                snippet: `Landsat Scene (${landsatScene.name})`,
+                title, //`Landsat Scene (${landsatScene.name})`,
+                snippet: summary, //`Landsat Scene (${landsatScene.name})`,
             });
             return;
         }

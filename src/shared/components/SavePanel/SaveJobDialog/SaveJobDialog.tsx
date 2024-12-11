@@ -3,9 +3,11 @@ import { SaveJobType } from '@shared/store/SaveJobs/reducer';
 import React, { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { SaveOptionInfo, saveOptionInfoLookup } from '../constants';
 import { checkIsServiceNameAvailable } from '@shared/services/arcgis-online/checkIsServiceNameAvailable';
+import { useDefaultTitleAndSummary } from './useDefaultTitleAndSummary';
 
 type SaveJobDialogProps = {
     saveJobType: SaveJobType;
+    sceneId: string;
     closeButtonOnClick: () => void;
     saveButtonOnClick: (title: string, summary: string) => void;
 };
@@ -14,13 +16,20 @@ const TEXT_INPUT_STYLE = `w-full bg-transparent border border-custom-light-blue-
 
 export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     saveJobType,
+    sceneId,
     closeButtonOnClick,
     saveButtonOnClick,
 }) => {
     const saveOptionInfo: SaveOptionInfo = saveOptionInfoLookup[saveJobType];
 
-    const [title, setTitle] = useState<string>('');
-    const [summary, setSummary] = useState<string>('');
+    const { defaultTitle, defaultSummary } = useDefaultTitleAndSummary(
+        saveJobType,
+        sceneId
+    );
+
+    const [title, setTitle] = useState<string>(defaultTitle);
+    const [summary, setSummary] = useState<string>(defaultSummary);
+
     const [isTitleAvailable, setIsTitleAvailable] = useState<boolean>(true);
     const [isCheckingTitleAvailability, setIsCheckingTitleAvailability] =
         useState<boolean>(false);
@@ -91,8 +100,8 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                     {isTitleAvailable === false &&
                         isCheckingTitleAvailability === false && (
                             <div className="text-sm text-red-500 mt-2">
-                                Title is not available. Please enter a different
-                                title.
+                                This name already exists. Please choose a unique
+                                name.
                             </div>
                         )}
                 </div>
