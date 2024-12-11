@@ -17,6 +17,10 @@ export type SaveOptionInfo = {
      * A detailed description of the save option.
      */
     description: string;
+    /**
+     * If true, the output name must be unique.
+     */
+    requireUniqueOutputName: boolean;
 };
 
 /**
@@ -29,6 +33,7 @@ export const saveOptionInfoLookup: Record<SaveJobType, SaveOptionInfo> = {
     'Publish Scene': {
         action: 'Publish',
         inputName: 'Scene',
+        requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
         description:
             'Publish a hosted imagery layer of the selected scene. This action requires a Professional Plus User Type and a Publisher role or higher.',
@@ -36,6 +41,7 @@ export const saveOptionInfoLookup: Record<SaveJobType, SaveOptionInfo> = {
     'Publish Index Mask': {
         action: 'Publish',
         inputName: 'Index mask',
+        requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
         description:
             'Publish a hosted imagery layer of the current index mask. This action requires a Professional Plus User Type and a Publisher role or higher.',
@@ -43,6 +49,7 @@ export const saveOptionInfoLookup: Record<SaveJobType, SaveOptionInfo> = {
     'Download Index Mask': {
         action: 'Download',
         inputName: 'Index mask',
+        requireUniqueOutputName: false,
         outputName: 'GeoTIFF',
         description:
             'Download the current index mask as a black and white image in GeoTIFF format.',
@@ -50,6 +57,7 @@ export const saveOptionInfoLookup: Record<SaveJobType, SaveOptionInfo> = {
     'Save Web Mapping App': {
         action: 'Publish',
         inputName: 'Current State',
+        requireUniqueOutputName: false,
         outputName: 'Web Application',
         description:
             'Create an instance of this application in its current state as an ArcGIS Online web application.',
@@ -57,6 +65,7 @@ export const saveOptionInfoLookup: Record<SaveJobType, SaveOptionInfo> = {
     'Save Web Map': {
         action: 'Publish',
         inputName: 'Scene',
+        requireUniqueOutputName: false,
         outputName: 'ArcGIS Online Map',
         description:
             'Create an ArcGIS Online map containing the selected scene as a layer.',

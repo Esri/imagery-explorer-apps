@@ -75,6 +75,9 @@ export const AGOL_PORTAL_ROOT =
 
 /**
  * Root URL of the ArcGIS REST API
+ *
+ * @example https://www.arcgis.com/sharing/rest
+ *
  * @see https://developers.arcgis.com/rest/
  */
 export const ARCGIS_REST_API_ROOT = AGOL_PORTAL_ROOT + '/sharing/rest';
