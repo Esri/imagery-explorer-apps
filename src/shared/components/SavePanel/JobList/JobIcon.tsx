@@ -1,7 +1,7 @@
 import {
     PublishAndDownloadJob,
     PublishAndDownloadJobStatus,
-} from '@shared/store/SaveJobs/reducer';
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import React, { FC, useMemo } from 'react';
 import { jobTypeLabels } from '../constants';
 

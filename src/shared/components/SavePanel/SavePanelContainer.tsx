@@ -10,7 +10,7 @@ import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
 import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
-import { PublishAndDownloadJobType } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { saveOptionInfoLookup } from './constants';
 import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';

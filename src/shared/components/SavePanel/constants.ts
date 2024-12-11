@@ -1,7 +1,7 @@
 import {
     PublishAndDownloadJobStatus,
     PublishAndDownloadJobType,
-} from '@shared/store/SaveJobs/reducer';
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 
 /**
  * Type definition for information related to save options.

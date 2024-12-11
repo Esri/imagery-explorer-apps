@@ -2,7 +2,7 @@ import {
     PublishAndDownloadJob,
     // PublishAndDownloadJobStatus,
     // PublishAndDownloadJobType,
-} from '@shared/store/SaveJobs/reducer';
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import { da } from 'date-fns/locale';
 import React, { FC, useMemo } from 'react';
 import { jobTypeLabels, saveJobStatusLabels } from '../constants';

@@ -1,4 +1,4 @@
-import { PublishAndDownloadJobStatus } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 
 export type RasterAnalysisJobOutput = {
     jobId: string;

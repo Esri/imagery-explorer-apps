@@ -3,14 +3,14 @@ import { RootState } from '../configureStore';
 import { PublishAndDownloadJobStatus } from './reducer';
 
 export const selectAllSaveJobs = createSelector(
-    (state: RootState) => state.SaveJobs.jobs.byId,
-    (state: RootState) => state.SaveJobs.jobs.allIds,
+    (state: RootState) => state.PublishAndDownloadJobs.jobs.byId,
+    (state: RootState) => state.PublishAndDownloadJobs.jobs.allIds,
     (byId, allIds) => allIds.map((id) => byId[id])
 );
 
 export const selectPendingRasterAnalysisJobs = createSelector(
-    (state: RootState) => state.SaveJobs.jobs.byId,
-    (state: RootState) => state.SaveJobs.jobs.allIds,
+    (state: RootState) => state.PublishAndDownloadJobs.jobs.byId,
+    (state: RootState) => state.PublishAndDownloadJobs.jobs.allIds,
     (byId, allIds) => {
         const allJobs = allIds.map((id) => byId[id]);
 

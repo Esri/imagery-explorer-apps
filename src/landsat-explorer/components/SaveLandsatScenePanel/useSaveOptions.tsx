@@ -1,4 +1,4 @@
-import { PublishAndDownloadJobType } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
 import {
     selectActiveAnalysisTool,
     selectAppMode,

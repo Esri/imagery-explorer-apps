@@ -8,7 +8,7 @@ import {
     PublishAndDownloadJobStatus,
 } from './reducer';
 import { nanoid } from 'nanoid';
-import { PublishAndDownloadJobType } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { APP_NAME } from '@shared/config';
 import {
     deletePublishAndDownloadJobInIndexedDB,

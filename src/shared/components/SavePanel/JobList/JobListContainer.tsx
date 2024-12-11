@@ -1,8 +1,8 @@
 import React from 'react';
 import { JobList } from './JobList';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAllSaveJobs } from '@shared/store/SaveJobs/selectors';
-import { removeSaveJob } from '@shared/store/SaveJobs/thunks';
+import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
+import { removeSaveJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 
 export const JobListContainer = () => {
     const jobs = useSelector(selectAllSaveJobs);

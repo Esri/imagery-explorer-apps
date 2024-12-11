@@ -2,7 +2,7 @@ import {
     PublishAndDownloadJob,
     PublishAndDownloadJobStatus,
     PublishAndDownloadJobType,
-} from '@shared/store/SaveJobs/reducer';
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import React, { CSSProperties, FC } from 'react';
 import { saveJobStatusLabels } from '../constants';
 import { getItemUrl } from '@shared/utils/esri-oauth';

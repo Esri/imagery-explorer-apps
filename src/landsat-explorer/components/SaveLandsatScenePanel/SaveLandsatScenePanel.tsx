@@ -15,7 +15,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useSaveOptions } from './useSaveOptions';
-import { createNewSaveJob, updateSaveJob } from '@shared/store/SaveJobs/thunks';
+import {
+    createNewSaveJob,
+    updateSaveJob,
+} from '@shared/store/PublishAndDownloadJobs/thunks';
 
 import {
     selectMaskLayerPixelValueRange,
@@ -30,7 +33,7 @@ import {
     PublishAndDownloadJob,
     PublishAndDownloadJobStatus,
     PublishAndDownloadJobType,
-} from '@shared/store/SaveJobs/reducer';
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
 

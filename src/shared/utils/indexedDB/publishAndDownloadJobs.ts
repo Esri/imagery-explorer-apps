@@ -1,7 +1,7 @@
 import {
     PublishAndDownloadJob,
     PublishAndDownloadJobType,
-} from '@shared/store/SaveJobs/reducer';
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import { saveData, getAllData, deleteDataByKey, updateData } from './helpers';
 
 const dbName = 'ImageryExplorerApps';

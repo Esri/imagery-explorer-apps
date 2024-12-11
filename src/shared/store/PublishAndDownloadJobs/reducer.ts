@@ -83,7 +83,7 @@ export type PublishAndDownloadJob = {
 };
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-export type SaveJobsState = {
+export type PublishAndDownloadJobsState = {
     jobs: {
         byId: {
             [jobId: string]: PublishAndDownloadJob;
@@ -92,7 +92,7 @@ export type SaveJobsState = {
     };
 };
 
-export const initialSaveJobsState: SaveJobsState = {
+export const initialPublishAndDownloadJobsState: PublishAndDownloadJobsState = {
     jobs: {
         byId: {},
         allIds: [],
@@ -100,8 +100,8 @@ export const initialSaveJobsState: SaveJobsState = {
 };
 
 const slice = createSlice({
-    name: 'SaveJobs',
-    initialState: initialSaveJobsState,
+    name: 'PublishAndDownloadJobs',
+    initialState: initialPublishAndDownloadJobsState,
     reducers: {
         jobAdded: (state, action: PayloadAction<PublishAndDownloadJob>) => {
             const job = action.payload;
