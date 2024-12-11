@@ -1,13 +1,12 @@
 import {
-    SaveJob,
-    SaveJobStatus,
-    SaveJobType,
+    PublishAndDownloadJob,
+    PublishAndDownloadJobType,
 } from '@shared/store/SaveJobs/reducer';
 import React, { FC, useMemo } from 'react';
 import { jobTypeLabels } from '../constants';
 
 type JobInfoProps = {
-    job: SaveJob;
+    job: PublishAndDownloadJob;
 };
 
 export const JobInfo: FC<JobInfoProps> = ({ job }) => {
@@ -18,7 +17,7 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
             return job.errormessage;
         }
 
-        if (job.type === SaveJobType.SaveWebMappingApp) {
+        if (job.type === PublishAndDownloadJobType.SaveWebMappingApp) {
             return null;
         }
 

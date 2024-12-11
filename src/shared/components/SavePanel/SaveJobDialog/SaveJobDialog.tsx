@@ -1,12 +1,12 @@
 import { Button } from '@shared/components/Button';
-import { SaveJobType } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobType } from '@shared/store/SaveJobs/reducer';
 import React, { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { SaveOptionInfo, saveOptionInfoLookup } from '../constants';
 import { checkIsServiceNameAvailable } from '@shared/services/arcgis-online/checkIsServiceNameAvailable';
 import { useDefaultTitleAndSummary } from './useDefaultTitleAndSummary';
 
 type SaveJobDialogProps = {
-    saveJobType: SaveJobType;
+    saveJobType: PublishAndDownloadJobType;
     sceneId: string;
     closeButtonOnClick: () => void;
     saveButtonOnClick: (title: string, summary: string) => void;

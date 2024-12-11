@@ -1,20 +1,20 @@
 import {
-    SaveJob,
-    SaveJobStatus,
-    SaveJobType,
+    PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
+    PublishAndDownloadJobType,
 } from '@shared/store/SaveJobs/reducer';
 import React, { CSSProperties, FC } from 'react';
 import { saveJobStatusLabels } from '../constants';
 import { getItemUrl } from '@shared/utils/esri-oauth';
 
 type JobStatusProps = {
-    job: SaveJob;
+    job: PublishAndDownloadJob;
 };
 
 export const JobStatus: FC<JobStatusProps> = ({ job }) => {
     const statusLabel = saveJobStatusLabels[job.status];
 
-    if (job.status !== SaveJobStatus.Succeeded) {
+    if (job.status !== PublishAndDownloadJobStatus.Succeeded) {
         return (
             <div className="">
                 <span>{statusLabel}</span>
@@ -36,18 +36,18 @@ export const JobStatus: FC<JobStatusProps> = ({ job }) => {
                 // scale="s"
                 width="full"
                 icon-start={
-                    job.type === SaveJobType.DownloadIndexMask
+                    job.type === PublishAndDownloadJobType.DownloadIndexMask
                         ? 'download-to'
                         : 'launch'
                 }
                 href={
-                    job.type === SaveJobType.DownloadIndexMask
+                    job.type === PublishAndDownloadJobType.DownloadIndexMask
                         ? job.outputURL
                         : getItemUrl(job.outputItemId)
                 }
                 target="_blank"
             >
-                {job.type === SaveJobType.DownloadIndexMask
+                {job.type === PublishAndDownloadJobType.DownloadIndexMask
                     ? 'Download'
                     : 'Open'}
             </calcite-button>

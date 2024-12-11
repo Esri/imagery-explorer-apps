@@ -1,4 +1,4 @@
-import { SaveJobType } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobType } from '@shared/store/SaveJobs/reducer';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -15,12 +15,14 @@ export const useSaveOptions = () => {
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const publishOptions: SaveJobType[] = useMemo(() => {
-        const output: SaveJobType[] = [SaveJobType.SaveWebMappingApp];
+    const publishOptions: PublishAndDownloadJobType[] = useMemo(() => {
+        const output: PublishAndDownloadJobType[] = [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+        ];
 
         if (objectIdOfSelectedScene) {
-            output.push(SaveJobType.SaveWebMap);
-            output.push(SaveJobType.PublishScene);
+            output.push(PublishAndDownloadJobType.SaveWebMap);
+            output.push(PublishAndDownloadJobType.PublishScene);
         }
 
         if (
@@ -28,21 +30,21 @@ export const useSaveOptions = () => {
             analyzeTool === 'mask' &&
             objectIdOfSelectedScene
         ) {
-            output.push(SaveJobType.PublishIndexMask);
+            output.push(PublishAndDownloadJobType.PublishIndexMask);
         }
 
         return output;
     }, [objectIdOfSelectedScene, mode, analyzeTool]);
 
-    const donwloadOptions: SaveJobType[] = useMemo(() => {
-        const output: SaveJobType[] = [];
+    const donwloadOptions: PublishAndDownloadJobType[] = useMemo(() => {
+        const output: PublishAndDownloadJobType[] = [];
 
         if (
             mode === 'analysis' &&
             analyzeTool === 'mask' &&
             objectIdOfSelectedScene
         ) {
-            output.push(SaveJobType.DownloadIndexMask);
+            output.push(PublishAndDownloadJobType.DownloadIndexMask);
         }
 
         return output;

@@ -10,7 +10,7 @@ import { RasterAnalysisTaskName } from '@shared/services/raster-analysis/types';
 /**
  * Enum representing different save options available in the application.
  */
-export enum SaveJobType {
+export enum PublishAndDownloadJobType {
     PublishScene = 'Publish Scene',
     PublishIndexMask = 'Publish Index Mask',
     DownloadIndexMask = 'Download Index Mask',
@@ -18,7 +18,7 @@ export enum SaveJobType {
     SaveWebMap = 'Save Web Map',
 }
 
-export enum SaveJobStatus {
+export enum PublishAndDownloadJobStatus {
     Submitted = 'esriJobSubmitted',
     New = 'esriJobNew',
     Waiting = 'esriJobWaiting',
@@ -31,7 +31,7 @@ export enum SaveJobStatus {
     Expired = 'esriJobExpired',
 }
 
-export type SaveJob = {
+export type PublishAndDownloadJob = {
     /**
      * unique id of the job
      */
@@ -39,7 +39,7 @@ export type SaveJob = {
     /**
      * type of the job
      */
-    type: SaveJobType;
+    type: PublishAndDownloadJobType;
     /**
      * id of the user who created the job
      */
@@ -55,7 +55,7 @@ export type SaveJob = {
     /**
      * status of the job
      */
-    status: SaveJobStatus;
+    status: PublishAndDownloadJobStatus;
     /**
      * id of the imagery scene the job is related to
      */
@@ -86,7 +86,7 @@ export type SaveJob = {
 export type SaveJobsState = {
     jobs: {
         byId: {
-            [jobId: string]: SaveJob;
+            [jobId: string]: PublishAndDownloadJob;
         };
         allIds: string[];
     };
@@ -103,7 +103,7 @@ const slice = createSlice({
     name: 'SaveJobs',
     initialState: initialSaveJobsState,
     reducers: {
-        jobAdded: (state, action: PayloadAction<SaveJob>) => {
+        jobAdded: (state, action: PayloadAction<PublishAndDownloadJob>) => {
             const job = action.payload;
             state.jobs.byId[job.id] = job;
             state.jobs.allIds.push(job.id);
@@ -113,7 +113,7 @@ const slice = createSlice({
             delete state.jobs.byId[jobId];
             state.jobs.allIds = state.jobs.allIds.filter((id) => id !== jobId);
         },
-        jobUpdated: (state, action: PayloadAction<SaveJob>) => {
+        jobUpdated: (state, action: PayloadAction<PublishAndDownloadJob>) => {
             const job = action.payload;
             if (state.jobs.byId[job.id]) {
                 state.jobs.byId[job.id] = job;

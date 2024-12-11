@@ -1,7 +1,7 @@
 import {
-    SaveJob,
-    SaveJobStatus,
-    SaveJobType,
+    PublishAndDownloadJob,
+    // PublishAndDownloadJobStatus,
+    // PublishAndDownloadJobType,
 } from '@shared/store/SaveJobs/reducer';
 import { da } from 'date-fns/locale';
 import React, { FC, useMemo } from 'react';
@@ -14,7 +14,7 @@ type JobListProps = {
     /**
      * List of save jobs to be displayed in the job list.
      */
-    data: SaveJob[];
+    data: PublishAndDownloadJob[];
     /**
      * Emits when the delete button is clicked.
      * @param jobId unique ID of the job to be deleted.

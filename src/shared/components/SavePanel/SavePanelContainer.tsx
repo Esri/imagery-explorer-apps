@@ -10,7 +10,7 @@ import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
 import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
-import { SaveJobType } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobType } from '@shared/store/SaveJobs/reducer';
 import { saveOptionInfoLookup } from './constants';
 import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
@@ -20,7 +20,7 @@ export type SaveJobButtonOnClickParams = {
     /**
      * The type of job to be saved.
      */
-    saveJobType: SaveJobType;
+    saveJobType: PublishAndDownloadJobType;
     /**
      * The title of the job.
      */
@@ -42,11 +42,11 @@ type SavePanelContainerProps = {
     /**
      * Options for publishing the scene.
      */
-    publishOptions: SaveJobType[];
+    publishOptions: PublishAndDownloadJobType[];
     /**
      * Options for downloading the scene.
      */
-    downloadOptions: SaveJobType[];
+    downloadOptions: PublishAndDownloadJobType[];
     /**
      * Emits when a save button is clicked.
      * @param {SaveOption} option - The save button that was clicked.
@@ -66,7 +66,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     const shouldShowSavePanel = useSelector(selectShowSavePanel);
 
     const [activeSaveJobDialog, setActiveSaveJobDialog] =
-        useState<SaveJobType>();
+        useState<PublishAndDownloadJobType>();
 
     useCheckJobStatus();
 

@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
-import { SaveJobStatus } from './reducer';
+import { PublishAndDownloadJobStatus } from './reducer';
 
 export const selectAllSaveJobs = createSelector(
     (state: RootState) => state.SaveJobs.jobs.byId,
@@ -21,10 +21,10 @@ export const selectPendingRasterAnalysisJobs = createSelector(
         return rasterAnanlysisJobs.filter((job) => {
             const status = job.status;
             return (
-                status !== SaveJobStatus.Succeeded &&
-                status !== SaveJobStatus.Failed &&
-                status !== SaveJobStatus.Cancelled &&
-                status !== SaveJobStatus.TimedOut
+                status !== PublishAndDownloadJobStatus.Succeeded &&
+                status !== PublishAndDownloadJobStatus.Failed &&
+                status !== PublishAndDownloadJobStatus.Cancelled &&
+                status !== PublishAndDownloadJobStatus.TimedOut
             );
         });
     }

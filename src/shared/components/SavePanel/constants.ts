@@ -1,4 +1,7 @@
-import { SaveJobStatus, SaveJobType } from '@shared/store/SaveJobs/reducer';
+import {
+    PublishAndDownloadJobStatus,
+    PublishAndDownloadJobType,
+} from '@shared/store/SaveJobs/reducer';
 
 /**
  * Type definition for information related to save options.
@@ -29,7 +32,10 @@ export type SaveOptionInfo = {
  *
  * @type {Record<SaveOption, { title: string; outputName: string; description: string }>}
  */
-export const saveOptionInfoLookup: Record<SaveJobType, SaveOptionInfo> = {
+export const saveOptionInfoLookup: Record<
+    PublishAndDownloadJobType,
+    SaveOptionInfo
+> = {
     'Publish Scene': {
         action: 'Publish',
         inputName: 'Scene',
@@ -72,23 +78,26 @@ export const saveOptionInfoLookup: Record<SaveJobType, SaveOptionInfo> = {
     },
 };
 
-export const saveJobStatusLabels: Record<SaveJobStatus, string> = {
-    [SaveJobStatus.Cancelled]: 'Cancelled',
-    [SaveJobStatus.Cancelling]: 'Cancelled',
-    [SaveJobStatus.Executing]: 'In Progress',
-    [SaveJobStatus.Failed]: 'Failed',
-    [SaveJobStatus.New]: 'In Progress',
-    [SaveJobStatus.Submitted]: 'Pending',
-    [SaveJobStatus.Succeeded]: 'Succeeded',
-    [SaveJobStatus.TimedOut]: 'Timed Out',
-    [SaveJobStatus.Waiting]: 'Timed Out',
-    [SaveJobStatus.Expired]: 'Expired',
-};
+export const saveJobStatusLabels: Record<PublishAndDownloadJobStatus, string> =
+    {
+        [PublishAndDownloadJobStatus.Cancelled]: 'Cancelled',
+        [PublishAndDownloadJobStatus.Cancelling]: 'Cancelled',
+        [PublishAndDownloadJobStatus.Executing]: 'In Progress',
+        [PublishAndDownloadJobStatus.Failed]: 'Failed',
+        [PublishAndDownloadJobStatus.New]: 'In Progress',
+        [PublishAndDownloadJobStatus.Submitted]: 'Pending',
+        [PublishAndDownloadJobStatus.Succeeded]: 'Succeeded',
+        [PublishAndDownloadJobStatus.TimedOut]: 'Timed Out',
+        [PublishAndDownloadJobStatus.Waiting]: 'Timed Out',
+        [PublishAndDownloadJobStatus.Expired]: 'Expired',
+    };
 
-export const jobTypeLabels: Record<SaveJobType, string> = {
-    [SaveJobType.PublishScene]: 'Scene as Hosted Imagery',
-    [SaveJobType.PublishIndexMask]: 'Index Mask as Hosted Imagery',
-    [SaveJobType.DownloadIndexMask]: 'Index Mask as GeoTIFF',
-    [SaveJobType.SaveWebMappingApp]: 'Current State as Web Application',
-    [SaveJobType.SaveWebMap]: 'Scene as ArcGIS Online Web Map',
+export const jobTypeLabels: Record<PublishAndDownloadJobType, string> = {
+    [PublishAndDownloadJobType.PublishScene]: 'Scene as Hosted Imagery',
+    [PublishAndDownloadJobType.PublishIndexMask]:
+        'Index Mask as Hosted Imagery',
+    [PublishAndDownloadJobType.DownloadIndexMask]: 'Index Mask as GeoTIFF',
+    [PublishAndDownloadJobType.SaveWebMappingApp]:
+        'Current State as Web Application',
+    [PublishAndDownloadJobType.SaveWebMap]: 'Scene as ArcGIS Online Web Map',
 };

@@ -1,15 +1,18 @@
-import { SaveJob, SaveJobType } from '@shared/store/SaveJobs/reducer';
+import {
+    PublishAndDownloadJob,
+    PublishAndDownloadJobType,
+} from '@shared/store/SaveJobs/reducer';
 import { saveData, getAllData, deleteDataByKey, updateData } from './helpers';
 
 const dbName = 'ImageryExplorerApps';
 const storeName = 'PublishAndDownloadJobsStore';
 
-const shouldBeSavedInIndexedDB = (jobData: SaveJob) => {
+const shouldBeSavedInIndexedDB = (jobData: PublishAndDownloadJob) => {
     const jobType = jobData.type;
 
     if (
-        jobType === SaveJobType.SaveWebMap ||
-        jobType === SaveJobType.SaveWebMappingApp
+        jobType === PublishAndDownloadJobType.SaveWebMap ||
+        jobType === PublishAndDownloadJobType.SaveWebMappingApp
     ) {
         return false;
     }
@@ -17,7 +20,9 @@ const shouldBeSavedInIndexedDB = (jobData: SaveJob) => {
     return true;
 };
 
-export const savePublishAndDownloadJob2IndexedDB = async (job: SaveJob) => {
+export const savePublishAndDownloadJob2IndexedDB = async (
+    job: PublishAndDownloadJob
+) => {
     if (!shouldBeSavedInIndexedDB(job)) {
         return;
     }
@@ -25,7 +30,9 @@ export const savePublishAndDownloadJob2IndexedDB = async (job: SaveJob) => {
     await saveData(dbName, storeName, job);
 };
 
-export const updatePublishAndDownloadJob2IndexedDB = async (job: SaveJob) => {
+export const updatePublishAndDownloadJob2IndexedDB = async (
+    job: PublishAndDownloadJob
+) => {
     if (!shouldBeSavedInIndexedDB(job)) {
         return;
     }
@@ -34,9 +41,9 @@ export const updatePublishAndDownloadJob2IndexedDB = async (job: SaveJob) => {
 };
 
 export const getPublishAndDownloadJobsFromIndexedDB = async (): Promise<
-    SaveJob[]
+    PublishAndDownloadJob[]
 > => {
-    const data = await getAllData<SaveJob>(dbName, storeName);
+    const data = await getAllData<PublishAndDownloadJob>(dbName, storeName);
     return data || [];
 };
 

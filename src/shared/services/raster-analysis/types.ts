@@ -1,8 +1,8 @@
-import { SaveJobStatus } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobStatus } from '@shared/store/SaveJobs/reducer';
 
 export type RasterAnalysisJobOutput = {
     jobId: string;
-    jobStatus: SaveJobStatus;
+    jobStatus: PublishAndDownloadJobStatus;
     messages: {
         type: string;
         description: string;

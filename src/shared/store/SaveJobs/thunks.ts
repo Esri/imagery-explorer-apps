@@ -4,11 +4,11 @@ import {
     jobAdded,
     jobRemoved,
     jobUpdated,
-    SaveJob,
-    SaveJobStatus,
+    PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
 } from './reducer';
 import { nanoid } from 'nanoid';
-import { SaveJobType } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJobType } from '@shared/store/SaveJobs/reducer';
 import { APP_NAME } from '@shared/config';
 import {
     deletePublishAndDownloadJobInIndexedDB,
@@ -18,19 +18,19 @@ import {
 import { de } from 'date-fns/locale';
 
 type CreateNewSaveJobParams = {
-    jobType: SaveJobType;
+    jobType: PublishAndDownloadJobType;
     sceneId?: string;
 };
 
 export const createNewSaveJob =
     ({ jobType, sceneId }: CreateNewSaveJobParams) =>
-    async (dispatch: StoreDispatch): Promise<SaveJob> => {
+    async (dispatch: StoreDispatch): Promise<PublishAndDownloadJob> => {
         const user = getSignedInUser();
 
-        const newJob: SaveJob = {
+        const newJob: PublishAndDownloadJob = {
             id: nanoid(5),
             type: jobType,
-            status: SaveJobStatus.Submitted,
+            status: PublishAndDownloadJobStatus.Submitted,
             creator: user?.username || 'anonymous',
             createdAt: Date.now(),
             sceneId,
@@ -51,7 +51,7 @@ export const removeSaveJob =
     };
 
 export const updateSaveJob =
-    (job: SaveJob) => async (dispatch: StoreDispatch) => {
+    (job: PublishAndDownloadJob) => async (dispatch: StoreDispatch) => {
         await updatePublishAndDownloadJob2IndexedDB(job);
         dispatch(jobUpdated(job));
     };

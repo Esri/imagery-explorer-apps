@@ -1,5 +1,5 @@
 import { checkRasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
-import { SaveJob } from '@shared/store/SaveJobs/reducer';
+import { PublishAndDownloadJob } from '@shared/store/SaveJobs/reducer';
 import { selectPendingRasterAnalysisJobs } from '@shared/store/SaveJobs/selectors';
 import { updateSaveJob } from '@shared/store/SaveJobs/thunks';
 import React, { useEffect } from 'react';
@@ -17,7 +17,7 @@ export const useCheckJobStatus = () => {
             return;
         }
 
-        const checkJobStatus = async (job: SaveJob) => {
+        const checkJobStatus = async (job: PublishAndDownloadJob) => {
             try {
                 const response = await checkRasterAnalysisJobStatus(
                     job.rasterAnanlysisJobId,

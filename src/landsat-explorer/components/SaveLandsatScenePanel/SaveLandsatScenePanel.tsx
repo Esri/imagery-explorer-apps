@@ -27,9 +27,9 @@ import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/ge
 import { Geometry } from '@arcgis/core/geometry';
 import {
     jobUpdated,
-    SaveJob,
-    SaveJobStatus,
-    SaveJobType,
+    PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
+    PublishAndDownloadJobType,
 } from '@shared/store/SaveJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
@@ -53,7 +53,7 @@ export const LandsatSceneSavePanel = () => {
         title,
         snippet,
     }: {
-        job: SaveJob;
+        job: PublishAndDownloadJob;
         title: string;
         snippet: string;
     }) => {
@@ -72,14 +72,16 @@ export const LandsatSceneSavePanel = () => {
 
             let rasterFunction: any = null;
 
-            if (job.type === SaveJobType.PublishScene) {
+            if (job.type === PublishAndDownloadJobType.PublishScene) {
                 rasterFunction = createClipRasterFunction({
                     serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                     objectId: objectIdOfSelectedScene,
                     token,
                     clippingGeometry,
                 });
-            } else if (job.type === SaveJobType.PublishIndexMask) {
+            } else if (
+                job.type === PublishAndDownloadJobType.PublishIndexMask
+            ) {
                 rasterFunction = createMaskIndexRasterFunction({
                     serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                     objectId: objectIdOfSelectedScene,
@@ -111,7 +113,7 @@ export const LandsatSceneSavePanel = () => {
             dispatch(
                 updateSaveJob({
                     ...job,
-                    status: SaveJobStatus.Failed,
+                    status: PublishAndDownloadJobStatus.Failed,
                     errormessage: `Failed to publish scene: ${
                         err.message || 'unknown error'
                     }`,
@@ -125,13 +127,13 @@ export const LandsatSceneSavePanel = () => {
         title,
         snippet,
     }: {
-        job: SaveJob;
+        job: PublishAndDownloadJob;
         title: string;
         snippet: string;
     }) => {
         try {
             const res =
-                job.type === SaveJobType.SaveWebMappingApp
+                job.type === PublishAndDownloadJobType.SaveWebMappingApp
                     ? await createWebMappingApplication({
                           title, // 'Esri Landsat Explorer',
                           snippet, // 'A web mapping application for Esri Landsat Explorer',
@@ -153,7 +155,7 @@ export const LandsatSceneSavePanel = () => {
             dispatch(
                 updateSaveJob({
                     ...job,
-                    status: SaveJobStatus.Succeeded,
+                    status: PublishAndDownloadJobStatus.Succeeded,
                     outputItemId: res.id,
                 })
             );
@@ -161,7 +163,7 @@ export const LandsatSceneSavePanel = () => {
             dispatch(
                 updateSaveJob({
                     ...job,
-                    status: SaveJobStatus.Failed,
+                    status: PublishAndDownloadJobStatus.Failed,
                     errormessage: `Failed to create ArcGIS Online item: ${
                         err.message || 'unknown error'
                     }`,
@@ -185,8 +187,8 @@ export const LandsatSceneSavePanel = () => {
         );
 
         if (
-            saveJobType === SaveJobType.PublishScene ||
-            saveJobType === SaveJobType.PublishIndexMask
+            saveJobType === PublishAndDownloadJobType.PublishScene ||
+            saveJobType === PublishAndDownloadJobType.PublishIndexMask
         ) {
             publishSelectedScene({
                 job,
@@ -197,8 +199,8 @@ export const LandsatSceneSavePanel = () => {
         }
 
         if (
-            saveJobType === SaveJobType.SaveWebMappingApp ||
-            saveJobType === SaveJobType.SaveWebMap
+            saveJobType === PublishAndDownloadJobType.SaveWebMappingApp ||
+            saveJobType === PublishAndDownloadJobType.SaveWebMap
         ) {
             createNewItemInArcGISOnline({
                 job,
