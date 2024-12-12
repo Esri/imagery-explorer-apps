@@ -49,9 +49,11 @@ export const createHostedImageryService = async (
         throw new Error('User does not have the privileges to publish content');
     }
 
+    const serviceNameCleaned = serviceName.replace(/[^a-zA-Z0-9_-]/g, '_');
+
     const params = new URLSearchParams({
         createParameters: JSON.stringify({
-            name: serviceName,
+            name: serviceNameCleaned,
             description: '',
             capabilities: 'Image',
             properties: {

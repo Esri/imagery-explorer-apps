@@ -3,8 +3,9 @@ import {
     PublishAndDownloadJobType,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { saveData, getAllData, deleteDataByKey, updateData } from './helpers';
+import { APP_NAME } from '@shared/config';
 
-const dbName = 'ImageryExplorerApps';
+const dbName = 'ImageryExplorerApp_' + APP_NAME;
 const storeName = 'PublishAndDownloadJobsStore';
 
 const shouldBeSavedInIndexedDB = (jobData: PublishAndDownloadJob) => {

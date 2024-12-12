@@ -101,6 +101,7 @@ export const getAllData = async <T>(
     storeName: string
 ): Promise<T[]> => {
     const db = await openDatabase(dbName, storeName);
+    console.log('db', db);
 
     return new Promise((resolve, reject) => {
         const transaction = db.transaction(storeName, 'readonly');
