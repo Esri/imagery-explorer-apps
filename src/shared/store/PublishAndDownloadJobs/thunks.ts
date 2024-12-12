@@ -22,7 +22,7 @@ type CreateNewSaveJobParams = {
     sceneId?: string;
 };
 
-export const createNewSaveJob =
+export const createNewPublishAndDownloadJob =
     ({ jobType, sceneId }: CreateNewSaveJobParams) =>
     async (dispatch: StoreDispatch): Promise<PublishAndDownloadJob> => {
         const user = getSignedInUser();
@@ -44,13 +44,13 @@ export const createNewSaveJob =
         return newJob;
     };
 
-export const removeSaveJob =
+export const removePublishAndDownloadJob =
     (jobId: string) => async (dispatch: StoreDispatch) => {
         await deletePublishAndDownloadJobInIndexedDB(jobId);
         dispatch(jobRemoved(jobId));
     };
 
-export const updateSaveJob =
+export const updatePublishAndDownloadJob =
     (job: PublishAndDownloadJob) => async (dispatch: StoreDispatch) => {
         await updatePublishAndDownloadJob2IndexedDB(job);
         dispatch(jobUpdated(job));

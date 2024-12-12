@@ -15,6 +15,7 @@ import { saveOptionInfoLookup } from './constants';
 import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
+import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -68,7 +69,11 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     const [activeSaveJobDialog, setActiveSaveJobDialog] =
         useState<PublishAndDownloadJobType>();
 
+    // Custom hook that checks the status of pending raster analysis jobs.
     useCheckJobStatus();
+
+    // Custom hook that clears finished raster analysis jobs.
+    useClearRasterAnalysisJobs();
 
     useEffect(() => {
         setOpenSavePanelInSessionStorage(shouldShowSavePanel);

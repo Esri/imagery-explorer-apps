@@ -2,7 +2,7 @@ import React from 'react';
 import { JobList } from './JobList';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
-import { removeSaveJob } from '@shared/store/PublishAndDownloadJobs/thunks';
+import { removePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 
 export const JobListContainer = () => {
     const jobs = useSelector(selectAllSaveJobs);
@@ -18,7 +18,7 @@ export const JobListContainer = () => {
             <JobList
                 data={jobs}
                 deleteButtonOnClick={(uniqueId) => {
-                    dispatch(removeSaveJob(uniqueId));
+                    dispatch(removePublishAndDownloadJob(uniqueId));
                 }}
             />
         </div>

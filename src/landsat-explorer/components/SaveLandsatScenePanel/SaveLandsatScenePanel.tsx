@@ -16,8 +16,8 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useSaveOptions } from './useSaveOptions';
 import {
-    createNewSaveJob,
-    updateSaveJob,
+    createNewPublishAndDownloadJob,
+    updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 
 import {
@@ -104,7 +104,7 @@ export const LandsatSceneSavePanel = () => {
             // console.log('Generate Raster Job submitted', response);
 
             dispatch(
-                updateSaveJob({
+                updatePublishAndDownloadJob({
                     ...job,
                     rasterAnanlysisJobId: response.rasterAnalysisJobId,
                     rasterAnalysisTaskName: 'GenerateRaster',
@@ -114,7 +114,7 @@ export const LandsatSceneSavePanel = () => {
             );
         } catch (err) {
             dispatch(
-                updateSaveJob({
+                updatePublishAndDownloadJob({
                     ...job,
                     status: PublishAndDownloadJobStatus.Failed,
                     errormessage: `Failed to publish scene: ${
@@ -156,7 +156,7 @@ export const LandsatSceneSavePanel = () => {
                       });
 
             dispatch(
-                updateSaveJob({
+                updatePublishAndDownloadJob({
                     ...job,
                     status: PublishAndDownloadJobStatus.Succeeded,
                     outputItemId: res.id,
@@ -164,7 +164,7 @@ export const LandsatSceneSavePanel = () => {
             );
         } catch (err) {
             dispatch(
-                updateSaveJob({
+                updatePublishAndDownloadJob({
                     ...job,
                     status: PublishAndDownloadJobStatus.Failed,
                     errormessage: `Failed to create ArcGIS Online item: ${
@@ -183,7 +183,7 @@ export const LandsatSceneSavePanel = () => {
         // console.log('saveOptionOnClick', option);
 
         const job = await dispatch(
-            createNewSaveJob({
+            createNewPublishAndDownloadJob({
                 jobType: saveJobType,
                 sceneId: landsatScene?.name,
             })

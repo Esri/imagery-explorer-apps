@@ -1,7 +1,7 @@
 import { checkRasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
 import { PublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { selectPendingRasterAnalysisJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
-import { updateSaveJob } from '@shared/store/PublishAndDownloadJobs/thunks';
+import { updatePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -36,7 +36,7 @@ export const useCheckJobStatus = () => {
                     output: response,
                 };
 
-                dispatch(updateSaveJob(jobWithUpdatedStatus));
+                dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
             } catch (error) {
                 console.error(
                     `Error checking status for job ${job.rasterAnanlysisJobId}:`,
