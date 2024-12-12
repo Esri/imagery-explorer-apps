@@ -82,8 +82,11 @@ export const saveTrendToolStateToHashParams = debounce(
     500
 );
 
-export const getTemporalProfileToolDataFromHashParams = (): TrendToolState => {
+export const getTemporalProfileToolDataFromHashParams = (
+    hashParams: URLSearchParams
+): TrendToolState => {
     const value =
-        getHashParamValueByKey('trend') || getHashParamValueByKey('profile');
+        getHashParamValueByKey('trend', hashParams) ||
+        getHashParamValueByKey('profile', hashParams);
     return decodeTemporalProfileToolData(value);
 };

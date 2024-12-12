@@ -112,8 +112,9 @@ export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
  * @returns
  */
 export const getMaskToolDataFromHashParams = (
+    hashParams: URLSearchParams,
     pixelValueRangeData?: MaskToolPixelValueRangeBySpectralIndex
 ): MaskToolState => {
-    const value = getHashParamValueByKey('mask');
+    const value = getHashParamValueByKey('mask', hashParams);
     return decodeMaskToolData(value, pixelValueRangeData);
 };

@@ -64,33 +64,41 @@ import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
 import { getOpenSavePanelFromSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
+import { InterestingPlaceData } from '@typing/shared';
 
-/**
- * Map location info that contains center and zoom info from URL Hash Params
- */
-const mapLocationFromHashParams = getMapCenterFromHashParams();
+// /**
+//  * Map location info that contains center and zoom info from URL Hash Params
+//  */
+// const mapLocationFromHashParams = getMapCenterFromHashParams();
 
-/**
- * Use the location of a randomly selected interesting place if there is no map location info
- * found in the URL hash params.
- */
-const randomInterestingPlace = !mapLocationFromHashParams
-    ? getRandomElement(landsatInterestingPlaces)
-    : null;
+// /**
+//  * Use the location of a randomly selected interesting place if there is no map location info
+//  * found in the URL hash params.
+//  */
+// const randomInterestingPlace = !mapLocationFromHashParams
+//     ? getRandomElement(landsatInterestingPlaces)
+//     : null;
 
-const getPreloadedMapState = (): MapState => {
-    let mapLocation = mapLocationFromHashParams;
+const getPreloadedMapState = (
+    hashParams: URLSearchParams,
+    randomInterestingPlace: InterestingPlaceData
+): MapState => {
+    let mapLocation = getMapCenterFromHashParams(hashParams);
 
     if (!mapLocation) {
         mapLocation = randomInterestingPlace?.location;
     }
+
     // show map labels if there is no `hideMapLabels` in hash params
-    const showMapLabel = getHashParamValueByKey('hideMapLabels') === null;
+    const showMapLabel =
+        getHashParamValueByKey('hideMapLabels', hashParams) === null;
 
     // show terrain if there is no `hideTerrain` in hash params
-    const showTerrain = getHashParamValueByKey('hideTerrain') === null;
+    const showTerrain =
+        getHashParamValueByKey('hideTerrain', hashParams) === null;
 
-    const showBasemap = getHashParamValueByKey('hideBasemap') === null;
+    const showBasemap =
+        getHashParamValueByKey('hideBasemap', hashParams) === null;
 
     return {
         ...initialMapState,
@@ -102,9 +110,12 @@ const getPreloadedMapState = (): MapState => {
     };
 };
 
-const getPreloadedImageryScenesState = (): ImageryScenesState => {
+const getPreloadedImageryScenesState = (
+    hashParams: URLSearchParams,
+    randomInterestingPlace: InterestingPlaceData
+): ImageryScenesState => {
     let mode: AppMode =
-        (getHashParamValueByKey('mode') as AppMode) || 'dynamic';
+        (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
 
     // user is only allowed to use the "dynamic" mode when using mobile device
     if (IS_MOBILE_DEVICE) {
@@ -117,26 +128,28 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     // Attempt to extract query parameters from the URL hash.
     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
     // which will serve as the map center.
-    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
+    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
+        hashParams
+    ) || {
         ...DefaultQueryParams4ImageryScene,
         rasterFunctionName:
             randomInterestingPlace?.renderer || defaultRasterFunction,
     };
 
     const queryParams4SecondaryScene =
-        getQueryParams4SecondarySceneFromHashParams() || {
+        getQueryParams4SecondarySceneFromHashParams(hashParams) || {
             ...DefaultQueryParams4ImageryScene,
             rasterFunctionName: defaultRasterFunction,
         };
 
     const queryParams4ScenesInAnimation =
-        getListOfQueryParamsFromHashParams() || [];
+        getListOfQueryParamsFromHashParams(hashParams) || [];
 
     const queryParamsById: {
         [key: string]: QueryParams4ImageryScene;
     } = {};
 
-    const tool = getHashParamValueByKey('tool') as AnalysisTool;
+    const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
 
     for (const queryParams of queryParams4ScenesInAnimation) {
         queryParamsById[queryParams.uniqueId] = queryParams;
@@ -161,9 +174,11 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     };
 };
 
-const getPreloadedTrendToolState = (): TrendToolState => {
+const getPreloadedTrendToolState = (
+    hashParams: URLSearchParams
+): TrendToolState => {
     // const maskToolData = getMaskToolDataFromHashParams();
-    const trendToolData = getTemporalProfileToolDataFromHashParams();
+    const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
 
     return {
         ...initialTrendToolState,
@@ -171,8 +186,10 @@ const getPreloadedTrendToolState = (): TrendToolState => {
     };
 };
 
-const getPreloadedMaskToolState = (): MaskToolState => {
-    const maskToolData = getMaskToolDataFromHashParams();
+const getPreloadedMaskToolState = (
+    hashParams: URLSearchParams
+): MaskToolState => {
+    const maskToolData = getMaskToolDataFromHashParams(hashParams);
 
     return {
         ...initialMaskToolState,
@@ -180,8 +197,11 @@ const getPreloadedMaskToolState = (): MaskToolState => {
     };
 };
 
-const getPreloadedSpectralProfileToolState = (): SpectralProfileToolState => {
-    const spectralProfileToolData = getSpectralProfileToolDataFromHashParams();
+const getPreloadedSpectralProfileToolState = (
+    hashParams: URLSearchParams
+): SpectralProfileToolState => {
+    const spectralProfileToolData =
+        getSpectralProfileToolDataFromHashParams(hashParams);
 
     return {
         ...initialSpectralProfileToolState,
@@ -189,8 +209,11 @@ const getPreloadedSpectralProfileToolState = (): SpectralProfileToolState => {
     };
 };
 
-const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
-    const changeCompareToolData = getChangeCompareToolDataFromHashParams();
+const getPreloadedChangeCompareToolState = (
+    hashParams: URLSearchParams
+): ChangeCompareToolState => {
+    const changeCompareToolData =
+        getChangeCompareToolDataFromHashParams(hashParams);
 
     return {
         ...initialChangeCompareToolState,
@@ -198,8 +221,11 @@ const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
     };
 };
 
-const getPreloadedUIState = (): UIState => {
-    const animationSpeed = getAnimationSpeedFromHashParams();
+const getPreloadedUIState = (
+    hashParams: URLSearchParams,
+    randomInterestingPlace: InterestingPlaceData
+): UIState => {
+    const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
 
     const showSavePanel = getOpenSavePanelFromSessionStorage();
 
@@ -221,17 +247,35 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
     const PublishAndDownloadJobs =
         await getPreloadedState4PublishAndDownloadJobs();
 
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+
+    /**
+     * Map location info that contains center and zoom info from URL Hash Params
+     */
+    const mapLocationFromHashParams = getMapCenterFromHashParams(hashParams);
+
+    /**
+     * Use the location of a randomly selected interesting place if there is no map location info
+     * found in the URL hash params.
+     */
+    const randomInterestingPlace = !mapLocationFromHashParams
+        ? getRandomElement(landsatInterestingPlaces)
+        : null;
+
     return {
-        Map: getPreloadedMapState(),
-        UI: getPreloadedUIState(),
+        Map: getPreloadedMapState(hashParams, randomInterestingPlace),
+        UI: getPreloadedUIState(hashParams, randomInterestingPlace),
         Landsat: {
             ...initialLandsatState,
         },
-        ImageryScenes: getPreloadedImageryScenesState(),
-        TrendTool: getPreloadedTrendToolState(),
-        MaskTool: getPreloadedMaskToolState(),
-        SpectralProfileTool: getPreloadedSpectralProfileToolState(),
-        ChangeCompareTool: getPreloadedChangeCompareToolState(),
+        ImageryScenes: getPreloadedImageryScenesState(
+            hashParams,
+            randomInterestingPlace
+        ),
+        TrendTool: getPreloadedTrendToolState(hashParams),
+        MaskTool: getPreloadedMaskToolState(hashParams),
+        SpectralProfileTool: getPreloadedSpectralProfileToolState(hashParams),
+        ChangeCompareTool: getPreloadedChangeCompareToolState(hashParams),
         PublishAndDownloadJobs,
     };
 };

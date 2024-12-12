@@ -52,8 +52,9 @@ export const saveTemporalCompositeToolStateToHashParams = (
     updateHashParams('composite', encodeTemporalCompositeTool(data));
 };
 
-export const getTemporalCompositeToolDataFromHashParams =
-    (): TemporalCompositeToolState => {
-        const value = getHashParamValueByKey('composite');
-        return decodeTemporalCompositeTool(value);
-    };
+export const getTemporalCompositeToolDataFromHashParams = (
+    hashParams: URLSearchParams
+): TemporalCompositeToolState => {
+    const value = getHashParamValueByKey('composite', hashParams);
+    return decodeTemporalCompositeTool(value);
+};

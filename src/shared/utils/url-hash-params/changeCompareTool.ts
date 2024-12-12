@@ -55,8 +55,9 @@ export const saveChangeCompareToolStateToHashParams = debounce(
     500
 );
 
-export const getChangeCompareToolDataFromHashParams =
-    (): ChangeCompareToolState => {
-        const value = getHashParamValueByKey('change');
-        return decodeChangeCompareToolData(value);
-    };
+export const getChangeCompareToolDataFromHashParams = (
+    hashParams: URLSearchParams
+): ChangeCompareToolState => {
+    const value = getHashParamValueByKey('change', hashParams);
+    return decodeChangeCompareToolData(value);
+};

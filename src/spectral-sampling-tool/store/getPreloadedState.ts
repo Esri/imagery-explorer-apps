@@ -26,8 +26,8 @@ import {
 } from '@shared/store/ImageryScene/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 
-const getPreloadedMapState = (): MapState => {
-    const mapLocation = getMapCenterFromHashParams();
+const getPreloadedMapState = (hashParams: URLSearchParams): MapState => {
+    const mapLocation = getMapCenterFromHashParams(hashParams);
 
     return {
         ...initialMapState,
@@ -44,8 +44,9 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
 };
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
     return {
         ImageryScenes: getPreloadedImageryScenesState(),
-        Map: getPreloadedMapState(),
+        Map: getPreloadedMapState(hashParams),
     };
 };

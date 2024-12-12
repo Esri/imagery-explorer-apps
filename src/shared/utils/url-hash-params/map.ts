@@ -56,8 +56,8 @@ export const saveMapCenterToHashParams = (center: number[], zoom: number) => {
     updateHashParams('mapCenter', encodeMapCenter(center, zoom));
 };
 
-export const getMapCenterFromHashParams = () => {
-    const value = getHashParamValueByKey('mapCenter');
+export const getMapCenterFromHashParams = (hashParams: URLSearchParams) => {
+    const value = getHashParamValueByKey('mapCenter', hashParams);
 
     return decodeMapCenter(value);
 };

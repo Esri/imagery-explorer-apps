@@ -77,17 +77,17 @@ export type UrlHashParamKey =
     | 'tool' // hash params for active analysis tool
     | 'sentinel1'; // hash params for Sentinel-1 scenes
 
-// const hashParams = new URLSearchParams(window.location.hash.slice(1));
+const hashParams = new URLSearchParams();
 
-const getHashParams = () => {
-    return new URLSearchParams(window.location.hash.slice(1));
-};
+// const getHashParams = () => {
+//     return new URLSearchParams(window.location.hash.slice(1));
+// };
 
 /**
  * update Hash Params in the URL using data from hashParams
  */
 export const updateHashParams = (key: UrlHashParamKey, value: string) => {
-    const hashParams = getHashParams();
+    // const hashParams = getHashParams();
 
     if (value === undefined || value === null) {
         hashParams.delete(key);
@@ -108,8 +108,11 @@ export const updateHashParams = (key: UrlHashParamKey, value: string) => {
     window.history.replaceState(null, '', newUrl);
 };
 
-export const getHashParamValueByKey = (key: UrlHashParamKey): string => {
-    const hashParams = getHashParams();
+export const getHashParamValueByKey = (
+    key: UrlHashParamKey,
+    hashParams: URLSearchParams
+): string => {
+    // const hashParams = getHashParams();
 
     if (!hashParams.has(key)) {
         return null;

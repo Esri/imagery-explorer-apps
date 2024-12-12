@@ -39,8 +39,10 @@ export const saveAnimationWindowInfoToHashParams = (
     );
 };
 
-export const getAnimationWindowInfoFromHashParams = () => {
-    const val = getHashParamValueByKey('animationWindow');
+export const getAnimationWindowInfoFromHashParams = (
+    hashParams: URLSearchParams
+) => {
+    const val = getHashParamValueByKey('animationWindow', hashParams);
 
     if (!val) {
         return null;
@@ -74,7 +76,9 @@ export const saveAnimationSpeedToHashParams = (animationSpeed?: number) => {
     );
 };
 
-export const getAnimationSpeedFromHashParams = () => {
-    const val = getHashParamValueByKey('animation');
+export const getAnimationSpeedFromHashParams = (
+    hashParams: URLSearchParams
+) => {
+    const val = getHashParamValueByKey('animation', hashParams);
     return val ? +val : null;
 };

@@ -49,7 +49,9 @@ export const saveSentinel1StateToHashParams = (state: Sentinel1State) => {
     updateHashParams('sentinel1', encodeSentinel1Data(state));
 };
 
-export const getSentinel1StateFromHashParams = () => {
-    const value = getHashParamValueByKey('sentinel1');
+export const getSentinel1StateFromHashParams = (
+    hashParams: URLSearchParams
+) => {
+    const value = getHashParamValueByKey('sentinel1', hashParams);
     return decodeSentinel1Data(value);
 };

@@ -57,8 +57,9 @@ export const saveSpectralProfileToolStateToHashParams = debounce(
     500
 );
 
-export const getSpectralProfileToolDataFromHashParams =
-    (): SpectralProfileToolState => {
-        const value = getHashParamValueByKey('spectral');
-        return decodeSpectralProfileToolData(value);
-    };
+export const getSpectralProfileToolDataFromHashParams = (
+    hashParams: URLSearchParams
+): SpectralProfileToolState => {
+    const value = getHashParamValueByKey('spectral', hashParams);
+    return decodeSpectralProfileToolData(value);
+};
