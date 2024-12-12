@@ -75,6 +75,8 @@ import { getSentinel1StateFromHashParams } from '@shared/utils/url-hash-params/s
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { sentinel1InterestingPlaces } from '../components/InterestingPlaces/';
 import { InterestingPlaceData } from '@typing/shared';
+import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
+import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 
 // /**
 //  * Map location info that contains center and zoom info from URL Hash Params
@@ -89,36 +91,36 @@ import { InterestingPlaceData } from '@typing/shared';
 //     ? getRandomElement(sentinel1InterestingPlaces)
 //     : null;
 
-const getPreloadedMapState = (
-    hashParams: URLSearchParams,
-    randomInterestingPlace: InterestingPlaceData
-): MapState => {
-    let mapLocation = getMapCenterFromHashParams(hashParams);
+// const getPreloadedMapState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData
+// ): MapState => {
+//     let mapLocation = getMapCenterFromHashParams(hashParams);
 
-    if (!mapLocation) {
-        mapLocation = randomInterestingPlace?.location;
-    }
+//     if (!mapLocation) {
+//         mapLocation = randomInterestingPlace?.location;
+//     }
 
-    // show map labels if there is no `hideMapLabels` in hash params
-    const showMapLabel =
-        getHashParamValueByKey('hideMapLabels', hashParams) === null;
+//     // show map labels if there is no `hideMapLabels` in hash params
+//     const showMapLabel =
+//         getHashParamValueByKey('hideMapLabels', hashParams) === null;
 
-    // show terrain if there is no `hideTerrain` in hash params
-    const showTerrain =
-        getHashParamValueByKey('hideTerrain', hashParams) === null;
+//     // show terrain if there is no `hideTerrain` in hash params
+//     const showTerrain =
+//         getHashParamValueByKey('hideTerrain', hashParams) === null;
 
-    const showBasemap =
-        getHashParamValueByKey('hideBasemap', hashParams) === null;
+//     const showBasemap =
+//         getHashParamValueByKey('hideBasemap', hashParams) === null;
 
-    return {
-        ...initialMapState,
-        center: mapLocation?.center || MAP_CENTER,
-        zoom: mapLocation?.zoom || MAP_ZOOM,
-        showMapLabel,
-        showTerrain,
-        showBasemap,
-    };
-};
+//     return {
+//         ...initialMapState,
+//         center: mapLocation?.center || MAP_CENTER,
+//         zoom: mapLocation?.zoom || MAP_ZOOM,
+//         showMapLabel,
+//         showTerrain,
+//         showBasemap,
+//     };
+// };
 
 const getPreloadedImageryScenesState = (
     hashParams: URLSearchParams,
@@ -184,24 +186,24 @@ const getPreloadedImageryScenesState = (
     };
 };
 
-const getPreloadedUIState = (
-    hashParams: URLSearchParams,
-    randomInterestingPlace: InterestingPlaceData
-): UIState => {
-    const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
+// const getPreloadedUIState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData
+// ): UIState => {
+//     const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
 
-    const proloadedUIState: UIState = {
-        ...initialUIState,
-        nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
-    };
+//     const proloadedUIState: UIState = {
+//         ...initialUIState,
+//         nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
+//     };
 
-    if (animationSpeed) {
-        proloadedUIState.animationSpeed = animationSpeed;
-        proloadedUIState.animationStatus = 'loading';
-    }
+//     if (animationSpeed) {
+//         proloadedUIState.animationSpeed = animationSpeed;
+//         proloadedUIState.animationStatus = 'loading';
+//     }
 
-    return proloadedUIState;
-};
+//     return proloadedUIState;
+// };
 
 const getPreloadedTemporalCompositeToolState = (
     hashParams: URLSearchParams
@@ -331,8 +333,8 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         : null;
 
     return {
-        Map: getPreloadedMapState(hashParams, randomInterestingPlace),
-        UI: getPreloadedUIState(hashParams, randomInterestingPlace),
+        Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
+        UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
         ImageryScenes: getPreloadedImageryScenesState(
             hashParams,
             randomInterestingPlace

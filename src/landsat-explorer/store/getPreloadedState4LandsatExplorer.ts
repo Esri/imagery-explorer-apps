@@ -15,20 +15,20 @@
 
 // import { PartialRootState } from './configureStore';
 
-import { initialMapState, MapState } from '@shared/store/Map/reducer';
+// import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import {
-    getAnimationSpeedFromHashParams,
-    getChangeCompareToolDataFromHashParams,
+    // getAnimationSpeedFromHashParams,
+    // getChangeCompareToolDataFromHashParams,
     getHashParamValueByKey,
     getMapCenterFromHashParams,
-    getMaskToolDataFromHashParams,
+    // getMaskToolDataFromHashParams,
     getQueryParams4MainSceneFromHashParams,
     getListOfQueryParamsFromHashParams,
     getQueryParams4SecondarySceneFromHashParams,
-    getSpectralProfileToolDataFromHashParams,
-    getTemporalProfileToolDataFromHashParams,
+    // getSpectralProfileToolDataFromHashParams,
+    // getTemporalProfileToolDataFromHashParams,
 } from '@shared/utils/url-hash-params';
-import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
+// import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
 // import { initialUIState, UIState } from './UI/reducer';
 import {
     AnalysisTool,
@@ -40,31 +40,37 @@ import {
     // QueryParams4ImageryScene,
 } from '@shared/store/ImageryScene/reducer';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { initialUIState, UIState } from '@shared/store/UI/reducer';
-import {
-    MaskToolState,
-    initialMaskToolState,
-} from '@shared/store/MaskTool/reducer';
-import {
-    TrendToolState,
-    initialTrendToolState,
-} from '@shared/store/TrendTool/reducer';
-import {
-    initialSpectralProfileToolState,
-    SpectralProfileToolState,
-} from '@shared/store/SpectralProfileTool/reducer';
-import {
-    ChangeCompareToolState,
-    initialChangeCompareToolState,
-} from '@shared/store/ChangeCompareTool/reducer';
+// import { initialUIState, UIState } from '@shared/store/UI/reducer';
+// import {
+//     MaskToolState,
+//     initialMaskToolState,
+// } from '@shared/store/MaskTool/reducer';
+// import {
+//     TrendToolState,
+//     initialTrendToolState,
+// } from '@shared/store/TrendTool/reducer';
+// import {
+//     initialSpectralProfileToolState,
+//     SpectralProfileToolState,
+// } from '@shared/store/SpectralProfileTool/reducer';
+// import {
+//     ChangeCompareToolState,
+//     initialChangeCompareToolState,
+// } from '@shared/store/ChangeCompareTool/reducer';
 import { initialLandsatState } from '@shared/store/Landsat/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
 import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
-import { getOpenSavePanelFromSessionStorage } from '@shared/utils/session-storage/sessionStorage';
+// import { getOpenSavePanelFromSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
 import { InterestingPlaceData } from '@typing/shared';
+import { getPreloadedState4ChangeCompareTool } from '@shared/store/ChangeCompareTool/getPreloadedState';
+import { getPreloadedState4SpectralProfileTool } from '@shared/store/SpectralProfileTool/getPreloadedState';
+import { getPreloadedState4MaskTool } from '@shared/store/MaskTool/getPrelaodedState';
+import { getPreloadedTrendToolState } from '@shared/store/TrendTool/getPreloadedState';
+import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
+import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 
 // /**
 //  * Map location info that contains center and zoom info from URL Hash Params
@@ -79,36 +85,36 @@ import { InterestingPlaceData } from '@typing/shared';
 //     ? getRandomElement(landsatInterestingPlaces)
 //     : null;
 
-const getPreloadedMapState = (
-    hashParams: URLSearchParams,
-    randomInterestingPlace: InterestingPlaceData
-): MapState => {
-    let mapLocation = getMapCenterFromHashParams(hashParams);
+// const getPreloadedMapState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData
+// ): MapState => {
+//     let mapLocation = getMapCenterFromHashParams(hashParams);
 
-    if (!mapLocation) {
-        mapLocation = randomInterestingPlace?.location;
-    }
+//     if (!mapLocation) {
+//         mapLocation = randomInterestingPlace?.location;
+//     }
 
-    // show map labels if there is no `hideMapLabels` in hash params
-    const showMapLabel =
-        getHashParamValueByKey('hideMapLabels', hashParams) === null;
+//     // show map labels if there is no `hideMapLabels` in hash params
+//     const showMapLabel =
+//         getHashParamValueByKey('hideMapLabels', hashParams) === null;
 
-    // show terrain if there is no `hideTerrain` in hash params
-    const showTerrain =
-        getHashParamValueByKey('hideTerrain', hashParams) === null;
+//     // show terrain if there is no `hideTerrain` in hash params
+//     const showTerrain =
+//         getHashParamValueByKey('hideTerrain', hashParams) === null;
 
-    const showBasemap =
-        getHashParamValueByKey('hideBasemap', hashParams) === null;
+//     const showBasemap =
+//         getHashParamValueByKey('hideBasemap', hashParams) === null;
 
-    return {
-        ...initialMapState,
-        center: mapLocation?.center || MAP_CENTER,
-        zoom: mapLocation?.zoom || MAP_ZOOM,
-        showMapLabel,
-        showTerrain,
-        showBasemap,
-    };
-};
+//     return {
+//         ...initialMapState,
+//         center: mapLocation?.center || MAP_CENTER,
+//         zoom: mapLocation?.zoom || MAP_ZOOM,
+//         showMapLabel,
+//         showTerrain,
+//         showBasemap,
+//     };
+// };
 
 const getPreloadedImageryScenesState = (
     hashParams: URLSearchParams,
@@ -174,74 +180,74 @@ const getPreloadedImageryScenesState = (
     };
 };
 
-const getPreloadedTrendToolState = (
-    hashParams: URLSearchParams
-): TrendToolState => {
-    // const maskToolData = getMaskToolDataFromHashParams();
-    const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
+// const getPreloadedTrendToolState = (
+//     hashParams: URLSearchParams
+// ): TrendToolState => {
+//     // const maskToolData = getMaskToolDataFromHashParams();
+//     const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
 
-    return {
-        ...initialTrendToolState,
-        ...trendToolData,
-    };
-};
+//     return {
+//         ...initialTrendToolState,
+//         ...trendToolData,
+//     };
+// };
 
-const getPreloadedMaskToolState = (
-    hashParams: URLSearchParams
-): MaskToolState => {
-    const maskToolData = getMaskToolDataFromHashParams(hashParams);
+// const getPreloadedMaskToolState = (
+//     hashParams: URLSearchParams
+// ): MaskToolState => {
+//     const maskToolData = getMaskToolDataFromHashParams(hashParams);
 
-    return {
-        ...initialMaskToolState,
-        ...maskToolData,
-    };
-};
+//     return {
+//         ...initialMaskToolState,
+//         ...maskToolData,
+//     };
+// };
 
-const getPreloadedSpectralProfileToolState = (
-    hashParams: URLSearchParams
-): SpectralProfileToolState => {
-    const spectralProfileToolData =
-        getSpectralProfileToolDataFromHashParams(hashParams);
+// const getPreloadedSpectralProfileToolState = (
+//     hashParams: URLSearchParams
+// ): SpectralProfileToolState => {
+//     const spectralProfileToolData =
+//         getSpectralProfileToolDataFromHashParams(hashParams);
 
-    return {
-        ...initialSpectralProfileToolState,
-        ...spectralProfileToolData,
-    };
-};
+//     return {
+//         ...initialSpectralProfileToolState,
+//         ...spectralProfileToolData,
+//     };
+// };
 
-const getPreloadedChangeCompareToolState = (
-    hashParams: URLSearchParams
-): ChangeCompareToolState => {
-    const changeCompareToolData =
-        getChangeCompareToolDataFromHashParams(hashParams);
+// const getPreloadedChangeCompareToolState = (
+//     hashParams: URLSearchParams
+// ): ChangeCompareToolState => {
+//     const changeCompareToolData =
+//         getChangeCompareToolDataFromHashParams(hashParams);
 
-    return {
-        ...initialChangeCompareToolState,
-        ...changeCompareToolData,
-    };
-};
+//     return {
+//         ...initialChangeCompareToolState,
+//         ...changeCompareToolData,
+//     };
+// };
 
-const getPreloadedUIState = (
-    hashParams: URLSearchParams,
-    randomInterestingPlace: InterestingPlaceData
-): UIState => {
-    const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
+// const getPreloadedUIState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData
+// ): UIState => {
+//     const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
 
-    const showSavePanel = getOpenSavePanelFromSessionStorage();
+//     const showSavePanel = getOpenSavePanelFromSessionStorage();
 
-    const proloadedUIState: UIState = {
-        ...initialUIState,
-        nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
-        showSavePanel,
-    };
+//     const proloadedUIState: UIState = {
+//         ...initialUIState,
+//         nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
+//         showSavePanel,
+//     };
 
-    if (animationSpeed) {
-        proloadedUIState.animationSpeed = animationSpeed;
-        proloadedUIState.animationStatus = 'loading';
-    }
+//     if (animationSpeed) {
+//         proloadedUIState.animationSpeed = animationSpeed;
+//         proloadedUIState.animationStatus = 'loading';
+//     }
 
-    return proloadedUIState;
-};
+//     return proloadedUIState;
+// };
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     const PublishAndDownloadJobs =
@@ -263,8 +269,8 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         : null;
 
     return {
-        Map: getPreloadedMapState(hashParams, randomInterestingPlace),
-        UI: getPreloadedUIState(hashParams, randomInterestingPlace),
+        Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
+        UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
         Landsat: {
             ...initialLandsatState,
         },
@@ -273,9 +279,9 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
             randomInterestingPlace
         ),
         TrendTool: getPreloadedTrendToolState(hashParams),
-        MaskTool: getPreloadedMaskToolState(hashParams),
-        SpectralProfileTool: getPreloadedSpectralProfileToolState(hashParams),
-        ChangeCompareTool: getPreloadedChangeCompareToolState(hashParams),
+        MaskTool: getPreloadedState4MaskTool(hashParams),
+        SpectralProfileTool: getPreloadedState4SpectralProfileTool(hashParams),
+        ChangeCompareTool: getPreloadedState4ChangeCompareTool(hashParams),
         PublishAndDownloadJobs,
     };
 };

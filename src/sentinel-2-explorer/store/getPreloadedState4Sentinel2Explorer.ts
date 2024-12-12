@@ -56,6 +56,12 @@ import {
 } from '@shared/store/MaskTool/reducer';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
+import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
+import { getPreloadedState4ChangeCompareTool } from '@shared/store/ChangeCompareTool/getPreloadedState';
+import { getPreloadedTrendToolState } from '@shared/store/TrendTool/getPreloadedState';
+import { getPreloadedState4MaskTool } from '@shared/store/MaskTool/getPrelaodedState';
+import { InterestingPlaceData } from '@typing/shared';
 
 // /**
 //  * Map location info that contains center and zoom info from URL Hash Params
@@ -70,33 +76,33 @@ import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
 //     ? getRandomElement(sentinel1InterestingPlaces)
 //     : null;
 
-const getPreloadedMapState = (hashParams: URLSearchParams): MapState => {
-    const mapLocation = getMapCenterFromHashParams(hashParams);
+// const getPreloadedMapState = (hashParams: URLSearchParams): MapState => {
+//     const mapLocation = getMapCenterFromHashParams(hashParams);
 
-    // if (!mapLocation) {
-    //     mapLocation = randomInterestingPlace?.location;
-    // }
+//     // if (!mapLocation) {
+//     //     mapLocation = randomInterestingPlace?.location;
+//     // }
 
-    // show map labels if there is no `hideMapLabels` in hash params
-    const showMapLabel =
-        getHashParamValueByKey('hideMapLabels', hashParams) === null;
+//     // show map labels if there is no `hideMapLabels` in hash params
+//     const showMapLabel =
+//         getHashParamValueByKey('hideMapLabels', hashParams) === null;
 
-    // show terrain if there is no `hideTerrain` in hash params
-    const showTerrain =
-        getHashParamValueByKey('hideTerrain', hashParams) === null;
+//     // show terrain if there is no `hideTerrain` in hash params
+//     const showTerrain =
+//         getHashParamValueByKey('hideTerrain', hashParams) === null;
 
-    const showBasemap =
-        getHashParamValueByKey('hideBasemap', hashParams) === null;
+//     const showBasemap =
+//         getHashParamValueByKey('hideBasemap', hashParams) === null;
 
-    return {
-        ...initialMapState,
-        center: mapLocation?.center || MAP_CENTER,
-        zoom: mapLocation?.zoom || MAP_ZOOM,
-        showMapLabel,
-        showTerrain,
-        showBasemap,
-    };
-};
+//     return {
+//         ...initialMapState,
+//         center: mapLocation?.center || MAP_CENTER,
+//         zoom: mapLocation?.zoom || MAP_ZOOM,
+//         showMapLabel,
+//         showTerrain,
+//         showBasemap,
+//     };
+// };
 
 const getPreloadedImageryScenesState = (
     hashParams: URLSearchParams
@@ -158,72 +164,74 @@ const getPreloadedImageryScenesState = (
     };
 };
 
-const getPreloadedUIState = (hashParams: URLSearchParams): UIState => {
-    const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
+// const getPreloadedUIState = (hashParams: URLSearchParams): UIState => {
+//     const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
 
-    const proloadedUIState: UIState = {
-        ...initialUIState,
-        // nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
-    };
+//     const proloadedUIState: UIState = {
+//         ...initialUIState,
+//         // nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
+//     };
 
-    if (animationSpeed) {
-        proloadedUIState.animationSpeed = animationSpeed;
-        proloadedUIState.animationStatus = 'loading';
-    }
+//     if (animationSpeed) {
+//         proloadedUIState.animationSpeed = animationSpeed;
+//         proloadedUIState.animationStatus = 'loading';
+//     }
 
-    return proloadedUIState;
-};
+//     return proloadedUIState;
+// };
 
-const getPreloadedChangeCompareToolState = (
-    hashParams: URLSearchParams
-): ChangeCompareToolState => {
-    const changeCompareToolData =
-        getChangeCompareToolDataFromHashParams(hashParams);
+// const getPreloadedChangeCompareToolState = (
+//     hashParams: URLSearchParams
+// ): ChangeCompareToolState => {
+//     const changeCompareToolData =
+//         getChangeCompareToolDataFromHashParams(hashParams);
 
-    const initalState: ChangeCompareToolState = {
-        ...initialChangeCompareToolState,
-    };
+//     const initalState: ChangeCompareToolState = {
+//         ...initialChangeCompareToolState,
+//     };
 
-    return {
-        ...initalState,
-        ...changeCompareToolData,
-    };
-};
+//     return {
+//         ...initalState,
+//         ...changeCompareToolData,
+//     };
+// };
 
-const getPreloadedTrendToolState = (
-    hashParams: URLSearchParams
-): TrendToolState => {
-    // const maskToolData = getMaskToolDataFromHashParams();
-    const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
+// const getPreloadedTrendToolState = (
+//     hashParams: URLSearchParams
+// ): TrendToolState => {
+//     // const maskToolData = getMaskToolDataFromHashParams();
+//     const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
 
-    return {
-        ...initialTrendToolState,
-        ...trendToolData,
-    };
-};
+//     return {
+//         ...initialTrendToolState,
+//         ...trendToolData,
+//     };
+// };
 
-const getPreloadedMaskToolState = (
-    hashParams: URLSearchParams
-): MaskToolState => {
-    const maskToolData = getMaskToolDataFromHashParams(hashParams);
+// const getPreloadedMaskToolState = (
+//     hashParams: URLSearchParams
+// ): MaskToolState => {
+//     const maskToolData = getMaskToolDataFromHashParams(hashParams);
 
-    return {
-        ...initialMaskToolState,
-        ...maskToolData,
-    };
-};
+//     return {
+//         ...initialMaskToolState,
+//         ...maskToolData,
+//     };
+// };
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
 
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
+    const randomInterestingPlace: InterestingPlaceData = null;
+
     return {
-        Map: getPreloadedMapState(hashParams),
-        UI: getPreloadedUIState(hashParams),
+        Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
+        UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
         ImageryScenes: getPreloadedImageryScenesState(hashParams),
-        ChangeCompareTool: getPreloadedChangeCompareToolState(hashParams),
+        ChangeCompareTool: getPreloadedState4ChangeCompareTool(hashParams),
         TrendTool: getPreloadedTrendToolState(hashParams),
-        MaskTool: getPreloadedMaskToolState(hashParams),
+        MaskTool: getPreloadedState4MaskTool(hashParams),
     } as PartialRootState;
 };
