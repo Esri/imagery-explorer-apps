@@ -15,53 +15,55 @@
 
 // import { PartialRootState } from './configureStore';
 
-import { initialMapState, MapState } from '@shared/store/Map/reducer';
-import {
-    getAnimationSpeedFromHashParams,
-    getChangeCompareToolDataFromHashParams,
-    getHashParamValueByKey,
-    getMapCenterFromHashParams,
-    getMaskToolDataFromHashParams,
-    getQueryParams4MainSceneFromHashParams,
-    getListOfQueryParamsFromHashParams,
-    getQueryParams4SecondarySceneFromHashParams,
-    getSpectralProfileToolDataFromHashParams,
-    getTemporalProfileToolDataFromHashParams,
-} from '@shared/utils/url-hash-params';
-import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
-// import { initialUIState, UIState } from './UI/reducer';
-import {
-    AnalysisTool,
-    AppMode,
-    DefaultQueryParams4ImageryScene,
-    initialImagerySceneState,
-    ImageryScenesState,
-    QueryParams4ImageryScene,
-    // QueryParams4ImageryScene,
-} from '@shared/store/ImageryScene/reducer';
-import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { initialUIState, UIState } from '@shared/store/UI/reducer';
+// import { initialMapState, MapState } from '@shared/store/Map/reducer';
+// import {
+//     getAnimationSpeedFromHashParams,
+//     getChangeCompareToolDataFromHashParams,
+//     getHashParamValueByKey,
+//     getMapCenterFromHashParams,
+//     getMaskToolDataFromHashParams,
+//     getQueryParams4MainSceneFromHashParams,
+//     getListOfQueryParamsFromHashParams,
+//     getQueryParams4SecondarySceneFromHashParams,
+//     getSpectralProfileToolDataFromHashParams,
+//     getTemporalProfileToolDataFromHashParams,
+// } from '@shared/utils/url-hash-params';
+// import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
+// // import { initialUIState, UIState } from './UI/reducer';
+// import {
+//     AnalysisTool,
+//     AppMode,
+//     DefaultQueryParams4ImageryScene,
+//     initialImagerySceneState,
+//     ImageryScenesState,
+//     QueryParams4ImageryScene,
+//     // QueryParams4ImageryScene,
+// } from '@shared/store/ImageryScene/reducer';
+// import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+// import { initialUIState, UIState } from '@shared/store/UI/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
-import {
-    ChangeCompareToolState,
-    initialChangeCompareToolState,
-} from '@shared/store/ChangeCompareTool/reducer';
-import {
-    TrendToolState,
-    initialTrendToolState,
-} from '@shared/store/TrendTool/reducer';
-import {
-    MaskToolState,
-    initialMaskToolState,
-} from '@shared/store/MaskTool/reducer';
-import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
-import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+// import {
+//     ChangeCompareToolState,
+//     initialChangeCompareToolState,
+// } from '@shared/store/ChangeCompareTool/reducer';
+// import {
+//     TrendToolState,
+//     initialTrendToolState,
+// } from '@shared/store/TrendTool/reducer';
+// import {
+//     MaskToolState,
+//     initialMaskToolState,
+// } from '@shared/store/MaskTool/reducer';
+// import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
+// import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4ChangeCompareTool } from '@shared/store/ChangeCompareTool/getPreloadedState';
 import { getPreloadedTrendToolState } from '@shared/store/TrendTool/getPreloadedState';
 import { getPreloadedState4MaskTool } from '@shared/store/MaskTool/getPrelaodedState';
 import { InterestingPlaceData } from '@typing/shared';
+// import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 
 // /**
 //  * Map location info that contains center and zoom info from URL Hash Params
@@ -104,65 +106,67 @@ import { InterestingPlaceData } from '@typing/shared';
 //     };
 // };
 
-const getPreloadedImageryScenesState = (
-    hashParams: URLSearchParams
-): ImageryScenesState => {
-    let mode: AppMode =
-        (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
+// const getPreloadedImageryScenesState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData,
+//     defaultRasterFunction: LandsatRasterFunctionName | Sentinel2FunctionName
+// ): ImageryScenesState => {
+//     let mode: AppMode =
+//         (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
 
-    // user is only allowed to use the "dynamic" mode when using mobile device
-    if (IS_MOBILE_DEVICE) {
-        mode = 'dynamic';
-    }
+//     // user is only allowed to use the "dynamic" mode when using mobile device
+//     if (IS_MOBILE_DEVICE) {
+//         mode = 'dynamic';
+//     }
 
-    const defaultRasterFunction: Sentinel2FunctionName =
-        'Natural Color with DRA';
+//     // const defaultRasterFunction: Sentinel2FunctionName =
+//     //     'Natural Color with DRA';
 
-    // Attempt to extract query parameters from the URL hash.
-    // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
-    // which will serve as the map center.
-    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
-        hashParams
-    ) || {
-        ...DefaultQueryParams4ImageryScene,
-        rasterFunctionName: defaultRasterFunction,
-        // randomInterestingPlace?.renderer || defaultRasterFunction,
-    };
+//     // Attempt to extract query parameters from the URL hash.
+//     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
+//     // which will serve as the map center.
+//     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
+//         hashParams
+//     ) || {
+//         ...DefaultQueryParams4ImageryScene,
+//         // rasterFunctionName: defaultRasterFunction,
+//         rasterFunctionName: randomInterestingPlace?.renderer || defaultRasterFunction,
+//     };
 
-    const queryParams4SecondaryScene =
-        getQueryParams4SecondarySceneFromHashParams(hashParams) || {
-            ...DefaultQueryParams4ImageryScene,
-            rasterFunctionName: null,
-        };
+//     const queryParams4SecondaryScene =
+//         getQueryParams4SecondarySceneFromHashParams(hashParams) || {
+//             ...DefaultQueryParams4ImageryScene,
+//             rasterFunctionName: defaultRasterFunction,
+//         };
 
-    const listOfQueryParams =
-        getListOfQueryParamsFromHashParams(hashParams) || [];
+//     const listOfQueryParams =
+//         getListOfQueryParamsFromHashParams(hashParams) || [];
 
-    const queryParamsById: {
-        [key: string]: QueryParams4ImageryScene;
-    } = {};
+//     const queryParamsById: {
+//         [key: string]: QueryParams4ImageryScene;
+//     } = {};
 
-    const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
+//     const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
 
-    for (const queryParams of listOfQueryParams) {
-        queryParamsById[queryParams.uniqueId] = queryParams;
-    }
+//     for (const queryParams of listOfQueryParams) {
+//         queryParamsById[queryParams.uniqueId] = queryParams;
+//     }
 
-    return {
-        ...initialImagerySceneState,
-        mode,
-        tool: tool || 'mask',
-        queryParams4MainScene,
-        queryParams4SecondaryScene,
-        queryParamsList: {
-            byId: queryParamsById,
-            ids: listOfQueryParams.map((d) => d.uniqueId),
-            selectedItemID: listOfQueryParams[0]
-                ? listOfQueryParams[0].uniqueId
-                : null,
-        },
-    };
-};
+//     return {
+//         ...initialImagerySceneState,
+//         mode,
+//         tool: tool || 'mask',
+//         queryParams4MainScene,
+//         queryParams4SecondaryScene,
+//         queryParamsList: {
+//             byId: queryParamsById,
+//             ids: listOfQueryParams.map((d) => d.uniqueId),
+//             selectedItemID: listOfQueryParams[0]
+//                 ? listOfQueryParams[0].uniqueId
+//                 : null,
+//         },
+//     };
+// };
 
 // const getPreloadedUIState = (hashParams: URLSearchParams): UIState => {
 //     const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
@@ -229,7 +233,11 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
     return {
         Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
         UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
-        ImageryScenes: getPreloadedImageryScenesState(hashParams),
+        ImageryScenes: getPreloadedState4ImageryScenes(
+            hashParams,
+            randomInterestingPlace,
+            'Natural Color with DRA'
+        ),
         ChangeCompareTool: getPreloadedState4ChangeCompareTool(hashParams),
         TrendTool: getPreloadedTrendToolState(hashParams),
         MaskTool: getPreloadedState4MaskTool(hashParams),

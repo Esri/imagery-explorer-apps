@@ -19,27 +19,27 @@
 import {
     // getAnimationSpeedFromHashParams,
     // getChangeCompareToolDataFromHashParams,
-    getHashParamValueByKey,
+    // getHashParamValueByKey,
     getMapCenterFromHashParams,
     // getMaskToolDataFromHashParams,
-    getQueryParams4MainSceneFromHashParams,
-    getListOfQueryParamsFromHashParams,
-    getQueryParams4SecondarySceneFromHashParams,
+    // getQueryParams4MainSceneFromHashParams,
+    // getListOfQueryParamsFromHashParams,
+    // getQueryParams4SecondarySceneFromHashParams,
     // getSpectralProfileToolDataFromHashParams,
     // getTemporalProfileToolDataFromHashParams,
 } from '@shared/utils/url-hash-params';
-// import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
-// import { initialUIState, UIState } from './UI/reducer';
-import {
-    AnalysisTool,
-    AppMode,
-    DefaultQueryParams4ImageryScene,
-    initialImagerySceneState,
-    ImageryScenesState,
-    QueryParams4ImageryScene,
-    // QueryParams4ImageryScene,
-} from '@shared/store/ImageryScene/reducer';
-import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+// // import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
+// // import { initialUIState, UIState } from './UI/reducer';
+// import {
+//     AnalysisTool,
+//     AppMode,
+//     DefaultQueryParams4ImageryScene,
+//     initialImagerySceneState,
+//     ImageryScenesState,
+//     QueryParams4ImageryScene,
+//     // QueryParams4ImageryScene,
+// } from '@shared/store/ImageryScene/reducer';
+// import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 // import { initialUIState, UIState } from '@shared/store/UI/reducer';
 // import {
 //     MaskToolState,
@@ -59,18 +59,20 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 // } from '@shared/store/ChangeCompareTool/reducer';
 import { initialLandsatState } from '@shared/store/Landsat/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
-import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+// import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { landsatInterestingPlaces } from '@landsat-explorer/components/InterestingPlaces';
 // import { getOpenSavePanelFromSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
-import { InterestingPlaceData } from '@typing/shared';
+// import { InterestingPlaceData } from '@typing/shared';
 import { getPreloadedState4ChangeCompareTool } from '@shared/store/ChangeCompareTool/getPreloadedState';
 import { getPreloadedState4SpectralProfileTool } from '@shared/store/SpectralProfileTool/getPreloadedState';
 import { getPreloadedState4MaskTool } from '@shared/store/MaskTool/getPrelaodedState';
 import { getPreloadedTrendToolState } from '@shared/store/TrendTool/getPreloadedState';
 import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
+// import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 
 // /**
 //  * Map location info that contains center and zoom info from URL Hash Params
@@ -116,69 +118,70 @@ import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 //     };
 // };
 
-const getPreloadedImageryScenesState = (
-    hashParams: URLSearchParams,
-    randomInterestingPlace: InterestingPlaceData
-): ImageryScenesState => {
-    let mode: AppMode =
-        (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
+// const getPreloadedImageryScenesState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData,
+//     defaultRasterFunction: LandsatRasterFunctionName | Sentinel2FunctionName
+// ): ImageryScenesState => {
+//     let mode: AppMode =
+//         (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
 
-    // user is only allowed to use the "dynamic" mode when using mobile device
-    if (IS_MOBILE_DEVICE) {
-        mode = 'dynamic';
-    }
+//     // user is only allowed to use the "dynamic" mode when using mobile device
+//     if (IS_MOBILE_DEVICE) {
+//         mode = 'dynamic';
+//     }
 
-    const defaultRasterFunction: LandsatRasterFunctionName =
-        'Natural Color with DRA';
+//     // const defaultRasterFunction: LandsatRasterFunctionName =
+//     //     'Natural Color with DRA';
 
-    // Attempt to extract query parameters from the URL hash.
-    // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
-    // which will serve as the map center.
-    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
-        hashParams
-    ) || {
-        ...DefaultQueryParams4ImageryScene,
-        rasterFunctionName:
-            randomInterestingPlace?.renderer || defaultRasterFunction,
-    };
+//     // Attempt to extract query parameters from the URL hash.
+//     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
+//     // which will serve as the map center.
+//     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
+//         hashParams
+//     ) || {
+//         ...DefaultQueryParams4ImageryScene,
+//         rasterFunctionName:
+//             randomInterestingPlace?.renderer || defaultRasterFunction,
+//     };
 
-    const queryParams4SecondaryScene =
-        getQueryParams4SecondarySceneFromHashParams(hashParams) || {
-            ...DefaultQueryParams4ImageryScene,
-            rasterFunctionName: defaultRasterFunction,
-        };
+//     const queryParams4SecondaryScene =
+//         getQueryParams4SecondarySceneFromHashParams(hashParams) || {
+//             ...DefaultQueryParams4ImageryScene,
+//             rasterFunctionName: defaultRasterFunction,
+//         };
 
-    const queryParams4ScenesInAnimation =
-        getListOfQueryParamsFromHashParams(hashParams) || [];
+//     const listOfQueryParams =
+//         getListOfQueryParamsFromHashParams(hashParams) || [];
 
-    const queryParamsById: {
-        [key: string]: QueryParams4ImageryScene;
-    } = {};
+//     const queryParamsById: {
+//         [key: string]: QueryParams4ImageryScene;
+//     } = {};
 
-    const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
+//     const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
 
-    for (const queryParams of queryParams4ScenesInAnimation) {
-        queryParamsById[queryParams.uniqueId] = queryParams;
-    }
+//     for (const queryParams of listOfQueryParams) {
+//         queryParamsById[queryParams.uniqueId] = queryParams;
+//     }
 
-    return {
-        ...initialImagerySceneState,
-        mode,
-        tool: tool || 'mask',
-        queryParams4MainScene,
-        queryParams4SecondaryScene,
-        queryParamsList: {
-            byId: queryParamsById,
-            ids: queryParams4ScenesInAnimation.map((d) => d.uniqueId),
-            selectedItemID: queryParams4ScenesInAnimation[0]
-                ? queryParams4ScenesInAnimation[0].uniqueId
-                : null,
-        },
-        // idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
-        //     ? queryParams4ScenesInAnimation[0].uniqueId
-        //     : null,
-    };
-};
+//     return {
+//         ...initialImagerySceneState,
+//         mode,
+//         tool: tool || 'mask',
+//         queryParams4MainScene,
+//         queryParams4SecondaryScene,
+//         queryParamsList: {
+//             byId: queryParamsById,
+//             ids: listOfQueryParams.map((d) => d.uniqueId),
+//             selectedItemID: listOfQueryParams[0]
+//                 ? listOfQueryParams[0].uniqueId
+//                 : null,
+//         },
+//         // idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
+//         //     ? queryParams4ScenesInAnimation[0].uniqueId
+//         //     : null,
+//     };
+// };
 
 // const getPreloadedTrendToolState = (
 //     hashParams: URLSearchParams
@@ -274,9 +277,10 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         Landsat: {
             ...initialLandsatState,
         },
-        ImageryScenes: getPreloadedImageryScenesState(
+        ImageryScenes: getPreloadedState4ImageryScenes(
             hashParams,
-            randomInterestingPlace
+            randomInterestingPlace,
+            'Natural Color with DRA'
         ),
         TrendTool: getPreloadedTrendToolState(hashParams),
         MaskTool: getPreloadedState4MaskTool(hashParams),
