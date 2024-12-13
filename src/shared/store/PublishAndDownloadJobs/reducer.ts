@@ -13,6 +13,7 @@ import { RasterAnalysisTaskName } from '@shared/services/raster-analysis/types';
 export enum PublishAndDownloadJobType {
     PublishScene = 'Publish Scene',
     PublishIndexMask = 'Publish Index Mask',
+    PublishChangeDetection = 'Publish Change Detection',
     DownloadIndexMask = 'Download Index Mask',
     SaveWebMappingApp = 'Save Web Mapping App',
     SaveWebMap = 'Save Web Map',

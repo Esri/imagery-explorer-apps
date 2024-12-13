@@ -4,6 +4,17 @@ import { getUserPortal } from '@shared/utils/esri-oauth';
 import { canPublishContent } from './checkUserRoleAndPrivileges';
 
 /**
+ * Formats the provided service name by replacing any character that is not
+ * a letter, number, or underscore with an underscore.
+ *
+ * @param serviceName - The name of the service to be formatted.
+ * @returns The formatted service name with invalid characters replaced by underscores.
+ */
+export const formatHostedImageryServiceName = (serviceName: string) => {
+    return serviceName.replace(/[^a-zA-Z0-9_]/g, '_');
+};
+
+/**
  * Create a new hosted Imagery Service on ArcGIS Online.
  *
  * This function sends a request to the ArcGIS Online API to create an image service with the specified name and properties.
@@ -49,7 +60,7 @@ export const createHostedImageryService = async (
         throw new Error('User does not have the privileges to publish content');
     }
 
-    const serviceNameCleaned = serviceName.replace(/[^a-zA-Z0-9_-]/g, '_');
+    const serviceNameCleaned = formatHostedImageryServiceName(serviceName); //serviceName.replace(/[^a-zA-Z0-9_]/g, '_');
 
     const params = new URLSearchParams({
         createParameters: JSON.stringify({

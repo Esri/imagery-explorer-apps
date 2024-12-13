@@ -1,5 +1,8 @@
 import { checkRasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
-import { PublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/reducer';
+import {
+    PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import { selectPendingRasterAnalysisJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
 import { updatePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect } from 'react';
@@ -18,6 +21,10 @@ export const useCheckJobStatus = () => {
         }
 
         const checkJobStatus = async (job: PublishAndDownloadJob) => {
+            const jobWithUpdatedStatus = {
+                ...job,
+            };
+
             try {
                 const response = await checkRasterAnalysisJobStatus(
                     job.rasterAnanlysisJobId,
@@ -30,19 +37,28 @@ export const useCheckJobStatus = () => {
                     throw new Error('Job status not found');
                 }
 
-                const jobWithUpdatedStatus = {
-                    ...job,
-                    status: response.jobStatus,
-                    output: response,
-                };
+                // const jobWithUpdatedStatus = {
+                //     ...job,
+                //     status: response.jobStatus,
+                //     output: response,
+                // };
 
-                dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
+                jobWithUpdatedStatus.status = response.jobStatus;
+                // jobWithUpdatedStatus.output = response;
+
+                // dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
             } catch (error) {
                 console.error(
                     `Error checking status for job ${job.rasterAnanlysisJobId}:`,
                     error
                 );
+
+                jobWithUpdatedStatus.status =
+                    PublishAndDownloadJobStatus.Failed;
+                jobWithUpdatedStatus.errormessage = error.message;
             }
+
+            dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
         };
 
         const intervalId = setInterval(() => {

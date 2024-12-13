@@ -8,10 +8,10 @@ type publishImagerySceneParams = {
      * service url of the input imagery service
      */
     serviceUrl: string;
-    /**
-     * object id of the imagery scene
-     */
-    objectId: number;
+    // /**
+    //  * object id of the imagery scene
+    //  */
+    // objectId: number;
     /**
      * name of the imagery service to store the output of the generate raster job.
      */
@@ -56,14 +56,13 @@ type PublishImagerySceneResponse = {
  *
  * @param {Object} params - The parameters for publishing the imagery scene.
  * @param {string} params.serviceUrl - The URL of the imagery service.
- * @param {number} params.objectId - The ID of the imagery scene to be published.
  * @param {string} params.outputServiceName - The name of the output imagery service.
  * @param {any} params.rasterFunction - The raster function to be applied to the imagery scene.
  * @returns {Promise<void>} A promise that resolves when the imagery scene has been published.
  */
 export const publishSceneAsHostedImageryLayer = async ({
     serviceUrl,
-    objectId,
+    // objectId,
     outputServiceName,
     rasterFunction,
 }: publishImagerySceneParams): Promise<PublishImagerySceneResponse> => {
@@ -71,7 +70,7 @@ export const publishSceneAsHostedImageryLayer = async ({
 
     const user = getSignedInUser();
 
-    if (!serviceUrl || !objectId || !outputServiceName) {
+    if (!serviceUrl || !rasterFunction || !outputServiceName) {
         throw new Error(
             'serviceUrl, objectId, and outputServiceName are required parameters'
         );

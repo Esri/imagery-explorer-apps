@@ -317,3 +317,103 @@ export const createMaskIndexRasterFunction = ({
         help: '',
     };
 };
+
+export const createChangeDetectionRasterFunction = ({
+    serviceUrl,
+    objectId4EarlierScene,
+    objectId4LaterScene,
+    token,
+    bandIndexes,
+    clippingGeometry,
+}: {
+    serviceUrl: string;
+    objectId4EarlierScene: number;
+    objectId4LaterScene: number;
+    token: string;
+    bandIndexes: string;
+    clippingGeometry: Geometry;
+}) => {
+    const bandArithmeticRasterFunction4EarlierScene =
+        createBandArithmeticRasterFunction({
+            serviceUrl,
+            objectId: objectId4EarlierScene,
+            token,
+            bandIndexes,
+            clippingGeometry,
+        });
+
+    const bandArithmeticRasterFunction4LaterScene =
+        createBandArithmeticRasterFunction({
+            serviceUrl,
+            objectId: objectId4LaterScene,
+            token,
+            bandIndexes,
+            clippingGeometry,
+        });
+
+    return {
+        name: 'Minus',
+        description:
+            'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
+        function: {
+            type: 'LocalFunction',
+            pixelType: 'UNKNOWN',
+            name: 'Minus',
+            description:
+                'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
+        },
+        arguments: {
+            Rasters: {
+                name: '_Rasters',
+                isPublic: false,
+                isDataset: false,
+                value: {
+                    elements: [
+                        {
+                            name: 'Raster',
+                            isPublic: false,
+                            isDataset: true,
+                            value: bandArithmeticRasterFunction4LaterScene,
+                            type: 'RasterFunctionVariable',
+                        },
+                        {
+                            name: 'InRaster2',
+                            isPublic: false,
+                            isDataset: true,
+                            value: bandArithmeticRasterFunction4EarlierScene,
+                            type: 'RasterFunctionVariable',
+                        },
+                    ],
+                    type: 'ArgumentArray',
+                },
+                type: 'RasterFunctionVariable',
+            },
+            Operation: {
+                name: 'Operation',
+                isPublic: false,
+                isDataset: false,
+                value: 2,
+                type: 'RasterFunctionVariable',
+            },
+            CellsizeType: {
+                name: 'CellsizeType',
+                isPublic: false,
+                isDataset: false,
+                value: 2,
+                type: 'RasterFunctionVariable',
+            },
+            ExtentType: {
+                name: 'ExtentType',
+                isPublic: false,
+                isDataset: false,
+                value: 1,
+                type: 'RasterFunctionVariable',
+            },
+            type: 'LocalFunctionArguments',
+        },
+        functionType: 0,
+        thumbnail: '',
+        thumbnailEx: '',
+        help: '',
+    };
+};

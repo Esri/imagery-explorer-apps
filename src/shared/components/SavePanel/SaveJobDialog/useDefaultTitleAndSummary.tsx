@@ -17,6 +17,7 @@ export const useDefaultTitleAndSummary = (
         'Save Web Map': `${satellite} Scene - ${formattedSceneId}`,
         'Publish Scene': `${satellite} Scene - ${formattedSceneId}`,
         'Publish Index Mask': `${satellite} Index Mask - ${formattedSceneId}`,
+        'Publish Change Detection': `${satellite} Change Detection - ${formattedSceneId}`,
         'Download Index Mask': 'Download Index Mask',
     };
 
@@ -25,6 +26,7 @@ export const useDefaultTitleAndSummary = (
         'Save Web Map': `Web map created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,
         'Publish Scene': `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,
         'Publish Index Mask': `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,
+        'Publish Change Detection': `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,
         'Download Index Mask': '',
     };
 

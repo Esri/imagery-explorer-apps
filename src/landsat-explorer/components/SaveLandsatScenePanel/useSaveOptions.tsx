@@ -2,7 +2,9 @@ import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/
 import {
     selectActiveAnalysisTool,
     selectAppMode,
-    selectQueryParams4SceneInSelectedMode,
+    selectQueryParams4MainScene,
+    // selectQueryParams4SceneInSelectedMode,
+    selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -12,15 +14,18 @@ export const useSaveOptions = () => {
 
     const analyzeTool = useSelector(selectActiveAnalysisTool);
 
-    const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+
+    const queryParams4SecondaryScene = useSelector(
+        selectQueryParams4SecondaryScene
+    );
 
     const publishOptions: PublishAndDownloadJobType[] = useMemo(() => {
         const output: PublishAndDownloadJobType[] = [
             PublishAndDownloadJobType.SaveWebMappingApp,
         ];
 
-        if (objectIdOfSelectedScene) {
+        if (queryParams4MainScene?.objectIdOfSelectedScene) {
             output.push(PublishAndDownloadJobType.SaveWebMap);
             output.push(PublishAndDownloadJobType.PublishScene);
         }
@@ -28,27 +33,41 @@ export const useSaveOptions = () => {
         if (
             mode === 'analysis' &&
             analyzeTool === 'mask' &&
-            objectIdOfSelectedScene
+            queryParams4MainScene?.objectIdOfSelectedScene
         ) {
             output.push(PublishAndDownloadJobType.PublishIndexMask);
         }
 
+        if (
+            mode === 'analysis' &&
+            analyzeTool === 'change' &&
+            queryParams4MainScene?.objectIdOfSelectedScene &&
+            queryParams4SecondaryScene?.objectIdOfSelectedScene
+        ) {
+            output.push(PublishAndDownloadJobType.PublishChangeDetection);
+        }
+
         return output;
-    }, [objectIdOfSelectedScene, mode, analyzeTool]);
+    }, [
+        queryParams4MainScene?.objectIdOfSelectedScene,
+        queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        mode,
+        analyzeTool,
+    ]);
 
     const donwloadOptions: PublishAndDownloadJobType[] = useMemo(() => {
         const output: PublishAndDownloadJobType[] = [];
 
-        if (
-            mode === 'analysis' &&
-            analyzeTool === 'mask' &&
-            objectIdOfSelectedScene
-        ) {
-            output.push(PublishAndDownloadJobType.DownloadIndexMask);
-        }
+        // if (
+        //     mode === 'analysis' &&
+        //     analyzeTool === 'mask' &&
+        //     queryParams4MainScene?.objectIdOfSelectedScene
+        // ) {
+        //     output.push(PublishAndDownloadJobType.DownloadIndexMask);
+        // }
 
         return output;
-    }, [objectIdOfSelectedScene, mode, analyzeTool]);
+    }, [queryParams4MainScene?.objectIdOfSelectedScene, mode, analyzeTool]);
 
     return {
         publishOptions,

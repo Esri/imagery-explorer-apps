@@ -6,10 +6,15 @@ import {
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import {
+    createChangeDetectionRasterFunction,
     createClipRasterFunction,
     createMaskIndexRasterFunction,
 } from '@shared/services/raster-analysis/rasterFunctions';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+import {
+    selectQueryParams4MainScene,
+    selectQueryParams4SceneInSelectedMode,
+    selectQueryParams4SecondaryScene,
+} from '@shared/store/ImageryScene/selectors';
 import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -42,8 +47,11 @@ export const LandsatSceneSavePanel = () => {
 
     const landsatScene = useSelectedLandsatScene();
 
-    const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+
+    const queryParams4SecondaryScene = useSelector(
+        selectQueryParams4SecondaryScene
+    );
 
     const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
 
@@ -60,7 +68,10 @@ export const LandsatSceneSavePanel = () => {
         title: string;
         snippet: string;
     }) => {
-        if (!objectIdOfSelectedScene) {
+        if (
+            !queryParams4MainScene ||
+            !queryParams4MainScene?.objectIdOfSelectedScene
+        ) {
             return;
         }
 
@@ -68,7 +79,7 @@ export const LandsatSceneSavePanel = () => {
 
         try {
             const feature = await getLandsatFeatureByObjectId(
-                objectIdOfSelectedScene
+                queryParams4MainScene.objectIdOfSelectedScene
             );
 
             const clippingGeometry = feature?.geometry as Geometry;
@@ -78,7 +89,7 @@ export const LandsatSceneSavePanel = () => {
             if (job.type === PublishAndDownloadJobType.PublishScene) {
                 rasterFunction = createClipRasterFunction({
                     serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                    objectId: objectIdOfSelectedScene,
+                    objectId: queryParams4MainScene?.objectIdOfSelectedScene,
                     token,
                     clippingGeometry,
                 });
@@ -87,16 +98,28 @@ export const LandsatSceneSavePanel = () => {
             ) {
                 rasterFunction = createMaskIndexRasterFunction({
                     serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                    objectId: objectIdOfSelectedScene,
+                    objectId: queryParams4MainScene?.objectIdOfSelectedScene,
                     token,
                     bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
                     pixelValueRange: selectedRange,
                     clippingGeometry,
                 });
+            } else if (
+                job.type === PublishAndDownloadJobType.PublishChangeDetection
+            ) {
+                rasterFunction = createChangeDetectionRasterFunction({
+                    serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                    objectId4EarlierScene:
+                        queryParams4MainScene?.objectIdOfSelectedScene,
+                    objectId4LaterScene:
+                        queryParams4SecondaryScene?.objectIdOfSelectedScene,
+                    token,
+                    bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+                    clippingGeometry,
+                });
             }
 
             const response = await publishSceneAsHostedImageryLayer({
-                objectId: objectIdOfSelectedScene,
                 outputServiceName: title, //'hosted-imagery-service-' + new Date().getTime(),
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 rasterFunction,
@@ -152,7 +175,8 @@ export const LandsatSceneSavePanel = () => {
                           ],
                           serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                           serviceName: 'LandsatLevel2',
-                          objectIdOfSelectedScene: objectIdOfSelectedScene,
+                          objectIdOfSelectedScene:
+                              queryParams4MainScene?.objectIdOfSelectedScene,
                       });
 
             dispatch(
@@ -191,7 +215,8 @@ export const LandsatSceneSavePanel = () => {
 
         if (
             saveJobType === PublishAndDownloadJobType.PublishScene ||
-            saveJobType === PublishAndDownloadJobType.PublishIndexMask
+            saveJobType === PublishAndDownloadJobType.PublishIndexMask ||
+            saveJobType === PublishAndDownloadJobType.PublishChangeDetection
         ) {
             publishSelectedScene({
                 job,

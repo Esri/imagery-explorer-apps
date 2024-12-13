@@ -52,6 +52,14 @@ export const saveOptionInfoLookup: Record<
         description:
             'Publish a hosted imagery layer of the current index mask. This action requires a Professional Plus User Type and a Publisher role or higher.',
     },
+    'Publish Change Detection': {
+        action: 'Publish',
+        inputName: 'Change Detection',
+        requireUniqueOutputName: true,
+        outputName: 'Hosted Imagery',
+        description:
+            'Publish a hosted imagery layer of the current change detection output. This action requires a Professional Plus User Type and a Publisher role or higher.',
+    },
     'Download Index Mask': {
         action: 'Download',
         inputName: 'Index mask',
@@ -96,6 +104,8 @@ export const jobTypeLabels: Record<PublishAndDownloadJobType, string> = {
     [PublishAndDownloadJobType.PublishScene]: 'Scene as Hosted Imagery',
     [PublishAndDownloadJobType.PublishIndexMask]:
         'Index Mask as Hosted Imagery',
+    [PublishAndDownloadJobType.PublishChangeDetection]:
+        'Change Detection as Hosted Imagery',
     [PublishAndDownloadJobType.DownloadIndexMask]: 'Index Mask as GeoTIFF',
     [PublishAndDownloadJobType.SaveWebMappingApp]:
         'Current State as Web Application',

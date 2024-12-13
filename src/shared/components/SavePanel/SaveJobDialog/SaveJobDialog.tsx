@@ -4,6 +4,7 @@ import React, { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { SaveOptionInfo, saveOptionInfoLookup } from '../constants';
 import { checkIsServiceNameAvailable } from '@shared/services/arcgis-online/checkIsServiceNameAvailable';
 import { useDefaultTitleAndSummary } from './useDefaultTitleAndSummary';
+import { formatHostedImageryServiceName } from '@shared/services/raster-analysis/createHostedImageryService';
 
 type SaveJobDialogProps = {
     saveJobType: PublishAndDownloadJobType;
@@ -44,7 +45,11 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
         debounceTimeOutRef.current = setTimeout(async () => {
             // console.log('calling checkIsServiceNameAvailable', title);
             try {
-                const isAvailable = await checkIsServiceNameAvailable(title);
+                const foramttedTitle = formatHostedImageryServiceName(title);
+
+                const isAvailable = await checkIsServiceNameAvailable(
+                    foramttedTitle
+                );
                 // check if the title is unique
                 setIsTitleAvailable(isAvailable);
             } catch (e) {
