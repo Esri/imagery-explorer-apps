@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectShowSavePanel } from '@shared/store/UI/selectors';
 import { CloseButton } from '../CloseButton';
 import { showSavePanelToggled } from '@shared/store/UI/reducer';
-import { isAnonymouns, signIn } from '@shared/utils/esri-oauth';
+import {
+    destroyCredentials,
+    isAnonymouns,
+    signIn,
+    signOut,
+} from '@shared/utils/esri-oauth';
 // import { CreateHostedImageryLayer } from './CreateHostedImageryLayer/CreateHostedImageryLayer';
 import { JobList } from './JobList';
 import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
@@ -16,6 +21,7 @@ import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
+import { set } from 'date-fns';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -99,7 +105,18 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 }}
             />
 
-            <SignedUserHeader />
+            <SignedUserHeader
+                onSignOut={() => {
+                    // console.log('sign out');
+                    // hide the save panel before signing out so that the user is not redirected to the sign-in page
+                    setOpenSavePanelInSessionStorage(false);
+                    signOut();
+                }}
+                onSwitchAccount={() => {
+                    // sign out and the user will be redirected to the sign-in page
+                    signOut();
+                }}
+            />
 
             <div className="mt-4 mx-4 md:mx-auto py-12 md:max-w-3xl w-full">
                 <Header sceneId={sceneId} />
