@@ -29,7 +29,7 @@ export const createClipRasterFunction = ({
             'Sets the extent of a raster using coordinates or another dataset.',
         function: {
             type: 'ClipFunction',
-            pixelType: 'UNKNOWN',
+            pixelType: 'F32',
             name: 'Clip',
             description:
                 'Sets the extent of a raster using coordinates or another dataset.',
@@ -119,7 +119,7 @@ export const createBandArithmeticRasterFunction = ({
             'Calculates indexes using predefined formulas or a user-defined expression.',
         function: {
             type: 'BandArithmeticFunction',
-            pixelType: 'UNKNOWN',
+            pixelType: 'F32',
             name: 'Band Arithmetic',
             description:
                 'Calculates indexes using predefined formulas or a user-defined expression.',
@@ -190,7 +190,7 @@ export const createMaskIndexRasterFunction = ({
             'Changes pixel values by assigning new values to ranges of pixel values or using an external table.',
         function: {
             type: 'RemapFunction',
-            pixelType: 'UNKNOWN',
+            pixelType: 'F32',
             name: 'Remap',
             description:
                 'Changes pixel values by assigning new values to ranges of pixel values or using an external table.',
@@ -324,6 +324,7 @@ export const createChangeDetectionRasterFunction = ({
     objectId4LaterScene,
     token,
     bandIndexes,
+    pixelValueRange,
     clippingGeometry,
 }: {
     serviceUrl: string;
@@ -331,6 +332,7 @@ export const createChangeDetectionRasterFunction = ({
     objectId4LaterScene: number;
     token: string;
     bandIndexes: string;
+    pixelValueRange: number[];
     clippingGeometry: Geometry;
 }) => {
     const bandArithmeticRasterFunction4EarlierScene =
@@ -352,64 +354,119 @@ export const createChangeDetectionRasterFunction = ({
         });
 
     return {
-        name: 'Minus',
-        description:
-            'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
+        name: 'Mask',
+        description: 'Sets values that you do not want to display.',
         function: {
-            type: 'LocalFunction',
-            pixelType: 'UNKNOWN',
-            name: 'Minus',
-            description:
-                'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
+            type: 'MaskFunction',
+            pixelType: 'F32',
+            name: 'Mask',
+            description: 'Sets values that you do not want to display.',
         },
         arguments: {
-            Rasters: {
-                name: '_Rasters',
-                isPublic: false,
-                isDataset: false,
-                value: {
-                    elements: [
-                        {
-                            name: 'Raster',
-                            isPublic: false,
-                            isDataset: true,
-                            value: bandArithmeticRasterFunction4LaterScene,
-                            type: 'RasterFunctionVariable',
-                        },
-                        {
-                            name: 'InRaster2',
-                            isPublic: false,
-                            isDataset: true,
-                            value: bandArithmeticRasterFunction4EarlierScene,
-                            type: 'RasterFunctionVariable',
-                        },
-                    ],
-                    type: 'ArgumentArray',
+            // Raster: {
+            //     name: "Raster",
+            //     isPublic: false,
+            //     isDataset: true,
+            //     value: {
+            //         url: "https://iservicesdev.arcgis.com/LkFyxb9zDq7vAOAm/arcgis/rest/services/Landsat_Change_Detection___LC08_L2SP_040037_20240129_20240207_02_T1/ImageServer?token=9RK8DY0qvaqYcPFrrqGyoc_Hw2w_BiuUfWSbVAwTisP5_rcoZesuFjwM_Y5mRo0ow_UCCbyhr3VWNLAkFpt5n3JHwp3_DjDg4bKF9v3EJi4zJhyjvkob1VEVFD-NIyNJZEk8SoI4nCCMDx9b6w-hj1VyaPDt-rELnZhwLi1LVnji8csySLD4R4H_4pz7LZd98kw6cpvHPHm8GknR4pwfO3r2tMCb1WlNJ0qpw6heJ5NYPBl6Wp6uc8VtLnubP1ZE5gCABFXvwO8qUbaiquw-lsp1qUi_NbuaeSdTJEtBldk3a6bixyq11Y9oFukARZCC",
+            //         name: "Landsat_Change_Detection___LC08_L2SP_040037_20240129_20240207_02_T1"
+            //     },
+            //     type: "RasterFunctionVariable"
+            // },
+            Raster: {
+                name: 'Minus',
+                description:
+                    'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
+                function: {
+                    type: 'LocalFunction',
+                    pixelType: 'F32',
+                    name: 'Minus',
+                    description:
+                        'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
                 },
-                type: 'RasterFunctionVariable',
+                arguments: {
+                    Rasters: {
+                        name: '_Rasters',
+                        isPublic: false,
+                        isDataset: false,
+                        value: {
+                            elements: [
+                                {
+                                    name: 'InRaster2',
+                                    isPublic: false,
+                                    isDataset: true,
+                                    value: bandArithmeticRasterFunction4LaterScene,
+                                    type: 'RasterFunctionVariable',
+                                },
+                                {
+                                    name: 'Raster',
+                                    isPublic: false,
+                                    isDataset: true,
+                                    value: bandArithmeticRasterFunction4EarlierScene,
+                                    type: 'RasterFunctionVariable',
+                                },
+                            ],
+                            type: 'ArgumentArray',
+                        },
+                        type: 'RasterFunctionVariable',
+                    },
+                    Operation: {
+                        name: 'Operation',
+                        isPublic: false,
+                        isDataset: false,
+                        value: 2,
+                        type: 'RasterFunctionVariable',
+                    },
+                    CellsizeType: {
+                        name: 'CellsizeType',
+                        isPublic: false,
+                        isDataset: false,
+                        value: 2,
+                        type: 'RasterFunctionVariable',
+                    },
+                    ExtentType: {
+                        name: 'ExtentType',
+                        isPublic: false,
+                        isDataset: false,
+                        value: 1,
+                        type: 'RasterFunctionVariable',
+                    },
+                    type: 'LocalFunctionArguments',
+                },
+                functionType: 0,
+                thumbnail: '',
+                thumbnailEx: '',
+                help: '',
             },
-            Operation: {
-                name: 'Operation',
+            NoDataInterpretation: {
+                name: 'NoDataInterpretation',
                 isPublic: false,
                 isDataset: false,
-                value: 2,
+                value: 0,
                 type: 'RasterFunctionVariable',
             },
-            CellsizeType: {
-                name: 'CellsizeType',
+            NoDataValues: {
+                name: 'NoDataValues',
                 isPublic: false,
                 isDataset: false,
-                value: 2,
+                value: [0],
                 type: 'RasterFunctionVariable',
             },
-            ExtentType: {
-                name: 'ExtentType',
+            IncludedRanges: {
+                name: 'IncludedRanges',
                 isPublic: false,
                 isDataset: false,
-                value: 1,
+                value: pixelValueRange, //[-2, 2],
                 type: 'RasterFunctionVariable',
             },
-            type: 'LocalFunctionArguments',
+            Invert: {
+                name: 'Invert',
+                isPublic: false,
+                isDataset: false,
+                value: false,
+                type: 'RasterFunctionVariable',
+            },
+            type: 'MaskFunctionArguments',
         },
         functionType: 0,
         thumbnail: '',

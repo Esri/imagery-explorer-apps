@@ -41,6 +41,8 @@ import {
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
+import { selectUserSelectedRangeInChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
+import { useObjectIds4ChangeDetectionTool } from '@shared/components/ChangeCompareLayer/useObjectIds4ChangeDetectionTool';
 
 export const LandsatSceneSavePanel = () => {
     const dispatch = useDispatch();
@@ -49,11 +51,16 @@ export const LandsatSceneSavePanel = () => {
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
-        selectQueryParams4SecondaryScene
+    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+
+    const selectedRange4ChangeDetectionTool = useSelector(
+        selectUserSelectedRangeInChangeCompareTool
     );
 
-    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+    const [
+        objectIdOfSelectedSceneInEarlierDate,
+        objectIdOfSelectedSceneInLater,
+    ] = useObjectIds4ChangeDetectionTool();
 
     const spectralIndex = useSelector(
         selectSelectedIndex4MaskTool
@@ -109,13 +116,12 @@ export const LandsatSceneSavePanel = () => {
             ) {
                 rasterFunction = createChangeDetectionRasterFunction({
                     serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                    objectId4EarlierScene:
-                        queryParams4MainScene?.objectIdOfSelectedScene,
-                    objectId4LaterScene:
-                        queryParams4SecondaryScene?.objectIdOfSelectedScene,
+                    objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
+                    objectId4LaterScene: objectIdOfSelectedSceneInLater,
                     token,
                     bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
                     clippingGeometry,
+                    pixelValueRange: selectedRange4ChangeDetectionTool,
                 });
             }
 
