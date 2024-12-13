@@ -49,6 +49,10 @@ export type PublishAndDownloadJob = {
      */
     createdAt: number;
     /**
+     * unix timestamp of when the job was last updated
+     */
+    updatedAt: number;
+    /**
      * name of the imagery explorer app that initiated the job
      */
     appName: AppName;

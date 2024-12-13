@@ -27,12 +27,15 @@ export const createNewPublishAndDownloadJob =
     async (dispatch: StoreDispatch): Promise<PublishAndDownloadJob> => {
         const user = getSignedInUser();
 
+        const timestamp = Date.now();
+
         const newJob: PublishAndDownloadJob = {
             id: nanoid(5),
             type: jobType,
             status: PublishAndDownloadJobStatus.Submitted,
             creator: user?.username || 'anonymous',
-            createdAt: Date.now(),
+            createdAt: timestamp,
+            updatedAt: timestamp,
             sceneId,
             appName: APP_NAME,
         };
@@ -52,6 +55,11 @@ export const removePublishAndDownloadJob =
 
 export const updatePublishAndDownloadJob =
     (job: PublishAndDownloadJob) => async (dispatch: StoreDispatch) => {
-        await updatePublishAndDownloadJob2IndexedDB(job);
-        dispatch(jobUpdated(job));
+        const updatedJob: PublishAndDownloadJob = {
+            ...job,
+            updatedAt: Date.now(),
+        };
+
+        await updatePublishAndDownloadJob2IndexedDB(updatedJob);
+        dispatch(jobUpdated(updatedJob));
     };

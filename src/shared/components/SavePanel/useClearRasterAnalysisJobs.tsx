@@ -6,6 +6,7 @@ import { removePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJob
 
 /**
  * Custom hook that clears finished raster analysis jobs.
+ * If a job has been finished for more than an hour, it will be removed from the store.
  */
 export const useClearRasterAnalysisJobs = () => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export const useClearRasterAnalysisJobs = () => {
 
             const oneHourInMilliseconds = 60 * 60 * 1000;
 
-            if (job.createdAt - currentTime >= oneHourInMilliseconds) {
+            if (currentTime - job.updatedAt >= oneHourInMilliseconds) {
                 dispatch(removePublishAndDownloadJob(job.id));
             }
         }
