@@ -3,6 +3,7 @@ import {
     initialPublishAndDownloadJobsState,
     PublishAndDownloadJobsState,
 } from './reducer';
+import { getSignedInUser } from '@shared/utils/esri-oauth';
 
 /**
  * get preloaded state for publish and download jobs state
@@ -11,8 +12,16 @@ import {
 export const getPreloadedState4PublishAndDownloadJobs =
     async (): Promise<PublishAndDownloadJobsState> => {
         try {
-            const jobs = await getPublishAndDownloadJobsFromIndexedDB();
-            console.log('pending publish and save jobs', jobs);
+            const user = getSignedInUser();
+
+            if (!user) {
+                throw new Error('User not signed in');
+            }
+
+            const jobs = await getPublishAndDownloadJobsFromIndexedDB(
+                user.username
+            );
+            // console.log('pending publish and save jobs', jobs);
 
             if (!jobs || jobs.length === 0) {
                 return {

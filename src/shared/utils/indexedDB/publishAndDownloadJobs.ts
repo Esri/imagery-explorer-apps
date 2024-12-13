@@ -41,11 +41,24 @@ export const updatePublishAndDownloadJob2IndexedDB = async (
     await updateData(dbName, storeName, job);
 };
 
-export const getPublishAndDownloadJobsFromIndexedDB = async (): Promise<
-    PublishAndDownloadJob[]
-> => {
-    const data = await getAllData<PublishAndDownloadJob>(dbName, storeName);
-    return data || [];
+/**
+ * Retrieves publish and download jobs from IndexedDB for a specific user.
+ *
+ * @param userId - The ID of the user whose jobs are to be fetched.
+ * @returns A promise that resolves to an array of `PublishAndDownloadJob` objects associated with the specified user.
+ * @throws Will log an error to the console and return an empty array if there is an issue fetching the jobs from IndexedDB.
+ */
+export const getPublishAndDownloadJobsFromIndexedDB = async (
+    userId: string
+): Promise<PublishAndDownloadJob[]> => {
+    try {
+        const data = await getAllData<PublishAndDownloadJob>(dbName, storeName);
+
+        return data.filter((job) => job.creator === userId);
+    } catch (error) {
+        console.error('Error fetching jobs from IndexedDB', error);
+        return [];
+    }
 };
 
 export const deletePublishAndDownloadJobInIndexedDB = async (
