@@ -93,6 +93,62 @@ export const createClipRasterFunction = ({
     };
 };
 
+export const createBandArithmeticRasterFunction = ({
+    serviceUrl,
+    objectId,
+    token,
+    bandIndexes,
+    clippingGeometry,
+}: {
+    serviceUrl: string;
+    objectId: number;
+    token: string;
+    bandIndexes: string;
+    clippingGeometry: Geometry;
+}) => {
+    const clipRasterFunction = createClipRasterFunction({
+        serviceUrl,
+        objectId,
+        token,
+        clippingGeometry,
+    });
+
+    return {
+        name: 'Band Arithmetic',
+        description:
+            'Calculates indexes using predefined formulas or a user-defined expression.',
+        function: {
+            type: 'BandArithmeticFunction',
+            pixelType: 'UNKNOWN',
+            name: 'Band Arithmetic',
+            description:
+                'Calculates indexes using predefined formulas or a user-defined expression.',
+        },
+        arguments: {
+            Raster: clipRasterFunction,
+            Method: {
+                name: 'Method',
+                isPublic: false,
+                isDataset: false,
+                value: 0,
+                type: 'RasterFunctionVariable',
+            },
+            BandIndexes: {
+                name: 'BandIndexes',
+                isPublic: false,
+                isDataset: false,
+                value: bandIndexes,
+                type: 'RasterFunctionVariable',
+            },
+            type: 'BandArithmeticFunctionArguments',
+        },
+        functionType: 0,
+        thumbnail: '',
+        thumbnailEx: '',
+        help: '',
+    };
+};
+
 /**
  * Creates a raster function to generate a mask or index using clipping and band arithmetic.
  *
@@ -120,10 +176,11 @@ export const createMaskIndexRasterFunction = ({
     pixelValueRange: number[];
     clippingGeometry: Geometry;
 }) => {
-    const clipRasterFunction = createClipRasterFunction({
+    const bandArithmeticRasterFunction = createBandArithmeticRasterFunction({
         serviceUrl,
         objectId,
         token,
+        bandIndexes,
         clippingGeometry,
     });
 
@@ -139,40 +196,41 @@ export const createMaskIndexRasterFunction = ({
                 'Changes pixel values by assigning new values to ranges of pixel values or using an external table.',
         },
         arguments: {
-            Raster: {
-                name: 'Band Arithmetic',
-                description:
-                    'Calculates indexes using predefined formulas or a user-defined expression.',
-                function: {
-                    type: 'BandArithmeticFunction',
-                    pixelType: 'UNKNOWN',
-                    name: 'Band Arithmetic',
-                    description:
-                        'Calculates indexes using predefined formulas or a user-defined expression.',
-                },
-                arguments: {
-                    Raster: clipRasterFunction,
-                    Method: {
-                        name: 'Method',
-                        isPublic: false,
-                        isDataset: false,
-                        value: 0,
-                        type: 'RasterFunctionVariable',
-                    },
-                    BandIndexes: {
-                        name: 'BandIndexes',
-                        isPublic: false,
-                        isDataset: false,
-                        value: bandIndexes,
-                        type: 'RasterFunctionVariable',
-                    },
-                    type: 'BandArithmeticFunctionArguments',
-                },
-                functionType: 0,
-                thumbnail: '',
-                thumbnailEx: '',
-                help: '',
-            },
+            // Raster: {
+            //     name: 'Band Arithmetic',
+            //     description:
+            //         'Calculates indexes using predefined formulas or a user-defined expression.',
+            //     function: {
+            //         type: 'BandArithmeticFunction',
+            //         pixelType: 'UNKNOWN',
+            //         name: 'Band Arithmetic',
+            //         description:
+            //             'Calculates indexes using predefined formulas or a user-defined expression.',
+            //     },
+            //     arguments: {
+            //         Raster: clipRasterFunction,
+            //         Method: {
+            //             name: 'Method',
+            //             isPublic: false,
+            //             isDataset: false,
+            //             value: 0,
+            //             type: 'RasterFunctionVariable',
+            //         },
+            //         BandIndexes: {
+            //             name: 'BandIndexes',
+            //             isPublic: false,
+            //             isDataset: false,
+            //             value: bandIndexes,
+            //             type: 'RasterFunctionVariable',
+            //         },
+            //         type: 'BandArithmeticFunctionArguments',
+            //     },
+            //     functionType: 0,
+            //     thumbnail: '',
+            //     thumbnailEx: '',
+            //     help: '',
+            // },
+            Raster: bandArithmeticRasterFunction,
             UseTable: {
                 name: 'UseTable',
                 isPublic: false,
