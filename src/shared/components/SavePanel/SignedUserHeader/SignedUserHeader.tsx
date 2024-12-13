@@ -4,6 +4,7 @@ import {
     signOut,
 } from '@shared/utils/esri-oauth';
 import React, { FC } from 'react';
+import './SignedUserHeader.css';
 
 type Props = {
     onSignOut: () => void;
@@ -20,7 +21,7 @@ export const SignedUserHeader: FC<Props> = ({ onSignOut, onSwitchAccount }) => {
     }
 
     return (
-        <div className="absolute top-3 left-3 flex items-center">
+        <div className="signed-in-user-header-container fixed top-3 left-3 flex items-center">
             {/* <div className=' w-9 h-9 rounded'
             style={{
                 backgroundImage: `url(${signedInUser?.thumbnailUrl})`,
@@ -35,7 +36,7 @@ export const SignedUserHeader: FC<Props> = ({ onSignOut, onSwitchAccount }) => {
             /> */}
 
             <div
-                className="w-[60px] h-[60px] border-[2px] border-custom-light-blue rounded-full"
+                className="w-[60px] h-[60px] border-[2px] border-custom-light-blue rounded-full z-10"
                 style={{
                     backgroundImage: `url(${signedInUser?.thumbnailUrl})`,
                     backgroundSize: 'cover',
@@ -43,7 +44,7 @@ export const SignedUserHeader: FC<Props> = ({ onSignOut, onSwitchAccount }) => {
                 title={signedInUser.fullName}
             ></div>
 
-            <div className="ml-2">
+            <div className="ml-2 z-10">
                 <div className=" ">
                     <h4 className="hover:underline">
                         <a

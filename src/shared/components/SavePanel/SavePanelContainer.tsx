@@ -118,7 +118,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 }}
             />
 
-            <div className="mt-4 mx-4 md:mx-auto py-12 md:max-w-3xl w-full">
+            <div className="mt-16 md:mt-4 mx-4 md:mx-auto py-12 md:max-w-3xl w-full">
                 <Header sceneId={sceneId} />
 
                 <div className="relative w-full mt-12 mx-auto">

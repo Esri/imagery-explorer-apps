@@ -1,0 +1,5 @@
+.signed-in-user-header-container::before {
+    @apply fixed top-0 left-0 w-52 h-52 pointer-events-none z-0;
+    content: ' ';
+    background: linear-gradient(145deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 40%);
+}
