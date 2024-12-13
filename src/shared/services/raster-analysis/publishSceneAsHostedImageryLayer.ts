@@ -1,7 +1,7 @@
 import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
 import { createHostedImageryService } from './createHostedImageryService';
 import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
-import { canUseRasterAnalysis } from './checkUserRoleAndPrivileges';
+import { hasRasterAnalysisPrivileges } from './checkUserRoleAndPrivileges';
 
 type publishImagerySceneParams = {
     /**
@@ -77,9 +77,11 @@ export const publishSceneAsHostedImageryLayer = async ({
         );
     }
 
-    if (canUseRasterAnalysis(user) === false) {
+    const canUseRasterAnalysis = await hasRasterAnalysisPrivileges(user);
+
+    if (canUseRasterAnalysis === false) {
         throw new Error(
-            'User does not have the required privileges to use raster analysis'
+            'User does not have the required license to use raster analysis'
         );
     }
 
