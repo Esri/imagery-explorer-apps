@@ -46,7 +46,7 @@ export const JobList: FC<JobListProps> = ({ data, deleteButtonOnClick }) => {
                     <div
                         key={job.id}
                         className="w-full grid gap-1 items-center text-custom-light-blue text-sm my-4"
-                        style={{ gridTemplateColumns: '50px 1fr 150px 32px' }}
+                        style={{ gridTemplateColumns: '50px 1fr 150px 60px' }}
                     >
                         <JobIcon job={job} />
 
