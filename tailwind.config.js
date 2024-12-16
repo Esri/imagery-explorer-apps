@@ -50,7 +50,13 @@ module.exports = {
             'selected': '#C2EEFE',
           }
         }
-      }
+      },
+      'calcite': {
+        green: {
+          60: `var(--calcite-color-green-060)`,
+          70: `var(--calcite-color-green-070)`
+        }
+      }, 
     },
     extend: {
       spacing: {

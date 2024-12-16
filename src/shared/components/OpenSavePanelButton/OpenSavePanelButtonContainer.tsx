@@ -40,15 +40,15 @@ export const OpenSavePanelButtonContainer: FC<Props> = ({ mapView }) => {
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
-    const mode = useSelector(selectAppMode);
+    // const mode = useSelector(selectAppMode);
 
-    const disabled = useMemo(() => {
-        return false;
-    }, []);
+    // const disabled = useMemo(() => {
+    //     return false;
+    // }, []);
 
     return (
         <OpenSavePanelButton
-            disabled={disabled}
+            disabled={false}
             hidden={isAnimationPlaying}
             showLoadingIndicator={false}
             tooltip={'Open Save Panel'}
