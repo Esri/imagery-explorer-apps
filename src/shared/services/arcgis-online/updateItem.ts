@@ -52,7 +52,7 @@ export const updateItem = async ({
 
     const { username } = signedInUser;
 
-    const requestURL = `${ARCGIS_REST_API_ROOT}/content/users/${username}/items/${id}/update?${requestBody.toString()}`;
+    const requestURL = `${ARCGIS_REST_API_ROOT}/content/users/${username}/items/${id}/update`;
 
     const res = await fetch(requestURL, {
         method: 'POST',
