@@ -2,7 +2,13 @@ import {
     PublishAndDownloadJob,
     PublishAndDownloadJobType,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
-import { saveData, getAllData, deleteDataByKey, updateData } from './helpers';
+import {
+    saveData,
+    getAllData,
+    deleteDataByKey,
+    updateData,
+    clearStore,
+} from './helpers';
 import { APP_NAME } from '@shared/config';
 
 const dbName = 'ImageryExplorerApp_' + APP_NAME;
@@ -66,3 +72,8 @@ export const deletePublishAndDownloadJobInIndexedDB = async (
 ): Promise<void> => {
     await deleteDataByKey(dbName, storeName, jobId);
 };
+
+export const deleteAllPublishAndDownloadJobInIndexedDB =
+    async (): Promise<void> => {
+        await clearStore(dbName, storeName);
+    };

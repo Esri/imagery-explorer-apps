@@ -3,6 +3,7 @@ import { StoreDispatch } from '../configureStore';
 import {
     jobAdded,
     jobRemoved,
+    jobsCleared,
     jobUpdated,
     PublishAndDownloadJob,
     PublishAndDownloadJobStatus,
@@ -11,6 +12,7 @@ import { nanoid } from 'nanoid';
 import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { APP_NAME } from '@shared/config';
 import {
+    deleteAllPublishAndDownloadJobInIndexedDB,
     deletePublishAndDownloadJobInIndexedDB,
     savePublishAndDownloadJob2IndexedDB,
     updatePublishAndDownloadJob2IndexedDB,
@@ -61,6 +63,12 @@ export const removePublishAndDownloadJob =
     (jobId: string) => async (dispatch: StoreDispatch) => {
         await deletePublishAndDownloadJobInIndexedDB(jobId);
         dispatch(jobRemoved(jobId));
+    };
+
+export const clearAllPublishAndDownloadJobs =
+    () => async (dispatch: StoreDispatch) => {
+        await deleteAllPublishAndDownloadJobInIndexedDB();
+        dispatch(jobsCleared());
     };
 
 export const updatePublishAndDownloadJob =

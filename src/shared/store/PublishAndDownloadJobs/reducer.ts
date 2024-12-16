@@ -132,11 +132,15 @@ const slice = createSlice({
                 state.jobs.byId[job.id] = job;
             }
         },
+        jobsCleared: (state) => {
+            state.jobs.byId = {};
+            state.jobs.allIds = [];
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { jobAdded, jobRemoved, jobUpdated } = slice.actions;
+export const { jobAdded, jobRemoved, jobUpdated, jobsCleared } = slice.actions;
 
 export default reducer;

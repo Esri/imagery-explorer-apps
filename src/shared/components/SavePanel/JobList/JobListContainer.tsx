@@ -2,7 +2,10 @@ import React from 'react';
 import { JobList } from './JobList';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
-import { removePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
+import {
+    clearAllPublishAndDownloadJobs,
+    removePublishAndDownloadJob,
+} from '@shared/store/PublishAndDownloadJobs/thunks';
 
 export const JobListContainer = () => {
     const jobs = useSelector(selectAllSaveJobs);
@@ -20,6 +23,9 @@ export const JobListContainer = () => {
                 <div
                     className="text-sm opacity-50 cursor-pointer underline"
                     title="Remove all pending jobs"
+                    onClick={() => {
+                        dispatch(clearAllPublishAndDownloadJobs());
+                    }}
                 >
                     Clear All
                 </div>

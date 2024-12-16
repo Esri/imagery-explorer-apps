@@ -119,6 +119,28 @@ export const getAllData = async <T>(
     });
 };
 
+// Function to delete all records in a store
+export const clearStore = async (
+    dbName: string,
+    storeName: string
+): Promise<void> => {
+    const db = await openDatabase(dbName, storeName);
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(storeName, 'readwrite');
+        const store = transaction.objectStore(storeName);
+
+        const request = store.clear();
+
+        request.onsuccess = () => {
+            resolve();
+        };
+
+        request.onerror = (event: Event) => {
+            reject((event.target as IDBRequest).error);
+        };
+    });
+};
+
 // Delete data by key
 export const deleteDataByKey = async (
     dbName: string,
