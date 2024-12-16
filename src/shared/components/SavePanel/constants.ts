@@ -26,7 +26,7 @@ export type SaveOptionInfo = {
     requireUniqueOutputName: boolean;
 };
 
-const ProfessionalPlusUserTypeLink = `<a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional-plus" target="_blank">Professional Plus User Type</a>`;
+const ProfessionalPlusUserTypeLink = `<a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional" target="_blank">Professional or above User Type</a>`;
 const PublisherRoleLink = `<a class="underline" href="https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm" target="_blank">Publisher role</a>`;
 
 /**

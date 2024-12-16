@@ -33,11 +33,14 @@ export const hasRasterAnalysisPrivileges = async (
             user.username
         );
 
-        // Check if the user has the GIS Professional Advanced user type and has more than 10 credits
-        return (
-            userLicenseTypeId === 'GISProfessionalAdvUT' &&
-            availableCredits > 10
-        );
+        // Check if the user has the GIS Professional or above user type
+        // @see https://developers.arcgis.com/rest/enterprise-administration/portal/create-user/
+        const isProfessionalUser =
+            userLicenseTypeId === 'GISProfessionalStdUT' ||
+            userLicenseTypeId === 'GISProfessionalAdvUT';
+
+        // Check if the user has the GIS Professional or above user type and has more than 10 credits
+        return isProfessionalUser && availableCredits > 10;
     } catch (error) {
         console.error(
             'Error checking user privileges for raster analysis',
