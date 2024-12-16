@@ -26,6 +26,9 @@ export type SaveOptionInfo = {
     requireUniqueOutputName: boolean;
 };
 
+const ProfessionalPlusUserTypeLink = `<a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional-plus" target="_blank">Professional Plus User Type</a>`;
+const PublisherRoleLink = `<a class="underline" href="https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm" target="_blank">Publisher role</a>`;
+
 /**
  * A lookup object that maps save options to their corresponding information.
  * Each save option is associated with an object containing a title, subtitle, and description.
@@ -41,24 +44,21 @@ export const saveOptionInfoLookup: Record<
         inputName: 'Scene',
         requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
-        description:
-            'Publish a hosted imagery layer of the selected scene. This action requires a Professional Plus User Type and a Publisher role or higher.',
+        description: `Publish a hosted imagery layer of the selected scene. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
     },
     'Publish Index Mask': {
         action: 'Publish',
         inputName: 'Index mask',
         requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
-        description:
-            'Publish a hosted imagery layer of the current index mask. This action requires a Professional Plus User Type and a Publisher role or higher.',
+        description: `Publish a hosted imagery layer of the current index mask. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
     },
     'Publish Change Detection': {
         action: 'Publish',
         inputName: 'Change Detection',
         requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
-        description:
-            'Publish a hosted imagery layer of the current change detection output. This action requires a Professional Plus User Type and a Publisher role or higher.',
+        description: `Publish a hosted imagery layer of the current change detection output. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
     },
     'Download Index Mask': {
         action: 'Download',

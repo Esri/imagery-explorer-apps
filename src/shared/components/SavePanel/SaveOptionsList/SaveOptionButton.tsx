@@ -36,7 +36,12 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
                 </Button>
             </div>
 
-            <p className=" text-sm">{desciprtion}</p>
+            <p
+                className=" text-sm"
+                dangerouslySetInnerHTML={{
+                    __html: desciprtion,
+                }}
+            ></p>
         </div>
     );
 };
