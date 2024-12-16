@@ -90,7 +90,7 @@ export const RasterFunctionSelector: FC<Props> = ({
                     const { name, thumbnail, label } = d;
 
                     const selected =
-                        disabled === false &&
+                        // disabled === false &&
                         nameOfSelectedRasterFunction === name;
 
                     return (
