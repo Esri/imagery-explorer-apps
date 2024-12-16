@@ -2,6 +2,7 @@ import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
 import { createHostedImageryService } from './createHostedImageryService';
 import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
 import { hasRasterAnalysisPrivileges } from './checkUserRoleAndPrivileges';
+import { updateItem } from '../arcgis-online/updateItem';
 
 type publishImagerySceneParams = {
     /**
@@ -15,7 +16,11 @@ type publishImagerySceneParams = {
     /**
      * name of the imagery service to store the output of the generate raster job.
      */
-    outputServiceName: string;
+    title: string;
+    /**
+     * description of the imagery service to store the output of the generate raster job.
+     */
+    snippet: string;
     /**
      * raster function to be applied to the imagery scene
      *
@@ -55,22 +60,24 @@ type PublishImagerySceneResponse = {
  * Publishes the selected imagery scene as a hosted imagery service by submitting a generate raster job.
  *
  * @param {Object} params - The parameters for publishing the imagery scene.
- * @param {string} params.serviceUrl - The URL of the imagery service.
- * @param {string} params.outputServiceName - The name of the output imagery service.
- * @param {any} params.rasterFunction - The raster function to be applied to the imagery scene.
+ * - {string} params.serviceUrl - The URL of the imagery service.
+ * - {string} params.title - The name of the output imagery service.
+ * - {string} params.snippet - The description of the output imagery service.
+ * - {any} params.rasterFunction - The raster function to be applied to the imagery scene.
  * @returns {Promise<void>} A promise that resolves when the imagery scene has been published.
  */
 export const publishSceneAsHostedImageryLayer = async ({
     serviceUrl,
     // objectId,
-    outputServiceName,
+    title,
+    snippet,
     rasterFunction,
 }: publishImagerySceneParams): Promise<PublishImagerySceneResponse> => {
     const token = getToken();
 
     const user = getSignedInUser();
 
-    if (!serviceUrl || !rasterFunction || !outputServiceName) {
+    if (!serviceUrl || !rasterFunction || !title) {
         throw new Error(
             'serviceUrl, objectId, and outputServiceName are required parameters'
         );
@@ -84,11 +91,13 @@ export const publishSceneAsHostedImageryLayer = async ({
         );
     }
 
+    // create a new hosted imagery service
     const createServiceResponse = await createHostedImageryService(
-        outputServiceName,
+        title,
         token
     );
 
+    // submit a generate raster job to generate the hosted imagery layer
     const requestURL =
         RASTER_ANALYSIS_SERVER_ROOT_URL + '/GenerateRaster/submitJob';
     // console.log(requestURL)
@@ -120,6 +129,13 @@ export const publishSceneAsHostedImageryLayer = async ({
     if (data.error) {
         throw data.error;
     }
+
+    // update the item with the title and snippet
+    await updateItem({
+        id: createServiceResponse.itemId,
+        title,
+        snippet,
+    });
 
     return {
         rasterAnalysisJobId: data.jobId,

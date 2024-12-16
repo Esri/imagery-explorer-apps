@@ -126,7 +126,8 @@ export const LandsatSceneSavePanel = () => {
             }
 
             const response = await publishSceneAsHostedImageryLayer({
-                outputServiceName: title, //'hosted-imagery-service-' + new Date().getTime(),
+                title, //'hosted-imagery-service-' + new Date().getTime(),
+                snippet,
                 serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                 rasterFunction,
             });
@@ -215,6 +216,8 @@ export const LandsatSceneSavePanel = () => {
         const job = await dispatch(
             createNewPublishAndDownloadJob({
                 jobType: saveJobType,
+                title,
+                summary,
                 sceneId: landsatScene?.name,
             })
         );

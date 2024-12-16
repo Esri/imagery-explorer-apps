@@ -18,12 +18,20 @@ import {
 import { de } from 'date-fns/locale';
 
 type CreateNewSaveJobParams = {
+    /**
+     * type of the job
+     */
     jobType: PublishAndDownloadJobType;
+    title: string;
+    summary: string;
+    /**
+     * id of the scene associated with the job
+     */
     sceneId?: string;
 };
 
 export const createNewPublishAndDownloadJob =
-    ({ jobType, sceneId }: CreateNewSaveJobParams) =>
+    ({ jobType, title, summary, sceneId }: CreateNewSaveJobParams) =>
     async (dispatch: StoreDispatch): Promise<PublishAndDownloadJob> => {
         const user = getSignedInUser();
 
@@ -32,6 +40,8 @@ export const createNewPublishAndDownloadJob =
         const newJob: PublishAndDownloadJob = {
             id: nanoid(5),
             type: jobType,
+            title,
+            summary,
             status: PublishAndDownloadJobStatus.Submitted,
             creator: user?.username || 'anonymous',
             createdAt: timestamp,

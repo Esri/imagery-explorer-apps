@@ -38,6 +38,14 @@ export type PublishAndDownloadJob = {
      */
     id: string;
     /**
+     * title of the job
+     */
+    title: string;
+    /**
+     * summary of the job
+     */
+    summary: string;
+    /**
      * type of the job
      */
     type: PublishAndDownloadJobType;
