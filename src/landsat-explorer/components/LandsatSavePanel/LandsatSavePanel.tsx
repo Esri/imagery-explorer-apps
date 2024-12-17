@@ -45,7 +45,7 @@ import { selectUserSelectedRangeInChangeCompareTool } from '@shared/store/Change
 import { useObjectIds4ChangeDetectionTool } from '@shared/components/ChangeCompareLayer/useObjectIds4ChangeDetectionTool';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 
-export const LandsatSceneSavePanel = () => {
+export const LandsatSavePanel = () => {
     const dispatch = useDispatch();
 
     const landsatScene = useSelectedLandsatScene();
