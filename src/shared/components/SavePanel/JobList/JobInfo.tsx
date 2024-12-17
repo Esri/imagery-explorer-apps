@@ -1,5 +1,6 @@
 import {
     PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
     PublishAndDownloadJobType,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import React, { FC, useMemo } from 'react';
@@ -24,7 +25,11 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
         return job.sceneId || 'No selected scene';
     }, [job]);
 
-    if (job.publishToHostedImageryService && job.outputItemId === undefined) {
+    if (
+        job.status === PublishAndDownloadJobStatus.Submitted &&
+        job.publishToHostedImageryService &&
+        job.outputItemId === undefined
+    ) {
         return <p>Initiating the publish job. Please do not close the tab.</p>;
     }
 

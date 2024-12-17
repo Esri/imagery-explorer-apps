@@ -51,22 +51,11 @@ import { WaterLandMaskLayer } from './WaterLandMaskLayer';
 import { useDispatch } from 'react-redux';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
+import { getSentinel1RasterFunctionNameByIndex } from '@shared/services/sentinel-1/helper';
 
 type Props = {
     mapView?: MapView;
     groupLayer?: GroupLayer;
-};
-
-/**
- * Lookup table that maps RadarIndex values to corresponding Sentinel1FunctionName values.
- *
- * This table is used by the Mask Layer to select the appropriate raster function based on the specified index.
- */
-const RasterFunctionNameByIndx: Record<RadarIndex, Sentinel1FunctionName> = {
-    ship: 'VV and VH Power with Despeckle',
-    urban: 'VV and VH Power with Despeckle',
-    water: 'SWI Raw',
-    'water anomaly': 'Water Anomaly Index Raw',
 };
 
 export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
@@ -123,7 +112,7 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
 
     const rasterFunction = useMemo(() => {
         return new RasterFunction({
-            functionName: RasterFunctionNameByIndx[selectedIndex],
+            functionName: getSentinel1RasterFunctionNameByIndex(selectedIndex),
         });
     }, [selectedIndex]);
 

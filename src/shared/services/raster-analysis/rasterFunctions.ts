@@ -17,12 +17,33 @@ export const createClipRasterFunction = ({
     objectId,
     token,
     clippingGeometry,
+    rasterFunctionTemplate,
 }: {
     serviceUrl: string;
     objectId: number;
     token: string;
     clippingGeometry: Geometry;
+    /**
+     * Name of the Raster function template to be applied to the clipped raster.
+     */
+    rasterFunctionTemplate?: string;
 }) => {
+    const inputRaster = {
+        url: `${serviceUrl}?token=${token}`,
+        name: '', //'LandsatC2L2',
+        mosaicRule: {
+            ascending: false,
+            lockRasterIds: [objectId],
+            mosaicMethod: 'esriMosaicLockRaster',
+            where: `objectid in (${objectId})`,
+        },
+        renderingRule: rasterFunctionTemplate
+            ? {
+                  rasterFunction: rasterFunctionTemplate,
+              }
+            : undefined,
+    };
+
     return {
         name: 'Clip',
         description:
@@ -39,16 +60,7 @@ export const createClipRasterFunction = ({
                 name: 'Raster',
                 isPublic: false,
                 isDataset: true,
-                value: {
-                    url: `${serviceUrl}?token=${token}`,
-                    name: '', //'LandsatC2L2',
-                    mosaicRule: {
-                        ascending: false,
-                        lockRasterIds: [objectId],
-                        mosaicMethod: 'esriMosaicLockRaster',
-                        where: `objectid in (${objectId})`,
-                    },
-                },
+                value: inputRaster,
                 type: 'RasterFunctionVariable',
             },
             ClippingType: {
@@ -166,23 +178,57 @@ export const createMaskIndexRasterFunction = ({
     objectId,
     token,
     bandIndexes,
+    rasterFunctionTemplate,
     pixelValueRange,
     clippingGeometry,
 }: {
     serviceUrl: string;
     objectId: number;
     token: string;
-    bandIndexes: string;
+    /**
+     * the pixel value range to be used in the remap function
+     */
     pixelValueRange: number[];
+    /**
+     * the geometry to be used in the clip function
+     */
     clippingGeometry: Geometry;
+    /**
+     * the band indexes to be used in the band arithmetic function
+     */
+    bandIndexes?: string;
+    /**
+     * the raster function template to be used in the clip function
+     */
+    rasterFunctionTemplate?: string;
 }) => {
-    const bandArithmeticRasterFunction = createBandArithmeticRasterFunction({
-        serviceUrl,
-        objectId,
-        token,
-        bandIndexes,
-        clippingGeometry,
-    });
+    // const bandArithmeticRasterFunction = createBandArithmeticRasterFunction({
+    //     serviceUrl,
+    //     objectId,
+    //     token,
+    //     bandIndexes,
+    //     clippingGeometry,
+    // });
+
+    let inputRaster = null;
+
+    if (bandIndexes) {
+        inputRaster = createBandArithmeticRasterFunction({
+            serviceUrl,
+            objectId,
+            token,
+            bandIndexes,
+            clippingGeometry,
+        });
+    } else if (rasterFunctionTemplate) {
+        inputRaster = createClipRasterFunction({
+            serviceUrl,
+            objectId,
+            token,
+            clippingGeometry,
+            rasterFunctionTemplate,
+        });
+    }
 
     return {
         name: 'Remap',
@@ -230,7 +276,7 @@ export const createMaskIndexRasterFunction = ({
             //     thumbnailEx: '',
             //     help: '',
             // },
-            Raster: bandArithmeticRasterFunction,
+            Raster: inputRaster,
             UseTable: {
                 name: 'UseTable',
                 isPublic: false,

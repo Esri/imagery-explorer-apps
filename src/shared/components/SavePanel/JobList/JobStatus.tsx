@@ -15,9 +15,23 @@ export const JobStatus: FC<JobStatusProps> = ({ job }) => {
     const statusLabel = saveJobStatusLabels[job.status];
 
     if (job.status !== PublishAndDownloadJobStatus.Succeeded) {
+        let progress = job.progress || 0;
+
+        // Limit progress to 99% to avoid showing 100% before the job is done
+        // The GP Job will return 100% when it is still processing which might be confusing
+        progress = Math.min(progress, 99);
+
+        // only show progress if the job is executing
+        const progressInfo =
+            job.status === PublishAndDownloadJobStatus.Executing
+                ? `(${progress}%)`
+                : '';
+
         return (
             <div className="">
-                <span>{statusLabel}</span>
+                <span>
+                    {statusLabel} {progressInfo}
+                </span>
             </div>
         );
     }

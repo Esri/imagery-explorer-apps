@@ -97,6 +97,10 @@ export type PublishAndDownloadJob = {
      * error message of the failed job
      */
     errormessage?: string;
+    /**
+     * progress of the job, 0-100
+     */
+    progress?: number;
 };
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';

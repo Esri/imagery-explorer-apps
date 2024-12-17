@@ -27,7 +27,7 @@ import {
     selectMaskLayerPixelValueRange,
     selectSelectedIndex4MaskTool,
 } from '@shared/store/MaskTool/selectors';
-import { SpectralIndex } from '@typing/imagery-service';
+import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 
 import { Geometry } from '@arcgis/core/geometry';
 import {
@@ -47,6 +47,7 @@ import {
 } from '@shared/services/sentinel-1/config';
 import { getSentinel1FeatureByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { useSelectedSentinel1Scene } from '../../hooks/useSelectedSentinel1Scene';
+import { getSentinel1RasterFunctionNameByIndex } from '@shared/services/sentinel-1/helper';
 
 export const Sentinel1SavePanel = () => {
     const dispatch = useDispatch();
@@ -66,9 +67,7 @@ export const Sentinel1SavePanel = () => {
         objectIdOfSelectedSceneInLater,
     ] = useObjectIds4ChangeDetectionTool();
 
-    const spectralIndex = useSelector(
-        selectSelectedIndex4MaskTool
-    ) as SpectralIndex;
+    const radarIndex = useSelector(selectSelectedIndex4MaskTool) as RadarIndex;
 
     const publishSelectedScene = async ({
         job,
@@ -104,19 +103,19 @@ export const Sentinel1SavePanel = () => {
                     token,
                     clippingGeometry,
                 });
+            } else if (
+                job.type === PublishAndDownloadJobType.PublishIndexMask
+            ) {
+                rasterFunction = createMaskIndexRasterFunction({
+                    serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+                    objectId: queryParams4MainScene?.objectIdOfSelectedScene,
+                    token,
+                    rasterFunctionTemplate:
+                        getSentinel1RasterFunctionNameByIndex(radarIndex),
+                    pixelValueRange: selectedRange,
+                    clippingGeometry,
+                });
             }
-            // else if (
-            //     job.type === PublishAndDownloadJobType.PublishIndexMask
-            // ) {
-            //     rasterFunction = createMaskIndexRasterFunction({
-            //         serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-            //         objectId: queryParams4MainScene?.objectIdOfSelectedScene,
-            //         token,
-            //         bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
-            //         pixelValueRange: selectedRange,
-            //         clippingGeometry,
-            //     });
-            // }
             // else if (
             //     job.type === PublishAndDownloadJobType.PublishChangeDetection
             // ) {

@@ -46,6 +46,9 @@ export const useCheckJobStatus = () => {
                 jobWithUpdatedStatus.status = response.jobStatus;
                 // jobWithUpdatedStatus.output = response;
 
+                jobWithUpdatedStatus.progress =
+                    response?.progress?.percent || 0;
+
                 // dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
             } catch (error) {
                 console.error(
