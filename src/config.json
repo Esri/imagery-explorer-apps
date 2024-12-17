@@ -28,7 +28,7 @@
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel1explorer",
             "entrypoint": "/src/sentinel-1-explorer/index.tsx",
-            "appId": ""
+            "appId": "LAWwebsite"
         },
         "sentinel2-explorer": {
             "title": "Esri | Sentinel-2 Explorer",
@@ -38,7 +38,7 @@
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel2explorer",
             "entrypoint": "/src/sentinel-2-explorer/index.tsx",
-            "appId": ""
+            "appId": "LAWwebsite"
         },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",

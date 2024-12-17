@@ -41,8 +41,19 @@ export const SENTINEL_1_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${S
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
  */
-const SENTINEL_1_ORIGINAL_SERVICE_URL =
+const SENTINEL_1_ORIGINAL_SERVICE_URL_PROD =
     'https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer';
+
+const SENTINEL_1_ORIGINAL_SERVICE_URL_DEV =
+    'https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer';
+
+/**
+ * This is the original service URL, which will prompt user to sign in by default as it requires subscription
+ */
+export const SENTINEL_1_ORIGINAL_SERVICE_URL =
+    TIER === 'development'
+        ? SENTINEL_1_ORIGINAL_SERVICE_URL_DEV
+        : SENTINEL_1_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in PROD enviroment

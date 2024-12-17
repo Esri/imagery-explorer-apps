@@ -28,11 +28,18 @@ import { getTimeExtentOfSentinel1Service } from '@shared/services/sentinel-1/get
 import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/config';
 import { Sentinel1DocPanel } from './components/DocPanel';
+import { initEsriOAuth } from '@shared/utils/esri-oauth';
+import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
     try {
+        await initEsriOAuth({
+            appId: appConfig.appId,
+            portalUrl: AGOL_PORTAL_ROOT,
+        });
+
         const store = await getSentinel1ExplorerStore();
 
         const timeExtent = await getTimeExtentOfSentinel1Service();

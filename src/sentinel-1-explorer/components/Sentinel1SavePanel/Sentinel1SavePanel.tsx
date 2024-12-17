@@ -1,9 +1,7 @@
-import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
 import {
     SavePanel,
     SaveJobButtonOnClickParams,
 } from '@shared/components/SavePanel';
-import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import {
     createChangeDetectionRasterFunction,
@@ -30,8 +28,7 @@ import {
     selectSelectedIndex4MaskTool,
 } from '@shared/store/MaskTool/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
-import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
-import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+
 import { Geometry } from '@arcgis/core/geometry';
 import {
     jobUpdated,
@@ -44,11 +41,17 @@ import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createW
 import { selectUserSelectedRangeInChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
 import { useObjectIds4ChangeDetectionTool } from '@shared/components/ChangeCompareLayer/useObjectIds4ChangeDetectionTool';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
+import {
+    SENTINEL_1_ORIGINAL_SERVICE_URL,
+    SENTINEL_1_SERVICE_URL,
+} from '@shared/services/sentinel-1/config';
+import { getSentinel1FeatureByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
+import { useSelectedSentinel1Scene } from '../../hooks/useSelectedSentinel1Scene';
 
-export const LandsatSceneSavePanel = () => {
+export const Sentinel1SavePanel = () => {
     const dispatch = useDispatch();
 
-    const landsatScene = useSelectedLandsatScene();
+    const sentinel1Scene = useSelectedSentinel1Scene();
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
@@ -86,7 +89,7 @@ export const LandsatSceneSavePanel = () => {
         const token = getToken();
 
         try {
-            const feature = await getLandsatFeatureByObjectId(
+            const feature = await getSentinel1FeatureByObjectId(
                 queryParams4MainScene.objectIdOfSelectedScene
             );
 
@@ -96,35 +99,37 @@ export const LandsatSceneSavePanel = () => {
 
             if (job.type === PublishAndDownloadJobType.PublishScene) {
                 rasterFunction = createClipRasterFunction({
-                    serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+                    serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
                     objectId: queryParams4MainScene?.objectIdOfSelectedScene,
                     token,
                     clippingGeometry,
-                });
-            } else if (
-                job.type === PublishAndDownloadJobType.PublishIndexMask
-            ) {
-                rasterFunction = createMaskIndexRasterFunction({
-                    serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                    objectId: queryParams4MainScene?.objectIdOfSelectedScene,
-                    token,
-                    bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
-                    pixelValueRange: selectedRange,
-                    clippingGeometry,
-                });
-            } else if (
-                job.type === PublishAndDownloadJobType.PublishChangeDetection
-            ) {
-                rasterFunction = createChangeDetectionRasterFunction({
-                    serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                    objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
-                    objectId4LaterScene: objectIdOfSelectedSceneInLater,
-                    token,
-                    bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
-                    clippingGeometry,
-                    pixelValueRange: selectedRange4ChangeDetectionTool,
                 });
             }
+            // else if (
+            //     job.type === PublishAndDownloadJobType.PublishIndexMask
+            // ) {
+            //     rasterFunction = createMaskIndexRasterFunction({
+            //         serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+            //         objectId: queryParams4MainScene?.objectIdOfSelectedScene,
+            //         token,
+            //         bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+            //         pixelValueRange: selectedRange,
+            //         clippingGeometry,
+            //     });
+            // }
+            // else if (
+            //     job.type === PublishAndDownloadJobType.PublishChangeDetection
+            // ) {
+            //     rasterFunction = createChangeDetectionRasterFunction({
+            //         serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+            //         objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
+            //         objectId4LaterScene: objectIdOfSelectedSceneInLater,
+            //         token,
+            //         bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+            //         clippingGeometry,
+            //         pixelValueRange: selectedRange4ChangeDetectionTool,
+            //     });
+            // }
 
             const response = await publishSceneAsHostedImageryLayer({
                 title, //'hosted-imagery-service-' + new Date().getTime(),
@@ -168,20 +173,20 @@ export const LandsatSceneSavePanel = () => {
             const res =
                 job.type === PublishAndDownloadJobType.SaveWebMappingApp
                     ? await createWebMappingApplication({
-                          title, // 'Esri Landsat Explorer',
-                          snippet, // 'A web mapping application for Esri Landsat Explorer',
-                          tags: 'Esri Landsat Explorer, Landsat, Landsat-Level-2 Imagery, Remote Sensing',
+                          title,
+                          snippet,
+                          tags: 'Esri Sentinel-1 Explorer, Sentinel-1, Remote Sensing',
                       })
                     : await saveImagerySceneAsWebMap({
-                          title, // `Landsat Scene (${landsatScene.name})`,
-                          snippet, // `Landsat Scene (${landsatScene.name})`,
+                          title,
+                          snippet,
                           tags: [
-                              'Landsat',
-                              'Landsat-Level-2 Imagery',
+                              'Esri Sentinel-1 Explorer',
+                              'Sentinel-1',
                               'Remote Sensing',
                           ],
-                          serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-                          serviceName: 'LandsatLevel2',
+                          serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+                          serviceName: 'Sentinel-1',
                           objectIdOfSelectedScene:
                               queryParams4MainScene?.objectIdOfSelectedScene,
                       });
@@ -218,7 +223,7 @@ export const LandsatSceneSavePanel = () => {
                 jobType: saveJobType,
                 title,
                 summary,
-                sceneId: landsatScene?.name,
+                sceneId: sentinel1Scene?.name,
             })
         );
 
@@ -252,7 +257,7 @@ export const LandsatSceneSavePanel = () => {
 
     return (
         <SavePanel
-            sceneId={landsatScene?.name}
+            sceneId={sentinel1Scene?.name}
             publishOptions={publishOptions}
             downloadOptions={donwloadOptions}
             saveButtonOnClick={saveOptionOnClick}

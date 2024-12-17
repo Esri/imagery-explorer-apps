@@ -51,6 +51,7 @@ import { Sentinel1InterestingPlaces } from '../InterestingPlaces';
 import { Sentinel1DynamicModeInfo } from '../Sentinel1DynamicModeInfo/Sentinel1DynamicModeInfo';
 // import { Sentinel1DocPanel } from '../DocPanel';
 import { useSyncRenderers } from '@shared/hooks/useSyncRenderers';
+import { Sentinel1SavePanel } from '../Sentinel1SavePanel';
 
 export const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -169,6 +170,7 @@ export const Layout = () => {
                     <Sentinel1FunctionSelector />
                 </div>
             </BottomPanel>
+            <Sentinel1SavePanel />
         </>
     );
 };

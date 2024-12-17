@@ -40,6 +40,7 @@ import { useDispatch } from 'react-redux';
 import { Sentinel1MaskLayer } from '../MaskLayer';
 import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootprintLayer';
 import { ZoomToExtent } from '@shared/components/ZoomToExtent';
+import { OpenSavePanelButton } from '@shared/components/OpenSavePanelButton';
 
 export const Map = () => {
     const dispatch = useDispatch();
@@ -78,6 +79,7 @@ export const Map = () => {
                 <ZoomToExtent serviceUrl={SENTINEL_1_SERVICE_URL} />
                 <ScreenshotWidget />
                 <CopyLinkWidget />
+                <OpenSavePanelButton />
             </MapActionButtonsGroup>
 
             <Popup />

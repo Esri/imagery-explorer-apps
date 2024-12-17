@@ -9,7 +9,16 @@ import {
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-export const useSaveOptions = () => {
+/**
+ * Custom hook that provides options for downloading and publishing based on the application mode,
+ * active analysis tool, and query parameters for the main and secondary scenes.
+ *
+ * @returns {Object} An object containing `publishOptions` and `downloadOptions`.
+ *
+ * @property {PublishAndDownloadJobType[]} publishOptions - An array of options for publishing.
+ * @property {PublishAndDownloadJobType[]} downloadOptions - An array of options for downloading.
+ */
+export const useDownloadAndPublishOptions = () => {
     const mode = useSelector(selectAppMode);
 
     const analyzeTool = useSelector(selectActiveAnalysisTool);

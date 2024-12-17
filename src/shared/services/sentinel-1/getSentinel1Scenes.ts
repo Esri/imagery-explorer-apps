@@ -233,6 +233,20 @@ export const getSentinel1Scenes = async ({
 };
 
 /**
+ * Retrieves a Sentinel-1 feature by its object ID.
+ *
+ * @param {number} objectId - The ID of the object to retrieve the feature for.
+ * @returns {Promise<any>} A promise that resolves to the feature object.
+ */
+export const getSentinel1FeatureByObjectId = async (objectId: number) => {
+    const feature = await getFeatureByObjectId(
+        SENTINEL_1_SERVICE_URL,
+        objectId
+    );
+    return feature;
+};
+
+/**
  * Query a feature from Sentinel-1 service using the input object Id,
  * and return the feature as formatted Sentinel Scene.
  * @param objectId The unique identifier of the feature
@@ -247,11 +261,7 @@ export const getSentinel1SceneByObjectId = async (
         return sentinel1SceneByObjectId.get(objectId);
     }
 
-    const feature = await getFeatureByObjectId(
-        SENTINEL_1_SERVICE_URL,
-        objectId,
-        abortController
-    );
+    const feature = await getSentinel1FeatureByObjectId(objectId);
 
     if (!feature) {
         return null;

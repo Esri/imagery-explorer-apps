@@ -5,11 +5,6 @@ import { hasRasterAnalysisPrivileges } from './checkUserRoleAndPrivileges';
 import { updateItem } from '../arcgis-online/updateItem';
 
 type publishImagerySceneParams = {
-    /**
-     * service url of the input imagery service
-     */
-    serviceUrl: string;
-    // /**
     //  * object id of the imagery scene
     //  */
     // objectId: number;
@@ -60,14 +55,13 @@ type PublishImagerySceneResponse = {
  * Publishes the selected imagery scene as a hosted imagery service by submitting a generate raster job.
  *
  * @param {Object} params - The parameters for publishing the imagery scene.
- * - {string} params.serviceUrl - The URL of the imagery service.
  * - {string} params.title - The name of the output imagery service.
  * - {string} params.snippet - The description of the output imagery service.
  * - {any} params.rasterFunction - The raster function to be applied to the imagery scene.
  * @returns {Promise<void>} A promise that resolves when the imagery scene has been published.
  */
 export const publishSceneAsHostedImageryLayer = async ({
-    serviceUrl,
+    // serviceUrl,
     // objectId,
     title,
     snippet,
@@ -77,7 +71,7 @@ export const publishSceneAsHostedImageryLayer = async ({
 
     const user = getSignedInUser();
 
-    if (!serviceUrl || !rasterFunction || !title) {
+    if (!rasterFunction || !title) {
         throw new Error(
             'serviceUrl, objectId, and outputServiceName are required parameters'
         );

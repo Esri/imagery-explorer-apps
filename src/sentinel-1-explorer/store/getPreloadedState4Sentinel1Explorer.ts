@@ -78,6 +78,7 @@ import { InterestingPlaceData } from '@typing/shared';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
+import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
 
 // /**
 //  * Map location info that contains center and zoom info from URL Hash Params
@@ -333,6 +334,9 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         ? getRandomElement(sentinel1InterestingPlaces)
         : null;
 
+    const PublishAndDownloadJobs =
+        await getPreloadedState4PublishAndDownloadJobs();
+
     return {
         Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
         UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
@@ -347,5 +351,6 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         TrendTool: getPreloadedTrendToolState(hashParams),
         MaskTool: getPreloadedMaskToolState(hashParams),
         Sentinel1: getPreloadedSentinel1State(hashParams),
+        PublishAndDownloadJobs,
     } as PartialRootState;
 };
