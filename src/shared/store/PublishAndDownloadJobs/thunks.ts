@@ -17,7 +17,6 @@ import {
     savePublishAndDownloadJob2IndexedDB,
     updatePublishAndDownloadJob2IndexedDB,
 } from '@shared/utils/indexedDB/publishAndDownloadJobs';
-import { de } from 'date-fns/locale';
 
 type CreateNewSaveJobParams = {
     /**
@@ -45,6 +44,10 @@ export const createNewPublishAndDownloadJob =
             title,
             summary,
             status: PublishAndDownloadJobStatus.Submitted,
+            publishToHostedImageryService:
+                jobType === PublishAndDownloadJobType.PublishChangeDetection ||
+                jobType === PublishAndDownloadJobType.PublishIndexMask ||
+                jobType === PublishAndDownloadJobType.PublishScene,
             creator: user?.username || 'anonymous',
             createdAt: timestamp,
             updatedAt: timestamp,

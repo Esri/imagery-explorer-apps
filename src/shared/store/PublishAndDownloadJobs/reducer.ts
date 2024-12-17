@@ -50,6 +50,10 @@ export type PublishAndDownloadJob = {
      */
     type: PublishAndDownloadJobType;
     /**
+     * if true, the job output will be published to the hosted imagery service
+     */
+    publishToHostedImageryService: boolean;
+    /**
      * id of the user who created the job
      */
     creator: string;

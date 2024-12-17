@@ -24,6 +24,10 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
         return job.sceneId || 'No selected scene';
     }, [job]);
 
+    if (job.publishToHostedImageryService && job.outputItemId === undefined) {
+        return <p>Initiating the publish job. Please do not close the tab.</p>;
+    }
+
     return (
         <div>
             <div className="">{jobTypeLabel}</div>
