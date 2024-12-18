@@ -21,6 +21,7 @@ import PixelBlock from '@arcgis/core/layers/support/PixelBlock';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { getLockRasterMosaicRule } from '../ImageryLayer/useImageLayer';
 import { BlendMode } from '@typing/argis-sdk-for-javascript';
+import { max } from 'date-fns';
 
 type Props = {
     mapView?: MapView;

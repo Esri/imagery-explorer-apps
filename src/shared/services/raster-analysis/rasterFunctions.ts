@@ -520,3 +520,356 @@ export const createChangeDetectionRasterFunction = ({
         help: '',
     };
 };
+
+// export const createChangeDetectionRasterFunctionLogDiff= ({
+//     serviceUrl,
+//     objectId4EarlierScene,
+//     objectId4LaterScene,
+//     token,
+//     bandIndexes,
+//     rasterFunctionTemplate,
+//     pixelValueRange,
+//     clippingGeometry,
+// }: {
+//     serviceUrl: string;
+//     objectId4EarlierScene: number;
+//     objectId4LaterScene: number;
+//     token: string;
+//     bandIndexes?: string;
+//     rasterFunctionTemplate?: string;
+//     pixelValueRange: number[];
+//     clippingGeometry: Geometry;
+// }) => {
+//     const inputRasterFunction4EarlierScene =
+//         createClipRasterFunction({
+//             serviceUrl,
+//             objectId: objectId4EarlierScene,
+//             token,
+//             clippingGeometry,
+//             rasterFunctionTemplate,
+//         });
+
+//     const inputRasterRasterFunction4LaterScene =
+//         createClipRasterFunction({
+//             serviceUrl,
+//             objectId: objectId4LaterScene,
+//             token,
+//             clippingGeometry,
+//             rasterFunctionTemplate,
+//         });
+//     return {
+//         name: 'Mask',
+//         description: 'Sets values that you do not want to display.',
+//         function: {
+//             type: 'MaskFunction',
+//             pixelType: 'F32',
+//             name: 'Mask',
+//             description: 'Sets values that you do not want to display.',
+//         },
+//         arguments: {
+//             // Raster: {
+//             //     name: "Raster",
+//             //     isPublic: false,
+//             //     isDataset: true,
+//             //     value: {
+//             //         url: "https://iservicesdev.arcgis.com/LkFyxb9zDq7vAOAm/arcgis/rest/services/Landsat_Change_Detection___LC08_L2SP_040037_20240129_20240207_02_T1/ImageServer?token=9RK8DY0qvaqYcPFrrqGyoc_Hw2w_BiuUfWSbVAwTisP5_rcoZesuFjwM_Y5mRo0ow_UCCbyhr3VWNLAkFpt5n3JHwp3_DjDg4bKF9v3EJi4zJhyjvkob1VEVFD-NIyNJZEk8SoI4nCCMDx9b6w-hj1VyaPDt-rELnZhwLi1LVnji8csySLD4R4H_4pz7LZd98kw6cpvHPHm8GknR4pwfO3r2tMCb1WlNJ0qpw6heJ5NYPBl6Wp6uc8VtLnubP1ZE5gCABFXvwO8qUbaiquw-lsp1qUi_NbuaeSdTJEtBldk3a6bixyq11Y9oFukARZCC",
+//             //         name: "Landsat_Change_Detection___LC08_L2SP_040037_20240129_20240207_02_T1"
+//             //     },
+//             //     type: "RasterFunctionVariable"
+//             // },
+//             Raster: {
+//                 "name": "Log10",
+//                 "description": "Calculates the base 10 logarithm of cells in a raster.",
+//                 "function": {
+//                   "type": "LocalFunction",
+//                   "pixelType": "UNKNOWN",
+//                   "name": "Log10",
+//                   "description": "Calculates the base 10 logarithm of cells in a raster."
+//                 },
+//                 "arguments": {
+//                   "Rasters": {
+//                     "name": "Divide",
+//                     "description": "Divides the values of two rasters on a cell-by-cell basis.",
+//                     "function": {
+//                       "type": "LocalFunction",
+//                       "pixelType": "UNKNOWN",
+//                       "name": "Divide",
+//                       "description": "Divides the values of two rasters on a cell-by-cell basis."
+//                     },
+//                     arguments: {
+//                         Rasters: {
+//                             name: '_Rasters',
+//                             isPublic: false,
+//                             isDataset: false,
+//                             value: {
+//                                 elements: [
+//                                     {
+//                                         name: 'InRaster2',
+//                                         isPublic: false,
+//                                         isDataset: true,
+//                                         value: inputRasterRasterFunction4LaterScene,
+//                                         type: 'RasterFunctionVariable',
+//                                     },
+//                                     {
+//                                         name: 'Raster',
+//                                         isPublic: false,
+//                                         isDataset: true,
+//                                         value: inputRasterFunction4EarlierScene,
+//                                         type: 'RasterFunctionVariable',
+//                                     },
+//                                 ],
+//                                 type: 'ArgumentArray',
+//                             },
+//                             type: 'RasterFunctionVariable',
+//                         },
+//                         "Operation": {
+//                             "name": "Operation",
+//                             "isPublic": false,
+//                             "isDataset": false,
+//                             "value": 23,
+//                             "type": "RasterFunctionVariable"
+//                         },
+//                         "CellsizeType": {
+//                             "name": "CellsizeType",
+//                             "isPublic": false,
+//                             "isDataset": false,
+//                             "value": 2,
+//                             "type": "RasterFunctionVariable"
+//                         },
+//                         "ExtentType": {
+//                             "name": "ExtentType",
+//                             "isPublic": false,
+//                             "isDataset": false,
+//                             "value": 1,
+//                             "type": "RasterFunctionVariable"
+//                         },
+//                         type: 'LocalFunctionArguments',
+//                     },
+//                     functionType: 0,
+//                     thumbnail: '',
+//                     thumbnailEx: '',
+//                     help: '',
+//                 },
+//                   "Operation": {
+//                     "name": "Operation",
+//                     "isPublic": false,
+//                     "isDataset": false,
+//                     "value": 36,
+//                     "type": "RasterFunctionVariable"
+//                   },
+//                   "CellsizeType": {
+//                     "name": "CellsizeType",
+//                     "isPublic": false,
+//                     "isDataset": false,
+//                     "value": 2,
+//                     "type": "RasterFunctionVariable"
+//                   },
+//                   "ExtentType": {
+//                     "name": "ExtentType",
+//                     "isPublic": false,
+//                     "isDataset": false,
+//                     "value": 1,
+//                     "type": "RasterFunctionVariable"
+//                   },
+//                   "type": "LocalFunctionArguments"
+//                 },
+//                 "functionType": 0,
+//                 "thumbnail": "",
+//                 "thumbnailEx": "",
+//                 "help": ""
+//             },
+//             NoDataInterpretation: {
+//                 name: 'NoDataInterpretation',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: 0,
+//                 type: 'RasterFunctionVariable',
+//             },
+//             NoDataValues: {
+//                 name: 'NoDataValues',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: [0],
+//                 type: 'RasterFunctionVariable',
+//             },
+//             IncludedRanges: {
+//                 name: 'IncludedRanges',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: pixelValueRange, //[-2, 2],
+//                 type: 'RasterFunctionVariable',
+//             },
+//             Invert: {
+//                 name: 'Invert',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: false,
+//                 type: 'RasterFunctionVariable',
+//             },
+//             type: 'MaskFunctionArguments',
+//         },
+//         functionType: 0,
+//         thumbnail: '',
+//         thumbnailEx: '',
+//         help: '',
+//     };
+// };
+
+// export const createChangeDetectionRasterFunctionTemp = ({
+//     serviceUrl,
+//     objectId4EarlierScene,
+//     objectId4LaterScene,
+//     token,
+//     bandIndexes,
+//     rasterFunctionTemplate,
+//     pixelValueRange,
+//     clippingGeometry,
+// }: {
+//     serviceUrl: string;
+//     objectId4EarlierScene: number;
+//     objectId4LaterScene: number;
+//     token: string;
+//     bandIndexes?: string;
+//     rasterFunctionTemplate?: string;
+//     pixelValueRange: number[];
+//     clippingGeometry: Geometry;
+// }) => {
+//     const inputRasterFunction4EarlierScene =
+//         createClipRasterFunction({
+//             serviceUrl,
+//             objectId: objectId4EarlierScene,
+//             token,
+//             clippingGeometry,
+//             rasterFunctionTemplate,
+//         });
+
+//     const inputRasterRasterFunction4LaterScene =
+//         createClipRasterFunction({
+//             serviceUrl,
+//             objectId: objectId4LaterScene,
+//             token,
+//             clippingGeometry,
+//             rasterFunctionTemplate,
+//         });
+
+//     return {
+//         name: 'Mask',
+//         description: 'Sets values that you do not want to display.',
+//         function: {
+//             type: 'MaskFunction',
+//             pixelType: 'F32',
+//             name: 'Mask',
+//             description: 'Sets values that you do not want to display.',
+//         },
+//         arguments: {
+//             // Raster: {
+//             //     name: "Raster",
+//             //     isPublic: false,
+//             //     isDataset: true,
+//             //     value: {
+//             //         url: "https://iservicesdev.arcgis.com/LkFyxb9zDq7vAOAm/arcgis/rest/services/Landsat_Change_Detection___LC08_L2SP_040037_20240129_20240207_02_T1/ImageServer?token=9RK8DY0qvaqYcPFrrqGyoc_Hw2w_BiuUfWSbVAwTisP5_rcoZesuFjwM_Y5mRo0ow_UCCbyhr3VWNLAkFpt5n3JHwp3_DjDg4bKF9v3EJi4zJhyjvkob1VEVFD-NIyNJZEk8SoI4nCCMDx9b6w-hj1VyaPDt-rELnZhwLi1LVnji8csySLD4R4H_4pz7LZd98kw6cpvHPHm8GknR4pwfO3r2tMCb1WlNJ0qpw6heJ5NYPBl6Wp6uc8VtLnubP1ZE5gCABFXvwO8qUbaiquw-lsp1qUi_NbuaeSdTJEtBldk3a6bixyq11Y9oFukARZCC",
+//             //         name: "Landsat_Change_Detection___LC08_L2SP_040037_20240129_20240207_02_T1"
+//             //     },
+//             //     type: "RasterFunctionVariable"
+//             // },
+//             Raster: {
+//                 name: 'Minus',
+//                 description:
+//                     'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
+//                 function: {
+//                     type: 'LocalFunction',
+//                     pixelType: 'F32',
+//                     name: 'Minus',
+//                     description:
+//                         'Subtracts the value of the second input raster from the value of the first input raster on a cell-by-cell basis.',
+//                 },
+//                 arguments: {
+//                     Rasters: {
+//                         name: '_Rasters',
+//                         isPublic: false,
+//                         isDataset: false,
+//                         value: {
+//                             elements: [
+//                                 {
+//                                     name: 'InRaster2',
+//                                     isPublic: false,
+//                                     isDataset: true,
+//                                     value: inputRasterRasterFunction4LaterScene,
+//                                     type: 'RasterFunctionVariable',
+//                                 },
+//                                 {
+//                                     name: 'Raster',
+//                                     isPublic: false,
+//                                     isDataset: true,
+//                                     value: inputRasterFunction4EarlierScene,
+//                                     type: 'RasterFunctionVariable',
+//                                 },
+//                             ],
+//                             type: 'ArgumentArray',
+//                         },
+//                         type: 'RasterFunctionVariable',
+//                     },
+//                     Operation: {
+//                         name: 'Operation',
+//                         isPublic: false,
+//                         isDataset: false,
+//                         value: 2,
+//                         type: 'RasterFunctionVariable',
+//                     },
+//                     CellsizeType: {
+//                         name: 'CellsizeType',
+//                         isPublic: false,
+//                         isDataset: false,
+//                         value: 2,
+//                         type: 'RasterFunctionVariable',
+//                     },
+//                     ExtentType: {
+//                         name: 'ExtentType',
+//                         isPublic: false,
+//                         isDataset: false,
+//                         value: 1,
+//                         type: 'RasterFunctionVariable',
+//                     },
+//                     type: 'LocalFunctionArguments',
+//                 },
+//                 functionType: 0,
+//                 thumbnail: '',
+//                 thumbnailEx: '',
+//                 help: '',
+//             },
+//             NoDataInterpretation: {
+//                 name: 'NoDataInterpretation',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: 0,
+//                 type: 'RasterFunctionVariable',
+//             },
+//             NoDataValues: {
+//                 name: 'NoDataValues',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: [0],
+//                 type: 'RasterFunctionVariable',
+//             },
+//             IncludedRanges: {
+//                 name: 'IncludedRanges',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: pixelValueRange, //[-2, 2],
+//                 type: 'RasterFunctionVariable',
+//             },
+//             Invert: {
+//                 name: 'Invert',
+//                 isPublic: false,
+//                 isDataset: false,
+//                 value: false,
+//                 type: 'RasterFunctionVariable',
+//             },
+//             type: 'MaskFunctionArguments',
+//         },
+//         functionType: 0,
+//         thumbnail: '',
+//         thumbnailEx: '',
+//         help: '',
+//     };
+// };

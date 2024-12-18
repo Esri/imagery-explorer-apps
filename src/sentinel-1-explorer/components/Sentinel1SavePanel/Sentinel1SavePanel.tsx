@@ -4,7 +4,6 @@ import {
 } from '@shared/components/SavePanel';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import {
-    createChangeDetectionRasterFunction,
     createClipRasterFunction,
     createMaskIndexRasterFunction,
 } from '@shared/services/raster-analysis/rasterFunctions';
@@ -119,15 +118,27 @@ export const Sentinel1SavePanel = () => {
             // else if (
             //     job.type === PublishAndDownloadJobType.PublishChangeDetection
             // ) {
-            //     rasterFunction = createChangeDetectionRasterFunction({
+            //     rasterFunction = createChangeDetectionRasterFunctionTemp({
             //         serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
             //         objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
             //         objectId4LaterScene: objectIdOfSelectedSceneInLater,
             //         token,
-            //         bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+            //         rasterFunctionTemplate:
+            //             getSentinel1RasterFunctionNameByIndex(radarIndex),
             //         clippingGeometry,
             //         pixelValueRange: selectedRange4ChangeDetectionTool,
             //     });
+
+            //     // rasterFunction = createChangeDetectionRasterFunctionLogDiff({
+            //     //     serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+            //     //     objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
+            //     //     objectId4LaterScene: objectIdOfSelectedSceneInLater,
+            //     //     token,
+            //     //     rasterFunctionTemplate:
+            //     //         'VV Amplitude with Despeckle',
+            //     //     clippingGeometry,
+            //     //     pixelValueRange: selectedRange4ChangeDetectionTool,
+            //     // });
             // }
 
             const response = await publishSceneAsHostedImageryLayer({

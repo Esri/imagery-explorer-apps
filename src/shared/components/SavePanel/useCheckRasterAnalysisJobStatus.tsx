@@ -70,10 +70,10 @@ export const useCheckJobStatus = () => {
                 return;
             }
 
-            console.log(
-                'Checking job status for:',
-                pendingJobs.map((job) => job.rasterAnanlysisJobId).join(',')
-            );
+            // console.log(
+            //     'Checking job status for:',
+            //     pendingJobs.map((job) => job.rasterAnanlysisJobId).join(',')
+            // );
 
             pendingJobs.forEach((job) => {
                 checkJobStatus(job);

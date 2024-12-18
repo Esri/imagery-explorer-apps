@@ -28,5 +28,5 @@ export const useClearRasterAnalysisJobs = () => {
                 dispatch(removePublishAndDownloadJob(job.id));
             }
         }
-    }, [finishedJobs]);
+    }, [finishedJobs.length]);
 };
