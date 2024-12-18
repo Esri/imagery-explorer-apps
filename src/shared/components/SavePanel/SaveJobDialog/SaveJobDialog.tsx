@@ -15,6 +15,8 @@ type SaveJobDialogProps = {
 
 const TEXT_INPUT_STYLE = `w-full bg-transparent border border-custom-light-blue-50 p-2 text-sm outline-none placeholder:text-custom-light-blue-25 focus:border-custom-light-blue`;
 
+const TITLE_MAX_LENGTH = 98;
+
 export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     saveJobType,
     sceneId,
@@ -32,6 +34,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     const [summary, setSummary] = useState<string>(defaultSummary);
 
     const [isTitleAvailable, setIsTitleAvailable] = useState<boolean>(true);
+    const [isTitleTooLong, setIsTitleTooLong] = useState<boolean>(false);
     const [isCheckingTitleAvailability, setIsCheckingTitleAvailability] =
         useState<boolean>(false);
 
@@ -46,6 +49,11 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
             // console.log('calling checkIsServiceNameAvailable', title);
             try {
                 const foramttedTitle = formatHostedImageryServiceName(title);
+
+                if (foramttedTitle.length > TITLE_MAX_LENGTH) {
+                    setIsCheckingTitleAvailability(false);
+                    return;
+                }
 
                 const isAvailable = await checkIsServiceNameAvailable(
                     foramttedTitle
@@ -65,7 +73,8 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
         title === '' ||
         summary === '' ||
         isCheckingTitleAvailability ||
-        isTitleAvailable === false;
+        isTitleAvailable === false ||
+        isTitleTooLong;
 
     useEffect(() => {
         // if the output name does not require unique name, then we can skip this step
@@ -75,6 +84,11 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
 
         checkTitleAvailability(title);
     }, [title, saveOptionInfo.requireUniqueOutputName]);
+
+    useEffect(() => {
+        const foramttedTitle = formatHostedImageryServiceName(title);
+        setIsTitleTooLong(foramttedTitle.length > TITLE_MAX_LENGTH);
+    }, [title]);
 
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-custom-background-90 backdrop-blur-sm z-10 flex justify-center">
@@ -94,21 +108,29 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     ></input>
-                    {isCheckingTitleAvailability && (
-                        <div className="text-sm text-custom-light-blue-50 mt-2 flex items-center">
-                            <calcite-loader active inline></calcite-loader>
-                            <span className="ml-1">
-                                Checking title availability...
-                            </span>
-                        </div>
-                    )}
-                    {isTitleAvailable === false &&
+                    {isTitleTooLong === false &&
+                        isCheckingTitleAvailability && (
+                            <div className="text-sm text-custom-light-blue-50 mt-2 flex items-center">
+                                <calcite-loader active inline></calcite-loader>
+                                <span className="ml-1">
+                                    Checking title availability...
+                                </span>
+                            </div>
+                        )}
+                    {isTitleTooLong === false &&
+                        isTitleAvailable === false &&
                         isCheckingTitleAvailability === false && (
                             <div className="text-sm text-red-500 mt-2">
                                 This name already exists. Please choose a unique
                                 name.
                             </div>
                         )}
+                    {isTitleTooLong && (
+                        <div className="text-sm text-red-500 mt-2">
+                            The title is too long. Please keep it under 98
+                            characters.
+                        </div>
+                    )}
                 </div>
 
                 <div className="mt-4">
