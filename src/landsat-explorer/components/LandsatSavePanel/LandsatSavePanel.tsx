@@ -41,7 +41,10 @@ import {
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
-import { selectUserSelectedRangeInChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
+import {
+    selectSelectedOption4ChangeCompareTool,
+    selectUserSelectedRangeInChangeCompareTool,
+} from '@shared/store/ChangeCompareTool/selectors';
 import { useObjectIds4ChangeDetectionTool } from '@shared/components/ChangeCompareLayer/useObjectIds4ChangeDetectionTool';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 
@@ -63,8 +66,12 @@ export const LandsatSavePanel = () => {
         objectIdOfSelectedSceneInLater,
     ] = useObjectIds4ChangeDetectionTool();
 
-    const spectralIndex = useSelector(
+    const spectralIndex4MaskTool = useSelector(
         selectSelectedIndex4MaskTool
+    ) as SpectralIndex;
+
+    const spectralIndex4ChangeDetection = useSelector(
+        selectSelectedOption4ChangeCompareTool
     ) as SpectralIndex;
 
     const publishSelectedScene = async ({
@@ -108,7 +115,9 @@ export const LandsatSavePanel = () => {
                     serviceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
                     objectId: queryParams4MainScene?.objectIdOfSelectedScene,
                     token,
-                    bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+                    bandIndexes: getBandIndexesBySpectralIndex(
+                        spectralIndex4MaskTool
+                    ),
                     pixelValueRange: selectedRange,
                     clippingGeometry,
                 });
@@ -120,7 +129,9 @@ export const LandsatSavePanel = () => {
                     objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
                     objectId4LaterScene: objectIdOfSelectedSceneInLater,
                     token,
-                    bandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
+                    bandIndexes: getBandIndexesBySpectralIndex(
+                        spectralIndex4ChangeDetection
+                    ),
                     clippingGeometry,
                     pixelValueRange: selectedRange4ChangeDetectionTool,
                 });
@@ -248,13 +259,13 @@ export const LandsatSavePanel = () => {
         }
     };
 
-    const { publishOptions, donwloadOptions } = useDownloadAndPublishOptions();
+    const { publishOptions } = useDownloadAndPublishOptions();
 
     return (
         <SavePanel
             sceneId={landsatScene?.name}
             publishOptions={publishOptions}
-            downloadOptions={donwloadOptions}
+            // downloadOptions={donwloadOptions}
             saveButtonOnClick={saveOptionOnClick}
         />
     );

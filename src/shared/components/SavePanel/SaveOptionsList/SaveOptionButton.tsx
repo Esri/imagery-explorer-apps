@@ -7,6 +7,10 @@ type SaveOptionButtonProps = {
     subtitle: string;
     desciprtion: string;
     disabled: boolean;
+    /**
+     * extra message to show
+     */
+    message?: string;
     onClick: () => void;
 };
 
@@ -17,16 +21,17 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
     title,
     subtitle,
     desciprtion,
+    message,
     disabled,
     onClick,
 }) => {
     return (
-        <div className={classNames(SAVE_OPTION_ROW_CLASS, 'my-6')}>
-            <div
-                className={classNames({
-                    'opacity-25 pointer-events-none': disabled,
-                })}
-            >
+        <div
+            className={classNames(SAVE_OPTION_ROW_CLASS, 'my-6', {
+                'opacity-50 pointer-events-none': disabled,
+            })}
+        >
+            <div>
                 <Button onClickHandler={onClick}>
                     <div className="text-center ">
                         <span className="uppercase">{title}</span>
@@ -36,12 +41,13 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
                 </Button>
             </div>
 
-            <p
-                className=" text-sm"
-                dangerouslySetInnerHTML={{
-                    __html: desciprtion,
-                }}
-            ></p>
+            <div className=" text-sm">
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: message || desciprtion,
+                    }}
+                ></p>
+            </div>
         </div>
     );
 };

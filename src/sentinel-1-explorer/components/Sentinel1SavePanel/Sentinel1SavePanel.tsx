@@ -40,14 +40,14 @@ import { createWebMappingApplication } from '@shared/services/arcgis-online/crea
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
 import { selectUserSelectedRangeInChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
 import { useObjectIds4ChangeDetectionTool } from '@shared/components/ChangeCompareLayer/useObjectIds4ChangeDetectionTool';
-import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 import {
     SENTINEL_1_ORIGINAL_SERVICE_URL,
-    SENTINEL_1_SERVICE_URL,
+    // SENTINEL_1_SERVICE_URL,
 } from '@shared/services/sentinel-1/config';
 import { getSentinel1FeatureByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { useSelectedSentinel1Scene } from '../../hooks/useSelectedSentinel1Scene';
 import { getSentinel1RasterFunctionNameByIndex } from '@shared/services/sentinel-1/helper';
+import { useSentinel1PublishOptions } from './useDownloadAndPublishOptions';
 
 export const Sentinel1SavePanel = () => {
     const dispatch = useDispatch();
@@ -252,13 +252,13 @@ export const Sentinel1SavePanel = () => {
         }
     };
 
-    const { publishOptions, donwloadOptions } = useDownloadAndPublishOptions();
+    const { publishOptions } = useSentinel1PublishOptions();
 
     return (
         <SavePanel
             sceneId={sentinel1Scene?.name}
             publishOptions={publishOptions}
-            downloadOptions={donwloadOptions}
+            // downloadOptions={donwloadOptions}
             saveButtonOnClick={saveOptionOnClick}
         />
     );

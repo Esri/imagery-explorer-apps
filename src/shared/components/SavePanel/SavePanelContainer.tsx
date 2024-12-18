@@ -21,7 +21,7 @@ import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
-import { set } from 'date-fns';
+import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -49,11 +49,11 @@ type SavePanelContainerProps = {
     /**
      * Options for publishing the scene.
      */
-    publishOptions: PublishAndDownloadJobType[];
-    /**
-     * Options for downloading the scene.
-     */
-    downloadOptions: PublishAndDownloadJobType[];
+    publishOptions: PublishAndDownloadJobOptionData[];
+    // /**
+    //  * Options for downloading the scene.
+    //  */
+    // downloadOptions: PublishAndDownloadJobOptionData[];
     /**
      * Emits when a save button is clicked.
      * @param {SaveOption} option - The save button that was clicked.
@@ -65,7 +65,7 @@ type SavePanelContainerProps = {
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     sceneId,
     publishOptions,
-    downloadOptions,
+    // downloadOptions,
     saveButtonOnClick,
 }) => {
     const dispatch = useDispatch();
@@ -122,7 +122,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 <Header sceneId={sceneId} />
 
                 <div className="relative w-full mt-12 mx-auto">
-                    {downloadOptions?.length ? (
+                    {/* {downloadOptions?.length ? (
                         <div>
                             <SaveOptionsListHeader title="Download" />
 
@@ -144,24 +144,27 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                                 );
                             })}
                         </div>
-                    ) : null}
+                    ) : null} */}
 
                     <div>
                         <SaveOptionsListHeader title="Publish" />
 
-                        {publishOptions.map((option) => {
+                        {publishOptions.map((d) => {
+                            const { saveJobType, disabled, message } = d;
+
                             const { inputName, outputName, description } =
-                                saveOptionInfoLookup[option];
+                                saveOptionInfoLookup[saveJobType];
 
                             return (
                                 <SaveOptionButton
-                                    key={option}
+                                    key={saveJobType}
                                     title={inputName}
                                     subtitle={'as ' + outputName}
                                     desciprtion={description}
-                                    disabled={false}
+                                    disabled={disabled}
+                                    message={message}
                                     onClick={() => {
-                                        setActiveSaveJobDialog(option);
+                                        setActiveSaveJobDialog(saveJobType);
                                     }}
                                 />
                             );

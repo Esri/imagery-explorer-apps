@@ -9,6 +9,21 @@ import {
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
+export type PublishAndDownloadJobOptionData = {
+    /**
+     * The type of job to be saved.
+     */
+    saveJobType: PublishAndDownloadJobType;
+    /**
+     * Whether the option is disabled.
+     */
+    disabled?: boolean;
+    /**
+     * The message to be displayed when the option is disabled.
+     */
+    message?: string;
+};
+
 /**
  * Custom hook that provides options for downloading and publishing based on the application mode,
  * active analysis tool, and query parameters for the main and secondary scenes.
@@ -29,7 +44,7 @@ export const useDownloadAndPublishOptions = () => {
         selectQueryParams4SecondaryScene
     );
 
-    const publishOptions: PublishAndDownloadJobType[] = useMemo(() => {
+    const publishOptions: PublishAndDownloadJobOptionData[] = useMemo(() => {
         const output: PublishAndDownloadJobType[] = [
             PublishAndDownloadJobType.SaveWebMappingApp,
         ];
@@ -56,7 +71,11 @@ export const useDownloadAndPublishOptions = () => {
             output.push(PublishAndDownloadJobType.PublishChangeDetection);
         }
 
-        return output;
+        return output.map((jobType) => {
+            return {
+                saveJobType: jobType,
+            };
+        });
     }, [
         queryParams4MainScene?.objectIdOfSelectedScene,
         queryParams4SecondaryScene?.objectIdOfSelectedScene,
