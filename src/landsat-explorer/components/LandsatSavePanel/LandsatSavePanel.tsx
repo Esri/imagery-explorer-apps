@@ -153,6 +153,10 @@ export const LandsatSavePanel = () => {
                 });
             }
 
+            if (!rasterFunction) {
+                throw new Error('Failed to create raster function');
+            }
+
             const response = await publishSceneAsHostedImageryLayer({
                 title, //'hosted-imagery-service-' + new Date().getTime(),
                 snippet,

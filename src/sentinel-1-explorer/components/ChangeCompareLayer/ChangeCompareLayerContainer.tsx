@@ -48,6 +48,7 @@ import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
 import { useDispatch } from 'react-redux';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
+import { useSentinel1RasterFunction4LogDiff } from './useSentinel1RasterFunction4LogDiff';
 
 type Props = {
     mapView?: MapView;
@@ -88,9 +89,11 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
         selectFullPixelValuesRangeInChangeCompareTool
     );
 
-    const polarizationFilter = useSelector(selectPolarizationFilter);
+    // const polarizationFilter = useSelector(selectPolarizationFilter);
 
     const isVisible = useChangeCompareLayerVisibility();
+
+    const rasterFunction4LogDiff = useSentinel1RasterFunction4LogDiff();
 
     const rasterFunction: RasterFunction = useMemo(() => {
         if (!isVisible) {
@@ -115,9 +118,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
 
         if (selectedOption === 'log difference') {
             const rasterFunction: Sentinel1FunctionName =
-                polarizationFilter === 'VV'
-                    ? 'VV Amplitude with Despeckle'
-                    : 'VH Amplitude with Despeckle';
+                rasterFunction4LogDiff;
 
             return log10({
                 raster: divide({
@@ -172,7 +173,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
         selectedOption,
         queryParams4SceneA,
         queryParams4SceneB,
-        polarizationFilter,
+        rasterFunction4LogDiff,
     ]);
 
     useCalculateTotalAreaByPixelsCount({
