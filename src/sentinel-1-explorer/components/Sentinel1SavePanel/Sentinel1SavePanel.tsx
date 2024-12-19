@@ -47,6 +47,7 @@ import { getSentinel1FeatureByObjectId } from '@shared/services/sentinel-1/getSe
 import { useSelectedSentinel1Scene } from '../../hooks/useSelectedSentinel1Scene';
 import { getSentinel1RasterFunctionNameByIndex } from '@shared/services/sentinel-1/helper';
 import { useSentinel1PublishOptions } from './useDownloadAndPublishOptions';
+import { useSentinel1MaskToolFullPixelValueRange } from '../MaskTool/useSentinel1MaskToolFullPixelValueRange';
 
 export const Sentinel1SavePanel = () => {
     const dispatch = useDispatch();
@@ -56,6 +57,9 @@ export const Sentinel1SavePanel = () => {
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
     const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+
+    const maskToolFullPixelValueRange =
+        useSentinel1MaskToolFullPixelValueRange();
 
     const selectedRange4ChangeDetectionTool = useSelector(
         selectUserSelectedRangeInChangeCompareTool
@@ -112,6 +116,7 @@ export const Sentinel1SavePanel = () => {
                     rasterFunctionTemplate:
                         getSentinel1RasterFunctionNameByIndex(radarIndex),
                     pixelValueRange: selectedRange,
+                    fullPixelValueRange: maskToolFullPixelValueRange,
                     clippingGeometry,
                 });
             }

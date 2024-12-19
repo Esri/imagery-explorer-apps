@@ -42,11 +42,13 @@ import {
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
 import {
+    selectFullPixelValuesRangeInChangeCompareTool,
     selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import { useObjectIds4ChangeDetectionTool } from '@shared/components/ChangeCompareLayer/useObjectIds4ChangeDetectionTool';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
+import { useLandsatMaskToolFullPixelValueRange } from '../MaskTool/useLandsatMaskToolFullPixelValueRange';
 
 export const LandsatSavePanel = () => {
     const dispatch = useDispatch();
@@ -57,8 +59,14 @@ export const LandsatSavePanel = () => {
 
     const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
 
+    const maskToolFullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
+
     const selectedRange4ChangeDetectionTool = useSelector(
         selectUserSelectedRangeInChangeCompareTool
+    );
+
+    const changeDetectionToolFullPixelValueRange = useSelector(
+        selectFullPixelValuesRangeInChangeCompareTool
     );
 
     const [
@@ -99,7 +107,7 @@ export const LandsatSavePanel = () => {
 
             const clippingGeometry = feature?.geometry as Geometry;
 
-            // A small clipping geometry for testing - Area close to the south end of the Salton Sea
+            // // A small clipping geometry for testing - Area close to the south end of the Salton Sea
             // const clippingGeometry = new Extent({
             //     xmin: -12907238.254787412, ymin: 3910098.8218691843, xmax: -12849638.051587004, ymax: 3925308.8755267914,
             //     spatialReference: { wkid: 102100 }
@@ -125,6 +133,7 @@ export const LandsatSavePanel = () => {
                         spectralIndex4MaskTool
                     ),
                     pixelValueRange: selectedRange,
+                    fullPixelValueRange: maskToolFullPixelValueRange,
                     clippingGeometry,
                 });
             } else if (
@@ -140,6 +149,7 @@ export const LandsatSavePanel = () => {
                     ),
                     clippingGeometry,
                     pixelValueRange: selectedRange4ChangeDetectionTool,
+                    fullPixelValueRange: changeDetectionToolFullPixelValueRange,
                 });
             }
 

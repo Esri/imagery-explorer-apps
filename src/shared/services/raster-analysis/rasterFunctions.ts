@@ -1,5 +1,48 @@
 import { Geometry } from '@arcgis/core/geometry';
 
+type CreateMaskIndexRasterFunctionParams = {
+    serviceUrl: string;
+    objectId: number;
+    token: string;
+    /**
+     * the pixel value range to be used in the remap function
+     */
+    pixelValueRange: number[];
+    /**
+     * the full pixel value range to be used to ajust the input pixel value range
+     */
+    fullPixelValueRange: number[];
+    /**
+     * the geometry to be used in the clip function
+     */
+    clippingGeometry: Geometry;
+    /**
+     * the band indexes to be used in the band arithmetic function
+     */
+    bandIndexes?: string;
+    /**
+     * the raster function template to be used in the clip function
+     */
+    rasterFunctionTemplate?: string;
+};
+
+type CreateChangeDetectionRasterFunctionParams = {
+    serviceUrl: string;
+    objectId4EarlierScene: number;
+    objectId4LaterScene: number;
+    token: string;
+    /**
+     * the pixel value range to be used in the remap function
+     */
+    pixelValueRange: number[];
+    /**
+     * the full pixel value range to be used to ajust the input pixel value range
+     */
+    fullPixelValueRange: number[];
+    bandIndexes: string;
+    clippingGeometry: Geometry;
+};
+
 /**
  * Creates a raster function to clip a raster based on the provided geometry.
  *
@@ -162,6 +205,38 @@ export const createBandArithmeticRasterFunction = ({
 };
 
 /**
+ * Adjusts the input pixel value range to ensure all pixel values are included in the mask tool.
+ * The output of the Band Arithmetic function may exceed the full pixel value range of the mask tool,
+ * causing some pixels to be masked out. This function modifies the input range by extending
+ * the range limits if they align with the full pixel value range.
+ *
+ * @param {number[]} pixelValueRange - The pixel value range to adjust, specified as [min, max].
+ * @param {number[]} fullPixelValueRange - The full pixel value range supported by the mask tool, specified as [min, max].
+ * @returns {number[]} The adjusted pixel value range as [adjustedMin, adjustedMax].
+ */
+const ajustInputPixelValueRange = (
+    pixelValueRange: number[],
+    fullPixelValueRange: number[]
+) => {
+    let adjustedMin = pixelValueRange[0];
+    let adjustedMax = pixelValueRange[1];
+
+    // Adjust the minimum value if it equals or exceeds the lower limit of the full range.
+    // set min to the smallest possible value for a 32-bit signed integer.
+    if (adjustedMin <= fullPixelValueRange[0]) {
+        adjustedMin = -(2 ** 31);
+    }
+
+    // Adjust the maximum value if it equals or exceeds the upper limit of the full range.
+    // set it to the largest possible value for a 32-bit signed integer.
+    if (adjustedMax >= fullPixelValueRange[1]) {
+        adjustedMax = 2 ** 31 - 1;
+    }
+
+    return [adjustedMin, adjustedMax];
+};
+
+/**
  * Creates a raster function to generate a mask or index using clipping and band arithmetic.
  *
  * @param {Object} params - Parameters for creating the mask/index function.
@@ -177,31 +252,12 @@ export const createMaskIndexRasterFunction = ({
     serviceUrl,
     objectId,
     token,
+    pixelValueRange,
+    fullPixelValueRange,
+    clippingGeometry,
     bandIndexes,
     rasterFunctionTemplate,
-    pixelValueRange,
-    clippingGeometry,
-}: {
-    serviceUrl: string;
-    objectId: number;
-    token: string;
-    /**
-     * the pixel value range to be used in the remap function
-     */
-    pixelValueRange: number[];
-    /**
-     * the geometry to be used in the clip function
-     */
-    clippingGeometry: Geometry;
-    /**
-     * the band indexes to be used in the band arithmetic function
-     */
-    bandIndexes?: string;
-    /**
-     * the raster function template to be used in the clip function
-     */
-    rasterFunctionTemplate?: string;
-}) => {
+}: CreateMaskIndexRasterFunctionParams) => {
     // const bandArithmeticRasterFunction = createBandArithmeticRasterFunction({
     //     serviceUrl,
     //     objectId,
@@ -229,6 +285,11 @@ export const createMaskIndexRasterFunction = ({
             rasterFunctionTemplate,
         });
     }
+
+    const remapInputPixelValueRange = ajustInputPixelValueRange(
+        pixelValueRange,
+        fullPixelValueRange
+    );
 
     return {
         name: 'Remap',
@@ -292,7 +353,7 @@ export const createMaskIndexRasterFunction = ({
                 //     0,
                 //     1
                 // ],
-                value: pixelValueRange,
+                value: remapInputPixelValueRange,
                 type: 'RasterFunctionVariable',
             },
             OutputValues: {
@@ -372,15 +433,7 @@ export const createChangeDetectionRasterFunction = ({
     bandIndexes,
     pixelValueRange,
     clippingGeometry,
-}: {
-    serviceUrl: string;
-    objectId4EarlierScene: number;
-    objectId4LaterScene: number;
-    token: string;
-    bandIndexes: string;
-    pixelValueRange: number[];
-    clippingGeometry: Geometry;
-}) => {
+}: CreateChangeDetectionRasterFunctionParams) => {
     const bandArithmeticRasterFunction4EarlierScene =
         createBandArithmeticRasterFunction({
             serviceUrl,
