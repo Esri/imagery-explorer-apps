@@ -52,6 +52,7 @@ import { useDispatch } from 'react-redux';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
 import { getSentinel1RasterFunctionNameByIndex } from '@shared/services/sentinel-1/helper';
+import { useSentinel1MaskToolFullPixelValueRange } from '../MaskTool/useSentinel1MaskToolFullPixelValueRange';
 
 type Props = {
     mapView?: MapView;
@@ -94,13 +95,15 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
         return true;
     }, [mode, anailysisTool, objectIdOfSelectedScene]);
 
-    const fullPixelValueRange = useMemo(() => {
-        return (
-            Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
-                0, 0,
-            ]
-        );
-    }, [selectedIndex]);
+    // const fullPixelValueRange = useMemo(() => {
+    //     return (
+    //         Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
+    //             0, 0,
+    //         ]
+    //     );
+    // }, [selectedIndex]);
+
+    const fullPixelValueRange = useSentinel1MaskToolFullPixelValueRange();
 
     const selectedPixelValueRange4Band2 = useMemo(() => {
         if (selectedIndex === 'ship' || selectedIndex === 'urban') {

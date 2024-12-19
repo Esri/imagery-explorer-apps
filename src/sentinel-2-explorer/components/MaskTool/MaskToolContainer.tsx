@@ -37,6 +37,7 @@ import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { SpectralIndex } from '@typing/imagery-service';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
+import { useSentinel2MaskToolFullPixelValueRange } from './useSentinel2MaskToolFullPixelValueRange';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -53,6 +54,8 @@ export const MaskToolContainer = () => {
     const shouldBeDisabled = useMemo(() => {
         return !objectIdOfSelectedScene;
     }, [objectIdOfSelectedScene]);
+
+    const fullPixelValueRange = useSentinel2MaskToolFullPixelValueRange();
 
     if (tool !== 'mask') {
         return null;
@@ -104,8 +107,8 @@ export const MaskToolContainer = () => {
 
                         <PixelRangeSlider
                             values={maskOptions.selectedRange}
-                            min={-1}
-                            max={1}
+                            min={fullPixelValueRange[0]}
+                            max={fullPixelValueRange[1]}
                             valuesOnChange={(values) => {
                                 dispatch(updateMaskLayerSelectedRange(values));
                             }}

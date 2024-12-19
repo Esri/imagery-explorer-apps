@@ -45,6 +45,7 @@ import {
     SENTINEL1_SHIP_AND_URBAN_INDEX_PIXEL_RANGE,
 } from '@shared/services/sentinel-1/config';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
+import { useSentinel1MaskToolFullPixelValueRange } from './useSentinel1MaskToolFullPixelValueRange';
 
 export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
     water: SENTINEL1_WATER_INDEX_PIXEL_RANGE,
@@ -71,13 +72,15 @@ export const Sentinel1MaskTool = () => {
         return !objectIdOfSelectedScene;
     }, [objectIdOfSelectedScene]);
 
-    const fullPixelValueRange = useMemo(() => {
-        return (
-            Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
-                0, 0,
-            ]
-        );
-    }, [selectedIndex]);
+    // const fullPixelValueRange = useMemo(() => {
+    //     return (
+    //         Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
+    //             0, 0,
+    //         ]
+    //     );
+    // }, [selectedIndex]);
+
+    const fullPixelValueRange = useSentinel1MaskToolFullPixelValueRange();
 
     const countOfTicks = useMemo(() => {
         // use 5 ticks if water index is selected

@@ -32,7 +32,7 @@ import {
 import { SpectralIndex } from '@typing/imagery-service';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
-import { Geometry } from '@arcgis/core/geometry';
+import { Extent, Geometry } from '@arcgis/core/geometry';
 import {
     jobUpdated,
     PublishAndDownloadJob,
@@ -98,6 +98,12 @@ export const LandsatSavePanel = () => {
             );
 
             const clippingGeometry = feature?.geometry as Geometry;
+
+            // A small clipping geometry for testing - Area close to the south end of the Salton Sea
+            // const clippingGeometry = new Extent({
+            //     xmin: -12907238.254787412, ymin: 3910098.8218691843, xmax: -12849638.051587004, ymax: 3925308.8755267914,
+            //     spatialReference: { wkid: 102100 }
+            // })
 
             let rasterFunction: any = null;
 

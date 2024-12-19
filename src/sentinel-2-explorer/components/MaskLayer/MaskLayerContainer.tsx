@@ -40,6 +40,7 @@ import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { getBandIndexesBySpectralIndex } from '@shared/services/sentinel-2/helpers';
 import { useMaskLayerVisibility } from '@shared/components/MaskLayer/useMaskLayerVisibility';
+import { useSentinel2MaskToolFullPixelValueRange } from '../MaskTool/useSentinel2MaskToolFullPixelValueRange';
 
 type Props = {
     mapView?: MapView;
@@ -81,9 +82,11 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         });
     }, [spectralIndex]);
 
-    const fullPixelValueRange = useMemo(() => {
-        return [-1, 1];
-    }, [spectralIndex]);
+    // const fullPixelValueRange = useMemo(() => {
+    //     return [-1, 1];
+    // }, [spectralIndex]);
+
+    const fullPixelValueRange = useSentinel2MaskToolFullPixelValueRange();
 
     useCalculateTotalAreaByPixelsCount({
         objectId: objectIdOfSelectedScene,

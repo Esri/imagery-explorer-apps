@@ -32,7 +32,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
-    selectQueryParams4MainScene,
+    // selectQueryParams4MainScene,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
@@ -44,6 +44,7 @@ import {
     SurfaceTempFarhenheitPixelRangeSlider,
 } from './SurfaceTempPixelRangeSlider';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
+import { useLandsatMaskToolFullPixelValueRange } from './useLandsatMaskToolFullPixelValueRange';
 
 export const MaskToolContainer = () => {
     const dispatch = useDispatch();
@@ -57,11 +58,13 @@ export const MaskToolContainer = () => {
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    // const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
     const shouldBeDisabled = useMemo(() => {
         return !objectIdOfSelectedScene;
     }, [objectIdOfSelectedScene]);
+
+    const fullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
 
     // useEffect(() => {
     //     if (!queryParams4MainScene?.rasterFunctionName) {
@@ -144,8 +147,8 @@ export const MaskToolContainer = () => {
                                 'temperature farhenheit' && (
                                 <PixelRangeSlider
                                     values={maskOptions.selectedRange}
-                                    min={-1}
-                                    max={1}
+                                    min={fullPixelValueRange[0]}
+                                    max={fullPixelValueRange[1]}
                                     valuesOnChange={(values) => {
                                         dispatch(
                                             updateMaskLayerSelectedRange(values)

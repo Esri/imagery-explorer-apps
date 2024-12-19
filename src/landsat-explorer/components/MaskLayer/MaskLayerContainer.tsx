@@ -36,15 +36,16 @@ import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import {
     LANDSAT_LEVEL_2_SERVICE_URL,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    // LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    // LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    // LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    // LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
 import { useDispatch } from 'react-redux';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useMaskLayerVisibility } from '@shared/components/MaskLayer/useMaskLayerVisibility';
+import { useLandsatMaskToolFullPixelValueRange } from '../MaskTool/useLandsatMaskToolFullPixelValueRange';
 
 type Props = {
     mapView?: MapView;
@@ -92,23 +93,25 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
         return getRasterFunctionBySpectralIndex(spectralIndex);
     }, [spectralIndex]);
 
-    const fullPixelValueRange = useMemo(() => {
-        if (spectralIndex === 'temperature celcius') {
-            return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-            ];
-        }
+    // const fullPixelValueRange = useMemo(() => {
+    //     if (spectralIndex === 'temperature celcius') {
+    //         return [
+    //             LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    //             LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    //         ];
+    //     }
 
-        if (spectralIndex === 'temperature farhenheit') {
-            return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-            ];
-        }
+    //     if (spectralIndex === 'temperature farhenheit') {
+    //         return [
+    //             LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    //             LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    //         ];
+    //     }
 
-        return [-1, 1];
-    }, [spectralIndex]);
+    //     return [-1, 1];
+    // }, [spectralIndex]);
+
+    const fullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
 
     useCalculateTotalAreaByPixelsCount({
         objectId: objectIdOfSelectedScene,
