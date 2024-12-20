@@ -15,6 +15,11 @@
 
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 
+type GetFeatureByObjectIdOptions = {
+    abortController?: AbortController;
+    token?: string;
+};
+
 /**
  * Query Imagery Service to get a feature by ObjectID
  * @param serviceUrl URL of the Imagery Service
@@ -24,7 +29,7 @@ import { IFeature } from '@esri/arcgis-rest-feature-service';
 export const getFeatureByObjectId = async (
     serviceUrl: string,
     objectId: number,
-    abortController?: AbortController
+    options?: GetFeatureByObjectIdOptions
 ): Promise<IFeature> => {
     const queryParams = new URLSearchParams({
         f: 'json',
@@ -32,6 +37,12 @@ export const getFeatureByObjectId = async (
         objectIds: objectId.toString(),
         outFields: '*',
     });
+
+    if (options?.token) {
+        queryParams.set('token', options.token);
+    }
+
+    const abortController = options?.abortController;
 
     const res = await fetch(`${serviceUrl}/query?${queryParams.toString()}`, {
         signal: abortController?.signal,
