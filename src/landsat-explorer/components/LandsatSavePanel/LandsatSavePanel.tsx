@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
 import { SavePanel } from '@shared/components/SavePanel';
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
@@ -11,6 +11,14 @@ import { getToken } from '@shared/utils/esri-oauth';
 import { usePublishSceneRasterFunction } from '@shared/components/SavePanel/usePublishSceneRasterFunction';
 import { usePublishMaskIndexRasterFunction } from '@shared/components/SavePanel/usePublishMaskIndexRasterFunction';
 import { usePublishChangeDetectionRasterFunction } from '@shared/components/SavePanel/usePublishChangeDetectionRasterFunction';
+import { useLandsatMaskToolFullPixelValueRange } from '../MaskTool/useLandsatMaskToolFullPixelValueRange';
+import {
+    selectMaskLayerPixelValueRange,
+    selectSelectedIndex4MaskTool,
+} from '@shared/store/MaskTool/selectors';
+import { SpectralIndex } from '@typing/imagery-service';
+import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import { selectSelectedOption4ChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
 
 const TAGS = [
     'Esri Landsat Explorer',
@@ -29,6 +37,28 @@ export const LandsatSavePanel = () => {
     const [clippingGeometry, setClippingGeometry] = useState<Geometry | null>(
         null
     );
+
+    const maskToolFullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
+
+    const spectralIndex4MaskTool = useSelector(
+        selectSelectedIndex4MaskTool
+    ) as SpectralIndex;
+
+    const maskToolBandIndexes = useMemo(() => {
+        if (!spectralIndex4MaskTool) {
+            return null;
+        }
+
+        return getBandIndexesBySpectralIndex(spectralIndex4MaskTool);
+    }, [spectralIndex4MaskTool]);
+
+    const spectralIndex4ChangeDetection = useSelector(
+        selectSelectedOption4ChangeCompareTool
+    ) as SpectralIndex;
+
+    const changeDetectionToolBandIndexes = useMemo(() => {
+        return getBandIndexesBySpectralIndex(spectralIndex4ChangeDetection);
+    }, [spectralIndex4ChangeDetection]);
 
     const token = getToken();
 
@@ -61,6 +91,8 @@ export const LandsatSavePanel = () => {
     const publishIndexMaskRasterFunction = usePublishMaskIndexRasterFunction({
         originalServiceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
         clippingGeometry,
+        fullPixelValueRange: maskToolFullPixelValueRange,
+        bandIndexes: maskToolBandIndexes,
         token,
     });
 
@@ -68,6 +100,7 @@ export const LandsatSavePanel = () => {
         usePublishChangeDetectionRasterFunction({
             originalServiceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
             clippingGeometry,
+            bandIndexes: changeDetectionToolBandIndexes,
             token,
         });
 

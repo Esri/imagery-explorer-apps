@@ -1,43 +1,28 @@
-import {
-    createChangeDetectionRasterFunction,
-    createClipRasterFunction,
-    createMaskIndexRasterFunction,
-} from '@shared/services/raster-analysis/rasterFunctions';
-import {
-    selectQueryParams4MainScene,
-    // selectQueryParams4SceneInSelectedMode,
-    // selectQueryParams4SecondaryScene,
-} from '@shared/store/ImageryScene/selectors';
-import { getToken } from '@shared/utils/esri-oauth';
+import { createChangeDetectionRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-    selectMaskLayerPixelValueRange,
-    selectSelectedIndex4MaskTool,
-} from '@shared/store/MaskTool/selectors';
-import { SpectralIndex } from '@typing/imagery-service';
-import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
-import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { Extent, Geometry } from '@arcgis/core/geometry';
 import {
     selectFullPixelValuesRangeInChangeCompareTool,
-    selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import { useObjectIds4ChangeDetectionTool } from '@shared/components/ChangeCompareLayer/useObjectIds4ChangeDetectionTool';
 
-import { useLandsatMaskToolFullPixelValueRange } from '../../../landsat-explorer/components/MaskTool/useLandsatMaskToolFullPixelValueRange';
-import { RasterFunctionsByPublishJobType } from '@shared/components/SavePanel/SavePanelContainer';
-
 type Props = {
     originalServiceUrl: string;
     clippingGeometry: Geometry;
+    bandIndexes?: string;
+    rasterFunctionName?: string;
+    logDiff?: boolean;
     token: string;
 };
 
 export const usePublishChangeDetectionRasterFunction = ({
     originalServiceUrl,
     clippingGeometry,
+    bandIndexes,
+    rasterFunctionName,
+    logDiff,
     token,
 }: Props) => {
     const changeDetectionToolFullPixelValueRange = useSelector(
@@ -53,10 +38,6 @@ export const usePublishChangeDetectionRasterFunction = ({
         objectIdOfSelectedSceneInLater,
     ] = useObjectIds4ChangeDetectionTool();
 
-    const spectralIndex4ChangeDetection = useSelector(
-        selectSelectedOption4ChangeCompareTool
-    ) as SpectralIndex;
-
     const rasterFunction = useMemo(() => {
         if (
             !objectIdOfSelectedSceneInEarlierDate ||
@@ -68,15 +49,15 @@ export const usePublishChangeDetectionRasterFunction = ({
 
         return createChangeDetectionRasterFunction({
             serviceUrl: originalServiceUrl,
+            token,
             objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
             objectId4LaterScene: objectIdOfSelectedSceneInLater,
-            token,
-            bandIndexes: getBandIndexesBySpectralIndex(
-                spectralIndex4ChangeDetection
-            ),
+            bandIndexes,
+            rasterFunctionTemplate: rasterFunctionName,
             clippingGeometry,
             pixelValueRange: selectedRange4ChangeDetectionTool,
             fullPixelValueRange: changeDetectionToolFullPixelValueRange,
+            logDiff,
         });
     }, [
         clippingGeometry,
@@ -84,7 +65,9 @@ export const usePublishChangeDetectionRasterFunction = ({
         objectIdOfSelectedSceneInLater,
         changeDetectionToolFullPixelValueRange,
         selectedRange4ChangeDetectionTool,
-        spectralIndex4ChangeDetection,
+        bandIndexes,
+        rasterFunctionName,
+        logDiff,
     ]);
 
     return rasterFunction;

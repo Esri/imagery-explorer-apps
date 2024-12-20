@@ -1,42 +1,30 @@
 import { createMaskIndexRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
-import {
-    selectQueryParams4MainScene,
-    // selectQueryParams4SceneInSelectedMode,
-    // selectQueryParams4SecondaryScene,
-} from '@shared/store/ImageryScene/selectors';
-
+import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-    selectMaskLayerPixelValueRange,
-    selectSelectedIndex4MaskTool,
-} from '@shared/store/MaskTool/selectors';
-import { SpectralIndex } from '@typing/imagery-service';
-import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import { selectMaskLayerPixelValueRange } from '@shared/store/MaskTool/selectors';
 import { Extent, Geometry } from '@arcgis/core/geometry';
-
-import { useLandsatMaskToolFullPixelValueRange } from '../../../landsat-explorer/components/MaskTool/useLandsatMaskToolFullPixelValueRange';
 
 type Props = {
     originalServiceUrl: string;
     clippingGeometry: Geometry;
+    fullPixelValueRange: number[];
+    bandIndexes?: string;
+    rasterFunctionName?: string;
     token: string;
 };
 
 export const usePublishMaskIndexRasterFunction = ({
     originalServiceUrl,
     clippingGeometry,
+    fullPixelValueRange,
+    bandIndexes,
+    rasterFunctionName,
     token,
 }: Props) => {
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
     const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
-
-    const maskToolFullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
-
-    const spectralIndex4MaskTool = useSelector(
-        selectSelectedIndex4MaskTool
-    ) as SpectralIndex;
 
     const rasterFunction = useMemo(() => {
         if (
@@ -51,17 +39,19 @@ export const usePublishMaskIndexRasterFunction = ({
             serviceUrl: originalServiceUrl,
             objectId: queryParams4MainScene?.objectIdOfSelectedScene,
             token,
-            bandIndexes: getBandIndexesBySpectralIndex(spectralIndex4MaskTool),
+            bandIndexes, //getBandIndexesBySpectralIndex(spectralIndex4MaskTool),
+            rasterFunctionTemplate: rasterFunctionName,
             pixelValueRange: selectedRange,
-            fullPixelValueRange: maskToolFullPixelValueRange,
+            fullPixelValueRange,
             clippingGeometry,
         });
     }, [
         clippingGeometry,
         queryParams4MainScene?.objectIdOfSelectedScene,
-        spectralIndex4MaskTool,
+        rasterFunctionName,
+        bandIndexes,
         selectedRange,
-        maskToolFullPixelValueRange,
+        fullPixelValueRange,
     ]);
 
     return rasterFunction;

@@ -1,11 +1,11 @@
 import {
     SavePanel,
-    SaveJobButtonOnClickParams,
+    // SaveJobButtonOnClickParams,
 } from '@shared/components/SavePanel';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import {
-    createClipRasterFunction,
-    createMaskIndexRasterFunction,
+    // createClipRasterFunction,
+    // createMaskIndexRasterFunction,
     createChangeDetectionRasterFunction,
     // createChangeDetectionRasterFunctionLogDiff
 } from '@shared/services/raster-analysis/rasterFunctions';
@@ -19,26 +19,26 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 // import { useSaveOptions } from './useSaveOptions';
-import {
-    createNewPublishAndDownloadJob,
-    updatePublishAndDownloadJob,
-} from '@shared/store/PublishAndDownloadJobs/thunks';
+// import {
+//     createNewPublishAndDownloadJob,
+//     updatePublishAndDownloadJob,
+// } from '@shared/store/PublishAndDownloadJobs/thunks';
 
 import {
-    selectMaskLayerPixelValueRange,
+    // selectMaskLayerPixelValueRange,
     selectSelectedIndex4MaskTool,
 } from '@shared/store/MaskTool/selectors';
 import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 
 import { Extent, Geometry } from '@arcgis/core/geometry';
-import {
-    jobUpdated,
-    PublishAndDownloadJob,
-    PublishAndDownloadJobStatus,
-    PublishAndDownloadJobType,
-} from '@shared/store/PublishAndDownloadJobs/reducer';
-import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
-import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
+// import {
+//     jobUpdated,
+//     PublishAndDownloadJob,
+//     PublishAndDownloadJobStatus,
+//     PublishAndDownloadJobType,
+// } from '@shared/store/PublishAndDownloadJobs/reducer';
+// import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
+// import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
 import {
     selectFullPixelValuesRangeInChangeCompareTool,
     selectSelectedOption4ChangeCompareTool,
@@ -58,28 +58,14 @@ import { ChangeCompareToolOption4Sentinel1 } from '../ChangeCompareTool/ChangeCo
 import { useSentinel1RasterFunction4LogDiff } from '../ChangeCompareLayer/useSentinel1RasterFunction4LogDiff';
 import { usePublishSceneRasterFunction } from '@shared/components/SavePanel/usePublishSceneRasterFunction';
 import { usePublishMaskIndexRasterFunction } from '@shared/components/SavePanel/usePublishMaskIndexRasterFunction';
+import { usePublishChangeDetectionRasterFunction } from '@shared/components/SavePanel/usePublishChangeDetectionRasterFunction';
 
 const TAGS = ['Esri Sentinel-1 Explorer', 'Sentinel-1', 'Remote Sensing'];
 
 export const Sentinel1SavePanel = () => {
-    const dispatch = useDispatch();
-
     const sentinel1Scene = useSelectedSentinel1Scene();
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
-
-    const selectedRange4ChangeDetectionTool = useSelector(
-        selectUserSelectedRangeInChangeCompareTool
-    );
-
-    const fullPixelValueRange = useSelector(
-        selectFullPixelValuesRangeInChangeCompareTool
-    );
-
-    const [
-        objectIdOfSelectedSceneInEarlierDate,
-        objectIdOfSelectedSceneInLater,
-    ] = useObjectIds4ChangeDetectionTool();
 
     const selectedOption4ChangeDetectionTool: ChangeCompareToolOption4Sentinel1 =
         useSelector(
@@ -87,6 +73,32 @@ export const Sentinel1SavePanel = () => {
         ) as ChangeCompareToolOption4Sentinel1;
 
     const rasterFunction4LogDiff = useSentinel1RasterFunction4LogDiff();
+
+    const rasterFunctionName4ChangeDetection = useMemo(() => {
+        const rasterFunctionTemplate =
+            selectedOption4ChangeDetectionTool === 'log difference'
+                ? rasterFunction4LogDiff
+                : getSentinel1RasterFunctionNameByIndex(
+                      selectedOption4ChangeDetectionTool
+                  );
+
+        return rasterFunctionTemplate;
+    }, [selectedOption4ChangeDetectionTool, rasterFunction4LogDiff]);
+
+    const maskToolFullPixelValueRange =
+        useSentinel1MaskToolFullPixelValueRange();
+
+    const maskToolRadarIndex = useSelector(
+        selectSelectedIndex4MaskTool
+    ) as RadarIndex;
+
+    const maskToolRaserFunctionName = useMemo(() => {
+        if (!maskToolRadarIndex) {
+            return null;
+        }
+
+        return getSentinel1RasterFunctionNameByIndex(maskToolRadarIndex);
+    }, [maskToolRadarIndex]);
 
     // const publishSelectedScene = async ({
     //     job,
@@ -238,37 +250,19 @@ export const Sentinel1SavePanel = () => {
     const publishIndexMaskRasterFunction = usePublishMaskIndexRasterFunction({
         originalServiceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
         clippingGeometry,
+        fullPixelValueRange: maskToolFullPixelValueRange,
+        rasterFunctionName: maskToolRaserFunctionName,
         token,
     });
 
-    const publishChangeDetectionRasterFunction = useMemo(() => {
-        const rasterFunctionTemplate =
-            selectedOption4ChangeDetectionTool === 'log difference'
-                ? rasterFunction4LogDiff
-                : getSentinel1RasterFunctionNameByIndex(
-                      selectedOption4ChangeDetectionTool
-                  );
-
-        return createChangeDetectionRasterFunction({
-            serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-            objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
-            objectId4LaterScene: objectIdOfSelectedSceneInLater,
-            token,
-            rasterFunctionTemplate,
+    const publishChangeDetectionRasterFunction =
+        usePublishChangeDetectionRasterFunction({
+            originalServiceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
             clippingGeometry,
-            pixelValueRange: selectedRange4ChangeDetectionTool,
-            fullPixelValueRange,
+            rasterFunctionName: rasterFunctionName4ChangeDetection,
             logDiff: selectedOption4ChangeDetectionTool === 'log difference',
+            token,
         });
-    }, [
-        clippingGeometry,
-        selectedOption4ChangeDetectionTool,
-        rasterFunction4LogDiff,
-        objectIdOfSelectedSceneInEarlierDate,
-        objectIdOfSelectedSceneInLater,
-        selectedRange4ChangeDetectionTool,
-        fullPixelValueRange,
-    ]);
 
     return (
         <SavePanel
