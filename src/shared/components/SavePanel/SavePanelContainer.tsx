@@ -4,16 +4,10 @@ import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions'
 import { SaveJobButtonOnClickParams } from '@shared/components/SavePanel';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import {
-    createChangeDetectionRasterFunction,
-    createClipRasterFunction,
-    createMaskIndexRasterFunction,
-} from '@shared/services/raster-analysis/rasterFunctions';
-import {
     selectQueryParams4MainScene,
     // selectQueryParams4SceneInSelectedMode,
     // selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { getToken } from '@shared/utils/esri-oauth';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 // import { useSaveOptions } from './useSaveOptions';
@@ -22,14 +16,6 @@ import {
     updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 
-import {
-    selectMaskLayerPixelValueRange,
-    selectSelectedIndex4MaskTool,
-} from '@shared/store/MaskTool/selectors';
-import { SpectralIndex } from '@typing/imagery-service';
-import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
-import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
-import { Extent, Geometry } from '@arcgis/core/geometry';
 import {
     jobUpdated,
     PublishAndDownloadJob,
