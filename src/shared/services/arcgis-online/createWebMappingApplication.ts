@@ -4,7 +4,7 @@ import { addItem, AddItemResponse } from './addItem';
 type CreateWebMappingApplicationOptions = {
     title: string;
     snippet: string;
-    tags?: string;
+    tags?: string[];
 };
 
 export const createWebMappingApplication = async ({
@@ -23,7 +23,7 @@ export const createWebMappingApplication = async ({
         url: window.location.href,
         title,
         snippet,
-        tags,
+        tags: tags?.join(',') || '',
     });
 
     const res = await addItem(requestBody);

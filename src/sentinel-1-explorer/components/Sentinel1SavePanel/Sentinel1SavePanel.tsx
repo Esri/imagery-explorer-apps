@@ -40,6 +40,7 @@ import {
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
 import {
+    selectFullPixelValuesRangeInChangeCompareTool,
     selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
@@ -55,6 +56,10 @@ import { useSentinel1PublishOptions } from './useDownloadAndPublishOptions';
 import { useSentinel1MaskToolFullPixelValueRange } from '../MaskTool/useSentinel1MaskToolFullPixelValueRange';
 import { ChangeCompareToolOption4Sentinel1 } from '../ChangeCompareTool/ChangeCompareToolContainer';
 import { useSentinel1RasterFunction4LogDiff } from '../ChangeCompareLayer/useSentinel1RasterFunction4LogDiff';
+import { usePublishSceneRasterFunction } from '@shared/components/SavePanel/usePublishSceneRasterFunction';
+import { usePublishMaskIndexRasterFunction } from '@shared/components/SavePanel/usePublishMaskIndexRasterFunction';
+
+const TAGS = ['Esri Sentinel-1 Explorer', 'Sentinel-1', 'Remote Sensing'];
 
 export const Sentinel1SavePanel = () => {
     const dispatch = useDispatch();
@@ -63,21 +68,18 @@ export const Sentinel1SavePanel = () => {
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
-    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
-
-    const maskToolFullPixelValueRange =
-        useSentinel1MaskToolFullPixelValueRange();
-
     const selectedRange4ChangeDetectionTool = useSelector(
         selectUserSelectedRangeInChangeCompareTool
+    );
+
+    const fullPixelValueRange = useSelector(
+        selectFullPixelValuesRangeInChangeCompareTool
     );
 
     const [
         objectIdOfSelectedSceneInEarlierDate,
         objectIdOfSelectedSceneInLater,
     ] = useObjectIds4ChangeDetectionTool();
-
-    const radarIndex = useSelector(selectSelectedIndex4MaskTool) as RadarIndex;
 
     const selectedOption4ChangeDetectionTool: ChangeCompareToolOption4Sentinel1 =
         useSelector(
@@ -86,244 +88,200 @@ export const Sentinel1SavePanel = () => {
 
     const rasterFunction4LogDiff = useSentinel1RasterFunction4LogDiff();
 
-    const publishSelectedScene = async ({
-        job,
-        title,
-        snippet,
-    }: {
-        job: PublishAndDownloadJob;
-        title: string;
-        snippet: string;
-    }) => {
-        if (
-            !queryParams4MainScene ||
-            !queryParams4MainScene?.objectIdOfSelectedScene
-        ) {
-            return;
-        }
+    // const publishSelectedScene = async ({
+    //     job,
+    //     title,
+    //     snippet,
+    // }: {
+    //     job: PublishAndDownloadJob;
+    //     title: string;
+    //     snippet: string;
+    // }) => {
+    //     if (
+    //         !queryParams4MainScene ||
+    //         !queryParams4MainScene?.objectIdOfSelectedScene
+    //     ) {
+    //         return;
+    //     }
 
-        const token = getToken();
+    //     const token = getToken();
 
-        try {
+    //     try {
+    //         const feature = await getSentinel1FeatureByObjectId(
+    //             queryParams4MainScene.objectIdOfSelectedScene
+    //         );
+
+    //         const clippingGeometry = feature?.geometry as Geometry;
+
+    //         // // A small clipping geometry for testing - Area close to the south end of the Salton Sea
+    //         // const clippingGeometry = new Extent({
+    //         //     xmin: -12907238.254787412,
+    //         //     ymin: 3910098.8218691843,
+    //         //     xmax: -12849638.051587004,
+    //         //     ymax: 3925308.8755267914,
+    //         //     spatialReference: { wkid: 102100 }
+    //         // })
+
+    //         let rasterFunction: any = null;
+
+    //         if (job.type === PublishAndDownloadJobType.PublishScene) {
+    //             rasterFunction = createClipRasterFunction({
+    //                 serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+    //                 objectId: queryParams4MainScene?.objectIdOfSelectedScene,
+    //                 token,
+    //                 clippingGeometry,
+    //             });
+    //         } else if (
+    //             job.type === PublishAndDownloadJobType.PublishIndexMask
+    //         ) {
+    //             rasterFunction = createMaskIndexRasterFunction({
+    //                 serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+    //                 objectId: queryParams4MainScene?.objectIdOfSelectedScene,
+    //                 token,
+    //                 rasterFunctionTemplate:
+    //                     getSentinel1RasterFunctionNameByIndex(radarIndex),
+    //                 pixelValueRange: selectedRange,
+    //                 fullPixelValueRange: maskToolFullPixelValueRange,
+    //                 clippingGeometry,
+    //             });
+    //         } else if (
+    //             job.type === PublishAndDownloadJobType.PublishChangeDetection
+    //         ) {
+    //             const rasterFunctionTemplate =
+    //                 selectedOption4ChangeDetectionTool === 'log difference'
+    //                     ? rasterFunction4LogDiff
+    //                     : getSentinel1RasterFunctionNameByIndex(
+    //                           selectedOption4ChangeDetectionTool
+    //                       );
+
+    //             rasterFunction = createChangeDetectionRasterFunction({
+    //                 serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+    //                 objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
+    //                 objectId4LaterScene: objectIdOfSelectedSceneInLater,
+    //                 token,
+    //                 rasterFunctionTemplate,
+    //                 clippingGeometry,
+    //                 pixelValueRange: selectedRange4ChangeDetectionTool,
+    //                 fullPixelValueRange: maskToolFullPixelValueRange,
+    //                 logDiff:
+    //                     selectedOption4ChangeDetectionTool === 'log difference',
+    //             });
+    //         }
+
+    //         if (!rasterFunction) {
+    //             throw new Error('Failed to create raster function');
+    //         }
+
+    //         const response = await publishSceneAsHostedImageryLayer({
+    //             title, //'hosted-imagery-service-' + new Date().getTime(),
+    //             snippet,
+    //             rasterFunction,
+    //         });
+    //         // console.log('Generate Raster Job submitted', response);
+
+    //         dispatch(
+    //             updatePublishAndDownloadJob({
+    //                 ...job,
+    //                 rasterAnanlysisJobId: response.rasterAnalysisJobId,
+    //                 rasterAnalysisTaskName: 'GenerateRaster',
+    //                 outputURL: response.outputServiceUrl,
+    //                 outputItemId: response.outputItemId,
+    //             })
+    //         );
+    //     } catch (err) {
+    //         dispatch(
+    //             updatePublishAndDownloadJob({
+    //                 ...job,
+    //                 status: PublishAndDownloadJobStatus.Failed,
+    //                 errormessage: `Failed to publish scene: ${
+    //                     err.message || 'unknown error'
+    //                 }`,
+    //             })
+    //         );
+    //     }
+    // };
+
+    const { publishOptions } = useSentinel1PublishOptions();
+
+    const [clippingGeometry, setClippingGeometry] = useState<Geometry | null>(
+        null
+    );
+
+    const token = getToken();
+
+    useEffect(() => {
+        (async () => {
+            if (
+                !queryParams4MainScene ||
+                !queryParams4MainScene?.objectIdOfSelectedScene
+            ) {
+                setClippingGeometry(null);
+                return;
+            }
+
             const feature = await getSentinel1FeatureByObjectId(
                 queryParams4MainScene.objectIdOfSelectedScene
             );
 
             const clippingGeometry = feature?.geometry as Geometry;
 
-            // // A small clipping geometry for testing - Area close to the south end of the Salton Sea
-            // const clippingGeometry = new Extent({
-            //     xmin: -12907238.254787412,
-            //     ymin: 3910098.8218691843,
-            //     xmax: -12849638.051587004,
-            //     ymax: 3925308.8755267914,
-            //     spatialReference: { wkid: 102100 }
-            // })
+            setClippingGeometry(clippingGeometry);
+        })();
+    }, [queryParams4MainScene]);
 
-            let rasterFunction: any = null;
+    const publishSceneRasterFunction = usePublishSceneRasterFunction({
+        originalServiceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+        clippingGeometry,
+        token,
+    });
 
-            if (job.type === PublishAndDownloadJobType.PublishScene) {
-                rasterFunction = createClipRasterFunction({
-                    serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-                    objectId: queryParams4MainScene?.objectIdOfSelectedScene,
-                    token,
-                    clippingGeometry,
-                });
-            } else if (
-                job.type === PublishAndDownloadJobType.PublishIndexMask
-            ) {
-                rasterFunction = createMaskIndexRasterFunction({
-                    serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-                    objectId: queryParams4MainScene?.objectIdOfSelectedScene,
-                    token,
-                    rasterFunctionTemplate:
-                        getSentinel1RasterFunctionNameByIndex(radarIndex),
-                    pixelValueRange: selectedRange,
-                    fullPixelValueRange: maskToolFullPixelValueRange,
-                    clippingGeometry,
-                });
-            } else if (
-                job.type === PublishAndDownloadJobType.PublishChangeDetection
-            ) {
-                const rasterFunctionTemplate =
-                    selectedOption4ChangeDetectionTool === 'log difference'
-                        ? rasterFunction4LogDiff
-                        : getSentinel1RasterFunctionNameByIndex(
-                              selectedOption4ChangeDetectionTool
-                          );
+    const publishIndexMaskRasterFunction = usePublishMaskIndexRasterFunction({
+        originalServiceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+        clippingGeometry,
+        token,
+    });
 
-                rasterFunction = createChangeDetectionRasterFunction({
-                    serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-                    objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
-                    objectId4LaterScene: objectIdOfSelectedSceneInLater,
-                    token,
-                    rasterFunctionTemplate,
-                    clippingGeometry,
-                    pixelValueRange: selectedRange4ChangeDetectionTool,
-                    fullPixelValueRange: maskToolFullPixelValueRange,
-                    logDiff:
-                        selectedOption4ChangeDetectionTool === 'log difference',
-                });
+    const publishChangeDetectionRasterFunction = useMemo(() => {
+        const rasterFunctionTemplate =
+            selectedOption4ChangeDetectionTool === 'log difference'
+                ? rasterFunction4LogDiff
+                : getSentinel1RasterFunctionNameByIndex(
+                      selectedOption4ChangeDetectionTool
+                  );
 
-                // rasterFunction = createChangeDetectionRasterFunctionTemp({
-                //     serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-                //     objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
-                //     objectId4LaterScene: objectIdOfSelectedSceneInLater,
-                //     token,
-                //     rasterFunctionTemplate:
-                //         getSentinel1RasterFunctionNameByIndex(radarIndex),
-                //     clippingGeometry,
-                //     pixelValueRange: selectedRange4ChangeDetectionTool,
-                //     fullPixelValueRange: maskToolFullPixelValueRange,
-                // });
-
-                // rasterFunction = createChangeDetectionRasterFunction({
-                //     serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-                //     objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
-                //     objectId4LaterScene: objectIdOfSelectedSceneInLater,
-                //     token,
-                //     rasterFunctionTemplate:
-                //         'VV Amplitude with Despeckle',
-                //     clippingGeometry,
-                //     pixelValueRange: selectedRange4ChangeDetectionTool,
-                //     fullPixelValueRange: maskToolFullPixelValueRange,
-                // });
-            }
-
-            if (!rasterFunction) {
-                throw new Error('Failed to create raster function');
-            }
-
-            const response = await publishSceneAsHostedImageryLayer({
-                title, //'hosted-imagery-service-' + new Date().getTime(),
-                snippet,
-                rasterFunction,
-            });
-            // console.log('Generate Raster Job submitted', response);
-
-            dispatch(
-                updatePublishAndDownloadJob({
-                    ...job,
-                    rasterAnanlysisJobId: response.rasterAnalysisJobId,
-                    rasterAnalysisTaskName: 'GenerateRaster',
-                    outputURL: response.outputServiceUrl,
-                    outputItemId: response.outputItemId,
-                })
-            );
-        } catch (err) {
-            dispatch(
-                updatePublishAndDownloadJob({
-                    ...job,
-                    status: PublishAndDownloadJobStatus.Failed,
-                    errormessage: `Failed to publish scene: ${
-                        err.message || 'unknown error'
-                    }`,
-                })
-            );
-        }
-    };
-
-    const createNewItemInArcGISOnline = async ({
-        job,
-        title,
-        snippet,
-    }: {
-        job: PublishAndDownloadJob;
-        title: string;
-        snippet: string;
-    }) => {
-        try {
-            const res =
-                job.type === PublishAndDownloadJobType.SaveWebMappingApp
-                    ? await createWebMappingApplication({
-                          title,
-                          snippet,
-                          tags: 'Esri Sentinel-1 Explorer, Sentinel-1, Remote Sensing',
-                      })
-                    : await saveImagerySceneAsWebMap({
-                          title,
-                          snippet,
-                          tags: [
-                              'Esri Sentinel-1 Explorer',
-                              'Sentinel-1',
-                              'Remote Sensing',
-                          ],
-                          serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
-                          serviceName: 'Sentinel-1',
-                          objectIdOfSelectedScene:
-                              queryParams4MainScene?.objectIdOfSelectedScene,
-                      });
-
-            dispatch(
-                updatePublishAndDownloadJob({
-                    ...job,
-                    status: PublishAndDownloadJobStatus.Succeeded,
-                    outputItemId: res.id,
-                })
-            );
-        } catch (err) {
-            dispatch(
-                updatePublishAndDownloadJob({
-                    ...job,
-                    status: PublishAndDownloadJobStatus.Failed,
-                    errormessage: `Failed to create ArcGIS Online item: ${
-                        err.message || 'unknown error'
-                    }`,
-                })
-            );
-        }
-    };
-
-    const saveOptionOnClick = async ({
-        saveJobType,
-        title,
-        summary,
-    }: SaveJobButtonOnClickParams) => {
-        // console.log('saveOptionOnClick', option);
-
-        const job = await dispatch(
-            createNewPublishAndDownloadJob({
-                jobType: saveJobType,
-                title,
-                summary,
-                sceneId: sentinel1Scene?.name,
-            })
-        );
-
-        if (
-            saveJobType === PublishAndDownloadJobType.PublishScene ||
-            saveJobType === PublishAndDownloadJobType.PublishIndexMask ||
-            saveJobType === PublishAndDownloadJobType.PublishChangeDetection
-        ) {
-            publishSelectedScene({
-                job,
-                title, //`hosted-imagery-service-${new Date().getTime()}`,
-                snippet: summary, //'Hosted Imagery Service created from Esri Landsat Explorer App',
-            });
-            return;
-        }
-
-        if (
-            saveJobType === PublishAndDownloadJobType.SaveWebMappingApp ||
-            saveJobType === PublishAndDownloadJobType.SaveWebMap
-        ) {
-            createNewItemInArcGISOnline({
-                job,
-                title, //`Landsat Scene (${landsatScene.name})`,
-                snippet: summary, //`Landsat Scene (${landsatScene.name})`,
-            });
-            return;
-        }
-    };
-
-    const { publishOptions } = useSentinel1PublishOptions();
+        return createChangeDetectionRasterFunction({
+            serviceUrl: SENTINEL_1_ORIGINAL_SERVICE_URL,
+            objectId4EarlierScene: objectIdOfSelectedSceneInEarlierDate,
+            objectId4LaterScene: objectIdOfSelectedSceneInLater,
+            token,
+            rasterFunctionTemplate,
+            clippingGeometry,
+            pixelValueRange: selectedRange4ChangeDetectionTool,
+            fullPixelValueRange,
+            logDiff: selectedOption4ChangeDetectionTool === 'log difference',
+        });
+    }, [
+        clippingGeometry,
+        selectedOption4ChangeDetectionTool,
+        rasterFunction4LogDiff,
+        objectIdOfSelectedSceneInEarlierDate,
+        objectIdOfSelectedSceneInLater,
+        selectedRange4ChangeDetectionTool,
+        fullPixelValueRange,
+    ]);
 
     return (
         <SavePanel
+            originalServiceUrl={SENTINEL_1_ORIGINAL_SERVICE_URL}
             sceneId={sentinel1Scene?.name}
             publishOptions={publishOptions}
-            // downloadOptions={donwloadOptions}
-            saveButtonOnClick={saveOptionOnClick}
+            serviceName={'Sentinel-1'}
+            tags={TAGS}
+            publishSceneRasterFunction={publishSceneRasterFunction}
+            publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}
+            publishChangeDetectionRasterFunction={
+                publishChangeDetectionRasterFunction
+            }
         />
     );
 };

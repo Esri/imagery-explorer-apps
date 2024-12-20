@@ -100,6 +100,10 @@ export const createClipRasterFunction = ({
      */
     rasterFunctionTemplate?: string;
 }) => {
+    if (!clippingGeometry || !objectId) {
+        return null;
+    }
+
     const inputRaster = {
         url: `${serviceUrl}?token=${token}`,
         name: '', //'LandsatC2L2',
@@ -190,7 +194,7 @@ export const createBandArithmeticRasterFunction = ({
     bandIndexes: string;
     clippingGeometry: Geometry;
 }) => {
-    if (!bandIndexes) {
+    if (!bandIndexes || !clippingGeometry || !objectId) {
         return null;
     }
 
@@ -298,6 +302,10 @@ export const createMaskIndexRasterFunction = ({
     //     bandIndexes,
     //     clippingGeometry,
     // });
+
+    if (!clippingGeometry || !objectId) {
+        return null;
+    }
 
     let inputRaster = null;
 
@@ -492,6 +500,10 @@ export const createChangeDetectionRasterFunction = ({
     rasterFunctionTemplate,
     logDiff,
 }: CreateChangeDetectionRasterFunctionParams) => {
+    if (!clippingGeometry || !objectId4EarlierScene || !objectId4LaterScene) {
+        return null;
+    }
+
     const rasterFunction4EarlierScene = rasterFunctionTemplate
         ? createClipRasterFunction({
               serviceUrl,

@@ -1,196 +1,252 @@
-import React, { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectShowSavePanel } from '@shared/store/UI/selectors';
-import { CloseButton } from '../CloseButton';
-import { showSavePanelToggled } from '@shared/store/UI/reducer';
-import {
-    destroyCredentials,
-    isAnonymouns,
-    signIn,
-    signOut,
-} from '@shared/utils/esri-oauth';
-// import { CreateHostedImageryLayer } from './CreateHostedImageryLayer/CreateHostedImageryLayer';
-import { JobList } from './JobList';
-import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
-import { Header } from './SavePanelHeader/Header';
-import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
-import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
-import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
-import { saveOptionInfoLookup } from './constants';
-import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
-import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
-import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
-import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
+import React, { FC } from 'react';
+import { SavePanel } from './SavePanel';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
+import { SaveJobButtonOnClickParams } from '@shared/components/SavePanel';
+import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
+import {
+    createChangeDetectionRasterFunction,
+    createClipRasterFunction,
+    createMaskIndexRasterFunction,
+} from '@shared/services/raster-analysis/rasterFunctions';
+import {
+    selectQueryParams4MainScene,
+    // selectQueryParams4SceneInSelectedMode,
+    // selectQueryParams4SecondaryScene,
+} from '@shared/store/ImageryScene/selectors';
+import { getToken } from '@shared/utils/esri-oauth';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+// import { useSaveOptions } from './useSaveOptions';
+import {
+    createNewPublishAndDownloadJob,
+    updatePublishAndDownloadJob,
+} from '@shared/store/PublishAndDownloadJobs/thunks';
 
-export type SaveJobButtonOnClickParams = {
-    /**
-     * The type of job to be saved.
-     */
-    saveJobType: PublishAndDownloadJobType;
-    /**
-     * The title of the job.
-     */
-    title: string;
-    /**
-     * The summary of the job.
-     */
-    summary: string;
-};
+import {
+    selectMaskLayerPixelValueRange,
+    selectSelectedIndex4MaskTool,
+} from '@shared/store/MaskTool/selectors';
+import { SpectralIndex } from '@typing/imagery-service';
+import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
+import { getLandsatFeatureByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { Extent, Geometry } from '@arcgis/core/geometry';
+import {
+    jobUpdated,
+    PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
+    PublishAndDownloadJobType,
+} from '@shared/store/PublishAndDownloadJobs/reducer';
+import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
+import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
+
+type PublishJob =
+    | PublishAndDownloadJobType.PublishChangeDetection
+    | PublishAndDownloadJobType.PublishIndexMask
+    | PublishAndDownloadJobType.PublishScene;
 
 /**
- * Props for the SavePanelContainer component.
+ * Raster functions for the publish jobs.
  */
-type SavePanelContainerProps = {
+export type RasterFunctionsByPublishJobType = Record<PublishJob, any>;
+
+export type SavePanelContainerProps = {
     /**
-     * ID of the scene to be used for generating and downloading the raster job.
+     * The URL of the original imagery service.
+     */
+    originalServiceUrl: string;
+    /**
+     * name of the service
+     * @example 'LandsatLevel2'
+     */
+    serviceName: string;
+    /**
+     * The ID of the scene to be saved.
      */
     sceneId: string;
     /**
      * Options for publishing the scene.
      */
     publishOptions: PublishAndDownloadJobOptionData[];
-    // /**
-    //  * Options for downloading the scene.
-    //  */
-    // downloadOptions: PublishAndDownloadJobOptionData[];
     /**
-     * Emits when a save button is clicked.
-     * @param {SaveOption} option - The save button that was clicked.
-     * @returns {void}
+     * Tags to be added to the item in ArcGIS Online.
      */
-    saveButtonOnClick: (params: SaveJobButtonOnClickParams) => void;
+    tags: string[];
+    /**
+     * Raster function for publishing the scene.
+     */
+    publishSceneRasterFunction?: any;
+    /**
+     * Raster function for publishing the index mask.
+     */
+    publishIndexMaskRasterFunction?: any;
+    /**
+     * Raster function for publishing the change detection.
+     */
+    publishChangeDetectionRasterFunction?: any;
 };
 
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
+    originalServiceUrl,
+    serviceName,
     sceneId,
     publishOptions,
-    // downloadOptions,
-    saveButtonOnClick,
+    tags,
+    publishSceneRasterFunction,
+    publishIndexMaskRasterFunction,
+    publishChangeDetectionRasterFunction,
 }) => {
     const dispatch = useDispatch();
 
-    const shouldShowSavePanel = useSelector(selectShowSavePanel);
+    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
-    const [activeSaveJobDialog, setActiveSaveJobDialog] =
-        useState<PublishAndDownloadJobType>();
+    const publishSelectedScene = async ({
+        job,
+        title,
+        snippet,
+    }: {
+        job: PublishAndDownloadJob;
+        title: string;
+        snippet: string;
+    }) => {
+        try {
+            const rasterFunctions: RasterFunctionsByPublishJobType = {
+                [PublishAndDownloadJobType.PublishScene]:
+                    publishSceneRasterFunction,
+                [PublishAndDownloadJobType.PublishIndexMask]:
+                    publishIndexMaskRasterFunction,
+                [PublishAndDownloadJobType.PublishChangeDetection]:
+                    publishChangeDetectionRasterFunction,
+            };
 
-    // Custom hook that checks the status of pending raster analysis jobs.
-    useCheckJobStatus();
+            const rasterFunction = rasterFunctions[job.type as PublishJob];
 
-    // Custom hook that clears finished raster analysis jobs.
-    useClearRasterAnalysisJobs();
+            if (!rasterFunction) {
+                throw new Error('Failed to create raster function');
+            }
 
-    useEffect(() => {
-        setOpenSavePanelInSessionStorage(shouldShowSavePanel);
+            const response = await publishSceneAsHostedImageryLayer({
+                title, //'hosted-imagery-service-' + new Date().getTime(),
+                snippet,
+                rasterFunction,
+            });
+            // console.log('Generate Raster Job submitted', response);
 
-        if (!shouldShowSavePanel) {
+            dispatch(
+                updatePublishAndDownloadJob({
+                    ...job,
+                    rasterAnanlysisJobId: response.rasterAnalysisJobId,
+                    rasterAnalysisTaskName: 'GenerateRaster',
+                    outputURL: response.outputServiceUrl,
+                    outputItemId: response.outputItemId,
+                })
+            );
+        } catch (err) {
+            dispatch(
+                updatePublishAndDownloadJob({
+                    ...job,
+                    status: PublishAndDownloadJobStatus.Failed,
+                    errormessage: `Failed to publish scene: ${
+                        err.message || 'unknown error'
+                    }`,
+                })
+            );
+        }
+    };
+
+    const createNewItemInArcGISOnline = async ({
+        job,
+        title,
+        snippet,
+    }: {
+        job: PublishAndDownloadJob;
+        title: string;
+        snippet: string;
+    }) => {
+        try {
+            const res =
+                job.type === PublishAndDownloadJobType.SaveWebMappingApp
+                    ? await createWebMappingApplication({
+                          title,
+                          snippet,
+                          tags, //'Esri Landsat Explorer, Landsat, Landsat-Level-2 Imagery, Remote Sensing',
+                      })
+                    : await saveImagerySceneAsWebMap({
+                          title, // `Landsat Scene (${landsatScene.name})`,
+                          snippet, // `Landsat Scene (${landsatScene.name})`,
+                          tags,
+                          serviceUrl: originalServiceUrl,
+                          serviceName, //'LandsatLevel2',
+                          objectIdOfSelectedScene:
+                              queryParams4MainScene?.objectIdOfSelectedScene,
+                      });
+
+            dispatch(
+                updatePublishAndDownloadJob({
+                    ...job,
+                    status: PublishAndDownloadJobStatus.Succeeded,
+                    outputItemId: res.id,
+                })
+            );
+        } catch (err) {
+            dispatch(
+                updatePublishAndDownloadJob({
+                    ...job,
+                    status: PublishAndDownloadJobStatus.Failed,
+                    errormessage: `Failed to create ArcGIS Online item: ${
+                        err.message || 'unknown error'
+                    }`,
+                })
+            );
+        }
+    };
+
+    const saveButtonOnClickHandler = async ({
+        saveJobType,
+        title,
+        summary,
+    }: SaveJobButtonOnClickParams) => {
+        // console.log('saveOptionOnClick', option);
+
+        const job = await dispatch(
+            createNewPublishAndDownloadJob({
+                jobType: saveJobType,
+                title,
+                summary,
+                sceneId,
+            })
+        );
+
+        if (
+            saveJobType === PublishAndDownloadJobType.PublishScene ||
+            saveJobType === PublishAndDownloadJobType.PublishIndexMask ||
+            saveJobType === PublishAndDownloadJobType.PublishChangeDetection
+        ) {
+            publishSelectedScene({
+                job,
+                title,
+                snippet: summary,
+            });
             return;
         }
 
-        if (isAnonymouns()) {
-            signIn();
+        if (
+            saveJobType === PublishAndDownloadJobType.SaveWebMappingApp ||
+            saveJobType === PublishAndDownloadJobType.SaveWebMap
+        ) {
+            createNewItemInArcGISOnline({
+                job,
+                title,
+                snippet: summary,
+            });
+            return;
         }
-    }, [shouldShowSavePanel]);
-
-    if (!shouldShowSavePanel) {
-        return null;
-    }
+    };
 
     return (
-        <div className="absolute top-0 left-0 bottom-0 right-0 bg-custom-background-95 z-20 text-custom-light-blue overflow-y-auto fancy-scrollbar">
-            <CloseButton
-                onClick={() => {
-                    dispatch(showSavePanelToggled());
-                }}
-            />
-
-            <SignedUserHeader
-                onSignOut={() => {
-                    // console.log('sign out');
-                    // hide the save panel before signing out so that the user is not redirected to the sign-in page
-                    setOpenSavePanelInSessionStorage(false);
-                    signOut();
-                }}
-                onSwitchAccount={() => {
-                    // sign out and the user will be redirected to the sign-in page
-                    signOut();
-                }}
-            />
-
-            <div className="mt-16 md:mt-4 mx-4 md:mx-auto py-12 md:max-w-3xl w-full">
-                <Header sceneId={sceneId} />
-
-                <div className="relative w-full mt-12 mx-auto">
-                    {/* {downloadOptions?.length ? (
-                        <div>
-                            <SaveOptionsListHeader title="Download" />
-
-                            {downloadOptions.map((option) => {
-                                const { inputName, outputName, description } =
-                                    saveOptionInfoLookup[option];
-
-                                return (
-                                    <SaveOptionButton
-                                        key={option}
-                                        title={inputName}
-                                        subtitle={'as ' + outputName}
-                                        desciprtion={description}
-                                        disabled={false}
-                                        onClick={() => {
-                                            setActiveSaveJobDialog(option);
-                                        }}
-                                    />
-                                );
-                            })}
-                        </div>
-                    ) : null} */}
-
-                    <div>
-                        <SaveOptionsListHeader title="Publish" />
-
-                        {publishOptions.map((d) => {
-                            const { saveJobType, disabled, message } = d;
-
-                            const { inputName, outputName, description } =
-                                saveOptionInfoLookup[saveJobType];
-
-                            return (
-                                <SaveOptionButton
-                                    key={saveJobType}
-                                    title={inputName}
-                                    subtitle={'as ' + outputName}
-                                    desciprtion={description}
-                                    disabled={disabled}
-                                    message={message}
-                                    onClick={() => {
-                                        setActiveSaveJobDialog(saveJobType);
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
-
-                <JobList />
-            </div>
-
-            {activeSaveJobDialog ? (
-                <SaveJobDialog
-                    saveJobType={activeSaveJobDialog}
-                    sceneId={sceneId}
-                    closeButtonOnClick={() => setActiveSaveJobDialog(undefined)}
-                    saveButtonOnClick={(title, summary) => {
-                        // console.log(title, summary);
-                        saveButtonOnClick({
-                            saveJobType: activeSaveJobDialog,
-                            title,
-                            summary,
-                        });
-                        setActiveSaveJobDialog(undefined);
-                    }}
-                />
-            ) : null}
-        </div>
+        <SavePanel
+            sceneId={sceneId}
+            publishOptions={publishOptions}
+            saveButtonOnClick={saveButtonOnClickHandler}
+        />
     );
 };
