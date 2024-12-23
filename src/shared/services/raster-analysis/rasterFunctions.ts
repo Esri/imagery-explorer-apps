@@ -126,7 +126,7 @@ export const createClipRasterFunction = ({
             'Sets the extent of a raster using coordinates or another dataset.',
         function: {
             type: 'ClipFunction',
-            pixelType: 'F32',
+            pixelType: 'UNKNOWN',
             name: 'Clip',
             description:
                 'Sets the extent of a raster using coordinates or another dataset.',
