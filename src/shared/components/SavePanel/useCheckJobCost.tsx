@@ -1,5 +1,11 @@
-import { PublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/reducer';
+import { getEstimateRasterAnalysisCost } from '@shared/services/raster-analysis/checkEstimatedCost';
+import {
+    PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
+    PublishAndDownloadJobType,
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import { selectRasterAnalysisJobsPendingCheckingCost } from '@shared/store/PublishAndDownloadJobs/selectors';
+import { updatePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -36,17 +42,23 @@ export const useCheckJobCost = () => {
             // jobWithUpdatedStatus.progress =
             //     response?.progress?.percent || 0;
             // dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
+
+            const res = await getEstimateRasterAnalysisCost(job.rasterFunction);
+
+            if (res.succeeded) {
+                jobWithUpdatedStatus.actualCost = res.credits;
+                jobWithUpdatedStatus.status = PublishAndDownloadJobStatus.New;
+            }
         } catch (error) {
-            // console.error(
-            //     `Error checking status for job ${job.rasterAnanlysisJobId}:`,
-            //     error
-            // );
-            // jobWithUpdatedStatus.status =
-            //     PublishAndDownloadJobStatus.Failed;
-            // jobWithUpdatedStatus.errormessage = error.message;
+            console.error(
+                `Error checking cost for job ${job.rasterAnanlysisJobId}:`,
+                error
+            );
+            jobWithUpdatedStatus.status = PublishAndDownloadJobStatus.Failed;
+            jobWithUpdatedStatus.errormessage = error.message;
         }
 
-        // dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
+        dispatch(updatePublishAndDownloadJob(jobWithUpdatedStatus));
     };
 
     useEffect(() => {

@@ -17,6 +17,12 @@ export type RasterAnalysisJobOutput = {
         message: string;
         percent: number;
     };
+    outCost?: {
+        paramUrl?: string;
+    };
 };
 
-export type RasterAnalysisTaskName = 'GenerateRaster' | 'DownloadRaster';
+export type RasterAnalysisTaskName =
+    | 'GenerateRaster'
+    | 'DownloadRaster'
+    | 'EstimateRasterAnalysisCost';
