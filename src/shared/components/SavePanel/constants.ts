@@ -88,6 +88,10 @@ export const saveOptionInfoLookup: Record<
 
 export const saveJobStatusLabels: Record<PublishAndDownloadJobStatus, string> =
     {
+        [PublishAndDownloadJobStatus.PendingCheckingCost]: 'Checking cost',
+        [PublishAndDownloadJobStatus.CheckingCost]: 'Checking cost',
+        [PublishAndDownloadJobStatus.PendingUserApprovalForActualCost]:
+            'Pending User Approval',
         [PublishAndDownloadJobStatus.Cancelled]: 'Cancelled',
         [PublishAndDownloadJobStatus.Cancelling]: 'Cancelled',
         [PublishAndDownloadJobStatus.Executing]: 'In Progress',

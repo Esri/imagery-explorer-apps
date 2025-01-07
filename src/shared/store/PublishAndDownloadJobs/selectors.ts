@@ -8,6 +8,23 @@ export const selectAllSaveJobs = createSelector(
     (byId, allIds) => allIds.map((id) => byId[id])
 );
 
+export const selectRasterAnalysisJobsPendingCheckingCost = createSelector(
+    (state: RootState) => state.PublishAndDownloadJobs.jobs.byId,
+    (state: RootState) => state.PublishAndDownloadJobs.jobs.allIds,
+    (byId, allIds) => {
+        const allJobs = allIds.map((id) => byId[id]);
+
+        return allJobs.filter((job) => {
+            const status = job.status;
+
+            return (
+                job.publishToHostedImageryService === true &&
+                status === PublishAndDownloadJobStatus.PendingCheckingCost
+            );
+        });
+    }
+);
+
 export const selectPendingRasterAnalysisJobs = createSelector(
     (state: RootState) => state.PublishAndDownloadJobs.jobs.byId,
     (state: RootState) => state.PublishAndDownloadJobs.jobs.allIds,
