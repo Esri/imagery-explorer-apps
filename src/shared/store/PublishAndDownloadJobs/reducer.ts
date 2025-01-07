@@ -20,6 +20,9 @@ export enum PublishAndDownloadJobType {
 }
 
 export enum PublishAndDownloadJobStatus {
+    PendingCheckingCost = 'pendingCheckingCost',
+    CheckingCost = 'checkingCost',
+    PendingUserApprovalForActualCost = 'pendingUserApprovalForActualCost',
     Submitted = 'esriJobSubmitted',
     New = 'esriJobNew',
     Waiting = 'esriJobWaiting',
@@ -101,6 +104,18 @@ export type PublishAndDownloadJob = {
      * progress of the job, 0-100
      */
     progress?: number;
+    /**
+     * estimated cost of the raster analysis job
+     */
+    estimatedCost?: number;
+    /**
+     * actual cost of the raster analysis job
+     */
+    actualCost?: number;
+    /**
+     * raster function of the raster analysis job
+     */
+    rasterFunction?: any;
 };
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';

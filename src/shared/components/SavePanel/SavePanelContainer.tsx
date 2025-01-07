@@ -35,6 +35,12 @@ type PublishJob =
  */
 export type RasterFunctionsByPublishJobType = Record<PublishJob, any>;
 
+export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
+    [PublishAndDownloadJobType.PublishScene]: 2,
+    [PublishAndDownloadJobType.PublishIndexMask]: 4,
+    [PublishAndDownloadJobType.PublishChangeDetection]: 4,
+};
+
 export type SavePanelContainerProps = {
     /**
      * The URL of the original imagery service.
@@ -85,70 +91,65 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 
-    const publishSelectedScene = async ({
-        job,
-        title,
-        snippet,
-    }: {
-        job: PublishAndDownloadJob;
-        title: string;
-        snippet: string;
-    }) => {
+    // const publishSelectedScene = async ({
+    //     job,
+    //     title,
+    //     snippet,
+    // }: {
+    //     job: PublishAndDownloadJob;
+    //     title: string;
+    //     snippet: string;
+    // }) => {
+    //     try {
+    //         const rasterFunctions: RasterFunctionsByPublishJobType = {
+    //             [PublishAndDownloadJobType.PublishScene]:
+    //                 publishSceneRasterFunction,
+    //             [PublishAndDownloadJobType.PublishIndexMask]:
+    //                 publishIndexMaskRasterFunction,
+    //             [PublishAndDownloadJobType.PublishChangeDetection]:
+    //                 publishChangeDetectionRasterFunction,
+    //         };
+
+    //         const rasterFunction = rasterFunctions[job.type as PublishJob];
+
+    //         if (!rasterFunction) {
+    //             throw new Error('Failed to create raster function');
+    //         }
+
+    //         const response = await publishSceneAsHostedImageryLayer({
+    //             title, //'hosted-imagery-service-' + new Date().getTime(),
+    //             snippet,
+    //             rasterFunction,
+    //         });
+    //         // console.log('Generate Raster Job submitted', response);
+
+    //         dispatch(
+    //             updatePublishAndDownloadJob({
+    //                 ...job,
+    //                 rasterAnanlysisJobId: response.rasterAnalysisJobId,
+    //                 rasterAnalysisTaskName: 'GenerateRaster',
+    //                 outputURL: response.outputServiceUrl,
+    //                 outputItemId: response.outputItemId,
+    //             })
+    //         );
+    //     } catch (err) {
+    //         dispatch(
+    //             updatePublishAndDownloadJob({
+    //                 ...job,
+    //                 status: PublishAndDownloadJobStatus.Failed,
+    //                 errormessage: `Failed to publish scene: ${
+    //                     err.message || 'unknown error'
+    //                 }`,
+    //             })
+    //         );
+    //     }
+    // };
+
+    const createNewItemInArcGISOnline = async (job: PublishAndDownloadJob) => {
         try {
-            const rasterFunctions: RasterFunctionsByPublishJobType = {
-                [PublishAndDownloadJobType.PublishScene]:
-                    publishSceneRasterFunction,
-                [PublishAndDownloadJobType.PublishIndexMask]:
-                    publishIndexMaskRasterFunction,
-                [PublishAndDownloadJobType.PublishChangeDetection]:
-                    publishChangeDetectionRasterFunction,
-            };
+            const title = job.title;
+            const snippet = job.summary;
 
-            const rasterFunction = rasterFunctions[job.type as PublishJob];
-
-            if (!rasterFunction) {
-                throw new Error('Failed to create raster function');
-            }
-
-            const response = await publishSceneAsHostedImageryLayer({
-                title, //'hosted-imagery-service-' + new Date().getTime(),
-                snippet,
-                rasterFunction,
-            });
-            // console.log('Generate Raster Job submitted', response);
-
-            dispatch(
-                updatePublishAndDownloadJob({
-                    ...job,
-                    rasterAnanlysisJobId: response.rasterAnalysisJobId,
-                    rasterAnalysisTaskName: 'GenerateRaster',
-                    outputURL: response.outputServiceUrl,
-                    outputItemId: response.outputItemId,
-                })
-            );
-        } catch (err) {
-            dispatch(
-                updatePublishAndDownloadJob({
-                    ...job,
-                    status: PublishAndDownloadJobStatus.Failed,
-                    errormessage: `Failed to publish scene: ${
-                        err.message || 'unknown error'
-                    }`,
-                })
-            );
-        }
-    };
-
-    const createNewItemInArcGISOnline = async ({
-        job,
-        title,
-        snippet,
-    }: {
-        job: PublishAndDownloadJob;
-        title: string;
-        snippet: string;
-    }) => {
-        try {
             const res =
                 job.type === PublishAndDownloadJobType.SaveWebMappingApp
                     ? await createWebMappingApplication({
@@ -193,37 +194,42 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     }: SaveJobButtonOnClickParams) => {
         // console.log('saveOptionOnClick', option);
 
+        const rasterFunctions: RasterFunctionsByPublishJobType = {
+            [PublishAndDownloadJobType.PublishScene]:
+                publishSceneRasterFunction,
+            [PublishAndDownloadJobType.PublishIndexMask]:
+                publishIndexMaskRasterFunction,
+            [PublishAndDownloadJobType.PublishChangeDetection]:
+                publishChangeDetectionRasterFunction,
+        };
+
+        const rasterFunction =
+            rasterFunctions[saveJobType as PublishJob] || null;
+
+        const estimatedCost =
+            EstimatedRasterAnalysisJobCost[saveJobType as PublishJob] || 0;
+
         const job = await dispatch(
             createNewPublishAndDownloadJob({
                 jobType: saveJobType,
                 title,
                 summary,
                 sceneId,
+                rasterFunction,
+                estimatedCost,
             })
         );
 
-        if (
-            saveJobType === PublishAndDownloadJobType.PublishScene ||
-            saveJobType === PublishAndDownloadJobType.PublishIndexMask ||
-            saveJobType === PublishAndDownloadJobType.PublishChangeDetection
-        ) {
-            publishSelectedScene({
-                job,
-                title,
-                snippet: summary,
-            });
-            return;
-        }
+        // if (job.publishToHostedImageryService) {
+        //     publishSelectedScene(job);
+        //     return;
+        // }
 
         if (
             saveJobType === PublishAndDownloadJobType.SaveWebMappingApp ||
             saveJobType === PublishAndDownloadJobType.SaveWebMap
         ) {
-            createNewItemInArcGISOnline({
-                job,
-                title,
-                snippet: summary,
-            });
+            createNewItemInArcGISOnline(job);
             return;
         }
     };

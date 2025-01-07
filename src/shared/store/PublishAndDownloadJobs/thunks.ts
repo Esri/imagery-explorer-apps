@@ -23,36 +23,67 @@ type CreateNewSaveJobParams = {
      * type of the job
      */
     jobType: PublishAndDownloadJobType;
+    /**
+     * title of the job
+     */
     title: string;
+    /**
+     * summary of the job
+     */
     summary: string;
     /**
      * id of the scene associated with the job
      */
     sceneId?: string;
+    /**
+     * raster function of the raster analysis job
+     */
+    rasterFunction?: any;
+    /**
+     * estimated cost of the raster analysis job
+     */
+    estimatedCost?: number;
 };
 
 export const createNewPublishAndDownloadJob =
-    ({ jobType, title, summary, sceneId }: CreateNewSaveJobParams) =>
+    ({
+        jobType,
+        title,
+        summary,
+        sceneId,
+        rasterFunction,
+        estimatedCost,
+    }: CreateNewSaveJobParams) =>
     async (dispatch: StoreDispatch): Promise<PublishAndDownloadJob> => {
         const user = getSignedInUser();
 
         const timestamp = Date.now();
+
+        const publishToHostedImageryService =
+            jobType === PublishAndDownloadJobType.PublishChangeDetection ||
+            jobType === PublishAndDownloadJobType.PublishIndexMask ||
+            jobType === PublishAndDownloadJobType.PublishScene;
+
+        // set the status of the raster analysis job to PendingCheckingCost so it will be checked for cost before being submitted
+        const status: PublishAndDownloadJobStatus =
+            publishToHostedImageryService
+                ? PublishAndDownloadJobStatus.PendingCheckingCost
+                : PublishAndDownloadJobStatus.Submitted;
 
         const newJob: PublishAndDownloadJob = {
             id: nanoid(5),
             type: jobType,
             title,
             summary,
-            status: PublishAndDownloadJobStatus.Submitted,
-            publishToHostedImageryService:
-                jobType === PublishAndDownloadJobType.PublishChangeDetection ||
-                jobType === PublishAndDownloadJobType.PublishIndexMask ||
-                jobType === PublishAndDownloadJobType.PublishScene,
+            status,
+            publishToHostedImageryService,
             creator: user?.username || 'anonymous',
             createdAt: timestamp,
             updatedAt: timestamp,
             sceneId,
             appName: APP_NAME,
+            rasterFunction,
+            estimatedCost,
         };
 
         await savePublishAndDownloadJob2IndexedDB(newJob);
