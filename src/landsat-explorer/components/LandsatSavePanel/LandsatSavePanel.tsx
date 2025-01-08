@@ -14,6 +14,20 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { selectSelectedOption4ChangeCompareTool } from '@shared/store/ChangeCompareTool/selectors';
 import { useClippingGeometry } from '@shared/components/SavePanel/useClippingGeometry';
+import {
+    PublishAndDownloadJobType,
+    PublishJob,
+} from '@shared/store/PublishAndDownloadJobs/reducer';
+
+/**
+ * Estimated cost of the raster analysis job for Landsat service.
+ * The cost is in credits.
+ */
+export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
+    [PublishAndDownloadJobType.PublishScene]: 2,
+    [PublishAndDownloadJobType.PublishIndexMask]: 3,
+    [PublishAndDownloadJobType.PublishChangeDetection]: 5,
+};
 
 const TAGS = [
     'Esri Landsat Explorer',
@@ -84,6 +98,7 @@ export const LandsatSavePanel = () => {
             originalServiceUrl={LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL}
             serviceName={'LandsatLevel2'}
             tags={TAGS}
+            estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}
             publishChangeDetectionRasterFunction={

@@ -33,11 +33,13 @@ const jobIdByRasterFunction = new Map<any, string>();
 export const getEstimateRasterAnalysisCost = async (
     rasterFunction: RasterAnalysisRasterFunction
 ): Promise<getEstimateRasterAnalysisCostResponse> => {
-    let jobId = jobIdByRasterFunction.get(rasterFunction);
+    const key = JSON.stringify(rasterFunction);
+
+    let jobId = jobIdByRasterFunction.get(key);
 
     if (!jobId) {
         jobId = await submitJob(rasterFunction);
-        jobIdByRasterFunction.set(rasterFunction, jobId);
+        jobIdByRasterFunction.set(key, jobId);
     }
 
     const jobStatusRes = await checkRasterAnalysisJobStatus(

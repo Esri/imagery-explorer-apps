@@ -31,6 +31,20 @@ import { usePublishSceneRasterFunction } from '@shared/components/SavePanel/useP
 import { usePublishMaskIndexRasterFunction } from '@shared/components/SavePanel/usePublishMaskIndexRasterFunction';
 import { usePublishChangeDetectionRasterFunction } from '@shared/components/SavePanel/usePublishChangeDetectionRasterFunction';
 import { useClippingGeometry } from '@shared/components/SavePanel/useClippingGeometry';
+import {
+    PublishAndDownloadJobType,
+    PublishJob,
+} from '@shared/store/PublishAndDownloadJobs/reducer';
+
+/**
+ * Estimated cost of the raster analysis job for Sentinel-1 service.
+ * The cost is in credits.
+ */
+export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
+    [PublishAndDownloadJobType.PublishScene]: 5,
+    [PublishAndDownloadJobType.PublishIndexMask]: 7,
+    [PublishAndDownloadJobType.PublishChangeDetection]: 13,
+};
 
 const TAGS = ['Esri Sentinel-1 Explorer', 'Sentinel-1', 'Remote Sensing'];
 
@@ -110,6 +124,7 @@ export const Sentinel1SavePanel = () => {
             publishOptions={publishOptions}
             serviceName={'Sentinel-1'}
             tags={TAGS}
+            estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}
             publishChangeDetectionRasterFunction={

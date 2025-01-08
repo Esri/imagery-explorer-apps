@@ -562,7 +562,7 @@ export const createChangeDetectionRasterFunction = ({
                         'Calculates the base 10 logarithm of cells in a raster.',
                     function: {
                         type: 'LocalFunction',
-                        pixelType: 'UNKNOWN',
+                        pixelType: 'F32',
                         name: 'Log10',
                         description:
                             'Calculates the base 10 logarithm of cells in a raster.',
@@ -574,7 +574,7 @@ export const createChangeDetectionRasterFunction = ({
                                 'Divides the values of two rasters on a cell-by-cell basis.',
                             function: {
                                 type: 'LocalFunction',
-                                pixelType: 'UNKNOWN',
+                                pixelType: 'F32',
                                 name: 'Divide',
                                 description:
                                     'Divides the values of two rasters on a cell-by-cell basis.',

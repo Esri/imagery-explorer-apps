@@ -22,6 +22,14 @@ export enum PublishAndDownloadJobType {
     SaveWebMap = 'Save Web Map',
 }
 
+/**
+ * type of the publish
+ */
+export type PublishJob =
+    | PublishAndDownloadJobType.PublishChangeDetection
+    | PublishAndDownloadJobType.PublishIndexMask
+    | PublishAndDownloadJobType.PublishScene;
+
 export enum PublishAndDownloadJobStatus {
     /**
      * The job is pending checking cost

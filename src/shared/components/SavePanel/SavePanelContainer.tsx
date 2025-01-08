@@ -21,29 +21,15 @@ import {
     PublishAndDownloadJob,
     PublishAndDownloadJobStatus,
     PublishAndDownloadJobType,
+    PublishJob,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
-
-type PublishJob =
-    | PublishAndDownloadJobType.PublishChangeDetection
-    | PublishAndDownloadJobType.PublishIndexMask
-    | PublishAndDownloadJobType.PublishScene;
 
 /**
  * Raster functions for the publish jobs.
  */
 export type RasterFunctionsByPublishJobType = Record<PublishJob, any>;
-
-/**
- * Estimated cost of the raster analysis job.
- * The cost is in credits.
- */
-export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
-    [PublishAndDownloadJobType.PublishScene]: 2,
-    [PublishAndDownloadJobType.PublishIndexMask]: 3,
-    [PublishAndDownloadJobType.PublishChangeDetection]: 5,
-};
 
 export type SavePanelContainerProps = {
     /**
@@ -79,6 +65,11 @@ export type SavePanelContainerProps = {
      * Raster function for publishing the change detection.
      */
     publishChangeDetectionRasterFunction?: any;
+    /**
+     * Estimated cost of the raster analysis job.
+     * The cost is in credits.
+     */
+    estimatedCostByJobType: Record<PublishJob, number>;
 };
 
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
@@ -90,6 +81,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     publishSceneRasterFunction,
     publishIndexMaskRasterFunction,
     publishChangeDetectionRasterFunction,
+    estimatedCostByJobType,
 }) => {
     const dispatch = useDispatch();
 
@@ -211,7 +203,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             rasterFunctions[saveJobType as PublishJob] || null;
 
         const estimatedCost =
-            EstimatedRasterAnalysisJobCost[saveJobType as PublishJob] || 0;
+            estimatedCostByJobType[saveJobType as PublishJob] || 0;
 
         const job = await dispatch(
             createNewPublishAndDownloadJob({
