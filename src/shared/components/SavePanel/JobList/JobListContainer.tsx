@@ -5,7 +5,9 @@ import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selector
 import {
     clearAllPublishAndDownloadJobs,
     removePublishAndDownloadJob,
+    updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
+import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 
 export const JobListContainer = () => {
     const jobs = useSelector(selectAllSaveJobs);
@@ -35,6 +37,17 @@ export const JobListContainer = () => {
                 data={jobs}
                 deleteButtonOnClick={(uniqueId) => {
                     dispatch(removePublishAndDownloadJob(uniqueId));
+                }}
+                acceptCreditsButtonOnClick={(job) => {
+                    dispatch(
+                        updatePublishAndDownloadJob({
+                            ...job,
+                            status: PublishAndDownloadJobStatus.ToBeSubmitted,
+                        })
+                    );
+                }}
+                cancelButtonOnClick={(job) => {
+                    dispatch(removePublishAndDownloadJob(job.id));
                 }}
             />
         </div>

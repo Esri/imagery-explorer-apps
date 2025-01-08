@@ -9,10 +9,69 @@ import { getItemUrl } from '@shared/utils/esri-oauth';
 
 type JobStatusProps = {
     job: PublishAndDownloadJob;
+    /**
+     * Emits when the accept credits button is clicked.
+     * @returns
+     */
+    acceptCreditsButtonOnClick: (job: PublishAndDownloadJob) => void;
+    /**
+     * Emits when the cancel button is clicked.
+     * @returns
+     */
+    cancelButtonOnClick: (job: PublishAndDownloadJob) => void;
 };
 
-export const JobStatus: FC<JobStatusProps> = ({ job }) => {
+const CustomCalciteButtonStyles = {
+    '--calcite-color-brand': 'var(--calcite-color-green-060)',
+    '--calcite-color-brand-hover': 'var(--calcite-color-green-070)',
+} as CSSProperties;
+
+export const JobStatus: FC<JobStatusProps> = ({
+    job,
+    acceptCreditsButtonOnClick,
+    cancelButtonOnClick,
+}) => {
     const statusLabel = saveJobStatusLabels[job.status];
+
+    if (
+        job.status ===
+        PublishAndDownloadJobStatus.PendingUserApprovalForActualCost
+    ) {
+        return (
+            <div>
+                <div className="mb-1">required credits: {job.actualCost}</div>
+
+                <div
+                    className="flex items-center"
+                    style={CustomCalciteButtonStyles}
+                >
+                    <div className="mr-2">
+                        <span
+                            className="underline cursor-pointer"
+                            onClick={() => {
+                                // dispatch(updatePublishAndDownloadJob({ ...job, status: PublishAndDownloadJobStatus.ToBeSubmitted }));
+                                cancelButtonOnClick(job);
+                            }}
+                        >
+                            Cancel
+                        </span>
+                    </div>
+
+                    <calcite-button
+                        scale="s"
+                        width="half"
+                        // icon-start="check"
+                        onClick={() => {
+                            // dispatch(updatePublishAndDownloadJob({ ...job, status: PublishAndDownloadJobStatus.ToBeSubmitted }));
+                            acceptCreditsButtonOnClick(job);
+                        }}
+                    >
+                        Accept
+                    </calcite-button>
+                </div>
+            </div>
+        );
+    }
 
     if (job.status !== PublishAndDownloadJobStatus.Succeeded) {
         let progress = job.progress || 0;
@@ -37,15 +96,7 @@ export const JobStatus: FC<JobStatusProps> = ({ job }) => {
     }
 
     return (
-        <div
-            style={
-                {
-                    '--calcite-color-brand': 'var(--calcite-color-green-060)',
-                    '--calcite-color-brand-hover':
-                        'var(--calcite-color-green-070)',
-                } as CSSProperties
-            }
-        >
+        <div style={CustomCalciteButtonStyles}>
             <calcite-button
                 // scale="s"
                 width="full"

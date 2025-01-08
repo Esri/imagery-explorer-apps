@@ -41,7 +41,7 @@ import {
  * The cost is in credits.
  */
 export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
-    [PublishAndDownloadJobType.PublishScene]: 5,
+    [PublishAndDownloadJobType.PublishScene]: 1, //5,
     [PublishAndDownloadJobType.PublishIndexMask]: 7,
     [PublishAndDownloadJobType.PublishChangeDetection]: 13,
 };

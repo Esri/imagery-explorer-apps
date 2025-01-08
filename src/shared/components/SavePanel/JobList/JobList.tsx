@@ -21,9 +21,24 @@ type JobListProps = {
      * @returns
      */
     deleteButtonOnClick: (jobId: string) => void;
+    /**
+     * Emits when the accept credits button is clicked.
+     * @returns
+     */
+    acceptCreditsButtonOnClick: (job: PublishAndDownloadJob) => void;
+    /**
+     * Emits when the cancel button is clicked.
+     * @returns
+     */
+    cancelButtonOnClick: (job: PublishAndDownloadJob) => void;
 };
 
-export const JobList: FC<JobListProps> = ({ data, deleteButtonOnClick }) => {
+export const JobList: FC<JobListProps> = ({
+    data,
+    deleteButtonOnClick,
+    acceptCreditsButtonOnClick,
+    cancelButtonOnClick,
+}) => {
     /**
      * Sort the jobs by creation time in descending order.
      */
@@ -53,7 +68,13 @@ export const JobList: FC<JobListProps> = ({ data, deleteButtonOnClick }) => {
                         <JobInfo job={job} />
 
                         {/* <div className="text-center">{statusLabel}</div> */}
-                        <JobStatus job={job} />
+                        <JobStatus
+                            job={job}
+                            acceptCreditsButtonOnClick={
+                                acceptCreditsButtonOnClick
+                            }
+                            cancelButtonOnClick={cancelButtonOnClick}
+                        />
 
                         <div
                             className="flex justify-center items-center cursor-pointer"

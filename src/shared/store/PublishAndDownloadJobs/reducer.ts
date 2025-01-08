@@ -35,10 +35,10 @@ export enum PublishAndDownloadJobStatus {
      * The job is pending checking cost
      */
     PendingCheckingCost = 'pendingCheckingCost',
-    /**
-     * In process of checking cost of the job
-     */
-    CheckingCost = 'checkingCost',
+    // /**
+    //  * In process of checking cost of the job
+    //  */
+    // CheckingCost = 'checkingCost',
     /**
      * The job is pending user approval for actual cost
      */
