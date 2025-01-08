@@ -1,5 +1,8 @@
 import { getToken } from '@shared/utils/esri-oauth';
-import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
+import {
+    RASTER_ANALYSIS_SERVER_ROOT_URL,
+    RasteranalysisTaskName,
+} from './config';
 import { checkRasterAnalysisJobStatus } from './checkJobStatus';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { RasterAnalysisRasterFunction } from './types';
@@ -39,7 +42,7 @@ export const getEstimateRasterAnalysisCost = async (
 
     const jobStatusRes = await checkRasterAnalysisJobStatus(
         jobId,
-        'EstimateRasterAnalysisCost'
+        RasteranalysisTaskName.EstimateRasterAnalysisCost
     );
 
     if (jobStatusRes.jobStatus === PublishAndDownloadJobStatus.Succeeded) {
@@ -77,7 +80,9 @@ const getOutCost = async (
 ): Promise<EstimateRasterAnalysisCostOutCostResponse> => {
     const requestURL =
         RASTER_ANALYSIS_SERVER_ROOT_URL +
-        `/EstimateRasterAnalysisCost/jobs/${jobId}/results/outCost?f=json&returnType=data&token=${getToken()}`;
+        `/${
+            RasteranalysisTaskName.EstimateRasterAnalysisCost
+        }/jobs/${jobId}/results/outCost?f=json&returnType=data&token=${getToken()}`;
 
     const res = await fetch(requestURL);
 
@@ -105,7 +110,7 @@ const submitJob = async (
     const params = new URLSearchParams({
         f: 'json',
         inputAnalysisTask: JSON.stringify({
-            name: 'GenerateRaster',
+            name: RasteranalysisTaskName.GenerateRaster,
             parameters: {
                 rasterFunction,
             },
@@ -128,7 +133,7 @@ const submitJob = async (
 
     const requestURL =
         RASTER_ANALYSIS_SERVER_ROOT_URL +
-        '/EstimateRasterAnalysisCost/submitJob';
+        `/${RasteranalysisTaskName.EstimateRasterAnalysisCost}/submitJob`;
 
     const res = await fetch(requestURL, {
         method: 'POST',

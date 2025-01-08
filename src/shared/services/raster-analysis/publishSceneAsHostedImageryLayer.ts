@@ -1,6 +1,9 @@
 import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
 import { createHostedImageryService } from './createHostedImageryService';
-import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
+import {
+    RASTER_ANALYSIS_SERVER_ROOT_URL,
+    RasteranalysisTaskName,
+} from './config';
 import { hasRasterAnalysisPrivileges } from './checkUserRoleAndPrivileges';
 import { updateItem } from '../arcgis-online/updateItem';
 
@@ -93,7 +96,8 @@ export const publishSceneAsHostedImageryLayer = async ({
 
     // submit a generate raster job to generate the hosted imagery layer
     const requestURL =
-        RASTER_ANALYSIS_SERVER_ROOT_URL + '/GenerateRaster/submitJob';
+        RASTER_ANALYSIS_SERVER_ROOT_URL +
+        `/${RasteranalysisTaskName.GenerateRaster}/submitJob`;
     // console.log(requestURL)
 
     const params = new URLSearchParams({
