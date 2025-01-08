@@ -32,7 +32,8 @@ export const useCheckJobCost = () => {
 
             const actualCost = res.credits;
 
-            const updatedJobData = {
+            // add the actual cost to the job
+            const updatedJobData: PublishAndDownloadJob = {
                 ...job,
                 actualCost,
             };
