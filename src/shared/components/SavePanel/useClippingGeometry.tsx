@@ -25,6 +25,11 @@ export const useClippingGeometry = (serviceUrl: string) => {
 
             const token = getToken();
 
+            if (!token) {
+                setClippingGeometry(null);
+                return;
+            }
+
             try {
                 const feature = await getFeatureByObjectId(
                     serviceUrl,
