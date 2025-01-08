@@ -44,10 +44,6 @@ export enum PublishAndDownloadJobStatus {
      */
     PendingUserApprovalForActualCost = 'pendingUserApprovalForActualCost',
     /**
-     * The job is pending submission
-     */
-    ToBeSubmitted = 'toBeSubmitted',
-    /**
      * The job is submitted
      */
     Submitted = 'esriJobSubmitted',

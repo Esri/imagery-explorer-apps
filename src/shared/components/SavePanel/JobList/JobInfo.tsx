@@ -30,7 +30,12 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
         job.publishToHostedImageryService &&
         job.outputItemId === undefined
     ) {
-        return <p>Initiating the publish job. Please do not close the tab.</p>;
+        return (
+            <p>
+                Submitting the raster analysis job. Please do not close the
+                browser tab.
+            </p>
+        );
     }
 
     return (

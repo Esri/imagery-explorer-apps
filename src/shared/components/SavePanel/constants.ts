@@ -93,7 +93,6 @@ export const saveJobStatusLabels: Record<PublishAndDownloadJobStatus, string> =
         // [PublishAndDownloadJobStatus.CheckingCost]: 'Checking credit usage',
         [PublishAndDownloadJobStatus.PendingUserApprovalForActualCost]:
             'Pending User Approval',
-        [PublishAndDownloadJobStatus.ToBeSubmitted]: 'Pending',
         [PublishAndDownloadJobStatus.Submitted]: 'Pending',
         [PublishAndDownloadJobStatus.New]: 'In Progress',
         [PublishAndDownloadJobStatus.Executing]: 'In Progress',

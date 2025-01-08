@@ -17,6 +17,7 @@ import {
     savePublishAndDownloadJob2IndexedDB,
     updatePublishAndDownloadJob2IndexedDB,
 } from '@shared/utils/indexedDB/publishAndDownloadJobs';
+import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 
 type CreateNewSaveJobParams = {
     /**
@@ -114,4 +115,52 @@ export const updatePublishAndDownloadJob =
 
         await updatePublishAndDownloadJob2IndexedDB(updatedJob);
         dispatch(jobUpdated(updatedJob));
+    };
+
+export const submitRasterAnalysisJob =
+    (job: PublishAndDownloadJob) => async (dispatch: StoreDispatch) => {
+        try {
+            const { title, summary, rasterFunction } = job;
+
+            if (!rasterFunction) {
+                throw new Error('Failed to create raster function');
+            }
+
+            const updatedJobData = {
+                ...job,
+                status: PublishAndDownloadJobStatus.Submitted,
+            };
+
+            // set the status of the job to Submitted
+            // so the user can see the job is being processed
+            dispatch(updatePublishAndDownloadJob(updatedJobData));
+
+            // create the hosted imagery layer and submit the generate raster job
+            const response = await publishSceneAsHostedImageryLayer({
+                title,
+                snippet: summary,
+                rasterFunction,
+            });
+            // console.log('Generate Raster Job submitted', response);
+
+            dispatch(
+                updatePublishAndDownloadJob({
+                    ...updatedJobData,
+                    rasterAnanlysisJobId: response.rasterAnalysisJobId,
+                    rasterAnalysisTaskName: 'GenerateRaster',
+                    outputURL: response.outputServiceUrl,
+                    outputItemId: response.outputItemId,
+                })
+            );
+        } catch (err) {
+            dispatch(
+                updatePublishAndDownloadJob({
+                    ...job,
+                    status: PublishAndDownloadJobStatus.Failed,
+                    errormessage: `Failed to publish scene: ${
+                        err.message || 'unknown error'
+                    }`,
+                })
+            );
+        }
     };

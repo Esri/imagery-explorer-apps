@@ -5,6 +5,7 @@ import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selector
 import {
     clearAllPublishAndDownloadJobs,
     removePublishAndDownloadJob,
+    submitRasterAnalysisJob,
     updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
@@ -39,12 +40,7 @@ export const JobListContainer = () => {
                     dispatch(removePublishAndDownloadJob(uniqueId));
                 }}
                 acceptCreditsButtonOnClick={(job) => {
-                    dispatch(
-                        updatePublishAndDownloadJob({
-                            ...job,
-                            status: PublishAndDownloadJobStatus.ToBeSubmitted,
-                        })
-                    );
+                    dispatch(submitRasterAnalysisJob(job));
                 }}
                 cancelButtonOnClick={(job) => {
                     dispatch(removePublishAndDownloadJob(job.id));

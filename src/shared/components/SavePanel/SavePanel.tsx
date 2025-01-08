@@ -11,7 +11,6 @@ import {
 } from '@shared/utils/esri-oauth';
 // import { CreateHostedImageryLayer } from './CreateHostedImageryLayer/CreateHostedImageryLayer';
 import { JobList } from './JobList';
-import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
 import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
@@ -20,9 +19,7 @@ import { saveOptionInfoLookup } from './constants';
 import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
-import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
-import { useCheckJobCost } from './useCheckJobCost';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -75,15 +72,6 @@ export const SavePanel: FC<SavePanelProps> = ({
 
     const [activeSaveJobDialog, setActiveSaveJobDialog] =
         useState<PublishAndDownloadJobType>();
-
-    // Custom hook that checks the status of pending raster analysis jobs.
-    useCheckJobStatus();
-
-    // Custom hook that clears finished raster analysis jobs.
-    useClearRasterAnalysisJobs();
-
-    // Custom hook that checks the cost of new raster analysis jobs.
-    useCheckJobCost();
 
     useEffect(() => {
         setOpenSavePanelInSessionStorage(shouldShowSavePanel);

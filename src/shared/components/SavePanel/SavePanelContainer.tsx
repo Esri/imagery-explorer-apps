@@ -25,6 +25,9 @@ import {
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
+import { useCheckJobCost } from './useCheckJobCost';
+import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
+import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
 
 /**
  * Raster functions for the publish jobs.
@@ -86,6 +89,15 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     const dispatch = useDispatch();
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+
+    // Custom hook that checks the status of pending raster analysis jobs.
+    useCheckJobStatus();
+
+    // Custom hook that clears finished raster analysis jobs.
+    useClearRasterAnalysisJobs();
+
+    // Custom hook that checks the cost of new raster analysis jobs.
+    useCheckJobCost();
 
     // const publishSelectedScene = async ({
     //     job,
