@@ -2,6 +2,7 @@ import { getToken } from '@shared/utils/esri-oauth';
 import { RASTER_ANALYSIS_SERVER_ROOT_URL } from './config';
 import { checkRasterAnalysisJobStatus } from './checkJobStatus';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
+import { RasterAnalysisRasterFunction } from './types';
 
 type EstimateRasterAnalysisCostOutCostResponse = {
     dataType: string;
@@ -19,14 +20,21 @@ type getEstimateRasterAnalysisCostResponse = {
 
 const jobIdByRasterFunction = new Map<any, string>();
 
+/**
+ * Retrieves an estimate of the cost to perform a raster analysis using the provided raster function.
+ *
+ * @param {RasterAnalysisRasterFunction} rasterFunction - The raster function to estimate the cost for.
+ * @returns {Promise<getEstimateRasterAnalysisCostResponse>} - A promise resolving to an object containing the estimated credits and success status.
+ * @throws Will throw an error if the job fails, times out, or is otherwise unsuccessful.
+ */
 export const getEstimateRasterAnalysisCost = async (
-    rasterFunction: any
+    rasterFunction: RasterAnalysisRasterFunction
 ): Promise<getEstimateRasterAnalysisCostResponse> => {
-    const jobId = jobIdByRasterFunction.get(rasterFunction);
+    let jobId = jobIdByRasterFunction.get(rasterFunction);
 
     if (!jobId) {
-        const newJobId = await submitJob(rasterFunction);
-        jobIdByRasterFunction.set(rasterFunction, newJobId);
+        jobId = await submitJob(rasterFunction);
+        jobIdByRasterFunction.set(rasterFunction, jobId);
     }
 
     const jobStatusRes = await checkRasterAnalysisJobStatus(
@@ -57,6 +65,13 @@ export const getEstimateRasterAnalysisCost = async (
     };
 };
 
+/**
+ * Fetches the output cost details of a raster analysis job.
+ *
+ * @param {string} jobId - The job ID of the raster analysis.
+ * @returns {Promise<EstimateRasterAnalysisCostOutCostResponse>} - A promise resolving to the cost response object.
+ * @throws Will throw an error if the fetch operation fails or returns an error.
+ */
 const getOutCost = async (
     jobId: string
 ): Promise<EstimateRasterAnalysisCostOutCostResponse> => {
@@ -76,11 +91,15 @@ const getOutCost = async (
 };
 
 /**
- * Submit a job to estimate the cost of running a raster function
- * @param rasterFunction
- * @returns
+ * Submits a job to estimate the cost of running a raster function.
+ *
+ * @param {any} rasterFunction - The raster function to be processed.
+ * @returns {Promise<string>} - A promise resolving to the job ID.
+ * @throws Will throw an error if the job submission fails.
  */
-const submitJob = async (rasterFunction: any): Promise<string> => {
+const submitJob = async (
+    rasterFunction: RasterAnalysisRasterFunction
+): Promise<string> => {
     const token = getToken();
 
     const params = new URLSearchParams({

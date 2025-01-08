@@ -5,7 +5,10 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { AppName } from '@shared/config';
-import { RasterAnalysisTaskName } from '@shared/services/raster-analysis/types';
+import {
+    RasterAnalysisRasterFunction,
+    RasterAnalysisTaskName,
+} from '@shared/services/raster-analysis/types';
 
 /**
  * Enum representing different save options available in the application.
@@ -20,18 +23,61 @@ export enum PublishAndDownloadJobType {
 }
 
 export enum PublishAndDownloadJobStatus {
+    /**
+     * The job is pending checking cost
+     */
     PendingCheckingCost = 'pendingCheckingCost',
+    /**
+     * In process of checking cost of the job
+     */
     CheckingCost = 'checkingCost',
+    /**
+     * The job is pending user approval for actual cost
+     */
     PendingUserApprovalForActualCost = 'pendingUserApprovalForActualCost',
+    /**
+     * The job is pending submission
+     */
+    ToBeSubmitted = 'toBeSubmitted',
+    /**
+     * The job is submitted
+     */
     Submitted = 'esriJobSubmitted',
+    /**
+     * The new raster analysis job is created
+     */
     New = 'esriJobNew',
+    /**
+     * The job is waiting in the queue
+     */
     Waiting = 'esriJobWaiting',
+    /**
+     * The job is in progress
+     */
     Executing = 'esriJobExecuting',
+    /**
+     * The job is succeeded
+     */
     Succeeded = 'esriJobSucceeded',
+    /**
+     * The job is failed
+     */
     Failed = 'esriJobFailed',
+    /**
+     * The job is timed out
+     */
     TimedOut = 'esriJobTimedOut',
+    /**
+     * The job is cancelling
+     */
     Cancelling = 'esriJobCancelling',
+    /**
+     * The job is cancelled
+     */
     Cancelled = 'esriJobCancelled',
+    /**
+     * The job is expired
+     */
     Expired = 'esriJobExpired',
 }
 
@@ -113,9 +159,10 @@ export type PublishAndDownloadJob = {
      */
     actualCost?: number;
     /**
-     * raster function of the raster analysis job
+     * raster function of the raster analysis job.
+     * It is a JSON object that represents the raster function chain.
      */
-    rasterFunction?: any;
+    rasterFunction?: RasterAnalysisRasterFunction;
 };
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';

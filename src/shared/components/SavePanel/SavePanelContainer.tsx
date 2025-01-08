@@ -35,10 +35,14 @@ type PublishJob =
  */
 export type RasterFunctionsByPublishJobType = Record<PublishJob, any>;
 
+/**
+ * Estimated cost of the raster analysis job.
+ * The cost is in credits.
+ */
 export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
     [PublishAndDownloadJobType.PublishScene]: 2,
-    [PublishAndDownloadJobType.PublishIndexMask]: 4,
-    [PublishAndDownloadJobType.PublishChangeDetection]: 4,
+    [PublishAndDownloadJobType.PublishIndexMask]: 3,
+    [PublishAndDownloadJobType.PublishChangeDetection]: 5,
 };
 
 export type SavePanelContainerProps = {

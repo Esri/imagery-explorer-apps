@@ -259,15 +259,15 @@ const ajustInputPixelValueRange = (
     let adjustedMax = pixelValueRange[1];
 
     // Adjust the minimum value if it equals or exceeds the lower limit of the full range.
-    // set min to the smallest possible value for a 32-bit signed integer.
+    // set min to the an arbitrary large negative value
     if (adjustedMin <= fullPixelValueRange[0]) {
-        adjustedMin = -(2 ** 31);
+        adjustedMin = -1000; //-(2 ** 31);
     }
 
     // Adjust the maximum value if it equals or exceeds the upper limit of the full range.
-    // set it to the largest possible value for a 32-bit signed integer.
+    // set min to the an arbitrary large postive value
     if (adjustedMax >= fullPixelValueRange[1]) {
-        adjustedMax = 2 ** 31 - 1;
+        adjustedMax = 1000; //2 ** 31 - 1;
     }
 
     return [adjustedMin, adjustedMax];

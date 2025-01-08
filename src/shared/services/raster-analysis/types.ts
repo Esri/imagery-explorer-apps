@@ -22,6 +22,22 @@ export type RasterAnalysisJobOutput = {
     };
 };
 
+export type RasterAnalysisRasterFunction = {
+    name: string;
+    description: string;
+    function: {
+        type: string;
+        pixelType: string;
+        name: string;
+        description: string;
+    };
+    arguments: {
+        Raster: any;
+        [key: string]: any;
+    };
+    [key: string]: any;
+};
+
 export type RasterAnalysisTaskName =
     | 'GenerateRaster'
     | 'DownloadRaster'

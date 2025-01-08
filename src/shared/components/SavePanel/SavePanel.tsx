@@ -22,6 +22,7 @@ import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
+import { useCheckJobCost } from './useCheckJobCost';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -80,6 +81,9 @@ export const SavePanel: FC<SavePanelProps> = ({
 
     // Custom hook that clears finished raster analysis jobs.
     useClearRasterAnalysisJobs();
+
+    // Custom hook that checks the cost of new raster analysis jobs.
+    useCheckJobCost();
 
     useEffect(() => {
         setOpenSavePanelInSessionStorage(shouldShowSavePanel);

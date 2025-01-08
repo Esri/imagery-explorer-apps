@@ -47,7 +47,10 @@ export const useCheckJobCost = () => {
 
             if (res.succeeded) {
                 jobWithUpdatedStatus.actualCost = res.credits;
-                jobWithUpdatedStatus.status = PublishAndDownloadJobStatus.New;
+                jobWithUpdatedStatus.status =
+                    res.credits <= jobWithUpdatedStatus.estimatedCost
+                        ? PublishAndDownloadJobStatus.ToBeSubmitted
+                        : PublishAndDownloadJobStatus.PendingUserApprovalForActualCost;
             }
         } catch (error) {
             console.error(
@@ -75,7 +78,7 @@ export const useCheckJobCost = () => {
             jobsPendingCheckingCost.forEach((job) => {
                 checkJobCost(job);
             });
-        }, 5 * 1000); // 5 seconds
+        }, 15 * 1000); // 15 seconds
 
         return () => clearInterval(intervalIdRef.current); // Cleanup interval on unmount
     }, [jobsPendingCheckingCost]);
