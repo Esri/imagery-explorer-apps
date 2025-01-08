@@ -1,6 +1,4 @@
 import PortalUser from '@arcgis/core/portal/PortalUser';
-import { getPortalBaseUrl, getToken } from '@shared/utils/esri-oauth';
-import { getUserLicense } from '../arcgis-online/getUserLicense';
 
 /**
  * Check if the user has the privileges to publish content
@@ -21,32 +19,19 @@ export const canPublishContent = (user: PortalUser): boolean => {
  * @param user the ArcGIS Online potal user object
  * @returns {boolean} indicating if the user can use raster analysis
  */
-export const hasRasterAnalysisPrivileges = async (
-    user: PortalUser
-): Promise<boolean> => {
-    if (!user) {
+export const hasRasterAnalysisPrivileges = (
+    userLicenseTypeId: string
+): boolean => {
+    if (!userLicenseTypeId) {
         return false;
     }
 
-    try {
-        const {
-            userLicenseTypeId,
-            // availableCredits
-        } = await getUserLicense(user.username);
+    // Check if the user has the GIS Professional or above user type
+    // @see https://developers.arcgis.com/rest/enterprise-administration/portal/create-user/
+    const isProfessionalUser =
+        userLicenseTypeId === 'GISProfessionalStdUT' ||
+        userLicenseTypeId === 'GISProfessionalAdvUT';
 
-        // Check if the user has the GIS Professional or above user type
-        // @see https://developers.arcgis.com/rest/enterprise-administration/portal/create-user/
-        const isProfessionalUser =
-            userLicenseTypeId === 'GISProfessionalStdUT' ||
-            userLicenseTypeId === 'GISProfessionalAdvUT';
-
-        // Check if the user has the GIS Professional or above user type
-        return isProfessionalUser;
-    } catch (error) {
-        console.error(
-            'Error checking user privileges for raster analysis',
-            error
-        );
-        return false;
-    }
+    // Check if the user has the GIS Professional or above user type
+    return isProfessionalUser;
 };

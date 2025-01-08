@@ -140,6 +140,7 @@ export const submitRasterAnalysisJob =
                 title,
                 snippet: summary,
                 rasterFunction,
+                cost: job.actualCost,
             });
             // console.log('Generate Raster Job submitted', response);
 

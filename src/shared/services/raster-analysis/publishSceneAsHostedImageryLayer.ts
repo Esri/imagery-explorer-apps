@@ -6,6 +6,7 @@ import {
 } from './config';
 import { hasRasterAnalysisPrivileges } from './checkUserRoleAndPrivileges';
 import { updateItem } from '../arcgis-online/updateItem';
+import { getUserLicense } from '../arcgis-online/getUserLicense';
 
 type publishImagerySceneParams = {
     //  * object id of the imagery scene
@@ -30,6 +31,10 @@ type publishImagerySceneParams = {
         function: any;
         arguments: any;
     };
+    /**
+     * estimated cost of the raster analysis job in credits
+     */
+    cost: number;
 };
 
 /**
@@ -69,6 +74,7 @@ export const publishSceneAsHostedImageryLayer = async ({
     title,
     snippet,
     rasterFunction,
+    cost,
 }: publishImagerySceneParams): Promise<PublishImagerySceneResponse> => {
     const token = getToken();
 
@@ -80,11 +86,19 @@ export const publishSceneAsHostedImageryLayer = async ({
         );
     }
 
-    const canUseRasterAnalysis = await hasRasterAnalysisPrivileges(user);
+    const { userLicenseTypeId, availableCredits } = await getUserLicense(
+        user.username
+    );
 
-    if (canUseRasterAnalysis === false) {
+    if (hasRasterAnalysisPrivileges(userLicenseTypeId) === false) {
         throw new Error(
             'User does not have the required license to use raster analysis'
+        );
+    }
+
+    if (availableCredits < cost) {
+        throw new Error(
+            'User does not have enough credits to run this raster analysis job'
         );
     }
 
