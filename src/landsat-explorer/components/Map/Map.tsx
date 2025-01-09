@@ -38,6 +38,7 @@ import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralP
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { ZoomToExtent } from '@shared/components/ZoomToExtent';
 import { OpenSavePanelButton } from '@shared/components/OpenSavePanelButton';
+import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -72,15 +73,18 @@ const Map = () => {
             <HillshadeLayer />
 
             <MapActionButtonsGroup>
+                <ScreenshotWidget />
+                <CopyLinkWidget />
+                <OpenSavePanelButton />
+            </MapActionButtonsGroup>
+
+            <MapNavButtonsGroup>
                 <Zoom2NativeScale
                     nativeScale={113386}
                     tooltip={"Zoom to Landsat's native resolution"}
                 />
                 <ZoomToExtent serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL} />
-                <ScreenshotWidget />
-                <CopyLinkWidget />
-                <OpenSavePanelButton />
-            </MapActionButtonsGroup>
+            </MapNavButtonsGroup>
 
             <Popup />
             <MapMagnifier />

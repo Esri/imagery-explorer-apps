@@ -24,3 +24,7 @@
 .esri-search__input::placeholder{
     color: var(--custom-light-blue-75);
 }
+
+.esri-view-root .esri-ui-top-right { 
+    top: 70px;
+}

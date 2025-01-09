@@ -63,7 +63,7 @@ export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
     return (
         <>
             <MapActionButton
-                topMarging={4}
+                // topMarging={4}
                 showLoadingIndicator={isCapturingScreenshot}
                 tooltip="Save this map view as an image"
                 disabled={disabled}

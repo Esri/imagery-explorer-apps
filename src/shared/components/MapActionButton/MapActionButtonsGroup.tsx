@@ -29,7 +29,36 @@ type Props = {
  */
 export const MapActionButtonsGroup: FC<Props> = ({ mapView, children }) => {
     return (
-        <div className={classNames('absolute left-[16px] top-[130px]')}>
+        <div
+            className={classNames(
+                'absolute left-[16px] top-[56px] flex items-center gap-[1px]'
+            )}
+        >
+            {mapView
+                ? React.Children.map(children, (child) => {
+                      if (!child) {
+                          return null;
+                      }
+
+                      return React.cloneElement(
+                          child as React.ReactElement<any>,
+                          {
+                              mapView,
+                          }
+                      );
+                  })
+                : null}
+        </div>
+    );
+};
+
+export const MapNavButtonsGroup: FC<Props> = ({ mapView, children }) => {
+    return (
+        <div
+            className={classNames(
+                'absolute right-[82px] top-[84px] flex items-center gap-[1px]'
+            )}
+        >
             {mapView
                 ? React.Children.map(children, (child) => {
                       if (!child) {

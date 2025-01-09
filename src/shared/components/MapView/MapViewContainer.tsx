@@ -57,6 +57,7 @@ import {
 import { MapCenterIndicator } from './MapCenterIndicator';
 // import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 import { appConfig } from '@shared/config';
+import { ZoomWidget } from './ZoomWidget';
 
 type Props = {
     /**
@@ -187,6 +188,8 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                 <SearchWidget hide={isAnimationPlaying} />
 
                 <ReferenceLayers />
+
+                <ZoomWidget />
             </MapView>
 
             <ReferenceLayersToggleControl shoudHide={isAnimationPlaying} />
