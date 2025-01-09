@@ -34,6 +34,8 @@ import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
  */
 export type RasterFunctionsByPublishJobType = Record<PublishJob, any>;
 
+export type EstimatedCostByJobType = Record<PublishJob, number>;
+
 export type SavePanelContainerProps = {
     /**
      * The URL of the original imagery service.
@@ -72,7 +74,7 @@ export type SavePanelContainerProps = {
      * Estimated cost of the raster analysis job.
      * The cost is in credits.
      */
-    estimatedCostByJobType: Record<PublishJob, number>;
+    estimatedCostByJobType: EstimatedCostByJobType;
 };
 
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
@@ -246,6 +248,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
         <SavePanel
             sceneId={sceneId}
             publishOptions={publishOptions}
+            estimatedCostByJobType={estimatedCostByJobType}
             saveButtonOnClick={saveButtonOnClickHandler}
         />
     );

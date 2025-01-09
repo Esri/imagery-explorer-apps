@@ -14,12 +14,16 @@ import { JobList } from './JobList';
 import { Header } from './SavePanelHeader/Header';
 import { SaveOptionButton } from './SaveOptionsList/SaveOptionButton';
 import { SaveOptionsListHeader } from './SaveOptionsList/SaveOptionsListHeader';
-import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
+import {
+    PublishAndDownloadJobType,
+    PublishJob,
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import { saveOptionInfoLookup } from './constants';
 import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
+import { EstimatedCostByJobType } from './SavePanelContainer';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -53,6 +57,11 @@ type SavePanelProps = {
     //  */
     // downloadOptions: PublishAndDownloadJobOptionData[];
     /**
+     * Estimated cost of the raster analysis job.
+     * The cost is in credits.
+     */
+    estimatedCostByJobType: EstimatedCostByJobType;
+    /**
      * Emits when a save button is clicked.
      * @param {SaveOption} option - The save button that was clicked.
      * @returns {void}
@@ -63,6 +72,7 @@ type SavePanelProps = {
 export const SavePanel: FC<SavePanelProps> = ({
     sceneId,
     publishOptions,
+    estimatedCostByJobType,
     // downloadOptions,
     saveButtonOnClick,
 }) => {
@@ -147,12 +157,18 @@ export const SavePanel: FC<SavePanelProps> = ({
                             const { inputName, outputName, description } =
                                 saveOptionInfoLookup[saveJobType];
 
+                            const estimatedCost =
+                                estimatedCostByJobType[
+                                    saveJobType as PublishJob
+                                ] || 0;
+
                             return (
                                 <SaveOptionButton
                                     key={saveJobType}
                                     title={inputName}
                                     subtitle={'as ' + outputName}
                                     desciprtion={description}
+                                    estimatedCost={estimatedCost}
                                     disabled={disabled}
                                     message={message}
                                     onClick={() => {

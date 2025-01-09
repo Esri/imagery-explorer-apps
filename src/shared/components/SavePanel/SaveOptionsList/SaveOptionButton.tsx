@@ -6,6 +6,7 @@ type SaveOptionButtonProps = {
     title: string;
     subtitle: string;
     desciprtion: string;
+    estimatedCost: number;
     disabled: boolean;
     /**
      * extra message to show
@@ -21,6 +22,7 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
     title,
     subtitle,
     desciprtion,
+    estimatedCost,
     message,
     disabled,
     onClick,
@@ -42,11 +44,14 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
             </div>
 
             <div className=" text-sm">
-                <p
+                <span
                     dangerouslySetInnerHTML={{
                         __html: message || desciprtion,
                     }}
-                ></p>
+                ></span>{' '}
+                <span>
+                    The estimated cost of this task is {estimatedCost} credits.
+                </span>
             </div>
         </div>
     );
