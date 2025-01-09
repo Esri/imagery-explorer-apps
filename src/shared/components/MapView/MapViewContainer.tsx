@@ -126,10 +126,14 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
 
     return (
         <div
-            className={classNames('absolute top-0 left-0 w-full', {
-                'bottom-0': shouldHideBottomPanel === true,
-                'bottom-bottom-panel-height': shouldHideBottomPanel === false,
-            })}
+            className={classNames(
+                'absolute top-app-header-size md:top-0 left-0 w-full',
+                {
+                    'bottom-0': shouldHideBottomPanel === true,
+                    'bottom-bottom-panel-height':
+                        shouldHideBottomPanel === false,
+                }
+            )}
         >
             <MapView webmapId={appConfig.webmapId} center={center} zoom={zoom}>
                 {children}

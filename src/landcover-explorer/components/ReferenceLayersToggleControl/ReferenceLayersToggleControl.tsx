@@ -91,7 +91,7 @@ const LayersToggleControl = () => {
     return (
         <div
             className={classNames(
-                'absolute bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-layer-toggle-top-position-mobile md:top-layer-toggle-top-position w-search-widget-width',
+                'absolute bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-map-ui-top-position w-search-widget-width',
                 {
                     hidden: animationMode !== null,
                 }

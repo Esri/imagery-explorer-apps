@@ -29,7 +29,7 @@
 * Place the UI cpomonenrs at top right corner under the search bar 
 */
 .esri-view-root .esri-ui-top-right { 
-    top: 70px;
+    @apply top-[70px]
 }
 
 /**

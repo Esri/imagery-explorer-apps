@@ -47,14 +47,16 @@ export const OpenSavePanelButtonContainer: FC<Props> = ({ mapView }) => {
     // }, []);
 
     return (
-        <OpenSavePanelButton
-            disabled={false}
-            hidden={isAnimationPlaying}
-            showLoadingIndicator={false}
-            tooltip={'Open Save Panel'}
-            onClick={() => {
-                dispatch(showSavePanelToggled());
-            }}
-        />
+        <div className=" hidden md:block">
+            <OpenSavePanelButton
+                disabled={false}
+                hidden={isAnimationPlaying}
+                showLoadingIndicator={false}
+                tooltip={'Open Save Panel'}
+                onClick={() => {
+                    dispatch(showSavePanelToggled());
+                }}
+            />
+        </div>
     );
 };

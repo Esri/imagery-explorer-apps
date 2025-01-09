@@ -92,7 +92,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
     return (
         <div
             className={classNames(
-                'absolute z-10 text-custom-light-blue flex top-0 left-0 right-0 md:top-app-header-position md:left-app-header-position md:right-auto',
+                'absolute z-10 text-custom-light-blue flex top-0 left-0 right-0 md:top-map-ui-top-position md:left-map-ui-top-position md:right-auto',
                 {
                     hidden: isAnimationPlaying,
                 }
