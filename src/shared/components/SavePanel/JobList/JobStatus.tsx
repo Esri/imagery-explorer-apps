@@ -39,7 +39,7 @@ export const JobStatus: FC<JobStatusProps> = ({
     ) {
         return (
             <div>
-                <div className="mb-1">required credits: {job.actualCost}</div>
+                <div className="mb-1">Required credits: {job.actualCost}</div>
 
                 <div
                     className="flex items-center"
@@ -47,7 +47,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                 >
                     <div className="mr-2">
                         <span
-                            className="underline cursor-pointer"
+                            className="underline cursor-pointer uppercase"
                             onClick={() => {
                                 // dispatch(updatePublishAndDownloadJob({ ...job, status: PublishAndDownloadJobStatus.ToBeSubmitted }));
                                 cancelButtonOnClick(job);
@@ -66,7 +66,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                             acceptCreditsButtonOnClick(job);
                         }}
                     >
-                        Accept
+                        <span className="uppercase">Accept</span>
                     </calcite-button>
                 </div>
             </div>
