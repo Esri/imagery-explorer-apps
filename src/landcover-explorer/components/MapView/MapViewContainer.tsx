@@ -61,6 +61,7 @@ import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
+import { ZoomWidget } from '@shared/components/MapView/ZoomWidget';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
@@ -113,10 +114,13 @@ const MapViewContainer = () => {
 
     return (
         <div
-            className={classNames('absolute top-0 left-0 w-full', {
-                'bottom-bottom-panel-height': hideControlPanel === false,
-                'bottom-0': hideControlPanel,
-            })}
+            className={classNames(
+                'absolute top-app-header-size md:top-0 left-0 w-full',
+                {
+                    'bottom-bottom-panel-height': hideControlPanel === false,
+                    'bottom-0': hideControlPanel,
+                }
+            )}
         >
             <MapView webmapId={WEB_MAP_ID} center={center} zoom={zoom}>
                 {/* <SwipeWidget
@@ -177,6 +181,8 @@ const MapViewContainer = () => {
                     <ScreenshotWidget />
                     <CopyLinkWidget />
                 </MapActionButtonsGroup>
+
+                <ZoomWidget />
             </MapView>
 
             <ReferenceLayersToggleControl />
