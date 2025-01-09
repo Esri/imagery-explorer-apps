@@ -25,6 +25,16 @@
     color: var(--custom-light-blue-75);
 }
 
+/**
+* Place the UI cpomonenrs at top right corner under the search bar 
+*/
 .esri-view-root .esri-ui-top-right { 
     top: 70px;
+}
+
+/**
+* Make sure the search suggestions are on above other nav buttons below the search bar
+*/  
+#root .esri-menu.esri-search__suggestions-menu {
+    z-index: 50;
 }
