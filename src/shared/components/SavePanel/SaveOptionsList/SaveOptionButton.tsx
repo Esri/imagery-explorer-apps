@@ -49,9 +49,12 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
                         __html: message || desciprtion,
                     }}
                 ></span>{' '}
-                <span>
-                    The estimated cost of this task is {estimatedCost} credits.
-                </span>
+                {estimatedCost && estimatedCost > 0 ? (
+                    <span>
+                        The estimated cost of this task is {estimatedCost}{' '}
+                        credits.
+                    </span>
+                ) : null}
             </div>
         </div>
     );
