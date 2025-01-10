@@ -69,8 +69,8 @@
             "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
         },
         "sentinel-2": {
-            "development": "https://utility.arcgis.com/usrsvcs/servers/3f0ca149c08f4746bc0d0fef2cee1624/rest/services/Sentinel2L2A/ImageServer",
-            "production": "https://utility.arcgis.com/usrsvcs/servers/3f0ca149c08f4746bc0d0fef2cee1624/rest/services/Sentinel2L2A/ImageServer"
+            "development": "https://utilitydevext.arcgis.com/sharing/servers/563afc27ba784f9fb3861e39c1587adc/rest/services/Sentinel2L2A/ImageServer",
+            "production": "https://utilitydevext.arcgis.com/sharing/servers/563afc27ba784f9fb3861e39c1587adc/rest/services/Sentinel2L2A/ImageServer"
         }
     }
 }

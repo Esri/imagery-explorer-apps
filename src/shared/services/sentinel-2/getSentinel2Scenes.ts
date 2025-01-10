@@ -93,7 +93,7 @@ export const getFormattedSentinel2Scenes = (
             acquisitionDate,
             formattedAcquisitionDate,
             name: attributes[NAME],
-            cloudCover: attributes[CLOUD_COVER],
+            cloudCover: attributes[CLOUD_COVER] / 100,
             formattedCloudCover: attributes[CLOUD_COVER]
                 ? Math.ceil(attributes[CLOUD_COVER] * 100)
                 : 0,
