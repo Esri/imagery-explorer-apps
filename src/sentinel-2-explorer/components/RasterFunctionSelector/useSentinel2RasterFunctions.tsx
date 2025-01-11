@@ -39,7 +39,8 @@ const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
         'Short-wave Infrared with DRA': ThumbnailSWIR,
         'NDVI Colormap': ThumbnailNDVI,
         'NDMI Colorized': ThumbnailNDMI,
-        'Normalized Burn Ratio': ThumbnailPlaceholder,
+        'NDWI Colorized': ThumbnailPlaceholder,
+        'Urban with DRA': ThumbnailPlaceholder,
     };
 
 const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
@@ -51,7 +52,8 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
     'Short-wave Infrared with DRA': null,
     'NDVI Colormap': null,
     'NDMI Colorized': null,
-    'Normalized Burn Ratio': null,
+    'NDWI Colorized': null,
+    'Urban with DRA': null,
 };
 
 export const getSentinel2RasterFunctionInfo = (): RasterFunctionInfo[] => {

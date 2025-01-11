@@ -82,9 +82,11 @@ const SENTINEL2_RASTER_FUNCTIONS = [
     'Color Infrared with DRA',
     'Short-wave Infrared with DRA',
     'Geology with DRA',
+    'Urban with DRA',
     'NDVI Colormap',
     'NDMI Colorized',
-    'Normalized Burn Ratio',
+    'NDWI Colorized',
+    // 'Normalized Burn Ratio',
 ] as const;
 
 export type Sentinel2FunctionName = (typeof SENTINEL2_RASTER_FUNCTIONS)[number];
@@ -147,10 +149,10 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
         label: 'NDMI',
     },
     {
-        name: 'Normalized Burn Ratio',
+        name: 'NDWI Colorized',
         description:
-            'The NBR index is computed as NIR(Band08)-SWIR(Band12)/NIR(Band08)+SWIR(Band12) and appropriate for highlighting burned areas and estimating fire severity. It highlights burnt areas in fire zones greater than 500 acres. You will need to generate a differenced NBR image by subtracting a post-fire image from a pre-fire image. The resulting darker pixels represent burned areas.',
-        label: 'Burn',
+            'Normalized Difference Water Index with color map computed as (b3 - b8) / (b3 + b8). Wetlands and moist areas range from light green to dark blue.',
+        label: 'NDWI',
     },
 ];
 
