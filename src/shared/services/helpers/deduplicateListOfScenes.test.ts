@@ -13,7 +13,10 @@
  * limitations under the License.
  */
 
-import { deduplicateListOfImageryScenes } from './deduplicateListOfScenes';
+import {
+    deduplicateImageryScenes4TemporalProfileTool,
+    deduplicateListOfImageryScenes,
+} from './deduplicateListOfScenes';
 
 describe('test deduplicateListOfImageryScenes', () => {
     const data = [
@@ -120,5 +123,79 @@ describe('test deduplicateListOfImageryScenes', () => {
         );
 
         expect(output.find((d) => d.objectId === 2)).toBeDefined();
+    });
+});
+describe('test deduplicateImageryScenes4TemporalProfileTool', () => {
+    const data = [
+        {
+            acquisitionYear: 2024,
+            acquisitionMonth: 1,
+            cloudCover: 10,
+            objectId: 1,
+        },
+        {
+            acquisitionYear: 2024,
+            acquisitionMonth: 1,
+            cloudCover: 5,
+            objectId: 2,
+        },
+        {
+            acquisitionYear: 2024,
+            acquisitionMonth: 2,
+            cloudCover: 20,
+            objectId: 3,
+        },
+        {
+            acquisitionYear: 2024,
+            acquisitionMonth: 2,
+            cloudCover: 15,
+            objectId: 4,
+        },
+    ] as any;
+
+    it('should retain one scene per month with the smallest cloud coverage', () => {
+        const output = deduplicateImageryScenes4TemporalProfileTool(data);
+
+        expect(output.length).toBe(2);
+        expect(output.find((d) => d.objectId === 2)).toBeDefined();
+        expect(output.find((d) => d.objectId === 4)).toBeDefined();
+    });
+
+    it('should return an empty array if input is empty', () => {
+        const output = deduplicateImageryScenes4TemporalProfileTool([]);
+
+        expect(output.length).toBe(0);
+    });
+
+    it('should retain the scene with the smallest cloud coverage when there are multiple scenes in the same month', () => {
+        const output = deduplicateImageryScenes4TemporalProfileTool(data);
+
+        expect(output.find((d) => d.objectId === 2)).toBeDefined();
+        expect(output.find((d) => d.objectId === 4)).toBeDefined();
+    });
+
+    it('should retain scenes from different months', () => {
+        const output = deduplicateImageryScenes4TemporalProfileTool(data);
+
+        expect(output.length).toBe(2);
+        expect(output.find((d) => d.objectId === 2)).toBeDefined();
+        expect(output.find((d) => d.objectId === 4)).toBeDefined();
+    });
+
+    it('should handle a single scene correctly', () => {
+        const singleSceneData = [
+            {
+                acquisitionYear: 2024,
+                acquisitionMonth: 1,
+                cloudCover: 10,
+                objectId: 1,
+            },
+        ] as any;
+
+        const output =
+            deduplicateImageryScenes4TemporalProfileTool(singleSceneData);
+
+        expect(output.length).toBe(1);
+        expect(output.find((d) => d.objectId === 1)).toBeDefined();
     });
 });

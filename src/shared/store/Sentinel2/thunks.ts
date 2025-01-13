@@ -26,6 +26,7 @@ import { DateRange } from '@typing/shared';
 import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
 import { deduplicateListOfImageryScenes } from '@shared/services/helpers/deduplicateListOfScenes';
 import { getSentinel2Scenes } from '@shared/services/sentinel-2/getSentinel2Scenes';
+import { convertSentinel2SceneToImageryScene } from '@shared/services/sentinel-2/helpers';
 
 let abortController: AbortController = null;
 
@@ -63,31 +64,32 @@ export const queryAvailableSentinel2Scenes =
             // convert list of Landsat scenes to list of imagery scenes
             let imageryScenes: ImageryScene[] = sentinel2Scenes.map(
                 (sentinel2Scene: Sentinel2Scene) => {
-                    const {
-                        objectId,
-                        name,
-                        formattedAcquisitionDate,
-                        acquisitionDate,
-                        acquisitionYear,
-                        acquisitionMonth,
-                        cloudCover,
-                    } = sentinel2Scene;
+                    // const {
+                    //     objectId,
+                    //     name,
+                    //     formattedAcquisitionDate,
+                    //     acquisitionDate,
+                    //     acquisitionYear,
+                    //     acquisitionMonth,
+                    //     cloudCover,
+                    // } = sentinel2Scene;
 
-                    const imageryScene: ImageryScene = {
-                        objectId,
-                        sceneId: name,
-                        formattedAcquisitionDate,
-                        acquisitionDate,
-                        acquisitionYear,
-                        acquisitionMonth,
-                        cloudCover,
-                        satellite: 'Sentinel-2',
-                        customTooltipText: [
-                            `${Math.ceil(cloudCover * 100)}% Cloudy`,
-                        ],
-                    };
+                    // const imageryScene: ImageryScene = {
+                    //     objectId,
+                    //     sceneId: name,
+                    //     formattedAcquisitionDate,
+                    //     acquisitionDate,
+                    //     acquisitionYear,
+                    //     acquisitionMonth,
+                    //     cloudCover,
+                    //     satellite: 'Sentinel-2',
+                    //     customTooltipText: [
+                    //         `${Math.ceil(cloudCover * 100)}% Cloudy`,
+                    //     ],
+                    // };
 
-                    return imageryScene;
+                    // return imageryScene;
+                    return convertSentinel2SceneToImageryScene(sentinel2Scene);
                 }
             );
 

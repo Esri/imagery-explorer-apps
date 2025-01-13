@@ -1,4 +1,5 @@
-import { SpectralIndex } from '@typing/imagery-service';
+import { ImageryScene } from '@shared/store/ImageryScene/reducer';
+import { Sentinel2Scene, SpectralIndex } from '@typing/imagery-service';
 
 type Sentinel2MissionId = 'S2A' | 'S2B';
 
@@ -121,4 +122,38 @@ export const getBandIndexesBySpectralIndex = (
     spectralIndex: SpectralIndex
 ): string => {
     return BandIndexesLookup[spectralIndex];
+};
+
+/**
+ * Converts a Sentinel-2 scene object to an ImageryScene object.
+ *
+ * @param {Sentinel2Scene} sentinel2Scene - The Sentinel-2 scene object to convert.
+ * @returns {ImageryScene} The converted ImageryScene object.
+ */
+export const convertSentinel2SceneToImageryScene = (
+    sentinel2Scene: Sentinel2Scene
+): ImageryScene => {
+    const {
+        objectId,
+        name,
+        formattedAcquisitionDate,
+        acquisitionDate,
+        acquisitionYear,
+        acquisitionMonth,
+        cloudCover,
+    } = sentinel2Scene;
+
+    const imageryScene: ImageryScene = {
+        objectId,
+        sceneId: name,
+        formattedAcquisitionDate,
+        acquisitionDate,
+        acquisitionYear,
+        acquisitionMonth,
+        cloudCover,
+        satellite: 'Sentinel-2',
+        customTooltipText: [`${Math.ceil(cloudCover * 100)}% Cloudy`],
+    };
+
+    return imageryScene;
 };

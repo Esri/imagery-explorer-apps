@@ -32,6 +32,7 @@ import {
 import { DateRange } from '@typing/shared';
 import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
 import { deduplicateListOfImageryScenes } from '@shared/services/helpers/deduplicateListOfScenes';
+import { convertLandsatSceneToImageryScene } from '@shared/services/landsat-level-2/helpers';
 
 let abortController: AbortController = null;
 /**
@@ -153,32 +154,34 @@ export const queryAvailableScenes =
             // convert list of Landsat scenes to list of imagery scenes
             let imageryScenes: ImageryScene[] = landsatScenes.map(
                 (landsatScene: LandsatScene) => {
-                    const {
-                        objectId,
-                        name,
-                        formattedAcquisitionDate,
-                        acquisitionDate,
-                        acquisitionYear,
-                        acquisitionMonth,
-                        cloudCover,
-                        satellite,
-                    } = landsatScene;
+                    // const {
+                    //     objectId,
+                    //     name,
+                    //     formattedAcquisitionDate,
+                    //     acquisitionDate,
+                    //     acquisitionYear,
+                    //     acquisitionMonth,
+                    //     cloudCover,
+                    //     satellite,
+                    // } = landsatScene;
 
-                    const imageryScene: ImageryScene = {
-                        objectId,
-                        sceneId: name,
-                        formattedAcquisitionDate,
-                        acquisitionDate,
-                        acquisitionYear,
-                        acquisitionMonth,
-                        cloudCover,
-                        satellite,
-                        customTooltipText: [
-                            `${Math.ceil(cloudCover * 100)}% Cloudy`,
-                        ],
-                    };
+                    // const imageryScene: ImageryScene = {
+                    //     objectId,
+                    //     sceneId: name,
+                    //     formattedAcquisitionDate,
+                    //     acquisitionDate,
+                    //     acquisitionYear,
+                    //     acquisitionMonth,
+                    //     cloudCover,
+                    //     satellite,
+                    //     customTooltipText: [
+                    //         `${Math.ceil(cloudCover * 100)}% Cloudy`,
+                    //     ],
+                    // };
 
-                    return imageryScene;
+                    // return imageryScene;
+
+                    return convertLandsatSceneToImageryScene(landsatScene);
                 }
             );
 

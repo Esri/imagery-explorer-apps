@@ -80,3 +80,48 @@ export const deduplicateListOfImageryScenes = (
 
     return output;
 };
+
+/**
+ * Deduplicates a list of imagery scenes for the temporal profile tool.
+ *
+ * This function processes a list of imagery scenes and returns a new list
+ * where scenes acquired in the same year and month are deduplicated. If multiple
+ * scenes are acquired in the same year and month, the scene with the smaller
+ * cloud coverage is retained.
+ *
+ * @param scenes - An array of ImageryScene objects to be deduplicated.
+ * @returns An array of ImageryScene objects with duplicates removed based on acquisition year, month, and cloud coverage.
+ */
+export const deduplicateImageryScenes4TemporalProfileTool = (
+    scenes: ImageryScene[]
+): ImageryScene[] => {
+    if (!scenes.length) {
+        return [];
+    }
+
+    const candidates: ImageryScene[] = [scenes[0]];
+
+    for (let i = 1; i < scenes.length; i++) {
+        const prevScene = candidates[candidates.length - 1];
+
+        const currentScene = scenes[i];
+
+        // add current scene to candidates if it was acquired from a different year or month
+        if (
+            prevScene?.acquisitionYear !== currentScene.acquisitionYear ||
+            prevScene?.acquisitionMonth !== currentScene.acquisitionMonth
+        ) {
+            candidates.push(currentScene);
+            continue;
+        }
+
+        // if two scenes that were acquired within the same year and month
+        // we should keep the one with smaller cloud coverage
+        if (currentScene.cloudCover < prevScene.cloudCover) {
+            candidates.pop();
+            candidates.push(currentScene);
+        }
+    }
+
+    return candidates;
+};

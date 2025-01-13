@@ -64,13 +64,14 @@ export const SENTINEL_2_SERVICE_URL =
  * Field Names Look-up table for Sentinel2L2A (ImageServer)
  * @see https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer
  */
-export const FIELD_NAMES = {
-    OBJECTID: 'objectid',
-    NAME: 'name',
-    ACQUISITION_DATE: 'acquisitiondate',
-    CLOUD_COVER: 'cloudcover',
-    CATEGORY: 'category',
-};
+export enum FIELD_NAMES {
+    OBJECTID = 'objectid',
+    NAME = 'name',
+    ACQUISITION_DATE = 'acquisitiondate',
+    CLOUD_COVER = 'cloudcover',
+    CATEGORY = 'category',
+    MONTH = 'month',
+}
 
 /**
  * List of Raster Functions for the Sentinel-1 service

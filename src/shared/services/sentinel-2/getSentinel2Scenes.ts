@@ -56,7 +56,8 @@ type GetSentinel1ScenesParams = {
 
 // let controller:AbortController = null;
 
-const { OBJECTID, ACQUISITION_DATE, CLOUD_COVER, NAME, CATEGORY } = FIELD_NAMES;
+const { OBJECTID, ACQUISITION_DATE, CLOUD_COVER, NAME, CATEGORY, MONTH } =
+    FIELD_NAMES;
 
 /**
  * A Map that will be used to retrieve Landsat Scene data using the object Id as key
@@ -137,9 +138,9 @@ export const getSentinel2Scenes = async ({
         );
     }
 
-    // if (acquisitionMonth) {
-    //     whereClauses.push(`(${MONTH} = ${acquisitionMonth})`);
-    // }
+    if (acquisitionMonth) {
+        whereClauses.push(`(${MONTH} = ${acquisitionMonth})`);
+    }
 
     const [longitude, latitude] = mapPoint;
 
