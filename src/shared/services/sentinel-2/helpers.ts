@@ -52,19 +52,21 @@ export const parseSentinel2ProductInfo = (
  * Sentinel-2 Band Index by Spectral Index
  *
  * Here is the list of Sentinel-2 Bands:
- * - Band 1: Coastal aerosol (0.433 - 0.453 µm)
- * - Band 2: Blue (0.458 - 0.523 µm)
- * - Band 3: Green (0.543 - 0.578 µm)
- * - Band 4: Red (0.650 - 0.680 µm)
- * - Band 5: Vegetation Red Edge (0.698 - 0.713 µm)
- * - Band 6: Vegetation Red Edge (0.733 - 0.748 µm)
- * - Band 7: Vegetation Red Edge (0.773 - 0.793 µm)
- * - Band 8: Near-Infrared (0.785 - 0.900 µm)
- * - Band 8A: Narrow NIR (0.855 - 0.875 µm)
- * - Band 9: Water vapour (0.935 - 0.955 µm)
- * - Band 10: SWIR – Cirrus (1.365 - 1.385 µm)
- * - Band 11: SWIR-1 (1.565 - 1.655 µm)
- * - Band 12: SWIR-2 (2.100 - 2.280 µm)
+ * - Band 1: Aerosols (60m)
+ * - Band 2: Blue (10m)
+ * - Band 3: Green (10m)
+ * - Band 4: Red (10m)
+ * - Band 5: Red Edge (20m)
+ * - Band 6: Red Edge (20m)
+ * - Band 7: Red Edge (20m)
+ * - Band 8: Near InfraRed (10m)
+ * - Band 8A: Narrow NIR (20m)
+ * - Band 9: Water Vapour (60m)
+ * - Band 11: Short Wave InfraRed (20m)
+ * - Band 12: Short Wave InfraRed (20m)
+ * - Band 13: AOT Map (10m)
+ * - Band 14: WVP Map (20m)
+ * - Band 15: SCL (20m)
  *
  * @see https://pro.arcgis.com/en/pro-app/3.0/help/analysis/raster-functions/band-arithmetic-function.htm
  * @see https://www.esri.com/about/newsroom/arcuser/spectral-library/
@@ -79,7 +81,7 @@ const BandIndexesLookup: Partial<Record<SpectralIndex, string>> = {
      * - NIR = pixel values from the near-infrared band
      * - SWIR1 = pixel values from the first shortwave infrared band
      */
-    moisture: '(B5-B12)/(B5+B12)',
+    moisture: '(B8-B11)/(B8+B11)',
     /**
      * The Green Normalized Difference Vegetation Index (GNDVI) method is a vegetation index for estimating photo synthetic activity
      * and is a commonly used vegetation index to determine water and nitrogen uptake into the plant canopy.
@@ -98,24 +100,24 @@ const BandIndexesLookup: Partial<Record<SpectralIndex, string>> = {
      * - Green = pixel values from the green band
      * - SWIR = pixel values from the shortwave infrared band
      */
-    water: '(B3-B12)/(B3+B12)',
-    /**
-     * The Normalized Difference Built-up Index (NDBI) uses the NIR and SWIR bands to emphasize man-made built-up areas.
-     * It is ratio based to mitigate the effects of terrain illumination differences as well as atmospheric effects.
-     *
-     * NDBI = (SWIR - NIR) / (SWIR + NIR)
-     * - SWIR = pixel values from the shortwave infrared band
-     * - NIR = pixel values from the near-infrared band
-     */
-    urban: '(B12-B8)/(B12+B8)',
-    /**
-     * The Normalized Burn Ratio Index (NBRI) uses the NIR and SWIR bands to emphasize burned areas, while mitigating illumination and atmospheric effects.
-     *
-     * NBR = (NIR - SWIR) / (NIR+ SWIR)
-     * - NIR = pixel values from the near-infrared band
-     * - SWIR = pixel values from the shortwave infrared band
-     */
-    burn: '(B13-B8)/(B13+B8)',
+    water: '(B3-B11)/(B3+B11)',
+    // /**
+    //  * The Normalized Difference Built-up Index (NDBI) uses the NIR and SWIR bands to emphasize man-made built-up areas.
+    //  * It is ratio based to mitigate the effects of terrain illumination differences as well as atmospheric effects.
+    //  *
+    //  * NDBI = (SWIR - NIR) / (SWIR + NIR)
+    //  * - SWIR = pixel values from the shortwave infrared band
+    //  * - NIR = pixel values from the near-infrared band
+    //  */
+    // urban: '(B12-B8)/(B12+B8)',
+    // /**
+    //  * The Normalized Burn Ratio Index (NBRI) uses the NIR and SWIR bands to emphasize burned areas, while mitigating illumination and atmospheric effects.
+    //  *
+    //  * NBR = (NIR - SWIR) / (NIR+ SWIR)
+    //  * - NIR = pixel values from the near-infrared band
+    //  * - SWIR = pixel values from the shortwave infrared band
+    //  */
+    // burn: '(B13-B8)/(B13+B8)',
 };
 
 export const getBandIndexesBySpectralIndex = (
@@ -156,4 +158,65 @@ export const convertSentinel2SceneToImageryScene = (
     };
 
     return imageryScene;
+};
+
+/**
+ * Calculate the Sentinel-2 Spectral Index based on the input band values.
+ *
+ * @param spectralIndex name of the spectral index
+ * @param bandValues array of band values
+ * @returns the calculated spectral index value
+ *
+ * Here is the list of Sentinel-2 Bands:
+ * - Band 1: Aerosols (60m)
+ * - Band 2: Blue (10m)
+ * - Band 3: Green (10m)
+ * - Band 4: Red (10m)
+ * - Band 5: Red Edge (20m)
+ * - Band 6: Red Edge (20m)
+ * - Band 7: Red Edge (20m)
+ * - Band 8: Near InfraRed (10m)
+ * - Band 8A: Narrow NIR (20m)
+ * - Band 9: Water Vapour (60m)
+ * - Band 11: Short Wave InfraRed (20m)
+ * - Band 12: Short Wave InfraRed (20m)
+ * - Band 13: AOT Map (10m)
+ * - Band 14: WVP Map (20m)
+ * - Band 15: SCL (20m)
+ */
+export const calcSentinel2SpectralIndex = (
+    spectralIndex: SpectralIndex,
+    bandValues: number[]
+): number => {
+    const [
+        B1,
+        B2,
+        B3,
+        B4,
+        B5,
+        B6,
+        B7,
+        B8,
+        B8A,
+        B9,
+        B10,
+        B11,
+        B12,
+        B13,
+        B14,
+        B15,
+    ] = bandValues;
+
+    let value = 0;
+
+    // Calculate the value based on the input spectral index
+    if (spectralIndex === 'moisture') {
+        value = (B8 - B11) / (B8 + B11);
+    } else if (spectralIndex === 'vegetation') {
+        value = (B8 - B4) / (B8 + B4);
+    } else if (spectralIndex === 'water') {
+        value = (B3 - B11) / (B3 + B11);
+    }
+
+    return value;
 };

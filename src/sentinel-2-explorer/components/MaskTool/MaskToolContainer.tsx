@@ -78,14 +78,14 @@ export const MaskToolContainer = () => {
                         value: 'moisture' as SpectralIndex,
                         label: 'MOISTURE INDEX',
                     },
-                    {
-                        value: 'urban' as SpectralIndex,
-                        label: 'URBAN',
-                    },
-                    {
-                        value: 'burn' as SpectralIndex,
-                        label: 'BURN INDEX',
-                    },
+                    // {
+                    //     value: 'urban' as SpectralIndex,
+                    //     label: 'URBAN',
+                    // },
+                    // {
+                    //     value: 'burn' as SpectralIndex,
+                    //     label: 'BURN INDEX',
+                    // },
                 ]}
                 selectedValue={selectedSpectralIndex}
                 tooltipText={MASK_TOOL_HEADER_TOOLTIP}

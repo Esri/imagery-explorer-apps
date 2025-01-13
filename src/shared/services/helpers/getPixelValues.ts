@@ -104,14 +104,23 @@ export const getPixelValues = async ({
             const feature = features[i];
             const value = Values[i];
 
+            // console.log(value)
             const objectId = feature.attributes.objectid;
+
+            let containsNonNumericValue = false;
+
             const values = value.split(' ').map((d) => {
                 if (canBeConvertedToNumber(d) === false) {
+                    containsNonNumericValue = true;
                     return null;
                 }
 
                 return +d;
             });
+
+            if (containsNonNumericValue) {
+                continue;
+            }
 
             pixelValuesByObjectId[objectId] = values;
         }

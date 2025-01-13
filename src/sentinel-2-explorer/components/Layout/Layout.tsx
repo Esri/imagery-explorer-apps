@@ -50,6 +50,7 @@ import { Sentinel2AnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeTool
 import { Sentinel2MaskTool } from '../MaskTool';
 import { Sentinel2ChangeCompareTool } from '../ChangeCompareTool';
 import { Sentinel2SpectralProfileTool } from '../SpectralProfileTool';
+import { Sentinel2TemporalProfileTool } from '../Sentinel2TemporalProfileTool/Sentinel2TemporalProfileTool';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -122,7 +123,7 @@ const Layout = () => {
                             {mode === 'analysis' && (
                                 <div className="analyze-tool-and-scene-info-container">
                                     <Sentinel2MaskTool />
-                                    {/* <TrendTool /> */}
+                                    <Sentinel2TemporalProfileTool />
                                     <Sentinel2SpectralProfileTool />
                                     <Sentinel2ChangeCompareTool />
                                 </div>

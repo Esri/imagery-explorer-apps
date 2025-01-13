@@ -72,6 +72,7 @@ import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getL
 import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selectors';
+import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
 
 export const LandsatTemporalProfileTool = () => {
     const dispatch = useDispatch();
@@ -194,7 +195,7 @@ export const LandsatTemporalProfileTool = () => {
                         label: 'surface temp °C',
                     },
                 ]}
-                tooltipText={`The least cloudy scenes from the selected time interval will be sampled to show a temporal trend for the selected point and category.`}
+                tooltipText={TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT}
             />
 
             <div className="w-full h-[120px] my-2">
