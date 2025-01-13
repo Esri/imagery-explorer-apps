@@ -1,4 +1,5 @@
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
+import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 import { Sentinel2Scene, SpectralIndex } from '@typing/imagery-service';
 
 type Sentinel2MissionId = 'S2A' | 'S2B';
@@ -206,6 +207,13 @@ export const calcSentinel2SpectralIndex = (
         B14,
         B15,
     ] = bandValues;
+
+    // Check if any of the band values is null or undefined
+    for (const val of bandValues) {
+        if (val === null || val === undefined) {
+            return 0;
+        }
+    }
 
     let value = 0;
 
