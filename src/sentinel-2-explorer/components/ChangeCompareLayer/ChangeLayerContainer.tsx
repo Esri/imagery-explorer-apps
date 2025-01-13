@@ -73,6 +73,10 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
 
     useEffect(() => {
         (async () => {
+            if (!isVisible) {
+                return;
+            }
+
             try {
                 const bandIndex = getBandIndexesBySpectralIndex(spectralIndex);
 
@@ -93,7 +97,7 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
                 setRasterFunction(null);
             }
         })();
-    }, [spectralIndex, queryParams4SceneA, queryParams4SceneB]);
+    }, [spectralIndex, queryParams4SceneA, queryParams4SceneB, isVisible]);
 
     useCalculateTotalAreaByPixelsCount({
         objectId:

@@ -20,6 +20,8 @@ type GetFeatureByObjectIdOptions = {
     token?: string;
 };
 
+const cachedFeature = new Map<string, IFeature>();
+
 /**
  * Query Imagery Service to get a feature by ObjectID
  * @param serviceUrl URL of the Imagery Service
@@ -31,6 +33,12 @@ export const getFeatureByObjectId = async (
     objectId: number,
     options?: GetFeatureByObjectIdOptions
 ): Promise<IFeature> => {
+    const cacheKey = `${serviceUrl}/${objectId}`;
+
+    if (cachedFeature.has(cacheKey)) {
+        return cachedFeature.get(cacheKey);
+    }
+
     const queryParams = new URLSearchParams({
         f: 'json',
         returnGeometry: 'true',
@@ -62,5 +70,7 @@ export const getFeatureByObjectId = async (
         return null;
     }
 
-    return data?.features[0] as IFeature;
+    cachedFeature.set(cacheKey, data.features[0]);
+
+    return cachedFeature.get(cacheKey) as IFeature;
 };

@@ -15,6 +15,8 @@
 
 import { IExtent } from '@esri/arcgis-rest-feature-service';
 
+const cachedExtent = new Map<string, IExtent>();
+
 /**
  * Fetches the extent of a feature by its object ID from a given service URL.
  *
@@ -37,6 +39,12 @@ export const getExtentByObjectId = async ({
     outputSpatialReference?: number;
     token?: string;
 }): Promise<IExtent> => {
+    const cacheKey = `${serviceUrl}/${objectId}`;
+
+    if (cachedExtent.has(cacheKey)) {
+        return cachedExtent.get(cacheKey);
+    }
+
     const queryParams = new URLSearchParams({
         f: 'json',
         returnExtentOnly: 'true',
@@ -67,5 +75,7 @@ export const getExtentByObjectId = async ({
         return null;
     }
 
-    return data?.extent as IExtent;
+    cachedExtent.set(cacheKey, data.extent);
+
+    return cachedExtent.get(cacheKey) as IExtent;
 };
