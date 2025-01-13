@@ -54,8 +54,6 @@ export type PixelValuesData = {
     values: number[];
 };
 
-const cachedPixelValues = new Map<string, PixelValuesData[]>();
-
 /**
  * Retrieves pixel values that intersect with the specified point from imagery scenes by the input object ID.
  * The function sends parallel identify requests for groups of object IDs to the specified service URL.
@@ -73,12 +71,6 @@ export const getPixelValues = async ({
     objectIds,
     abortController,
 }: GetPixelValuesParams): Promise<PixelValuesData[]> => {
-    const cacheKey = `${serviceURL}/${objectIds.join(',')}`;
-
-    if (cachedPixelValues.has(cacheKey)) {
-        return cachedPixelValues.get(cacheKey);
-    }
-
     // divide object IDs into separate groups for parallel fetching.
     const objectsIdsInSeparateGroups =
         splitObjectIdsToSeparateGroups(objectIds);
@@ -142,8 +134,6 @@ export const getPixelValues = async ({
                 values: pixelValuesByObjectId[objectId],
             };
         });
-
-    cachedPixelValues.set(cacheKey, output);
 
     return output;
 };
