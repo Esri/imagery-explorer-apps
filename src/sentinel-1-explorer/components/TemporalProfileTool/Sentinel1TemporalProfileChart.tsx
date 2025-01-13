@@ -15,8 +15,9 @@
 
 import React from 'react';
 import { useSentinel1TemporalProfileDataAsChartData } from './useTemporalProfileDataAsChartData';
-import { useCustomDomain4YScale } from './useCustomDomain4YScale';
+// import { useCustomDomain4YScale } from './useCustomDomain4YScale';
 import { TemporalProfileChart } from '@shared/components/TemporalProfileChart';
+import { useCustomDomain4YScale } from '@shared/components/TemporalProfileChart/useCustomDomain4YScale';
 
 export const Sentinel1TemporalProfileChart = () => {
     const chartData = useSentinel1TemporalProfileDataAsChartData();
