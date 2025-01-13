@@ -89,7 +89,7 @@ const useLandCoverLayer = ({
             return;
         }
 
-        layerRef.current.renderingRule = {
+        layerRef.current.rasterFunction = {
             functionName:
                 getRasterFunctionByLandCoverClassName(activeLandCoverType),
         } as any;

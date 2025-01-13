@@ -114,7 +114,7 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
-    "@arcgis/core": "^4.29.10",
+    "@arcgis/core": "^4.31.6",
     "@esri/arcgis-rest-feature-service": "^4.0.4",
     "@reduxjs/toolkit": "1.8",
     "@types/react": "^18.0.9",
@@ -126,7 +126,7 @@
     "date-fns-tz": "^2.0.0",
     "helper-toolkit-ts": "^1.2.1",
     "jszip": "^3.10.1",
-    "nanoid": "^4.0.2",
+    "nanoid": "^5.0.9",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",
