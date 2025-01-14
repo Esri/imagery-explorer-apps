@@ -46,41 +46,53 @@ export const getLoadingIndicator = () => {
  */
 export const getPopUpContentWithLocationInfo = (
     mapPoint: Point,
-    popupContent?: string
+    popupContent = ''
 ): HTMLDivElement => {
     const lat = Math.round(mapPoint.latitude * 1000) / 1000;
     const lon = Math.round(mapPoint.longitude * 1000) / 1000;
 
     const popupDiv = document.createElement('div');
 
-    popupContent = popupContent || '';
+    const coordinatesHTML = `
+        <span><span class='text-custom-light-blue-50'>x</span> ${lon}</span>
+        <span class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</span>
+    `;
 
-    popupDiv.innerHTML =
-        popupContent +
-        `
+    const locationInfoHTML = `
         <div 
-            class='popup-location-info text-custom-light-blue text-xs cursor-pointer' 
-            title="click to copy the coordinates of this location"
+            class='popup-location-info-container text-custom-light-blue text-xs cursor-pointer' 
+            title="Click to copy the coordinates of this location"
         >
-            <div class='flex'>
-                <p><span class='text-custom-light-blue-50'>x</span> ${lon}</p>
-                <p class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</p>
+            <div class='popup-location-info-content'>
+                ${coordinatesHTML}
             </div>
         </div>
     `;
 
-    const locationInfo = popupDiv.querySelector('.popup-location-info');
+    popupDiv.innerHTML = popupContent + locationInfoHTML;
 
-    if (locationInfo) {
-        locationInfo.addEventListener('click', async () => {
-            // console.log('clicked on popup location info')
-            await navigator.clipboard.writeText(
-                `x: ${mapPoint.longitude.toFixed(
-                    5
-                )} y: ${mapPoint.latitude.toFixed(5)}`
-            );
-        });
-    }
+    const locationInfoContainer = popupDiv.querySelector(
+        '.popup-location-info-container'
+    );
+    const locationInfoContent = popupDiv.querySelector(
+        '.popup-location-info-content'
+    );
+
+    locationInfoContainer.addEventListener('click', async () => {
+        // console.log('clicked on popup location info')
+        await navigator.clipboard.writeText(
+            `x: ${mapPoint.longitude.toFixed(5)} y: ${mapPoint.latitude.toFixed(
+                5
+            )}`
+        );
+
+        locationInfoContent.innerHTML =
+            '<span>Cooridnates copied to clipboard</span>';
+
+        setTimeout(() => {
+            locationInfoContent.innerHTML = coordinatesHTML;
+        }, 2000);
+    });
 
     return popupDiv;
 };
