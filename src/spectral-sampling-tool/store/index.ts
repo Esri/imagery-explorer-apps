@@ -15,8 +15,11 @@
 
 import configureAppStore from '@shared/store/configureStore';
 import { getPreloadedState } from './getPreloadedState';
+import { SpectralSamplingToolSupportedService } from '@shared/store/SpectralSamplingTool/reducer';
 
-export const getSpectralSampingToolStore = async () => {
-    const preloadedState = await getPreloadedState();
+export const getSpectralSampingToolStore = (
+    targetService: SpectralSamplingToolSupportedService
+) => {
+    const preloadedState = getPreloadedState(targetService);
     return configureAppStore(preloadedState);
 };

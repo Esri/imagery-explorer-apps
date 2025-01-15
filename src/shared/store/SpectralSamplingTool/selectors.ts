@@ -41,3 +41,8 @@ export const selectSelectedSpectralSamplingPointData = createSelector(
         return byId[idOfSelectedItemInListOfQueryParams];
     }
 );
+
+export const selectTargetService = createSelector(
+    (state: RootState) => state.SpectralSamplingTool.targetService,
+    (targetService) => targetService
+);

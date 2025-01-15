@@ -23,17 +23,15 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 // import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
-import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { LandsatRasterFunctionSelector } from '@landsat-explorer/components/RasterFunctionSelector';
+import { useSelector } from 'react-redux';
+import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
+import { Layout4Sentinel2 } from './Layout4Sentinel2';
+import { Layout4Landsat } from './Layout4Landsat';
 
 const Layout = () => {
-    useSaveAppState2HashParams();
+    const targetService = useSelector(selectTargetService);
 
-    /**
-     * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
-     * changes, it will dispatch the query that finds the available landsat scenes.
-     */
-    useQueryAvailableLandsatScenes();
+    useSaveAppState2HashParams();
 
     return (
         <>
@@ -54,7 +52,10 @@ const Layout = () => {
                         </div>
 
                         <div className="flex shrink-0 ml-4">
-                            <LandsatRasterFunctionSelector />
+                            {targetService === 'landsat' && <Layout4Landsat />}
+                            {targetService === 'sentinel-2' && (
+                                <Layout4Sentinel2 />
+                            )}
                         </div>
                     </>
                 </div>

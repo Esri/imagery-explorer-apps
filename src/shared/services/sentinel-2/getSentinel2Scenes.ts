@@ -175,7 +175,7 @@ export const getSentinel2Scenes = async ({
     );
 
     if (!res.ok) {
-        throw new Error('failed to query Landsat-2 service');
+        throw new Error('failed to query Sentinel-2 service');
     }
 
     const data = await res.json();

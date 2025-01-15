@@ -76,6 +76,7 @@ module.exports =  (env, options)=> {
             alias: {
                 '@shared': path.resolve(__dirname, 'src/shared/'),
                 '@landsat-explorer': path.resolve(__dirname, 'src/landsat-explorer/'),
+                '@sentinel2-explorer': path.resolve(__dirname, 'src/sentinel-2-explorer/'),
                 '@landcover-explorer': path.resolve(__dirname, 'src/landcover-explorer/'),
                 '@typing': path.resolve(__dirname, 'src/types/'),
             },

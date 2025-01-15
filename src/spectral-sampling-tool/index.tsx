@@ -24,21 +24,30 @@ import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { getSpectralSampingToolStore } from './store';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
-import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
-import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
+import {
+    getTargetService,
+    getTimeExtentByTargetService,
+    getRasterFunctionInfoByTargetService,
+} from './utils/getTargetService';
 
 (async () => {
-    const store = await getSpectralSampingToolStore();
-
-    const timeExtent = await getTimeExtentOfLandsatService();
-
     const root = createRoot(document.getElementById('root'));
+
+    const targetService = getTargetService();
+
+    const store = getSpectralSampingToolStore(targetService);
+
+    const timeExtent = await getTimeExtentByTargetService(targetService);
+    console.log('timeExtent', timeExtent);
+
+    const rasterFunctionInfo =
+        getRasterFunctionInfoByTargetService(targetService);
 
     root.render(
         <ReduxProvider store={store}>
             <AppContextProvider
                 timeExtent={timeExtent}
-                rasterFunctionInfo={LANDSAT_RASTER_FUNCTION_INFOS}
+                rasterFunctionInfo={rasterFunctionInfo}
             >
                 <ErrorBoundary>
                     <Map />

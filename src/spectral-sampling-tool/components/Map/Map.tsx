@@ -19,12 +19,19 @@ import { LandsatLayer } from '@landsat-explorer/components/LandsatLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { CustomEventHandlers } from './CustomEventHandler';
 import { SamplingPointsLayer } from '../SamplingPointsLayer';
+import { useSelector } from 'react-redux';
+import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
+import { Sentinel2Layer } from '@sentinel2-explorer/components/Sentinel2Layer';
 
 const Map = () => {
+    const targetService = useSelector(selectTargetService);
+
     return (
         <MapViewContainer>
             <GroupLayer>
-                <LandsatLayer />
+                {targetService === 'landsat' ? <LandsatLayer /> : <></>}
+                {targetService === 'sentinel-2' ? <Sentinel2Layer /> : <></>}
+                {/* <LandsatLayer /> */}
                 <SamplingPointsLayer />
             </GroupLayer>
             <CustomEventHandlers />
