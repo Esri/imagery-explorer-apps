@@ -29,8 +29,15 @@ import {
     getTimeExtentByTargetService,
     getRasterFunctionInfoByTargetService,
 } from './utils/getTargetService';
+import { initEsriOAuth } from '@shared/utils/esri-oauth';
+import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
 
 (async () => {
+    await initEsriOAuth({
+        appId: appConfig.appId,
+        portalUrl: AGOL_PORTAL_ROOT,
+    });
+
     const root = createRoot(document.getElementById('root'));
 
     const targetService = getTargetService();
