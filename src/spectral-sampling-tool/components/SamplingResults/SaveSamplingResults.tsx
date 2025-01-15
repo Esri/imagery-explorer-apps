@@ -17,7 +17,7 @@ import React, { useState } from 'react';
 import { useFormattedSpectralSamplingData } from '../SamplingPointsList/useFormattedSpectralSamplingData';
 import { useSelector } from 'react-redux';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
-import { convert2csv } from '@shared/utils/snippets/convert2csv';
+// import { convert2csv } from '@shared/utils/snippets/convert2csv';
 import { saveLandsatSamplingResults } from './helpers';
 import { useAveragedBandValues } from './useAveragedSamplingResults';
 

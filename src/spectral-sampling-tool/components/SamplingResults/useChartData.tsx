@@ -19,7 +19,7 @@ import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
 } from '@shared/store/SpectralSamplingTool/selectors';
-import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumns';
+// import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumns';
 // import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import React, { useMemo } from 'react';
