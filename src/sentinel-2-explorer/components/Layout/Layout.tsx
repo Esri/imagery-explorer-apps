@@ -51,6 +51,7 @@ import { Sentinel2MaskTool } from '../MaskTool';
 import { Sentinel2ChangeCompareTool } from '../ChangeCompareTool';
 import { Sentinel2SpectralProfileTool } from '../SpectralProfileTool';
 import { Sentinel2TemporalProfileTool } from '../Sentinel2TemporalProfileTool/Sentinel2TemporalProfileTool';
+import { Sentinel2SavePanel } from '../Sentinel2SavePanel';
 
 const Layout = () => {
     const mode = useSelector(selectAppMode);
@@ -136,6 +137,7 @@ const Layout = () => {
                     <Sentinel2RasterFunctionSelector />
                 </div>
             </BottomPanel>
+            <Sentinel2SavePanel />
         </>
     );
 };

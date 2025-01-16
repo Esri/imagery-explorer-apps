@@ -35,17 +35,22 @@ export const SENTINEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${S
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
  */
-const SENTINEL_2_ORIGINAL_SERVICE_URL =
+const SENTINEL_2_ORIGINAL_SERVICE_URL_PROD =
     'https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
 
 const SENTINEL_2_ORIGINAL_SERVICE_URL_DEV =
     'https://sentineldev.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer/';
 
+export const SENTINEL_2_ORIGINAL_SERVICE_URL =
+    TIER === 'development'
+        ? SENTINEL_2_ORIGINAL_SERVICE_URL_DEV
+        : SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+
 /**
  * Service URL to be used in PROD enviroment
  */
 export const SENTINEL_2_SERVICE_URL_PROD =
-    serviceConfig.production || SENTINEL_2_ORIGINAL_SERVICE_URL;
+    serviceConfig.production || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in DEV enviroment

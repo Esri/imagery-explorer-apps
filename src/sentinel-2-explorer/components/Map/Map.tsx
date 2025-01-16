@@ -39,6 +39,7 @@ import { Sentinel2Layer } from '../Sentinel2Layer';
 import { Sentinel2MaskLayer } from '../MaskLayer';
 import { Sentinel2ChangeLayer } from '../ChangeCompareLayer';
 import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
+import { OpenSavePanelButton } from '@shared/components/OpenSavePanelButton';
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const Map = () => {
             <MapActionButtonsGroup>
                 <ScreenshotWidget />
                 <CopyLinkWidget />
+                <OpenSavePanelButton />
             </MapActionButtonsGroup>
 
             <MapNavButtonsGroup>
