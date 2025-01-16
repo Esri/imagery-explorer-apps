@@ -41,6 +41,8 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
             />
             <ZoomToExtent serviceUrl={serviceUrl} />
 
+            <div className="h-[1px] my-[5px] w-map-action-button-size bg-custom-background"></div>
+
             <ScreenshotWidget />
             <CopyLinkWidget />
             <OpenSavePanelButton />
