@@ -569,69 +569,86 @@ export const createChangeDetectionRasterFunction = ({
                     },
                     arguments: {
                         Rasters: {
-                            name: 'Divide',
-                            description:
-                                'Divides the values of two rasters on a cell-by-cell basis.',
-                            function: {
-                                type: 'LocalFunction',
-                                pixelType: 'F32',
-                                name: 'Divide',
-                                description:
-                                    'Divides the values of two rasters on a cell-by-cell basis.',
-                            },
-                            arguments: {
-                                Rasters: {
-                                    name: '_Rasters',
-                                    isPublic: false,
-                                    isDataset: false,
-                                    value: {
-                                        elements: [
-                                            {
-                                                name: 'InRaster2',
-                                                isPublic: false,
-                                                isDataset: true,
-                                                value: rasterFunction4LaterScene,
-                                                type: 'RasterFunctionVariable',
+                            name: '_Rasters',
+                            value: {
+                                elements: [
+                                    {
+                                        name: 'Raster',
+                                        isDataset: true,
+                                        isPublic: false,
+                                        type: 'RasterFunctionVariable',
+                                        value: {
+                                            name: 'Divide',
+                                            description:
+                                                'Divides the values of two rasters on a cell-by-cell basis.',
+                                            function: {
+                                                type: 'LocalFunction',
+                                                pixelType: 'F32',
+                                                name: 'Divide',
+                                                description:
+                                                    'Divides the values of two rasters on a cell-by-cell basis.',
                                             },
-                                            {
-                                                name: 'Raster',
-                                                isPublic: false,
-                                                isDataset: true,
-                                                value: rasterFunction4EarlierScene,
-                                                type: 'RasterFunctionVariable',
+                                            arguments: {
+                                                Rasters: {
+                                                    name: '_Rasters',
+                                                    isPublic: false,
+                                                    isDataset: false,
+                                                    value: {
+                                                        elements: [
+                                                            {
+                                                                name: 'InRaster2',
+                                                                isPublic: false,
+                                                                isDataset: true,
+                                                                value: rasterFunction4LaterScene,
+                                                                type: 'RasterFunctionVariable',
+                                                            },
+                                                            {
+                                                                name: 'Raster',
+                                                                isPublic: false,
+                                                                isDataset: true,
+                                                                value: rasterFunction4EarlierScene,
+                                                                type: 'RasterFunctionVariable',
+                                                            },
+                                                        ],
+                                                        type: 'ArgumentArray',
+                                                    },
+                                                    type: 'RasterFunctionVariable',
+                                                },
+                                                Operation: {
+                                                    name: 'Operation',
+                                                    isPublic: false,
+                                                    isDataset: false,
+                                                    value: 23,
+                                                    type: 'RasterFunctionVariable',
+                                                },
+                                                CellsizeType: {
+                                                    name: 'CellsizeType',
+                                                    isPublic: false,
+                                                    isDataset: false,
+                                                    value: 2,
+                                                    type: 'RasterFunctionVariable',
+                                                },
+                                                ExtentType: {
+                                                    name: 'ExtentType',
+                                                    isPublic: false,
+                                                    isDataset: false,
+                                                    value: 1,
+                                                    type: 'RasterFunctionVariable',
+                                                },
+                                                type: 'LocalFunctionArguments',
                                             },
-                                        ],
-                                        type: 'ArgumentArray',
+                                            functionType: 0,
+                                            thumbnail: '',
+                                            thumbnailEx: '',
+                                            help: '',
+                                        },
                                     },
-                                    type: 'RasterFunctionVariable',
-                                },
-                                Operation: {
-                                    name: 'Operation',
-                                    isPublic: false,
-                                    isDataset: false,
-                                    value: 23,
-                                    type: 'RasterFunctionVariable',
-                                },
-                                CellsizeType: {
-                                    name: 'CellsizeType',
-                                    isPublic: false,
-                                    isDataset: false,
-                                    value: 2,
-                                    type: 'RasterFunctionVariable',
-                                },
-                                ExtentType: {
-                                    name: 'ExtentType',
-                                    isPublic: false,
-                                    isDataset: false,
-                                    value: 1,
-                                    type: 'RasterFunctionVariable',
-                                },
-                                type: 'LocalFunctionArguments',
+                                ],
+                                type: 'ArgumentArray',
                             },
-                            functionType: 0,
-                            thumbnail: '',
-                            thumbnailEx: '',
-                            help: '',
+                            isDataset: false,
+                            isPublic: false,
+                            type: 'RasterFunctionVariable',
                         },
                         Operation: {
                             name: 'Operation',
