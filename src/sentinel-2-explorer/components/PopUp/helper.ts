@@ -15,15 +15,29 @@
 
 import Point from '@arcgis/core/geometry/Point';
 import { getPopUpContentWithLocationInfo } from '@shared/components/MapPopup/helper';
+import { calcSentinel2SpectralIndex } from '@shared/services/sentinel-2/helpers';
 
 export const getMainContent = (values: number[], mapPoint: Point) => {
+    const vegetationIndex = calcSentinel2SpectralIndex(
+        'vegetation',
+        values
+    ).toFixed(3);
+
+    const waterIndex = calcSentinel2SpectralIndex('water', values).toFixed(3);
+
+    const moistureIndex = calcSentinel2SpectralIndex(
+        'moisture',
+        values
+    ).toFixed(3);
+
     const content = `
         <div class='text-custom-light-blue text-xs'>
             <div class='mb-2'>
-                <span><span class='text-custom-light-blue-50'>Index Name:</span> Index Value</span>
+                <span><span class='text-custom-light-blue-50'>NDMI:</span> ${moistureIndex}</span><br />
+                <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span><br />
+                <span><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
             </div>
         </div>
     `;
-
     return getPopUpContentWithLocationInfo(mapPoint, content);
 };
