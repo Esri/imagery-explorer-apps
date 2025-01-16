@@ -88,16 +88,18 @@ export const getFormattedSentinel2Scenes = (
             .split('-')
             .map((d) => +d);
 
+        const cloudCover = attributes[CLOUD_COVER]
+            ? attributes[CLOUD_COVER] / 100
+            : 0;
+
         const sentinel2Scene: Sentinel2Scene = {
             objectId: attributes[OBJECTID],
             // productId,
             acquisitionDate,
             formattedAcquisitionDate,
             name: attributes[NAME],
-            cloudCover: attributes[CLOUD_COVER] / 100,
-            formattedCloudCover: attributes[CLOUD_COVER]
-                ? Math.ceil(attributes[CLOUD_COVER] * 100)
-                : 0,
+            cloudCover,
+            formattedCloudCover: Math.ceil(cloudCover * 100),
             acquisitionYear,
             acquisitionMonth,
         };
