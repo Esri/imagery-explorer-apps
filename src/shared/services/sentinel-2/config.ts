@@ -164,4 +164,17 @@ export const SENTINEL2_SERVICE_SORT_FIELD = 'best';
 
 export const SENTINEL2_SERVICE_SORT_VALUE = '0';
 
-export const SENTINEL2_BAND_NAMES: string[] = [];
+export const SENTINEL2_BAND_NAMES: string[] = [
+    'Aerosol',
+    'Blue',
+    'Green',
+    'Red',
+    'Veg 1',
+    'Veg 2',
+    'Veg 3',
+    'NIR',
+    'Narrow NIR',
+    'Water Vapor',
+    'SWIR 1',
+    'SWIR 2',
+];

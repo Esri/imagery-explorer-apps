@@ -15,25 +15,22 @@
 
 import { convert2csv } from '@shared/utils/snippets/convert2csv';
 import { FormattedSpectralSamplingData } from '../SamplingPointsList/useFormattedSpectralSamplingData';
-import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import JSZip from 'jszip';
 import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { SpectralSamplingToolSupportedService } from '@shared/store/SpectralSamplingTool/reducer';
+import { LandsatScene, Sentinel2Scene } from '@typing/imagery-service';
+import { getSentinel2SceneByObjectId } from '@shared/services/sentinel-2/getSentinel2Scenes';
 
-const getHeadersForLandsatSamplingResults = () => {
-    return [
-        'Classification',
-        // for Landsat, we only need to include data from the first 7 bands
-        ...LANDSAT_BAND_NAMES.slice(0, 7),
-        'Longitude',
-        'Latitude',
-        'SceneId',
-    ];
+const getHeadersForLandsatSamplingResults = (bandNames: string[]) => {
+    return ['Classification', ...bandNames, 'Longitude', 'Latitude', 'SceneId'];
 };
 
 const getCsvString4LandsatSamplingResults = async (
     classification: string,
-    data: FormattedSpectralSamplingData[]
+    data: FormattedSpectralSamplingData[],
+    bandNames: string[],
+    targetService: SpectralSamplingToolSupportedService
 ): Promise<string> => {
     const rows: string[][] = [];
 
@@ -50,60 +47,85 @@ const getCsvString4LandsatSamplingResults = async (
             continue;
         }
 
-        const landsatScene = await getLandsatSceneByObjectId(
-            objectIdOfSelectedScene
-        );
+        let scene: LandsatScene | Sentinel2Scene = null;
+
+        if (targetService === 'landsat') {
+            scene = await getLandsatSceneByObjectId(objectIdOfSelectedScene);
+        } else if (targetService === 'sentinel-2') {
+            scene = await getSentinel2SceneByObjectId(objectIdOfSelectedScene);
+        }
 
         const row = [
             classification,
-            // for Landsat, we only need to include data from the first 7 bands
-            ...bandValues.slice(0, 7).map((d) => d.toString()),
+            ...bandValues.slice(0, bandNames.length).map((d) => d.toString()),
             location.longitude.toFixed(5),
             location.latitude.toFixed(5),
-            landsatScene.name,
+            scene.name,
         ];
 
         rows.push(row);
     }
 
-    const csvStr = convert2csv(getHeadersForLandsatSamplingResults(), rows);
+    const csvStr = convert2csv(
+        getHeadersForLandsatSamplingResults(bandNames),
+        rows
+    );
 
     return csvStr;
 };
 
 const getCsvString4AveragedLandsatSamplingResults = (
     classification: string,
-    averagedBandValues: number[]
+    averagedBandValues: number[],
+    bandNames: string[]
 ) => {
     const rows: string[][] = [
         [
             classification,
-            // for Landsat, we only need to include data from the first 7 bands
-            ...averagedBandValues.slice(0, 7).map((d) => d.toString()),
+            ...averagedBandValues
+                .slice(0, bandNames.length)
+                .map((d) => d.toString()),
         ],
     ];
 
-    const csvStr = convert2csv(getHeadersForLandsatSamplingResults(), rows);
+    const csvStr = convert2csv(
+        getHeadersForLandsatSamplingResults(bandNames),
+        rows
+    );
 
     return csvStr;
 };
 
-export const saveLandsatSamplingResults = async (
-    classification: string,
-    data: FormattedSpectralSamplingData[],
-    averagedBandValues: number[]
-) => {
+export const saveSamplingResults = async ({
+    classification,
+    data,
+    averagedBandValues,
+    targetService,
+    bandNames,
+}: {
+    classification: string;
+    data: FormattedSpectralSamplingData[];
+    averagedBandValues: number[];
+    targetService: SpectralSamplingToolSupportedService;
+    bandNames: string[];
+}) => {
     const zip = new JSZip();
 
     zip.file(
         `${classification}-samples.csv`,
-        getCsvString4LandsatSamplingResults(classification, data)
+        getCsvString4LandsatSamplingResults(
+            classification,
+            data,
+            bandNames,
+            targetService
+        )
     );
     zip.file(
         `${classification}-average.csv`,
         getCsvString4AveragedLandsatSamplingResults(
             classification,
-            averagedBandValues
+            averagedBandValues,
+            bandNames
         )
     );
 

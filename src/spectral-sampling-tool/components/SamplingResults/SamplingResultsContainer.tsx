@@ -19,10 +19,19 @@ import { useChartData } from './useChartData';
 import { SpectralProfileChart } from '@shared/components/SpectralProfileTool';
 // import { Button } from '@shared/components/Button';
 import { SaveSamplingResults } from './SaveSamplingResults';
-import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
+import { useNumOfBandsToDisplay } from './useNumOfBandsToDisplay';
+import { useBandNames } from './useBandNames';
+import { useSelector } from 'react-redux';
+import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 
 export const SamplingResultsContainer = () => {
-    const chartData = useChartData();
+    const targetService = useSelector(selectTargetService);
+
+    const numOfBandsToDisplay = useNumOfBandsToDisplay();
+
+    const bandNames = useBandNames(numOfBandsToDisplay);
+
+    const chartData = useChartData(numOfBandsToDisplay);
 
     return (
         <div
@@ -48,11 +57,14 @@ export const SamplingResultsContainer = () => {
                     <div className="w-full h-[150px] my-2">
                         <SpectralProfileChart
                             chartData={chartData}
-                            bottomAxisTickText={LANDSAT_BAND_NAMES.slice(0, 7)}
+                            bottomAxisTickText={bandNames}
                         />
                     </div>
 
-                    <SaveSamplingResults />
+                    <SaveSamplingResults
+                        bandNames={bandNames}
+                        targetService={targetService}
+                    />
                 </>
             )}
         </div>

@@ -18,6 +18,7 @@ import {
     selectIdOfItem2Highlight,
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
+    selectTargetService,
 } from '@shared/store/SpectralSamplingTool/selectors';
 // import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumns';
 // import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
@@ -33,7 +34,7 @@ import { useAveragedBandValues } from './useAveragedSamplingResults';
  * - a line represents the average spectral profile from all sampling point
  * @returns
  */
-export const useChartData = () => {
+export const useChartData = (numOfBandsToDisplay: number) => {
     const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
 
     const idOfItem2Highlight = useSelector(selectIdOfItem2Highlight);
@@ -54,6 +55,7 @@ export const useChartData = () => {
             .map((d, index) => {
                 const values = formatBandValuesAsLineChartDataItems({
                     bandValues: d.bandValues,
+                    length: numOfBandsToDisplay,
                 });
 
                 return {
@@ -79,6 +81,7 @@ export const useChartData = () => {
                 key: 'average',
                 values: formatBandValuesAsLineChartDataItems({
                     bandValues: averageBandValues,
+                    length: numOfBandsToDisplay,
                 }),
                 dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
             });
@@ -90,6 +93,7 @@ export const useChartData = () => {
         selectedSamplingPointsData,
         averageBandValues,
         idOfItem2Highlight,
+        numOfBandsToDisplay,
     ]);
 
     return chartData;
