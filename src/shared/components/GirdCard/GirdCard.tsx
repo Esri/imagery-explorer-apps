@@ -53,14 +53,12 @@ export const GirdCard: FC<Props> = ({
 }) => {
     return (
         <div
-            className={classNames(
-                'relative w-24 h-12 bg-cover cursor-pointer',
-                {
-                    'drop-shadow-custom-light-blue': selected,
-                }
-            )}
+            className={classNames('relative w-24 h-12 cursor-pointer', {
+                'drop-shadow-custom-light-blue': selected,
+            })}
             style={{
                 background: `url(${thumbnail})`,
+                backgroundSize: 'cover',
             }}
             onClick={onClick}
             onMouseEnter={onMouseEnter}
