@@ -15,20 +15,15 @@
 
 import React, { FC } from 'react';
 import MapViewContainer from '@shared/components/MapView/MapViewContainer';
-// import { SwipeWidget } from '../SwipeWidget';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
-// import { MaskLayer } from '../MaskLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { AnalysisToolQueryLocation } from '@shared/components/AnalysisToolQueryLocation';
-import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { Popup } from '../PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
-import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
-import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
-import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
+import { MapActionButtonGroup } from '@shared/components/MapActionButton';
 import { useDispatch } from 'react-redux';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
@@ -38,8 +33,6 @@ import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { Sentinel2Layer } from '../Sentinel2Layer';
 import { Sentinel2MaskLayer } from '../MaskLayer';
 import { Sentinel2ChangeLayer } from '../ChangeCompareLayer';
-// import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
-import { OpenSavePanelButton } from '@shared/components/OpenSavePanelButton';
 
 const Map = () => {
     const dispatch = useDispatch();
@@ -69,25 +62,11 @@ const Map = () => {
             />
             <HillshadeLayer />
 
-            <MapActionButtonsGroup>
-                <Zoom2NativeScale
-                    nativeScale={37795}
-                    tooltip={"Zoom to Sentinel-2's native resolution"}
-                />
-                <ZoomToExtent serviceUrl={SENTINEL_2_SERVICE_URL} />
-
-                <ScreenshotWidget />
-                <CopyLinkWidget />
-                <OpenSavePanelButton />
-            </MapActionButtonsGroup>
-            {/* 
-            <MapNavButtonsGroup>
-                <Zoom2NativeScale
-                    nativeScale={37795}
-                    tooltip={"Zoom to Sentinel-2's native resolution"}
-                />
-                <ZoomToExtent serviceUrl={SENTINEL_2_SERVICE_URL} />
-            </MapNavButtonsGroup> */}
+            <MapActionButtonGroup
+                nativeScale={37795}
+                serviceName={'Sentinel-2'}
+                serviceUrl={SENTINEL_2_SERVICE_URL}
+            />
 
             <Popup />
             <MapMagnifier />

@@ -57,7 +57,7 @@ import {
 import MapView from '@shared/components/MapView/MapView';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 import SearchWidget from '@shared/components/MapView/SearchWidget';
-import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
+import { MapActionButtonGroup } from '@shared/components/MapActionButton/MapActionButtonGroup';
 import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
@@ -172,17 +172,15 @@ const MapViewContainer = () => {
 
                 <AnimationPanel />
 
-                <MapActionButtonsGroup>
+                <MapActionButtonGroup>
+                    <ZoomWidget />
                     <Zoom2NativeScale
                         nativeScale={37795}
                         tooltip={"Zoom to Land cover layer's native resolution"}
                     />
-                    {/* <ZoomToExtent /> */}
                     <ScreenshotWidget />
                     <CopyLinkWidget />
-                </MapActionButtonsGroup>
-
-                <ZoomWidget />
+                </MapActionButtonGroup>
             </MapView>
 
             <ReferenceLayersToggleControl />

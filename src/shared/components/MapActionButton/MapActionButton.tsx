@@ -93,7 +93,7 @@ export const MapActionButton: FC<Props> = ({
             {notificationMessage ? (
                 <div
                     className={classNames(
-                        'absolute left-0 top-[110%] h-map-action-button-size px-2 flex items-center',
+                        'absolute left-[110%] top-0 h-map-action-button-size px-2 flex items-center',
                         'w-auto whitespace-nowrap', // expand its width to cover the whole text content without wrapping the text
                         'bg-custom-background text-custom-light-blue-90 pointer-events-none text-xs'
                     )}

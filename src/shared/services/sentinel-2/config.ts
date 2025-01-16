@@ -39,7 +39,7 @@ const SENTINEL_2_ORIGINAL_SERVICE_URL_PROD =
     'https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
 
 const SENTINEL_2_ORIGINAL_SERVICE_URL_DEV =
-    'https://sentineldev.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer/';
+    'https://sentineldev.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
 
 export const SENTINEL_2_ORIGINAL_SERVICE_URL =
     TIER === 'development'
@@ -79,6 +79,11 @@ export enum FIELD_NAMES {
     CLOUD_COVER = 'cloudcover',
     CATEGORY = 'category',
     MONTH = 'month',
+    SNOW_ICE_PERCENTAGE = 'snowicepercentage',
+    SUN_ZENITH = 'meansolarzenith',
+    SUN_AZIMUTH = 'meansolarazimuth',
+    RELATIVE_ORBIT = 'relativeorbit',
+    ABSOLUTE_ORBIT = 'absoluteorbit',
 }
 
 /**

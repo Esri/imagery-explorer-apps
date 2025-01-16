@@ -13,4 +13,4 @@
  * limitations under the License.
  */
 
-export { MapActionButtonsGroup } from './MapActionButtonsGroup';
+export { MapActionButtonGroupContainer as MapActionButtonGroup } from './MapActionButtonGroupContainer';

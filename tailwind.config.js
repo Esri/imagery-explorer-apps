@@ -62,17 +62,9 @@ module.exports = {
       spacing: {
         'bottom-panel-height': '236px',
         'app-header-size': '40px',
-        // 'app-header-position': '15px',
-        // 'layer-toggle-top-position': '15px',
-        // 'layer-toggle-top-position-mobile': '55px',
-
         'map-ui-top-position': '15px',
-        // 'map-ui-top-position-mobile': '55px',
-        'map-action-button-group-top-position-mobile': '80px',
-        'map-action-button-group-top-position': '124px',
-        // 'map-nav-button-group-top-position': '84px',
+        'map-action-button-group-top-position': '56px',
         'search-widget-top-position': '50px',
-        // 'search-widget-top-position-mobile': '90px',
         'cloud-slider-height': '80px',
         'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)',
         'analysis-tool-container-width': '255px',

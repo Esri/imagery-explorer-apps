@@ -1,5 +1,5 @@
 import MapView from '@arcgis/core/views/MapView';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import Zoom from '@arcgis/core/widgets/Zoom.js';
 
 type Props = {
@@ -7,20 +7,23 @@ type Props = {
 };
 
 export const ZoomWidget: FC<Props> = ({ mapView }) => {
+    const container = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         if (!mapView) return;
 
         const zoomWidget = new Zoom({
             view: mapView,
-            layout: 'horizontal',
+            // layout: 'horizontal',
+            container: container.current,
         });
 
-        mapView.ui.add(zoomWidget, 'top-right');
+        // mapView.ui.add(zoomWidget, 'top-right');
 
         // return () => {
         //     mapView.ui.remove(zoomWidget)
         // }
     }, [mapView]);
 
-    return null;
+    return <div ref={container}></div>;
 };
