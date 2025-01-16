@@ -38,7 +38,7 @@ import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { Sentinel2Layer } from '../Sentinel2Layer';
 import { Sentinel2MaskLayer } from '../MaskLayer';
 import { Sentinel2ChangeLayer } from '../ChangeCompareLayer';
-import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
+// import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 import { OpenSavePanelButton } from '@shared/components/OpenSavePanelButton';
 
 const Map = () => {
@@ -70,18 +70,24 @@ const Map = () => {
             <HillshadeLayer />
 
             <MapActionButtonsGroup>
+                <Zoom2NativeScale
+                    nativeScale={37795}
+                    tooltip={"Zoom to Sentinel-2's native resolution"}
+                />
+                <ZoomToExtent serviceUrl={SENTINEL_2_SERVICE_URL} />
+
                 <ScreenshotWidget />
                 <CopyLinkWidget />
                 <OpenSavePanelButton />
             </MapActionButtonsGroup>
-
+            {/* 
             <MapNavButtonsGroup>
                 <Zoom2NativeScale
                     nativeScale={37795}
                     tooltip={"Zoom to Sentinel-2's native resolution"}
                 />
                 <ZoomToExtent serviceUrl={SENTINEL_2_SERVICE_URL} />
-            </MapNavButtonsGroup>
+            </MapNavButtonsGroup> */}
 
             <Popup />
             <MapMagnifier />

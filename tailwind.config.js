@@ -68,8 +68,9 @@ module.exports = {
 
         'map-ui-top-position': '15px',
         // 'map-ui-top-position-mobile': '55px',
-        'map-action-button-group-top-position': '56px',
-        'map-nav-button-group-top-position': '84px',
+        'map-action-button-group-top-position-mobile': '80px',
+        'map-action-button-group-top-position': '124px',
+        // 'map-nav-button-group-top-position': '84px',
         'search-widget-top-position': '50px',
         // 'search-widget-top-position-mobile': '90px',
         'cloud-slider-height': '80px',

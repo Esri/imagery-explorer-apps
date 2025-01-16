@@ -193,7 +193,7 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
 
                 <ReferenceLayers />
 
-                <ZoomWidget />
+                {/* <ZoomWidget /> */}
             </MapView>
 
             <ReferenceLayersToggleControl shoudHide={isAnimationPlaying} />

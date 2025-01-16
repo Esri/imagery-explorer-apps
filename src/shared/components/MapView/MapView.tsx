@@ -69,8 +69,8 @@ const MapView: React.FC<Props> = ({
             popupEnabled: false,
         });
 
-        // Removes all default UI components, except Attribution.
-        mapViewRef.current.ui.components = ['attribution'];
+        // // Removes all default UI components, except Attribution.
+        // mapViewRef.current.ui.components = ['attribution'];
 
         mapViewRef.current.when(() => {
             setMapView(mapViewRef.current);

@@ -31,7 +31,7 @@ export const MapActionButtonsGroup: FC<Props> = ({ mapView, children }) => {
     return (
         <div
             className={classNames(
-                'absolute left-map-ui-top-position top-map-ui-top-position md:top-map-action-button-group-top-position md:flex items-center gap-[1px]'
+                'absolute left-map-ui-top-position top-map-action-button-group-top-position-mobile md:top-map-action-button-group-top-position'
             )}
         >
             {mapView
@@ -52,27 +52,27 @@ export const MapActionButtonsGroup: FC<Props> = ({ mapView, children }) => {
     );
 };
 
-export const MapNavButtonsGroup: FC<Props> = ({ mapView, children }) => {
-    return (
-        <div
-            className={classNames(
-                'absolute right-[82px] top-map-nav-button-group-top-position flex items-center gap-[1px]'
-            )}
-        >
-            {mapView
-                ? React.Children.map(children, (child) => {
-                      if (!child) {
-                          return null;
-                      }
+// export const MapNavButtonsGroup: FC<Props> = ({ mapView, children }) => {
+//     return (
+//         <div
+//             className={classNames(
+//                 'absolute right-[82px] top-map-nav-button-group-top-position flex items-center gap-[1px]'
+//             )}
+//         >
+//             {mapView
+//                 ? React.Children.map(children, (child) => {
+//                       if (!child) {
+//                           return null;
+//                       }
 
-                      return React.cloneElement(
-                          child as React.ReactElement<any>,
-                          {
-                              mapView,
-                          }
-                      );
-                  })
-                : null}
-        </div>
-    );
-};
+//                       return React.cloneElement(
+//                           child as React.ReactElement<any>,
+//                           {
+//                               mapView,
+//                           }
+//                       );
+//                   })
+//                 : null}
+//         </div>
+//     );
+// };

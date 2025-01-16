@@ -41,7 +41,7 @@ import { Sentinel1MaskLayer } from '../MaskLayer';
 import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootprintLayer';
 import { ZoomToExtent } from '@shared/components/ZoomToExtent';
 import { OpenSavePanelButton } from '@shared/components/OpenSavePanelButton';
-import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
+// import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 
 export const Map = () => {
     const dispatch = useDispatch();
@@ -73,18 +73,15 @@ export const Map = () => {
             <HillshadeLayer />
 
             <MapActionButtonsGroup>
-                <ScreenshotWidget />
-                <CopyLinkWidget />
-                <OpenSavePanelButton />
-            </MapActionButtonsGroup>
-
-            <MapNavButtonsGroup>
                 <Zoom2NativeScale
                     nativeScale={37795}
                     tooltip={"Zoom to Sentinel-1's native resolution"}
                 />
                 <ZoomToExtent serviceUrl={SENTINEL_1_SERVICE_URL} />
-            </MapNavButtonsGroup>
+                <ScreenshotWidget />
+                <CopyLinkWidget />
+                <OpenSavePanelButton />
+            </MapActionButtonsGroup>
 
             <Popup />
             <MapMagnifier />

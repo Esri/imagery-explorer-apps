@@ -25,6 +25,10 @@
     color: var(--custom-light-blue-75);
 }
 
+.esri-view-root .esri-ui-top-left { 
+    @apply md:top-[45px]
+}
+
 /**
 * Place the UI cpomonenrs at top right corner under the search bar 
 */
