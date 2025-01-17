@@ -47,7 +47,7 @@ import { MapLoadingIndicator } from './MapLoadingIndicator';
 import { Point } from '@arcgis/core/geometry';
 import { ReferenceLayersToggleControl } from '../ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
-import SearchWidget from './SearchWidget';
+// import SearchWidget from '../SearchWidget/SearchWidget';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -189,7 +189,7 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                     }
                 />
 
-                <SearchWidget hide={isAnimationPlaying} />
+                {/* <SearchWidget hide={isAnimationPlaying} /> */}
 
                 <ReferenceLayers />
 

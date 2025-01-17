@@ -56,12 +56,13 @@ import {
 } from '@shared/store/Map/reducer';
 import MapView from '@shared/components/MapView/MapView';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
-import SearchWidget from '@shared/components/MapView/SearchWidget';
+// import SearchWidget from '@shared/components/SearchWidget/SearchWidget';
 import { MapActionButtonGroup } from '@shared/components/MapActionButton/MapActionButtonGroup';
 import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
 import { ZoomWidget } from '@shared/components/MapView/ZoomWidget';
+import { SearchWidget } from '@shared/components/SearchWidget';
 
 const MapViewContainer = () => {
     const dispatch = useDispatch();
@@ -164,7 +165,7 @@ const MapViewContainer = () => {
 
                 <Popup />
 
-                <SearchWidget hide={animationMode !== null} />
+                {/* <SearchWidget hide={animationMode !== null} /> */}
 
                 <ReferenceLayers />
 
@@ -173,6 +174,7 @@ const MapViewContainer = () => {
                 <AnimationPanel />
 
                 <MapActionButtonGroup>
+                    <SearchWidget />
                     <ZoomWidget />
                     <Zoom2NativeScale
                         nativeScale={37795}

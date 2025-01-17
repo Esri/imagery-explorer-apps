@@ -64,11 +64,11 @@ module.exports = {
         'app-header-size': '40px',
         'map-ui-top-position': '15px',
         'map-action-button-group-top-position': '56px',
-        'search-widget-top-position': '50px',
+        // 'search-widget-top-position': '50px',
         'cloud-slider-height': '80px',
         'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)',
         'analysis-tool-container-width': '255px',
-        'search-widget-width': '270px',
+        // 'search-widget-width': '270px',
         'map-action-button-size': '32px'
       },
       dropShadow: {

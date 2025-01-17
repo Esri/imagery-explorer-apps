@@ -97,7 +97,7 @@ export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
     return (
         <div
             className={classNames(
-                'absolute w-search-widget-width bg-custom-background flex py-2 px-1 text-custom-light-blue text-xs top-map-ui-top-position',
+                'absolute bg-custom-background flex py-2 px-1 text-custom-light-blue text-xs top-map-ui-top-position',
                 {
                     hidden: shoudHide,
                 }

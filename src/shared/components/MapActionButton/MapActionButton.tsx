@@ -13,10 +13,10 @@
  * limitations under the License.
  */
 
-import {
-    selectAnimationStatus,
-    selectIsAnimationPlaying,
-} from '@shared/store/UI/selectors';
+// import {
+//     selectAnimationStatus,
+//     selectIsAnimationPlaying,
+// } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
@@ -62,12 +62,12 @@ export const MapActionButton: FC<Props> = ({
     children,
     onClickHandler,
 }) => {
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    // const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 
     return (
         <div
             className={classNames('relative z-10', {
-                hidden: isAnimationPlaying,
+                // hidden: isAnimationPlaying,
                 'is-disabled': disabled,
             })}
             style={{

@@ -14,8 +14,10 @@
  */
 
 import MapView from '@arcgis/core/views/MapView';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
 
 type Props = {
     mapView?: MapView;
@@ -28,10 +30,15 @@ type Props = {
  * @returns
  */
 export const MapActionButtonGroup: FC<Props> = ({ mapView, children }) => {
+    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+
     return (
         <div
             className={classNames(
-                'absolute left-map-ui-top-position top-map-ui-top-position md:top-map-action-button-group-top-position'
+                'absolute left-map-ui-top-position top-map-ui-top-position md:top-map-action-button-group-top-position',
+                {
+                    hidden: isAnimationPlaying,
+                }
             )}
         >
             {mapView

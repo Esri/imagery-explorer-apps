@@ -76,17 +76,10 @@ const SearchWidget: React.FC<Props> = ({
 
     return (
         <div
-            className={classNames(
-                'absolute top-search-widget-top-position w-search-widget-width',
-                {
-                    'opacity-0': hide,
-                }
-            )}
+            className={classNames('relative w-full', {
+                'opacity-0': hide,
+            })}
             ref={containerRef}
-            style={{
-                // top: 50,
-                right: 15,
-            }}
         ></div>
     );
 };

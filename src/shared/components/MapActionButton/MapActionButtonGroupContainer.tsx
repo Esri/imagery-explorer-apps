@@ -7,6 +7,7 @@ import { ScreenshotWidget } from '../ScreenshotWidget/ScreenshotWidget';
 import { ZoomToExtent } from '../ZoomToExtent';
 import { ZoomWidget } from '../MapView/ZoomWidget';
 import { Zoom2NativeScale } from '../Zoom2NativeScale/Zoom2NativeScale';
+import { SearchWidget } from '../SearchWidget';
 
 type Props = {
     mapView?: MapView;
@@ -34,6 +35,7 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
 
     return (
         <MapActionButtonGroup mapView={mapView}>
+            <SearchWidget />
             <ZoomWidget />
             <Zoom2NativeScale
                 nativeScale={nativeScale}

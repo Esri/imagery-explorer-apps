@@ -25,5 +25,5 @@ export const ZoomWidget: FC<Props> = ({ mapView }) => {
         // }
     }, [mapView]);
 
-    return <div ref={container}></div>;
+    return <div className="mt-[1px]" ref={container}></div>;
 };

@@ -70,7 +70,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({
 }: ToggleButtonProps) => {
     return (
         <div
-            className="w-1/2 cursor-pointer z-10 flex items-center"
+            className="mx-2 cursor-pointer z-10 flex items-center"
             onClick={onToggle}
         >
             {active ? CheckIcon : UncheckIcon}
@@ -91,7 +91,7 @@ const LayersToggleControl = () => {
     return (
         <div
             className={classNames(
-                'absolute bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-map-ui-top-position w-search-widget-width',
+                'absolute bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-map-ui-top-position',
                 {
                     hidden: animationMode !== null,
                 }
