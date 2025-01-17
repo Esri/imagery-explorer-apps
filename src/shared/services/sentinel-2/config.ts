@@ -97,7 +97,7 @@ const SENTINEL2_RASTER_FUNCTIONS = [
     'Short-wave Infrared with DRA',
     'Geology with DRA',
     'Urban with DRA',
-    'NDVI Colormap',
+    'NDVI Colorized',
     'NDMI Colorized',
     'NDWI Colorized',
     // 'Normalized Burn Ratio',
@@ -151,7 +151,7 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
         label: 'Geology',
     },
     {
-        name: 'NDVI Colormap',
+        name: 'NDVI Colorized',
         description:
             'Normalized difference vegetation index (NDVI) with colormap. Dark green represents vigorous vegetation and brown represents sparse vegetation. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.',
         label: 'NDVI',

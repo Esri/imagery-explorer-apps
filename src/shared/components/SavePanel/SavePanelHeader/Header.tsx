@@ -17,14 +17,14 @@ export const Header: FC<HeaderProps> = ({ sceneId }) => {
             </div>
 
             <div className="flex justify-center">
-                <ul className=" list-disc list-inside text-sm opacity-50">
+                <ul className="list-inside text-sm opacity-50">
                     <li>
                         This dialog can safely be closed while request is
                         processed.
                     </li>
-                    <li>
+                    {/* <li>
                         Downloads are available for one hour after creation.
-                    </li>
+                    </li> */}
                 </ul>
             </div>
         </div>
