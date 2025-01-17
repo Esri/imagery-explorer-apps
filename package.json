@@ -116,7 +116,7 @@
   "dependencies": {
     "@arcgis/core": "^4.31.6",
     "@esri/arcgis-rest-feature-service": "^4.0.4",
-    "@reduxjs/toolkit": "1.8",
+    "@reduxjs/toolkit": "2.5",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "@vannizhang/images-to-video-converter-client": "^1.1.13",
@@ -130,7 +130,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-redux": "^8.0.2",
-    "redux": "^4.1.0"
+    "redux": "^5.0.1"
   },
   "browserslist": [
     "defaults"
