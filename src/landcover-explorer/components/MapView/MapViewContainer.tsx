@@ -15,7 +15,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { batch } from 'react-redux';
 import { useAppSelector } from '@shared/store/configureStore';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
@@ -142,14 +141,12 @@ const MapViewContainer = () => {
                 <SwipeWidget4Sentinel2 />
                 <MapViewEventHandlers
                     extentOnChange={(extent, resolution, center, zoom) => {
-                        batch(() => {
-                            dispatch(resolutionUpdated(resolution));
-                            dispatch(extentUpdated(extent));
-                            // dispatch(mapCenterUpdated(center));
-                            // dispatch(zoomUpdated(zoom));
-                            dispatch(centerChanged(center));
-                            dispatch(zoomChanged(zoom));
-                        });
+                        dispatch(resolutionUpdated(resolution));
+                        dispatch(extentUpdated(extent));
+                        // dispatch(mapCenterUpdated(center));
+                        // dispatch(zoomUpdated(zoom));
+                        dispatch(centerChanged(center));
+                        dispatch(zoomChanged(zoom));
                     }}
                     // mapViewOnClick={fetchLandCoverData}
                     mapViewUpdatingOnChange={(val: boolean) => {

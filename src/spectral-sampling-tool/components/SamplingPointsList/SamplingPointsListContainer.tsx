@@ -29,7 +29,6 @@ import {
     removeSpectralSamplingPoint,
 } from '@shared/store/SpectralSamplingTool/thunks';
 import { nanoid } from 'nanoid';
-import { batch } from 'react-redux';
 import { useFormattedSpectralSamplingData } from './useFormattedSpectralSamplingData';
 import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
@@ -57,18 +56,14 @@ export const SamplingPointsListContainer = () => {
         // the sampling point data can be joined
         const idOfSamplingPoint2Add = nanoid(5);
 
-        batch(() => {
-            dispatch(addNewItemToQueryParamsList(idOfSamplingPoint2Add));
-            dispatch(addSpectralSamplingPoint(idOfSamplingPoint2Add));
-        });
+        dispatch(addNewItemToQueryParamsList(idOfSamplingPoint2Add));
+        dispatch(addSpectralSamplingPoint(idOfSamplingPoint2Add));
     };
 
     const samplingPointOnRemove = (idOfItemToRemove: string) => {
         console.log(idOfItemToRemove);
-        batch(() => {
-            dispatch(removeItemFromQueryParamsList(idOfItemToRemove));
-            dispatch(removeSpectralSamplingPoint(idOfItemToRemove));
-        });
+        dispatch(removeItemFromQueryParamsList(idOfItemToRemove));
+        dispatch(removeSpectralSamplingPoint(idOfItemToRemove));
     };
 
     useEffect(() => {

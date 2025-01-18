@@ -25,7 +25,6 @@ import {
     queryParams4MainSceneChanged,
     queryParams4SecondarySceneChanged,
 } from '../ImageryScene/reducer';
-import { batch } from 'react-redux';
 
 // import Point from '@arcgis/core/geometry/Point';
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
@@ -81,15 +80,9 @@ export const syncImageryScenesDateRangeForChangeCompareTool =
                 updatedDateRange;
         }
 
-        batch(() => {
-            dispatch(
-                queryParams4MainSceneChanged(updatedQueryParams4MainScene)
-            );
+        dispatch(queryParams4MainSceneChanged(updatedQueryParams4MainScene));
 
-            dispatch(
-                queryParams4SecondarySceneChanged(
-                    updatedQueryParams4SecondaryScene
-                )
-            );
-        });
+        dispatch(
+            queryParams4SecondarySceneChanged(updatedQueryParams4SecondaryScene)
+        );
     };

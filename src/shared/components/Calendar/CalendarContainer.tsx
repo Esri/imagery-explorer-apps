@@ -54,7 +54,6 @@ import {
     getDateRangeForYear,
 } from '@shared/utils/date-time/getTimeRange';
 import { useAcquisitionYear } from './useAcquisitionYear';
-import { batch } from 'react-redux';
 import { useFindSelectedSceneByDate } from '@shared/hooks/useFindSelectedSceneByDate';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
@@ -176,16 +175,12 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
 
-                    batch(() => {
-                        // unselect the selected imagery scene so that a new scene can be selected
-                        dispatch(updateObjectIdOfSelectedScene(null));
+                    // unselect the selected imagery scene so that a new scene can be selected
+                    dispatch(updateObjectIdOfSelectedScene(null));
 
-                        // select a new acquisition date that will be used to find the scenes that was acquired on
-                        // this date
-                        dispatch(
-                            updateAcquisitionDate(formattedAcquisitionDate)
-                        );
-                    });
+                    // select a new acquisition date that will be used to find the scenes that was acquired on
+                    // this date
+                    dispatch(updateAcquisitionDate(formattedAcquisitionDate));
                 }}
             />
         </div>

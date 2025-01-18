@@ -19,7 +19,6 @@ import { useAppDispatch } from '@shared/store/configureStore';
 
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { ModeSelector } from './ModeSelector';
-import { batch } from 'react-redux';
 import {
     selectAppMode,
     selectActiveAnalysisTool,
@@ -47,16 +46,12 @@ export const ModeSelectorContainer = () => {
                 dispatch(modeChanged(value));
             }}
             highlightButtonOnClick={() => {
-                batch(() => {
-                    dispatch(activeAnalysisToolChanged('mask'));
-                    dispatch(modeChanged('analysis'));
-                });
+                dispatch(activeAnalysisToolChanged('mask'));
+                dispatch(modeChanged('analysis'));
             }}
             profileButtonOnClick={() => {
-                batch(() => {
-                    dispatch(activeAnalysisToolChanged('trend'));
-                    dispatch(modeChanged('analysis'));
-                });
+                dispatch(activeAnalysisToolChanged('trend'));
+                dispatch(modeChanged('analysis'));
             }}
         />
     );

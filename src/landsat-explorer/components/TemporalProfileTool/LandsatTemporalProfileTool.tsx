@@ -59,7 +59,6 @@ import {
 import { SpectralIndex, TemporalProfileData } from '@typing/imagery-service';
 // import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { TrendChart } from '.';
-// import { batch } from 'react-redux';
 // import { debounce } from '@shared/utils/snippets/debounce';
 import { useUpdateTemporalProfileToolData } from '@shared/components/TemproalProfileTool/useUpdateTemporalProfileToolData';
 import { useSyncSelectedYearAndMonth4TemporalProfileTool } from '@shared/components/TemproalProfileTool/useSyncSelectedYearAndMonth';

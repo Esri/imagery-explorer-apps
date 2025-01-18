@@ -15,7 +15,6 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { batch } from 'react-redux';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     // getFormatedDateString,
@@ -55,9 +54,7 @@ export const useSyncSelectedYearAndMonth4TemporalProfileTool = () => {
 
         const year = getYearFromFormattedDateString(acquisitionDate);
 
-        batch(() => {
-            dispatch(acquisitionMonth4TrendToolChanged(month));
-            dispatch(acquisitionYear4TrendToolChanged(year));
-        });
+        dispatch(acquisitionMonth4TrendToolChanged(month));
+        dispatch(acquisitionYear4TrendToolChanged(year));
     }, [acquisitionDate]);
 };

@@ -15,7 +15,6 @@
 
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { InterestingPlaces } from './InterestingPlaces';
-import { batch } from 'react-redux';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
 import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
@@ -66,15 +65,9 @@ export const InterestingPlacesContainer: FC<Props> = ({
             return;
         }
 
-        batch(() => {
-            dispatch(
-                centerChanged([...selectedInterestingPlace.location.center])
-            );
-            dispatch(zoomChanged(selectedInterestingPlace.location.zoom));
-            dispatch(
-                updateRasterFunctionName(selectedInterestingPlace.renderer)
-            );
-        });
+        dispatch(centerChanged([...selectedInterestingPlace.location.center]));
+        dispatch(zoomChanged(selectedInterestingPlace.location.zoom));
+        dispatch(updateRasterFunctionName(selectedInterestingPlace.renderer));
     }, [selectedInterestingPlace]);
 
     return (

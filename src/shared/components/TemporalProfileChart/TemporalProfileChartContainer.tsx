@@ -31,7 +31,6 @@ import {
 } from '@shared/store/ImageryScene/thunks';
 
 import { centerChanged } from '@shared/store/Map/reducer';
-import { batch } from 'react-redux';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 
@@ -110,21 +109,19 @@ export const TemporalProfileChartContainer: FC<Props> = ({
                     return;
                 }
 
-                batch(() => {
-                    // update the center of the map using user selected query location to
-                    // invoke query that fetches the landsat scenes that intersects with the query location
-                    dispatch(centerChanged([queryLocation.x, queryLocation.y]));
+                // update the center of the map using user selected query location to
+                // invoke query that fetches the landsat scenes that intersects with the query location
+                dispatch(centerChanged([queryLocation.x, queryLocation.y]));
 
-                    // unselect the selected imagery scene so that a new scene can be selected
-                    dispatch(updateObjectIdOfSelectedScene(null));
+                // unselect the selected imagery scene so that a new scene can be selected
+                dispatch(updateObjectIdOfSelectedScene(null));
 
-                    dispatch(
-                        updateAcquisitionDate(
-                            clickedDataItem.formattedAcquisitionDate,
-                            true
-                        )
-                    );
-                });
+                dispatch(
+                    updateAcquisitionDate(
+                        clickedDataItem.formattedAcquisitionDate,
+                        true
+                    )
+                );
             }}
         />
     );

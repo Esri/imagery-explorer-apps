@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { batch } from 'react-redux';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import { sentinel2ScenesUpdated } from './reducer';
@@ -98,10 +97,8 @@ export const queryAvailableSentinel2Scenes =
                 objectIdOfSelectedScene
             );
 
-            batch(() => {
-                dispatch(sentinel2ScenesUpdated(sentinel2Scenes));
-                dispatch(availableImageryScenesUpdated(imageryScenes));
-            });
+            dispatch(sentinel2ScenesUpdated(sentinel2Scenes));
+            dispatch(availableImageryScenesUpdated(imageryScenes));
         } catch (err) {
             console.error(err);
         }

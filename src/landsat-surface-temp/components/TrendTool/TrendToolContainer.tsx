@@ -40,15 +40,6 @@ import { updateTemporalProfileToolData } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
-// import { TemporalProfileChart } from './TrendChart';
-// import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
-import {
-    // getFormatedDateString,
-    getMonthFromFormattedDateString,
-    getYearFromFormattedDateString,
-} from '@shared/utils/date-time/formatDateString';
-// import { centerChanged } from '@shared/store/Map/reducer';
-// import { batch } from 'react-redux';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,

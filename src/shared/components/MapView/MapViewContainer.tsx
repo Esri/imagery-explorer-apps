@@ -31,7 +31,6 @@ import {
 } from '../../store/UI/selectors';
 import EventHandlers from './EventHandlers';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { batch } from 'react-redux';
 import {
     centerChanged,
     extentUpdated,
@@ -141,19 +140,12 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                 <EventHandlers
                     onStationary={(center, zoom, extent, resolution, scale) => {
                         // console.log('map view is stationary', center, zoom, extent);
-
-                        batch(() => {
-                            dispatch(
-                                centerChanged([
-                                    center.longitude,
-                                    center.latitude,
-                                ])
-                            );
-                            dispatch(zoomChanged(zoom));
-                            dispatch(resolutionUpdated(resolution));
-                            dispatch(scaleUpdated(scale));
-                            // dispatch(extentUpdated(extent.toJSON()));
-                        });
+                        dispatch(
+                            centerChanged([center.longitude, center.latitude])
+                        );
+                        dispatch(zoomChanged(zoom));
+                        dispatch(resolutionUpdated(resolution));
+                        dispatch(scaleUpdated(scale));
                     }}
                     onClickHandler={(point) => {
                         // console.log('clicked on map', point);

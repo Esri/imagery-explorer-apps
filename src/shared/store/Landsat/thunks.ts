@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { batch } from 'react-redux';
 import { getLandsatScenes } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
@@ -190,10 +189,8 @@ export const queryAvailableScenes =
                 objectIdOfSelectedScene
             );
 
-            batch(() => {
-                dispatch(landsatScenesUpdated(landsatScenes));
-                dispatch(availableImageryScenesUpdated(imageryScenes));
-            });
+            dispatch(landsatScenesUpdated(landsatScenes));
+            dispatch(availableImageryScenesUpdated(imageryScenes));
         } catch (err) {
             console.error(err);
         }

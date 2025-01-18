@@ -19,7 +19,6 @@ import React, { useRef, useEffect, FC, useMemo } from 'react';
 import TimeSlider from '@arcgis/core/widgets/TimeSlider';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import classNames from 'classnames';
-import { useSelector, batch } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
@@ -101,9 +100,7 @@ export const TimeSliderWidgetContainer = () => {
                 }}
                 visible={timeStepSliderVisibility}
                 timeExtentOnChange={(startYear) => {
-                    batch(() => {
-                        dispatch(yearUpdated(startYear));
-                    });
+                    dispatch(yearUpdated(startYear));
                 }}
                 selectedYear={year}
             />

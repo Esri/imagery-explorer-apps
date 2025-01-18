@@ -15,7 +15,6 @@
 
 import classNames from 'classnames';
 import React, { useEffect } from 'react';
-// import { batch } from 'react-redux';
 import { useAppSelector } from '@shared/store/configureStore';
 // import { useAppDispatch } from '@shared/store/configureStore';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
