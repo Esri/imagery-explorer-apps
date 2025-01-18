@@ -85,12 +85,6 @@ describe('getPreloadedState4ImageryScenes', () => {
         const hashParams = new URLSearchParams(
             `mode=animate&animationScenes=2023-02-01|Natural Color with DRA|100,2024-04-01|Short-wave Infrared with DRA|101,2025-01-01|NDVI Colorized|102`
         );
-        hashParams.set(
-            'list',
-            JSON.stringify([
-                { uniqueId: '1', rasterFunctionName: 'Natural Color with DRA' },
-            ])
-        );
 
         const state = getPreloadedState4ImageryScenes(
             hashParams,
