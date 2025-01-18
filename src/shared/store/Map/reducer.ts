@@ -48,11 +48,11 @@ export type MapState = {
      * Represents the size of one pixel in map units.
      * The value of resolution can be found by dividing the extent width by the view's width.
      */
-    resolution?: number;
+    resolution: number;
     /**
      * The extent represents the visible portion of a map within the view as an instance of Extent.
      */
-    extent?: Extent;
+    extent: Extent;
     /**
      * If true, Map Reference Labels layer will be on
      */

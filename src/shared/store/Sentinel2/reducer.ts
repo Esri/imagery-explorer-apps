@@ -27,11 +27,11 @@ export type Sentinel2State = {
     /**
      * Sentinel-2 scenes that intersect with center point of map view and were acquired during the input year.
      */
-    sentinel2Scenes?: {
-        byObjectId?: {
+    sentinel2Scenes: {
+        byObjectId: {
             [key: number]: Sentinel2Scene;
         };
-        objectIds?: number[];
+        objectIds: number[];
     };
 };
 

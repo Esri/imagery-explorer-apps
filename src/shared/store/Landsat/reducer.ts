@@ -25,11 +25,11 @@ export type LandsatState = {
     /**
      * Landsat scenes that intersect with center point of map view and were acquired during the input year.
      */
-    landsatScenes?: {
-        byObjectId?: {
+    landsatScenes: {
+        byObjectId: {
             [key: number]: LandsatScene;
         };
-        objectIds?: number[];
+        objectIds: number[];
     };
     /**
      * list of Landat missions to be excluded
