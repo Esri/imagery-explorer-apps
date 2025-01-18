@@ -37,6 +37,22 @@ export const SpectralProfileChart: FC<Props> = ({
         return null;
     }
 
+    const bottomAxisNumberOfTicks = useMemo(() => {
+        if (!chartData || !chartData.length) {
+            return 0;
+        }
+
+        return chartData[0].values.length;
+    }, [chartData]);
+
+    const shouldRotateBottomAxisTextLabels = useMemo(() => {
+        if (!bottomAxisNumberOfTicks) {
+            return false;
+        }
+
+        return bottomAxisNumberOfTicks > 7;
+    }, [bottomAxisNumberOfTicks]);
+
     return (
         <div
             className="relative w-full h-full"
@@ -48,7 +64,7 @@ export const SpectralProfileChart: FC<Props> = ({
                         'var(--custom-light-blue-50)',
                     '--vertical-reference-line-color':
                         'var(--custom-light-blue-70)',
-                    '--tooltip-text-font-size': '.725rem',
+                    '--tooltip-text-font-size': '.715rem',
                     '--tooltip-text-color': 'var(--custom-light-blue-70)',
                     '--tooltip-background-color': 'var(--custom-background-95)',
                     '--tooltip-border-color': 'var(--custom-light-blue-50)',
@@ -63,7 +79,8 @@ export const SpectralProfileChart: FC<Props> = ({
                     domain: [0, 1],
                 }}
                 bottomAxisOptions={{
-                    numberOfTicks: 7,
+                    numberOfTicks: bottomAxisNumberOfTicks,
+                    shouldRotateTextLabels: shouldRotateBottomAxisTextLabels,
                     tickFormatFunction: (val: number | string, index) => {
                         // console.log(val, index)
                         return (
@@ -72,9 +89,9 @@ export const SpectralProfileChart: FC<Props> = ({
                     },
                 }}
                 margin={{
-                    bottom: 20,
+                    bottom: shouldRotateBottomAxisTextLabels ? 50 : 20,
                     left: 30,
-                    right: 30,
+                    right: 10,
                     top: 10,
                 }}
             />
