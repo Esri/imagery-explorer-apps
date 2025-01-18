@@ -73,184 +73,7 @@ import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 // import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
-
-// /**
-//  * Map location info that contains center and zoom info from URL Hash Params
-//  */
-// const mapLocationFromHashParams = getMapCenterFromHashParams();
-
-// /**
-//  * Use the location of a randomly selected interesting place if there is no map location info
-//  * found in the URL hash params.
-//  */
-// const randomInterestingPlace = !mapLocationFromHashParams
-//     ? getRandomElement(landsatInterestingPlaces)
-//     : null;
-
-// const getPreloadedMapState = (
-//     hashParams: URLSearchParams,
-//     randomInterestingPlace: InterestingPlaceData
-// ): MapState => {
-//     let mapLocation = getMapCenterFromHashParams(hashParams);
-
-//     if (!mapLocation) {
-//         mapLocation = randomInterestingPlace?.location;
-//     }
-
-//     // show map labels if there is no `hideMapLabels` in hash params
-//     const showMapLabel =
-//         getHashParamValueByKey('hideMapLabels', hashParams) === null;
-
-//     // show terrain if there is no `hideTerrain` in hash params
-//     const showTerrain =
-//         getHashParamValueByKey('hideTerrain', hashParams) === null;
-
-//     const showBasemap =
-//         getHashParamValueByKey('hideBasemap', hashParams) === null;
-
-//     return {
-//         ...initialMapState,
-//         center: mapLocation?.center || MAP_CENTER,
-//         zoom: mapLocation?.zoom || MAP_ZOOM,
-//         showMapLabel,
-//         showTerrain,
-//         showBasemap,
-//     };
-// };
-
-// const getPreloadedImageryScenesState = (
-//     hashParams: URLSearchParams,
-//     randomInterestingPlace: InterestingPlaceData,
-//     defaultRasterFunction: LandsatRasterFunctionName | Sentinel2FunctionName
-// ): ImageryScenesState => {
-//     let mode: AppMode =
-//         (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
-
-//     // user is only allowed to use the "dynamic" mode when using mobile device
-//     if (IS_MOBILE_DEVICE) {
-//         mode = 'dynamic';
-//     }
-
-//     // const defaultRasterFunction: LandsatRasterFunctionName =
-//     //     'Natural Color with DRA';
-
-//     // Attempt to extract query parameters from the URL hash.
-//     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
-//     // which will serve as the map center.
-//     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
-//         hashParams
-//     ) || {
-//         ...DefaultQueryParams4ImageryScene,
-//         rasterFunctionName:
-//             randomInterestingPlace?.renderer || defaultRasterFunction,
-//     };
-
-//     const queryParams4SecondaryScene =
-//         getQueryParams4SecondarySceneFromHashParams(hashParams) || {
-//             ...DefaultQueryParams4ImageryScene,
-//             rasterFunctionName: defaultRasterFunction,
-//         };
-
-//     const listOfQueryParams =
-//         getListOfQueryParamsFromHashParams(hashParams) || [];
-
-//     const queryParamsById: {
-//         [key: string]: QueryParams4ImageryScene;
-//     } = {};
-
-//     const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
-
-//     for (const queryParams of listOfQueryParams) {
-//         queryParamsById[queryParams.uniqueId] = queryParams;
-//     }
-
-//     return {
-//         ...initialImagerySceneState,
-//         mode,
-//         tool: tool || 'mask',
-//         queryParams4MainScene,
-//         queryParams4SecondaryScene,
-//         queryParamsList: {
-//             byId: queryParamsById,
-//             ids: listOfQueryParams.map((d) => d.uniqueId),
-//             selectedItemID: listOfQueryParams[0]
-//                 ? listOfQueryParams[0].uniqueId
-//                 : null,
-//         },
-//         // idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
-//         //     ? queryParams4ScenesInAnimation[0].uniqueId
-//         //     : null,
-//     };
-// };
-
-// const getPreloadedTrendToolState = (
-//     hashParams: URLSearchParams
-// ): TrendToolState => {
-//     // const maskToolData = getMaskToolDataFromHashParams();
-//     const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
-
-//     return {
-//         ...initialTrendToolState,
-//         ...trendToolData,
-//     };
-// };
-
-// const getPreloadedMaskToolState = (
-//     hashParams: URLSearchParams
-// ): MaskToolState => {
-//     const maskToolData = getMaskToolDataFromHashParams(hashParams);
-
-//     return {
-//         ...initialMaskToolState,
-//         ...maskToolData,
-//     };
-// };
-
-// const getPreloadedSpectralProfileToolState = (
-//     hashParams: URLSearchParams
-// ): SpectralProfileToolState => {
-//     const spectralProfileToolData =
-//         getSpectralProfileToolDataFromHashParams(hashParams);
-
-//     return {
-//         ...initialSpectralProfileToolState,
-//         ...spectralProfileToolData,
-//     };
-// };
-
-// const getPreloadedChangeCompareToolState = (
-//     hashParams: URLSearchParams
-// ): ChangeCompareToolState => {
-//     const changeCompareToolData =
-//         getChangeCompareToolDataFromHashParams(hashParams);
-
-//     return {
-//         ...initialChangeCompareToolState,
-//         ...changeCompareToolData,
-//     };
-// };
-
-// const getPreloadedUIState = (
-//     hashParams: URLSearchParams,
-//     randomInterestingPlace: InterestingPlaceData
-// ): UIState => {
-//     const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
-
-//     const showSavePanel = getOpenSavePanelFromSessionStorage();
-
-//     const proloadedUIState: UIState = {
-//         ...initialUIState,
-//         nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
-//         showSavePanel,
-//     };
-
-//     if (animationSpeed) {
-//         proloadedUIState.animationSpeed = animationSpeed;
-//         proloadedUIState.animationStatus = 'loading';
-//     }
-
-//     return proloadedUIState;
-// };
+import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     const PublishAndDownloadJobs =
@@ -271,6 +94,9 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         ? getRandomElement(landsatInterestingPlaces)
         : null;
 
+    const defaultRasterFunction: LandsatRasterFunctionName =
+        'Natural Color with DRA';
+
     return {
         Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
         UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
@@ -280,7 +106,7 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         ImageryScenes: getPreloadedState4ImageryScenes(
             hashParams,
             randomInterestingPlace,
-            'Natural Color with DRA'
+            defaultRasterFunction
         ),
         TrendTool: getPreloadedTrendToolState(hashParams),
         MaskTool: getPreloadedState4MaskTool(hashParams),
