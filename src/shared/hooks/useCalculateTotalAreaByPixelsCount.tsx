@@ -21,7 +21,7 @@ import { selectCountOfVisiblePixels } from '@shared/store/Map/selectors';
 // import { debounce } from '@shared/utils/snippets/debounce';
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * Custom hook that calculates the total visible area based on
@@ -43,7 +43,7 @@ export const useCalculateTotalAreaByPixelsCount = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const countOfVisiblePixels = useSelector(selectCountOfVisiblePixels);
+    const countOfVisiblePixels = useAppSelector(selectCountOfVisiblePixels);
 
     // calculate the approximate area a pixel covers, adjusted by the latitude of the centroid point of the imagery scene to which this pixel belongs
     const pixelAreaInSqMeter = useCalculatePixelArea({

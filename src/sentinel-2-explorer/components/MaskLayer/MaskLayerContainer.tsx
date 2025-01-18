@@ -16,7 +16,7 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useMemo } from 'react';
 // import { MaskLayer } from './MaskLayer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMaskLayerPixelValueRange,
     selectShouldClipMaskLayer,
@@ -50,20 +50,20 @@ type Props = {
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const dispatch = useAppDispatch();
 
-    const spectralIndex = useSelector(
+    const spectralIndex = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
-    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+    const { selectedRange } = useAppSelector(selectMaskLayerPixelValueRange);
 
-    const pixelColor = useSelector(selectMaskLayerPixelColor);
+    const pixelColor = useAppSelector(selectMaskLayerPixelColor);
 
-    const opacity = useSelector(selectMaskLayerOpcity);
+    const opacity = useAppSelector(selectMaskLayerOpcity);
 
-    const shouldClip = useSelector(selectShouldClipMaskLayer);
+    const shouldClip = useAppSelector(selectShouldClipMaskLayer);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const isVisible = useMaskLayerVisibility();
 

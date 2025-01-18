@@ -24,7 +24,7 @@ import {
 // import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAveragedBandValues } from './useAveragedSamplingResults';
 
 /**
@@ -35,11 +35,11 @@ import { useAveragedBandValues } from './useAveragedSamplingResults';
  * @returns
  */
 export const useChartData = (numOfBandsToDisplay: number) => {
-    const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
+    const samplingPointsData = useAppSelector(selectSpectralSamplingPointsData);
 
-    const idOfItem2Highlight = useSelector(selectIdOfItem2Highlight);
+    const idOfItem2Highlight = useAppSelector(selectIdOfItem2Highlight);
 
-    const selectedSamplingPointsData = useSelector(
+    const selectedSamplingPointsData = useAppSelector(
         selectSelectedSpectralSamplingPointData
     );
 

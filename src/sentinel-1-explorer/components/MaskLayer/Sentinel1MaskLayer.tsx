@@ -33,7 +33,7 @@ import {
     selectMaskLayerPixelColor,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -62,26 +62,26 @@ type Props = {
 export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const groupLayer4MaskAndWaterLandLayersRef = useRef<GroupLayer>();
 
-    const selectedIndex = useSelector(
+    const selectedIndex = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as RadarIndex;
 
-    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+    const { selectedRange } = useAppSelector(selectMaskLayerPixelValueRange);
 
-    const pixelColor = useSelector(selectMaskLayerPixelColor);
+    const pixelColor = useAppSelector(selectMaskLayerPixelColor);
 
-    const opacity = useSelector(selectMaskLayerOpcity);
+    const opacity = useAppSelector(selectMaskLayerOpcity);
 
-    const shouldClip = useSelector(selectShouldClipMaskLayer);
+    const shouldClip = useAppSelector(selectShouldClipMaskLayer);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
+    const anailysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const isVisible = useMemo(() => {
         if (mode !== 'analysis' || anailysisTool !== 'mask') {

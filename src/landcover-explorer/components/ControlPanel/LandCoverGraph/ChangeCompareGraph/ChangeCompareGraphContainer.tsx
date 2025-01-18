@@ -15,7 +15,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     formatAreaPercentage,
     getLandCoverChangeInAcres,
@@ -53,14 +53,14 @@ import {
 const ChangeCompareGraphContainer = () => {
     const dispatch = useAppDispatch();
 
-    // const { zoom } = useSelector(selectMapCenterAndZoom);
-    const zoom = useSelector(selectMapZoom);
+    // const { zoom } = useAppSelector(selectMapCenterAndZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
-    const resolution = useSelector(selectMapResolution);
+    const resolution = useAppSelector(selectMapResolution);
 
-    const extent = useSelector(selectMapExtent);
+    const extent = useAppSelector(selectMapExtent);
 
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
     );
 

@@ -16,7 +16,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import Calendar, { FormattedImageryScene } from './Calendar';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { Dropdown } from '@shared/components/Dropdown';
 // import { useMonthOptions } from './useMonthOptions';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
@@ -65,15 +65,15 @@ type Props = {
 const CalendarContainer: FC<Props> = ({ children }: Props) => {
     const dispatch = useAppDispatch();
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
-    // const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    // const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
     const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
-    // const cloudCoverThreshold = useSelector(selectCloudCover);
+    // const cloudCoverThreshold = useAppSelector(selectCloudCover);
 
     const acquisitionYear = useAcquisitionYear();
 

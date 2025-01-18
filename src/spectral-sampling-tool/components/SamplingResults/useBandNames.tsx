@@ -2,10 +2,10 @@ import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import { SENTINEL2_BAND_NAMES } from '@shared/services/sentinel-2/config';
 import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useBandNames = (numOfBandsToDisplay: number) => {
-    const targetService = useSelector(selectTargetService);
+    const targetService = useAppSelector(selectTargetService);
 
     const bandNames = useMemo(() => {
         if (targetService === 'landsat') {

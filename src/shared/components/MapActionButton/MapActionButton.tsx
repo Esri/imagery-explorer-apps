@@ -19,7 +19,7 @@
 // } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
     /**
@@ -62,7 +62,7 @@ export const MapActionButton: FC<Props> = ({
     children,
     onClickHandler,
 }) => {
-    // const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    // const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     return (
         <div

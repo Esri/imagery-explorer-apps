@@ -23,7 +23,7 @@ import {
     // activeSceneChanged,
     changeCompareLayerIsOnUpdated,
 } from '@shared/store/ChangeCompareTool/reducer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     // selectActiveScene4ChangeCompareTool,
     selectChangeCompareLayerIsOn,
@@ -39,13 +39,13 @@ import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reduce
 export const ChangeCompareLayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
 
-    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
+    const isSecondarySceneActive = useAppSelector(selectIsSecondarySceneActive);
 
-    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+    const changeCompareLayerIsOn = useAppSelector(selectChangeCompareLayerIsOn);
 
-    const queryParams4SceneA = useSelector(selectQueryParams4MainScene);
+    const queryParams4SceneA = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SceneB = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4SceneB = useAppSelector(selectQueryParams4SecondaryScene);
 
     const viewChangeButtonDisabled =
         !queryParams4SceneA?.objectIdOfSelectedScene ||

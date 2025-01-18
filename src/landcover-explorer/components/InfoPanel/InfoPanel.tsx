@@ -15,7 +15,7 @@
 
 import React, { useEffect, useState } from 'react';
 import LandcoverGraph from './LandcoverGraph/LandcoverGraphContainer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import Header from './Header/Header';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { showInfoPanelToggled } from '@shared/store/LandcoverExplorer/reducer';
@@ -47,11 +47,11 @@ import {
 const InfoPanel = () => {
     const dispatch = useAppDispatch();
 
-    const showInfoPanel = useSelector(selectShowInfoPanel);
+    const showInfoPanel = useAppSelector(selectShowInfoPanel);
 
-    const resolution = useSelector(selectMapResolution);
+    const resolution = useAppSelector(selectMapResolution);
 
-    const extent = useSelector(selectMapExtent);
+    const extent = useAppSelector(selectMapExtent);
 
     const [selectedCountryFromHashParam, setSelectedSubReginFromHashParam] =
         getRegionFromHashParams().split(',');

@@ -2,11 +2,11 @@ import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSent
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import { Sentinel1Scene } from '@typing/imagery-service';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useSelectedSentinel1Scene = (): Sentinel1Scene => {
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const [sentinel1Scene, setSentinel1Scene] = useState<Sentinel1Scene>(null);
 

@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
@@ -32,20 +32,22 @@ import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScen
 export const useQueryAvailableLandsatScenes = (): void => {
     const dispatch = useAppDispatch();
 
-    // const acquisitionYear = useSelector(selectAcquisitionYear);
+    // const acquisitionYear = useAppSelector(selectAcquisitionYear);
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
     const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
     /**
      * current map center
      */
-    const center = useSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter);
 
     useEffect(() => {
         if (!center || !acquisitionDateRange) {

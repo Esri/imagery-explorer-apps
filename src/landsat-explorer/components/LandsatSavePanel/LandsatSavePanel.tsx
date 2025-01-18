@@ -3,7 +3,7 @@ import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLand
 import { SavePanel } from '@shared/components/SavePanel';
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { getToken } from '@shared/utils/esri-oauth';
 import { usePublishSceneRasterFunction } from '@shared/components/SavePanel/usePublishSceneRasterFunction';
 import { usePublishMaskIndexRasterFunction } from '@shared/components/SavePanel/usePublishMaskIndexRasterFunction';
@@ -43,7 +43,7 @@ export const LandsatSavePanel = () => {
 
     const maskToolFullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
 
-    const spectralIndex4MaskTool = useSelector(
+    const spectralIndex4MaskTool = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
@@ -55,7 +55,7 @@ export const LandsatSavePanel = () => {
         return getBandIndexesBySpectralIndex(spectralIndex4MaskTool);
     }, [spectralIndex4MaskTool]);
 
-    const spectralIndex4ChangeDetection = useSelector(
+    const spectralIndex4ChangeDetection = useAppSelector(
         selectSelectedOption4ChangeCompareTool
     ) as SpectralIndex;
 

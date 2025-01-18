@@ -1,7 +1,7 @@
 import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
 import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * Custom hook that returns the appropriate Sentinel-1 raster function name based on the selected polarization filter.
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
  * @returns {Sentinel1FunctionName} The name of the Sentinel-1 raster function to use.
  */
 export const useSentinel1RasterFunction4LogDiff = () => {
-    const polarizationFilter = useSelector(selectPolarizationFilter);
+    const polarizationFilter = useAppSelector(selectPolarizationFilter);
 
     const sentinel1RasterFunction: Sentinel1FunctionName = useMemo(() => {
         const rasterFunction: Sentinel1FunctionName =

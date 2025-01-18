@@ -7,7 +7,7 @@ import {
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { PublishAndDownloadJobOptionData } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 import { selectSelectedIndex4MaskTool } from '@shared/store/MaskTool/selectors';
 import { RadarIndex } from '@typing/imagery-service';
@@ -22,17 +22,19 @@ import { RadarIndex } from '@typing/imagery-service';
  * @property {PublishAndDownloadJobType[]} downloadOptions - An array of options for downloading.
  */
 export const useSentinel1PublishOptions = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analyzeTool = useSelector(selectActiveAnalysisTool);
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 
-    const radarIndex = useSelector(selectSelectedIndex4MaskTool) as RadarIndex;
+    const radarIndex = useAppSelector(
+        selectSelectedIndex4MaskTool
+    ) as RadarIndex;
 
     const publishOptions: PublishAndDownloadJobOptionData[] = useMemo(() => {
         const options: PublishAndDownloadJobType[] = [

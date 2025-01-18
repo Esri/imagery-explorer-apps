@@ -17,7 +17,7 @@
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import Point from '@arcgis/core/geometry/Point';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapPopupAnchorLocation,
     selectSwipeWidgetHandlerPosition,
@@ -63,17 +63,17 @@ type MapViewOnClickHandler = (mapPoint: Point, mousePointX: number) => void;
 export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 
-    const swipePosition = useSelector(selectSwipeWidgetHandlerPosition);
+    const swipePosition = useAppSelector(selectSwipeWidgetHandlerPosition);
 
     const openPopupRef = useRef<MapViewOnClickHandler>();
 

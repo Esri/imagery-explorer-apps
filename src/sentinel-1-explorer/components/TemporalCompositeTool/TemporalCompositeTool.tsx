@@ -16,7 +16,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectListOfQueryParams,
@@ -40,17 +40,17 @@ import { Tooltip } from '@shared/components/Tooltip';
 export const TemporalCompositeTool = () => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const isTemporalCompositeLayerOn = useSelector(
+    const isTemporalCompositeLayerOn = useAppSelector(
         selectIsTemporalCompositeLayerOn
     );
 
-    const rasterFunction = useSelector(
+    const rasterFunction = useAppSelector(
         selectRasterFunction4TemporalCompositeTool
     );
 
-    const listOfQueryParams = useSelector(selectListOfQueryParams);
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
     const rasterFunctionDropdownOptions: DropdownData[] = useMemo(() => {
         const VVdBRasterFunction: Sentinel1FunctionName = 'VV dB Colorized';

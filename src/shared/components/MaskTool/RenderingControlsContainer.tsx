@@ -26,23 +26,23 @@ import {
     selectShouldClipMaskLayer,
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskColor } from '@shared/store/MaskTool/thunks';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 
 export const RenderingControlsContainer = () => {
     const dispatch = useAppDispatch();
 
-    const pixelColor = useSelector(selectMaskLayerPixelColor);
+    const pixelColor = useAppSelector(selectMaskLayerPixelColor);
 
     /**
      * opacity of the mask layer
      */
-    const opacity = useSelector(selectMaskLayerOpcity);
+    const opacity = useAppSelector(selectMaskLayerOpcity);
 
     /**
      * if true, use mask layer to clip the imagery scene
      */
-    const shouldClip = useSelector(selectShouldClipMaskLayer);
+    const shouldClip = useAppSelector(selectShouldClipMaskLayer);
 
     return (
         <RenderingControls

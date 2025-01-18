@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import MapView from './MapView';
 // import { WEB_MAP_ID } from '../../constants/map';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapCenter,
     selectMapPopupAnchorLocation,
@@ -72,27 +72,27 @@ type Props = {
 const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
     const dispatch = useAppDispatch();
 
-    const center = useSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
-    const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
+    const shouldHideBottomPanel = useAppSelector(selectHideBottomPanel);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
+    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
 
-    const swipeWidgetHandlerPosition = useSelector(
+    const swipeWidgetHandlerPosition = useAppSelector(
         selectSwipeWidgetHandlerPosition
     );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    // const analysisTool = useSelector(selectActiveAnalysisTool);
+    // const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const anchorLocation = useSelector(selectMapPopupAnchorLocation);
+    const anchorLocation = useAppSelector(selectMapPopupAnchorLocation);
 
     // const showMagnifier = useMemo(() => {
     //     if (mode !== 'analysis') {

@@ -21,7 +21,7 @@ import {
     ContainerOfSecondaryControls,
     ModeSelector,
 } from '@shared/components/ModeSelector';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -54,9 +54,9 @@ import { useSyncRenderers } from '@shared/hooks/useSyncRenderers';
 import { Sentinel1SavePanel } from '../Sentinel1SavePanel';
 
 export const Layout = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const dynamicModeOn = mode === 'dynamic';
 

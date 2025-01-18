@@ -16,7 +16,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { batch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     // getFormatedDateString,
     getMonthFromFormattedDateString,
@@ -42,7 +42,7 @@ export const useSyncSelectedYearAndMonth4TemporalProfileTool = () => {
     const dispatch = useAppDispatch();
 
     const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     useEffect(() => {
         // remove query location when selected acquisition date is removed

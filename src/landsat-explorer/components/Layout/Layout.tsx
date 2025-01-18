@@ -22,7 +22,7 @@ import {
     ModeSelector,
 } from '@shared/components/ModeSelector';
 import { SceneInfo } from '../SceneInfo';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -50,9 +50,9 @@ import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamic
 import { LandsatSavePanel } from '../LandsatSavePanel/LandsatSavePanel';
 
 const Layout = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const dynamicModeOn = mode === 'dynamic';
 

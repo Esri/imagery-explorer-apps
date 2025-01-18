@@ -22,7 +22,7 @@ import {
     ModeSelector,
 } from '@shared/components/ModeSelector';
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -54,9 +54,9 @@ import { Sentinel2TemporalProfileTool } from '../Sentinel2TemporalProfileTool/Se
 import { Sentinel2SavePanel } from '../Sentinel2SavePanel';
 
 const Layout = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const dynamicModeOn = mode === 'dynamic';
 

@@ -14,7 +14,7 @@
  */
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
     selectIsSecondarySceneActive,
@@ -30,13 +30,15 @@ import { AutoSwipeControls } from './AutoSwipeControls';
 export const SwipeLayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
 
-    const appMode = useSelector(selectAppMode);
+    const appMode = useAppSelector(selectAppMode);
 
-    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
+    const isSecondarySceneActive = useAppSelector(selectIsSecondarySceneActive);
 
-    const queryParams4LeftSide = useSelector(selectQueryParams4MainScene);
+    const queryParams4LeftSide = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4RightSide = useAppSelector(
+        selectQueryParams4SecondaryScene
+    );
 
     if (appMode !== 'swipe') {
         return null;

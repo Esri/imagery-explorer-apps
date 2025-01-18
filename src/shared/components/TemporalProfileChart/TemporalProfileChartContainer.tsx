@@ -23,7 +23,7 @@ import {
 } from '@shared/store/TrendTool/selectors';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { TemporalProfileChart } from './TemporalProfileChart';
 import {
     updateAcquisitionDate,
@@ -52,19 +52,19 @@ export const TemporalProfileChartContainer: FC<Props> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    const queryLocation = useAppSelector(selectQueryLocation4TrendTool);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    const acquisitionYear = useAppSelector(selectAcquisitionYear4TrendTool);
 
-    const temporalProfileData = useSelector(selectTrendToolData);
+    const temporalProfileData = useAppSelector(selectTrendToolData);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const trendToolOption = useSelector(selectTrendToolOption);
+    const trendToolOption = useAppSelector(selectTrendToolOption);
 
-    const isLoading = useSelector(selectIsLoadingData4TrendingTool);
+    const isLoading = useAppSelector(selectIsLoadingData4TrendingTool);
 
-    const error = useSelector(selectError4TemporalProfileTool);
+    const error = useAppSelector(selectError4TemporalProfileTool);
 
     const message = useMemo(() => {
         if (isLoading) {

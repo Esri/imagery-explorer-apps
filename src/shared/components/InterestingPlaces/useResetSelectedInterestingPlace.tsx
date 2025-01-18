@@ -18,16 +18,16 @@ import { nameOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer'
 import { InterestingPlaceData } from '@typing/shared';
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useResetSelectedInterestingPlace = (
     selectedInterestingPlace: InterestingPlaceData
 ): void => {
     const dispatch = useAppDispatch();
 
-    const mapCenter = useSelector(selectMapCenter);
+    const mapCenter = useAppSelector(selectMapCenter);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
     useEffect(() => {
         if (!selectedInterestingPlace) {

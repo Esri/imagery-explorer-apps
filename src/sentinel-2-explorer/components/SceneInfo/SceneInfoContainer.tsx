@@ -19,7 +19,7 @@ import {
     SceneInfoTableData,
 } from '@shared/components/SceneInfoTable';
 import { DATE_FORMAT } from '@shared/constants/UI';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { Sentinel2Scene } from '@typing/imagery-service';
@@ -27,7 +27,7 @@ import { getSentinel2SceneByObjectId } from '@shared/services/sentinel-2/getSent
 import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
 
 export const SceneInfoContainer = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const fetchSceneByObjectId = useCallback(async (objectId: number) => {
         const res = await getSentinel2SceneByObjectId(objectId);

@@ -21,7 +21,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { AnalysisTool } from '@shared/store/ImageryScene/reducer';
 
 export type AnalyzeToolSelectorData = {
@@ -46,9 +46,9 @@ type Props = {
 export const AnalysisToolSelectorContainer: FC<Props> = ({ data }) => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     if (mode !== 'analysis') {
         return null;

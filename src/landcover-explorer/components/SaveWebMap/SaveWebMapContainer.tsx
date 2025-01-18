@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectShowSaveWebMapPanel } from '@shared/store/UI/selectors';
 import { SaveWebMap, WebMapMetadata } from './SaveWebMap';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -32,7 +32,7 @@ import { getPortalBaseUrl } from '@shared/utils/esri-oauth';
 export const SaveWebMapContainer = () => {
     const dispatch = useAppDispatch();
 
-    const showSaveWebMap = useSelector(selectShowSaveWebMapPanel);
+    const showSaveWebMap = useAppSelector(selectShowSaveWebMapPanel);
 
     const [webmapMetadata, setWebMapMetadata] = useState<WebMapMetadata>();
 

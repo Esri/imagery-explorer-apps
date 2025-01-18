@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
@@ -46,7 +46,7 @@ type Props = {
 const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
     const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const mediaLayerRef = useRef<MediaLayer>();
 
@@ -55,9 +55,9 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
     const frameData4DownloadJob: AnimationFrameData[] =
         useFrameDataForDownloadJob({ mediaLayerElements, mapView });
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

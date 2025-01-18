@@ -45,7 +45,7 @@ import {
 // } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import {
 //     // getFormatedDateString,
 //     getMonthFromFormattedDateString,
@@ -77,12 +77,14 @@ import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalP
 export const LandsatTemporalProfileTool = () => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
     const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     /**
      * this function will be invoked by the updateTemporalProfileToolData thunk function

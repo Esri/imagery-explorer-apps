@@ -15,7 +15,7 @@
 
 import React from 'react';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import {
     // selectAcquisitionYear,
@@ -31,9 +31,9 @@ import {
 export const CloudFilterContainer = () => {
     const dispatch = useAppDispatch();
 
-    const cloudCoverThreshold = useSelector(selectCloudCover);
+    const cloudCoverThreshold = useAppSelector(selectCloudCover);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     return (
         <CloudFilter

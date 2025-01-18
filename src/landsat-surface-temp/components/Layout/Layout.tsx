@@ -17,7 +17,7 @@ import React from 'react';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 import { MaskTool } from '../MaskTool';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
@@ -31,7 +31,7 @@ import { useOpenAboutThisAppLink } from '../../hooks/useOpenAboutThisAppLink';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 
 const Layout = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const dynamicModeOn = mode === 'dynamic';
 

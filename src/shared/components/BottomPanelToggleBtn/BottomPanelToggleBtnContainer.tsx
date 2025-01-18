@@ -14,7 +14,7 @@
  */
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import BottomPanelToggleBtn from './BottomPanelToggleBtn';
 import { selectHideBottomPanel } from '../../store/UI/selectors';
@@ -23,7 +23,7 @@ import { bottomPanelToggled } from '../../store/UI/reducer';
 const BottomPanelToggleBtnContainer = () => {
     const dispatch = useAppDispatch();
 
-    const isHidden = useSelector(selectHideBottomPanel);
+    const isHidden = useAppSelector(selectHideBottomPanel);
 
     return (
         <BottomPanelToggleBtn

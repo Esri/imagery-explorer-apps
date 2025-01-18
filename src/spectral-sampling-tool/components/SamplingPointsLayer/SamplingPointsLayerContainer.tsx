@@ -17,7 +17,7 @@ import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import React, { FC, useMemo } from 'react';
 import { SamplingPoints } from './SamplingPointsLayer';
 import MapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
@@ -33,9 +33,9 @@ export const SamplingPointsLayerContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    // const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
+    // const samplingPointsData = useAppSelector(selectSpectralSamplingPointsData);
 
-    const selectedSamplingPoint = useSelector(
+    const selectedSamplingPoint = useAppSelector(
         selectSelectedSpectralSamplingPointData
     );
 

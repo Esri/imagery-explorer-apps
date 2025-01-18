@@ -25,7 +25,7 @@ import {
     updateTemporalProfileToolData,
 } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4SceneInSelectedMode,
@@ -47,20 +47,22 @@ export const useUpdateTemporalProfileToolData = (
 ) => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    const queryLocation = useAppSelector(selectQueryLocation4TrendTool);
 
-    const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
+    const acquisitionMonth = useAppSelector(selectAcquisitionMonth4TrendTool);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    const acquisitionYear = useAppSelector(selectAcquisitionYear4TrendTool);
 
-    const selectedTrendToolOption = useSelector(selectTrendToolOption);
+    const selectedTrendToolOption = useAppSelector(selectTrendToolOption);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const updateTrendToolDataDebounced = useCallback(
         debounce(() => {

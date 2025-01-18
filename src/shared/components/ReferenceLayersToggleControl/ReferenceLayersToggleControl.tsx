@@ -27,7 +27,7 @@ import {
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type ToggleButtonProps = {
     label: string;
@@ -88,11 +88,11 @@ type Props = {
 export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
     const dispatch = useAppDispatch();
 
-    const showMapLabel = useSelector(selectShowMapLabel);
+    const showMapLabel = useAppSelector(selectShowMapLabel);
 
-    const showTerrain = useSelector(selectShowTerrain);
+    const showTerrain = useAppSelector(selectShowTerrain);
 
-    const showBasemap = useSelector(selectShowBasemap);
+    const showBasemap = useAppSelector(selectShowBasemap);
 
     return (
         <div

@@ -4,7 +4,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * Custom hook to retrieve object IDs for change detection tool.
@@ -15,9 +15,9 @@ import { useSelector } from 'react-redux';
  * @returns An array containing the object ID of the selected scene
  */
 export const useObjectIds4ChangeDetectionTool = (): number[] => {
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 

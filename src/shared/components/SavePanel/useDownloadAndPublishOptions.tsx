@@ -7,7 +7,7 @@ import {
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export type PublishAndDownloadJobOptionData = {
     /**
@@ -34,13 +34,13 @@ export type PublishAndDownloadJobOptionData = {
  * @property {PublishAndDownloadJobType[]} downloadOptions - An array of options for downloading.
  */
 export const useDownloadAndPublishOptions = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analyzeTool = useSelector(selectActiveAnalysisTool);
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 

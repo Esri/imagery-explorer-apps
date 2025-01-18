@@ -18,7 +18,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * This custom hook returns the acquisition date of the selected scene to highlight it on the calendar.
@@ -26,7 +26,7 @@ import { useSelector } from 'react-redux';
  */
 export const useAcquisitionDateFromSelectedScene = (): string => {
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     // /**
     //  * user selected acquisition date
@@ -36,7 +36,7 @@ export const useAcquisitionDateFromSelectedScene = (): string => {
     /**
      * List of available imagery scenes that intersect with map center and were acquired during the input year.
      */
-    const availableScenes = useSelector(selectAvailableScenes);
+    const availableScenes = useAppSelector(selectAvailableScenes);
 
     const selectedAcquisitionDate = useMemo(() => {
         // If the user has not selected a date or there are no available scenes for the query location,

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { selectFinishedRasterAnalysisJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
 import { removePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
@@ -11,7 +11,7 @@ import { removePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJob
 export const useClearRasterAnalysisJobs = () => {
     const dispatch = useAppDispatch();
 
-    const finishedJobs = useSelector(selectFinishedRasterAnalysisJobs);
+    const finishedJobs = useAppSelector(selectFinishedRasterAnalysisJobs);
 
     useEffect(() => {
         if (!finishedJobs.length) {

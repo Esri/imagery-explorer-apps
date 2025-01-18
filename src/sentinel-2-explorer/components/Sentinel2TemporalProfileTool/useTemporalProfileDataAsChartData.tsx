@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectTrendToolData,
     selectSelectedIndex4TrendTool,
@@ -74,13 +74,13 @@ const convertSentinel2TemporalProfileData2ChartData = (
 };
 
 export const useSentinel2TemporalProfileDataAsChartData = () => {
-    const temporalProfileData = useSelector(selectTrendToolData);
+    const temporalProfileData = useAppSelector(selectTrendToolData);
 
-    const spectralIndex: SpectralIndex = useSelector(
+    const spectralIndex: SpectralIndex = useAppSelector(
         selectSelectedIndex4TrendTool
     ) as SpectralIndex;
 
-    const trendToolOption = useSelector(selectTrendToolOption);
+    const trendToolOption = useAppSelector(selectTrendToolOption);
 
     const chartData = useMemo(() => {
         return convertSentinel2TemporalProfileData2ChartData(

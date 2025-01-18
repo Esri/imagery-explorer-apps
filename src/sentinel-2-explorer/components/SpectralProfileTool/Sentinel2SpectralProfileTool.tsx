@@ -15,7 +15,7 @@
 
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { SpectralProfileTool } from '@shared/components/SpectralProfileTool';
 import { Sentinel2SpectralProfileData } from './config';
 import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
@@ -25,7 +25,7 @@ import { SENTINEL2_BAND_NAMES } from '@shared/services/sentinel-2/config';
 import { getSentinel2PixelValues } from '@shared/services/sentinel-2/getSentinel2PixelValues';
 
 export const Sentinel2SpectralProfileTool = () => {
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
     const fetchSentinel2PixelValuesFunc = useCallback(
         async ({

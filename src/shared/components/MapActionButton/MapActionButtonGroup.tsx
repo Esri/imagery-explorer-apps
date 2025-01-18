@@ -17,7 +17,7 @@ import MapView from '@arcgis/core/views/MapView';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
     mapView?: MapView;
@@ -30,7 +30,7 @@ type Props = {
  * @returns
  */
 export const MapActionButtonGroup: FC<Props> = ({ mapView, children }) => {
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     return (
         <div

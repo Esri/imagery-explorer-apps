@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import { map } from 'd3';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
 
 type Props = {

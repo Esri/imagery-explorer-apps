@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useCallback, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import MapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -60,11 +60,11 @@ export const AnimationLayer: FC<Props> = ({
 
     const mediaLayerRef = useRef<MediaLayer>();
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
-    const queryParams4ScenesInAnimationMode = useSelector(
+    const queryParams4ScenesInAnimationMode = useAppSelector(
         selectListOfQueryParams
     );
 

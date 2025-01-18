@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import MapView from '@arcgis/core/views/MapView';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import {
@@ -30,12 +30,12 @@ type Props = {
 };
 
 export const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const { rasterFunctionName, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4MainScene) || {};
+        useAppSelector(selectQueryParams4MainScene) || {};
 
-    const activeAnalysisTool = useSelector(selectActiveAnalysisTool);
+    const activeAnalysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const getVisibility = () => {
         if (mode === 'dynamic') {

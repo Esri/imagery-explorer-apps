@@ -31,16 +31,16 @@ type Props = {
 };
 
 const LandsatLayer: FC<Props> = ({ mapView, groupLayer }: Props) => {
-    // const mode = useSelector(selectAppMode);
+    // const mode = useAppSelector(selectAppMode);
 
     // const { rasterFunctionName, objectIdOfSelectedScene } =
-    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    //     useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    // const animationStatus = useSelector(selectAnimationStatus);
+    // const animationStatus = useAppSelector(selectAnimationStatus);
 
-    // const analysisTool = useSelector(selectActiveAnalysisTool);
+    // const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    // const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+    // const changeCompareLayerIsOn = useAppSelector(selectChangeCompareLayerIsOn);
 
     // const getVisibility = () => {
     //     if (mode === 'dynamic') {

@@ -18,7 +18,7 @@ import { maskLayerOpacityChanged } from '@shared/store/MaskTool/reducer';
 import { selectMaskLayerOpcity } from '@shared/store/MaskTool/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 
 export const MaskLayerOpacityControl = () => {
@@ -27,7 +27,7 @@ export const MaskLayerOpacityControl = () => {
     /**
      * opacity of the mask layer
      */
-    const opacity = useSelector(selectMaskLayerOpcity);
+    const opacity = useAppSelector(selectMaskLayerOpcity);
 
     return (
         <div className="flex items-center calcite-mode-dark">

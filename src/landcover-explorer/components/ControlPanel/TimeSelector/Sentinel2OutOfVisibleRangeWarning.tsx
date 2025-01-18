@@ -18,12 +18,12 @@ import {
     selectMapMode,
 } from '@shared/store/LandcoverExplorer/selectors';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const Sentinel2OutOfVisibleRangeWarning = () => {
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 

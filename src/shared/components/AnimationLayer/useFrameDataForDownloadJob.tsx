@@ -20,7 +20,7 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { AnimationFrameData4DownloadJob } from '../AnimationDownloadPanel/DownloadPanel';
 
 /**
@@ -48,7 +48,7 @@ export const useFrameDataForDownloadJob = ({
     sortedQueryParams4ScenesInAnimationMode,
     mediaLayerElements,
 }: Props) => {
-    const mapCenter = useSelector(selectMapCenter);
+    const mapCenter = useAppSelector(selectMapCenter);
 
     const [frameData, setFrameData] = useState<AnimationFrameData[]>([]);
 

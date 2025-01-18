@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -42,19 +42,19 @@ import { useAppDispatch } from '@shared/store/configureStore';
 export const useLockedRelativeOrbit = () => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
-    const queryParamsOfMainScene = useSelector(selectQueryParams4MainScene);
+    const queryParamsOfMainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParamsOfSecondaryScene = useSelector(
+    const queryParamsOfSecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 
-    const listOfQueryParams = useSelector(selectListOfQueryParams);
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
     const [sentinel1Scene, setSentinel1Scene] = useState<Sentinel1Scene>();
 

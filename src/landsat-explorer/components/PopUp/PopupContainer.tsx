@@ -17,7 +17,7 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import Point from '@arcgis/core/geometry/Point';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     // selectActiveAnalysisTool,
     selectAppMode,
@@ -44,11 +44,11 @@ type Props = {
 let controller: AbortController = null;
 
 export const PopupContainer: FC<Props> = ({ mapView }) => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 

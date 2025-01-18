@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
@@ -34,11 +34,11 @@ import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
     const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const years = getAvailableYears();
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     const isPlayingRef = useRef<boolean>(false);
 
@@ -46,7 +46,7 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
 
     const indexOfNextFrame = useRef<number>(0);
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     const animationSpeedRef = useRef<number>(animationSpeed);
 

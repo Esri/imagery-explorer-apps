@@ -17,7 +17,7 @@ import './ScreenshotEffect.css';
 import classNames from 'classnames';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { imageDataToBlob } from '@shared/utils/snippets/imageData2Blob';
@@ -29,7 +29,7 @@ type Props = {
 };
 
 export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
-    const shouldHideBottomPanel = useSelector(selectHideBottomPanel);
+    const shouldHideBottomPanel = useAppSelector(selectHideBottomPanel);
 
     const [isCapturingScreenshot, setIsCapturingScreenshot] =
         useState<boolean>(false);

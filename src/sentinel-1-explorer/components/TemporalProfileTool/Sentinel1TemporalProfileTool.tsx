@@ -45,7 +45,7 @@ import {
 // } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4SceneInSelectedMode,
@@ -71,14 +71,14 @@ import { Sentinel1TemporalProfileChart } from './Sentinel1TemporalProfileChart';
 export const Sentinel1TemporalProfileTool = () => {
     // const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    // const orbitDirection = useSelector(selectSentinel1OrbitDirection);
+    // const orbitDirection = useAppSelector(selectSentinel1OrbitDirection);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    // const error = useSelector(selectError4TemporalProfileTool);
+    // const error = useAppSelector(selectError4TemporalProfileTool);
 
     /**
      * this function will be invoked by the updateTemporalProfileToolData thunk function

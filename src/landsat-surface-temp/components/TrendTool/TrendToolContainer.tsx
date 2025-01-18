@@ -39,7 +39,7 @@ import {
 import { updateTemporalProfileToolData } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { TemporalProfileChart } from './TrendChart';
 // import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
 import {
@@ -65,27 +65,29 @@ import { useSyncSelectedYearAndMonth4TemporalProfileTool } from '@shared/compone
 export const TrendToolContainer = () => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    // const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    // const queryLocation = useAppSelector(selectQueryLocation4TrendTool);
 
-    // const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
+    // const acquisitionMonth = useAppSelector(selectAcquisitionMonth4TrendTool);
 
-    // const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    // const acquisitionYear = useAppSelector(selectAcquisitionYear4TrendTool);
 
-    // const selectedTrendToolOption = useSelector(selectTrendToolOption);
+    // const selectedTrendToolOption = useAppSelector(selectTrendToolOption);
 
-    // const temporalProfileData = useSelector(selectTrendToolData);
+    // const temporalProfileData = useAppSelector(selectTrendToolData);
 
-    const spectralIndex = useSelector(selectSelectedIndex4TrendTool);
+    const spectralIndex = useAppSelector(selectSelectedIndex4TrendTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    // const isLoading = useSelector(selectIsLoadingData4TrendingTool);
+    // const isLoading = useAppSelector(selectIsLoadingData4TrendingTool);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
-    // const trendToolOption = useSelector(selectTrendToolOption);
+    // const trendToolOption = useAppSelector(selectTrendToolOption);
 
     const intersectWithImageryScene = useCallback(
         async (

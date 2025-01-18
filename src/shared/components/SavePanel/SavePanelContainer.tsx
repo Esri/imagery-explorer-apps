@@ -9,7 +9,7 @@ import {
     // selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { useSaveOptions } from './useSaveOptions';
 import {
     createNewPublishAndDownloadJob,
@@ -90,7 +90,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     // Custom hook that checks the status of pending raster analysis jobs.
     useCheckJobStatus();

@@ -15,7 +15,7 @@
 
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { SpectralProfileTool } from '@shared/components/SpectralProfileTool';
 import { LANDSAT_BAND_NAMES } from '@shared/services/landsat-level-2/config';
 import { LandsatSpectralProfileData } from './config';
@@ -24,7 +24,7 @@ import { useFetchSpectralProfileToolData } from '@shared/components/SpectralProf
 import { FetchPixelValuesFuncParams } from '@shared/store/SpectralProfileTool/thunks';
 
 export const LandsatSpectralProfileTool = () => {
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
     const fetchLandsatPixelValuesFunc = useCallback(
         async ({

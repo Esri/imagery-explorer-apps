@@ -17,10 +17,10 @@ import { COPIED_LINK_MESSAGE_STRING } from '@shared/constants/UI';
 import { selectAnimationLinkIsCopied } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const CopiedLinkMessage = () => {
-    const linkIsCopied = useSelector(selectAnimationLinkIsCopied);
+    const linkIsCopied = useAppSelector(selectAnimationLinkIsCopied);
 
     if (!linkIsCopied) {
         return null;

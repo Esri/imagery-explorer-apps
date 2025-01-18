@@ -14,13 +14,12 @@
  */
 
 import React, { useEffect } from 'react';
-import { useSelector, batch } from 'react-redux';
 import {
     selectAvailableScenes,
     selectQueryParams4SceneInSelectedMode,
     selectShouldForceSceneReselection,
 } from '@shared/store/ImageryScene/selectors';
-import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { shouldForceSceneReselectionUpdated } from '@shared/store/ImageryScene/reducer';
@@ -33,16 +32,16 @@ export const useFindSelectedSceneByDate = (): void => {
     const dispatch = useAppDispatch();
 
     const { acquisitionDate, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     /**
      * available imagery scenes that intersect with input map geometry and were acquired during the input year.
      */
-    const availableScenes = useSelector(selectAvailableScenes);
+    const availableScenes = useAppSelector(selectAvailableScenes);
 
-    const shouldForceSceneReselection = useSelector(
+    const shouldForceSceneReselection = useAppSelector(
         selectShouldForceSceneReselection
     );
 
@@ -74,12 +73,10 @@ export const useFindSelectedSceneByDate = (): void => {
             (d) => d.formattedAcquisitionDate === acquisitionDate
         );
 
-        batch(() => {
-            dispatch(
-                updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
-            );
+        dispatch(
+            updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
+        );
 
-            dispatch(shouldForceSceneReselectionUpdated(false));
-        });
+        dispatch(shouldForceSceneReselectionUpdated(false));
     }, [availableScenes, acquisitionDate, objectIdOfSelectedScene]);
 };

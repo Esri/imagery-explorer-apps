@@ -16,7 +16,7 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useMemo } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -41,19 +41,19 @@ import { useAppDispatch } from '@shared/store/configureStore';
 export const useSyncRenderers = () => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analyzeTool = useSelector(selectActiveAnalysisTool);
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
-    const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
+    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 
-    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
+    const isSecondarySceneActive = useAppSelector(selectIsSecondarySceneActive);
 
     /**
      * Determines whether the renderer should be synchronized based on the current mode

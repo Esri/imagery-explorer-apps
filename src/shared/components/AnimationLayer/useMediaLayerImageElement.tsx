@@ -44,7 +44,7 @@ const useMediaLayerImageElement = ({
 
     const abortControllerRef = useRef<AbortController>();
 
-    // const animationStatus = useSelector(selectAnimationStatus);
+    // const animationStatus = useAppSelector(selectAnimationStatus);
 
     const loadFrameData = async () => {
         if (!mapView) {

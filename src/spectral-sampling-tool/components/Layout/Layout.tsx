@@ -23,13 +23,13 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 // import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 import { Layout4Sentinel2 } from './Layout4Sentinel2';
 import { Layout4Landsat } from './Layout4Landsat';
 
 const Layout = () => {
-    const targetService = useSelector(selectTargetService);
+    const targetService = useAppSelector(selectTargetService);
 
     useSaveAppState2HashParams();
 

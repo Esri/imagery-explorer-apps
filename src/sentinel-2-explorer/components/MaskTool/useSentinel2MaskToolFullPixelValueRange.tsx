@@ -1,10 +1,10 @@
 import { selectSelectedIndex4MaskTool } from '@shared/store/MaskTool/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useSentinel2MaskToolFullPixelValueRange = () => {
-    const spectralIndex = useSelector(
+    const spectralIndex = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 

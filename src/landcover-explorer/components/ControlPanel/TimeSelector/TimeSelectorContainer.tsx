@@ -16,7 +16,7 @@
 import classNames from 'classnames';
 import React, { useEffect } from 'react';
 // import { batch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { useAppDispatch } from '@shared/store/configureStore';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
@@ -41,11 +41,11 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { TimeSelectorHeader } from './TimeSelectorHeader';
 
 export const TimeSelectorContainer = () => {
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

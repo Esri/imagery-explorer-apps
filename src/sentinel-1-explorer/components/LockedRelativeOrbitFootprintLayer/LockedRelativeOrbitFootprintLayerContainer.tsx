@@ -21,7 +21,7 @@ import { LockedRelativeOrbitFootprintLayer } from './LockedRelativeOrbitFootprin
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { getFeatureByObjectId } from '@shared/services/helpers/getFeatureById';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import { selectLockedRelativeOrbit } from '@shared/store/Sentinel1/selectors';
 
@@ -38,10 +38,10 @@ export const LockedRelativeOrbitFootprintLayerContainer: FC<Props> = ({
      * Locked relative orbit to be used by the different Analyze tools (e.g. temporal composite and change compare)
      */
     const { lockedRelativeOrbit, objectIdOfSceneWithLockedRelativeOrbit } =
-        useSelector(selectLockedRelativeOrbit) || {};
+        useAppSelector(selectLockedRelativeOrbit) || {};
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const [footPrintFeature, setFootPrintFeature] = useState<IFeature>();
 

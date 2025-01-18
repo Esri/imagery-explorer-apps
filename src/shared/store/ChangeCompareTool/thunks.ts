@@ -15,7 +15,7 @@
 
 import { DateRange } from '@typing/shared';
 import { StoreDispatch, StoreGetState } from '../configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectShowSavePanel } from '@shared/store/UI/selectors';
 import { CloseButton } from '../CloseButton';
 import { showSavePanelToggled } from '@shared/store/UI/reducer';
@@ -79,7 +79,7 @@ export const SavePanel: FC<SavePanelProps> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const shouldShowSavePanel = useSelector(selectShowSavePanel);
+    const shouldShowSavePanel = useAppSelector(selectShowSavePanel);
 
     const [activeSaveJobDialog, setActiveSaveJobDialog] =
         useState<PublishAndDownloadJobType>();

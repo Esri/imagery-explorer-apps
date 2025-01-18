@@ -14,7 +14,7 @@
  */
 import React, { FC, useEffect, useMemo } from 'react';
 // import { MaskLayer } from './MaskLayer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -26,12 +26,12 @@ import {
  * @returns
  */
 export const useMaskLayerVisibility = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
+    const anailysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const isVisible = useMemo(() => {
         if (mode !== 'analysis' || anailysisTool !== 'mask') {

@@ -15,7 +15,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     getLandCoverAreaByYear,
     // getLandCoverChangeInAcres,
@@ -36,15 +36,15 @@ import {
 const TotalAreaGraphContainer = () => {
     const dispatch = useAppDispatch();
 
-    // const { zoom } = useSelector(selectMapCenterAndZoom);
+    // const { zoom } = useAppSelector(selectMapCenterAndZoom);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
-    const resolution = useSelector(selectMapResolution);
+    const resolution = useAppSelector(selectMapResolution);
 
-    const extent = useSelector(selectMapExtent);
+    const extent = useAppSelector(selectMapExtent);
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     const [chartData, setChartData] = useState<BarChartDataItem[]>();
 

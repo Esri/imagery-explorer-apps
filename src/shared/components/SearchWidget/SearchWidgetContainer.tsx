@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import SearchWidget from './SearchWidget';
 import MapView from '@arcgis/core/views/MapView';
@@ -14,7 +14,7 @@ type Props = {
 export const SearchWidgetContainer: FC<Props> = ({ mapView }) => {
     const containerRef = React.useRef<HTMLDivElement>();
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const [isSearchWidgetOpen, setIsSearchWidgetOpen] = React.useState(false);
 

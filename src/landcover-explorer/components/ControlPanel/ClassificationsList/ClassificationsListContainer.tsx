@@ -15,7 +15,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { activeLandCoverTypeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
@@ -28,9 +28,9 @@ import ClassificationsList from './ClassificationsList';
 const ClassificationsListContainer = () => {
     const dispatch = useAppDispatch();
 
-    const activeLandCoverType = useSelector(selectActiveLandCoverType);
+    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const data = useMemo(() => {
         return getLandCoverClassifications();

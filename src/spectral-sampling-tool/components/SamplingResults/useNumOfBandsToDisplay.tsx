@@ -1,9 +1,9 @@
 import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useNumOfBandsToDisplay = () => {
-    const targetService = useSelector(selectTargetService);
+    const targetService = useAppSelector(selectTargetService);
 
     const numOfBandsToDisplay = useMemo(() => {
         if (targetService === 'landsat') {

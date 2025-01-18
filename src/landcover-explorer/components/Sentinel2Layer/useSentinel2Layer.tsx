@@ -20,7 +20,7 @@ import {
     SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
     SENTINEL_2_IMAGE_SERVICE_URL,
 } from './config';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectSentinel2AquisitionMonth,
     selectSentinel2RasterFunction,
@@ -58,9 +58,11 @@ const useSentinel2Layer = ({
 
     const [sentinel2Layer, setSentinel2Layer] = useState<ImageryLayer>();
 
-    const selectedRasterFunction = useSelector(selectSentinel2RasterFunction);
+    const selectedRasterFunction = useAppSelector(
+        selectSentinel2RasterFunction
+    );
 
-    const aquisitionMonth = useSelector(selectSentinel2AquisitionMonth);
+    const aquisitionMonth = useAppSelector(selectSentinel2AquisitionMonth);
 
     /**
      * get sentinel 2 layer using mosaic created using the input year

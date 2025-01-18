@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -29,15 +29,15 @@ import {
 } from '@shared/store/ChangeCompareTool/selectors';
 
 export const useChangeCompareLayerVisibility = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+    const changeCompareLayerIsOn = useAppSelector(selectChangeCompareLayerIsOn);
 
-    const queryParams4SceneA = useSelector(selectQueryParams4MainScene);
+    const queryParams4SceneA = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SceneB = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4SceneB = useAppSelector(selectQueryParams4SecondaryScene);
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
+    const anailysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const isVisible = useMemo(() => {
         if (mode !== 'analysis') {

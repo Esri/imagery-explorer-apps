@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAutoSwipeStatus,
     selectAutoSwipeSpeed,
@@ -20,9 +20,9 @@ import { Slider } from '../Slider';
 export const AutoSwipeControls = () => {
     const dispatch = useAppDispatch();
 
-    const status = useSelector(selectAutoSwipeStatus);
+    const status = useAppSelector(selectAutoSwipeStatus);
 
-    const speed = useSelector(selectAutoSwipeSpeed);
+    const speed = useAppSelector(selectAutoSwipeSpeed);
 
     const statusOnChange = (status: AutoSwipeStatus) => {
         dispatch(autoSwipeStatusChanged(status));

@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
@@ -31,11 +31,11 @@ export const useDataFromSelectedImageryScene = <T,>(
     fetchSceneByObjectId: (objectId: number) => Promise<T>
 ) => {
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const animationPlaying = useSelector(selectIsAnimationPlaying);
+    const animationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const [selectedScene, setSelectedScene] = useState<T>();
 

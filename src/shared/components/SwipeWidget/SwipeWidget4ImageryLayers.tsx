@@ -16,7 +16,7 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
     selectIsSwipeModeOn,
@@ -45,11 +45,13 @@ export const SwipeWidget4ImageryLayers: FC<Props> = ({
 }: Props) => {
     const dispatch = useAppDispatch();
 
-    const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
+    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
 
-    const queryParams4LeftSide = useSelector(selectQueryParams4MainScene);
+    const queryParams4LeftSide = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4RightSide = useAppSelector(
+        selectQueryParams4SecondaryScene
+    );
 
     const leadingLayer = useImageryLayerByObjectId({
         url: serviceUrl,

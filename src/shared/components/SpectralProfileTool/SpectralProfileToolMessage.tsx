@@ -18,14 +18,14 @@ import {
     selectIsLoadingData4SpectralProfileTool,
 } from '@shared/store/SpectralProfileTool/selectors';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const SpectralProfileToolMessage = () => {
-    const isLoading = useSelector(selectIsLoadingData4SpectralProfileTool);
+    const isLoading = useAppSelector(selectIsLoadingData4SpectralProfileTool);
 
-    const spectralProfileData = useSelector(selectData4SpectralProfileTool);
+    const spectralProfileData = useAppSelector(selectData4SpectralProfileTool);
 
-    const error4SpectralProfileTool = useSelector(
+    const error4SpectralProfileTool = useAppSelector(
         selectError4SpectralProfileTool
     );
 

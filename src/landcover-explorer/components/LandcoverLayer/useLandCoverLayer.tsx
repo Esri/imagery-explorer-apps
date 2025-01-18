@@ -24,7 +24,7 @@ import {
     getRasterFunctionByLandCoverClassName,
     LandCoverClassification,
 } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
 // import IMapView from '@arcgis/core/views/MapView';
 
@@ -43,7 +43,7 @@ const useLandCoverLayer = ({
     year,
     visible = true,
 }: UseLandCoverLayerParams) => {
-    const activeLandCoverType = useSelector(selectActiveLandCoverType);
+    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
     const layerRef = useRef<ImageryLayer>();
 

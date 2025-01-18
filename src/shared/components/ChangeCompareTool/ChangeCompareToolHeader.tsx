@@ -29,7 +29,7 @@ import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
     /**
@@ -51,9 +51,11 @@ export const ChangeCompareToolHeader: FC<Props> = ({
 }: Props) => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedOption = useSelector(selectSelectedOption4ChangeCompareTool);
+    const selectedOption = useAppSelector(
+        selectSelectedOption4ChangeCompareTool
+    );
 
     if (tool !== 'change') {
         return null;

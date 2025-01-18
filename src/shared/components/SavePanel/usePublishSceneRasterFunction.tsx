@@ -2,7 +2,7 @@ import { Geometry } from '@arcgis/core/geometry';
 import { createClipRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
     originalServiceUrl: string;
@@ -15,7 +15,7 @@ export const usePublishSceneRasterFunction = ({
     clippingGeometry,
     token,
 }: Props) => {
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     const rasterFunction = useMemo(() => {
         if (

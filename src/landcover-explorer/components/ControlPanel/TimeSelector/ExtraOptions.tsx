@@ -32,7 +32,7 @@ import { copyAnimationLink } from '@shared/store/UI/thunks';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type SaveOptionsProps = {
     donwloadButtonOnClick: () => void;
@@ -74,9 +74,9 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
     donwloadButtonOnClick,
     saveWebmapButtonOnClick,
 }) => {
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 
@@ -131,7 +131,7 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
     donwloadAnimationOnClick,
     speedOnChange,
 }: AnimationOptionsProps) => {
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     if (!animationMode) {
         return null;
@@ -166,7 +166,7 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 export const ExtraOptions = () => {
     const dispatch = useAppDispatch();
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     return (
         <div className="w-full my-6 text-xs">

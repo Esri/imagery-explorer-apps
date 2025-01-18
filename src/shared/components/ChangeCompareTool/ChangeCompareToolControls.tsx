@@ -30,7 +30,7 @@ import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
 import { TotalVisibleAreaInfo } from '../TotalAreaInfo/TotalAreaInfo';
 
@@ -58,17 +58,17 @@ export const ChangeCompareToolControls: FC<Props> = ({
 }: Props) => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedRange = useSelector(
+    const selectedRange = useAppSelector(
         selectUserSelectedRangeInChangeCompareTool
     );
 
-    const fullPixelValueRange = useSelector(
+    const fullPixelValueRange = useAppSelector(
         selectFullPixelValuesRangeInChangeCompareTool
     );
 
-    const isChangeLayerOn = useSelector(selectChangeCompareLayerIsOn);
+    const isChangeLayerOn = useAppSelector(selectChangeCompareLayerIsOn);
 
     const getPixelRangeSlider = () => {
         const [min, max] = fullPixelValueRange;

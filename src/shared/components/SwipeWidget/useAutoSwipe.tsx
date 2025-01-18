@@ -1,6 +1,6 @@
 import Swipe from '@arcgis/core/widgets/Swipe';
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAutoSwipeStatus,
     selectAutoSwipeSpeed,
@@ -15,9 +15,9 @@ import { AutoSwipeStatus } from '@shared/store/Map/reducer';
  * @param {Swipe} swipeWidget - The ArcGIS Swipe widget instance to control.
  */
 export const useAutoSwipe = (swipeWidget: Swipe) => {
-    const status = useSelector(selectAutoSwipeStatus);
+    const status = useAppSelector(selectAutoSwipeStatus);
 
-    const autoSwipeSpeed = useSelector(selectAutoSwipeSpeed);
+    const autoSwipeSpeed = useAppSelector(selectAutoSwipeSpeed);
 
     /**
      * Reference to track the current position of the swipe handle (0 to 100)

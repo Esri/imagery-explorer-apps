@@ -15,7 +15,7 @@
 
 import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { CloseButton } from '../CloseButton';
 import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
@@ -27,7 +27,7 @@ type Props = {
 export const About: FC<Props> = ({ children }) => {
     const dispatch = useAppDispatch();
 
-    const show = useSelector(selectShouldShowAboutThisApp);
+    const show = useAppSelector(selectShouldShowAboutThisApp);
 
     if (!show) {
         return null;

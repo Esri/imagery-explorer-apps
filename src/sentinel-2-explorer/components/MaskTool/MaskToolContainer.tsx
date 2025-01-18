@@ -26,7 +26,7 @@ import {
 import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
@@ -42,14 +42,14 @@ import { useSentinel2MaskToolFullPixelValueRange } from './useSentinel2MaskToolF
 export const MaskToolContainer = () => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
+    const selectedSpectralIndex = useAppSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
+    const maskOptions = useAppSelector(selectMaskLayerPixelValueRange);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const shouldBeDisabled = useMemo(() => {
         return !objectIdOfSelectedScene;

@@ -15,7 +15,7 @@
 
 import React, { FC, useState } from 'react';
 import { useFormattedSpectralSamplingData } from '../SamplingPointsList/useFormattedSpectralSamplingData';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
 // import { convert2csv } from '@shared/utils/snippets/convert2csv';
 import { saveSamplingResults } from './helpers';
@@ -35,7 +35,7 @@ export const SaveSamplingResults: FC<Props> = ({
 
     const averagedBandValues = useAveragedBandValues();
 
-    const classification = useSelector(
+    const classification = useAppSelector(
         selectClassifictionNameOfSpectralSamplingTask
     );
 

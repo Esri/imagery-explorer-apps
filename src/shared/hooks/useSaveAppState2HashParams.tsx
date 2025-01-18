@@ -46,7 +46,7 @@ import {
     saveTemporalCompositeToolStateToHashParams,
 } from '@shared/utils/url-hash-params';
 import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectSpectralProfileToolState } from '@shared/store/SpectralProfileTool/selectors';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectChangeCompareToolState } from '@shared/store/ChangeCompareTool/selectors';
@@ -54,41 +54,41 @@ import { saveListOfQueryParamsToHashParams } from '@shared/utils/url-hash-params
 import { selectTemporalCompositeToolState } from '@shared/store/TemporalCompositeTool/selectors';
 
 export const useSaveAppState2HashParams = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 
-    const maskToolState = useSelector(selectMaskToolState);
+    const maskToolState = useAppSelector(selectMaskToolState);
 
-    const trendToolState = useSelector(selectTrendToolState);
+    const trendToolState = useAppSelector(selectTrendToolState);
 
-    const spectralToolState = useSelector(selectSpectralProfileToolState);
+    const spectralToolState = useAppSelector(selectSpectralProfileToolState);
 
-    const listOfQueryParams = useSelector(selectListOfQueryParams);
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
-    const showMapLabel = useSelector(selectShowMapLabel);
+    const showMapLabel = useAppSelector(selectShowMapLabel);
 
-    const showTerrain = useSelector(selectShowTerrain);
+    const showTerrain = useAppSelector(selectShowTerrain);
 
-    const showBasemap = useSelector(selectShowBasemap);
+    const showBasemap = useAppSelector(selectShowBasemap);
 
-    const changeCompareToolState = useSelector(selectChangeCompareToolState);
+    const changeCompareToolState = useAppSelector(selectChangeCompareToolState);
 
-    const temporalCompositeToolState = useSelector(
+    const temporalCompositeToolState = useAppSelector(
         selectTemporalCompositeToolState
     );
 
-    const showSavePanel = useSelector(selectShowSavePanel);
+    const showSavePanel = useAppSelector(selectShowSavePanel);
 
     useEffect(() => {
         updateHashParams('mode', mode);

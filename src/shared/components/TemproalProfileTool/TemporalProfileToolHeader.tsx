@@ -15,7 +15,7 @@
 
 import { selectSelectedIndex4TrendTool } from '@shared/store/TrendTool/selectors';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { AnalysisToolHeader } from '../AnalysisToolHeader';
 import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -35,7 +35,7 @@ export const TemporalProfileToolHeader: FC<Props> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const spectralIndex = useSelector(selectSelectedIndex4TrendTool);
+    const spectralIndex = useAppSelector(selectSelectedIndex4TrendTool);
 
     return (
         <AnalysisToolHeader

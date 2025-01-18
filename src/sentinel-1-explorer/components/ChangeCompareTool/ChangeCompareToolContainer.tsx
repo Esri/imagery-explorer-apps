@@ -39,7 +39,7 @@ import classNames from 'classnames';
 import React, { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 // import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { PolarizationFilter } from './PolarizationFilter';
 import { RadarIndex } from '@typing/imagery-service';
 import {
@@ -118,9 +118,9 @@ export const ChangeCompareToolPixelValueRange4Sentinel1: Record<
 export const ChangeCompareToolContainer = () => {
     const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedOption: ChangeCompareToolOption4Sentinel1 = useSelector(
+    const selectedOption: ChangeCompareToolOption4Sentinel1 = useAppSelector(
         selectSelectedOption4ChangeCompareTool
     ) as ChangeCompareToolOption4Sentinel1;
 

@@ -15,7 +15,7 @@
 
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { shouldShowSentinel2LayerToggled } from '@shared/store/LandcoverExplorer/reducer';
 import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 import {
@@ -29,9 +29,9 @@ import LayerSelector from './LayerSelector';
 const LayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

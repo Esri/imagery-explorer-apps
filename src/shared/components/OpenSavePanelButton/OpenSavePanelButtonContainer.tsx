@@ -19,7 +19,7 @@ import {
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
 import MapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 // import {
 //     getExtentOfLandsatSceneByObjectId,
@@ -35,13 +35,13 @@ type Props = {
 };
 
 export const OpenSavePanelButtonContainer: FC<Props> = ({ mapView }) => {
-    // const animationStatus = useSelector(selectAnimationStatus);
+    // const animationStatus = useAppSelector(selectAnimationStatus);
 
     const dispatch = useAppDispatch();
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    // const mode = useSelector(selectAppMode);
+    // const mode = useAppSelector(selectAppMode);
 
     // const disabled = useMemo(() => {
     //     return false;

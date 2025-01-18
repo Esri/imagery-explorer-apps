@@ -18,7 +18,7 @@ import {
     selectShouldShowDocPanel,
 } from '@shared/store/UI/selectors';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { CloseButton } from '../CloseButton';
 import { showDocPanelToggled } from '@shared/store/UI/reducer';
@@ -30,9 +30,9 @@ type Props = {
 export const DocPanel: FC<Props> = ({ children }) => {
     const dispatch = useAppDispatch();
 
-    const show = useSelector(selectShouldShowDocPanel);
+    const show = useAppSelector(selectShouldShowDocPanel);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     if (!show || isAnimationPlaying) {
         return null;

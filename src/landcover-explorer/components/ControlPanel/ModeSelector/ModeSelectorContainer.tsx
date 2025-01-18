@@ -16,11 +16,11 @@
 import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
 import React from 'react';
 import { ModeSelector } from './ModeSelector';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 export const ModeSelectorContainer = () => {
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     return (
         <ContainerOfSecondaryControls>

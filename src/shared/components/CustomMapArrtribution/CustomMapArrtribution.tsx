@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import './style.css';
 import React, { FC, useEffect, useState } from 'react';
 import {
@@ -37,8 +37,8 @@ type Props = {
  * @returns
  */
 const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
-    const mapScale = useSelector(selectMapScale);
-    const resolution = useSelector(selectMapResolution);
+    const mapScale = useAppSelector(selectMapScale);
+    const resolution = useAppSelector(selectMapResolution);
 
     const [shouldShowEsriAttribution, setShouldShowEsriAttribution] =
         useState<boolean>(false);

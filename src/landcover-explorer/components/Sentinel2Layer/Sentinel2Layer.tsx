@@ -17,7 +17,7 @@ import React, { FC, useEffect } from 'react';
 
 import IMapView from '@arcgis/core/views/MapView';
 import useSentinel2Layer from './useSentinel2Layer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapMode,
     selectShouldShowSentinel2Layer,
@@ -31,17 +31,17 @@ type Props = {
 };
 
 const Sentinel2Layer: FC<Props> = ({ mapView }: Props) => {
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 

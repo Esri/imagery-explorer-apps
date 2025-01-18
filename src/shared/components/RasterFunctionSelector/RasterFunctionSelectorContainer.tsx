@@ -16,7 +16,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { RasterFunctionSelector } from './RasterFunctionSelector';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -51,18 +51,18 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     // const rasterFunctionInfo = useRasterFunctionInfo();
 
-    const isChangeCompareLayerOn = useSelector(selectChangeCompareLayerIsOn);
+    const isChangeCompareLayerOn = useAppSelector(selectChangeCompareLayerIsOn);
 
     const { rasterFunctionName, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const shouldHide = useMemo(() => {
         if (mode === 'analysis' && analysisTool === 'temporal composite') {

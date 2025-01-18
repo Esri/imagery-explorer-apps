@@ -16,7 +16,7 @@
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import MapAnchorImage from '../../statics/img/map-anchor.png';
 import { SizeOfMapAnchorImage } from '@shared/constants/UI';
 

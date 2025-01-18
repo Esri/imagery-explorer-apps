@@ -14,15 +14,15 @@
  */
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectTooltipData,
     selectTooltipXPosition,
 } from '@shared/store/UI/selectors';
 export const BottomPanelTooltip = () => {
-    const xPosition = useSelector(selectTooltipXPosition);
+    const xPosition = useAppSelector(selectTooltipXPosition);
 
-    const data = useSelector(selectTooltipData);
+    const data = useAppSelector(selectTooltipData);
 
     if (!data || !xPosition) {
         return null;

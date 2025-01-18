@@ -1,7 +1,7 @@
 import { createMaskIndexRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectMaskLayerPixelValueRange } from '@shared/store/MaskTool/selectors';
 import { Extent, Geometry } from '@arcgis/core/geometry';
 
@@ -22,9 +22,9 @@ export const usePublishMaskIndexRasterFunction = ({
     rasterFunctionName,
     token,
 }: Props) => {
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+    const { selectedRange } = useAppSelector(selectMaskLayerPixelValueRange);
 
     const rasterFunction = useMemo(() => {
         if (

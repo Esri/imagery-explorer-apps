@@ -16,7 +16,7 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import {
     year4LeadingLayerUpdated,
@@ -40,15 +40,15 @@ const TimeSelector4SwipeMode: FC<Props> = ({
 }: Props) => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
     const years = getAvailableYears();
 
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
     );
 

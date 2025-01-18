@@ -21,7 +21,7 @@ import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumn
 // import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * This custom hook calculates the averaged band values across all sampling points.
@@ -29,7 +29,7 @@ import { useSelector } from 'react-redux';
  * @returns {Array} An array containing averaged band values across all sampling points.
  */
 export const useAveragedBandValues = () => {
-    const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
+    const samplingPointsData = useAppSelector(selectSpectralSamplingPointsData);
 
     const averagedResults = useMemo(() => {
         if (!samplingPointsData || !samplingPointsData.length) {

@@ -14,7 +14,7 @@
  */
 import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import {
     shouldShowAboutThisAppToggled,
@@ -67,16 +67,16 @@ const IMAGERY_EXPLORER_APPS: {
 const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
     const dispatch = useAppDispatch();
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const [showImageryExplorerAppsList, setShowImageryExplorerAppsList] =
         useState<boolean>(false);
 
     const containerRef = useRef<HTMLDivElement>();
 
-    const mapCenter = useSelector(selectMapCenter);
+    const mapCenter = useAppSelector(selectMapCenter);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
     const launchImageryExplorerApp = (url: string) => {
         const key: UrlHashParamKey = 'mapCenter';

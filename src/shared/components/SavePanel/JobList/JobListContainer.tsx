@@ -1,6 +1,6 @@
 import React from 'react';
 import { JobList } from './JobList';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
 import {
     clearAllPublishAndDownloadJobs,
@@ -12,7 +12,7 @@ import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJob
 import { useAppDispatch } from '@shared/store/configureStore';
 
 export const JobListContainer = () => {
-    const jobs = useSelector(selectAllSaveJobs);
+    const jobs = useAppSelector(selectAllSaveJobs);
 
     const dispatch = useAppDispatch();
 

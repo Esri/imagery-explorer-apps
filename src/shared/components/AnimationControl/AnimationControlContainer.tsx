@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
@@ -48,17 +48,17 @@ const ANIMATION_FRAMES_UPPER_LIMIT = 30;
 export const AnimationControlContainer = () => {
     const dispatch = useAppDispatch();
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const animationFramesData = useAnimationFramesInfo();
 
     const shouldDisablePlayPauseButton = useShouldDisablePlayPauseButton();
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     const addNewAnimationFrame = () => {
         dispatch(addNewItemToQueryParamsList(nanoid(5), true));

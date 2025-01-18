@@ -20,7 +20,7 @@ import TimeSlider from '@arcgis/core/widgets/TimeSlider';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import classNames from 'classnames';
 import { useSelector, batch } from 'react-redux';
-import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectMapMode,
@@ -71,17 +71,17 @@ type Props = {
 export const TimeSliderWidgetContainer = () => {
     const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
     const years = getAvailableYears();
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     const timeStepSliderVisibility =
         mode === 'step' && isSentinel2LayerOutOfVisibleRange === false;

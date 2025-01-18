@@ -21,12 +21,12 @@ import {
 import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
 import React, { useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const PolarizationFilter = () => {
     const dispatch = useAppDispatch();
 
-    const selectedPolarizationFilter = useSelector(selectPolarizationFilter);
+    const selectedPolarizationFilter = useAppSelector(selectPolarizationFilter);
 
     const dropdownMenuData = useMemo(() => {
         const data: DropdownData[] = [

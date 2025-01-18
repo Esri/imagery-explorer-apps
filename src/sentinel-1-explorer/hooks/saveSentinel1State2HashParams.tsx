@@ -20,14 +20,14 @@ import {
 } from '@shared/store/Sentinel1/selectors';
 import { saveSentinel1StateToHashParams } from '@shared/utils/url-hash-params/sentinel1';
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useSaveSentinel1State2HashParams = () => {
-    const orbitDirection = useSelector(selectSentinel1OrbitDirection);
+    const orbitDirection = useAppSelector(selectSentinel1OrbitDirection);
 
-    const polarizationFilter = useSelector(selectPolarizationFilter);
+    const polarizationFilter = useAppSelector(selectPolarizationFilter);
 
-    const sentinel1State = useSelector(selectSentinel1State);
+    const sentinel1State = useAppSelector(selectSentinel1State);
 
     useEffect(() => {
         saveSentinel1StateToHashParams(sentinel1State);

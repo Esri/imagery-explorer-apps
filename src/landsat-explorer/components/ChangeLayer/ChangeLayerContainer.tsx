@@ -15,7 +15,7 @@
 
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -54,25 +54,25 @@ type Props = {
 export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const spectralIndex = useSelector(
+    const spectralIndex = useAppSelector(
         selectSelectedOption4ChangeCompareTool
     ) as SpectralIndex;
 
-    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+    const changeCompareLayerIsOn = useAppSelector(selectChangeCompareLayerIsOn);
 
-    const queryParams4SceneA = useSelector(selectQueryParams4MainScene);
+    const queryParams4SceneA = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SceneB = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4SceneB = useAppSelector(selectQueryParams4SecondaryScene);
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
+    const anailysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedRange = useSelector(
+    const selectedRange = useAppSelector(
         selectUserSelectedRangeInChangeCompareTool
     );
 
-    const fullPixelValueRange = useSelector(
+    const fullPixelValueRange = useAppSelector(
         selectFullPixelValuesRangeInChangeCompareTool
     );
 

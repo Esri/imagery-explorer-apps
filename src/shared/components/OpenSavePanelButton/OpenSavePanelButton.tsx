@@ -16,7 +16,7 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectPendingRasterAnalysisJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
 
 type Props = {
@@ -50,7 +50,7 @@ export const OpenSavePanelButton: FC<Props> = ({
     tooltip,
     onClick,
 }) => {
-    const pendingJobs = useSelector(selectPendingRasterAnalysisJobs);
+    const pendingJobs = useAppSelector(selectPendingRasterAnalysisJobs);
 
     const showIndicator4PendingJobs = pendingJobs.length > 0;
 

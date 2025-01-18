@@ -19,7 +19,7 @@ import {
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
 import MapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { ZoomToExtent } from './ZoomToExtent';
 import {
     selectAppMode,
@@ -40,14 +40,14 @@ type Props = {
 };
 
 export const ZoomToExtentContainer: FC<Props> = ({ serviceUrl, mapView }) => {
-    // const animationStatus = useSelector(selectAnimationStatus);
+    // const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const [isLoadingExtent, setIsLoadingExtent] = useState<boolean>(false);
 

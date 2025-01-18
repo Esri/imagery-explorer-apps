@@ -21,7 +21,7 @@ import {
     TERRAIN_LAYER_ITEM_ID,
     TERRAIN_LAYER_TITLE,
 } from '@shared/constants/map';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectShowTerrain } from '@shared/store/Map/selectors';
 
 type Props = {
@@ -30,7 +30,7 @@ type Props = {
 };
 
 export const HillshadeLayer: FC<Props> = ({ mapView }) => {
-    const visible = useSelector(selectShowTerrain);
+    const visible = useAppSelector(selectShowTerrain);
 
     const terrainLayerRef = useRef<TileLayer>();
 

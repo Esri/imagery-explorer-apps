@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 import IMapView from '@arcgis/core/views/MapView';
@@ -39,19 +39,21 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
 
     const years = getAvailableYears();
 
-    const sentinel2AquisitionMonth = useSelector(
+    const sentinel2AquisitionMonth = useAppSelector(
         selectSentinel2AquisitionMonth
     );
 
-    const sentinel2RasterFunction = useSelector(selectSentinel2RasterFunction);
+    const sentinel2RasterFunction = useAppSelector(
+        selectSentinel2RasterFunction
+    );
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 
-    const activeLandCoverType = useSelector(selectActiveLandCoverType);
+    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const loadFrameData = async () => {
         if (!mapView) {

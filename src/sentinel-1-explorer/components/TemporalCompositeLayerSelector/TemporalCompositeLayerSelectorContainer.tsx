@@ -20,7 +20,7 @@ import {
     initiateImageryScenes4TemporalCompositeTool,
     swapImageryScenesInTemporalCompositeTool,
 } from '@shared/store/TemporalCompositeTool/thunks';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIdOfSelectedItemInListOfQueryParams,
     selectListOfQueryParams,
@@ -33,13 +33,13 @@ import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
 export const TemporalCompositeLayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
 
-    const listOfQueryParams = useSelector(selectListOfQueryParams);
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
-    const idOfSelectedQueryParams = useSelector(
+    const idOfSelectedQueryParams = useAppSelector(
         selectIdOfSelectedItemInListOfQueryParams
     );
 
-    const isCompositeLayerOn = useSelector(selectIsTemporalCompositeLayerOn);
+    const isCompositeLayerOn = useAppSelector(selectIsTemporalCompositeLayerOn);
 
     const isViewCompositeLayerDisabled = useMemo(() => {
         if (!listOfQueryParams || !listOfQueryParams.length) {

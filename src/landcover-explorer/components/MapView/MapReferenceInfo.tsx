@@ -15,7 +15,7 @@
 
 import classNames from 'classnames';
 import React, { useEffect, FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     // selectMapMode,
@@ -60,23 +60,23 @@ const MapInfoIndicators: FC<Props> = ({
     isUpdating,
     isSwipeWidgetVisible,
 }: Props) => {
-    const position = useSelector(selectSwipeWidgetHandlerPosition);
+    const position = useAppSelector(selectSwipeWidgetHandlerPosition);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
-    const showSwipeWidgetYearIndicator = useSelector(
+    const showSwipeWidgetYearIndicator = useAppSelector(
         selectShowSwipeWidgetYearIndicator
     );
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
     );
 

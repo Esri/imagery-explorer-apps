@@ -16,7 +16,7 @@
 import React, { useEffect, useState } from 'react';
 import { SamplingPointsList } from './SamplingPointsList';
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { AddSamplingPointButton } from './AddSamplingPointButton';
 import { useAppDispatch } from '@shared/store/configureStore';
 import {
@@ -46,7 +46,7 @@ export const SamplingPointsListContainer = () => {
     const samplingListData = useFormattedSpectralSamplingData();
 
     // classification name of the current spectral sampling session
-    const classificationName = useSelector(
+    const classificationName = useAppSelector(
         selectClassifictionNameOfSpectralSamplingTask
     );
 

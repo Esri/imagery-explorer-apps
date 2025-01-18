@@ -16,7 +16,7 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     showMapLabelToggled,
     showTerrainToggled,
@@ -82,11 +82,11 @@ const ToggleButton: FC<ToggleButtonProps> = ({
 const LayersToggleControl = () => {
     const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const showMapLabel = useSelector(selectShowMapLabel);
+    const showMapLabel = useAppSelector(selectShowMapLabel);
 
-    const showTerrain = useSelector(selectShowTerrain);
+    const showTerrain = useAppSelector(selectShowTerrain);
 
     return (
         <div

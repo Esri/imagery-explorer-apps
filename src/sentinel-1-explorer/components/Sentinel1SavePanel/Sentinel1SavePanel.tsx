@@ -5,7 +5,7 @@ import {
 import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     // selectMaskLayerPixelValueRange,
     selectSelectedIndex4MaskTool,
@@ -51,10 +51,10 @@ const TAGS = ['Esri Sentinel-1 Explorer', 'Sentinel-1', 'Remote Sensing'];
 export const Sentinel1SavePanel = () => {
     const sentinel1Scene = useSelectedSentinel1Scene();
 
-    // const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     const selectedOption4ChangeDetectionTool: ChangeCompareToolOption4Sentinel1 =
-        useSelector(
+        useAppSelector(
             selectSelectedOption4ChangeCompareTool
         ) as ChangeCompareToolOption4Sentinel1;
 
@@ -74,7 +74,7 @@ export const Sentinel1SavePanel = () => {
     const maskToolFullPixelValueRange =
         useSentinel1MaskToolFullPixelValueRange();
 
-    const maskToolRadarIndex = useSelector(
+    const maskToolRadarIndex = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as RadarIndex;
 

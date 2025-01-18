@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { SavePanel } from '@shared/components/SavePanel';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { getToken } from '@shared/utils/esri-oauth';
 import { usePublishSceneRasterFunction } from '@shared/components/SavePanel/usePublishSceneRasterFunction';
 import { usePublishMaskIndexRasterFunction } from '@shared/components/SavePanel/usePublishMaskIndexRasterFunction';
@@ -39,7 +39,7 @@ export const Sentinel2SavePanel = () => {
     const maskToolFullPixelValueRange =
         useSentinel2MaskToolFullPixelValueRange();
 
-    const spectralIndex4MaskTool = useSelector(
+    const spectralIndex4MaskTool = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
@@ -51,7 +51,7 @@ export const Sentinel2SavePanel = () => {
         return getBandIndexesBySpectralIndex(spectralIndex4MaskTool);
     }, [spectralIndex4MaskTool]);
 
-    const spectralIndex4ChangeDetection = useSelector(
+    const spectralIndex4ChangeDetection = useAppSelector(
         selectSelectedOption4ChangeCompareTool
     ) as SpectralIndex;
 

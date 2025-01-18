@@ -21,7 +21,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { selectSpectralSamplingPointsData } from '@shared/store/SpectralSamplingTool/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export type FormattedSpectralSamplingData = {
     /**
@@ -56,13 +56,13 @@ export type FormattedSpectralSamplingData = {
 
 export const useFormattedSpectralSamplingData =
     (): FormattedSpectralSamplingData[] => {
-        const queryParamsForSamplingPoints = useSelector(
+        const queryParamsForSamplingPoints = useAppSelector(
             selectListOfQueryParams
         );
 
-        const samplingPoints = useSelector(selectSpectralSamplingPointsData);
+        const samplingPoints = useAppSelector(selectSpectralSamplingPointsData);
 
-        const idOfSelectedSamplingPoint = useSelector(
+        const idOfSelectedSamplingPoint = useAppSelector(
             selectIdOfSelectedItemInListOfQueryParams
         );
 

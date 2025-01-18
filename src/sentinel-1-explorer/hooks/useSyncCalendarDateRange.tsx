@@ -23,7 +23,7 @@ import { syncImageryScenesDateRangeForTemporalCompositeTool } from '@shared/stor
 import { getDateRangeForPast12Month } from '@shared/utils/date-time/getTimeRange';
 import React, { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 const DATE_RANGE_OF_PAST_12_MONTH = getDateRangeForPast12Month();
 
@@ -35,11 +35,11 @@ const DATE_RANGE_OF_PAST_12_MONTH = getDateRangeForPast12Month();
 export const useSyncCalendarDateRange = () => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analyzeTool = useSelector(selectActiveAnalysisTool);
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
     useEffect(() => {
         if (!queryParams?.acquisitionDateRange) {

@@ -29,7 +29,7 @@ import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React from 'react';
 // import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { getChangeCompareLayerColorrampAsCSSGradient } from '../ChangeLayer/helpers';
 import {
     ChangeCompareToolHeader,
@@ -39,7 +39,7 @@ import {
 const LEGEND_LABEL_TEXT = ['decrease', 'no change', 'increase'];
 
 export const ChangeCompareToolContainer = () => {
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
     if (tool !== 'change') {
         return null;

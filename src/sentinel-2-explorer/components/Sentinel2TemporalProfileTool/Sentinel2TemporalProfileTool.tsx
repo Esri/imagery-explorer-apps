@@ -18,7 +18,7 @@ import {
 } from '@shared/components/TemproalProfileTool';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4SceneInSelectedMode,
@@ -39,7 +39,7 @@ import { getSentinel2TemporalProfileData } from '@shared/services/sentinel-2/get
 import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
 
 export const Sentinel2TemporalProfileTool = () => {
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
     /**
      * this function will be invoked by the updateTemporalProfileToolData thunk function

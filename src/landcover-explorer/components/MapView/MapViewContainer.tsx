@@ -16,7 +16,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { batch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     // selectMapCenterAndZoom,
@@ -67,31 +67,31 @@ import { SearchWidget } from '@shared/components/SearchWidget';
 const MapViewContainer = () => {
     const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const hideControlPanel = useSelector(selectHideBottomPanel);
+    const hideControlPanel = useAppSelector(selectHideBottomPanel);
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
-    // const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    // const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
     //     selectYearsForSwipeWidgetLayers
     // );
 
-    // const shouldShowSentinel2Layer = useSelector(
+    // const shouldShowSentinel2Layer = useAppSelector(
     //     selectShouldShowSentinel2Layer
     // );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
-    // const { center, zoom } = useSelector(selectMapCenterAndZoom);
+    // const { center, zoom } = useAppSelector(selectMapCenterAndZoom);
 
-    const center = useSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
     /**
      * Show Swipe Widget when in swipe mode

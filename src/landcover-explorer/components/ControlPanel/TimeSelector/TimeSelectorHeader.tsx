@@ -18,13 +18,13 @@ import {
     selectShouldShowSentinel2Layer,
 } from '@shared/store/LandcoverExplorer/selectors';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import HeaderText from '../HeaderText/HeaderText';
 
 export const TimeSelectorHeader = () => {
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

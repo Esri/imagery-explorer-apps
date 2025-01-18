@@ -11,14 +11,14 @@ import {
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useCheckJobCost = () => {
     const dispatch = useAppDispatch();
 
     const intervalIdRef = useRef<NodeJS.Timeout>();
 
-    const jobsPendingCheckingCost = useSelector(
+    const jobsPendingCheckingCost = useAppSelector(
         selectRasterAnalysisJobsPendingCheckingCost
     );
 

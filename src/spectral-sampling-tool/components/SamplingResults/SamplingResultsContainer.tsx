@@ -21,11 +21,11 @@ import { SpectralProfileChart } from '@shared/components/SpectralProfileTool';
 import { SaveSamplingResults } from './SaveSamplingResults';
 import { useNumOfBandsToDisplay } from './useNumOfBandsToDisplay';
 import { useBandNames } from './useBandNames';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 
 export const SamplingResultsContainer = () => {
-    const targetService = useSelector(selectTargetService);
+    const targetService = useAppSelector(selectTargetService);
 
     const numOfBandsToDisplay = useNumOfBandsToDisplay();
 

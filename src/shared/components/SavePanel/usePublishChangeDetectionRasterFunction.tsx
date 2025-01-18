@@ -1,6 +1,6 @@
 import { createChangeDetectionRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { Extent, Geometry } from '@arcgis/core/geometry';
 import {
     selectFullPixelValuesRangeInChangeCompareTool,
@@ -25,11 +25,11 @@ export const usePublishChangeDetectionRasterFunction = ({
     logDiff,
     token,
 }: Props) => {
-    const changeDetectionToolFullPixelValueRange = useSelector(
+    const changeDetectionToolFullPixelValueRange = useAppSelector(
         selectFullPixelValuesRangeInChangeCompareTool
     );
 
-    const selectedRange4ChangeDetectionTool = useSelector(
+    const selectedRange4ChangeDetectionTool = useAppSelector(
         selectUserSelectedRangeInChangeCompareTool
     );
 

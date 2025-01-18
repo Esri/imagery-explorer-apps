@@ -22,7 +22,7 @@ import {
 } from '@shared/store/SpectralProfileTool/selectors';
 import classNames from 'classnames';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { LandCoverType } from '@shared/components/SpectralProfileTool';
 import {
     getFillColorByLandCoverType,
@@ -53,13 +53,13 @@ export const SpectralProfileToolContainer: FC<Props> = ({
     spectralProfileDataByLandCoverTypes,
     bandNames,
 }) => {
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const isLoading = useSelector(selectIsLoadingData4SpectralProfileTool);
+    const isLoading = useAppSelector(selectIsLoadingData4SpectralProfileTool);
 
-    const spectralProfileData = useSelector(selectData4SpectralProfileTool);
+    const spectralProfileData = useAppSelector(selectData4SpectralProfileTool);
 
-    const error4SpectralProfileTool = useSelector(
+    const error4SpectralProfileTool = useAppSelector(
         selectError4SpectralProfileTool
     );
 

@@ -16,7 +16,7 @@
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { modeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectMapMode } from '@shared/store/LandcoverExplorer/selectors';
 import { saveMapModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
@@ -32,7 +32,7 @@ type Props = {
 export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
     const dispatch = useAppDispatch();
 
-    const activeMode = useSelector(selectMapMode);
+    const activeMode = useAppSelector(selectMapMode);
 
     const isSwipeBtnActive = activeMode === 'swipe';
     const isStepBtnActive = activeMode === 'step';

@@ -15,7 +15,7 @@
 
 import './BottomPanel.css';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectHideBottomPanel } from '../../store/UI/selectors';
 import { BottomPanelToggleBtn } from '../BottomPanelToggleBtn';
 import { BottomPanelTooltip } from './BottomPanelTooltip';
@@ -26,7 +26,7 @@ type Props = {
 };
 
 const BottomPanel: FC<Props> = ({ children }) => {
-    const shouldHide = useSelector(selectHideBottomPanel);
+    const shouldHide = useAppSelector(selectHideBottomPanel);
 
     return (
         <>

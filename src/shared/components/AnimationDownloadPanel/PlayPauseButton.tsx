@@ -17,7 +17,7 @@ import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import React from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 const ICON_SIZE = 64;
 
@@ -54,7 +54,7 @@ const PauseButton = (
 export const PlayPauseButton = () => {
     const dispatch = useAppDispatch();
 
-    const status = useSelector(selectAnimationStatus);
+    const status = useAppSelector(selectAnimationStatus);
 
     return (
         <div className="cursor-pointer">

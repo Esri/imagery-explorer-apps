@@ -7,12 +7,12 @@ import { selectPendingRasterAnalysisJobs } from '@shared/store/PublishAndDownloa
 import { updatePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useCheckJobStatus = () => {
     const dispatch = useAppDispatch();
 
-    const pendingJobs = useSelector(selectPendingRasterAnalysisJobs);
+    const pendingJobs = useAppSelector(selectPendingRasterAnalysisJobs);
 
     const intervalIdRef = useRef<NodeJS.Timeout>();
 

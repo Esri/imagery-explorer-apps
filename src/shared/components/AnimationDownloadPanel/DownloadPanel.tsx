@@ -20,7 +20,7 @@ import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import { DownloadOptionsList } from './DownloadOptionsList';
 import { Dimension, PreviewWindow } from './PreviewWindow';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selectors';
 import { DownloadJobStatusInfo } from './DownloadJobStatus';
 import { CloseButton } from '../CloseButton';
@@ -83,7 +83,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const shouldShowDownloadPanel = useSelector(
+    const shouldShowDownloadPanel = useAppSelector(
         selectShouldShowDownloadAnimationPanel
     );
 

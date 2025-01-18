@@ -24,7 +24,7 @@ import {
 import { debounce } from '@shared/utils/snippets/debounce';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * This custom hook triggers `updateSpectralProfileData` thunk function to get spectral profile data for the user-selected location
@@ -37,11 +37,13 @@ export const useFetchSpectralProfileToolData = (
     const dispatch = useAppDispatch();
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const queryLocation = useSelector(selectQueryLocation4SpectralProfileTool);
+    const queryLocation = useAppSelector(
+        selectQueryLocation4SpectralProfileTool
+    );
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
     const updateSpectralProfileDataDebounced = useCallback(
         debounce(async () => {

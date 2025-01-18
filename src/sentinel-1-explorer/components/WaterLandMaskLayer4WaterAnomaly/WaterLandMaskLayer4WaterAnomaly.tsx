@@ -22,7 +22,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { WaterLandMaskLayer } from '../MaskLayer/WaterLandMaskLayer';
 
 type Props = {
@@ -35,11 +35,11 @@ export const WaterLandMaskLayer4WaterAnomaly: FC<Props> = ({
     groupLayer,
 }) => {
     const { rasterFunctionName } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analyzeTool = useSelector(selectActiveAnalysisTool);
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
     const isVisible = useMemo(() => {
         if (mode === 'analysis') {

@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
@@ -31,18 +31,18 @@ import { queryAvailableSentinel2Scenes } from '@shared/store/Sentinel2/thunks';
 export const useQueryAvailableSentinel2Scenes = (): void => {
     const dispatch = useAppDispatch();
 
-    // const acquisitionYear = useSelector(selectAcquisitionYear);
+    // const acquisitionYear = useAppSelector(selectAcquisitionYear);
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
     const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     /**
      * current map center
      */
-    const center = useSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter);
 
     useEffect(() => {
         if (!center || !acquisitionDateRange) {

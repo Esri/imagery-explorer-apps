@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useMemo } from 'react';
-// import { useSelector } from 'react-redux';
+// import { useAppSelector } from '@shared/store/configureStore';
 import { LineChartBasic } from '@vannizhang/react-d3-charts';
 // import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
 import {
@@ -74,10 +74,10 @@ export const TemporalProfileChart: FC<Props> = ({
     selectedAcquisitionDate,
     onClickHandler,
 }: Props) => {
-    // const trendToolOption = useSelector(selectTrendToolOption);
+    // const trendToolOption = useAppSelector(selectTrendToolOption);
 
     // const queryParams4SelectedScene =
-    //     useSelector(selectQueryParams4SceneInSelectedMode) || {};
+    //     useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const customDomain4XScale = useMemo(() => {
         if (!chartData.length) {

@@ -1,13 +1,13 @@
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 import { Extent, Geometry } from '@arcgis/core/geometry';
 import { getFeatureByObjectId } from '@shared/services/helpers/getFeatureById';
 
 export const useClippingGeometry = (serviceUrl: string) => {
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     const [clippingGeometry, setClippingGeometry] = useState<Geometry | null>(
         null

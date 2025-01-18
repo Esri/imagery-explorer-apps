@@ -17,7 +17,7 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import Layer from '@arcgis/core/layers/Layer';
 import IMapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectShowBasemap,
     selectShowMapLabel,
@@ -43,10 +43,10 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
 
     const basemapLayersRef = useRef<__esri.Collection<__esri.Layer>>();
 
-    const showMapLabel = useSelector(selectShowMapLabel);
-    // const showTerrain = useSelector(selectShowTerrain);
+    const showMapLabel = useAppSelector(selectShowMapLabel);
+    // const showTerrain = useAppSelector(selectShowTerrain);
 
-    const showBasemap = useSelector(selectShowBasemap);
+    const showBasemap = useAppSelector(selectShowBasemap);
 
     const updateLabelLayersVisibility = () => {
         if (!mapLabelLayersRef.current) {
