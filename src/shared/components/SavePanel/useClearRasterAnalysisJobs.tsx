@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { selectFinishedRasterAnalysisJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
 import { removePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 
@@ -9,7 +9,7 @@ import { removePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJob
  * If a job has been finished for more than an hour, it will be removed from the store.
  */
 export const useClearRasterAnalysisJobs = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const finishedJobs = useSelector(selectFinishedRasterAnalysisJobs);
 

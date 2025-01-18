@@ -15,7 +15,7 @@
 
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { modeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectMapMode } from '@shared/store/LandcoverExplorer/selectors';
@@ -30,7 +30,7 @@ type Props = {
 };
 
 export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const activeMode = useSelector(selectMapMode);
 

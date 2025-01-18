@@ -24,7 +24,7 @@ import {
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import MapView from '@arcgis/core/views/MapView';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 
 type Props = {
@@ -32,7 +32,7 @@ type Props = {
 };
 
 export const SwipeWidget4Landcover: FC<Props> = ({ mapView }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectMapMode);
 

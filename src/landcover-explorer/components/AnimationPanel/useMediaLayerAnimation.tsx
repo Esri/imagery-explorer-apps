@@ -22,7 +22,7 @@ import {
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 
 // const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
@@ -32,7 +32,7 @@ import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
  * @param mediaLayerElements Image Elements added to media layer
  */
 const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
 

@@ -33,7 +33,7 @@ import {
 // import { SpectralIndex } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { debounce } from '@shared/utils/snippets/debounce';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 /**
  * This custom hook triggers `updateTemporalProfileToolData` thunk function to get temporal profile data
@@ -45,7 +45,7 @@ export const useUpdateTemporalProfileToolData = (
     fetchTemporalProfileDataFunc: FetchTemporalProfileDataFunc,
     intersectWithImagerySceneFunc: IntersectWithImagerySceneFunc
 ) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 

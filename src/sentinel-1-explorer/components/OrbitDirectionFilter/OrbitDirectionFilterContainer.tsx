@@ -17,11 +17,11 @@ import React from 'react';
 import { OrbitDirectionFilter } from './OrbitDirectionFilter';
 import { useSelector } from 'react-redux';
 import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { orbitDirectionChanged } from '@shared/store/Sentinel1/reducer';
 
 export const OrbitDirectionFilterContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const selectedOrbitDirection = useSelector(selectSentinel1OrbitDirection);
 

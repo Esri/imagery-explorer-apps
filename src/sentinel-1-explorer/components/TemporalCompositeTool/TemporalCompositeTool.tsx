@@ -15,7 +15,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
@@ -38,7 +38,7 @@ import { initiateImageryScenes4TemporalCompositeTool } from '@shared/store/Tempo
 import { Tooltip } from '@shared/components/Tooltip';
 
 export const TemporalCompositeTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 

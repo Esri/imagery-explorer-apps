@@ -48,7 +48,7 @@ import {
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { Sentinel1PixelValueRangeByIndex } from '../MaskTool/Sentinel1MaskTool';
 import { WaterLandMaskLayer } from './WaterLandMaskLayer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
 import { getSentinel1RasterFunctionNameByIndex } from '@shared/services/sentinel-1/helper';
@@ -60,7 +60,7 @@ type Props = {
 };
 
 export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 
@@ -176,7 +176,7 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
                 opacity={opacity}
                 pixelColor={pixelColor}
                 countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                    dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                    dispatch(countOfVisiblePixelsChanged(visiblePixels));
                 }}
             />
 

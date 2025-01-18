@@ -20,11 +20,11 @@ import {
 } from '@shared/store/Sentinel1/reducer';
 import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
 import React, { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 export const PolarizationFilter = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const selectedPolarizationFilter = useSelector(selectPolarizationFilter);
 

@@ -16,7 +16,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
@@ -30,7 +30,7 @@ import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScen
  * @returns
  */
 export const useQueryAvailableLandsatScenes = (): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     // const acquisitionYear = useSelector(selectAcquisitionYear);
 

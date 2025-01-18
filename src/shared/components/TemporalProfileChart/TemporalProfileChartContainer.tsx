@@ -22,7 +22,7 @@ import {
     selectError4TemporalProfileTool,
 } from '@shared/store/TrendTool/selectors';
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { TemporalProfileChart } from './TemporalProfileChart';
 import {
@@ -50,7 +50,7 @@ export const TemporalProfileChartContainer: FC<Props> = ({
     chartData,
     customDomain4YScale,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const queryLocation = useSelector(selectQueryLocation4TrendTool);
 

@@ -20,7 +20,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
     selectShouldForceSceneReselection,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { shouldForceSceneReselectionUpdated } from '@shared/store/ImageryScene/reducer';
@@ -30,7 +30,7 @@ import { shouldForceSceneReselectionUpdated } from '@shared/store/ImageryScene/r
  * whenever the available scenes and acquisition date changes
  */
 export const useFindSelectedSceneByDate = (): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { acquisitionDate, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};

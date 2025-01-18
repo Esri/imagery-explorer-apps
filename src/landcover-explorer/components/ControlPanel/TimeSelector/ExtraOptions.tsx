@@ -31,7 +31,7 @@ import {
 import { copyAnimationLink } from '@shared/store/UI/thunks';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 type SaveOptionsProps = {
@@ -164,7 +164,7 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 };
 
 export const ExtraOptions = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationSpeed = useSelector(selectAnimationSpeed);
 

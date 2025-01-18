@@ -15,7 +15,7 @@
 
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import {
@@ -38,7 +38,7 @@ type Props = {
 const TimeSelector4SwipeMode: FC<Props> = ({
     shouldShowMonthPicker,
 }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectMapMode);
 

@@ -20,7 +20,7 @@ import {
     selectAnimationStatus,
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { AnimationControl } from './AnimationControl';
 import {
     AnimationFramesList,
@@ -46,7 +46,7 @@ import { copyAnimationLink } from '@shared/store/UI/thunks';
 const ANIMATION_FRAMES_UPPER_LIMIT = 30;
 
 export const AnimationControlContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationStatus = useSelector(selectAnimationStatus);
 

@@ -19,10 +19,10 @@ import { selectMaskLayerOpcity } from '@shared/store/MaskTool/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 export const MaskLayerOpacityControl = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     /**
      * opacity of the mask layer

@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import { Dropdown } from '@shared/components/Dropdown';
 // import { useMonthOptions } from './useMonthOptions';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     // selectAcquisitionYear,
     selectCloudCover,
@@ -63,7 +63,7 @@ type Props = {
 };
 
 const CalendarContainer: FC<Props> = ({ children }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
 

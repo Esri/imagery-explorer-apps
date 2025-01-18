@@ -15,7 +15,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { TemporalCompositeLayerSelector } from './TemporalCompositeLayerSelector';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     initiateImageryScenes4TemporalCompositeTool,
     swapImageryScenesInTemporalCompositeTool,
@@ -31,7 +31,7 @@ import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalComposit
 import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
 
 export const TemporalCompositeLayerSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const listOfQueryParams = useSelector(selectListOfQueryParams);
 

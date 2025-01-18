@@ -16,7 +16,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
@@ -29,7 +29,7 @@ import { queryAvailableSentinel2Scenes } from '@shared/store/Sentinel2/thunks';
  * @returns
  */
 export const useQueryAvailableSentinel2Scenes = (): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     // const acquisitionYear = useSelector(selectAcquisitionYear);
 

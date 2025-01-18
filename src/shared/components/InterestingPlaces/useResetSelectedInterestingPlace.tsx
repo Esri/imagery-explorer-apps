@@ -17,13 +17,13 @@ import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import { nameOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
 import { InterestingPlaceData } from '@typing/shared';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 export const useResetSelectedInterestingPlace = (
     selectedInterestingPlace: InterestingPlaceData
 ): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mapCenter = useSelector(selectMapCenter);
 

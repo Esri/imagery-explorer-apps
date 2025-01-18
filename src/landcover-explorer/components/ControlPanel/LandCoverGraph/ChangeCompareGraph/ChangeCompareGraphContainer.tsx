@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     formatAreaPercentage,
@@ -51,7 +51,7 @@ import {
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 const ChangeCompareGraphContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     // const { zoom } = useSelector(selectMapCenterAndZoom);
     const zoom = useSelector(selectMapZoom);

@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react';
 import LandcoverGraph from './LandcoverGraph/LandcoverGraphContainer';
 import { useSelector } from 'react-redux';
 import Header from './Header/Header';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { showInfoPanelToggled } from '@shared/store/LandcoverExplorer/reducer';
 
 import {
@@ -45,7 +45,7 @@ import {
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 const InfoPanel = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const showInfoPanel = useSelector(selectShowInfoPanel);
 

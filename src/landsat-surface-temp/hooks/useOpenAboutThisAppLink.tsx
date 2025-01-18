@@ -17,10 +17,10 @@ import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
 import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 export const useOpenAboutThisAppLink = (): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const show = useSelector(selectShouldShowAboutThisApp);
 

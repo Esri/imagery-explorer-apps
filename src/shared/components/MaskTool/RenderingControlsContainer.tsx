@@ -27,10 +27,10 @@ import {
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskColor } from '@shared/store/MaskTool/thunks';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 export const RenderingControlsContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const pixelColor = useSelector(selectMaskLayerPixelColor);
 

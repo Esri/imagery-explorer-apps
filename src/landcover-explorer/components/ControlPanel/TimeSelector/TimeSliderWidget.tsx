@@ -20,7 +20,7 @@ import TimeSlider from '@arcgis/core/widgets/TimeSlider';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import classNames from 'classnames';
 import { useSelector, batch } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectMapMode,
@@ -69,7 +69,7 @@ type Props = {
 };
 
 export const TimeSliderWidgetContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
 

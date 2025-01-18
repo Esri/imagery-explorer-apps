@@ -15,7 +15,7 @@
 
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { RasterFunctionSelector } from './RasterFunctionSelector';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
@@ -49,7 +49,7 @@ export const RasterFunctionSelectorContainer: FC<Props> = ({
     widthOfTooltipContainer,
     data,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 

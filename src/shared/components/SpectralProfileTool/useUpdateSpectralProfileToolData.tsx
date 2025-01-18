@@ -23,7 +23,7 @@ import {
 } from '@shared/store/SpectralProfileTool/thunks';
 import { debounce } from '@shared/utils/snippets/debounce';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 /**
@@ -34,7 +34,7 @@ import { useSelector } from 'react-redux';
 export const useFetchSpectralProfileToolData = (
     fetchPixelBandValuesFunc: FetchPixelValuesFunc
 ) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};

@@ -14,7 +14,7 @@
  */
 
 import React from 'react';
-// import { useDispatch } from 'react-redux';
+// import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 // import { showAboutThisAppToggled } from '@shared/store/LandcoverUI/reducer';
 // import { selectShowAboutThisApp } from '@shared/store/LandcoverUI/selectors';
@@ -25,7 +25,7 @@ import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import { About } from '@shared/components/About';
 
 const AboutLandcoverExplorer = () => {
-    // const dispatch = useDispatch();
+    // const dispatch = useAppDispatch();
 
     const show = useSelector(selectShouldShowAboutThisApp);
 

@@ -15,7 +15,7 @@
 
 import classNames from 'classnames';
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { sentinel2AquisitionMonthChanged } from '@shared/store/LandcoverExplorer/reducer';
@@ -43,7 +43,7 @@ type Props = {
 };
 
 const MonthPicker: FC<Props> = ({ disabled }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const selectedMonth = useSelector(selectSentinel2AquisitionMonth);
 

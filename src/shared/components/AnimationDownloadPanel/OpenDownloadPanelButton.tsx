@@ -15,11 +15,11 @@
 
 import classNames from 'classnames';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 
 export const OpenDownloadPanelButton = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <div

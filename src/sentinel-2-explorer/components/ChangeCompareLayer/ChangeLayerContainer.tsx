@@ -35,7 +35,7 @@ import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { getPixelColor4ChangeCompareLayer } from '@shared/components/ChangeCompareTool/helpers';
 import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { getChangeCompareLayerRasterFunction } from '@shared/components/ChangeCompareLayer/helpers';
 import { useChangeCompareLayerVisibility } from '@shared/components/ChangeCompareLayer';
@@ -49,7 +49,7 @@ type Props = {
 };
 
 export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
     const spectralIndex = useSelector(
         selectSelectedOption4ChangeCompareTool
@@ -114,7 +114,7 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
             countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                dispatch(countOfVisiblePixelsChanged(visiblePixels));
             }}
         />
     );

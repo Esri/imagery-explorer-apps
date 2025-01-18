@@ -17,7 +17,7 @@ import React, { FC, useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import MapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import classNames from 'classnames';
 import {
     animationStatusChanged,
@@ -56,7 +56,7 @@ export const AnimationLayer: FC<Props> = ({
     authoringAppName,
     mapView,
 }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mediaLayerRef = useRef<MediaLayer>();
 

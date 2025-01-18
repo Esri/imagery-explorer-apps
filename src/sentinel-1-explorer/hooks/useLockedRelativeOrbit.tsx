@@ -29,7 +29,7 @@ import {
     lockedRelativeOrbitInfoChanged,
     LockedRelativeOrbitInfo,
 } from '@shared/store/Sentinel1/reducer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 /**
  * Custom hook that determines the relative orbit (and the object Id of associated sentinel 1 scene) to be used by the different Analyze tools (e.g. temporal composite and change compare).
@@ -40,7 +40,7 @@ import { useDispatch } from 'react-redux';
  * @returns void
  */
 export const useLockedRelativeOrbit = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 

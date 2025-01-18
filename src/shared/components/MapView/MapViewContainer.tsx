@@ -30,7 +30,7 @@ import {
     selectIsAnimationPlaying,
 } from '../../store/UI/selectors';
 import EventHandlers from './EventHandlers';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { batch } from 'react-redux';
 import {
     centerChanged,
@@ -70,7 +70,7 @@ type Props = {
 };
 
 const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const center = useSelector(selectMapCenter);
 

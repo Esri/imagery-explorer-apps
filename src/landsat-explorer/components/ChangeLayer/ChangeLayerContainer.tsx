@@ -40,7 +40,7 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/co
 import { getPixelColor4ChangeCompareLayer } from '@shared/components/ChangeCompareTool/helpers';
 import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWithPixelFilter';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { getChangeCompareLayerRasterFunction } from '@shared/components/ChangeCompareLayer/helpers';
 import { Polygon } from '@arcgis/core/geometry';
@@ -52,7 +52,7 @@ type Props = {
 };
 
 export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 
@@ -123,7 +123,7 @@ export const ChangeLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
             countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                dispatch(countOfVisiblePixelsChanged(visiblePixels));
             }}
         />
     );

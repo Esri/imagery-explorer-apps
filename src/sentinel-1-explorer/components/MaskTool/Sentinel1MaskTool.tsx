@@ -29,7 +29,7 @@ import {
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
@@ -55,7 +55,7 @@ export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
 };
 
 export const Sentinel1MaskTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 

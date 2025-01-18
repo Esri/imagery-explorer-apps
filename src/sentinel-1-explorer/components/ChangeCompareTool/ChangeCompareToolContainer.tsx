@@ -37,8 +37,8 @@ import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 // import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-// import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+// import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { PolarizationFilter } from './PolarizationFilter';
 import { RadarIndex } from '@typing/imagery-service';
@@ -116,7 +116,7 @@ export const ChangeCompareToolPixelValueRange4Sentinel1: Record<
 };
 
 export const ChangeCompareToolContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 

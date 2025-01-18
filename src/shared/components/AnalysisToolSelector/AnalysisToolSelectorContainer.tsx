@@ -20,7 +20,7 @@ import {
     selectAppMode,
 } from '@shared/store/ImageryScene/selectors';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { AnalysisTool } from '@shared/store/ImageryScene/reducer';
 
@@ -44,7 +44,7 @@ type Props = {
 };
 
 export const AnalysisToolSelectorContainer: FC<Props> = ({ data }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 

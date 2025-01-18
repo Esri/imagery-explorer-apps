@@ -14,7 +14,7 @@
  */
 
 import React, { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 // import { MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM } from '@landcover-explorer/constants/map';
 import {
@@ -33,7 +33,7 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 
 const LandCoverGraphContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectMapMode);
 

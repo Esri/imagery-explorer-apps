@@ -24,13 +24,13 @@ import {
 } from '@shared/store/TrendTool/selectors';
 import { resetTrendToolData } from '@shared/store/TrendTool/thunks';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 import { TemporalProfileToolControls } from './TemporalProfileToolControls';
 
 export const TemporalProfileToolControlsContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const queryLocation = useSelector(selectQueryLocation4TrendTool);
 

@@ -23,7 +23,7 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useImageryLayerByObjectId } from '../ImageryLayer/useImageLayer';
 import {
@@ -43,7 +43,7 @@ export const SwipeWidget4ImageryLayers: FC<Props> = ({
     serviceUrl,
     mapView,
 }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
 

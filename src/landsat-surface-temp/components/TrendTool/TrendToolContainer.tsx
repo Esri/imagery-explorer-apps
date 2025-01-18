@@ -38,7 +38,7 @@ import {
 } from '@shared/store/TrendTool/selectors';
 import { updateTemporalProfileToolData } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 // import { TemporalProfileChart } from './TrendChart';
 // import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
@@ -63,7 +63,7 @@ import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getL
 import { useSyncSelectedYearAndMonth4TemporalProfileTool } from '@shared/components/TemproalProfileTool/useSyncSelectedYearAndMonth';
 
 export const TrendToolContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectShowSavePanel } from '@shared/store/UI/selectors';
 import { CloseButton } from '../CloseButton';
 import { showSavePanelToggled } from '@shared/store/UI/reducer';
@@ -24,6 +24,7 @@ import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
 import { EstimatedCostByJobType } from './SavePanelContainer';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -76,7 +77,7 @@ export const SavePanel: FC<SavePanelProps> = ({
     // downloadOptions,
     saveButtonOnClick,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const shouldShowSavePanel = useSelector(selectShowSavePanel);
 

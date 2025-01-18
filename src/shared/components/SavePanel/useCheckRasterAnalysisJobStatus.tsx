@@ -6,11 +6,11 @@ import {
 import { selectPendingRasterAnalysisJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
 import { updatePublishAndDownloadJob } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 export const useCheckJobStatus = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const pendingJobs = useSelector(selectPendingRasterAnalysisJobs);
 

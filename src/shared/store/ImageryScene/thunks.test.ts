@@ -50,7 +50,7 @@ describe('thunks of ImageryScene slice of Redux Store', () => {
     };
 
     beforeEach(() => {
-        store = configureAppStore();
+        store = configureAppStore({});
     });
 
     describe('test updateQueryParams4SceneInSelectedMode thunk', () => {

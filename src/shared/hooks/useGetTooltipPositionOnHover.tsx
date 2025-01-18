@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { tooltipXPositionChanged } from '@shared/store/UI/reducer';
 
 /**
@@ -27,7 +27,7 @@ import { tooltipXPositionChanged } from '@shared/store/UI/reducer';
 const useGetTooltipPositionOnHover = (
     ref: React.MutableRefObject<HTMLDivElement>
 ) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const onEnter = (event: MouseEvent) => {

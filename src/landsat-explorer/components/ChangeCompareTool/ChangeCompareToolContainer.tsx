@@ -28,7 +28,7 @@ import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React from 'react';
-// import { useDispatch } from 'react-redux';
+// import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 // import { getChangeCompareLayerColorrampAsCSSGradient } from '../ChangeLayer/helpers';
 import {

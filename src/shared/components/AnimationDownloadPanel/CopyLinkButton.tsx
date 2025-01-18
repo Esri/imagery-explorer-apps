@@ -15,10 +15,10 @@
 import { copyAnimationLink } from '@shared/store/UI/thunks';
 import classNames from 'classnames';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 export const CopyLinkButton = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <div

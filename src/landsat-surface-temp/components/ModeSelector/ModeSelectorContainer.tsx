@@ -15,7 +15,7 @@
 
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { ModeSelector } from './ModeSelector';
@@ -30,7 +30,7 @@ import {
 } from '@shared/store/ImageryScene/reducer';
 
 export const ModeSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const selectedMode = useSelector(selectAppMode);
 

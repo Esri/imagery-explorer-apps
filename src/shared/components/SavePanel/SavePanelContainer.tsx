@@ -8,7 +8,7 @@ import {
     // selectQueryParams4SceneInSelectedMode,
     // selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 // import { useSaveOptions } from './useSaveOptions';
 import {
@@ -88,7 +88,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     publishChangeDetectionRasterFunction,
     estimatedCostByJobType,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
 

@@ -15,7 +15,7 @@
 
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
@@ -65,7 +65,7 @@ const CloseButton = (
 );
 
 export const AnimationStatusButton = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
 

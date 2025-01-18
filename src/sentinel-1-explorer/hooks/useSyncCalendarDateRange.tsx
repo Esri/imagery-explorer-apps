@@ -22,7 +22,7 @@ import {
 import { syncImageryScenesDateRangeForTemporalCompositeTool } from '@shared/store/TemporalCompositeTool/thunks';
 import { getDateRangeForPast12Month } from '@shared/utils/date-time/getTimeRange';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 const DATE_RANGE_OF_PAST_12_MONTH = getDateRangeForPast12Month();
@@ -33,7 +33,7 @@ const DATE_RANGE_OF_PAST_12_MONTH = getDateRangeForPast12Month();
  * (past 12 months) using the updated date range selected by the user.
  */
 export const useSyncCalendarDateRange = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 

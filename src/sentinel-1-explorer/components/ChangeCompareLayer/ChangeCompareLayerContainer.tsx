@@ -45,7 +45,7 @@ import {
     minus,
 } from '@arcgis/core/layers/support/rasterFunctionUtils';
 import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
 import { useSentinel1RasterFunction4LogDiff } from './useSentinel1RasterFunction4LogDiff';
@@ -71,7 +71,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
 }) => {
     // const mode = useSelector(selectAppMode);
 
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
     const selectedOption: ChangeCompareToolOption4Sentinel1 = useSelector(
         selectSelectedOption4ChangeCompareTool
@@ -195,7 +195,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
             countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                dispatch(countOfVisiblePixelsChanged(visiblePixels));
             }}
         />
     );

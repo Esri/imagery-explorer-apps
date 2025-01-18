@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { batch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
@@ -39,7 +39,7 @@ import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
  * to keep it in sync with the acquisition date of selected imagery scene
  */
 export const useSyncSelectedYearAndMonth4TemporalProfileTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
         useSelector(selectQueryParams4SceneInSelectedMode) || {};

@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     getLandCoverAreaByYear,
@@ -34,7 +34,7 @@ import {
 } from '@shared/store/Map/selectors';
 
 const TotalAreaGraphContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     // const { zoom } = useSelector(selectMapCenterAndZoom);
 

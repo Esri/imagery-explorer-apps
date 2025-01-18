@@ -24,7 +24,7 @@ import { useSelector } from 'react-redux';
 import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selectors';
 import { DownloadJobStatusInfo } from './DownloadJobStatus';
 import { CloseButton } from '../CloseButton';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
@@ -81,7 +81,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
     mapViewWindowSize,
     authoringAppName,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const shouldShowDownloadPanel = useSelector(
         selectShouldShowDownloadAnimationPanel

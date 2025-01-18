@@ -33,14 +33,14 @@ import { Popup } from '../Popup';
 import { TemporalCompositeLayer } from '../TemporalCompositeLayer';
 import { ChangeCompareLayer4Sentinel1 } from '../ChangeCompareLayer';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { Sentinel1MaskLayer } from '../MaskLayer';
 import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootprintLayer';
 import { MapActionButtonGroup } from '@shared/components/MapActionButton';
 // import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 
 export const Map = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <MapViewContainer

@@ -17,11 +17,11 @@ import React from 'react';
 import { LandsatMissionFilter } from './LandsatMissionFilter';
 import { useSelector } from 'react-redux';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { missionsToBeExcludedUpdated } from '@shared/store/Landsat/reducer';
 
 export const LandsatMissionFilterContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
 

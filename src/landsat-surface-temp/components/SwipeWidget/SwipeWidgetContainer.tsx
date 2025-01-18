@@ -16,7 +16,7 @@
 import React, { FC, useEffect } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useLandsatLayer } from '@landsat-explorer/components/LandsatLayer';
 import {
@@ -32,7 +32,7 @@ type Props = {
 };
 
 export const SwipeWidgetContainer: FC<Props> = ({ mapView }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 

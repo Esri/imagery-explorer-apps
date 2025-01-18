@@ -25,7 +25,7 @@ import {
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 // import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
-// import { useDispatch } from 'react-redux';
+// import { useAppDispatch } from '@shared/store/configureStore';
 // import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getMainContent } from './helper';
 // import { watch } from '@arcgis/core/core/reactiveUtils';

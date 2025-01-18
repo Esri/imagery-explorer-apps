@@ -44,7 +44,7 @@ import {
 //     updateTrendToolData,
 // } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,
@@ -69,7 +69,7 @@ import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors
 import { Sentinel1TemporalProfileChart } from './Sentinel1TemporalProfileChart';
 
 export const Sentinel1TemporalProfileTool = () => {
-    // const dispatch = useDispatch();
+    // const dispatch = useAppDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 

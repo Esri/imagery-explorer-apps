@@ -15,7 +15,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     shouldShowAboutThisAppToggled,
     showDocPanelToggled,
@@ -65,7 +65,7 @@ const IMAGERY_EXPLORER_APPS: {
 ];
 
 const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 

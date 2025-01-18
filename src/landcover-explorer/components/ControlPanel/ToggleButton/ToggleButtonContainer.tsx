@@ -15,7 +15,7 @@
 
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 // import { hideControlPanelToggled } from '@shared/store/LandcoverUI/reducer';
 import {
     selectAnimationStatus,
@@ -26,7 +26,7 @@ import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import { bottomPanelToggled } from '@shared/store/UI/reducer';
 
 const ToggleButtonContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
 

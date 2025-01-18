@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { activeLandCoverTypeChanged } from '@shared/store/LandcoverExplorer/reducer';
@@ -26,7 +26,7 @@ import { saveActiveLandCoverTypeToHashParams } from '@landcover-explorer/utils/U
 import ClassificationsList from './ClassificationsList';
 
 const ClassificationsListContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const activeLandCoverType = useSelector(selectActiveLandCoverType);
 

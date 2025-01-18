@@ -19,7 +19,7 @@ import {
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
 import MapView from '@arcgis/core/views/MapView';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 // import {
 //     getExtentOfLandsatSceneByObjectId,
@@ -28,6 +28,7 @@ import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import { getExtentByObjectId } from '@shared/services/helpers/getExtentById';
 import { OpenSavePanelButton } from './OpenSavePanelButton';
 import { showSavePanelToggled } from '@shared/store/UI/reducer';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 type Props = {
     mapView?: MapView;
@@ -36,7 +37,7 @@ type Props = {
 export const OpenSavePanelButtonContainer: FC<Props> = ({ mapView }) => {
     // const animationStatus = useSelector(selectAnimationStatus);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
 

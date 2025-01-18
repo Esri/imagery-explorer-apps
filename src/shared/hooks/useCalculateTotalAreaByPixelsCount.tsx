@@ -20,7 +20,7 @@ import { totalVisibleAreaInSqKmChanged } from '@shared/store/Map/reducer';
 import { selectCountOfVisiblePixels } from '@shared/store/Map/selectors';
 // import { debounce } from '@shared/utils/snippets/debounce';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 /**
@@ -41,7 +41,7 @@ export const useCalculateTotalAreaByPixelsCount = ({
     serviceURL: string;
     pixelSize: number;
 }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
     const countOfVisiblePixels = useSelector(selectCountOfVisiblePixels);
 
@@ -57,7 +57,7 @@ export const useCalculateTotalAreaByPixelsCount = ({
         const areaSqMeter = pixelAreaInSqMeter * visiblePixels;
         const areaSqKM = areaSqMeter / 1000000;
 
-        dispatach(totalVisibleAreaInSqKmChanged(areaSqKM));
+        dispatch(totalVisibleAreaInSqKmChanged(areaSqKM));
     };
 
     useEffect(() => {

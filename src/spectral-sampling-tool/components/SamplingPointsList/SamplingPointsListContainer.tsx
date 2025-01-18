@@ -18,7 +18,7 @@ import { SamplingPointsList } from './SamplingPointsList';
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import { useSelector } from 'react-redux';
 import { AddSamplingPointButton } from './AddSamplingPointButton';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     addNewItemToQueryParamsList,
     removeItemFromQueryParamsList,
@@ -41,7 +41,7 @@ import {
 import { ResetDialog } from './ResetDialog';
 
 export const SamplingPointsListContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const samplingListData = useFormattedSpectralSamplingData();
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { JobList } from './JobList';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
 import {
     clearAllPublishAndDownloadJobs,
@@ -9,11 +9,12 @@ import {
     updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 export const JobListContainer = () => {
     const jobs = useSelector(selectAllSaveJobs);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <div className="w-full mt-16">

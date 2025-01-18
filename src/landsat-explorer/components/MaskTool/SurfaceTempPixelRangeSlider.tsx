@@ -20,7 +20,7 @@ import {
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
@@ -33,7 +33,7 @@ import {
 import { useLandsatMaskToolFullPixelValueRange } from './useLandsatMaskToolFullPixelValueRange';
 
 export const SurfaceTempCelsiusPixelRangeSlider = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 
@@ -62,7 +62,7 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
 };
 
 export const SurfaceTempFarhenheitPixelRangeSlider = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
 

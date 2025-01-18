@@ -22,7 +22,7 @@ import {
 
 import IMapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import classNames from 'classnames';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { saveAnimationModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
@@ -44,7 +44,7 @@ type Props = {
 };
 
 const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
 

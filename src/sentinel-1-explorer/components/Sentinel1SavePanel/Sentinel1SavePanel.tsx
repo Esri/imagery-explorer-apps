@@ -4,7 +4,7 @@ import {
 } from '@shared/components/SavePanel';
 import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     // selectMaskLayerPixelValueRange,

@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { batch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
@@ -65,7 +65,7 @@ import { ZoomWidget } from '@shared/components/MapView/ZoomWidget';
 import { SearchWidget } from '@shared/components/SearchWidget';
 
 const MapViewContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectMapMode);
 

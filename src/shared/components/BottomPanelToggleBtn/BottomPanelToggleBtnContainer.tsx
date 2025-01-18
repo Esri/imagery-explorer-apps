@@ -15,13 +15,13 @@
 
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import BottomPanelToggleBtn from './BottomPanelToggleBtn';
 import { selectHideBottomPanel } from '../../store/UI/selectors';
 import { bottomPanelToggled } from '../../store/UI/reducer';
 
 const BottomPanelToggleBtnContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const isHidden = useSelector(selectHideBottomPanel);
 

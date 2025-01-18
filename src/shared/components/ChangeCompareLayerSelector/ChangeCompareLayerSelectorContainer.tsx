@@ -28,7 +28,7 @@ import {
     // selectActiveScene4ChangeCompareTool,
     selectChangeCompareLayerIsOn,
 } from '@shared/store/ChangeCompareTool/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     selectIsSecondarySceneActive,
     selectQueryParams4MainScene,
@@ -37,7 +37,7 @@ import {
 import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 
 export const ChangeCompareLayerSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
 

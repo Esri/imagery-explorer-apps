@@ -35,7 +35,7 @@ import { ImageryLayerWithPixelFilter } from '@shared/components/ImageryLayerWith
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { getBandIndexesBySpectralIndex } from '@shared/services/sentinel-2/helpers';
@@ -48,7 +48,7 @@ type Props = {
 };
 
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
     const spectralIndex = useSelector(
         selectSelectedIndex4MaskTool
@@ -108,7 +108,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             opacity={opacity}
             blendMode={shouldClip ? 'destination-atop' : 'normal'}
             countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                dispatch(countOfVisiblePixelsChanged(visiblePixels));
             }}
         />
     );

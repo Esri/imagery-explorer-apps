@@ -22,7 +22,7 @@ import {
     selectMapPopupAnchorLocation,
     selectSwipeWidgetHandlerPosition,
 } from '@shared/store/Map/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { watch } from '@arcgis/core/core/reactiveUtils';
 import {
@@ -61,7 +61,7 @@ type Props = {
 type MapViewOnClickHandler = (mapPoint: Point, mousePointX: number) => void;
 
 export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 

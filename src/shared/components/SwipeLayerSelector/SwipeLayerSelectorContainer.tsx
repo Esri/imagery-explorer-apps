@@ -21,14 +21,14 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { SwipeLayerSelector } from './SwipeLayerSelector';
 import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 import { swapMainAndSecondaryScenes } from '@shared/store/ImageryScene/thunks';
 import { AutoSwipeControls } from './AutoSwipeControls';
 
 export const SwipeLayerSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const appMode = useSelector(selectAppMode);
 

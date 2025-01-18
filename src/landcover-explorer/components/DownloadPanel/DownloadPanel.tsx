@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import { DWONLOAD_MODE_WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
@@ -30,7 +30,7 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import MapView from '@shared/components/MapView/MapView';
 
 const DownloadPanel = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const showDownloadPanel = useSelector(selectShowDownloadPanel);
 

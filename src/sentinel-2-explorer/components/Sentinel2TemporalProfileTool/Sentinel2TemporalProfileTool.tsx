@@ -17,7 +17,7 @@ import {
     TemporalProfileToolHeader,
 } from '@shared/components/TemproalProfileTool';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 import {
     selectActiveAnalysisTool,

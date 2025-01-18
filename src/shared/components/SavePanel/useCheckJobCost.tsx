@@ -10,11 +10,11 @@ import {
     updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 
 export const useCheckJobCost = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const intervalIdRef = useRef<NodeJS.Timeout>();
 

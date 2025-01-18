@@ -15,7 +15,7 @@
 
 import './ControlPanel.css';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { year4LeadingLayerUpdated } from '@shared/store/LandcoverExplorer/reducer';
 // import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
@@ -35,7 +35,7 @@ import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
 import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
 
 const ControlPanel = () => {
-    // const dispatch = useDispatch();
+    // const dispatch = useAppDispatch();
 
     // const hideControlPanel = useSelector(selectHideBottomPanel);
 

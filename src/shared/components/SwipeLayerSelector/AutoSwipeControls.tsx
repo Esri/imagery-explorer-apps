@@ -8,7 +8,7 @@ import {
     StartPlayButton,
     CloseButton,
 } from '../AnimationControl/AnimationControl';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     AUTO_SWIPE_SPEEDS,
     autoSwipeSpeedChanged,
@@ -18,7 +18,7 @@ import {
 import { Slider } from '../Slider';
 
 export const AutoSwipeControls = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const status = useSelector(selectAutoSwipeStatus);
 

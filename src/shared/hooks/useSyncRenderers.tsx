@@ -25,11 +25,11 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
 import {
     QueryParams4ImageryScene,
     queryParams4SecondarySceneChanged,
 } from '@shared/store/ImageryScene/reducer';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 /**
  * Custom hook to synchronize the renderer of the secondary imagery scene with the main scene.
@@ -39,7 +39,7 @@ import {
  * Change Compare tool to provide a consistent user experience.
  */
 export const useSyncRenderers = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mode = useSelector(selectAppMode);
 

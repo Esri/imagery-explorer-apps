@@ -44,7 +44,7 @@ import {
 //     updateTrendToolData,
 // } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { useSelector } from 'react-redux';
 // import {
 //     // getFormatedDateString,
@@ -75,7 +75,7 @@ import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selecto
 import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
 
 export const LandsatTemporalProfileTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const tool = useSelector(selectActiveAnalysisTool);
 

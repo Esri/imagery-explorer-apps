@@ -22,7 +22,7 @@ import ThumbnailColorIR from './thumbnails/Imagery_ColorIR.png';
 import ThumbnailNDMI from './thumbnails/Imagery_NDMI.png';
 import ThumbnailNDVI from './thumbnails/Imagery_NDVI.png';
 import ThumbnailSWIR from './thumbnails/Imagery_SWIR.png';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { sentinel2RasterFunctionChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { useSelector } from 'react-redux';
 import { selectSentinel2RasterFunction } from '@shared/store/LandcoverExplorer/selectors';
@@ -91,7 +91,7 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
 ];
 
 const ImageryRasterFunctionsListContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const animationMode = useSelector(selectAnimationStatus);
 

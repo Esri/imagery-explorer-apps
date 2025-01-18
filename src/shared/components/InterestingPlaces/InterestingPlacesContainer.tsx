@@ -16,7 +16,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { InterestingPlaces } from './InterestingPlaces';
 import { batch } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
 import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { updateTooltipData } from '@shared/store/UI/thunks';
@@ -42,7 +42,7 @@ export const InterestingPlacesContainer: FC<Props> = ({
     data,
     isThreeColumnGrid,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const nameOfSelectedInterestingPlace = useSelector(
         selectNameOfSelectedInterestingPlace
