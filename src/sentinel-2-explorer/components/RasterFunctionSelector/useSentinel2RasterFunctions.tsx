@@ -21,26 +21,27 @@ import {
 
 import { RasterFunctionInfo } from '@typing/imagery-service';
 
-import ThumbnailPlaceholder from './thumbnails/Imagery_NaturalColor.png';
-import ThumbnailNatrualColor from './thumbnails/Imagery_NaturalColor.png';
-import ThumbnailAgriculture from './thumbnails/Imagery_Agriculture.png';
-import ThumbnailColorIR from './thumbnails/Imagery_ColorIR.png';
-import ThumbnailNDMI from './thumbnails/Imagery_NDMI.png';
-import ThumbnailNDVI from './thumbnails/Imagery_NDVI.png';
-import ThumbnailSWIR from './thumbnails/Imagery_SWIR.png';
+import ThumbnailNatrualColor from './thumbnails/Sentinel2_NaturalColor.jpg';
+import ThumbnailAgriculture from './thumbnails/Sentinel2_Agriculture.jpg';
+import ThumbnailColorIR from './thumbnails/Sentinel2_ColorIR.jpg';
+import ThumbnailNDMI from './thumbnails/Sentinel2_NDMI.jpg';
+import ThumbnailNDVI from './thumbnails/Sentinel2_NDVI.jpg';
+import ThumbnailSWIR from './thumbnails/Sentinel2_SWIR.jpg';
+import ThumbnailBathymetric from './thumbnails/Sentinel2_Bathymetric.jpg';
+import ThumbnailGeology from './thumbnails/Sentinel2_Geology.jpg';
+import ThumbnailNDWI from './thumbnails/Sentinel2_NDWI.jpg';
 
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
     {
         'Agriculture with DRA': ThumbnailAgriculture,
-        'Bathymetric with DRA': ThumbnailPlaceholder,
+        'Bathymetric with DRA': ThumbnailBathymetric,
         'Color Infrared with DRA': ThumbnailColorIR,
         'Natural Color with DRA': ThumbnailNatrualColor,
-        'Geology with DRA': ThumbnailPlaceholder,
+        'Geology with DRA': ThumbnailGeology,
         'Short-wave Infrared with DRA': ThumbnailSWIR,
         'NDVI Colorized': ThumbnailNDVI,
         'NDMI Colorized': ThumbnailNDMI,
-        'NDWI Colorized': ThumbnailPlaceholder,
-        'Urban with DRA': ThumbnailPlaceholder,
+        'NDWI Colorized': ThumbnailNDWI,
     };
 
 const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
@@ -53,7 +54,7 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
     'NDVI Colorized': null,
     'NDMI Colorized': null,
     'NDWI Colorized': null,
-    'Urban with DRA': null,
+    // 'Urban with DRA': null,
 };
 
 export const getSentinel2RasterFunctionInfo = (): RasterFunctionInfo[] => {

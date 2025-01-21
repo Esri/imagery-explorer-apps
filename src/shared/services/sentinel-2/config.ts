@@ -96,7 +96,7 @@ const SENTINEL2_RASTER_FUNCTIONS = [
     'Color Infrared with DRA',
     'Short-wave Infrared with DRA',
     'Geology with DRA',
-    'Urban with DRA',
+    // 'Urban with DRA',
     'NDVI Colorized',
     'NDMI Colorized',
     'NDWI Colorized',
