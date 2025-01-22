@@ -31,10 +31,10 @@ import { showSavePanelToggled } from '@shared/store/UI/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
 
 type Props = {
-    mapView?: MapView;
+    // mapView?: MapView;
 };
 
-export const OpenSavePanelButtonContainer: FC<Props> = ({ mapView }) => {
+export const OpenSavePanelButtonContainer: FC<Props> = () => {
     // const animationStatus = useAppSelector(selectAnimationStatus);
 
     const dispatch = useAppDispatch();

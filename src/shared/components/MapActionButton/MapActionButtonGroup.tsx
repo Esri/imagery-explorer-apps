@@ -20,16 +20,14 @@ import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
-    mapView?: MapView;
+    // mapView?: MapView;
     children?: React.ReactNode;
 };
 
 /**
  * This component groups custom Map Action Buttons together at the left side of the map container
- * @param param0
- * @returns
  */
-export const MapActionButtonGroup: FC<Props> = ({ mapView, children }) => {
+export const MapActionButtonGroup: FC<Props> = ({ children }) => {
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     return (
@@ -41,20 +39,7 @@ export const MapActionButtonGroup: FC<Props> = ({ mapView, children }) => {
                 }
             )}
         >
-            {mapView
-                ? React.Children.map(children, (child) => {
-                      if (!child) {
-                          return null;
-                      }
-
-                      return React.cloneElement(
-                          child as React.ReactElement<any>,
-                          {
-                              mapView,
-                          }
-                      );
-                  })
-                : null}
+            {children}
         </div>
     );
 };

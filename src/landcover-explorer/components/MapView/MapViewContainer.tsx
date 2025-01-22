@@ -55,13 +55,8 @@ import {
 } from '@shared/store/Map/reducer';
 import MapView from '@shared/components/MapView/MapView';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
+import { MapActionButtonGroup4LandcoverExplorer } from './MapActionButtonGroup4LandcoverExplorer';
 // import SearchWidget from '@shared/components/SearchWidget/SearchWidget';
-import { MapActionButtonGroup } from '@shared/components/MapActionButton/MapActionButtonGroup';
-import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
-import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
-import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
-import { ZoomWidget } from '@shared/components/MapView/ZoomWidget';
-import { SearchWidget } from '@shared/components/SearchWidget';
 
 const MapViewContainer = () => {
     const dispatch = useAppDispatch();
@@ -170,16 +165,7 @@ const MapViewContainer = () => {
 
                 <AnimationPanel />
 
-                <MapActionButtonGroup>
-                    <SearchWidget />
-                    <ZoomWidget />
-                    <Zoom2NativeScale
-                        nativeScale={37795}
-                        tooltip={"Zoom to Land cover layer's native resolution"}
-                    />
-                    <ScreenshotWidget />
-                    <CopyLinkWidget />
-                </MapActionButtonGroup>
+                <MapActionButtonGroup4LandcoverExplorer />
             </MapView>
 
             <ReferenceLayersToggleControl />

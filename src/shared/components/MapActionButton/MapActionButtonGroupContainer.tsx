@@ -34,18 +34,19 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
     if (!mapView) return null;
 
     return (
-        <MapActionButtonGroup mapView={mapView}>
-            <SearchWidget />
-            <ZoomWidget />
+        <MapActionButtonGroup>
+            <SearchWidget mapView={mapView} />
+            <ZoomWidget mapView={mapView} />
             <Zoom2NativeScale
+                mapView={mapView}
                 nativeScale={nativeScale}
                 tooltip={`Zoom to ${serviceName}'s native resolution`}
             />
-            <ZoomToExtent serviceUrl={serviceUrl} />
+            <ZoomToExtent mapView={mapView} serviceUrl={serviceUrl} />
 
             <div className="h-[1px] my-[5px] w-map-action-button-size bg-custom-background"></div>
 
-            <ScreenshotWidget />
+            <ScreenshotWidget mapView={mapView} />
             <CopyLinkWidget />
             <OpenSavePanelButton />
         </MapActionButtonGroup>
