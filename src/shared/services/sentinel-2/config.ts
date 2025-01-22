@@ -96,7 +96,7 @@ const SENTINEL2_RASTER_FUNCTIONS = [
     'Color Infrared with DRA',
     'Short-wave Infrared with DRA',
     'Geology with DRA',
-    // 'Urban with DRA',
+    'Urban with DRA',
     'NDVI Colorized',
     'NDMI Colorized',
     'NDWI Colorized',
@@ -127,12 +127,6 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
         label: 'Agriculture',
     },
     {
-        name: 'Bathymetric with DRA',
-        description:
-            'Bands red, green, coastal/aerosol(4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applicaitons.',
-        label: 'Bathymetric',
-    },
-    {
         name: 'Color Infrared with DRA',
         description:
             'Bands near-infrared, red, green (8,4,3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
@@ -145,10 +139,10 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
         label: 'Short-wave IR',
     },
     {
-        name: 'Geology with DRA',
+        name: 'Urban with DRA',
         description:
-            'Bands shortwave IR-2, shortwave IR-1, blue (12, 11, 2) with dynamic range adjustment applied. Highlights geological features.',
-        label: 'Geology',
+            'Bands shortwave IR-2, shortwave IR-1, red (12, 11, 4) with dynamic range adjustment applied.',
+        label: 'Urban',
     },
     {
         name: 'NDVI Colorized',
@@ -167,6 +161,18 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
         description:
             'Normalized Difference Water Index with color map computed as (b3 - b8) / (b3 + b8). Wetlands and moist areas range from light green to dark blue.',
         label: 'NDWI',
+    },
+    {
+        name: 'Bathymetric with DRA',
+        description:
+            'Bands red, green, coastal/aerosol(4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applicaitons.',
+        label: 'Bathymetric',
+    },
+    {
+        name: 'Geology with DRA',
+        description:
+            'Bands shortwave IR-2, shortwave IR-1, blue (12, 11, 2) with dynamic range adjustment applied. Highlights geological features.',
+        label: 'Geology',
     },
 ];
 

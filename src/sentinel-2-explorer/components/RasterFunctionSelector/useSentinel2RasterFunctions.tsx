@@ -42,6 +42,7 @@ const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
         'NDVI Colorized': ThumbnailNDVI,
         'NDMI Colorized': ThumbnailNDMI,
         'NDWI Colorized': ThumbnailNDWI,
+        'Urban with DRA': null,
     };
 
 const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
@@ -54,7 +55,7 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
     'NDVI Colorized': null,
     'NDMI Colorized': null,
     'NDWI Colorized': null,
-    // 'Urban with DRA': null,
+    'Urban with DRA': null,
 };
 
 export const getSentinel2RasterFunctionInfo = (): RasterFunctionInfo[] => {
