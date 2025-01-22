@@ -30,6 +30,7 @@ import ThumbnailSWIR from './thumbnails/Sentinel2_SWIR.jpg';
 import ThumbnailBathymetric from './thumbnails/Sentinel2_Bathymetric.jpg';
 import ThumbnailGeology from './thumbnails/Sentinel2_Geology.jpg';
 import ThumbnailNDWI from './thumbnails/Sentinel2_NDWI.jpg';
+import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
     {
@@ -42,7 +43,7 @@ const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
         'NDVI Colorized': ThumbnailNDVI,
         'NDMI Colorized': ThumbnailNDMI,
         'NDWI Colorized': ThumbnailNDWI,
-        'Urban with DRA': null,
+        'Urban with DRA': ThumbnailUrban,
     };
 
 const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
