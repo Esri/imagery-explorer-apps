@@ -22,7 +22,7 @@ export const JobListContainer = () => {
                 className="grid items-center mb-6 pb-1 border-b border-custom-light-blue-25"
                 style={{ gridTemplateColumns: '1fr 150px 60px' }}
             >
-                <div className="uppercase text-lg">Pending Jobs</div>
+                <div className="uppercase text-lg">Task History</div>
                 <div className="text-sm opacity-50">Status</div>
                 <div
                     className="text-sm opacity-50 cursor-pointer underline"

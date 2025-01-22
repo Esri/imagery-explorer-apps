@@ -183,8 +183,8 @@ export const SENTINEL2_BAND_NAMES: string[] = [
     'Veg 2',
     'Veg 3',
     'NIR',
-    'Narrow NIR',
-    'Water Vapor',
+    'N-NIR',
+    'Vapor',
     'SWIR 1',
     'SWIR 2',
 ];

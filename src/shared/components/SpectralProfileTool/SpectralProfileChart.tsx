@@ -89,7 +89,7 @@ export const SpectralProfileChart: FC<Props> = ({
                     },
                 }}
                 margin={{
-                    bottom: shouldRotateBottomAxisTextLabels ? 50 : 20,
+                    bottom: shouldRotateBottomAxisTextLabels ? 40 : 20,
                     left: 30,
                     right: 10,
                     top: 10,

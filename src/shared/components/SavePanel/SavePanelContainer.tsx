@@ -95,8 +95,8 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     // Custom hook that checks the status of pending raster analysis jobs.
     useCheckJobStatus();
 
-    // Custom hook that clears finished raster analysis jobs.
-    useClearRasterAnalysisJobs();
+    // // Custom hook that clears finished raster analysis jobs.
+    // useClearRasterAnalysisJobs();
 
     // Custom hook that checks the cost of new raster analysis jobs.
     useCheckJobCost();
