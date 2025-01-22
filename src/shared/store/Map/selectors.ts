@@ -21,77 +21,43 @@ import { RootState } from '../configureStore';
 //     (webmapId) => webmapId
 // );
 
-export const selectMapCenter = createSelector(
-    (state: RootState) => state.Map.center,
-    (center) => center
-);
+export const selectMapCenter = (state: RootState) => state.Map.center;
 
-export const selectMapZoom = createSelector(
-    (state: RootState) => state.Map.zoom,
-    (zoom) => zoom
-);
+// export const selectMapCenter = createSelector(
+//     (state: RootState) => state.Map.center,
+//     (center) => center
+// );
 
-export const selectMapExtent = createSelector(
-    (state: RootState) => state.Map.extent,
-    (extent) => extent
-);
+export const selectMapZoom = (state: RootState) => state.Map.zoom;
 
-export const selectMapResolution = createSelector(
-    (state: RootState) => state.Map.resolution,
-    (resolution) => resolution
-);
+export const selectMapExtent = (state: RootState) => state.Map.extent;
 
-export const selectMapScale = createSelector(
-    (state: RootState) => state.Map.scale,
-    (scale) => scale
-);
+export const selectMapResolution = (state: RootState) => state.Map.resolution;
 
-export const selectShowMapLabel = createSelector(
-    (state: RootState) => state.Map.showMapLabel,
-    (showMapLabel) => showMapLabel
-);
+export const selectMapScale = (state: RootState) => state.Map.scale;
 
-export const selectShowTerrain = createSelector(
-    (state: RootState) => state.Map.showTerrain,
-    (showTerrain) => showTerrain
-);
+export const selectShowMapLabel = (state: RootState) => state.Map.showMapLabel;
 
-export const selectShowBasemap = createSelector(
-    (state: RootState) => state.Map.showBasemap,
-    (showBasemap) => showBasemap
-);
+export const selectShowTerrain = (state: RootState) => state.Map.showTerrain;
 
-export const selectSwipeWidgetHandlerPosition = createSelector(
-    (state: RootState) => state.Map.swipeWidgetHanlderPosition,
-    (swipeWidgetHanlderPosition) => swipeWidgetHanlderPosition
-);
+export const selectShowBasemap = (state: RootState) => state.Map.showBasemap;
 
-export const selectMapPopupAnchorLocation = createSelector(
-    (state: RootState) => state.Map.popupAnchorLocation,
-    (popupAnchorLocation) => popupAnchorLocation
-);
+export const selectSwipeWidgetHandlerPosition = (state: RootState) =>
+    state.Map.swipeWidgetHanlderPosition;
 
-export const selectIsMapUpdating = createSelector(
-    (state: RootState) => state.Map.isUpadting,
-    (isUpadting) => isUpadting
-);
+export const selectMapPopupAnchorLocation = (state: RootState) =>
+    state.Map.popupAnchorLocation;
 
-export const selectTotalVisibleArea = createSelector(
-    (state: RootState) => state.Map.totalVisibleAreaInSqKm,
-    (totalVisibleAreaInSqKm) => totalVisibleAreaInSqKm
-);
+export const selectIsMapUpdating = (state: RootState) => state.Map.isUpadting;
 
-export const selectCountOfVisiblePixels = createSelector(
-    (state: RootState) => state.Map.countOfVisiblePixels,
-    (countOfVisiblePixels) => countOfVisiblePixels
-);
+export const selectTotalVisibleArea = (state: RootState) =>
+    state.Map.totalVisibleAreaInSqKm;
 
-export const selectAutoSwipeStatus = createSelector(
-    (state: RootState) => state.Map.autoSwipeStatus,
-    (autoSwipeStatus) => autoSwipeStatus
-);
+export const selectCountOfVisiblePixels = (state: RootState) =>
+    state.Map.countOfVisiblePixels;
 
-export const selectAutoSwipeSpeed = createSelector(
-    (state: RootState) => state.Map.autoSwipeSpeed,
-    (autoSwipeSpeed) => autoSwipeSpeed
-);
+export const selectAutoSwipeStatus = (state: RootState) =>
+    state.Map.autoSwipeStatus;
+
+export const selectAutoSwipeSpeed = (state: RootState) =>
+    state.Map.autoSwipeSpeed;

@@ -24,12 +24,10 @@ import { RootState } from '../configureStore';
 //     }
 // );
 
-export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Landsat.landsatScenes.byObjectId,
-    (byObjectId) => byObjectId
-);
+export const selectAvailableScenesByObjectId = (state: RootState) => {
+    return state.Landsat.landsatScenes.byObjectId;
+};
 
-export const selectLandsatMissionsToBeExcluded = createSelector(
-    (state: RootState) => state.Landsat.missionsToBeExcluded,
-    (missionsToBeExcluded) => missionsToBeExcluded
-);
+export const selectLandsatMissionsToBeExcluded = (state: RootState) => {
+    return state.Landsat.missionsToBeExcluded;
+};

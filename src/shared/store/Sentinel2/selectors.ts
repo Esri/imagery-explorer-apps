@@ -16,7 +16,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Sentinel2.sentinel2Scenes.byObjectId,
-    (byObjectId) => byObjectId
-);
+export const selectAvailableScenesByObjectId = (state: RootState) => {
+    return state.Sentinel2.sentinel2Scenes.byObjectId;
+};

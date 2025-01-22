@@ -16,18 +16,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectIsTemporalCompositeLayerOn = createSelector(
-    (state: RootState) =>
-        state.TemporalCompositeTool.isTemporalCompositeLayerOn,
-    (isTemporalCompositeLayerOn) => isTemporalCompositeLayerOn
-);
+export const selectIsTemporalCompositeLayerOn = (state: RootState) =>
+    state.TemporalCompositeTool.isTemporalCompositeLayerOn;
 
-export const selectRasterFunction4TemporalCompositeTool = createSelector(
-    (state: RootState) => state.TemporalCompositeTool.rasterFunction,
-    (rasterFunction) => rasterFunction
-);
+export const selectRasterFunction4TemporalCompositeTool = (state: RootState) =>
+    state.TemporalCompositeTool.rasterFunction;
 
-export const selectTemporalCompositeToolState = createSelector(
-    (state: RootState) => state.TemporalCompositeTool,
-    (TemporalCompositeTool) => TemporalCompositeTool
-);
+export const selectTemporalCompositeToolState = (state: RootState) =>
+    state.TemporalCompositeTool;

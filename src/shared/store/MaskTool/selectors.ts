@@ -16,10 +16,16 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectSelectedIndex4MaskTool = createSelector(
-    (state: RootState) => state.MaskTool.selectedIndex,
-    (selectedIndex) => selectedIndex
-);
+export const selectSelectedIndex4MaskTool = (state: RootState) =>
+    state.MaskTool.selectedIndex;
+
+export const selectMaskLayerOpcity = (state: RootState) =>
+    state.MaskTool.maskLayerOpacity;
+
+export const selectShouldClipMaskLayer = (state: RootState) =>
+    state.MaskTool.shouldClipMaskLayer;
+
+export const selectMaskToolState = (state: RootState) => state.MaskTool;
 
 export const selectMaskLayerPixelValueRange = createSelector(
     (state: RootState) => state.MaskTool.selectedIndex,
@@ -33,21 +39,6 @@ export const selectMaskLayerPixelColor = createSelector(
     (state: RootState) => state.MaskTool.pixelColorBySelectedIndex,
     (selectedIndex, pixelColorBySelectedIndex) =>
         pixelColorBySelectedIndex[selectedIndex] || [255, 255, 255]
-);
-
-export const selectMaskLayerOpcity = createSelector(
-    (state: RootState) => state.MaskTool.maskLayerOpacity,
-    (maskLayerOpacity) => maskLayerOpacity
-);
-
-export const selectShouldClipMaskLayer = createSelector(
-    (state: RootState) => state.MaskTool.shouldClipMaskLayer,
-    (shouldClipMaskLayer) => shouldClipMaskLayer
-);
-
-export const selectMaskToolState = createSelector(
-    (state: RootState) => state.MaskTool,
-    (maskTool) => maskTool
 );
 
 // export const selectMaskLayerVisibleArea = createSelector(
