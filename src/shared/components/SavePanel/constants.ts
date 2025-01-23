@@ -39,36 +39,28 @@ export const saveOptionInfoLookup: Record<
     PublishAndDownloadJobType,
     SaveOptionInfo
 > = {
-    'Publish Scene': {
+    [PublishAndDownloadJobType.PublishScene]: {
         action: 'Publish',
         inputName: 'Scene',
         requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
         description: `Publish a hosted imagery layer of the selected scene. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
     },
-    'Publish Index Mask': {
+    [PublishAndDownloadJobType.PublishIndexMask]: {
         action: 'Publish',
         inputName: 'Index mask',
         requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
         description: `Publish a hosted imagery layer of the current index mask. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
     },
-    'Publish Change Detection': {
+    [PublishAndDownloadJobType.PublishChangeDetection]: {
         action: 'Publish',
         inputName: 'Change Detection',
         requireUniqueOutputName: true,
         outputName: 'Hosted Imagery',
         description: `Publish a hosted imagery layer of the current change detection output. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
     },
-    'Download Index Mask': {
-        action: 'Download',
-        inputName: 'Index mask',
-        requireUniqueOutputName: false,
-        outputName: 'GeoTIFF',
-        description:
-            'Download the current index mask as a black and white image in GeoTIFF format.',
-    },
-    'Save Web Mapping App': {
+    [PublishAndDownloadJobType.SaveWebMappingApp]: {
         action: 'Publish',
         inputName: 'Current State',
         requireUniqueOutputName: false,
@@ -76,13 +68,29 @@ export const saveOptionInfoLookup: Record<
         description:
             'Create an instance of this application in its current state as an ArcGIS Online web application.',
     },
-    'Save Web Map': {
+    [PublishAndDownloadJobType.SaveWebMap]: {
         action: 'Publish',
         inputName: 'Scene',
         requireUniqueOutputName: false,
         outputName: 'ArcGIS Online Map',
         description:
             'Create an ArcGIS Online map containing the selected scene as a layer.',
+    },
+    [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]: {
+        action: 'Publish',
+        inputName: 'Scenes',
+        requireUniqueOutputName: false,
+        outputName: 'ArcGIS Online Map',
+        description:
+            'Create an ArcGIS Online map with individual layers per scene.',
+    },
+    [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: {
+        action: 'Publish',
+        inputName: 'Scenes',
+        requireUniqueOutputName: false,
+        outputName: 'ArcGIS Online Map',
+        description:
+            'Create an ArcGIS Online map with a single layer with multiple scenes.',
     },
 };
 
@@ -111,8 +119,12 @@ export const jobTypeLabels: Record<PublishAndDownloadJobType, string> = {
         'Index Mask as Hosted Imagery',
     [PublishAndDownloadJobType.PublishChangeDetection]:
         'Change Detection as Hosted Imagery',
-    [PublishAndDownloadJobType.DownloadIndexMask]: 'Index Mask as GeoTIFF',
+    // [PublishAndDownloadJobType.DownloadIndexMask]: 'Index Mask as GeoTIFF',
     [PublishAndDownloadJobType.SaveWebMappingApp]:
         'Current State as Web Application',
     [PublishAndDownloadJobType.SaveWebMap]: 'Scene as ArcGIS Online Web Map',
+    [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]:
+        'Scenes as ArcGIS Online Web Map',
+    [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]:
+        'Scenes as ArcGIS Online Web Map',
 };

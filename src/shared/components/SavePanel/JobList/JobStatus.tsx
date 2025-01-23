@@ -100,21 +100,11 @@ export const JobStatus: FC<JobStatusProps> = ({
             <calcite-button
                 // scale="s"
                 width="full"
-                icon-start={
-                    job.type === PublishAndDownloadJobType.DownloadIndexMask
-                        ? 'download-to'
-                        : 'launch'
-                }
-                href={
-                    job.type === PublishAndDownloadJobType.DownloadIndexMask
-                        ? job.outputURL
-                        : getItemUrl(job.outputItemId)
-                }
+                icon-start={'launch'}
+                href={getItemUrl(job.outputItemId)}
                 target="_blank"
             >
-                {job.type === PublishAndDownloadJobType.DownloadIndexMask
-                    ? 'Download'
-                    : 'Open'}
+                Open
             </calcite-button>
         </div>
     );

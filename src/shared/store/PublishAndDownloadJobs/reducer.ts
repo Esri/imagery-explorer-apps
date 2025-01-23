@@ -17,9 +17,11 @@ export enum PublishAndDownloadJobType {
     PublishScene = 'Publish Scene',
     PublishIndexMask = 'Publish Index Mask',
     PublishChangeDetection = 'Publish Change Detection',
-    DownloadIndexMask = 'Download Index Mask',
+    // DownloadIndexMask = 'Download Index Mask',
     SaveWebMappingApp = 'Save Web Mapping App',
     SaveWebMap = 'Save Web Map',
+    SaveWebMapWithMultipleScenes = 'Save Web Map with Multiple Scenes',
+    SaveWebMapWithMultipleScenesInSingleLayer = 'Save Web Map with Multiple Scenes in Single Layer',
 }
 
 /**
