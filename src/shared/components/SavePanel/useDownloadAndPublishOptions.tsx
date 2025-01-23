@@ -2,6 +2,7 @@ import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectListOfQueryParams,
     selectQueryParams4MainScene,
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
@@ -44,14 +45,39 @@ export const useDownloadAndPublishOptions = () => {
         selectQueryParams4SecondaryScene
     );
 
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
+
     const publishOptions: PublishAndDownloadJobOptionData[] = useMemo(() => {
         const output: PublishAndDownloadJobType[] = [
             PublishAndDownloadJobType.SaveWebMappingApp,
         ];
 
-        if (queryParams4MainScene?.objectIdOfSelectedScene) {
+        if (
+            (mode === 'find a scene' ||
+                mode === 'dynamic' ||
+                mode === 'analysis') &&
+            queryParams4MainScene?.objectIdOfSelectedScene
+        ) {
             output.push(PublishAndDownloadJobType.SaveWebMap);
             output.push(PublishAndDownloadJobType.PublishScene);
+        }
+
+        if (
+            mode === 'swipe' &&
+            queryParams4MainScene?.objectIdOfSelectedScene &&
+            queryParams4SecondaryScene?.objectIdOfSelectedScene
+        ) {
+            output.push(PublishAndDownloadJobType.SaveWebMapWithMultipleScenes);
+            output.push(
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+            );
+        }
+
+        if (mode === 'animate' && listOfQueryParams?.length > 0) {
+            output.push(PublishAndDownloadJobType.SaveWebMapWithMultipleScenes);
+            output.push(
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+            );
         }
 
         if (
@@ -79,26 +105,16 @@ export const useDownloadAndPublishOptions = () => {
     }, [
         queryParams4MainScene?.objectIdOfSelectedScene,
         queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        listOfQueryParams?.length,
         mode,
         analyzeTool,
     ]);
 
-    const donwloadOptions: PublishAndDownloadJobType[] = useMemo(() => {
-        const output: PublishAndDownloadJobType[] = [];
+    // const donwloadOptions: PublishAndDownloadJobType[] = useMemo(() => {
+    //     const output: PublishAndDownloadJobType[] = [];
 
-        // if (
-        //     mode === 'analysis' &&
-        //     analyzeTool === 'mask' &&
-        //     queryParams4MainScene?.objectIdOfSelectedScene
-        // ) {
-        //     output.push(PublishAndDownloadJobType.DownloadIndexMask);
-        // }
+    //     return output;
+    // }, [queryParams4MainScene?.objectIdOfSelectedScene, mode, analyzeTool]);
 
-        return output;
-    }, [queryParams4MainScene?.objectIdOfSelectedScene, mode, analyzeTool]);
-
-    return {
-        publishOptions,
-        donwloadOptions,
-    };
+    return publishOptions;
 };

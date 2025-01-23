@@ -80,7 +80,7 @@ export const saveOptionInfoLookup: Record<
         action: 'Publish',
         inputName: 'Scenes',
         requireUniqueOutputName: false,
-        outputName: 'ArcGIS Online Map',
+        outputName: 'Multiple Layers Map',
         description:
             'Create an ArcGIS Online map with individual layers per scene.',
     },
@@ -88,7 +88,7 @@ export const saveOptionInfoLookup: Record<
         action: 'Publish',
         inputName: 'Scenes',
         requireUniqueOutputName: false,
-        outputName: 'ArcGIS Online Map',
+        outputName: 'Single Layer Map',
         description:
             'Create an ArcGIS Online map with a single layer with multiple scenes.',
     },

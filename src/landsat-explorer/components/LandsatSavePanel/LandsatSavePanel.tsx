@@ -39,7 +39,7 @@ const TAGS = [
 export const LandsatSavePanel = () => {
     const landsatScene = useSelectedLandsatScene();
 
-    const { publishOptions } = useDownloadAndPublishOptions();
+    const publishOptions = useDownloadAndPublishOptions();
 
     const maskToolFullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
 
