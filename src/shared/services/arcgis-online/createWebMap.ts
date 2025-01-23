@@ -3,6 +3,11 @@ import { addItem } from './addItem';
 import { getExtentByObjectId } from '../helpers/getExtentById';
 import { WorldTopographicMapStyleURL } from './config';
 
+export type ImagerySceneData4WebMap = {
+    objectId: number;
+    acquisitionDate: string;
+};
+
 type SaveImagerySceneAsWebMapOptions = {
     title: string;
     snippet: string;
@@ -16,30 +21,121 @@ type SaveImagerySceneAsWebMapOptions = {
      */
     serviceName: string;
     /**
-     * Object IDs of the selected imagery scenes.
+     * Data the selected imagery scenes.
      */
-    objectIdOfSelectedScenes: number[];
+    scenes: ImagerySceneData4WebMap[];
+    /**
+     * If true, all scenes will be saved in a single layer. Otherwise, each scene will be saved in a separate layer.
+     */
+    singleLayerWithMultipleScenes: boolean;
 };
 
+type OperationalLayerData = {
+    id: string;
+    title: string;
+    url: string;
+    mosaicRule?: {
+        ascending: boolean;
+        lockRasterIds: number[];
+        mosaicMethod: string;
+    };
+    layerType: string;
+    timeAnimation?: boolean;
+};
+
+type GetOperationalLayersOptions = {
+    scenes: ImagerySceneData4WebMap[];
+    serviceUrl: string;
+    serviceName: string;
+    singleLayerWithMultipleScenes: boolean;
+};
+
+const getOperationalLayers = ({
+    scenes,
+    serviceUrl,
+    serviceName,
+    singleLayerWithMultipleScenes,
+}: GetOperationalLayersOptions): OperationalLayerData[] => {
+    if (singleLayerWithMultipleScenes) {
+        const id = `${serviceName} - Multiple Scenes`;
+        return [
+            {
+                id,
+                title: id,
+                url: serviceUrl,
+                mosaicRule: {
+                    ascending: true,
+                    lockRasterIds: scenes.map((d) => d.objectId),
+                    mosaicMethod: 'esriMosaicLockRaster',
+                },
+                layerType: 'ArcGISImageServiceLayer',
+                timeAnimation: false,
+            },
+        ];
+    }
+
+    return scenes.map((scene) => {
+        const id = `${serviceName} - Single Scene ${scene.acquisitionDate}`;
+        return {
+            id,
+            title: id,
+            url: serviceUrl,
+            mosaicRule: {
+                ascending: true,
+                lockRasterIds: [scene.objectId],
+                mosaicMethod: 'esriMosaicLockRaster',
+            },
+            layerType: 'ArcGISImageServiceLayer',
+            timeAnimation: false,
+        };
+    });
+};
+
+/**
+ * Saves the selected imagery scenes as a web map in ArcGIS Online.
+ *
+ * @param {Object} options - The options for saving the web map.
+ * @param {string} options.title - The title of the web map.
+ * @param {string} options.snippet - A brief summary of the web map.
+ * @param {string[]} options.tags - An array of tags associated with the web map.
+ * @param {string} options.serviceUrl - The URL of the imagery service.
+ * @param {string} options.serviceName - The name of the imagery service.
+ * @param {Array} options.scenes - An array of scenes to be included in the web map.
+ * @param {boolean} options.singleLayerWithMultipleScenes - Whether to use a single layer with multiple scenes.
+ * @throws {Error} If no scenes are selected to save.
+ * @returns {Promise<Object>} The response from the addItem request.
+ */
 export const saveImagerySceneAsWebMap = async ({
     title,
     snippet,
     tags,
     serviceUrl,
     serviceName,
-    objectIdOfSelectedScenes,
+    scenes,
+    singleLayerWithMultipleScenes,
 }: SaveImagerySceneAsWebMapOptions) => {
-    if (!objectIdOfSelectedScenes || objectIdOfSelectedScenes.length === 0) {
+    if (!scenes || scenes.length === 0) {
         throw new Error('No selected scene to save');
     }
 
     const token = getToken();
 
+    if (!token) {
+        throw new Error('No token found');
+    }
+
     const extent = await getExtentByObjectId({
         serviceUrl,
-        objectId: objectIdOfSelectedScenes[0],
+        objectId: scenes[0].objectId,
         token,
         outputSpatialReference: 4326,
+    });
+
+    const operationalLayers = getOperationalLayers({
+        scenes,
+        serviceUrl,
+        serviceName,
+        singleLayerWithMultipleScenes,
     });
 
     const requestBody = new URLSearchParams({
@@ -54,20 +150,21 @@ export const saveImagerySceneAsWebMap = async ({
         type: 'Web Map',
         typeKeywords: 'ArcGIS API for JavaScript',
         text: JSON.stringify({
-            operationalLayers: [
-                {
-                    id: `${serviceName}-${objectIdOfSelectedScenes.join('-')}`,
-                    title: serviceName,
-                    url: serviceUrl,
-                    mosaicRule: {
-                        ascending: true,
-                        lockRasterIds: objectIdOfSelectedScenes,
-                        mosaicMethod: 'esriMosaicLockRaster',
-                    },
-                    layerType: 'ArcGISImageServiceLayer',
-                    timeAnimation: false,
-                },
-            ],
+            operationalLayers,
+            // operationalLayers: [
+            //     {
+            //         id: `${serviceName}`,
+            //         title: serviceName,
+            //         url: serviceUrl,
+            //         mosaicRule: {
+            //             ascending: true,
+            //             lockRasterIds: scenes.map((d) => d.objectId),
+            //             mosaicMethod: 'esriMosaicLockRaster',
+            //         },
+            //         layerType: 'ArcGISImageServiceLayer',
+            //         timeAnimation: false,
+            //     },
+            // ],
             baseMap: {
                 baseMapLayers: [
                     {

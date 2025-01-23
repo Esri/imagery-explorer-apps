@@ -26,8 +26,8 @@ export const useDefaultTitleAndSummary = (
     const summaryBySaveJobType: Record<PublishAndDownloadJobType, string> = {
         [PublishAndDownloadJobType.SaveWebMappingApp]: `An instance of the ${foramttedTitle} app.`,
         [PublishAndDownloadJobType.SaveWebMap]: `Web map created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,
-        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]: `Web map created by ${foramttedTitle}. Mulple scenes included`,
-        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: `Web map created by ${foramttedTitle}. Mulple scenes in a single layer`,
+        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]: `Web map created by ${foramttedTitle}.`,
+        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: `Web map created by ${foramttedTitle}.`,
         [PublishAndDownloadJobType.PublishScene]: `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,
         [PublishAndDownloadJobType.PublishIndexMask]: `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,
         [PublishAndDownloadJobType.PublishChangeDetection]: `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${formattedSceneId}`,

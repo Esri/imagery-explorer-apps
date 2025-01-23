@@ -2,14 +2,7 @@ import React, { FC } from 'react';
 import { SavePanel } from './SavePanel';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
 import { SaveJobButtonOnClickParams } from '@shared/components/SavePanel';
-import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
-import {
-    selectQueryParams4MainScene,
-    // selectQueryParams4SceneInSelectedMode,
-    // selectQueryParams4SecondaryScene,
-} from '@shared/store/ImageryScene/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useAppSelector } from '@shared/store/configureStore';
 // import { useSaveOptions } from './useSaveOptions';
 import {
     createNewPublishAndDownloadJob,
@@ -26,9 +19,8 @@ import {
 import { createWebMappingApplication } from '@shared/services/arcgis-online/createWebMappingApplication';
 import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createWebMap';
 import { useCheckJobCost } from './useCheckJobCost';
-import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
 import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
-import { useObjectIdOfSelectedScenes } from './useObjectIdOfSelectedScenes';
+import { useImagerySceneData4WebMap } from './useImagerySceneData4WebMap';
 import { AddItemResponse } from '@shared/services/arcgis-online/addItem';
 
 /**
@@ -92,7 +84,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const objectIdOfSelectedScenes = useObjectIdOfSelectedScenes();
+    const imageryScenesData = useImagerySceneData4WebMap();
 
     // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
@@ -126,12 +118,15 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                     PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
             ) {
                 addItemResponse = await saveImagerySceneAsWebMap({
-                    title, // `Landsat Scene (${landsatScene.name})`,
-                    snippet, // `Landsat Scene (${landsatScene.name})`,
+                    title,
+                    snippet,
                     tags,
                     serviceUrl: originalServiceUrl,
                     serviceName, //'LandsatLevel2',
-                    objectIdOfSelectedScenes,
+                    scenes: imageryScenesData,
+                    singleLayerWithMultipleScenes:
+                        job.type ===
+                        PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
                 });
             }
 
@@ -151,9 +146,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 updatePublishAndDownloadJob({
                     ...job,
                     status: PublishAndDownloadJobStatus.Failed,
-                    errormessage: `Failed to create ArcGIS Online item: ${
-                        err.message || 'unknown error'
-                    }`,
+                    errormessage: `${err.message || 'unknown error'}`,
                 })
             );
         }
