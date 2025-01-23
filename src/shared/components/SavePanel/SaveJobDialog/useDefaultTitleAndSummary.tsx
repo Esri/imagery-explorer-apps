@@ -15,8 +15,8 @@ export const useDefaultTitleAndSummary = (
     const titleBySaveJobType: Record<PublishAndDownloadJobType, string> = {
         [PublishAndDownloadJobType.SaveWebMappingApp]: `${foramttedTitle} View`,
         [PublishAndDownloadJobType.SaveWebMap]: `${satellite} Scene - ${formattedSceneId}`,
-        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]: `${satellite} Scenes - Multiple`,
-        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: `${satellite} Scenes - Multiple`,
+        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]: `${satellite} Scenes - Individual layers per scene`,
+        [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: `${satellite} Scenes - A single layer with multiple scenes`,
         [PublishAndDownloadJobType.PublishScene]: `${satellite} Scene - ${formattedSceneId}`,
         [PublishAndDownloadJobType.PublishIndexMask]: `${satellite} Index Mask - ${formattedSceneId}`,
         [PublishAndDownloadJobType.PublishChangeDetection]: `${satellite} Change Detection - ${formattedSceneId}`,

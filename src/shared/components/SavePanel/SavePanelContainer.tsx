@@ -29,6 +29,7 @@ import { useCheckJobCost } from './useCheckJobCost';
 import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
 import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
 import { useObjectIdOfSelectedScenes } from './useObjectIdOfSelectedScenes';
+import { AddItemResponse } from '@shared/services/arcgis-online/addItem';
 
 /**
  * Raster functions for the publish jobs.
@@ -109,27 +110,40 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             const title = job.title;
             const snippet = job.summary;
 
-            const res =
-                job.type === PublishAndDownloadJobType.SaveWebMappingApp
-                    ? await createWebMappingApplication({
-                          title,
-                          snippet,
-                          tags, //'Esri Landsat Explorer, Landsat, Landsat-Level-2 Imagery, Remote Sensing',
-                      })
-                    : await saveImagerySceneAsWebMap({
-                          title, // `Landsat Scene (${landsatScene.name})`,
-                          snippet, // `Landsat Scene (${landsatScene.name})`,
-                          tags,
-                          serviceUrl: originalServiceUrl,
-                          serviceName, //'LandsatLevel2',
-                          objectIdOfSelectedScene: objectIdOfSelectedScenes[0],
-                      });
+            let addItemResponse: AddItemResponse = null;
+
+            if (job.type === PublishAndDownloadJobType.SaveWebMappingApp) {
+                addItemResponse = await createWebMappingApplication({
+                    title,
+                    snippet,
+                    tags,
+                });
+            } else if (
+                job.type === PublishAndDownloadJobType.SaveWebMap ||
+                job.type ===
+                    PublishAndDownloadJobType.SaveWebMapWithMultipleScenes ||
+                job.type ===
+                    PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+            ) {
+                addItemResponse = await saveImagerySceneAsWebMap({
+                    title, // `Landsat Scene (${landsatScene.name})`,
+                    snippet, // `Landsat Scene (${landsatScene.name})`,
+                    tags,
+                    serviceUrl: originalServiceUrl,
+                    serviceName, //'LandsatLevel2',
+                    objectIdOfSelectedScenes,
+                });
+            }
+
+            if (!addItemResponse) {
+                throw new Error('Failed to create ArcGIS Online item');
+            }
 
             dispatch(
                 updatePublishAndDownloadJob({
                     ...job,
                     status: PublishAndDownloadJobStatus.Succeeded,
-                    outputItemId: res.id,
+                    outputItemId: addItemResponse.id,
                 })
             );
         } catch (err) {
@@ -185,7 +199,11 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
         if (
             saveJobType === PublishAndDownloadJobType.SaveWebMappingApp ||
-            saveJobType === PublishAndDownloadJobType.SaveWebMap
+            saveJobType === PublishAndDownloadJobType.SaveWebMap ||
+            saveJobType ===
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenes ||
+            saveJobType ===
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
         ) {
             createNewItemInArcGISOnline(job);
             return;

@@ -1,6 +1,7 @@
 import { getToken } from '@shared/utils/esri-oauth';
 import { addItem } from './addItem';
 import { getExtentByObjectId } from '../helpers/getExtentById';
+import { WorldTopographicMapStyleURL } from './config';
 
 type SaveImagerySceneAsWebMapOptions = {
     title: string;
@@ -15,9 +16,9 @@ type SaveImagerySceneAsWebMapOptions = {
      */
     serviceName: string;
     /**
-     * Object ID of the selected imagery scene.
+     * Object IDs of the selected imagery scenes.
      */
-    objectIdOfSelectedScene: number;
+    objectIdOfSelectedScenes: number[];
 };
 
 export const saveImagerySceneAsWebMap = async ({
@@ -26,9 +27,9 @@ export const saveImagerySceneAsWebMap = async ({
     tags,
     serviceUrl,
     serviceName,
-    objectIdOfSelectedScene,
+    objectIdOfSelectedScenes,
 }: SaveImagerySceneAsWebMapOptions) => {
-    if (!objectIdOfSelectedScene) {
+    if (!objectIdOfSelectedScenes || objectIdOfSelectedScenes.length === 0) {
         throw new Error('No selected scene to save');
     }
 
@@ -36,7 +37,7 @@ export const saveImagerySceneAsWebMap = async ({
 
     const extent = await getExtentByObjectId({
         serviceUrl,
-        objectId: objectIdOfSelectedScene,
+        objectId: objectIdOfSelectedScenes[0],
         token,
         outputSpatialReference: 4326,
     });
@@ -55,12 +56,12 @@ export const saveImagerySceneAsWebMap = async ({
         text: JSON.stringify({
             operationalLayers: [
                 {
-                    id: `${serviceName}-${objectIdOfSelectedScene}`,
+                    id: `${serviceName}-${objectIdOfSelectedScenes.join('-')}`,
                     title: serviceName,
                     url: serviceUrl,
                     mosaicRule: {
                         ascending: true,
-                        lockRasterIds: [objectIdOfSelectedScene],
+                        lockRasterIds: objectIdOfSelectedScenes,
                         mosaicMethod: 'esriMosaicLockRaster',
                     },
                     layerType: 'ArcGISImageServiceLayer',
@@ -69,22 +70,13 @@ export const saveImagerySceneAsWebMap = async ({
             ],
             baseMap: {
                 baseMapLayers: [
-                    // {
-                    //   "id": "World_Hillshade_3805",
-                    //   "opacity": 1,
-                    //   "title": "World Hillshade",
-                    //   "url": "https://servicesdev.arcgisonline.com/arcgis/rest/services/Elevation/World_Hillshade/MapServer",
-                    //   "visibility": true,
-                    //   "layerType": "ArcGISTiledMapServiceLayer"
-                    // },
                     {
                         id: 'World_Topographic_Map',
                         opacity: 1,
                         title: 'World Topographic Map',
                         visibility: true,
                         layerType: 'VectorTileLayer',
-                        styleUrl:
-                            'https://cdn.arcgis.com/sharing/rest/content/items/7dc6cea0b1764a1f9af2e679f642f0f5/resources/styles/root.json',
+                        styleUrl: WorldTopographicMapStyleURL,
                     },
                 ],
                 title: 'Topographic',
