@@ -1,6 +1,6 @@
 {
     "apps": {
-        "landsat": {
+        "landsatexplorer": {
             "title": "Esri | Landsat Explorer",
             "satellite": "Landsat",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
@@ -10,7 +10,7 @@
             "entrypoint": "/src/landsat-explorer/index.tsx",
             "appId": "LAWwebsite"
         },
-        "landcover-explorer": {
+        "landcoverexplorer": {
             "title": "Esri | Sentinel-2 Land Cover Explorer",
             "satellite": "Sentinel-2",
             "webmapId": "f8770e0adc5c41038026494b871ceb99",
@@ -20,7 +20,7 @@
             "entrypoint": "/src/landcover-explorer/index.tsx",
             "appId": "S2LCX"
         },
-        "sentinel1-explorer": {
+        "sentinel1explorer": {
             "title": "Esri | Sentinel-1 Explorer",
             "satellite": "Sentinel-1",
             "webmapId": "260548c9e7934ef5b20a5f48467a3c1d",
@@ -30,7 +30,7 @@
             "entrypoint": "/src/sentinel-1-explorer/index.tsx",
             "appId": "LAWwebsite"
         },
-        "sentinel2-explorer": {
+        "sentinel2explorer": {
             "title": "Esri | Sentinel-2 Explorer",
             "satellite": "Sentinel-2",
             "webmapId": "81609bbe235942919ad27c77e42c600e",

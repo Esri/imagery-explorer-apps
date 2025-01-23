@@ -15,9 +15,11 @@ const config = require('./src/config.json');
 
 module.exports =  (env, options)=> {
 
-    const devMode = options.mode === 'development' ? true : false;
-
     process.env.NODE_ENV = options.mode;
+
+    const devMode = process.env.NODE_ENV === 'development' 
+        ? true 
+        : false;
 
     // name of the explorer app to start/build:
     const app = env['app']
@@ -51,8 +53,7 @@ module.exports =  (env, options)=> {
             'please update `./src/config.json` to make sure it includes entrypoint of the app to start'
         )
     }
-
-    console.log(`starting ${app}\n`);
+    console.log(`${env['WEBPACK_BUILD'] ? 'building' : 'starting'} ${app}\n`);
 
     return {
         mode: options.mode,

@@ -48,19 +48,24 @@ const IMAGERY_EXPLORER_APPS: {
     url: string;
 }[] = [
     {
-        appName: 'landcover-explorer',
+        appName: 'landcoverexplorer',
         title: 'Sentinel-2 Land Cover Explorer',
         url: '/landcoverexplorer',
     },
     {
-        appName: 'landsat',
+        appName: 'landsatexplorer',
         title: 'Landsat Explorer',
         url: '/landsatexplorer',
     },
     {
-        appName: 'sentinel1-explorer',
+        appName: 'sentinel1explorer',
         title: 'Sentinel-1 Explorer',
         url: '/sentinel1explorer',
+    },
+    {
+        appName: 'sentinel2explorer',
+        title: 'Sentinel-2 Explorer',
+        url: '/sentinel2explorer',
     },
 ];
 
