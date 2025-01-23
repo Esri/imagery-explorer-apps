@@ -101,60 +101,6 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     // Custom hook that checks the cost of new raster analysis jobs.
     useCheckJobCost();
 
-    // const publishSelectedScene = async ({
-    //     job,
-    //     title,
-    //     snippet,
-    // }: {
-    //     job: PublishAndDownloadJob;
-    //     title: string;
-    //     snippet: string;
-    // }) => {
-    //     try {
-    //         const rasterFunctions: RasterFunctionsByPublishJobType = {
-    //             [PublishAndDownloadJobType.PublishScene]:
-    //                 publishSceneRasterFunction,
-    //             [PublishAndDownloadJobType.PublishIndexMask]:
-    //                 publishIndexMaskRasterFunction,
-    //             [PublishAndDownloadJobType.PublishChangeDetection]:
-    //                 publishChangeDetectionRasterFunction,
-    //         };
-
-    //         const rasterFunction = rasterFunctions[job.type as PublishJob];
-
-    //         if (!rasterFunction) {
-    //             throw new Error('Failed to create raster function');
-    //         }
-
-    //         const response = await publishSceneAsHostedImageryLayer({
-    //             title, //'hosted-imagery-service-' + new Date().getTime(),
-    //             snippet,
-    //             rasterFunction,
-    //         });
-    //         // console.log('Generate Raster Job submitted', response);
-
-    //         dispatch(
-    //             updatePublishAndDownloadJob({
-    //                 ...job,
-    //                 rasterAnanlysisJobId: response.rasterAnalysisJobId,
-    //                 rasterAnalysisTaskName: 'GenerateRaster',
-    //                 outputURL: response.outputServiceUrl,
-    //                 outputItemId: response.outputItemId,
-    //             })
-    //         );
-    //     } catch (err) {
-    //         dispatch(
-    //             updatePublishAndDownloadJob({
-    //                 ...job,
-    //                 status: PublishAndDownloadJobStatus.Failed,
-    //                 errormessage: `Failed to publish scene: ${
-    //                     err.message || 'unknown error'
-    //                 }`,
-    //             })
-    //         );
-    //     }
-    // };
-
     const createNewItemInArcGISOnline = async (job: PublishAndDownloadJob) => {
         try {
             const title = job.title;
