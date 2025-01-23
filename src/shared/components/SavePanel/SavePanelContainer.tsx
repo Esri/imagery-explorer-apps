@@ -28,6 +28,7 @@ import { saveImagerySceneAsWebMap } from '@shared/services/arcgis-online/createW
 import { useCheckJobCost } from './useCheckJobCost';
 import { useClearRasterAnalysisJobs } from './useClearRasterAnalysisJobs';
 import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
+import { useObjectIdOfSelectedScenes } from './useObjectIdOfSelectedScenes';
 
 /**
  * Raster functions for the publish jobs.
@@ -90,7 +91,9 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
+    const objectIdOfSelectedScenes = useObjectIdOfSelectedScenes();
+
+    // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     // Custom hook that checks the status of pending raster analysis jobs.
     useCheckJobStatus();
@@ -119,8 +122,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                           tags,
                           serviceUrl: originalServiceUrl,
                           serviceName, //'LandsatLevel2',
-                          objectIdOfSelectedScene:
-                              queryParams4MainScene?.objectIdOfSelectedScene,
+                          objectIdOfSelectedScene: objectIdOfSelectedScenes[0],
                       });
 
             dispatch(
