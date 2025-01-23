@@ -30,6 +30,10 @@ type Props = {
      */
     selected: boolean;
     /**
+     * if true, the card should be disabled
+     */
+    disabled?: boolean;
+    /**
      * emits when user clicks on this card
      * @returns
      */
@@ -47,6 +51,7 @@ export const GirdCard: FC<Props> = ({
     label,
     thumbnail,
     selected,
+    disabled,
     onClick,
     onMouseEnter,
     onMouseLeave,
@@ -55,6 +60,7 @@ export const GirdCard: FC<Props> = ({
         <div
             className={classNames('relative w-24 h-12 cursor-pointer', {
                 'drop-shadow-custom-light-blue': selected,
+                'is-disabled': disabled,
             })}
             style={{
                 background: `url(${thumbnail})`,
