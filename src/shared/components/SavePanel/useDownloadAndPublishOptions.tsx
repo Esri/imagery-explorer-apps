@@ -26,13 +26,16 @@ export type PublishAndDownloadJobOptionData = {
 };
 
 /**
- * Custom hook that provides options for downloading and publishing based on the application mode,
- * active analysis tool, and query parameters for the main and secondary scenes.
+ * Custom hook that generates a list of publish and download options based on the current application state.
  *
- * @returns {Object} An object containing `publishOptions` and `downloadOptions`.
+ * The available options are determined based on the following conditions:
+ * - If the mode is 'find a scene', 'dynamic', or 'analysis' and a main scene is selected, the options include saving a web map and publishing the scene.
+ * - If the mode is 'swipe' and both a main scene and a secondary scene are selected, the options include saving a web map with multiple scenes and saving a web map with multiple scenes in a single layer.
+ * - If the mode is 'animate' and there are multiple query parameters, the options include saving a web map with multiple scenes and saving a web map with multiple scenes in a single layer.
+ * - If the mode is 'analysis' and the active analysis tool is 'mask' and a main scene is selected, the option includes publishing an index mask.
+ * - If the mode is 'analysis' and the active analysis tool is 'change' and both a main scene and a secondary scene are selected, the option includes publishing change detection.
  *
- * @property {PublishAndDownloadJobType[]} publishOptions - An array of options for publishing.
- * @property {PublishAndDownloadJobType[]} downloadOptions - An array of options for downloading.
+ * @returns {PublishAndDownloadJobOptionData[]} An array of objects representing the available publish and download job options.
  */
 export const useDownloadAndPublishOptions = () => {
     const mode = useAppSelector(selectAppMode);
