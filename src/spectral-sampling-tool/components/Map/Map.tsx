@@ -22,6 +22,7 @@ import { SamplingPointsLayer } from '../SamplingPointsLayer';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 import { Sentinel2Layer } from '@sentinel2-explorer/components/Sentinel2Layer';
+import { MapActionButtonGroup4SpectralSamplingTool } from './MapActionButtonGroup4SpectralSamplingTool';
 
 const Map = () => {
     const targetService = useAppSelector(selectTargetService);
@@ -35,6 +36,7 @@ const Map = () => {
                 <SamplingPointsLayer />
             </GroupLayer>
             <CustomEventHandlers />
+            <MapActionButtonGroup4SpectralSamplingTool />
         </MapViewContainer>
     );
 };
