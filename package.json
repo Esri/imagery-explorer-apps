@@ -11,7 +11,7 @@
     "start:sentinel2": "webpack serve --mode development --open --env app=sentinel2explorer",
     "start:spectral-sampling-tool": "webpack serve --mode development --open --env app=spectral-sampling-tool",
     "start:surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
-    "build:landsat": "webpack --mode production --env app=landsat",
+    "build:landsat": "webpack --mode production --env app=landsatexplorer",
     "build:landcover": "webpack --mode production --env app=landcoverexplorer",
     "build:sentinel1": "webpack --mode production --env app=sentinel1explorer",
     "build:sentinel2": "webpack --mode production --env app=sentinel2explorer",
