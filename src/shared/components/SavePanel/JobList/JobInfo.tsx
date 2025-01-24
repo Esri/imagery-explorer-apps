@@ -18,7 +18,13 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
             return job.errormessage;
         }
 
-        if (job.type === PublishAndDownloadJobType.SaveWebMappingApp) {
+        if (
+            job.type === PublishAndDownloadJobType.SaveWebMappingApp ||
+            job.type ===
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenes ||
+            job.type ===
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+        ) {
             return null;
         }
 

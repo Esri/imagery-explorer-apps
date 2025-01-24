@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { SavePanel } from './SavePanel';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
 import { SaveJobButtonOnClickParams } from '@shared/components/SavePanel';
@@ -96,6 +96,18 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
     // Custom hook that checks the cost of new raster analysis jobs.
     useCheckJobCost();
+
+    const subHeader = useMemo(() => {
+        if (imageryScenesData.length > 1) {
+            return 'Multiple Scenes Selected';
+        }
+
+        if (sceneId) {
+            return `Scene ID: ${sceneId}`;
+        }
+
+        return null;
+    }, [imageryScenesData.length, sceneId]);
 
     const createNewItemInArcGISOnline = async (job: PublishAndDownloadJob) => {
         try {
@@ -206,6 +218,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     return (
         <SavePanel
             sceneId={sceneId}
+            subHeader={subHeader}
             publishOptions={publishOptions}
             estimatedCostByJobType={estimatedCostByJobType}
             saveButtonOnClick={saveButtonOnClickHandler}

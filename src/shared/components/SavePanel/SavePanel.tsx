@@ -50,6 +50,10 @@ type SavePanelProps = {
      */
     sceneId: string;
     /**
+     * Subheader text to be displayed below the title. This is optional.
+     */
+    subHeader: string;
+    /**
      * Options for publishing the scene.
      */
     publishOptions: PublishAndDownloadJobOptionData[];
@@ -72,6 +76,7 @@ type SavePanelProps = {
 
 export const SavePanel: FC<SavePanelProps> = ({
     sceneId,
+    subHeader,
     publishOptions,
     estimatedCostByJobType,
     // downloadOptions,
@@ -122,7 +127,10 @@ export const SavePanel: FC<SavePanelProps> = ({
             />
 
             <div className="mt-16 md:mt-4 mx-4 md:mx-auto py-12 md:max-w-3xl w-full">
-                <Header sceneId={sceneId} />
+                <Header
+                    // sceneId={sceneId}
+                    subHeader={subHeader}
+                />
 
                 <div className="relative w-full mt-12 mx-auto">
                     {/* {downloadOptions?.length ? (
