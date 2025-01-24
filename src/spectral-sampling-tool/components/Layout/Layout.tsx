@@ -27,6 +27,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 import { Layout4Sentinel2 } from './Layout4Sentinel2';
 import { Layout4Landsat } from './Layout4Landsat';
+import { CloudFilter } from '@shared/components/CloudFilter';
 
 const Layout = () => {
     const targetService = useAppSelector(selectTargetService);
@@ -48,7 +49,9 @@ const Layout = () => {
                 <div className="flex flex-grow justify-center shrink-0">
                     <>
                         <div className="ml-2 3xl:ml-0">
-                            <Calendar />
+                            <Calendar>
+                                <CloudFilter />
+                            </Calendar>
                         </div>
 
                         <div className="flex shrink-0 ml-4">
