@@ -68,7 +68,7 @@ export const useGenerateSpectralProfileChartData = (
         const lineChartData4SelectedLocation =
             formatBandValuesAsLineChartDataItems({
                 bandValues: bandValuesFromSelectedLocation,
-                title: 'Selected Location',
+                title: 'Selected Value',
                 length,
             });
 
