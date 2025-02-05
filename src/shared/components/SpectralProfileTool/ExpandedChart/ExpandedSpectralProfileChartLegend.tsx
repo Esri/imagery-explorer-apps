@@ -1,6 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { LandCoverType, ListOfLandCoverTypes } from '../config';
 import { getFillColorByLandCoverType } from '../helpers';
+import classNames from 'classnames';
 
 type LegendData = {
     label: string;
@@ -63,7 +64,13 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                                 onClick={() => landCoverTypeOnClick(data.value)}
                             ></calcite-icon>
 
-                            <svg width="16" height="2" className="mx-3">
+                            <svg
+                                width="16"
+                                height="2"
+                                className={classNames('mx-3', {
+                                    'opacity-50': !data.selected,
+                                })}
+                            >
                                 <line
                                     x1="0"
                                     y1="1"
@@ -75,7 +82,13 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                                 />
                             </svg>
 
-                            <span className="text-sm">{data.label}</span>
+                            <span
+                                className={classNames('text-sm', {
+                                    'opacity-50': !data.selected,
+                                })}
+                            >
+                                {data.label}
+                            </span>
                         </div>
                     );
                 })}
