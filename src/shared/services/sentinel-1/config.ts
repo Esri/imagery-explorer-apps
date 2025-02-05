@@ -128,7 +128,7 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
     {
         name: 'False Color dB with DRA',
         description:
-            'VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth’s surface. VV is particularly good for are good for characterizing soil and water surfaces while VH for canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. The RGB image is composited as follows: Red=VV, Green=VH, B=VV/VH in decibel (dB) scale .',
+            'VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth’s surface. VV is particularly good for characterizing soil and water surfaces while VH for canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. The RGB image is composited as follows: Red=VV, Green=VH, B=VV/VH in decibel (dB) scale .',
         label: 'False Color',
     },
     {

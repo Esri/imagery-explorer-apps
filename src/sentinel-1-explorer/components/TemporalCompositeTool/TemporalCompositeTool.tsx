@@ -59,11 +59,11 @@ export const TemporalCompositeTool = () => {
         const data = [
             {
                 value: VVdBRasterFunction,
-                label: 'V V dB',
+                label: 'VV dB',
             },
             {
                 value: VHdBRasterFunction,
-                label: 'V H dB',
+                label: 'VH dB',
             },
         ];
 

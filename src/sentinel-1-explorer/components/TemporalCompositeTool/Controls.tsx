@@ -59,6 +59,7 @@ export const TemproalCompositeToolControls: FC<Props> = ({
 
                 <Dropdown
                     data={rasterFunctionsDropdownData}
+                    skipUppercase={true}
                     onChange={rasterFunctionOnChange}
                 />
             </div>

@@ -37,6 +37,10 @@ type Props = {
     data: DropdownData[];
     disabled?: boolean;
     tooltip?: string;
+    /**
+     * If true, the label text will not be converted to uppercase
+     */
+    skipUppercase?: boolean;
     onChange: (val: string) => void;
 };
 
@@ -44,6 +48,7 @@ export const Dropdown: FC<Props> = ({
     data,
     disabled,
     tooltip,
+    skipUppercase,
     onChange,
 }: Props) => {
     const [shouldShowOptions, setShouldShowOptions] = useState(false);
@@ -87,7 +92,13 @@ export const Dropdown: FC<Props> = ({
                                 setShouldShowOptions(false);
                             }}
                         >
-                            <span className="uppercase">{label || value}</span>
+                            <span
+                                className={classNames({
+                                    uppercase: !skipUppercase,
+                                })}
+                            >
+                                {label || value}
+                            </span>
                         </div>
                     );
                 })}
