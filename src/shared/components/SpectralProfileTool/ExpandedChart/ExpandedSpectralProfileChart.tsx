@@ -11,12 +11,16 @@ type Props = {
     bottomAxisTickText: string[];
 };
 
+export const EXPANDED_SPECTRAL_PROFILE_CHART_CONTAINER_ID =
+    'expanded-spectral-profile-chart-container';
+
 export const ExpandedSpectralProfileChart: FC<Props> = ({
     chartData,
     bottomAxisTickText,
 }) => {
     return (
         <div
+            id={EXPANDED_SPECTRAL_PROFILE_CHART_CONTAINER_ID}
             className="relative w-full h-full"
             style={SpectralProfileChartStyle}
         >

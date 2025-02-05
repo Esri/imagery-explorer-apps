@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScreenshotSaver } from './ScreenshotSaver';
 
 export const ExpandedSpectralProfileChartHeader = () => {
     return (
@@ -8,12 +9,7 @@ export const ExpandedSpectralProfileChartHeader = () => {
                 <h4 className="ml-3">Spectral Profile of Selected Location</h4>
             </div>
 
-            <calcite-icon
-                class="cursor-pointer mx-4"
-                title="Save the chart as an image"
-                icon="camera"
-                scale="s"
-            />
+            <ScreenshotSaver />
 
             <calcite-icon
                 class="cursor-pointer"
