@@ -13,12 +13,14 @@ type LegendData = {
 type Props = {
     excludedLandCoverTypes: Set<LandCoverType>;
     landCoverTypeOnClick: (landCoverType: LandCoverType) => void;
+    landCoverTypeOnHover: (landCoverType: LandCoverType) => void;
     toggleSelectAll: () => void;
 };
 
 export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
     excludedLandCoverTypes,
     landCoverTypeOnClick,
+    landCoverTypeOnHover,
     toggleSelectAll,
 }) => {
     const legendData: LegendData[] = useMemo(() => {
@@ -42,7 +44,7 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                     <calcite-icon
                         icon={
                             excludedLandCoverTypes.size === 0
-                                ? 'check-square'
+                                ? 'square-inset-medium'
                                 : 'square'
                         }
                         class="cursor-pointer"
@@ -55,7 +57,9 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                     return (
                         <div
                             key={data.value}
-                            className="flex items-center mb-2"
+                            className="flex items-center pb-2 cursor-pointer"
+                            onMouseOver={() => landCoverTypeOnHover(data.value)}
+                            onMouseOut={() => landCoverTypeOnHover(null)}
                         >
                             <calcite-icon
                                 icon={data.selected ? 'check-square' : 'square'}

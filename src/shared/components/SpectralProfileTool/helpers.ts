@@ -30,19 +30,41 @@ const FILL_COLOR_BY_LAND_COVER_TYPE: Record<LandCoverType, string> = {
     'Healthy Vegetation': '#1BE43E',
     'Dry Vegetation': '#CAD728',
 };
-
+const FILL_COLOR_BY_LAND_COVER_TYPE_RGBA: Record<LandCoverType, string> = {
+    Cloud: 'rgba(136, 136, 136,opacity)',
+    'Clear Water': 'rgba(0, 121, 242,{{opacity}})',
+    'Turbid Water': 'rgba(118, 181, 226,{{opacity}})',
+    'Snow and Ice': 'rgba(255, 255, 255,{{opacity}})',
+    Sand: 'rgba(237, 198, 146,{{opacity}})',
+    'Bare Soil': 'rgba(238, 151, 32,{{opacity}})',
+    'Paved Surface': 'rgba(235, 126, 224,{{opacity}})',
+    Trees: 'rgba(10, 197, 192,{{opacity}})',
+    'Healthy Vegetation': 'rgba(27, 228, 62,{{opacity}})',
+    'Dry Vegetation': 'rgba(202, 215, 40,{{opacity}})',
+};
 /**
  * Get fill color that will be used to render the stroke line by land cover type.
  * @param {LandCoverType} landCoverType user selected land cover type
  * @returns hex color string
  */
 export const getFillColorByLandCoverType = (
-    landCoverType: LandCoverType
+    landCoverType: LandCoverType,
+    opacity: number = 1
 ): string => {
-    return (
-        FILL_COLOR_BY_LAND_COVER_TYPE[landCoverType] ||
-        'var(--custom-light-blue-90)'
-    );
+    if (opacity === 1) {
+        return (
+            FILL_COLOR_BY_LAND_COVER_TYPE[landCoverType] ||
+            'var(--custom-light-blue-90)'
+        );
+    }
+
+    const color = FILL_COLOR_BY_LAND_COVER_TYPE_RGBA[landCoverType];
+
+    if (!color) {
+        return 'var(--custom-light-blue-90)';
+    }
+
+    return color.replace('{{opacity}}', opacity.toString());
 };
 
 /**

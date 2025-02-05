@@ -9,14 +9,14 @@ export const ExpandedSpectralProfileChartHeader = () => {
                 <h4 className="ml-3">Spectral Profile of Selected Location</h4>
             </div>
 
-            <ScreenshotSaver />
+            {/* <ScreenshotSaver />
 
             <calcite-icon
                 class="cursor-pointer"
                 title="Save profiles as a table"
                 icon="table"
                 scale="s"
-            />
+            /> */}
         </div>
     );
 };

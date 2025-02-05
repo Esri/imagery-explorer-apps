@@ -47,6 +47,9 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
         Set<LandCoverType>
     >(new Set());
 
+    const [landCoverTypeOnHover, setLandCoverTypeOnHover] =
+        useState<LandCoverType | null>(null);
+
     const toggleExcludedLandCoverType = (type: LandCoverType) => {
         setExcludedLandCoverTypes((prev) => {
             const newSet = new Set(prev);
@@ -86,8 +89,13 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
                     length,
                 });
 
+            const opacity =
+                landCoverTypeOnHover && landCoverTypeOnHover !== landCoverType
+                    ? 0.25
+                    : 1;
+
             return {
-                fill: getFillColorByLandCoverType(landCoverType), //'var(--custom-light-blue-70)',
+                fill: getFillColorByLandCoverType(landCoverType, opacity), //'var(--custom-light-blue-70)',
                 key: landCoverType,
                 values: lineChartData4SelectedLandCoverType,
                 dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
@@ -108,7 +116,7 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
         } as LineGroupData);
 
         return output;
-    }, [spectralProfileData, excludedLandCoverTypes]);
+    }, [spectralProfileData, excludedLandCoverTypes, landCoverTypeOnHover]);
 
     if (!chartData.length) {
         return null;
@@ -137,6 +145,7 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
                         <ExpandedSpectralProfileChartLegend
                             excludedLandCoverTypes={excludedLandCoverTypes}
                             landCoverTypeOnClick={toggleExcludedLandCoverType}
+                            landCoverTypeOnHover={setLandCoverTypeOnHover}
                             toggleSelectAll={() =>
                                 setExcludedLandCoverTypes((prev) => {
                                     if (prev.size) {

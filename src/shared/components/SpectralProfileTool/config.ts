@@ -25,14 +25,14 @@ export type SpectralProfileDataByLandCoverType = Record<
  * List of supported land cover types.
  */
 export const ListOfLandCoverTypes: LandCoverType[] = [
-    'Trees',
-    'Cloud',
-    'Clear Water',
-    'Turbid Water',
     'Snow and Ice',
+    'Cloud',
     'Sand',
-    'Bare Soil',
-    'Paved Surface',
     'Healthy Vegetation',
     'Dry Vegetation',
+    'Bare Soil',
+    'Paved Surface',
+    'Trees',
+    'Turbid Water',
+    'Clear Water',
 ];
