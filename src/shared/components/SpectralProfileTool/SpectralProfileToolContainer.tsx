@@ -36,6 +36,8 @@ import { useGenerateSpectralProfileChartData } from './useGenerateSpectralProfil
 import { SpectralProfileChartLegend } from './SpectralProfileChartLegend';
 import { SpectralProfileToolMessage } from './SpectralProfileToolMessage';
 import { SpectralProfileChart } from './SpectralProfileChart';
+import { ExpandedSpectralProfileChart } from './ExpandedChart';
+import { set } from 'date-fns';
 
 type Props = {
     /**
@@ -65,6 +67,8 @@ export const SpectralProfileToolContainer: FC<Props> = ({
 
     const [selectedLandCoverType, setSelectedLandCoverType] =
         useState<LandCoverType>();
+
+    const [showExpandedChart, setShowExpandedChart] = useState(true);
 
     const chartData = useGenerateSpectralProfileChartData(
         spectralProfileData,
@@ -135,6 +139,19 @@ export const SpectralProfileToolContainer: FC<Props> = ({
                         )}
                     />
                 </>
+            )}
+
+            {showExpandedChart && (
+                <ExpandedSpectralProfileChart
+                    spectralProfileDataByLandCoverTypes={
+                        spectralProfileDataByLandCoverTypes
+                    }
+                    bandNames={bandNames}
+                    closeButtonClickHandler={setShowExpandedChart.bind(
+                        null,
+                        false
+                    )}
+                />
             )}
 
             <SpectralProfileToolMessage />

@@ -29,6 +29,17 @@ type Props = {
     bottomAxisTickText: string[];
 };
 
+export const SpectralProfileChartStyle = {
+    '--axis-tick-line-color': 'var(--custom-light-blue-50)',
+    '--axis-tick-text-color': 'var(--custom-light-blue-50)',
+    '--crosshair-reference-line-color': 'var(--custom-light-blue-50)',
+    '--vertical-reference-line-color': 'var(--custom-light-blue-70)',
+    '--tooltip-text-font-size': '.715rem',
+    '--tooltip-text-color': 'var(--custom-light-blue-70)',
+    '--tooltip-background-color': 'var(--custom-background-95)',
+    '--tooltip-border-color': 'var(--custom-light-blue-50)',
+} as React.CSSProperties;
+
 export const SpectralProfileChart: FC<Props> = ({
     chartData,
     bottomAxisTickText,
@@ -56,20 +67,7 @@ export const SpectralProfileChart: FC<Props> = ({
     return (
         <div
             className="relative w-full h-full"
-            style={
-                {
-                    '--axis-tick-line-color': 'var(--custom-light-blue-50)',
-                    '--axis-tick-text-color': 'var(--custom-light-blue-50)',
-                    '--crosshair-reference-line-color':
-                        'var(--custom-light-blue-50)',
-                    '--vertical-reference-line-color':
-                        'var(--custom-light-blue-70)',
-                    '--tooltip-text-font-size': '.715rem',
-                    '--tooltip-text-color': 'var(--custom-light-blue-70)',
-                    '--tooltip-background-color': 'var(--custom-background-95)',
-                    '--tooltip-border-color': 'var(--custom-light-blue-50)',
-                } as React.CSSProperties
-            }
+            style={SpectralProfileChartStyle}
         >
             <MultipleLinesChart
                 data={chartData}
