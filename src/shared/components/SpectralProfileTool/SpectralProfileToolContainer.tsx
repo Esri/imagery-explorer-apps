@@ -125,7 +125,11 @@ export const SpectralProfileToolContainer: FC<Props> = ({
                 <calcite-icon
                     icon="zoom-out-fixed"
                     scale="s"
-                    class="ml-1 cursor-pointer"
+                    class={classNames('ml-1 cursor-pointer', {
+                        'is-disabled':
+                            !spectralProfileData ||
+                            !spectralProfileData?.length,
+                    })}
                     onClick={setShowExpandedChart.bind(null, true)}
                 />
             </AnalysisToolHeader>

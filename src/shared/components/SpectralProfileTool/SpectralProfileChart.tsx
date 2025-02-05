@@ -30,7 +30,7 @@ type Props = {
 };
 
 export const SpectralProfileChartStyle = {
-    '--axis-tick-line-color': 'var(--custom-light-blue-50)',
+    '--axis-tick-line-color': 'var(--custom-light-blue-25)',
     '--axis-tick-text-color': 'var(--custom-light-blue-50)',
     '--crosshair-reference-line-color': 'var(--custom-light-blue-50)',
     '--vertical-reference-line-color': 'var(--custom-light-blue-70)',

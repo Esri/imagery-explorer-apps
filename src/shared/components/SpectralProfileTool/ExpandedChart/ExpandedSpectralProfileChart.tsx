@@ -27,8 +27,11 @@ export const ExpandedSpectralProfileChart: FC<Props> = ({
                 yScaleOptions={{
                     domain: [0, 1],
                 }}
+                leftAxisOptions={{
+                    showGridLines: true,
+                }}
                 bottomAxisOptions={{
-                    // numberOfTicks: bottomAxisNumberOfTicks.length,
+                    numberOfTicks: bottomAxisTickText.length,
                     shouldRotateTextLabels: false,
                     tickFormatFunction: (val: number | string, index) => {
                         // console.log(val, index)
