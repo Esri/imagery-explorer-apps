@@ -4,8 +4,11 @@ import {
     selectError4SpectralProfileTool,
 } from '@shared/store/SpectralProfileTool/selectors';
 import React, { FC, useMemo, useState } from 'react';
-import { LandCoverType, SpectralProfileDataByLandCoverType } from '../config';
-import { useGenerateSpectralProfileChartData } from '../useGenerateSpectralProfileChartData';
+import {
+    LandCoverType,
+    ListOfLandCoverTypes,
+    SpectralProfileDataByLandCoverType,
+} from '../config';
 import {
     formatBandValuesAsLineChartDataItems,
     getFillColorByLandCoverType,
@@ -14,6 +17,7 @@ import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesCha
 import { ExpandedSpectralProfileChart } from './ExpandedSpectralProfileChart';
 import { ExpandedSpectralProfileChartLegend } from './ExpandedSpectralProfileChartLegend';
 import { CloseButton } from '@shared/components/CloseButton';
+import { ExpandedSpectralProfileChartHeader } from './ExpandedSpectralProfileChartHeader';
 
 type Props = {
     /**
@@ -50,31 +54,44 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
             return [];
         }
 
-        const output: LineGroupData[] = Object.keys(
-            spectralProfileDataByLandCoverTypes
-        ).map((landCoverType: LandCoverType) => {
-            const bandValuesFromSelectedLandCoverType =
-                spectralProfileDataByLandCoverTypes[landCoverType];
+        const length = Math.min(
+            spectralProfileData.length,
+            spectralProfileDataByLandCoverTypes.Cloud.length
+        );
 
-            const length = Math.min(
-                spectralProfileData.length,
-                bandValuesFromSelectedLandCoverType.length
-            );
+        const output: LineGroupData[] = ListOfLandCoverTypes.map(
+            (landCoverType: LandCoverType) => {
+                const bandValuesFromSelectedLandCoverType =
+                    spectralProfileDataByLandCoverTypes[landCoverType];
 
-            const lineChartData4SelectedLandCoverType =
-                formatBandValuesAsLineChartDataItems({
-                    bandValues: bandValuesFromSelectedLandCoverType,
-                    title: landCoverType,
-                    length,
-                });
+                const lineChartData4SelectedLandCoverType =
+                    formatBandValuesAsLineChartDataItems({
+                        bandValues: bandValuesFromSelectedLandCoverType,
+                        title: landCoverType,
+                        length,
+                    });
 
-            return {
-                fill: getFillColorByLandCoverType(landCoverType), //'var(--custom-light-blue-70)',
-                key: landCoverType,
-                values: lineChartData4SelectedLandCoverType,
-                dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
-            } as LineGroupData;
-        });
+                return {
+                    fill: getFillColorByLandCoverType(landCoverType), //'var(--custom-light-blue-70)',
+                    key: landCoverType,
+                    values: lineChartData4SelectedLandCoverType,
+                    dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
+                } as LineGroupData;
+            }
+        );
+
+        const lineChartData4SelectedLocation =
+            formatBandValuesAsLineChartDataItems({
+                bandValues: spectralProfileData,
+                title: 'Selected Value',
+                length,
+            });
+
+        output.push({
+            fill: '#fff',
+            key: 'selected-location',
+            values: lineChartData4SelectedLocation,
+        } as LineGroupData);
 
         return output;
     }, [spectralProfileData, selectedLandCoverType]);
@@ -87,16 +104,24 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
         <div className="fixed top-0 left-0 w-screen h-screen bg-custom-background-90 z-50 flex items-center justify-center">
             <CloseButton onClick={closeButtonClickHandler} />
 
-            <div className="flex items-center justify-center w-4/5 max-w-7xl h-[400px]">
-                <div className="flex-grow w-3/4 h-full">
-                    <ExpandedSpectralProfileChart
-                        chartData={chartData}
-                        bottomAxisTickText={bandNames}
-                    />
-                </div>
+            <div className="mx-auto w-4/5 max-w-7xl">
+                <div className="w-full flex items-center">
+                    <div className="flex-grow w-3/4 h-full">
+                        <div className="w-full mb-8">
+                            <ExpandedSpectralProfileChartHeader />
+                        </div>
 
-                <div className="w-1/4 h-full shrink-0">
-                    <ExpandedSpectralProfileChartLegend />
+                        <div className="w-full  h-[400px]">
+                            <ExpandedSpectralProfileChart
+                                chartData={chartData}
+                                bottomAxisTickText={bandNames}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="w-1/4 h-full shrink-0">
+                        <ExpandedSpectralProfileChartLegend />
+                    </div>
                 </div>
             </div>
         </div>
