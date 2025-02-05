@@ -137,6 +137,14 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
                         <ExpandedSpectralProfileChartLegend
                             excludedLandCoverTypes={excludedLandCoverTypes}
                             landCoverTypeOnClick={toggleExcludedLandCoverType}
+                            toggleSelectAll={() =>
+                                setExcludedLandCoverTypes((prev) => {
+                                    if (prev.size) {
+                                        return new Set();
+                                    }
+                                    return new Set(ListOfLandCoverTypes);
+                                })
+                            }
                         />
                     </div>
                 </div>

@@ -12,11 +12,13 @@ type LegendData = {
 type Props = {
     excludedLandCoverTypes: Set<LandCoverType>;
     landCoverTypeOnClick: (landCoverType: LandCoverType) => void;
+    toggleSelectAll: () => void;
 };
 
 export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
     excludedLandCoverTypes,
     landCoverTypeOnClick,
+    toggleSelectAll,
 }) => {
     const legendData: LegendData[] = useMemo(() => {
         return ListOfLandCoverTypes.map((landCoverType: LandCoverType) => {
@@ -32,6 +34,22 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
     return (
         <div className="pl-20 h-full flex items-center">
             <div className="">
+                <div
+                    className="flex items-center mb-2"
+                    title="toggle select all"
+                >
+                    <calcite-icon
+                        icon={
+                            excludedLandCoverTypes.size === 0
+                                ? 'check-square'
+                                : 'square'
+                        }
+                        class="cursor-pointer"
+                        scale="s"
+                        onClick={toggleSelectAll}
+                    ></calcite-icon>
+                    <span className="text-sm ml-3">Spectral Profiles</span>
+                </div>
                 {legendData.map((data: LegendData, index: number) => {
                     return (
                         <div

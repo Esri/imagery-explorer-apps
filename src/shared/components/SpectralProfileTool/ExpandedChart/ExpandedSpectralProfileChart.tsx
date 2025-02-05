@@ -22,7 +22,7 @@ export const ExpandedSpectralProfileChart: FC<Props> = ({
         >
             <MultipleLinesChart
                 data={chartData}
-                strokeWidth={1}
+                strokeWidth={1.5}
                 showTooltip={true}
                 yScaleOptions={{
                     domain: [0, 1],
