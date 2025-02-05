@@ -68,7 +68,7 @@ export const SpectralProfileToolContainer: FC<Props> = ({
     const [selectedLandCoverType, setSelectedLandCoverType] =
         useState<LandCoverType>();
 
-    const [showExpandedChart, setShowExpandedChart] = useState(true);
+    const [showExpandedChart, setShowExpandedChart] = useState(false);
 
     const chartData = useGenerateSpectralProfileChartData(
         spectralProfileData,
@@ -121,7 +121,14 @@ export const SpectralProfileToolContainer: FC<Props> = ({
                 dropdownMenuSelectedItemOnChange={(val) => {
                     setSelectedLandCoverType(val as LandCoverType);
                 }}
-            />
+            >
+                <calcite-icon
+                    icon="zoom-out-fixed"
+                    scale="s"
+                    class="ml-1 cursor-pointer"
+                    onClick={setShowExpandedChart.bind(null, true)}
+                />
+            </AnalysisToolHeader>
 
             {shouldShowChart && (
                 <>

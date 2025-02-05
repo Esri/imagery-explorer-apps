@@ -167,7 +167,9 @@ export const Dropdown: FC<Props> = ({
                         setShouldShowOptions(!shouldShowOptions);
                     }}
                 >
-                    <span className="mr-1">{getLabel()}</span>
+                    <span className="mr-1 whitespace-nowrap ">
+                        {getLabel()}
+                    </span>
 
                     <calcite-icon icon="chevron-down" scale="s" />
                 </div>
