@@ -2,6 +2,7 @@ import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectListOfQueryParams,
     selectQueryParams4MainScene,
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
@@ -36,14 +37,43 @@ export const useSentinel1PublishOptions = () => {
         selectSelectedIndex4MaskTool
     ) as RadarIndex;
 
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
+
     const publishOptions: PublishAndDownloadJobOptionData[] = useMemo(() => {
         const options: PublishAndDownloadJobType[] = [
             PublishAndDownloadJobType.SaveWebMappingApp,
         ];
 
-        if (queryParams4MainScene?.objectIdOfSelectedScene) {
+        if (
+            (mode === 'find a scene' ||
+                mode === 'dynamic' ||
+                mode === 'analysis') &&
+            queryParams4MainScene?.objectIdOfSelectedScene
+        ) {
             options.push(PublishAndDownloadJobType.SaveWebMap);
             options.push(PublishAndDownloadJobType.PublishScene);
+        }
+
+        if (
+            mode === 'swipe' &&
+            queryParams4MainScene?.objectIdOfSelectedScene &&
+            queryParams4SecondaryScene?.objectIdOfSelectedScene
+        ) {
+            options.push(
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenes
+            );
+            options.push(
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+            );
+        }
+
+        if (mode === 'animate' && listOfQueryParams?.length > 0) {
+            options.push(
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenes
+            );
+            options.push(
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+            );
         }
 
         if (
@@ -83,6 +113,7 @@ export const useSentinel1PublishOptions = () => {
     }, [
         queryParams4MainScene?.objectIdOfSelectedScene,
         queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        listOfQueryParams?.length,
         mode,
         analyzeTool,
         radarIndex,
