@@ -43,8 +43,22 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
 }) => {
     const spectralProfileData = useAppSelector(selectData4SpectralProfileTool);
 
-    const [selectedLandCoverType, setSelectedLandCoverType] =
-        useState<LandCoverType>();
+    const [excludedLandCoverTypes, setExcludedLandCoverTypes] = useState<
+        Set<LandCoverType>
+    >(new Set());
+
+    const toggleExcludedLandCoverType = (type: LandCoverType) => {
+        setExcludedLandCoverTypes((prev) => {
+            const newSet = new Set(prev);
+
+            if (newSet.has(type)) {
+                newSet.delete(type);
+            } else {
+                newSet.add(type);
+            }
+            return newSet;
+        });
+    };
 
     const chartData = useMemo(() => {
         if (
@@ -59,26 +73,26 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
             spectralProfileDataByLandCoverTypes.Cloud.length
         );
 
-        const output: LineGroupData[] = ListOfLandCoverTypes.map(
-            (landCoverType: LandCoverType) => {
-                const bandValuesFromSelectedLandCoverType =
-                    spectralProfileDataByLandCoverTypes[landCoverType];
+        const output: LineGroupData[] = ListOfLandCoverTypes.filter(
+            (landCoverType) => !excludedLandCoverTypes.has(landCoverType)
+        ).map((landCoverType: LandCoverType) => {
+            const bandValuesFromSelectedLandCoverType =
+                spectralProfileDataByLandCoverTypes[landCoverType];
 
-                const lineChartData4SelectedLandCoverType =
-                    formatBandValuesAsLineChartDataItems({
-                        bandValues: bandValuesFromSelectedLandCoverType,
-                        title: landCoverType,
-                        length,
-                    });
+            const lineChartData4SelectedLandCoverType =
+                formatBandValuesAsLineChartDataItems({
+                    bandValues: bandValuesFromSelectedLandCoverType,
+                    title: landCoverType,
+                    length,
+                });
 
-                return {
-                    fill: getFillColorByLandCoverType(landCoverType), //'var(--custom-light-blue-70)',
-                    key: landCoverType,
-                    values: lineChartData4SelectedLandCoverType,
-                    dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
-                } as LineGroupData;
-            }
-        );
+            return {
+                fill: getFillColorByLandCoverType(landCoverType), //'var(--custom-light-blue-70)',
+                key: landCoverType,
+                values: lineChartData4SelectedLandCoverType,
+                dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
+            } as LineGroupData;
+        });
 
         const lineChartData4SelectedLocation =
             formatBandValuesAsLineChartDataItems({
@@ -94,7 +108,7 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
         } as LineGroupData);
 
         return output;
-    }, [spectralProfileData, selectedLandCoverType]);
+    }, [spectralProfileData, excludedLandCoverTypes]);
 
     if (!chartData.length) {
         return null;
@@ -120,7 +134,10 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
                     </div>
 
                     <div className="w-1/4 h-full shrink-0">
-                        <ExpandedSpectralProfileChartLegend />
+                        <ExpandedSpectralProfileChartLegend
+                            excludedLandCoverTypes={excludedLandCoverTypes}
+                            landCoverTypeOnClick={toggleExcludedLandCoverType}
+                        />
                     </div>
                 </div>
             </div>

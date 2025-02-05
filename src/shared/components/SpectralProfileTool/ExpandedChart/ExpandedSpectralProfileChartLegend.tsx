@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { LandCoverType, ListOfLandCoverTypes } from '../config';
 import { getFillColorByLandCoverType } from '../helpers';
 
@@ -9,17 +9,25 @@ type LegendData = {
     selected: boolean;
 };
 
-export const ExpandedSpectralProfileChartLegend = () => {
+type Props = {
+    excludedLandCoverTypes: Set<LandCoverType>;
+    landCoverTypeOnClick: (landCoverType: LandCoverType) => void;
+};
+
+export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
+    excludedLandCoverTypes,
+    landCoverTypeOnClick,
+}) => {
     const legendData: LegendData[] = useMemo(() => {
         return ListOfLandCoverTypes.map((landCoverType: LandCoverType) => {
             return {
                 label: landCoverType,
                 color: getFillColorByLandCoverType(landCoverType),
                 value: landCoverType,
-                selected: true,
+                selected: excludedLandCoverTypes.has(landCoverType) === false,
             };
         });
-    }, []);
+    }, [excludedLandCoverTypes]);
 
     return (
         <div className="pl-20 h-full flex items-center">
@@ -34,6 +42,7 @@ export const ExpandedSpectralProfileChartLegend = () => {
                                 icon={data.selected ? 'check-square' : 'square'}
                                 class="text-sm cursor-pointer"
                                 scale="s"
+                                onClick={() => landCoverTypeOnClick(data.value)}
                             ></calcite-icon>
 
                             <svg width="16" height="2" className="mx-3">
