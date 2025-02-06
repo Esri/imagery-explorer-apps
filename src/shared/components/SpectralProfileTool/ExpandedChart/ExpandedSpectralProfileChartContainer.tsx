@@ -126,9 +126,9 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
         <div className="fixed top-0 left-0 w-screen h-screen bg-custom-background-90 z-50 flex items-center justify-center">
             <CloseButton onClick={closeButtonClickHandler} />
 
-            <div className="mx-auto w-4/5 max-w-7xl">
+            <div className="mx-auto w-4/5 max-w-7xl overflow-x-auto fancy-scrollbar">
                 <div className="w-full flex items-center">
-                    <div className="flex-grow w-3/4 h-full">
+                    <div className="flex-grow w-3/4 min-w-[500px] pb-4 h-full">
                         <div className="w-full mb-8">
                             <ExpandedSpectralProfileChartHeader />
                         </div>
