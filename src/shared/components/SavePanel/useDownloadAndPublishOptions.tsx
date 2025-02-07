@@ -50,53 +50,107 @@ export const useDownloadAndPublishOptions = () => {
 
     const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
-    const publishOptions: PublishAndDownloadJobOptionData[] = useMemo(() => {
-        const output: PublishAndDownloadJobType[] = [
-            PublishAndDownloadJobType.SaveWebMappingApp,
-        ];
+    const shouldAddSaveSingleSceneOption = useMemo(() => {
+        const mainSceneSelected =
+            queryParams4MainScene?.objectIdOfSelectedScene;
 
         if (
-            (mode === 'find a scene' ||
-                mode === 'dynamic' ||
-                mode === 'analysis') &&
-            queryParams4MainScene?.objectIdOfSelectedScene
+            (mode === 'find a scene' || mode === 'dynamic') &&
+            mainSceneSelected
         ) {
-            output.push(PublishAndDownloadJobType.SaveWebMap);
-            output.push(PublishAndDownloadJobType.PublishScene);
+            return true;
         }
 
-        if (
-            mode === 'swipe' &&
+        if (mode === 'analysis' && mainSceneSelected) {
+            return (
+                analyzeTool !== 'change' && analyzeTool !== 'temporal composite'
+            );
+        }
+
+        return false;
+    }, [mode, analyzeTool, queryParams4MainScene?.objectIdOfSelectedScene]);
+
+    const shouldAddSaveMultipleScenesOption = useMemo(() => {
+        const bothScenesSelected =
             queryParams4MainScene?.objectIdOfSelectedScene &&
-            queryParams4SecondaryScene?.objectIdOfSelectedScene
-        ) {
-            output.push(PublishAndDownloadJobType.SaveWebMapWithMultipleScenes);
-            output.push(
-                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
-            );
-        }
+            queryParams4SecondaryScene?.objectIdOfSelectedScene;
 
-        if (mode === 'animate' && listOfQueryParams?.length > 0) {
-            output.push(PublishAndDownloadJobType.SaveWebMapWithMultipleScenes);
-            output.push(
-                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
-            );
-        }
-
-        if (
-            mode === 'analysis' &&
-            analyzeTool === 'mask' &&
-            queryParams4MainScene?.objectIdOfSelectedScene
-        ) {
-            output.push(PublishAndDownloadJobType.PublishIndexMask);
+        if (mode === 'swipe' && bothScenesSelected) {
+            return true;
         }
 
         if (
             mode === 'analysis' &&
             analyzeTool === 'change' &&
+            bothScenesSelected
+        ) {
+            return true;
+        }
+
+        if (mode === 'animate' && listOfQueryParams?.length > 0) {
+            return true;
+        }
+
+        return false;
+    }, [
+        queryParams4MainScene?.objectIdOfSelectedScene,
+        queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        listOfQueryParams?.length,
+        mode,
+        analyzeTool,
+    ]);
+
+    const shouldAddPublishIndexMaskOption = useMemo(() => {
+        return (
+            mode === 'analysis' &&
+            analyzeTool === 'mask' &&
+            queryParams4MainScene?.objectIdOfSelectedScene
+        );
+    }, [mode, analyzeTool, queryParams4MainScene?.objectIdOfSelectedScene]);
+
+    const shouldAddPublishChangeDetectionOption = useMemo(() => {
+        return (
+            mode === 'analysis' &&
+            analyzeTool === 'change' &&
             queryParams4MainScene?.objectIdOfSelectedScene &&
             queryParams4SecondaryScene?.objectIdOfSelectedScene
-        ) {
+        );
+    }, [
+        queryParams4MainScene?.objectIdOfSelectedScene,
+        queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        mode,
+        analyzeTool,
+    ]);
+
+    const publishOptions: PublishAndDownloadJobOptionData[] = useMemo(() => {
+        const output: PublishAndDownloadJobType[] = [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+        ];
+
+        if (shouldAddSaveSingleSceneOption) {
+            output.push(PublishAndDownloadJobType.SaveWebMap);
+            output.push(PublishAndDownloadJobType.PublishScene);
+        }
+
+        if (shouldAddSaveMultipleScenesOption) {
+            output.push(PublishAndDownloadJobType.SaveWebMapWithMultipleScenes);
+            output.push(
+                PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+            );
+        }
+
+        // if (mode === 'animate' && listOfQueryParams?.length > 0) {
+        //     output.push(PublishAndDownloadJobType.SaveWebMapWithMultipleScenes);
+        //     output.push(
+        //         PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+        //     );
+        // }
+
+        if (shouldAddPublishIndexMaskOption) {
+            output.push(PublishAndDownloadJobType.PublishIndexMask);
+        }
+
+        if (shouldAddPublishChangeDetectionOption) {
             output.push(PublishAndDownloadJobType.PublishChangeDetection);
         }
 
@@ -106,11 +160,15 @@ export const useDownloadAndPublishOptions = () => {
             };
         });
     }, [
-        queryParams4MainScene?.objectIdOfSelectedScene,
-        queryParams4SecondaryScene?.objectIdOfSelectedScene,
-        listOfQueryParams?.length,
-        mode,
-        analyzeTool,
+        // queryParams4MainScene?.objectIdOfSelectedScene,
+        // queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        // // listOfQueryParams?.length,
+        // mode,
+        // analyzeTool,
+        shouldAddSaveSingleSceneOption,
+        shouldAddSaveMultipleScenesOption,
+        shouldAddPublishIndexMaskOption,
+        shouldAddPublishChangeDetectionOption,
     ]);
 
     // const donwloadOptions: PublishAndDownloadJobType[] = useMemo(() => {
