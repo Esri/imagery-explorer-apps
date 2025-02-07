@@ -35,6 +35,7 @@ import {
     PublishAndDownloadJobType,
     PublishJob,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
+import { useSceneIdsFromSelectedSentinel1Scenes } from './useSceneIds';
 
 /**
  * Estimated cost of the raster analysis job for Sentinel-1 service.
@@ -49,11 +50,9 @@ export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
 const TAGS = ['Esri Sentinel-1 Explorer', 'Sentinel-1', 'Remote Sensing'];
 
 export const Sentinel1SavePanel = () => {
-    const sentinel1Scene = useSelectedSentinel1Scene();
+    // const sentinel1Scene = useSelectedSentinel1Scene();
 
-    const sceneIds = useMemo(() => {
-        return sentinel1Scene ? [sentinel1Scene.name] : [];
-    }, [sentinel1Scene]);
+    const sceneIds = useSceneIdsFromSelectedSentinel1Scenes();
 
     // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
