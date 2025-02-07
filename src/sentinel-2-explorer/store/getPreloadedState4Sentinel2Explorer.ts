@@ -23,6 +23,7 @@ import { InterestingPlaceData } from '@typing/shared';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 import { getPreloadedState4SpectralProfileTool } from '@shared/store/SpectralProfileTool/getPreloadedState';
 import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
@@ -33,6 +34,9 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
 
     const defaultRasterFunction: Sentinel2FunctionName =
         'Natural Color with DRA';
+
+    const PublishAndDownloadJobs =
+        await getPreloadedState4PublishAndDownloadJobs();
 
     const preloadedState: PartialRootState = {
         Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
@@ -46,6 +50,7 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         TrendTool: getPreloadedTrendToolState(hashParams),
         MaskTool: getPreloadedState4MaskTool(hashParams),
         SpectralProfileTool: getPreloadedState4SpectralProfileTool(hashParams),
+        PublishAndDownloadJobs,
     };
 
     return preloadedState;
