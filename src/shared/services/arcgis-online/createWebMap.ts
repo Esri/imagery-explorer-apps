@@ -41,6 +41,10 @@ type OperationalLayerData = {
     };
     layerType: string;
     timeAnimation?: boolean;
+    layerDefinition?: {
+        definitionExpression: string;
+        activePresetRendererName: string;
+    };
 };
 
 type GetOperationalLayersOptions = {
@@ -68,6 +72,12 @@ const getOperationalLayers = ({
                     lockRasterIds: scenes.map((d) => d.objectId),
                     mosaicMethod: 'esriMosaicLockRaster',
                 },
+                layerDefinition: {
+                    definitionExpression: `objectid in (${scenes
+                        .map((d) => d.objectId)
+                        .join(',')})`,
+                    activePresetRendererName: null,
+                },
                 layerType: 'ArcGISImageServiceLayer',
                 timeAnimation: false,
             },
@@ -84,6 +94,10 @@ const getOperationalLayers = ({
                 ascending: true,
                 lockRasterIds: [scene.objectId],
                 mosaicMethod: 'esriMosaicLockRaster',
+            },
+            layerDefinition: {
+                definitionExpression: `objectid in (${scene.objectId})`,
+                activePresetRendererName: null,
             },
             layerType: 'ArcGISImageServiceLayer',
             timeAnimation: false,
