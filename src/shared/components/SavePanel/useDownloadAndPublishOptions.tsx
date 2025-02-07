@@ -9,6 +9,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import React, { useMemo } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
+import { APP_NAME } from '@shared/config';
 
 export type PublishAndDownloadJobOptionData = {
     /**
@@ -26,14 +27,7 @@ export type PublishAndDownloadJobOptionData = {
 };
 
 /**
- * Custom hook that generates a list of publish and download options based on the current application state.
- *
- * The available options are determined based on the following conditions:
- * - If the mode is 'find a scene', 'dynamic', or 'analysis' and a main scene is selected, the options include saving a web map and publishing the scene.
- * - If the mode is 'swipe' and both a main scene and a secondary scene are selected, the options include saving a web map with multiple scenes and saving a web map with multiple scenes in a single layer.
- * - If the mode is 'animate' and there are multiple query parameters, the options include saving a web map with multiple scenes and saving a web map with multiple scenes in a single layer.
- * - If the mode is 'analysis' and the active analysis tool is 'mask' and a main scene is selected, the option includes publishing an index mask.
- * - If the mode is 'analysis' and the active analysis tool is 'change' and both a main scene and a secondary scene are selected, the option includes publishing change detection.
+ * Custom hook to determine the available download and publish options based on the current application state.
  *
  * @returns {PublishAndDownloadJobOptionData[]} An array of objects representing the available publish and download job options.
  */
@@ -101,6 +95,11 @@ export const useDownloadAndPublishOptions = () => {
     ]);
 
     const shouldAddPublishIndexMaskOption = useMemo(() => {
+        // Sentinel-1 Explorer uses a different logic for the PublishIndexMask option
+        if (APP_NAME === 'sentinel1explorer') {
+            return false;
+        }
+
         return (
             mode === 'analysis' &&
             analyzeTool === 'mask' &&
