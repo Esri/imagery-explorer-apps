@@ -41,9 +41,9 @@ export type SavePanelContainerProps = {
      */
     serviceName: string;
     /**
-     * The ID of the scene to be saved.
+     * The IDs of the scene to be saved.
      */
-    sceneId: string;
+    sceneIds: string[];
     /**
      * Options for publishing the scene.
      */
@@ -74,7 +74,7 @@ export type SavePanelContainerProps = {
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     originalServiceUrl,
     serviceName,
-    sceneId,
+    sceneIds,
     publishOptions,
     tags,
     publishSceneRasterFunction,
@@ -102,12 +102,12 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             return 'Multiple Scenes Selected';
         }
 
-        if (sceneId) {
-            return `Scene ID: ${sceneId}`;
+        if (sceneIds[0]) {
+            return `Scene ID: ${sceneIds[0]}`;
         }
 
         return null;
-    }, [imageryScenesData.length, sceneId]);
+    }, [imageryScenesData.length, sceneIds]);
 
     const createNewItemInArcGISOnline = async (job: PublishAndDownloadJob) => {
         try {
@@ -191,7 +191,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 jobType: saveJobType,
                 title,
                 summary,
-                sceneId,
+                sceneIds,
                 rasterFunction,
                 estimatedCost,
             })
@@ -217,7 +217,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
     return (
         <SavePanel
-            sceneId={sceneId}
+            sceneIds={sceneIds}
             subHeader={subHeader}
             publishOptions={publishOptions}
             estimatedCostByJobType={estimatedCostByJobType}

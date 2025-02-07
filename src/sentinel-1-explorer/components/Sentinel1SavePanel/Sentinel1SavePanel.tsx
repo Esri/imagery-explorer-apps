@@ -51,6 +51,10 @@ const TAGS = ['Esri Sentinel-1 Explorer', 'Sentinel-1', 'Remote Sensing'];
 export const Sentinel1SavePanel = () => {
     const sentinel1Scene = useSelectedSentinel1Scene();
 
+    const sceneIds = useMemo(() => {
+        return sentinel1Scene ? [sentinel1Scene.name] : [];
+    }, [sentinel1Scene]);
+
     // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     const selectedOption4ChangeDetectionTool: ChangeCompareToolOption4Sentinel1 =
@@ -120,7 +124,7 @@ export const Sentinel1SavePanel = () => {
     return (
         <SavePanel
             originalServiceUrl={SENTINEL_1_ORIGINAL_SERVICE_URL}
-            sceneId={sentinel1Scene?.name}
+            sceneIds={sceneIds}
             publishOptions={publishOptions}
             serviceName={'Sentinel-1'}
             tags={TAGS}

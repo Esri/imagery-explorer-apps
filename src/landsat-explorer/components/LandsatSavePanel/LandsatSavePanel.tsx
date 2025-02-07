@@ -39,6 +39,10 @@ const TAGS = [
 export const LandsatSavePanel = () => {
     const landsatScene = useSelectedLandsatScene();
 
+    const sceneIds = useMemo(() => {
+        return landsatScene ? [landsatScene.name] : [];
+    }, [landsatScene]);
+
     const publishOptions = useDownloadAndPublishOptions();
 
     const maskToolFullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
@@ -93,7 +97,7 @@ export const LandsatSavePanel = () => {
 
     return (
         <SavePanel
-            sceneId={landsatScene?.name}
+            sceneIds={sceneIds}
             publishOptions={publishOptions}
             originalServiceUrl={LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL}
             serviceName={'LandsatLevel2'}

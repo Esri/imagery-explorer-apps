@@ -48,7 +48,7 @@ type SavePanelProps = {
     /**
      * ID of the scene to be used for generating and downloading the raster job.
      */
-    sceneId: string;
+    sceneIds: string[];
     /**
      * Subheader text to be displayed below the title. This is optional.
      */
@@ -75,7 +75,7 @@ type SavePanelProps = {
 };
 
 export const SavePanel: FC<SavePanelProps> = ({
-    sceneId,
+    sceneIds,
     subHeader,
     publishOptions,
     estimatedCostByJobType,
@@ -195,7 +195,7 @@ export const SavePanel: FC<SavePanelProps> = ({
             {activeSaveJobDialog ? (
                 <SaveJobDialog
                     saveJobType={activeSaveJobDialog}
-                    sceneId={sceneId}
+                    sceneIds={sceneIds}
                     closeButtonOnClick={() => setActiveSaveJobDialog(undefined)}
                     saveButtonOnClick={(title, summary) => {
                         // console.log(title, summary);

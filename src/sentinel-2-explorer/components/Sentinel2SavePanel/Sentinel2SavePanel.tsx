@@ -34,6 +34,10 @@ const TAGS = ['Esri Sentinel-2 Explorer', 'Sentinel-2 ', 'Remote Sensing'];
 export const Sentinel2SavePanel = () => {
     const sentinel2Scene = useSelectedSentinel2Scene();
 
+    const sceneIds = useMemo(() => {
+        return sentinel2Scene ? [sentinel2Scene.name] : [];
+    }, [sentinel2Scene]);
+
     const publishOptions = useDownloadAndPublishOptions();
 
     const maskToolFullPixelValueRange =
@@ -89,7 +93,7 @@ export const Sentinel2SavePanel = () => {
 
     return (
         <SavePanel
-            sceneId={sentinel2Scene?.name}
+            sceneIds={sceneIds}
             publishOptions={publishOptions}
             originalServiceUrl={SENTINEL_2_ORIGINAL_SERVICE_URL}
             serviceName={'Sentinel2'}

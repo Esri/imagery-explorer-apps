@@ -4,13 +4,13 @@ import React, { useMemo } from 'react';
 
 export const useDefaultTitleAndSummary = (
     saveJobType: PublishAndDownloadJobType,
-    sceneId: string
+    sceneIds: string[]
 ) => {
     const { title, satellite } = appConfig;
 
     const foramttedTitle = title.split(' | ')[1] || title;
 
-    const formattedSceneId = sceneId || 'N/A';
+    const formattedSceneId = sceneIds[0] || 'N/A';
 
     const titleBySaveJobType: Record<PublishAndDownloadJobType, string> = {
         [PublishAndDownloadJobType.SaveWebMappingApp]: `${foramttedTitle} View`,

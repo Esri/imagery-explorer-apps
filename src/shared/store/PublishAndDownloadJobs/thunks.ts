@@ -35,7 +35,7 @@ type CreateNewSaveJobParams = {
     /**
      * id of the scene associated with the job
      */
-    sceneId?: string;
+    sceneIds?: string[];
     /**
      * raster function of the raster analysis job
      */
@@ -51,7 +51,7 @@ export const createNewPublishAndDownloadJob =
         jobType,
         title,
         summary,
-        sceneId,
+        sceneIds,
         rasterFunction,
         estimatedCost,
     }: CreateNewSaveJobParams) =>
@@ -70,6 +70,8 @@ export const createNewPublishAndDownloadJob =
             publishToHostedImageryService
                 ? PublishAndDownloadJobStatus.PendingCheckingCost
                 : PublishAndDownloadJobStatus.Submitted;
+
+        const sceneId = sceneIds?.[0] || 'N/A';
 
         const newJob: PublishAndDownloadJob = {
             id: nanoid(5),

@@ -8,7 +8,7 @@ import { formatHostedImageryServiceName } from '@shared/services/raster-analysis
 
 type SaveJobDialogProps = {
     saveJobType: PublishAndDownloadJobType;
-    sceneId: string;
+    sceneIds: string[];
     closeButtonOnClick: () => void;
     saveButtonOnClick: (title: string, summary: string) => void;
 };
@@ -19,7 +19,7 @@ const TITLE_MAX_LENGTH = 98;
 
 export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     saveJobType,
-    sceneId,
+    sceneIds,
     closeButtonOnClick,
     saveButtonOnClick,
 }) => {
@@ -27,7 +27,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
 
     const { defaultTitle, defaultSummary } = useDefaultTitleAndSummary(
         saveJobType,
-        sceneId
+        sceneIds
     );
 
     const [title, setTitle] = useState<string>(defaultTitle);
