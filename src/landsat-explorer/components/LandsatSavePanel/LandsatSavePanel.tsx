@@ -18,6 +18,9 @@ import {
     PublishAndDownloadJobType,
     PublishJob,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
+import { useSceneIds } from '@shared/components/SavePanel/useSceneIds';
+import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { shortenLandsatSceneId } from './helpers';
 
 /**
  * Estimated cost of the raster analysis job for Landsat service.
@@ -37,11 +40,16 @@ const TAGS = [
 ];
 
 export const LandsatSavePanel = () => {
-    const landsatScene = useSelectedLandsatScene();
+    // const landsatScene = useSelectedLandsatScene();
 
-    const sceneIds = useMemo(() => {
-        return landsatScene ? [landsatScene.name] : [];
-    }, [landsatScene]);
+    // const sceneIds = useMemo(() => {
+    //     return landsatScene ? [landsatScene.name] : [];
+    // }, [landsatScene]);
+
+    const sceneIds = useSceneIds({
+        getSceneByObjectId: getLandsatSceneByObjectId,
+        shortenSceneId: shortenLandsatSceneId,
+    });
 
     const publishOptions = useDownloadAndPublishOptions();
 
