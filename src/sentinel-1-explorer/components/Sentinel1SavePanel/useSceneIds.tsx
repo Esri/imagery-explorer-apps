@@ -9,6 +9,7 @@ import {
 import { Sentinel1Scene } from '@typing/imagery-service';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useSceneIds } from '@shared/components/SavePanel/useSceneIds';
 
 /**
  * This function shortens the Sentinel-1 scene ID.
@@ -44,52 +45,57 @@ const shortenSentinel1SceneId = (sceneId: string): string => {
 };
 
 export const useSceneIdsFromSelectedSentinel1Scenes = (): string[] => {
-    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
+    const sceneIds = useSceneIds({
+        getSceneByObjectId: getSentinel1SceneByObjectId,
+        shortenSceneId: shortenSentinel1SceneId,
+    });
 
-    const queryParams4SecondaryScene = useAppSelector(
-        selectQueryParams4SecondaryScene
-    );
+    // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const [sceneIds, setSceneIds] = useState<string[]>([]);
+    // const queryParams4SecondaryScene = useAppSelector(
+    //     selectQueryParams4SecondaryScene
+    // );
 
-    const mode = useAppSelector(selectAppMode);
+    // const [sceneIds, setSceneIds] = useState<string[]>([]);
 
-    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
+    // const mode = useAppSelector(selectAppMode);
 
-    useEffect(() => {
-        (async () => {
-            const mainScene: Sentinel1Scene =
-                queryParams4MainScene?.objectIdOfSelectedScene
-                    ? await getSentinel1SceneByObjectId(
-                          queryParams4MainScene?.objectIdOfSelectedScene
-                      )
-                    : null;
+    // const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
-            const secondaryScene: Sentinel1Scene =
-                queryParams4SecondaryScene?.objectIdOfSelectedScene
-                    ? await getSentinel1SceneByObjectId(
-                          queryParams4SecondaryScene?.objectIdOfSelectedScene
-                      )
-                    : null;
+    // useEffect(() => {
+    //     (async () => {
+    //         const mainScene: Sentinel1Scene =
+    //             queryParams4MainScene?.objectIdOfSelectedScene
+    //                 ? await getSentinel1SceneByObjectId(
+    //                       queryParams4MainScene?.objectIdOfSelectedScene
+    //                   )
+    //                 : null;
 
-            let mainSceneId = mainScene?.name;
-            let secondarySceneId = secondaryScene?.name;
+    //         const secondaryScene: Sentinel1Scene =
+    //             queryParams4SecondaryScene?.objectIdOfSelectedScene
+    //                 ? await getSentinel1SceneByObjectId(
+    //                       queryParams4SecondaryScene?.objectIdOfSelectedScene
+    //                   )
+    //                 : null;
 
-            // Shorten the scene ID if the mode is 'analysis' and the analyze tool is 'change'.
-            if (mode === 'analysis' && analyzeTool === 'change') {
-                mainSceneId = shortenSentinel1SceneId(mainSceneId);
-                secondarySceneId = shortenSentinel1SceneId(secondarySceneId);
-            }
+    //         let mainSceneId = mainScene?.name;
+    //         let secondarySceneId = secondaryScene?.name;
 
-            // console.log('scene', scene);
-            setSceneIds([mainSceneId, secondarySceneId]);
-        })();
-    }, [
-        queryParams4MainScene?.objectIdOfSelectedScene,
-        queryParams4SecondaryScene?.objectIdOfSelectedScene,
-        mode,
-        analyzeTool,
-    ]);
+    //         // Shorten the scene ID if the mode is 'analysis' and the analyze tool is 'change'.
+    //         if (mode === 'analysis' && analyzeTool === 'change') {
+    //             mainSceneId = shortenSentinel1SceneId(mainSceneId);
+    //             secondarySceneId = shortenSentinel1SceneId(secondarySceneId);
+    //         }
+
+    //         // console.log('scene', scene);
+    //         setSceneIds([mainSceneId, secondarySceneId]);
+    //     })();
+    // }, [
+    //     queryParams4MainScene?.objectIdOfSelectedScene,
+    //     queryParams4SecondaryScene?.objectIdOfSelectedScene,
+    //     mode,
+    //     analyzeTool,
+    // ]);
 
     return sceneIds;
 };
