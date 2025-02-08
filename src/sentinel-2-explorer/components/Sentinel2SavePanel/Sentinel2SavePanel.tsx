@@ -14,10 +14,13 @@ import {
     PublishAndDownloadJobType,
     PublishJob,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
-import { useSelectedSentinel2Scene } from '@sentinel2-explorer/hooks/useSelectedSentinel2Scene';
+// import { useSelectedSentinel2Scene } from '@sentinel2-explorer/hooks/useSelectedSentinel2Scene';
 import { SENTINEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { getBandIndexesBySpectralIndex } from '@shared/services/sentinel-2/helpers';
 import { useSentinel2MaskToolFullPixelValueRange } from '../MaskTool/useSentinel2MaskToolFullPixelValueRange';
+import { useSceneIds } from '@shared/components/SavePanel/useSceneIds';
+import { getSentinel2SceneByObjectId } from '@shared/services/sentinel-2/getSentinel2Scenes';
+import { shortenSentinel2SceneId } from './helpers';
 
 /**
  * Estimated cost of the raster analysis job for Sentinel-2 service.
@@ -32,11 +35,16 @@ export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
 const TAGS = ['Esri Sentinel-2 Explorer', 'Sentinel-2 ', 'Remote Sensing'];
 
 export const Sentinel2SavePanel = () => {
-    const sentinel2Scene = useSelectedSentinel2Scene();
+    // const sentinel2Scene = useSelectedSentinel2Scene();
 
-    const sceneIds = useMemo(() => {
-        return sentinel2Scene ? [sentinel2Scene.name] : [];
-    }, [sentinel2Scene]);
+    // const sceneIds = useMemo(() => {
+    //     return sentinel2Scene ? [sentinel2Scene.name] : [];
+    // }, [sentinel2Scene]);
+
+    const sceneIds = useSceneIds({
+        getSceneByObjectId: getSentinel2SceneByObjectId,
+        shortenSceneId: shortenSentinel2SceneId,
+    });
 
     const publishOptions = useDownloadAndPublishOptions();
 

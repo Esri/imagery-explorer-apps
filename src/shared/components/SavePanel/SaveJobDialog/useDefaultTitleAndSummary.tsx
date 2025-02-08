@@ -20,7 +20,7 @@ export const useDefaultTitleAndSummary = (
         [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: `${satellite} Scenes - A single layer with multiple scenes`,
         [PublishAndDownloadJobType.PublishScene]: `${satellite} Scene - ${mainSceneId}`,
         [PublishAndDownloadJobType.PublishIndexMask]: `${satellite} Index Mask - ${mainSceneId}`,
-        [PublishAndDownloadJobType.PublishChangeDetection]: `${satellite} Change Detection - ${mainSceneId}-${secondarySceneId}`,
+        [PublishAndDownloadJobType.PublishChangeDetection]: `${satellite} Change Detection - ${mainSceneId} - ${secondarySceneId}`,
         // 'Download Index Mask': 'Download Index Mask',
     };
 
