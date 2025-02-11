@@ -28,6 +28,7 @@ import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
+import { AboutSentinel2Explorer } from './components/About';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -52,6 +53,7 @@ import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
                     <ErrorBoundary>
                         <Map />
                         <Layout />
+                        <AboutSentinel2Explorer />
                     </ErrorBoundary>
                 </AppContextProvider>
             </ReduxProvider>
