@@ -37,7 +37,10 @@ export const BottomPanelTooltip = () => {
         >
             <div className=" bg-custom-background-90 text-custom-light-blue-90 text-sm p-2 max-w-xs">
                 {data.title && <h4 className="text-sm mb-1">{data.title}</h4>}
-                <p className="text-xs mb-2">{data.content}</p>
+                <div
+                    className="text-xs mb-2"
+                    dangerouslySetInnerHTML={{ __html: data.content }}
+                ></div>
                 {data.legendImage && (
                     <img src={data.legendImage} className="w-full h-auto" />
                 )}

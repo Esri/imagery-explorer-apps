@@ -128,31 +128,31 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
     {
         name: 'False Color dB with DRA',
         description:
-            'VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth’s surface. VV is particularly good for characterizing soil and water surfaces while VH for canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. The RGB image is composited as follows: Red=VV, Green=VH, B=VV/VH in decibel (dB) scale .',
+            'VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth’s surface. VV is particularly good for characterizing soil and water surfaces while VH for canopy vs bare ground.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> The RGB image is composited as follows: Red=VV, Green=VH, B=VV-VH in decibel (dB) scale.',
         label: 'False Color',
     },
     {
         name: 'VV dB Colorized',
         description:
-            'VV refers to a signal sent in a vertical orientation and returned in a vertical orientation. VV signals are strongest when they reflect off and return from vertically oriented surface features and are good for characterizing soil and water surfaces. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. This is a single band renderer with a color ramp applied for visualization.',
+            'VV refers to a signal sent in a vertical orientation and returned in a vertical orientation. VV signals are strongest when they reflect off and return from vertically oriented surface features and are good for characterizing soil and water surfaces.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> This is a single band renderer with a color ramp applied for visualization.',
         label: 'Colorized VV',
     },
     {
         name: 'VH dB Colorized',
         description:
-            'VH refers to a signal sent in a vertical orientation and returned in a horizontal orientation. This cross polarization typically occurs with volumetric targets such as tree canopies. VH signals are strongest when they reflect off and return from horizontally oriented surface features and are good for helping to distinguish canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. This is a single band renderer with a color ramp applied for visualization.',
+            'VH refers to a signal sent in a vertical orientation and returned in a horizontal orientation. This cross polarization typically occurs with volumetric targets such as tree canopies. VH signals are strongest when they reflect off and return from horizontally oriented surface features and are good for helping to distinguish canopy vs bare ground.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> This is a single band renderer with a color ramp applied for visualization.',
         label: 'Colorized VH',
     },
     {
         name: 'SWI Colorized',
         description:
-            'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
+            'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue.<br /><br /> Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
         label: 'Water Index ',
     },
     {
         name: 'Water Anomaly Index Colorized',
         description:
-            'A water anomaly index with a color map applied. Increased water anomalies are indicated by bright red, orange, and yellow colors. Water anomalies can include oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more. Computed as Ln(0.01/(0.01 + VV*2)).',
+            'A water anomaly index with a color map applied. Increased water anomalies are indicated by bright red, orange, and yellow colors. Water anomalies can include oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more.<br /><br /> Computed as Ln(0.01/(0.01 + VV*2)).',
         label: 'Water Anomaly',
     },
     // {
