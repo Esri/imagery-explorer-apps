@@ -18,6 +18,7 @@ import {
 import {
     SENTINEL2_SERVICE_ACCESS_INFOMRATION,
     SENTINEL2_SERVICE_DESCRIPTION,
+    SENTINEL2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE,
     SENTINEL2_SERVICE_LICENSE_INFO_WEB_MAP,
     SENTINEL_2_ORIGINAL_SERVICE_URL,
 } from '@shared/services/sentinel-2/config';
@@ -114,6 +115,9 @@ export const Sentinel2SavePanel = () => {
             description={SENTINEL2_SERVICE_DESCRIPTION}
             accessInformation={SENTINEL2_SERVICE_ACCESS_INFOMRATION}
             licenseInfo={SENTINEL2_SERVICE_LICENSE_INFO_WEB_MAP}
+            licenseInfoForHostedImageryService={
+                SENTINEL2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE
+            }
             estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}

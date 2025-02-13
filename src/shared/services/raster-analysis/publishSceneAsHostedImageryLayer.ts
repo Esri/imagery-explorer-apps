@@ -21,6 +21,18 @@ type publishImagerySceneParams = {
      */
     snippet: string;
     /**
+     * description of the ArcGIS Online item to store the output of the generate raster job.
+     */
+    description: string;
+    /**
+     * access information for the ArcGIS Online item to store the output of the generate raster job.
+     */
+    accessInformation: string;
+    /**
+     * license information for the ArcGIS Online item to store the output of the generate raster job.
+     */
+    licenseInfo: string;
+    /**
      * raster function to be applied to the imagery scene
      *
      * @see https://developers.arcgis.com/rest/services-reference/enterprise/raster-function-objects/
@@ -74,6 +86,9 @@ export const publishSceneAsHostedImageryLayer = async ({
     title,
     snippet,
     rasterFunction,
+    description,
+    accessInformation,
+    licenseInfo,
     cost,
 }: publishImagerySceneParams): Promise<PublishImagerySceneResponse> => {
     const token = getToken();
@@ -147,6 +162,9 @@ export const publishSceneAsHostedImageryLayer = async ({
         id: createServiceResponse.itemId,
         title,
         snippet,
+        description,
+        accessInformation,
+        licenseInfo,
     });
 
     return {

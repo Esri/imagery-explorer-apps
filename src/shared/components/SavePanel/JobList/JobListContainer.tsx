@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { JobList } from './JobList';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectAllSaveJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
@@ -8,10 +8,22 @@ import {
     submitRasterAnalysisJob,
     updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
-import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
+import {
+    PublishAndDownloadJob,
+    PublishAndDownloadJobStatus,
+} from '@shared/store/PublishAndDownloadJobs/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
 
-export const JobListContainer = () => {
+type Props = {
+    /**
+     * Emit when user click the accept credits button
+     * @param job
+     * @returns
+     */
+    publishJobSubmitHandler: (job: PublishAndDownloadJob) => void;
+};
+
+export const JobListContainer: FC<Props> = ({ publishJobSubmitHandler }) => {
     const jobs = useAppSelector(selectAllSaveJobs);
 
     const dispatch = useAppDispatch();
@@ -41,7 +53,8 @@ export const JobListContainer = () => {
                     dispatch(removePublishAndDownloadJob(uniqueId));
                 }}
                 acceptCreditsButtonOnClick={(job) => {
-                    dispatch(submitRasterAnalysisJob(job));
+                    // dispatch(submitRasterAnalysisJob(job));
+                    publishJobSubmitHandler(job);
                 }}
                 cancelButtonOnClick={(job) => {
                     dispatch(removePublishAndDownloadJob(job.id));

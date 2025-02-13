@@ -23,7 +23,10 @@ import { setOpenSavePanelInSessionStorage } from '@shared/utils/session-storage/
 import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
-import { EstimatedCostByJobType } from './SavePanelContainer';
+import {
+    EstimatedCostByJobType,
+    PublishJobSubmitHandler,
+} from './SavePanelContainer';
 import { useAppDispatch } from '@shared/store/configureStore';
 
 export type SaveJobButtonOnClickParams = {
@@ -72,6 +75,12 @@ type SavePanelProps = {
      * @returns {void}
      */
     saveButtonOnClick: (params: SaveJobButtonOnClickParams) => void;
+    /**
+     * Handler for submitting a publish job.
+     * @param job data for the publish job
+     * @returns void
+     */
+    publishJobSubmitHandler: PublishJobSubmitHandler;
 };
 
 export const SavePanel: FC<SavePanelProps> = ({
@@ -81,6 +90,7 @@ export const SavePanel: FC<SavePanelProps> = ({
     estimatedCostByJobType,
     // downloadOptions,
     saveButtonOnClick,
+    publishJobSubmitHandler,
 }) => {
     const dispatch = useAppDispatch();
 
@@ -189,7 +199,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                     </div>
                 </div>
 
-                <JobList />
+                <JobList publishJobSubmitHandler={publishJobSubmitHandler} />
             </div>
 
             {activeSaveJobDialog ? (

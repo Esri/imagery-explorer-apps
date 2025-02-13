@@ -5,6 +5,7 @@ import {
     LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
     LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION,
     LANDSAT_LEVEL_2_SERVICE_DESCRIPTION,
+    LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE,
     LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_WEB_MAP,
 } from '@shared/services/landsat-level-2/config';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
@@ -118,6 +119,9 @@ export const LandsatSavePanel = () => {
             description={LANDSAT_LEVEL_2_SERVICE_DESCRIPTION}
             accessInformation={LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION}
             licenseInfo={LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_WEB_MAP}
+            licenseInfoForHostedImageryService={
+                LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE
+            }
             estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}

@@ -6,6 +6,7 @@ import { useAppDispatch } from '@shared/store/configureStore';
 // import { useSaveOptions } from './useSaveOptions';
 import {
     createNewPublishAndDownloadJob,
+    submitRasterAnalysisJob,
     updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 
@@ -65,6 +66,11 @@ export type SavePanelContainerProps = {
      */
     licenseInfo: string;
     /**
+     * License information for the item associated with the hosted imagery service that stores
+     * the output of the raster analysis job.
+     */
+    licenseInfoForHostedImageryService: string;
+    /**
      * Raster function for publishing the scene.
      */
     publishSceneRasterFunction?: any;
@@ -83,6 +89,8 @@ export type SavePanelContainerProps = {
     estimatedCostByJobType: EstimatedCostByJobType;
 };
 
+export type PublishJobSubmitHandler = (job: PublishAndDownloadJob) => void;
+
 export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     originalServiceUrl,
     serviceName,
@@ -92,6 +100,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     description,
     accessInformation,
     licenseInfo,
+    licenseInfoForHostedImageryService,
     publishSceneRasterFunction,
     publishIndexMaskRasterFunction,
     publishChangeDetectionRasterFunction,
@@ -103,6 +112,22 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
     // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
+    // submit the raster analysis job once the cost is checked
+    const publishJobSubmitHandler = (job: PublishAndDownloadJob): void => {
+        if (!job) {
+            return;
+        }
+
+        dispatch(
+            submitRasterAnalysisJob({
+                job,
+                description,
+                accessInformation,
+                licenseInfo: licenseInfoForHostedImageryService,
+            })
+        );
+    };
+
     // Custom hook that checks the status of pending raster analysis jobs.
     useCheckJobStatus();
 
@@ -110,7 +135,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     // useClearRasterAnalysisJobs();
 
     // Custom hook that checks the cost of new raster analysis jobs.
-    useCheckJobCost();
+    useCheckJobCost(publishJobSubmitHandler);
 
     const subHeader = useMemo(() => {
         if (imageryScenesData.length > 1) {
@@ -240,6 +265,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             publishOptions={publishOptions}
             estimatedCostByJobType={estimatedCostByJobType}
             saveButtonOnClick={saveButtonOnClickHandler}
+            publishJobSubmitHandler={publishJobSubmitHandler}
         />
     );
 };

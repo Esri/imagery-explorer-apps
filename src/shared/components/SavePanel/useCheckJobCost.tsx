@@ -6,14 +6,17 @@ import {
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { selectRasterAnalysisJobsPendingCheckingCost } from '@shared/store/PublishAndDownloadJobs/selectors';
 import {
-    submitRasterAnalysisJob,
+    // submitRasterAnalysisJob,
     updatePublishAndDownloadJob,
 } from '@shared/store/PublishAndDownloadJobs/thunks';
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
+import { PublishJobSubmitHandler } from './SavePanelContainer';
 
-export const useCheckJobCost = () => {
+export const useCheckJobCost = (
+    publishJobSubmitHandler: PublishJobSubmitHandler
+) => {
     const dispatch = useAppDispatch();
 
     const intervalIdRef = useRef<NodeJS.Timeout>();
@@ -48,7 +51,8 @@ export const useCheckJobCost = () => {
                     })
                 );
             } else {
-                dispatch(submitRasterAnalysisJob(updatedJobData));
+                // dispatch(submitRasterAnalysisJob(updatedJobData));
+                publishJobSubmitHandler(updatedJobData);
             }
         } catch (error) {
             console.error(

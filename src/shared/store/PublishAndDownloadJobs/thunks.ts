@@ -120,7 +120,18 @@ export const updatePublishAndDownloadJob =
     };
 
 export const submitRasterAnalysisJob =
-    (job: PublishAndDownloadJob) => async (dispatch: StoreDispatch) => {
+    ({
+        job,
+        description,
+        accessInformation,
+        licenseInfo,
+    }: {
+        job: PublishAndDownloadJob;
+        description?: string;
+        accessInformation?: string;
+        licenseInfo?: string;
+    }) =>
+    async (dispatch: StoreDispatch) => {
         try {
             const { title, summary, rasterFunction } = job;
 
@@ -143,6 +154,9 @@ export const submitRasterAnalysisJob =
                 snippet: summary,
                 rasterFunction,
                 cost: job.actualCost,
+                description,
+                accessInformation,
+                licenseInfo,
             });
             // console.log('Generate Raster Job submitted', response);
 
