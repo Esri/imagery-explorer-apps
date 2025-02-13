@@ -1,11 +1,13 @@
 import { AGOL_PORTAL_ROOT, ARCGIS_REST_API_ROOT } from '@shared/config';
 import { getSignedInUser, getToken } from '@shared/utils/esri-oauth';
-import { th } from 'date-fns/locale';
 
 type UpdateItemParams = {
     id: string;
     title?: string;
     snippet?: string;
+    description?: string;
+    accessInformation?: string;
+    licenseInfo?: string;
 };
 
 type UpdateItemResponse = {
@@ -29,6 +31,9 @@ export const updateItem = async ({
     id,
     title,
     snippet,
+    description,
+    accessInformation,
+    licenseInfo,
 }: UpdateItemParams): Promise<UpdateItemResponse> => {
     const token = getToken();
     const signedInUser = getSignedInUser();
@@ -48,6 +53,18 @@ export const updateItem = async ({
 
     if (snippet) {
         requestBody.append('snippet', snippet);
+    }
+
+    if (description) {
+        requestBody.append('description', description);
+    }
+
+    if (accessInformation) {
+        requestBody.append('accessInformation', accessInformation);
+    }
+
+    if (licenseInfo) {
+        requestBody.append('licenseInfo', licenseInfo);
     }
 
     const { username } = signedInUser;

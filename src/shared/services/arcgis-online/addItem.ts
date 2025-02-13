@@ -11,6 +11,27 @@ export type AddItemResponse = {
     folder: string;
 };
 
+export type AddItemParams = {
+    title: string;
+    snippet: string;
+    tags: string;
+    description?: string;
+    /**
+     * Credits the source of the item.
+     */
+    accessInformation?: string;
+    /**
+     * 	Includes any license information or restrictions.
+     */
+    licenseInfo?: string;
+    extent?: string;
+    text?: string;
+    url?: string;
+    typeKeywords: string;
+    type: string;
+    applicationType?: string;
+};
+
 /**
  * Add an item to the signed in user's content
  * @param requestBody
@@ -19,7 +40,7 @@ export type AddItemResponse = {
  * @see https://developers.arcgis.com/rest/users-groups-and-items/add-item/
  */
 export const addItem = async (
-    requestBody: URLSearchParams
+    params: AddItemParams
 ): Promise<AddItemResponse> => {
     const portalRoot = getPortalBaseUrl();
     const signedInUser = getSignedInUser();
@@ -28,13 +49,21 @@ export const addItem = async (
         throw new Error('Cannot add item without a signed-in user');
     }
 
-    if (!requestBody.has('token')) {
+    const token = getToken();
+
+    if (!token) {
         throw new Error('Cannot add item in anonymous mode, sign in first');
     }
 
     if (canPublishContent(signedInUser) === false) {
         throw new Error('User does not have permission to publish content');
     }
+
+    const requestBody = new URLSearchParams({
+        f: 'json',
+        token,
+        ...params,
+    });
 
     const requestURL = `${portalRoot}/sharing/rest/content/users/${signedInUser.username}/addItem`;
 

@@ -1,5 +1,5 @@
 import { getToken } from '@shared/utils/esri-oauth';
-import { addItem } from './addItem';
+import { addItem, AddItemParams } from './addItem';
 import { getExtentByObjectId } from '../helpers/getExtentById';
 import { WorldTopographicMapStyleURL } from './config';
 
@@ -12,6 +12,15 @@ type SaveImagerySceneAsWebMapOptions = {
     title: string;
     snippet: string;
     tags: string[];
+    description?: string;
+    /**
+     * Credits the source of the item.
+     */
+    accessInformation?: string;
+    /**
+     * 	Includes any license information or restrictions.
+     */
+    licenseInfo?: string;
     /**
      * URL of the original imagery service.
      */
@@ -76,7 +85,7 @@ const getOperationalLayers = ({
                     definitionExpression: `objectid in (${scenes
                         .map((d) => d.objectId)
                         .join(',')})`,
-                    activePresetRendererName: null,
+                    activePresetRendererName: '',
                 },
                 layerType: 'ArcGISImageServiceLayer',
                 timeAnimation: false,
@@ -97,7 +106,7 @@ const getOperationalLayers = ({
             },
             layerDefinition: {
                 definitionExpression: `objectid in (${scene.objectId})`,
-                activePresetRendererName: null,
+                activePresetRendererName: '',
             },
             layerType: 'ArcGISImageServiceLayer',
             timeAnimation: false,
@@ -127,6 +136,9 @@ export const saveImagerySceneAsWebMap = async ({
     serviceName,
     scenes,
     singleLayerWithMultipleScenes,
+    description,
+    accessInformation,
+    licenseInfo,
 }: SaveImagerySceneAsWebMapOptions) => {
     if (!scenes || scenes.length === 0) {
         throw new Error('No selected scene to save');
@@ -152,8 +164,8 @@ export const saveImagerySceneAsWebMap = async ({
         singleLayerWithMultipleScenes,
     });
 
-    const requestBody = new URLSearchParams({
-        f: 'json',
+    const requestBody: AddItemParams = {
+        // f: 'json',
         extent: JSON.stringify([
             [extent.xmin, extent.ymin],
             [extent.xmax, extent.ymax],
@@ -205,8 +217,11 @@ export const saveImagerySceneAsWebMap = async ({
             timeZone: 'system',
             version: '2.32',
         }),
-        token: getToken(),
-    });
+        description,
+        accessInformation,
+        licenseInfo,
+        // token: getToken(),
+    };
 
     const res = await addItem(requestBody);
 
