@@ -34,29 +34,29 @@ import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
     {
-        'Agriculture with DRA': ThumbnailAgriculture,
-        'Bathymetric with DRA': ThumbnailBathymetric,
-        'Color Infrared with DRA': ThumbnailColorIR,
-        'Natural Color with DRA': ThumbnailNatrualColor,
-        'Geology with DRA': ThumbnailGeology,
-        'Short-wave Infrared with DRA': ThumbnailSWIR,
-        'NDVI Colorized': ThumbnailNDVI,
-        'NDMI Colorized': ThumbnailNDMI,
-        'NDWI Colorized': ThumbnailNDWI,
-        'Urban with DRA': ThumbnailUrban,
+        'Agriculture for Visualization': ThumbnailAgriculture,
+        'Bathymetric for Visualization': ThumbnailBathymetric,
+        'Color Infrared for Visualization': ThumbnailColorIR,
+        'Natural Color for Visualization': ThumbnailNatrualColor,
+        'Geology for Visualization': ThumbnailGeology,
+        'Short-wave Infrared for Visualization': ThumbnailSWIR,
+        'NDVI Colorized for Visualization': ThumbnailNDVI,
+        'NDMI Colorized for Visualization': ThumbnailNDMI,
+        'NDWI Colorized for Visualization': ThumbnailNDWI,
+        'Urban for Visualization': ThumbnailUrban,
     };
 
 const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
-    'Agriculture with DRA': null,
-    'Bathymetric with DRA': null,
-    'Color Infrared with DRA': null,
-    'Natural Color with DRA': null,
-    'Geology with DRA': null,
-    'Short-wave Infrared with DRA': null,
-    'NDVI Colorized': null,
-    'NDMI Colorized': null,
-    'NDWI Colorized': null,
-    'Urban with DRA': null,
+    'Agriculture for Visualization': null,
+    'Bathymetric for Visualization': null,
+    'Color Infrared for Visualization': null,
+    'Natural Color for Visualization': null,
+    'Geology for Visualization': null,
+    'Short-wave Infrared for Visualization': null,
+    'NDVI Colorized for Visualization': null,
+    'NDMI Colorized for Visualization': null,
+    'NDWI Colorized for Visualization': null,
+    'Urban for Visualization': null,
 };
 
 export const getSentinel2RasterFunctionInfo = (): RasterFunctionInfo[] => {

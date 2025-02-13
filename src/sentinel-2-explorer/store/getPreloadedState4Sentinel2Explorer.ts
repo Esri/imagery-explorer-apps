@@ -33,7 +33,7 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
     const randomInterestingPlace: InterestingPlaceData = null;
 
     const defaultRasterFunction: Sentinel2FunctionName =
-        'Natural Color with DRA';
+        'Natural Color for Visualization';
 
     const PublishAndDownloadJobs =
         await getPreloadedState4PublishAndDownloadJobs();

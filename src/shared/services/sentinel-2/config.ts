@@ -90,16 +90,16 @@ export enum FIELD_NAMES {
  * List of Raster Functions for the Sentinel-1 service
  */
 const SENTINEL2_RASTER_FUNCTIONS = [
-    'Natural Color with DRA',
-    'Agriculture with DRA',
-    'Bathymetric with DRA',
-    'Color Infrared with DRA',
-    'Short-wave Infrared with DRA',
-    'Geology with DRA',
-    'Urban with DRA',
-    'NDVI Colorized',
-    'NDMI Colorized',
-    'NDWI Colorized',
+    'Natural Color for Visualization',
+    'Agriculture for Visualization',
+    'Bathymetric for Visualization',
+    'Color Infrared for Visualization',
+    'Short-wave Infrared for Visualization',
+    'Geology for Visualization',
+    'Urban for Visualization',
+    'NDVI Colorized for Visualization',
+    'NDMI Colorized for Visualization',
+    'NDWI Colorized for Visualization',
     // 'Normalized Burn Ratio',
 ] as const;
 
@@ -115,61 +115,61 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
     label: string;
 }[] = [
     {
-        name: 'Natural Color with DRA',
+        name: 'Natural Color for Visualization',
         description:
             'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.',
         label: 'Natural Color',
     },
     {
-        name: 'Agriculture with DRA',
+        name: 'Agriculture for Visualization',
         description:
             'Bands shortwave IR-1, near-IR, blue (11, 8, 2) with dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
         label: 'Agriculture',
     },
     {
-        name: 'Color Infrared with DRA',
+        name: 'Color Infrared for Visualization',
         description:
             'Bands near-infrared, red, green (8,4,3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
         label: 'Color IR',
     },
     {
-        name: 'Short-wave Infrared with DRA',
+        name: 'Short-wave Infrared for Visualization',
         description:
             'Bands shortwave infrared-2, shortwave infrared-1, red (12, 11, 4) with dynamic range adjustment applied.',
         label: 'Short-wave IR',
     },
     {
-        name: 'Urban with DRA',
+        name: 'Urban for Visualization',
         description:
             'Bands shortwave IR-2, shortwave IR-1, red (12, 11, 4) with dynamic range adjustment applied.',
         label: 'Urban',
     },
     {
-        name: 'NDVI Colorized',
+        name: 'NDVI Colorized for Visualization',
         description:
             'Normalized difference vegetation index (NDVI) with colormap. Dark green represents vigorous vegetation and brown represents sparse vegetation. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.',
         label: 'NDVI',
     },
     {
-        name: 'NDMI Colorized',
+        name: 'NDMI Colorized for Visualization',
         description:
             'Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11).',
         label: 'NDMI',
     },
     {
-        name: 'NDWI Colorized',
+        name: 'NDWI Colorized for Visualization',
         description:
             'Normalized Difference Water Index with color map computed as (b3 - b8) / (b3 + b8). Wetlands and moist areas range from light green to dark blue.',
         label: 'NDWI',
     },
     {
-        name: 'Bathymetric with DRA',
+        name: 'Bathymetric for Visualization',
         description:
             'Bands red, green, coastal/aerosol(4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applicaitons.',
         label: 'Bathymetric',
     },
     {
-        name: 'Geology with DRA',
+        name: 'Geology for Visualization',
         description:
             'Bands shortwave IR-2, shortwave IR-1, blue (12, 11, 2) with dynamic range adjustment applied. Highlights geological features.',
         label: 'Geology',
