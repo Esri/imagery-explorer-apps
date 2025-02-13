@@ -1,7 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
 import { SavePanel } from '@shared/components/SavePanel';
-import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
+import {
+    LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
+    LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION,
+    LANDSAT_LEVEL_2_SERVICE_DESCRIPTION,
+    LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_WEB_MAP,
+} from '@shared/services/landsat-level-2/config';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 import { useAppSelector } from '@shared/store/configureStore';
 import { getToken } from '@shared/utils/esri-oauth';
@@ -110,6 +115,9 @@ export const LandsatSavePanel = () => {
             originalServiceUrl={LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL}
             serviceName={'LandsatLevel2'}
             tags={TAGS}
+            description={LANDSAT_LEVEL_2_SERVICE_DESCRIPTION}
+            accessInformation={LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION}
+            licenseInfo={LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_WEB_MAP}
             estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}

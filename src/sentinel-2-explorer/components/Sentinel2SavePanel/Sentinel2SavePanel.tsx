@@ -15,7 +15,12 @@ import {
     PublishJob,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 // import { useSelectedSentinel2Scene } from '@sentinel2-explorer/hooks/useSelectedSentinel2Scene';
-import { SENTINEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/sentinel-2/config';
+import {
+    SENTINEL2_SERVICE_ACCESS_INFOMRATION,
+    SENTINEL2_SERVICE_DESCRIPTION,
+    SENTINEL2_SERVICE_LICENSE_INFO_WEB_MAP,
+    SENTINEL_2_ORIGINAL_SERVICE_URL,
+} from '@shared/services/sentinel-2/config';
 import { getBandIndexesBySpectralIndex } from '@shared/services/sentinel-2/helpers';
 import { useSentinel2MaskToolFullPixelValueRange } from '../MaskTool/useSentinel2MaskToolFullPixelValueRange';
 import { useSceneIds } from '@shared/components/SavePanel/useSceneIds';
@@ -106,6 +111,9 @@ export const Sentinel2SavePanel = () => {
             originalServiceUrl={SENTINEL_2_ORIGINAL_SERVICE_URL}
             serviceName={'Sentinel2'}
             tags={TAGS}
+            description={SENTINEL2_SERVICE_DESCRIPTION}
+            accessInformation={SENTINEL2_SERVICE_ACCESS_INFOMRATION}
+            licenseInfo={SENTINEL2_SERVICE_LICENSE_INFO_WEB_MAP}
             estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}

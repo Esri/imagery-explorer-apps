@@ -18,6 +18,9 @@ import {
     // selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import {
+    SENTINEL1_SERVICE_ACCESS_INFOMRATION,
+    SENTINEL1_SERVICE_DESCRIPTION,
+    SENTINEL1_SERVICE_LICENSE_INFO_WEB_MAP,
     SENTINEL_1_ORIGINAL_SERVICE_URL,
     // SENTINEL_1_SERVICE_URL,
 } from '@shared/services/sentinel-1/config';
@@ -127,6 +130,9 @@ export const Sentinel1SavePanel = () => {
             publishOptions={publishOptions}
             serviceName={'Sentinel-1'}
             tags={TAGS}
+            description={SENTINEL1_SERVICE_DESCRIPTION}
+            accessInformation={SENTINEL1_SERVICE_ACCESS_INFOMRATION}
+            licenseInfo={SENTINEL1_SERVICE_LICENSE_INFO_WEB_MAP}
             estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}

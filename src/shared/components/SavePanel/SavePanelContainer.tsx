@@ -53,6 +53,18 @@ export type SavePanelContainerProps = {
      */
     tags: string[];
     /**
+     * Description of the item in ArcGIS Online.
+     */
+    description: string;
+    /**
+     * Credits the source of the item in ArcGIS Online.
+     */
+    accessInformation: string;
+    /**
+     * Includes any license information or restrictions of the item in ArcGIS Online.
+     */
+    licenseInfo: string;
+    /**
      * Raster function for publishing the scene.
      */
     publishSceneRasterFunction?: any;
@@ -77,6 +89,9 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     sceneIds,
     publishOptions,
     tags,
+    description,
+    accessInformation,
+    licenseInfo,
     publishSceneRasterFunction,
     publishIndexMaskRasterFunction,
     publishChangeDetectionRasterFunction,
@@ -139,6 +154,9 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                     singleLayerWithMultipleScenes:
                         job.type ===
                         PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
+                    description,
+                    accessInformation,
+                    licenseInfo,
                 });
             }
 
