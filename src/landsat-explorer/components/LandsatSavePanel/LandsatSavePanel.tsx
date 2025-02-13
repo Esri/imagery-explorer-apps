@@ -1,13 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
+// import { useSelectedLandsatScene } from '@landsat-explorer/hooks/useSelectedLandsatScene';
 import { SavePanel } from '@shared/components/SavePanel';
-import {
-    LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-    LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION,
-    LANDSAT_LEVEL_2_SERVICE_DESCRIPTION,
-    LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE,
-    LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_WEB_MAP,
-} from '@shared/services/landsat-level-2/config';
+import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 import { useAppSelector } from '@shared/store/configureStore';
 import { getToken } from '@shared/utils/esri-oauth';
@@ -28,6 +22,14 @@ import { useSceneIds } from '@shared/components/SavePanel/useSceneIds';
 import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { shortenLandsatSceneId } from './helpers';
 
+import {
+    LANDSAT_LEVEL_2_SERVICE_DESCRIPTION,
+    LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION,
+    LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE,
+    LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_WEB_MAP,
+    TAGS,
+} from './config';
+
 /**
  * Estimated cost of the raster analysis job for Landsat service.
  * The cost is in credits.
@@ -37,13 +39,6 @@ export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
     [PublishAndDownloadJobType.PublishIndexMask]: 4,
     [PublishAndDownloadJobType.PublishChangeDetection]: 5,
 };
-
-const TAGS = [
-    'Esri Landsat Explorer',
-    'Landsat',
-    'Landsat-Level-2 Imagery',
-    'Remote Sensing',
-];
 
 export const LandsatSavePanel = () => {
     // const landsatScene = useSelectedLandsatScene();

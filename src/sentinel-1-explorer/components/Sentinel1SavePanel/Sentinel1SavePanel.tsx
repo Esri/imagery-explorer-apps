@@ -18,10 +18,6 @@ import {
     // selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import {
-    SENTINEL1_SERVICE_ACCESS_INFOMRATION,
-    SENTINEL1_SERVICE_DESCRIPTION,
-    SENTINEL1_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE,
-    SENTINEL1_SERVICE_LICENSE_INFO_WEB_MAP,
     SENTINEL_1_ORIGINAL_SERVICE_URL,
     // SENTINEL_1_SERVICE_URL,
 } from '@shared/services/sentinel-1/config';
@@ -40,6 +36,13 @@ import {
     PublishJob,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { useSceneIdsFromSelectedSentinel1Scenes } from './useSceneIds';
+import {
+    SENTINEL1_SERVICE_ACCESS_INFOMRATION,
+    SENTINEL1_SERVICE_DESCRIPTION,
+    SENTINEL1_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE,
+    SENTINEL1_SERVICE_LICENSE_INFO_WEB_MAP,
+    TAGS,
+} from './config';
 
 /**
  * Estimated cost of the raster analysis job for Sentinel-1 service.
@@ -50,8 +53,6 @@ export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
     [PublishAndDownloadJobType.PublishIndexMask]: 7,
     [PublishAndDownloadJobType.PublishChangeDetection]: 13,
 };
-
-const TAGS = ['Esri Sentinel-1 Explorer', 'Sentinel-1', 'Remote Sensing'];
 
 export const Sentinel1SavePanel = () => {
     // const sentinel1Scene = useSelectedSentinel1Scene();
