@@ -43,3 +43,8 @@ export const COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS = 3000;
  * content of copy link message
  */
 export const COPIED_LINK_MESSAGE_STRING = 'link copied to clipboard';
+
+/**
+ * tooltip content for the renderer tooltip
+ */
+export const RENDERER_TOOLTIP = `{{satellite}} sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.`;

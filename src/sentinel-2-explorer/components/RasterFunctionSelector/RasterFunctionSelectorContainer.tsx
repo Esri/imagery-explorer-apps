@@ -14,11 +14,16 @@
  */
 
 import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSentinel2RasterFunctions } from './useSentinel2RasterFunctions';
+import { RENDERER_TOOLTIP } from '@shared/constants/UI';
 
 export const RasterFunctionSelectorContainer = () => {
     const data = useSentinel2RasterFunctions();
 
-    return <RasterFunctionSelector headerTooltip={``} data={data} />;
+    const tooltip = useMemo(() => {
+        return RENDERER_TOOLTIP.replace('{{satellite}}', 'Sentinel-2');
+    }, []);
+
+    return <RasterFunctionSelector headerTooltip={tooltip} data={data} />;
 };
