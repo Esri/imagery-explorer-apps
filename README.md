@@ -6,6 +6,7 @@ This repository contains a collection of Imagery Explorer web applications devel
 - [Landsat Explorer](#landsat-explorer)
 - [Sentinel-2 Landcover Explorer](#sentinel-2-land-cover-explorer)
 - [Sentinel-1 Explorer](#sentinel-1-explorer)
+- [Sentinel-2 Explorer](#sentinel-2-explorer)
 
 ## Getting Started
 Before you begin, make sure you have a fresh version of [Node.js](https://nodejs.org/en/) and NPM installed. The current Long Term Support (LTS) release is an ideal starting point.
@@ -36,19 +37,15 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 - Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
 
 ### Usage
-Before running the application, update the `landsat-level-2` URLs in the [`config.json`](./src/config.json) to use the URL of your service proxy for [Landsat Level-2](https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer). 
+Before running the application, update the `LANDSAT_SERVICE_PROXY_URL_DEV` and `LANDSAT_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Landsat Level-2](https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer). 
 
-[`config.json`](./src/config.json):
-```js
-{
-    //...
-    "services": {
-        "landsat-level-2": {
-            "development": "URL_OF_YOUR_PROXY_SERVICE_FOR_LANDSAT_LEVEL_2",
-            "production": "URL_OF_YOUR_PROXY_SERVICE_FOR_LANDSAT_LEVEL_2"
-        }
-    }
-}
+[`.env`](.env):
+```sh
+# Service proxy URL for Landsat-Level-2 in development environment
+LANDSAT_SERVICE_PROXY_URL_DEV = https://dev.landsat.service.proxy.url
+
+# Service proxy URL for Landsat-Level-2 in production environment
+LANDSAT_SERVICE_PROXY_URL_PROD = https://prod.landsat.service.proxy.url
 ```
 
 To run and test the app on your local machine:
@@ -122,19 +119,15 @@ Through an intuitive user experience, this app leverages a variety of ArcGIS cap
 - Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
 
 ### Usage
-Before running the application, update the `"sentinel-1` URLs in the [`config.json`](./src/config.json) to use the URL of your service proxy for [Sentinel-1 RTC](https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer). 
+Before running the application, update the `SENTINEL1_SERVICE_PROXY_URL_DEV` and `SENTINEL1_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Sentinel-1 RTC](https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer).
 
-[`config.json`](./src/config.json):
-```js
-{
-    //...
-    "services": {
-        "sentinel-1": {
-            "development": "URL_OF_YOUR_PROXY_SERVICE_FOR_SENTINEL_1",
-            "production": "URL_OF_YOUR_PROXY_SERVICE_FOR_SENTINEL_1"
-        }
-    }
-}
+[`.env`](.env):
+```sh
+# Service proxy URL for Sentinel-1 in development environment
+SENTINEL1_SERVICE_PROXY_URL_DEV = https://dev.sentinel1.service.proxy.url
+
+# Service proxy URL for Sentinel-1 in production environment
+SENTINEL1_SERVICE_PROXY_URL_PROD = https://prod.sentinel1.service.proxy.url
 ```
 
 To run and test the app on your local machine:
