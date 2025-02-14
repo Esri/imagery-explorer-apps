@@ -26,10 +26,6 @@
       "prettier --write",
       "eslint src --fix",
       "jest --bail --findRelatedTests --passWithNoTests"
-    ],
-    "public/__tests__/**/*.{ts,js,json}": [
-      "prettier --write",
-      "jest --bail --findRelatedTests --passWithNoTests"
     ]
   },
   "repository": {
