@@ -14,9 +14,9 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER, getServiceConfig } from '@shared/config';
+import { TIER } from '@shared/config';
 
-const serviceConfig = getServiceConfig('sentinel-2');
+// const serviceConfig = getServiceConfig('sentinel-2');
 // console.log('sentinel-2 service config', serviceConfig);
 
 /**
@@ -50,14 +50,14 @@ export const SENTINEL_2_ORIGINAL_SERVICE_URL =
  * Service URL to be used in PROD enviroment
  */
 export const SENTINEL_2_SERVICE_URL_PROD =
-    serviceConfig.production || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+    SENTINEL2_SERVICE_PROXY_URL_PROD || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in DEV enviroment
  *
  */
 export const SENTINEL_2_SERVICE_URL_DEV =
-    serviceConfig.development || SENTINEL_2_ORIGINAL_SERVICE_URL_DEV;
+    SENTINEL2_SERVICE_PROXY_URL_DEV || SENTINEL_2_ORIGINAL_SERVICE_URL_DEV;
 
 /**
  * A proxy imagery service which has embedded credential that points to the sentinel-2 imagery service

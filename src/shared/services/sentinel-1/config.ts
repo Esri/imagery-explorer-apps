@@ -14,9 +14,9 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER, getServiceConfig } from '@shared/config';
+import { TIER } from '@shared/config';
 
-const serviceConfig = getServiceConfig('sentinel-1');
+// const serviceConfig = getServiceConfig('sentinel-1');
 // console.log('sentinel-1 service config', serviceConfig);
 
 // const serviceUrls = {
@@ -59,7 +59,7 @@ export const SENTINEL_1_ORIGINAL_SERVICE_URL =
  * Service URL to be used in PROD enviroment
  */
 export const SENTINEL_1_SERVICE_URL_PROD =
-    serviceConfig.production || SENTINEL_1_ORIGINAL_SERVICE_URL;
+    SENTINEL1_SERVICE_PROXY_URL_PROD || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
 /**
  * Service URL to be used in DEV enviroment
@@ -67,7 +67,7 @@ export const SENTINEL_1_SERVICE_URL_PROD =
  * @see https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer/
  */
 export const SENTINEL_1_SERVICE_URL_DEV =
-    serviceConfig.development || SENTINEL_1_ORIGINAL_SERVICE_URL;
+    SENTINEL1_SERVICE_PROXY_URL_DEV || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service

@@ -14,10 +14,10 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER, getServiceConfig } from '@shared/config';
+import { TIER } from '@shared/config';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
-const serviceConfig = getServiceConfig('landsat-level-2');
+// const serviceConfig = getServiceConfig('landsat-level-2');
 // console.log('landsat-level-2 service config', serviceConfig);
 //
 // const serviceUrls = {
@@ -51,13 +51,13 @@ const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV =
  * Service URL to be used in PROD enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_PROD =
-    serviceConfig.production || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
+    LANDSAT_SERVICE_PROXY_URL_PROD || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in DEV enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
-    serviceConfig.development || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV;
+    LANDSAT_SERVICE_PROXY_URL_DEV || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service

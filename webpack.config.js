@@ -140,6 +140,30 @@ module.exports =  (env, options)=> {
                  * name of the imagery explorer app to start/build
                  */
                 WEBPACK_DEFINED_APP_NAME: JSON.stringify(app),
+                /**
+                 * URL for Landsat service proxy in development environment
+                 */
+                LANDSAT_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_DEV),
+                /**
+                 * URL for Landsat service proxy in production environment
+                 */
+                LANDSAT_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_PROD),
+                /**
+                 * URL for Sentinel-2 service proxy in development environment
+                 */
+                SENTINEL2_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_DEV),
+                /**
+                 * URL for Sentinel-2 service proxy in production environment
+                 */
+                SENTINEL2_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_PROD),
+                /**
+                 * URL for Sentinel-1 service proxy in development environment
+                 */
+                SENTINEL1_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_DEV),
+                /**
+                 * URL for Sentinel-1 service proxy in production environment
+                 */
+                SENTINEL1_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_PROD),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output

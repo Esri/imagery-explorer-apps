@@ -17,3 +17,33 @@
  * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
  */
 declare const WEBPACK_DEFINED_APP_NAME: string;
+
+/**
+ * URL for Landsat service proxy in development environment
+ */
+declare const LANDSAT_SERVICE_PROXY_URL_DEV: string;
+
+/**
+ * URL for Landsat service proxy in production environment
+ */
+declare const LANDSAT_SERVICE_PROXY_URL_PROD: string;
+
+/**
+ * URL for Sentinel-2 service proxy in development environment
+ */
+declare const SENTINEL2_SERVICE_PROXY_URL_DEV: string;
+
+/**
+ * URL for Sentinel-2 service proxy in production environment
+ */
+declare const SENTINEL2_SERVICE_PROXY_URL_PROD: string;
+
+/**
+ * URL for Sentinel-1 service proxy in development environment
+ */
+declare const SENTINEL1_SERVICE_PROXY_URL_DEV: string;
+
+/**
+ * URL for Sentinel-1 service proxy in production environment
+ */
+declare const SENTINEL1_SERVICE_PROXY_URL_PROD: string;

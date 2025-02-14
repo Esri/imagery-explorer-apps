@@ -44,10 +44,10 @@ type AppConfig = {
  */
 export type AppName = keyof typeof config.apps;
 
-/**
- * a type that represents the keys of the imagery services object in the `/src/config.json` file
- */
-export type ServiceName = keyof typeof config.services;
+// /**
+//  * a type that represents the keys of the imagery services object in the `/src/config.json` file
+//  */
+// export type ServiceName = keyof typeof config.services;
 
 /**
  * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
@@ -86,11 +86,11 @@ export const AGOL_PORTAL_ROOT =
  */
 export const ARCGIS_REST_API_ROOT = AGOL_PORTAL_ROOT + '/sharing/rest';
 
-/**
- * Get imagery service config by name
- * @param serviceName
- * @returns
- */
-export const getServiceConfig = (serviceName: ServiceName) => {
-    return config.services[serviceName];
-};
+// /**
+//  * Get imagery service config by name
+//  * @param serviceName
+//  * @returns
+//  */
+// export const getServiceConfig = (serviceName: ServiceName) => {
+//     return config.services[serviceName];
+// };

@@ -58,19 +58,5 @@
             "entrypoint": "/src/landsat-surface-temp/index.tsx",
             "appId": ""
         }
-    },
-    "services": {
-        "landsat-level-2": {
-            "development": "https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer",
-            "production": "https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer"
-        },
-        "sentinel-1": {
-            "development": "https://utility.arcgis.com/usrsvcs/servers/ae20c269388b4ea3acac60b9bf2a319f/rest/services/Sentinel1RTC/ImageServer",
-            "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
-        },
-        "sentinel-2": {
-            "development": "https://utilitydevext.arcgis.com/sharing/servers/28d7c769d42d4ce68212fe59053d388c/rest/services/Sentinel2L2A/ImageServer",
-            "production": "https://utilitydevext.arcgis.com/sharing/servers/28d7c769d42d4ce68212fe59053d388c/rest/services/Sentinel2L2A/ImageServer"
-        }
     }
 }
