@@ -52,6 +52,7 @@ import { Sentinel2ChangeCompareTool } from '../ChangeCompareTool';
 import { Sentinel2SpectralProfileTool } from '../SpectralProfileTool';
 import { Sentinel2TemporalProfileTool } from '../Sentinel2TemporalProfileTool/Sentinel2TemporalProfileTool';
 import { Sentinel2SavePanel } from '../Sentinel2SavePanel';
+import { Sentinel2InterestingPlaces } from '../Sentinel2InterestingPlaces';
 
 const Layout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -77,7 +78,7 @@ const Layout = () => {
                 <BottomPanel>
                     <div className="mx-auto">
                         <Sentinel2DynamicModeInfo />
-                        {/* <LandsatInterestingPlaces /> */}
+                        <Sentinel2InterestingPlaces />
                         <Sentinel2RasterFunctionSelector />
                     </div>
                 </BottomPanel>
@@ -111,7 +112,7 @@ const Layout = () => {
                     {dynamicModeOn ? (
                         <>
                             <Sentinel2DynamicModeInfo />
-                            {/* <LandsatInterestingPlaces /> */}
+                            <Sentinel2InterestingPlaces />
                         </>
                     ) : (
                         <>
