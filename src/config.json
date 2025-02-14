@@ -34,7 +34,7 @@
             "title": "Esri | Sentinel-2 Explorer",
             "satellite": "Sentinel-2",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
-            "description": "",
+            "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-2 provides.",
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel2explorer",
             "entrypoint": "/src/sentinel-2-explorer/index.tsx",
