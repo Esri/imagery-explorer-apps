@@ -82,7 +82,7 @@ export const data: InterestingPlaceData[] = [
             center: [-11.398, 21.124],
             zoom: 13,
         },
-        renderer: 'Urban for Visualization',
+        renderer: 'Geology for Visualization',
         thumbnail: Sentinel2_Interesting_Richat,
     },
     {
