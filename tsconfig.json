@@ -33,5 +33,5 @@
     ],
     "include": [
         "./src/**/**/*"
-    ]
+, "public/__tests__"    ]
 }

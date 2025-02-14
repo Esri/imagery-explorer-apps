@@ -153,7 +153,7 @@ module.exports =  (env, options)=> {
                     { 
                         from: "public/**/*", 
                         globOptions: {
-                            ignore: ["**/index.html"],
+                            ignore: ["**/index.html", "**/__tests__/**"],
                         },
                     }
                 ],
