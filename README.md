@@ -27,7 +27,7 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 
 [View it live](https://livingatlas.arcgis.com/landsatexplorer/)
 
-![App](./public/thumbnails/landsat.jpg)
+![App](./public/thumbnails/landsatexplorer.jpg)
 
 ### Features:
 - Visual exploration of a Dynamic global mosaic of the best available Landsat scenes.
@@ -39,7 +39,6 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 ### Usage
 Before running the application, update the `LANDSAT_SERVICE_PROXY_URL_DEV` and `LANDSAT_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Landsat Level-2](https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer). 
 
-[`.env`](.env):
 ```sh
 # Service proxy URL for Landsat-Level-2 in development environment
 LANDSAT_SERVICE_PROXY_URL_DEV = https://dev.landsat.service.proxy.url
@@ -75,7 +74,7 @@ The Sentinel-2 Land Cover Explorer app provides dynamic visual and statistical c
 
 [View it live](https://livingatlas.arcgis.com/landcoverexplorer/)
 
-![App](./public/thumbnails/landcover-explorer.jpg)
+![App](./public/thumbnails/landcoverexplorer.jpg)
 
 ### Features:
 - Visual change analysis with either ‘Step Mode’ or ‘Swipe Mode’
@@ -109,7 +108,7 @@ Through an intuitive user experience, this app leverages a variety of ArcGIS cap
 
 [View it live](https://livingatlas.arcgis.com/sentinel1explorer/)
 
-![App](./public/thumbnails/sentinel1-explorer.jpg)
+![App](./public/thumbnails/sentinel1explorer.jpg)
 
 ### Features:
 - Visual exploration of a Dynamic global mosaic of the best available Sentinel-1 scenes.
@@ -121,7 +120,6 @@ Through an intuitive user experience, this app leverages a variety of ArcGIS cap
 ### Usage
 Before running the application, update the `SENTINEL1_SERVICE_PROXY_URL_DEV` and `SENTINEL1_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Sentinel-1 RTC](https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer).
 
-[`.env`](.env):
 ```sh
 # Service proxy URL for Sentinel-1 in development environment
 SENTINEL1_SERVICE_PROXY_URL_DEV = https://dev.sentinel1.service.proxy.url
