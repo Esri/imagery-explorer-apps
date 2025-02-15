@@ -47,3 +47,8 @@ declare const SENTINEL1_SERVICE_PROXY_URL_DEV: string;
  * URL for Sentinel-1 service proxy in production environment
  */
 declare const SENTINEL1_SERVICE_PROXY_URL_PROD: string;
+
+/**
+ * Specifies the service tier of the application
+ */
+declare const SERVICE_TIER: string;
