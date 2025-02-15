@@ -70,7 +70,7 @@ const Map = () => {
 
             <Popup />
             <MapMagnifier />
-            <CustomMapArrtribution atrribution="Custom Attribution for Sentinel-2 Imagery service" />
+            <CustomMapArrtribution atrribution="Sentinel-2 imagery courtesy of European Space Agency, European Commission, and Microsoft" />
         </MapViewContainer>
     );
 };
