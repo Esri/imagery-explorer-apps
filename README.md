@@ -52,7 +52,7 @@ To run and test the app on your local machine:
 npm run start:landsat
 ```
 
-To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landsat` directory.
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landsatexplorer` directory.
 ```sh
 npm run build:landsat
 ```
@@ -91,7 +91,7 @@ To run and test the app on your local machine:
 npm run start:landcover
 ```
 
-To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landcover-explorer` directory.
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landcoverexplorer` directory.
 ```sh
 npm run build:landcover
 ```
@@ -133,7 +133,7 @@ To run and test the app on your local machine:
 npm run start:sentinel1
 ```
 
-To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/sentinel1-explorer` directory.
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/sentinel1explorer` directory.
 ```sh
 npm run build:sentinel1
 ```
@@ -146,6 +146,48 @@ npm run build:sentinel1
 - Sentinel-1 RTC Source Imagery – The source imagery is hosted on Microsoft Planetary Computer under an open [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
 - Sentinel-1 RTC Image Service - This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
 
+
+## Sentinel-2 Explorer
+
+Sentinel-2 multispectral imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes, disasters, and human activity.
+
+Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-2 provides. Some of the key capabilities include:
+
+[View it live](https://livingatlas.arcgis.com/sentinel2explorer/)
+
+![App](./public/thumbnails/sentinel2explorer.jpg)
+
+### Features:
+- Visual exploration of a Dynamic global mosaic of the best available Sentinel-2 scenes.
+- On-the-fly multispectral band combinations and indices for visualization and analysis.
+- Interactive Find a Scene by location, sensor, time, and cloud cover.
+- Visual change by time, and comparison of different renderings, with Swipe and Animation modes.
+- Analysis such as threshold masking and temporal profiles for vegetation, water, and more.
+
+### Usage
+Before running the application, update the `SENTINEL2_SERVICE_PROXY_URL_DEV` and `SENTINEL2_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Sentinel-2 Level-2A](https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer).
+
+```sh
+# Service proxy URL for Sentinel-2 in development environment
+SENTINEL2_SERVICE_PROXY_URL_DEV = https://dev.sentinel2.service.proxy.url
+
+# Service proxy URL for Sentinel-2 in production environment
+SENTINEL2_SERVICE_PROXY_URL_PROD = https://prod.sentinel2.service.proxy.url
+```
+
+To run and test the app on your local machine:
+```sh
+npm run start:sentinel2
+```
+
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/sentinel2explorer` directory.
+```sh
+npm run build:sentinel2
+```
+
+### Sentinel-2 Level-2A Imagery Service Licensing
+- Source Sentinel-2 Imagery – The access and use of Copernicus Sentinel Data and Service Information is regulated under EU law. In particular, the law provides that users shall have a free, full and open access to Copernicus Sentinel Data and Service Information without any express or implied warranty, including as regards quality and suitability for any purpose. [More](https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice).
+- Sentinel-2 Image Service - This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
 
 ## Issues
 Find a bug or want to request a new feature?  Please let us know by submitting an issue.
