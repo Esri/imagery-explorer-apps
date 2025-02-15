@@ -96,6 +96,7 @@ const AGOL_PORTAL_ROOT_BASED_ON_TIER =
     TIER === 'production'
         ? `https://www.arcgis.com`
         : `https://devext.arcgis.com`;
+console.log(`The application is using ${AGOL_PORTAL_ROOT_BASED_ON_TIER}.`);
 
 /**
  * Root URL of the ArcGIS Portal
