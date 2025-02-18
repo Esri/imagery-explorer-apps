@@ -16,6 +16,7 @@ import {
     autoSwipeStatusChanged,
 } from '@shared/store/Map/reducer';
 import { Slider } from '../Slider';
+import classNames from 'classnames';
 
 export const AutoSwipeControls = () => {
     const dispatch = useAppDispatch();
@@ -44,7 +45,11 @@ export const AutoSwipeControls = () => {
 
     return (
         <div className="flex items-center">
-            <div className="flex-grow mx-2 mt-2">
+            <div
+                className={classNames('flex-grow mx-2 mt-2', {
+                    'is-disabled': !status,
+                })}
+            >
                 <Slider
                     value={AUTO_SWIPE_SPEEDS.indexOf(speed)}
                     steps={sliderSteps}
