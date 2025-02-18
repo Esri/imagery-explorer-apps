@@ -73,7 +73,14 @@ export const RasterFunctionSelector: FC<Props> = ({
             })}
             ref={containerRef}
         >
-            <div className="text-center mb-3 flex items-center justify-center">
+            <div
+                className={classNames(
+                    'text-center mb-3 flex items-center justify-center',
+                    {
+                        'is-disabled': disabled,
+                    }
+                )}
+            >
                 <Tooltip
                     content={headerTooltip}
                     width={widthOfTooltipContainer || 240}

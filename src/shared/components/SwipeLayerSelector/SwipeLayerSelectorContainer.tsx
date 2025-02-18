@@ -26,6 +26,8 @@ import { SwipeLayerSelector } from './SwipeLayerSelector';
 import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 import { swapMainAndSecondaryScenes } from '@shared/store/ImageryScene/thunks';
 import { AutoSwipeControls } from './AutoSwipeControls';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import classNames from 'classnames';
 
 export const SwipeLayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
@@ -40,6 +42,8 @@ export const SwipeLayerSelectorContainer = () => {
         selectQueryParams4SecondaryScene
     );
 
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
+
     if (appMode !== 'swipe') {
         return null;
     }
@@ -47,7 +51,9 @@ export const SwipeLayerSelectorContainer = () => {
     return (
         <>
             <div
-                className="w-full"
+                className={classNames('w-full', {
+                    'is-disabled': isAnimationPlaying,
+                })}
                 style={{
                     height: `calc(100% - 30px)`,
                 }}

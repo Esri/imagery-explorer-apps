@@ -34,18 +34,6 @@ import {
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
-// import {
-//     // selectIsAnimationPlaying,
-//     selectShouldHideCloudCoverInfo,
-// } from '@shared/store/UI/selectors';
-// import { CloudFilter } from '@shared/components/CloudFilter';
-// import {
-//     // acquisitionYearChanged,
-//     cloudCoverChanged,
-// } from '@shared/store/ImageryScene/reducer';
-// import { LandsatMissionFilter } from '../LandsatMissionFilter';
-// import { APP_NAME } from '@shared/config';
-// import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
@@ -65,8 +53,6 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
     const dispatch = useAppDispatch();
 
     const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
-
-    // const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const acquisitionDate = queryParams?.acquisitionDate;
 

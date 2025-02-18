@@ -18,7 +18,9 @@ import { RootState } from '../configureStore';
 
 export const selectIsAnimationPlaying = createSelector(
     (state: RootState) => state.UI.animationStatus,
-    (animationStatus) => animationStatus !== null
+    (state: RootState) => state.Map.autoSwipeStatus,
+    (animationStatus, autoSwipeStatus) =>
+        animationStatus !== null || autoSwipeStatus !== null
 );
 
 export const selectAnimationSpeed = (state: RootState) =>

@@ -62,8 +62,6 @@ export const MapActionButton: FC<Props> = ({
     children,
     onClickHandler,
 }) => {
-    // const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
-
     return (
         <div
             className={classNames('relative z-10', {
