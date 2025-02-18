@@ -56,8 +56,21 @@ type GetSentinel1ScenesParams = {
 
 // let controller:AbortController = null;
 
-const { OBJECTID, ACQUISITION_DATE, CLOUD_COVER, NAME, CATEGORY, MONTH } =
-    FIELD_NAMES;
+const {
+    OBJECTID,
+    ACQUISITION_DATE,
+    CLOUD_COVER,
+    NAME,
+    MONTH,
+    SATELLITE,
+    SENSOR,
+    SNOW_ICE_PERCENTAGE,
+    PRODUCT,
+    RELATIVE_ORBIT,
+    SUN_ZENITH,
+    SUN_AZIMUTH,
+    CATEGORY,
+} = FIELD_NAMES;
 
 /**
  * A Map that will be used to retrieve Landsat Scene data using the object Id as key
@@ -102,6 +115,15 @@ export const getFormattedSentinel2Scenes = (
             formattedCloudCover: Math.ceil(cloudCover * 100),
             acquisitionYear,
             acquisitionMonth,
+            satellite: attributes[SATELLITE],
+            sensor: attributes[SENSOR],
+            snowIcePercentage: Math.floor(
+                attributes[SNOW_ICE_PERCENTAGE] * 100
+            ),
+            productName: attributes[PRODUCT],
+            relativeOrbit: attributes[RELATIVE_ORBIT],
+            sunElevation: (90 - attributes[SUN_ZENITH]).toFixed(2),
+            sunAzimuth: attributes[SUN_AZIMUTH].toFixed(2),
         };
 
         return sentinel2Scene;
@@ -160,7 +182,21 @@ export const getSentinel2Scenes = async ({
         // geometryType: 'esriGeometryEnvelope',
         geometryType: 'esriGeometryPoint',
         // inSR: '102100',
-        outFields: [ACQUISITION_DATE, CLOUD_COVER, NAME].join(','),
+        outFields: [
+            OBJECTID,
+            ACQUISITION_DATE,
+            CLOUD_COVER,
+            NAME,
+            MONTH,
+            SATELLITE,
+            SENSOR,
+            SNOW_ICE_PERCENTAGE,
+            PRODUCT,
+            RELATIVE_ORBIT,
+            SUN_ZENITH,
+            SUN_AZIMUTH,
+            CATEGORY,
+        ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',
         returnGeometry: 'false',

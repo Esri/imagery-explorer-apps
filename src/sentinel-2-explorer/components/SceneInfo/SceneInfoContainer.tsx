@@ -42,7 +42,18 @@ export const SceneInfoContainer = () => {
             return [];
         }
 
-        const { acquisitionDate, formattedCloudCover, name } = data;
+        const {
+            acquisitionDate,
+            formattedCloudCover,
+            name,
+            satellite,
+            sensor,
+            snowIcePercentage,
+            productName,
+            relativeOrbit,
+            sunElevation,
+            sunAzimuth,
+        } = data;
 
         return [
             {
@@ -51,12 +62,41 @@ export const SceneInfoContainer = () => {
                 clickToCopy: true,
             },
             {
+                name: 'Satellite',
+                value: satellite,
+            },
+            {
+                name: 'Sensor',
+                value: sensor,
+            },
+
+            {
                 name: 'Acquired',
                 value: formatInUTCTimeZone(acquisitionDate, DATE_FORMAT),
             },
             {
                 name: 'Cloud Cover',
                 value: `${formattedCloudCover}%`,
+            },
+            {
+                name: 'Snow/Ice',
+                value: `${snowIcePercentage}%`,
+            },
+            {
+                name: 'Product Name',
+                value: productName,
+            },
+            {
+                name: 'Relative Orbit',
+                value: relativeOrbit,
+            },
+            {
+                name: 'Sun Elevation',
+                value: `${sunElevation}°`,
+            },
+            {
+                name: 'Sun Azimuth',
+                value: `${sunAzimuth}°`,
             },
         ];
     }, [data]);

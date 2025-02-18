@@ -173,6 +173,35 @@ export type Sentinel2Scene = {
      * percent of cloud cover ranges rounded to integers that ranges from 0 - 100
      */
     formattedCloudCover: number;
+    /**
+     * name of the satellite (e.g. 'Sentinel-2C')
+     */
+    satellite: string;
+    /**
+     * name of the sensor (e.g. 'MSI')
+     */
+    sensor: string;
+    /**
+     * percentage of snow and ice cover, the value ranges from 0 - 1
+     */
+    snowIcePercentage: number;
+    /**
+     * name of the product, e.g. 'S2MSI2A'
+     */
+    productName: string;
+    /**
+     * relative orbit number of the scene
+     */
+    relativeOrbit: string;
+    /**
+     * elevation of the sun in degrees:
+     * 90 - MeanSolarZenith
+     */
+    sunElevation: string;
+    /**
+     * azimuth of the sun in degrees:
+     */
+    sunAzimuth: string;
 };
 
 /**

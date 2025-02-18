@@ -75,15 +75,18 @@ export const SENTINEL_2_SERVICE_URL =
 export enum FIELD_NAMES {
     OBJECTID = 'objectid',
     NAME = 'name',
+    SATELLITE = 'platform',
+    SENSOR = 'instrument',
     ACQUISITION_DATE = 'acquisitiondate',
     CLOUD_COVER = 'cloudcover',
-    CATEGORY = 'category',
-    MONTH = 'month',
     SNOW_ICE_PERCENTAGE = 'snowicepercentage',
+    PRODUCT = 'productname',
+    RELATIVE_ORBIT = 'relativeorbit',
     SUN_ZENITH = 'meansolarzenith',
     SUN_AZIMUTH = 'meansolarazimuth',
-    RELATIVE_ORBIT = 'relativeorbit',
     ABSOLUTE_ORBIT = 'absoluteorbit',
+    CATEGORY = 'category',
+    MONTH = 'month',
 }
 
 /**
