@@ -44,7 +44,7 @@ import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecon
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { Sentinel2DynamicModeInfo } from '../Sentinel2DynamicModeInfo/Sentinel2DynamicModeInfo';
 import { Sentinel2RasterFunctionSelector } from '../RasterFunctionSelector';
-import { useQueryAvailableSentinel2Scenes } from '../../hooks/useQueryAvailableLandsatScenes';
+import { useQueryAvailableSentinel2Scenes } from '../../hooks/useQueryAvailableSentinel2Scenes';
 import { SceneInfo } from '../SceneInfo';
 import { Sentinel2AnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { Sentinel2MaskTool } from '../MaskTool';
