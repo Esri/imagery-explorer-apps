@@ -23,6 +23,8 @@ import {
     selectActiveAnalysisTool,
 } from '@shared/store/ImageryScene/selectors';
 import {
+    selectAutoSwipeSpeed,
+    selectAutoSwipeStatus,
     selectShowBasemap,
     selectShowMapLabel,
     selectShowTerrain,
@@ -88,7 +90,11 @@ export const useSaveAppState2HashParams = () => {
         selectTemporalCompositeToolState
     );
 
-    const showSavePanel = useAppSelector(selectShowSavePanel);
+    // const showSavePanel = useAppSelector(selectShowSavePanel);
+
+    const autoSwipeStatus = useAppSelector(selectAutoSwipeStatus);
+
+    const autoSwipeSpeed = useAppSelector(selectAutoSwipeSpeed);
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -190,4 +196,12 @@ export const useSaveAppState2HashParams = () => {
     useEffect(() => {
         updateHashParams('hideTerrain', showTerrain === false ? 'true' : null);
     }, [showTerrain]);
+
+    useEffect(() => {
+        if (!autoSwipeStatus) {
+            updateHashParams('autoSwipeSpeed', null);
+        } else {
+            updateHashParams('autoSwipeSpeed', autoSwipeSpeed.toString());
+        }
+    }, [autoSwipeSpeed, autoSwipeStatus]);
 };

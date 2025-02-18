@@ -1,5 +1,9 @@
 import { InterestingPlaceData } from '@typing/shared';
-import { MapState, initialMapState } from './reducer';
+import {
+    AUTO_SWIPE_SPEED_DEFAULTVALUE,
+    MapState,
+    initialMapState,
+} from './reducer';
 import {
     getHashParamValueByKey,
     getMapCenterFromHashParams,
@@ -27,12 +31,20 @@ export const getPreloadedState4Map = (
     const showBasemap =
         getHashParamValueByKey('hideBasemap', hashParams) === null;
 
-    return {
+    const autoSwipeSpeed = getHashParamValueByKey('autoSwipeSpeed', hashParams);
+
+    const mapState: MapState = {
         ...initialMapState,
         center: mapLocation?.center || MAP_CENTER,
         zoom: mapLocation?.zoom || MAP_ZOOM,
         showMapLabel,
         showTerrain,
         showBasemap,
+        autoSwipeSpeed: autoSwipeSpeed
+            ? +autoSwipeSpeed
+            : AUTO_SWIPE_SPEED_DEFAULTVALUE,
+        autoSwipeStatus: autoSwipeSpeed ? 'playing' : null,
     };
+
+    return mapState;
 };

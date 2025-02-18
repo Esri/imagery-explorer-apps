@@ -104,6 +104,8 @@ export type MapState = {
  */
 export const AUTO_SWIPE_SPEEDS = [0.25, 0.5, 1, 2.5, 5];
 
+export const AUTO_SWIPE_SPEED_DEFAULTVALUE = AUTO_SWIPE_SPEEDS[2];
+
 export const initialMapState: MapState = {
     // webmapId: WEB_MAP_ID, // Topographic
     center: MAP_CENTER,
@@ -116,7 +118,7 @@ export const initialMapState: MapState = {
     showBasemap: true,
     swipeWidgetHanlderPosition: 50,
     autoSwipeStatus: null,
-    autoSwipeSpeed: AUTO_SWIPE_SPEEDS[2],
+    autoSwipeSpeed: AUTO_SWIPE_SPEED_DEFAULTVALUE,
     popupAnchorLocation: null,
     isUpadting: false,
     totalVisibleAreaInSqKm: null,
