@@ -128,3 +128,9 @@ export const jobTypeLabels: Record<PublishAndDownloadJobType, string> = {
     [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]:
         'Scenes as ArcGIS Online Web Map',
 };
+
+/**
+ * This is the template for the item description when saving current state as a web mapping app.
+ */
+export const ITEM_DESCRIPTION_TEMPLATE_4_WEB_APP =
+    '<i>This Web Mapping Application item provides a saved "view" or state of the {{APP_NAME}} app. These items can be used to save and share exactly what you were seeing in the app. From visualizations, like swipe and animate, to analysis results such as change detection. Fill in your own description here if you wish to persist and/or share this item with others. Common use cases include saving and sharing current events.</i>';

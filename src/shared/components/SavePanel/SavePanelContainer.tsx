@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react';
 import { SavePanel } from './SavePanel';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
 import { SaveJobButtonOnClickParams } from '@shared/components/SavePanel';
-import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 // import { useSaveOptions } from './useSaveOptions';
 import {
     createNewPublishAndDownloadJob,
@@ -23,6 +23,8 @@ import { useCheckJobCost } from './useCheckJobCost';
 import { useCheckJobStatus } from './useCheckRasterAnalysisJobStatus';
 import { useImagerySceneData4WebMap } from './useImagerySceneData4WebMap';
 import { AddItemResponse } from '@shared/services/arcgis-online/addItem';
+import { ITEM_DESCRIPTION_TEMPLATE_4_WEB_APP } from './constants';
+import { useAppTitle } from '@shared/hooks/useAppTitle';
 
 /**
  * Raster functions for the publish jobs.
@@ -108,7 +110,15 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 }) => {
     const dispatch = useAppDispatch();
 
+    /**
+     * Custom hook that generates imagery scene data for a web map based on the current application mode and query parameters.
+     */
     const imageryScenesData = useImagerySceneData4WebMap();
+
+    /**
+     * Custom hook that returns the title of the app
+     */
+    const appTitle = useAppTitle();
 
     // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
@@ -157,10 +167,17 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
             let addItemResponse: AddItemResponse = null;
 
             if (job.type === PublishAndDownloadJobType.SaveWebMappingApp) {
+                const description = ITEM_DESCRIPTION_TEMPLATE_4_WEB_APP.replace(
+                    '{{APP_NAME}}',
+                    appTitle
+                );
+
                 addItemResponse = await createWebMappingApplication({
                     title,
                     snippet,
                     tags,
+                    licenseInfo,
+                    description,
                 });
             } else if (
                 job.type === PublishAndDownloadJobType.SaveWebMap ||

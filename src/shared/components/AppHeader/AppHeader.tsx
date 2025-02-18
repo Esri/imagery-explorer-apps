@@ -42,7 +42,7 @@ type Props = {
     docButtonTooltip?: string;
 };
 
-const IMAGERY_EXPLORER_APPS: {
+export const IMAGERY_EXPLORER_APPS: {
     appName: AppName;
     title: string;
     url: string;
