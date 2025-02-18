@@ -37,6 +37,7 @@ import {
     isUpdatingChanged,
     resolutionUpdated,
     scaleUpdated,
+    swipeWidgetHanlderPositionChanged,
     zoomChanged,
 } from '../../store/Map/reducer';
 import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
@@ -57,6 +58,7 @@ import { MapCenterIndicator } from './MapCenterIndicator';
 // import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 import { appConfig } from '@shared/config';
 import { ZoomWidget } from './ZoomWidget';
+import { autoSwipeStatusChanged } from '@shared/store/Map/reducer';
 
 type Props = {
     /**
@@ -122,6 +124,14 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
     useEffect(() => {
         dispatch(isUpdatingChanged(isUpdating));
     }, [isUpdating]);
+
+    useEffect(() => {
+        // turn off auto swipe when app mode is not swipe
+        // this is to prevent auto swipe from running when swipe mode is not active
+        if (mode !== 'swipe') {
+            dispatch(autoSwipeStatusChanged(null));
+        }
+    }, [mode]);
 
     return (
         <div
