@@ -144,7 +144,12 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                 }
             )}
         >
-            <MapView webmapId={appConfig.webmapId} center={center} zoom={zoom}>
+            <MapView
+                webmapId={appConfig.webmapId}
+                center={center}
+                zoom={zoom}
+                shouldDisableMapNavigate={isAnimationPlaying}
+            >
                 {children}
 
                 <EventHandlers

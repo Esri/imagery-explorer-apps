@@ -35,6 +35,10 @@ interface Props {
      */
     zoom?: number;
     /**
+     * If true, disables the map navigation
+     */
+    shouldDisableMapNavigate?: boolean;
+    /**
      * Children Elements that will receive Map View as prop
      */
     children?: React.ReactNode;
@@ -44,6 +48,7 @@ const MapView: React.FC<Props> = ({
     webmapId,
     center,
     zoom,
+    shouldDisableMapNavigate,
     children,
 }: Props) => {
     const mapDivRef = useRef<HTMLDivElement>();
@@ -112,6 +117,7 @@ const MapView: React.FC<Props> = ({
             <div
                 className={classNames('absolute top-0 left-0 w-full bottom-0', {
                     // 'cursor-none': showMagnifier,
+                    'pointer-events-none': shouldDisableMapNavigate,
                 })}
                 ref={mapDivRef}
             ></div>
