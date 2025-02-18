@@ -44,7 +44,7 @@ export const AutoSwipeControls = () => {
 
     return (
         <div className="flex items-center">
-            <div className="flex-grow mx-2">
+            <div className="flex-grow mx-2 mt-2">
                 <Slider
                     value={AUTO_SWIPE_SPEEDS.indexOf(speed)}
                     steps={sliderSteps}
@@ -57,6 +57,10 @@ export const AutoSwipeControls = () => {
                         dispatch(autoSwipeSpeedChanged(speed));
                     }}
                 />
+
+                <div className="text-xs text-center mt-1">
+                    <span>speed</span>
+                </div>
             </div>
 
             <div className={'flex cursor-pointer items-center mx-1'}>
