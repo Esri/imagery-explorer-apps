@@ -27,7 +27,7 @@ import { SENTINEL2_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-2/con
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
-import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
+import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { AboutSentinel2Explorer } from './components/About';
 
 (async () => {
@@ -35,7 +35,7 @@ import { AboutSentinel2Explorer } from './components/About';
 
     try {
         await initEsriOAuth({
-            appId: appConfig.appId,
+            appId: APP_ID,
             portalUrl: AGOL_PORTAL_ROOT,
         });
 

@@ -27,14 +27,14 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
-import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
+import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
     await initEsriOAuth({
-        appId: appConfig.appId,
+        appId: APP_ID,
         portalUrl: AGOL_PORTAL_ROOT,
     });
 

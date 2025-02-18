@@ -8,7 +8,7 @@
             "animationMetadataSources": "Esri, USGS, NASA",
             "pathname": "/landsatexplorer",
             "entrypoint": "/src/landsat-explorer/index.tsx",
-            "appId": "LAWwebsite"
+            "appId": "LSX"
         },
         "landcoverexplorer": {
             "title": "Esri | Sentinel-2 Land Cover Explorer",
@@ -28,7 +28,7 @@
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel1explorer",
             "entrypoint": "/src/sentinel-1-explorer/index.tsx",
-            "appId": "LAWwebsite"
+            "appId": "S1X"
         },
         "sentinel2explorer": {
             "title": "Esri | Sentinel-2 Explorer",
@@ -38,7 +38,7 @@
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel2explorer",
             "entrypoint": "/src/sentinel-2-explorer/index.tsx",
-            "appId": "LAWwebsite"
+            "appId": "S2X"
         },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",
