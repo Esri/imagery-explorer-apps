@@ -32,6 +32,10 @@ import ThumbnailGeology from './thumbnails/Sentinel2_Geology.jpg';
 import ThumbnailNDWI from './thumbnails/Sentinel2_NDWI.jpg';
 import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 
+import MNDWILegend from './legends/MNDWI.png';
+import NDVILegend from './legends/NDVI.png';
+import NDMILegend from './legends/NDMI.png';
+
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
     {
         'Agriculture for Visualization': ThumbnailAgriculture,
@@ -53,9 +57,9 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
     'Natural Color for Visualization': null,
     'Geology for Visualization': null,
     'Short-wave Infrared for Visualization': null,
-    'NDVI Colorized for Visualization': null,
-    'NDMI Colorized for Visualization': null,
-    'NDWI Colorized for Visualization': null,
+    'NDVI Colorized for Visualization': NDVILegend,
+    'NDMI Colorized for Visualization': NDMILegend,
+    'NDWI Colorized for Visualization': MNDWILegend,
     'Urban for Visualization': null,
 };
 
