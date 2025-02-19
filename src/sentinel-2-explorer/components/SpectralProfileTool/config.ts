@@ -17,6 +17,7 @@ import { SpectralProfileDataByLandCoverType } from '@shared/components/SpectralP
 
 /**
  * The typical spectral profiles data for Sentinel-2 Imagery
+ * They were trained using the Spectral Sampling Tool
  */
 export const Sentinel2SpectralProfileData: SpectralProfileDataByLandCoverType =
     {
