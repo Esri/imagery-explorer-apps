@@ -29,7 +29,7 @@ import ThumbnailNDVI from './thumbnails/Sentinel2_NDVI.jpg';
 import ThumbnailSWIR from './thumbnails/Sentinel2_SWIR.jpg';
 import ThumbnailBathymetric from './thumbnails/Sentinel2_Bathymetric.jpg';
 import ThumbnailGeology from './thumbnails/Sentinel2_Geology.jpg';
-import ThumbnailNDWI from './thumbnails/Sentinel2_NDWI.jpg';
+import ThumbnailMNDWI from './thumbnails/Sentinel2_NDWI.jpg';
 import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 
 import MNDWILegend from './legends/MNDWI.png';
@@ -46,7 +46,7 @@ const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
         'Short-wave Infrared for Visualization': ThumbnailSWIR,
         'NDVI Colorized for Visualization': ThumbnailNDVI,
         'NDMI Colorized for Visualization': ThumbnailNDMI,
-        'NDWI Colorized for Visualization': ThumbnailNDWI,
+        'MNDWI Colorized for Visualization': ThumbnailMNDWI,
         'Urban for Visualization': ThumbnailUrban,
     };
 
@@ -59,7 +59,7 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
     'Short-wave Infrared for Visualization': null,
     'NDVI Colorized for Visualization': NDVILegend,
     'NDMI Colorized for Visualization': NDMILegend,
-    'NDWI Colorized for Visualization': MNDWILegend,
+    'MNDWI Colorized for Visualization': MNDWILegend,
     'Urban for Visualization': null,
 };
 

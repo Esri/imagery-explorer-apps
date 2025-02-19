@@ -102,7 +102,7 @@ const SENTINEL2_RASTER_FUNCTIONS = [
     'Urban for Visualization',
     'NDVI Colorized for Visualization',
     'NDMI Colorized for Visualization',
-    'NDWI Colorized for Visualization',
+    'MNDWI Colorized for Visualization',
     // 'Normalized Burn Ratio',
 ] as const;
 
@@ -160,10 +160,10 @@ export const SENTINEL2_RASTER_FUNCTION_INFOS: {
         label: 'NDMI',
     },
     {
-        name: 'NDWI Colorized for Visualization',
+        name: 'MNDWI Colorized for Visualization',
         description:
-            'Normalized Difference Water Index with color map computed as (b3 - b8) / (b3 + b8). Wetlands and moist areas range from light green to dark blue.',
-        label: 'NDWI',
+            'Modified Normalized Difference Water Index with color map computed as (b3 - b11) / (b3 + b11). Wetlands and moist areas range from light green to dark blue.  This template is for visualization only and should not be used as input to analysis.',
+        label: 'MNDWI',
     },
     {
         name: 'Bathymetric for Visualization',
