@@ -15,7 +15,6 @@
 
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
-import { map } from 'd3';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
