@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { FormattedImageryScene } from './Calendar';
 
 /**
@@ -28,14 +28,14 @@ import { FormattedImageryScene } from './Calendar';
  * @returns {FormattedImageryScene[]} An array of formatted imagery scenes
  */
 export const useFormattedScenes = (): FormattedImageryScene[] => {
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const cloudCoverThreshold = useSelector(selectCloudCover);
+    const cloudCoverThreshold = useAppSelector(selectCloudCover);
 
     /**
      * List of available imagery scenes that intersect with map center and were acquired during the input year.
      */
-    const availableScenes = useSelector(selectAvailableScenes);
+    const availableScenes = useAppSelector(selectAvailableScenes);
 
     const formattedScenes: FormattedImageryScene[] = useMemo(() => {
         if (isAnimationPlaying) {

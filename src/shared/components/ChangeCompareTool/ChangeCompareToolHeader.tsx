@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
     /**
@@ -49,11 +49,13 @@ export const ChangeCompareToolHeader: FC<Props> = ({
     options,
     tooltipText,
 }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedOption = useSelector(selectSelectedOption4ChangeCompareTool);
+    const selectedOption = useAppSelector(
+        selectSelectedOption4ChangeCompareTool
+    );
 
     if (tool !== 'change') {
         return null;

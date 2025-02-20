@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,11 @@
 
 import configureAppStore from '@shared/store/configureStore';
 import { getPreloadedState } from './getPreloadedState';
+import { SpectralSamplingToolSupportedService } from '@shared/store/SpectralSamplingTool/reducer';
 
-export const getSpectralSampingToolStore = async () => {
-    const preloadedState = await getPreloadedState();
+export const getSpectralSampingToolStore = (
+    targetService: SpectralSamplingToolSupportedService
+) => {
+    const preloadedState = getPreloadedState(targetService);
     return configureAppStore(preloadedState);
 };

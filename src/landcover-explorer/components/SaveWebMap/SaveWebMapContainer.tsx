@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectShowSaveWebMapPanel } from '@shared/store/UI/selectors';
 import { SaveWebMap, WebMapMetadata } from './SaveWebMap';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { showSaveWebMapPanelToggled } from '@shared/store/UI/reducer';
 import {
     getSignedInUser,
@@ -30,9 +30,9 @@ import { useCreateWebmap } from './useCreateWebmap';
 import { getPortalBaseUrl } from '@shared/utils/esri-oauth';
 
 export const SaveWebMapContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const showSaveWebMap = useSelector(selectShowSaveWebMapPanel);
+    const showSaveWebMap = useAppSelector(selectShowSaveWebMapPanel);
 
     const [webmapMetadata, setWebMapMetadata] = useState<WebMapMetadata>();
 

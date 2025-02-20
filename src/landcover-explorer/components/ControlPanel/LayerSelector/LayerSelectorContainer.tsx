@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { shouldShowSentinel2LayerToggled } from '@shared/store/LandcoverExplorer/reducer';
 import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
 import {
@@ -27,11 +27,11 @@ import { saveshowImageryLayerToHashParams } from '@landcover-explorer/utils/URLH
 import LayerSelector from './LayerSelector';
 
 const LayerSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

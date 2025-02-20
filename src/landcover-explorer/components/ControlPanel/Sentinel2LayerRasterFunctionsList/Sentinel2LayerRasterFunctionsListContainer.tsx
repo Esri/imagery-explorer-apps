@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,9 @@ import ThumbnailColorIR from './thumbnails/Imagery_ColorIR.png';
 import ThumbnailNDMI from './thumbnails/Imagery_NDMI.png';
 import ThumbnailNDVI from './thumbnails/Imagery_NDVI.png';
 import ThumbnailSWIR from './thumbnails/Imagery_SWIR.png';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { sentinel2RasterFunctionChanged } from '@shared/store/LandcoverExplorer/reducer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectSentinel2RasterFunction } from '@shared/store/LandcoverExplorer/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { saveSentinel2RasterFunctionToHashParams } from '@landcover-explorer/utils/URLHashParams';
@@ -91,11 +91,13 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
 ];
 
 const ImageryRasterFunctionsListContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const selectedRasterFunction = useSelector(selectSentinel2RasterFunction);
+    const selectedRasterFunction = useAppSelector(
+        selectSentinel2RasterFunction
+    );
 
     useEffect(() => {
         saveSentinel2RasterFunctionToHashParams(selectedRasterFunction);

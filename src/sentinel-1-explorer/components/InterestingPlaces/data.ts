@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ export const data: InterestingPlaceData[] = [
         label: 'Port of Singapore',
         thumbnail: Singapre,
         description:
-            'Due to its strategic location in maritime Southeast Asia, the city of Singapore is home to one of the of the busiest shipping ports in the world. One fifth of the worlds shipping containers pass through the Port of Singapore. Here you can visually depict shipping vessels in the waters off the southern tip of the Malay Peninsula.',
+            'Due to its strategic location in maritime Southeast Asia, the city of Singapore is home to one of the busiest shipping ports in the world. One fifth of the worlds shipping containers pass through the Port of Singapore. Here you can visually depict shipping vessels in the waters off the southern tip of the Malay Peninsula.',
     },
     {
         name: 'Crater Lake',

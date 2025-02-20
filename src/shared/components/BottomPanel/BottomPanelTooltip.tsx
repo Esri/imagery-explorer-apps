@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@
  */
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectTooltipData,
     selectTooltipXPosition,
 } from '@shared/store/UI/selectors';
 export const BottomPanelTooltip = () => {
-    const xPosition = useSelector(selectTooltipXPosition);
+    const xPosition = useAppSelector(selectTooltipXPosition);
 
-    const data = useSelector(selectTooltipData);
+    const data = useAppSelector(selectTooltipData);
 
     if (!data || !xPosition) {
         return null;
@@ -37,7 +37,10 @@ export const BottomPanelTooltip = () => {
         >
             <div className=" bg-custom-background-90 text-custom-light-blue-90 text-sm p-2 max-w-xs">
                 {data.title && <h4 className="text-sm mb-1">{data.title}</h4>}
-                <p className="text-xs mb-2">{data.content}</p>
+                <div
+                    className="text-xs mb-2"
+                    dangerouslySetInnerHTML={{ __html: data.content }}
+                ></div>
                 {data.legendImage && (
                     <img src={data.legendImage} className="w-full h-auto" />
                 )}

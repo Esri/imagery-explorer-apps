@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,8 +55,9 @@ export const saveChangeCompareToolStateToHashParams = debounce(
     500
 );
 
-export const getChangeCompareToolDataFromHashParams =
-    (): ChangeCompareToolState => {
-        const value = getHashParamValueByKey('change');
-        return decodeChangeCompareToolData(value);
-    };
+export const getChangeCompareToolDataFromHashParams = (
+    hashParams: URLSearchParams
+): ChangeCompareToolState => {
+    const value = getHashParamValueByKey('change', hashParams);
+    return decodeChangeCompareToolData(value);
+};

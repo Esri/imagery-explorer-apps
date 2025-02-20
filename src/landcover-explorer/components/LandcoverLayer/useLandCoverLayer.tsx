@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import {
     getRasterFunctionByLandCoverClassName,
     LandCoverClassification,
 } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
 // import IMapView from '@arcgis/core/views/MapView';
 
@@ -43,7 +43,7 @@ const useLandCoverLayer = ({
     year,
     visible = true,
 }: UseLandCoverLayerParams) => {
-    const activeLandCoverType = useSelector(selectActiveLandCoverType);
+    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
     const layerRef = useRef<ImageryLayer>();
 
@@ -89,7 +89,7 @@ const useLandCoverLayer = ({
             return;
         }
 
-        layerRef.current.renderingRule = {
+        layerRef.current.rasterFunction = {
             functionName:
                 getRasterFunctionByLandCoverClassName(activeLandCoverType),
         } as any;

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import {
     ModeSelector,
 } from '@shared/components/ModeSelector';
 import { SceneInfo } from '../SceneInfo';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -35,7 +35,7 @@ import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 // import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
-import { SpectralTool } from '../SpectralTool';
+import { LandsatSpectralProfileTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { ChangeCompareTool } from '../ChangeCompareTool';
 import { appConfig } from '@shared/config';
@@ -47,11 +47,12 @@ import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolS
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamicModeInfo';
+import { LandsatSavePanel } from '../LandsatSavePanel/LandsatSavePanel';
 
 const Layout = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const dynamicModeOn = mode === 'dynamic';
 
@@ -124,7 +125,7 @@ const Layout = () => {
                                 <div className="analyze-tool-and-scene-info-container">
                                     <MaskTool />
                                     <TrendTool />
-                                    <SpectralTool />
+                                    <LandsatSpectralProfileTool />
                                     <ChangeCompareTool />
                                 </div>
                             )}
@@ -136,6 +137,7 @@ const Layout = () => {
                     <LandsatRasterFunctionSelector />
                 </div>
             </BottomPanel>
+            <LandsatSavePanel />
         </>
     );
 };

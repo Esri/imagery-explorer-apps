@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,11 @@ export const getCentroidByObjectId = async (
     serviceUrl: string,
     objectId: number
 ): Promise<number[]> => {
-    const extent = await getExtentByObjectId(serviceUrl, objectId, 4326);
+    const extent = await getExtentByObjectId({
+        serviceUrl,
+        objectId,
+        outputSpatialReference: 4326,
+    });
 
     const { ymax, ymin } = extent;
     let { xmax, xmin } = extent;

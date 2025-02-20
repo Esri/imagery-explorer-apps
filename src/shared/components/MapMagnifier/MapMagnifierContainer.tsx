@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { MapMagnifier } from './MapMagnifier';
 
 type Props = {
@@ -33,12 +33,12 @@ type Props = {
  * @returns
  */
 export const MapMagnifierContainer: FC<Props> = ({ mapView }) => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const showMagnifier = useMemo(() => {
         if (mode !== 'analysis') {

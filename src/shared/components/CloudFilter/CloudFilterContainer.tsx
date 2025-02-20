@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 import React from 'react';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     // selectAcquisitionYear,
     selectCloudCover,
@@ -29,11 +29,11 @@ import {
 } from '@shared/store/ImageryScene/reducer';
 
 export const CloudFilterContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const cloudCoverThreshold = useSelector(selectCloudCover);
+    const cloudCoverThreshold = useAppSelector(selectCloudCover);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     return (
         <CloudFilter

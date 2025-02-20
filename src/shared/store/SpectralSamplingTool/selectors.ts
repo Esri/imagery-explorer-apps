@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,6 @@ export const selectSpectralSamplingPointsData = createSelector(
     }
 );
 
-export const selectClassifictionNameOfSpectralSamplingTask = createSelector(
-    (state: RootState) => state.SpectralSamplingTool.classificationName,
-    (classificationName) => classificationName
-);
-
-export const selectIdOfItem2Highlight = createSelector(
-    (state: RootState) => state.SpectralSamplingTool.idOfItem2Highlight,
-    (idOfItem2Highlight) => idOfItem2Highlight
-);
-
 export const selectSelectedSpectralSamplingPointData = createSelector(
     (state: RootState) => state.SpectralSamplingTool.data.byId,
     (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
@@ -41,3 +31,12 @@ export const selectSelectedSpectralSamplingPointData = createSelector(
         return byId[idOfSelectedItemInListOfQueryParams];
     }
 );
+export const selectTargetService = (state: RootState) =>
+    state.SpectralSamplingTool.targetService;
+
+export const selectClassifictionNameOfSpectralSamplingTask = (
+    state: RootState
+) => state.SpectralSamplingTool.classificationName;
+
+export const selectIdOfItem2Highlight = (state: RootState) =>
+    state.SpectralSamplingTool.idOfItem2Highlight;

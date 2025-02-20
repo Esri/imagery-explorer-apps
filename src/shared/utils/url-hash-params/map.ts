@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,8 +56,8 @@ export const saveMapCenterToHashParams = (center: number[], zoom: number) => {
     updateHashParams('mapCenter', encodeMapCenter(center, zoom));
 };
 
-export const getMapCenterFromHashParams = () => {
-    const value = getHashParamValueByKey('mapCenter');
+export const getMapCenterFromHashParams = (hashParams: URLSearchParams) => {
+    const value = getHashParamValueByKey('mapCenter', hashParams);
 
     return decodeMapCenter(value);
 };

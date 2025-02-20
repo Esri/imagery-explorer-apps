@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 import { selectQueryLocation4TrendTool } from '@shared/store/TrendTool/selectors';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { AnalysisToolQueryLocation } from './AnalysisToolQueryLocation';
 import {
     selectActiveAnalysisTool,
@@ -34,15 +34,17 @@ export const AnalysisToolQueryLocationContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const queryLocation4TrendTool = useSelector(selectQueryLocation4TrendTool);
+    const queryLocation4TrendTool = useAppSelector(
+        selectQueryLocation4TrendTool
+    );
 
-    const queryLocation4SpectralProfileTool = useSelector(
+    const queryLocation4SpectralProfileTool = useAppSelector(
         selectQueryLocation4SpectralProfileTool
     );
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const visible = useMemo(() => {
         if (mode !== 'analysis') {

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 
 import IMapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectShowMapLabel,
     selectShowTerrain,
@@ -36,8 +36,8 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     const mapLabelLayersRef = useRef<__esri.Collection<__esri.Layer>>();
     const terrainLayerRef = useRef<__esri.Layer>();
 
-    const showMapLabel = useSelector(selectShowMapLabel);
-    const showTerrain = useSelector(selectShowTerrain);
+    const showMapLabel = useAppSelector(selectShowMapLabel);
+    const showTerrain = useAppSelector(selectShowTerrain);
 
     const init = () => {
         mapLabelLayersRef.current = mapView.map.allLayers.filter((layer) => {

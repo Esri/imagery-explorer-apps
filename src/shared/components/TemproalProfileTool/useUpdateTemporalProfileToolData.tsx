@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import {
     updateTemporalProfileToolData,
 } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4SceneInSelectedMode,
@@ -33,7 +33,7 @@ import {
 // import { SpectralIndex } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { debounce } from '@shared/utils/snippets/debounce';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 /**
  * This custom hook triggers `updateTemporalProfileToolData` thunk function to get temporal profile data
@@ -45,22 +45,24 @@ export const useUpdateTemporalProfileToolData = (
     fetchTemporalProfileDataFunc: FetchTemporalProfileDataFunc,
     intersectWithImagerySceneFunc: IntersectWithImagerySceneFunc
 ) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    const queryLocation = useAppSelector(selectQueryLocation4TrendTool);
 
-    const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
+    const acquisitionMonth = useAppSelector(selectAcquisitionMonth4TrendTool);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    const acquisitionYear = useAppSelector(selectAcquisitionYear4TrendTool);
 
-    const selectedTrendToolOption = useSelector(selectTrendToolOption);
+    const selectedTrendToolOption = useAppSelector(selectTrendToolOption);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const updateTrendToolDataDebounced = useCallback(
         debounce(() => {

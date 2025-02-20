@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ import { selectSelectedIndex4TrendTool } from '@shared/store/TrendTool/selectors
 import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
@@ -26,7 +26,7 @@ import {
 } from '@shared/services/landsat-level-2/config';
 
 export const useCustomDomain4YScale = (chartData: LineChartDataItem[]) => {
-    const spectralIndex: SpectralIndex = useSelector(
+    const spectralIndex: SpectralIndex = useAppSelector(
         selectSelectedIndex4TrendTool
     ) as SpectralIndex;
 

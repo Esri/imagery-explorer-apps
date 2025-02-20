@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,92 @@
  * limitations under the License.
  */
 
+import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
-import { webmapIdChanged } from './reducer';
+import { sentinel2ScenesUpdated } from './reducer';
+import { Sentinel2Scene } from '@typing/imagery-service';
+import {
+    ImageryScene,
+    availableImageryScenesUpdated,
+} from '../ImageryScene/reducer';
+import { DateRange } from '@typing/shared';
+import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
+import { deduplicateListOfImageryScenes } from '@shared/services/helpers/deduplicateListOfScenes';
+import { getSentinel2Scenes } from '@shared/services/sentinel-2/getSentinel2Scenes';
+import { convertSentinel2SceneToImageryScene } from '@shared/services/sentinel-2/helpers';
 
-// Good resource about what "thunks" are, and why they're used for writing Redux logic: https://redux.js.org/usage/writing-logic-thunks
-export const updateWebmap =
-    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+let abortController: AbortController = null;
+
+/**
+ * Query Sentinel-2 Scenes that intersect with center point of map view that were acquired within the user selected acquisition year.
+ * @param year use selected acquisition year
+ * @returns
+ */
+export const queryAvailableSentinel2Scenes =
+    (acquisitionDateRange: DateRange) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        if (!acquisitionDateRange) {
+            return;
+        }
+
+        if (abortController) {
+            abortController.abort();
+        }
+
+        abortController = new AbortController();
+
         try {
-            // do some async work (e.g. check if the new webmap id is an valid ArcGIS Online Item)
-            // ...
+            const { objectIdOfSelectedScene } =
+                selectQueryParams4SceneInSelectedMode(getState()) || {};
+
+            const center = selectMapCenter(getState());
+
+            // get scenes that were acquired within the acquisition year
+            const sentinel2Scenes: Sentinel2Scene[] = await getSentinel2Scenes({
+                acquisitionDateRange,
+                mapPoint: center,
+                abortController,
+            });
+
+            // convert list of Landsat scenes to list of imagery scenes
+            let imageryScenes: ImageryScene[] = sentinel2Scenes.map(
+                (sentinel2Scene: Sentinel2Scene) => {
+                    // const {
+                    //     objectId,
+                    //     name,
+                    //     formattedAcquisitionDate,
+                    //     acquisitionDate,
+                    //     acquisitionYear,
+                    //     acquisitionMonth,
+                    //     cloudCover,
+                    // } = sentinel2Scene;
+
+                    // const imageryScene: ImageryScene = {
+                    //     objectId,
+                    //     sceneId: name,
+                    //     formattedAcquisitionDate,
+                    //     acquisitionDate,
+                    //     acquisitionYear,
+                    //     acquisitionMonth,
+                    //     cloudCover,
+                    //     satellite: 'Sentinel-2',
+                    //     customTooltipText: [
+                    //         `${Math.ceil(cloudCover * 100)}% Cloudy`,
+                    //     ],
+                    // };
+
+                    // return imageryScene;
+                    return convertSentinel2SceneToImageryScene(sentinel2Scene);
+                }
+            );
+
+            imageryScenes = deduplicateListOfImageryScenes(
+                imageryScenes,
+                objectIdOfSelectedScene
+            );
+
+            dispatch(sentinel2ScenesUpdated(sentinel2Scenes));
+            dispatch(availableImageryScenesUpdated(imageryScenes));
         } catch (err) {
             console.error(err);
         }

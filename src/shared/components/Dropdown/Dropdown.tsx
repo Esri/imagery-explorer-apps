@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,10 @@ type Props = {
     data: DropdownData[];
     disabled?: boolean;
     tooltip?: string;
+    /**
+     * If true, the label text will not be converted to uppercase
+     */
+    skipUppercase?: boolean;
     onChange: (val: string) => void;
 };
 
@@ -44,6 +48,7 @@ export const Dropdown: FC<Props> = ({
     data,
     disabled,
     tooltip,
+    skipUppercase,
     onChange,
 }: Props) => {
     const [shouldShowOptions, setShouldShowOptions] = useState(false);
@@ -87,7 +92,13 @@ export const Dropdown: FC<Props> = ({
                                 setShouldShowOptions(false);
                             }}
                         >
-                            <span className="uppercase">{label || value}</span>
+                            <span
+                                className={classNames({
+                                    uppercase: !skipUppercase,
+                                })}
+                            >
+                                {label || value}
+                            </span>
                         </div>
                     );
                 })}
@@ -156,7 +167,9 @@ export const Dropdown: FC<Props> = ({
                         setShouldShowOptions(!shouldShowOptions);
                     }}
                 >
-                    <span className="mr-1">{getLabel()}</span>
+                    <span className="mr-1 whitespace-nowrap ">
+                        {getLabel()}
+                    </span>
 
                     <calcite-icon icon="chevron-down" scale="s" />
                 </div>

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     formatAreaPercentage,
     getLandCoverChangeInAcres,
@@ -51,16 +51,16 @@ import {
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 const ChangeCompareGraphContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    // const { zoom } = useSelector(selectMapCenterAndZoom);
-    const zoom = useSelector(selectMapZoom);
+    // const { zoom } = useAppSelector(selectMapCenterAndZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
-    const resolution = useSelector(selectMapResolution);
+    const resolution = useAppSelector(selectMapResolution);
 
-    const extent = useSelector(selectMapExtent);
+    const extent = useAppSelector(selectMapExtent);
 
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
     );
 

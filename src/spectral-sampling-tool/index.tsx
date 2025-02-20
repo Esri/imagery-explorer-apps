@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,21 +24,37 @@ import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { getSpectralSampingToolStore } from './store';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
-import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
-import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
+import {
+    getTargetService,
+    getTimeExtentByTargetService,
+    getRasterFunctionInfoByTargetService,
+} from './utils/getTargetService';
+import { initEsriOAuth } from '@shared/utils/esri-oauth';
+import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
 
 (async () => {
-    const store = await getSpectralSampingToolStore();
-
-    const timeExtent = await getTimeExtentOfLandsatService();
+    await initEsriOAuth({
+        appId: appConfig.appId,
+        portalUrl: AGOL_PORTAL_ROOT,
+    });
 
     const root = createRoot(document.getElementById('root'));
+
+    const targetService = getTargetService();
+
+    const store = getSpectralSampingToolStore(targetService);
+
+    const timeExtent = await getTimeExtentByTargetService(targetService);
+    console.log('timeExtent', timeExtent);
+
+    const rasterFunctionInfo =
+        getRasterFunctionInfoByTargetService(targetService);
 
     root.render(
         <ReduxProvider store={store}>
             <AppContextProvider
                 timeExtent={timeExtent}
-                rasterFunctionInfo={LANDSAT_RASTER_FUNCTION_INFOS}
+                rasterFunctionInfo={rasterFunctionInfo}
             >
                 <ErrorBoundary>
                     <Map />

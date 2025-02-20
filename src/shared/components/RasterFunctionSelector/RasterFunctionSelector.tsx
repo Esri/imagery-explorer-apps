@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,12 +69,18 @@ export const RasterFunctionSelector: FC<Props> = ({
     return (
         <div
             className={classNames('h-full w-auto select-none', {
-                'is-disabled': disabled,
                 'mx-4': IS_MOBILE_DEVICE,
             })}
             ref={containerRef}
         >
-            <div className="text-center mb-3 flex items-center justify-center">
+            <div
+                className={classNames(
+                    'text-center mb-3 flex items-center justify-center',
+                    {
+                        'is-disabled': disabled,
+                    }
+                )}
+            >
                 <Tooltip
                     content={headerTooltip}
                     width={widthOfTooltipContainer || 240}
@@ -90,44 +96,16 @@ export const RasterFunctionSelector: FC<Props> = ({
                     const { name, thumbnail, label } = d;
 
                     const selected =
-                        disabled === false &&
+                        // disabled === false &&
                         nameOfSelectedRasterFunction === name;
 
                     return (
-                        // <div
-                        //     className={classNames(
-                        //         'relative w-24 h-12 bg-cover cursor-pointer'
-                        //     )}
-                        //     style={{
-                        //         background: `url(${thumbnail})`,
-                        //     }}
-                        //     key={name}
-                        //     onClick={onChange.bind(null, name)}
-                        // >
-                        //     <div
-                        //         className={classNames(
-                        //             'absolute top-0 left-0 w-full h-full',
-                        //             {
-                        //                 'border-2': selected,
-                        //                 'border-custom-light-blue': selected,
-                        //                 'drop-shadow-custom-light-blue':
-                        //                     selected,
-                        //             }
-                        //         )}
-                        //         style={{
-                        //             background: `linear-gradient(0deg, rgba(2,28,36,1) 0%, rgba(2,28,36,0.6) 30%, rgba(2,28,36,0) 50%, rgba(2,28,36,0) 100%)`,
-                        //         }}
-                        //     ></div>
-
-                        //     <div className="absolute bottom-0 left-0 right-0 text-center text-ellipsis whitespace-nowrap overflow-hidden z-10">
-                        //         <span className="text-xs">{label || name}</span>
-                        //     </div>
-                        // </div>
                         <GirdCard
                             key={name}
                             label={label || name}
                             thumbnail={thumbnail}
                             selected={selected}
+                            disabled={disabled}
                             onClick={() => {
                                 onChange(name);
                             }}

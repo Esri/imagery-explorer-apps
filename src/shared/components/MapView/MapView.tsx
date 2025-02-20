@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,10 @@ interface Props {
      */
     zoom?: number;
     /**
+     * If true, disables the map navigation
+     */
+    shouldDisableMapNavigate?: boolean;
+    /**
      * Children Elements that will receive Map View as prop
      */
     children?: React.ReactNode;
@@ -44,6 +48,7 @@ const MapView: React.FC<Props> = ({
     webmapId,
     center,
     zoom,
+    shouldDisableMapNavigate,
     children,
 }: Props) => {
     const mapDivRef = useRef<HTMLDivElement>();
@@ -68,6 +73,9 @@ const MapView: React.FC<Props> = ({
             },
             popupEnabled: false,
         });
+
+        // Removes all default UI components, except Attribution.
+        mapViewRef.current.ui.components = ['attribution'];
 
         mapViewRef.current.when(() => {
             setMapView(mapViewRef.current);
@@ -109,6 +117,7 @@ const MapView: React.FC<Props> = ({
             <div
                 className={classNames('absolute top-0 left-0 w-full bottom-0', {
                     // 'cursor-none': showMagnifier,
+                    'pointer-events-none': shouldDisableMapNavigate,
                 })}
                 ref={mapDivRef}
             ></div>

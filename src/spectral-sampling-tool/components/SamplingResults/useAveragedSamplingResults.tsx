@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { formatLandsatBandValuesAsLineChartDataItems } from '@landsat-explorer/components/SpectralTool/helper';
 import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
@@ -22,7 +21,7 @@ import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumn
 // import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * This custom hook calculates the averaged band values across all sampling points.
@@ -30,7 +29,7 @@ import { useSelector } from 'react-redux';
  * @returns {Array} An array containing averaged band values across all sampling points.
  */
 export const useAveragedBandValues = () => {
-    const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
+    const samplingPointsData = useAppSelector(selectSpectralSamplingPointsData);
 
     const averagedResults = useMemo(() => {
         if (!samplingPointsData || !samplingPointsData.length) {

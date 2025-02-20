@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,11 @@
  */
 
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { ModeSelector } from './ModeSelector';
-import { batch } from 'react-redux';
 import {
     selectAppMode,
     selectActiveAnalysisTool,
@@ -30,13 +29,13 @@ import {
 } from '@shared/store/ImageryScene/reducer';
 
 export const ModeSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const selectedMode = useSelector(selectAppMode);
+    const selectedMode = useAppSelector(selectAppMode);
 
-    const activeAnalysisTool = useSelector(selectActiveAnalysisTool);
+    const activeAnalysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     return (
         <ModeSelector
@@ -47,16 +46,12 @@ export const ModeSelectorContainer = () => {
                 dispatch(modeChanged(value));
             }}
             highlightButtonOnClick={() => {
-                batch(() => {
-                    dispatch(activeAnalysisToolChanged('mask'));
-                    dispatch(modeChanged('analysis'));
-                });
+                dispatch(activeAnalysisToolChanged('mask'));
+                dispatch(modeChanged('analysis'));
             }}
             profileButtonOnClick={() => {
-                batch(() => {
-                    dispatch(activeAnalysisToolChanged('trend'));
-                    dispatch(modeChanged('analysis'));
-                });
+                dispatch(activeAnalysisToolChanged('trend'));
+                dispatch(modeChanged('analysis'));
             }}
         />
     );

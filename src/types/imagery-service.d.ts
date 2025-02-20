@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,9 @@ export type SpectralIndex =
     | 'vegetation'
     | 'moisture'
     | 'temperature farhenheit'
-    | 'temperature celcius';
+    | 'temperature celcius'
+    | 'urban'
+    | 'burn';
 
 /**
  * Name of Radar Index for SAR image (e.g. Sentinel-1)
@@ -138,6 +140,68 @@ export type LandsatScene = {
     // best: number;
     sunElevation: number;
     sunAzimuth: number;
+};
+
+export type Sentinel2Scene = {
+    objectId: number;
+    /**
+     * Sentinel-2 product name
+     * @example Ov_i05_L02_R00000016_C00000004
+     */
+    name: string;
+    /**
+     * acquisitionDate as a string in ISO format (YYYY-MM-DD).
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * acquisitionDate in unix timestamp
+     */
+    acquisitionDate: number;
+    /**
+     * year when this scene was acquired
+     */
+    acquisitionYear: number;
+    /**
+     * month when this scene was acquired
+     */
+    acquisitionMonth: number;
+    /**
+     * percent of cloud cover, the value ranges from 0 - 1
+     */
+    cloudCover: number;
+    /**
+     * percent of cloud cover ranges rounded to integers that ranges from 0 - 100
+     */
+    formattedCloudCover: number;
+    /**
+     * name of the satellite (e.g. 'Sentinel-2C')
+     */
+    satellite: string;
+    /**
+     * name of the sensor (e.g. 'MSI')
+     */
+    sensor: string;
+    /**
+     * percentage of snow and ice cover, the value ranges from 0 - 1
+     */
+    snowIcePercentage: number;
+    /**
+     * name of the product, e.g. 'S2MSI2A'
+     */
+    productName: string;
+    /**
+     * relative orbit number of the scene
+     */
+    relativeOrbit: string;
+    /**
+     * elevation of the sun in degrees:
+     * 90 - MeanSolarZenith
+     */
+    sunElevation: string;
+    /**
+     * azimuth of the sun in degrees:
+     */
+    sunAzimuth: string;
 };
 
 /**

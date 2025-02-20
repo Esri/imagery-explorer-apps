@@ -15,9 +15,11 @@ const config = require('./src/config.json');
 
 module.exports =  (env, options)=> {
 
-    const devMode = options.mode === 'development' ? true : false;
-
     process.env.NODE_ENV = options.mode;
+
+    const devMode = process.env.NODE_ENV === 'development' 
+        ? true 
+        : false;
 
     // name of the explorer app to start/build:
     const app = env['app']
@@ -51,8 +53,7 @@ module.exports =  (env, options)=> {
             'please update `./src/config.json` to make sure it includes entrypoint of the app to start'
         )
     }
-
-    console.log(`starting ${app}\n`);
+    console.log(`${env['WEBPACK_BUILD'] ? 'building' : 'starting'} ${app}\n`);
 
     return {
         mode: options.mode,
@@ -76,6 +77,7 @@ module.exports =  (env, options)=> {
             alias: {
                 '@shared': path.resolve(__dirname, 'src/shared/'),
                 '@landsat-explorer': path.resolve(__dirname, 'src/landsat-explorer/'),
+                '@sentinel2-explorer': path.resolve(__dirname, 'src/sentinel-2-explorer/'),
                 '@landcover-explorer': path.resolve(__dirname, 'src/landcover-explorer/'),
                 '@typing': path.resolve(__dirname, 'src/types/'),
             },
@@ -138,6 +140,34 @@ module.exports =  (env, options)=> {
                  * name of the imagery explorer app to start/build
                  */
                 WEBPACK_DEFINED_APP_NAME: JSON.stringify(app),
+                /**
+                 * URL for Landsat service proxy in development environment
+                 */
+                LANDSAT_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_DEV),
+                /**
+                 * URL for Landsat service proxy in production environment
+                 */
+                LANDSAT_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_PROD),
+                /**
+                 * URL for Sentinel-2 service proxy in development environment
+                 */
+                SENTINEL2_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_DEV),
+                /**
+                 * URL for Sentinel-2 service proxy in production environment
+                 */
+                SENTINEL2_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_PROD),
+                /**
+                 * URL for Sentinel-1 service proxy in development environment
+                 */
+                SENTINEL1_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_DEV),
+                /**
+                 * URL for Sentinel-1 service proxy in production environment
+                 */
+                SENTINEL1_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_PROD),
+                /**
+                 * Specify the service tier to use in the application
+                 */
+                SERVICE_TIER: JSON.stringify(process.env.SERVICE_TIER),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
@@ -151,7 +181,7 @@ module.exports =  (env, options)=> {
                     { 
                         from: "public/**/*", 
                         globOptions: {
-                            ignore: ["**/index.html"],
+                            ignore: ["**/index.html", "**/__tests__/**"],
                         },
                     }
                 ],

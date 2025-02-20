@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ import {
 // import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type ToggleButtonProps = {
     label: string;
@@ -86,18 +86,18 @@ type Props = {
 };
 
 export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const showMapLabel = useSelector(selectShowMapLabel);
+    const showMapLabel = useAppSelector(selectShowMapLabel);
 
-    const showTerrain = useSelector(selectShowTerrain);
+    const showTerrain = useAppSelector(selectShowTerrain);
 
-    const showBasemap = useSelector(selectShowBasemap);
+    const showBasemap = useAppSelector(selectShowBasemap);
 
     return (
         <div
             className={classNames(
-                'absolute w-search-widget-width bg-custom-background flex py-2 px-1 text-custom-light-blue text-xs top-layer-toggle-top-position-mobile md:top-layer-toggle-top-position',
+                'absolute bg-custom-background flex py-2 px-1 text-custom-light-blue text-xs top-map-ui-top-position',
                 {
                     hidden: shoudHide,
                 }

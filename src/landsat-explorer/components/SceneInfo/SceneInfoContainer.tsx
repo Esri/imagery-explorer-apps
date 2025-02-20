@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,29 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
     SceneInfoTable,
     SceneInfoTableData,
 } from '@shared/components/SceneInfoTable';
-import { useDataFromSelectedLandsatScene } from './useDataFromSelectedLandsatScene';
 import { DATE_FORMAT } from '@shared/constants/UI';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
+import { LandsatScene } from '@typing/imagery-service';
+import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 
 export const SceneInfoContainer = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const data = useDataFromSelectedLandsatScene();
+    const fetchSceneByObjectId = useCallback(async (objectId: number) => {
+        const res = await getLandsatSceneByObjectId(objectId);
+        return res;
+    }, []);
+
+    const data =
+        useDataFromSelectedImageryScene<LandsatScene>(fetchSceneByObjectId);
 
     const tableData: SceneInfoTableData[] = useMemo(() => {
         if (!data) {

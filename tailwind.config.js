@@ -50,21 +50,25 @@ module.exports = {
             'selected': '#C2EEFE',
           }
         }
-      }
+      },
+      'calcite': {
+        green: {
+          60: `var(--calcite-color-green-060)`,
+          70: `var(--calcite-color-green-070)`
+        }
+      }, 
     },
     extend: {
       spacing: {
         'bottom-panel-height': '236px',
         'app-header-size': '40px',
-        'app-header-position': '15px',
-        'layer-toggle-top-position': '15px',
-        'layer-toggle-top-position-mobile': '55px',
-        'search-widget-top-position': '50px',
-        'search-widget-top-position-mobile': '90px',
+        'map-ui-top-position': '15px',
+        'map-action-button-group-top-position': '56px',
+        // 'search-widget-top-position': '50px',
         'cloud-slider-height': '80px',
         'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)',
         'analysis-tool-container-width': '255px',
-        'search-widget-width': '270px',
+        // 'search-widget-width': '270px',
         'map-action-button-size': '32px'
       },
       dropShadow: {
@@ -77,6 +81,9 @@ module.exports = {
         '2xl': '1620px',
         '3xl': '1920px'
       },
+      gridTemplateColumns: {
+        "save-option-list": "200px 1fr",
+      }
     },
   },
   variants: {

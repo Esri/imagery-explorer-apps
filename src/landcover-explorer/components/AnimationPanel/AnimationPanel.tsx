@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
@@ -22,7 +22,7 @@ import {
 
 import IMapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import classNames from 'classnames';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { saveAnimationModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
@@ -44,9 +44,9 @@ type Props = {
 };
 
 const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const mediaLayerRef = useRef<MediaLayer>();
 
@@ -55,9 +55,9 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
     const frameData4DownloadJob: AnimationFrameData[] =
         useFrameDataForDownloadJob({ mediaLayerElements, mapView });
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 import React, { useContext, useMemo } from 'react';
 import { AnimationFrameInfo } from './AnimationFramesList';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectListOfQueryParams,
     selectIdOfSelectedItemInListOfQueryParams,
@@ -30,11 +30,11 @@ import { AppContext } from '@shared/contexts/AppContextProvider';
 export const useAnimationFramesInfo = () => {
     const { rasterFunctionLabelMap } = useContext(AppContext);
 
-    const selectedAnimationFrameId = useSelector(
+    const selectedAnimationFrameId = useAppSelector(
         selectIdOfSelectedItemInListOfQueryParams
     );
 
-    const queryParams4ScenesInAnimationMode = useSelector(
+    const queryParams4ScenesInAnimationMode = useAppSelector(
         selectListOfQueryParams
     );
 

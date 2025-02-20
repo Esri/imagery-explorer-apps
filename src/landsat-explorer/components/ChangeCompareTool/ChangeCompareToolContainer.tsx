@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React from 'react';
-// import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+// import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { getChangeCompareLayerColorrampAsCSSGradient } from '../ChangeLayer/helpers';
 import {
     ChangeCompareToolHeader,
@@ -39,7 +39,7 @@ import {
 const LEGEND_LABEL_TEXT = ['decrease', 'no change', 'increase'];
 
 export const ChangeCompareToolContainer = () => {
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
     if (tool !== 'change') {
         return null;

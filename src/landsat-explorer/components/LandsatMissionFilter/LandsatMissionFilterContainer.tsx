@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,17 @@
 
 import React from 'react';
 import { LandsatMissionFilter } from './LandsatMissionFilter';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { missionsToBeExcludedUpdated } from '@shared/store/Landsat/reducer';
 
 export const LandsatMissionFilterContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
     return (
         <LandsatMissionFilter

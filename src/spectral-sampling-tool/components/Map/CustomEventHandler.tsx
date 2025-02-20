@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,14 @@ import { Extent, Point } from '@arcgis/core/geometry';
 import MapView from '@arcgis/core/views/MapView';
 import { updateLocationOfSpectralSamplingPoint } from '@shared/store/SpectralSamplingTool/thunks';
 import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 type Props = {
     mapView?: MapView;
 };
 
 export const CustomEventHandlers: FC<Props> = ({ mapView }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const initEventHandlers = async () => {
         mapView.on('click', (evt) => {

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,17 +38,8 @@ import {
 } from '@shared/store/TrendTool/selectors';
 import { updateTemporalProfileToolData } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-// import { TemporalProfileChart } from './TrendChart';
-// import { updateAcquisitionDate } from '@shared/store/ImageryScene/thunks';
-import {
-    // getFormatedDateString,
-    getMonthFromFormattedDateString,
-    getYearFromFormattedDateString,
-} from '@shared/utils/date-time/formatDateString';
-// import { centerChanged } from '@shared/store/Map/reducer';
-// import { batch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
@@ -63,29 +54,31 @@ import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getL
 import { useSyncSelectedYearAndMonth4TemporalProfileTool } from '@shared/components/TemproalProfileTool/useSyncSelectedYearAndMonth';
 
 export const TrendToolContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    // const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    // const queryLocation = useAppSelector(selectQueryLocation4TrendTool);
 
-    // const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
+    // const acquisitionMonth = useAppSelector(selectAcquisitionMonth4TrendTool);
 
-    // const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    // const acquisitionYear = useAppSelector(selectAcquisitionYear4TrendTool);
 
-    // const selectedTrendToolOption = useSelector(selectTrendToolOption);
+    // const selectedTrendToolOption = useAppSelector(selectTrendToolOption);
 
-    // const temporalProfileData = useSelector(selectTrendToolData);
+    // const temporalProfileData = useAppSelector(selectTrendToolData);
 
-    const spectralIndex = useSelector(selectSelectedIndex4TrendTool);
+    const spectralIndex = useAppSelector(selectSelectedIndex4TrendTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    // const isLoading = useSelector(selectIsLoadingData4TrendingTool);
+    // const isLoading = useAppSelector(selectIsLoadingData4TrendingTool);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
-    // const trendToolOption = useSelector(selectTrendToolOption);
+    // const trendToolOption = useAppSelector(selectTrendToolOption);
 
     const intersectWithImageryScene = useCallback(
         async (

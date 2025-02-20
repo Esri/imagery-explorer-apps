@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
@@ -22,7 +22,7 @@ import {
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 
 // const ANIMATION_SPEED_IN_MILLISECONDS = 1000;
@@ -32,13 +32,13 @@ import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
  * @param mediaLayerElements Image Elements added to media layer
  */
 const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const years = getAvailableYears();
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     const isPlayingRef = useRef<boolean>(false);
 
@@ -46,7 +46,7 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
 
     const indexOfNextFrame = useRef<number>(0);
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     const animationSpeedRef = useRef<number>(animationSpeed);
 

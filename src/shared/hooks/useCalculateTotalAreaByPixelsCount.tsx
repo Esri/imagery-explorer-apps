@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import { totalVisibleAreaInSqKmChanged } from '@shared/store/Map/reducer';
 import { selectCountOfVisiblePixels } from '@shared/store/Map/selectors';
 // import { debounce } from '@shared/utils/snippets/debounce';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * Custom hook that calculates the total visible area based on
@@ -41,9 +41,9 @@ export const useCalculateTotalAreaByPixelsCount = ({
     serviceURL: string;
     pixelSize: number;
 }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const countOfVisiblePixels = useSelector(selectCountOfVisiblePixels);
+    const countOfVisiblePixels = useAppSelector(selectCountOfVisiblePixels);
 
     // calculate the approximate area a pixel covers, adjusted by the latitude of the centroid point of the imagery scene to which this pixel belongs
     const pixelAreaInSqMeter = useCalculatePixelArea({
@@ -57,7 +57,7 @@ export const useCalculateTotalAreaByPixelsCount = ({
         const areaSqMeter = pixelAreaInSqMeter * visiblePixels;
         const areaSqKM = areaSqMeter / 1000000;
 
-        dispatach(totalVisibleAreaInSqKmChanged(areaSqKM));
+        dispatch(totalVisibleAreaInSqKmChanged(areaSqKM));
     };
 
     useEffect(() => {

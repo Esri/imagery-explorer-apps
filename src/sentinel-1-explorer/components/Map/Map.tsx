@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@ import MapViewContainer from '@shared/components/MapView/MapViewContainer';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { AnalysisToolQueryLocation } from '@shared/components/AnalysisToolQueryLocation';
-import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 // import { ChangeLayer } from '../ChangeLayer';
-import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
-import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
-import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
+// import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { Sentinel1Layer } from '../Sentinel1Layer';
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
@@ -36,13 +33,14 @@ import { Popup } from '../Popup';
 import { TemporalCompositeLayer } from '../TemporalCompositeLayer';
 import { ChangeCompareLayer4Sentinel1 } from '../ChangeCompareLayer';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { Sentinel1MaskLayer } from '../MaskLayer';
 import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootprintLayer';
-import { ZoomToExtent } from '@shared/components/ZoomToExtent';
+import { MapActionButtonGroup } from '@shared/components/MapActionButton';
+// import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 
 export const Map = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <MapViewContainer
@@ -70,15 +68,11 @@ export const Map = () => {
             />
             <HillshadeLayer />
 
-            <MapActionButtonsGroup>
-                <Zoom2NativeScale
-                    nativeScale={37795}
-                    tooltip={"Zoom to Sentinel-1's native resolution"}
-                />
-                <ZoomToExtent serviceUrl={SENTINEL_1_SERVICE_URL} />
-                <ScreenshotWidget />
-                <CopyLinkWidget />
-            </MapActionButtonsGroup>
+            <MapActionButtonGroup
+                nativeScale={37795}
+                serviceName={'Sentinel-1'}
+                serviceUrl={SENTINEL_1_SERVICE_URL}
+            />
 
             <Popup />
             <MapMagnifier />

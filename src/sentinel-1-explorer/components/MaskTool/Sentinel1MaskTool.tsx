@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,8 @@ import {
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
@@ -45,6 +45,7 @@ import {
     SENTINEL1_SHIP_AND_URBAN_INDEX_PIXEL_RANGE,
 } from '@shared/services/sentinel-1/config';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
+import { useSentinel1MaskToolFullPixelValueRange } from './useSentinel1MaskToolFullPixelValueRange';
 
 export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
     water: SENTINEL1_WATER_INDEX_PIXEL_RANGE,
@@ -54,30 +55,32 @@ export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
 };
 
 export const Sentinel1MaskTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedIndex = useSelector(selectSelectedIndex4MaskTool);
+    const selectedIndex = useAppSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
+    const maskOptions = useAppSelector(selectMaskLayerPixelValueRange);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    // const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     const shouldBeDisabled = useMemo(() => {
         return !objectIdOfSelectedScene;
     }, [objectIdOfSelectedScene]);
 
-    const fullPixelValueRange = useMemo(() => {
-        return (
-            Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
-                0, 0,
-            ]
-        );
-    }, [selectedIndex]);
+    // const fullPixelValueRange = useMemo(() => {
+    //     return (
+    //         Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
+    //             0, 0,
+    //         ]
+    //     );
+    // }, [selectedIndex]);
+
+    const fullPixelValueRange = useSentinel1MaskToolFullPixelValueRange();
 
     const countOfTicks = useMemo(() => {
         // use 5 ticks if water index is selected

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
 
 import { selectSelectedIndex4TrendTool } from '@shared/store/TrendTool/selectors';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { AnalysisToolHeader } from '../AnalysisToolHeader';
 import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { selectedIndex4TrendToolChanged } from '@shared/store/TrendTool/reducer';
 
 type Props = {
@@ -33,9 +33,9 @@ export const TemporalProfileToolHeader: FC<Props> = ({
     options,
     tooltipText,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const spectralIndex = useSelector(selectSelectedIndex4TrendTool);
+    const spectralIndex = useAppSelector(selectSelectedIndex4TrendTool);
 
     return (
         <AnalysisToolHeader

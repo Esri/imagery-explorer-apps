@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,8 +44,8 @@ import {
 //     updateTrendToolData,
 // } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectQueryParams4SceneInSelectedMode,
@@ -69,16 +69,16 @@ import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors
 import { Sentinel1TemporalProfileChart } from './Sentinel1TemporalProfileChart';
 
 export const Sentinel1TemporalProfileTool = () => {
-    // const dispatch = useDispatch();
+    // const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    // const orbitDirection = useSelector(selectSentinel1OrbitDirection);
+    // const orbitDirection = useAppSelector(selectSentinel1OrbitDirection);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    // const error = useSelector(selectError4TemporalProfileTool);
+    // const error = useAppSelector(selectError4TemporalProfileTool);
 
     /**
      * this function will be invoked by the updateTemporalProfileToolData thunk function

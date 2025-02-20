@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import {
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
 import MapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { ZoomToExtent } from './ZoomToExtent';
 import {
     selectAppMode,
@@ -40,14 +40,14 @@ type Props = {
 };
 
 export const ZoomToExtentContainer: FC<Props> = ({ serviceUrl, mapView }) => {
-    // const animationStatus = useSelector(selectAnimationStatus);
+    // const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     const [isLoadingExtent, setIsLoadingExtent] = useState<boolean>(false);
 
@@ -72,10 +72,10 @@ export const ZoomToExtentContainer: FC<Props> = ({ serviceUrl, mapView }) => {
         setIsLoadingExtent(true);
 
         try {
-            const extent = await getExtentByObjectId(
+            const extent = await getExtentByObjectId({
                 serviceUrl,
-                objectIdOfSelectedScene
-            );
+                objectId: objectIdOfSelectedScene,
+            });
             mapView.extent = extent as any;
         } catch (err) {
             console.log(err);

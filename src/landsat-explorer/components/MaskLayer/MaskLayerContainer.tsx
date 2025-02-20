@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useMemo } from 'react';
 // import { MaskLayer } from './MaskLayer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMaskLayerPixelValueRange,
     selectShouldClipMaskLayer,
@@ -36,14 +36,16 @@ import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { getBandIndexesBySpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import {
     LANDSAT_LEVEL_2_SERVICE_URL,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    // LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    // LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    // LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    // LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
+import { useMaskLayerVisibility } from '@shared/components/MaskLayer/useMaskLayerVisibility';
+import { useLandsatMaskToolFullPixelValueRange } from '../MaskTool/useLandsatMaskToolFullPixelValueRange';
 
 type Props = {
     mapView?: MapView;
@@ -68,60 +70,48 @@ export const getRasterFunctionBySpectralIndex = (
 };
 
 export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
-
-    const spectralIndex = useSelector(
+    const spectralIndex = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as SpectralIndex;
 
-    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+    const { selectedRange } = useAppSelector(selectMaskLayerPixelValueRange);
 
-    const pixelColor = useSelector(selectMaskLayerPixelColor);
+    const pixelColor = useAppSelector(selectMaskLayerPixelColor);
 
-    const opacity = useSelector(selectMaskLayerOpcity);
+    const opacity = useAppSelector(selectMaskLayerOpcity);
 
-    const shouldClip = useSelector(selectShouldClipMaskLayer);
+    const shouldClip = useAppSelector(selectShouldClipMaskLayer);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
-
-    const isVisible = useMemo(() => {
-        if (mode !== 'analysis' || anailysisTool !== 'mask') {
-            return false;
-        }
-
-        if (!objectIdOfSelectedScene) {
-            return false;
-        }
-
-        return true;
-    }, [mode, anailysisTool, objectIdOfSelectedScene]);
+    const isVisible = useMaskLayerVisibility();
 
     const rasterFunction = useMemo(() => {
         return getRasterFunctionBySpectralIndex(spectralIndex);
     }, [spectralIndex]);
 
-    const fullPixelValueRange = useMemo(() => {
-        if (spectralIndex === 'temperature celcius') {
-            return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-            ];
-        }
+    // const fullPixelValueRange = useMemo(() => {
+    //     if (spectralIndex === 'temperature celcius') {
+    //         return [
+    //             LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+    //             LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+    //         ];
+    //     }
 
-        if (spectralIndex === 'temperature farhenheit') {
-            return [
-                LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-                LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-            ];
-        }
+    //     if (spectralIndex === 'temperature farhenheit') {
+    //         return [
+    //             LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+    //             LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+    //         ];
+    //     }
 
-        return [-1, 1];
-    }, [spectralIndex]);
+    //     return [-1, 1];
+    // }, [spectralIndex]);
+
+    const fullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
 
     useCalculateTotalAreaByPixelsCount({
         objectId: objectIdOfSelectedScene,
@@ -143,7 +133,7 @@ export const MaskLayerContainer: FC<Props> = ({ mapView, groupLayer }) => {
             opacity={opacity}
             blendMode={shouldClip ? 'destination-atop' : 'normal'}
             countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                dispatch(countOfVisiblePixelsChanged(visiblePixels));
             }}
         />
     );

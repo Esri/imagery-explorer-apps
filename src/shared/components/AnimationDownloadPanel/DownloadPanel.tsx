@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@ import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import { DownloadOptionsList } from './DownloadOptionsList';
 import { Dimension, PreviewWindow } from './PreviewWindow';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selectors';
 import { DownloadJobStatusInfo } from './DownloadJobStatus';
 import { CloseButton } from '../CloseButton';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
@@ -81,9 +81,9 @@ export const AnimationDownloadPanel: FC<Props> = ({
     mapViewWindowSize,
     authoringAppName,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const shouldShowDownloadPanel = useSelector(
+    const shouldShowDownloadPanel = useAppSelector(
         selectShouldShowDownloadAnimationPanel
     );
 

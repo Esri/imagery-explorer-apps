@@ -8,8 +8,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 ### Changed
-### Fixed
 ### Removed
+### Fixed
+
+## [2025-02-19]
+
+## Sentinel-2 Explorer
+
+### Added
+- Add the Sentinel-2 Explorer application that includes the following modes/tools
+    - Dynamic View
+    - Find a Scene mode
+    - Swipe mode
+    - Animate mode
+    - Index Mask Tool
+    - Temporal Profile Tool
+    - Spectral Profile Tool
+    - Change Detection Tool
+
+## Shared
+
+### Added
+- Add "Save Panel" that allows users to save the current state of the app or selected imagery scenes to ArcGIS Online Web Map or Hosted Imagery Layer.
+- Add "Auto-Swipe" option for Swipe Mode.
+- Add "Expanded Chart" panel to Spectral Profile Tool.
+- Add tooltip to Spectral Profile Tool chart.
+- Add "Click to Copy Coordinates" indicator in popup.
 
 ## 2024 July Release
 

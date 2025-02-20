@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect, useMemo } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -25,11 +25,11 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
 import {
     QueryParams4ImageryScene,
     queryParams4SecondarySceneChanged,
 } from '@shared/store/ImageryScene/reducer';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 /**
  * Custom hook to synchronize the renderer of the secondary imagery scene with the main scene.
@@ -39,21 +39,21 @@ import {
  * Change Compare tool to provide a consistent user experience.
  */
 export const useSyncRenderers = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analyzeTool = useSelector(selectActiveAnalysisTool);
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
-    const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
+    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 
-    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
+    const isSecondarySceneActive = useAppSelector(selectIsSecondarySceneActive);
 
     /**
      * Determines whether the renderer should be synchronized based on the current mode

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import Point from '@arcgis/core/geometry/Point';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapPopupAnchorLocation,
     selectSwipeWidgetHandlerPosition,
 } from '@shared/store/Map/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { watch } from '@arcgis/core/core/reactiveUtils';
 import {
@@ -61,19 +61,19 @@ type Props = {
 type MapViewOnClickHandler = (mapPoint: Point, mousePointX: number) => void;
 
 export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 
-    const swipePosition = useSelector(selectSwipeWidgetHandlerPosition);
+    const swipePosition = useAppSelector(selectSwipeWidgetHandlerPosition);
 
     const openPopupRef = useRef<MapViewOnClickHandler>();
 

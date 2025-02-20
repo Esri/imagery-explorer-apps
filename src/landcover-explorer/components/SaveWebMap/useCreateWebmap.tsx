@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@ import React, { useEffect, useState } from 'react';
 import { WebMapMetadata } from './SaveWebMap';
 import { CreateWebMapResponse, createWebMap } from './createWebMap';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectMapExtent } from '@shared/store/Map/selectors';
 
 export const useCreateWebmap = (webmapMetadata: WebMapMetadata) => {
-    const mapExtent = useSelector(selectMapExtent);
+    const mapExtent = useAppSelector(selectMapExtent);
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
 

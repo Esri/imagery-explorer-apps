@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import SpectralSamplingTool from './SpectralSamplingTool/reducer';
 import TemporalCompositeTool from './TemporalCompositeTool/reducer';
 import LandcoverExplorer from './LandcoverExplorer/reducer';
 import Sentinel1 from './Sentinel1/reducer';
+import PublishAndDownloadJobs from './PublishAndDownloadJobs/reducer';
 
 const reducers = combineReducers({
     Map,
@@ -42,6 +43,7 @@ const reducers = combineReducers({
     ChangeCompareTool,
     SpectralSamplingTool,
     TemporalCompositeTool,
+    PublishAndDownloadJobs,
 });
 
 export default reducers;

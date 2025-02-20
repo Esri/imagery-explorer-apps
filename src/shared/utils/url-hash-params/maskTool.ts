@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,8 +112,9 @@ export const saveMaskToolToHashParams = debounce((data: MaskToolState) => {
  * @returns
  */
 export const getMaskToolDataFromHashParams = (
+    hashParams: URLSearchParams,
     pixelValueRangeData?: MaskToolPixelValueRangeBySpectralIndex
 ): MaskToolState => {
-    const value = getHashParamValueByKey('mask');
+    const value = getHashParamValueByKey('mask', hashParams);
     return decodeMaskToolData(value, pixelValueRangeData);
 };

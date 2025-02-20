@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,8 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { batch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     // getFormatedDateString,
     getMonthFromFormattedDateString,
@@ -39,10 +38,10 @@ import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
  * to keep it in sync with the acquisition date of selected imagery scene
  */
 export const useSyncSelectedYearAndMonth4TemporalProfileTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     useEffect(() => {
         // remove query location when selected acquisition date is removed
@@ -55,9 +54,7 @@ export const useSyncSelectedYearAndMonth4TemporalProfileTool = () => {
 
         const year = getYearFromFormattedDateString(acquisitionDate);
 
-        batch(() => {
-            dispatch(acquisitionMonth4TrendToolChanged(month));
-            dispatch(acquisitionYear4TrendToolChanged(year));
-        });
+        dispatch(acquisitionMonth4TrendToolChanged(month));
+        dispatch(acquisitionYear4TrendToolChanged(year));
     }, [acquisitionDate]);
 };

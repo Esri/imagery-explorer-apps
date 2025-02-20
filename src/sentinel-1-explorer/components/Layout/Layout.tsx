@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import {
     ContainerOfSecondaryControls,
     ModeSelector,
 } from '@shared/components/ModeSelector';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -51,11 +51,12 @@ import { Sentinel1InterestingPlaces } from '../InterestingPlaces';
 import { Sentinel1DynamicModeInfo } from '../Sentinel1DynamicModeInfo/Sentinel1DynamicModeInfo';
 // import { Sentinel1DocPanel } from '../DocPanel';
 import { useSyncRenderers } from '@shared/hooks/useSyncRenderers';
+import { Sentinel1SavePanel } from '../Sentinel1SavePanel';
 
 export const Layout = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const dynamicModeOn = mode === 'dynamic';
 
@@ -169,6 +170,7 @@ export const Layout = () => {
                     <Sentinel1FunctionSelector />
                 </div>
             </BottomPanel>
+            <Sentinel1SavePanel />
         </>
     );
 };

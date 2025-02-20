@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import { appConfig } from '@shared/config';
 // import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { AnimationFrameData4DownloadJob } from '@shared/components/AnimationDownloadPanel/DownloadPanel';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
@@ -49,11 +49,11 @@ export const useFrameDataForDownloadJob = ({
     mediaLayerElements,
     mapView,
 }: Props) => {
-    const mapCenter = useSelector(selectMapCenter);
+    const mapCenter = useAppSelector(selectMapCenter);
 
     const years = getAvailableYears();
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
 
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 /**
  * This custom hook returns a boolean value indicates if the secondary controls should be shown
  * @returns {boolean} If true, show secondary controls next to mode selectors
  */
 export const useShouldShowSecondaryControls = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const shouldShowSecondaryControls =
         mode === 'swipe' || mode === 'animate' || mode === 'analysis';

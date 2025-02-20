@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -92,30 +92,35 @@ export const saveListOfQueryParamsToHashParams = (
     updateHashParams('listOfScenes', encodedData);
 };
 
-export const getQueryParams4MainSceneFromHashParams = () => {
-    const value = getHashParamValueByKey('mainScene');
+export const getQueryParams4MainSceneFromHashParams = (
+    hashParams: URLSearchParams
+) => {
+    const value = getHashParamValueByKey('mainScene', hashParams);
     return decodeQueryParams4ImageryScene(value);
 };
 
-export const getQueryParams4SecondarySceneFromHashParams = () => {
-    const value = getHashParamValueByKey('secondaryScene');
+export const getQueryParams4SecondarySceneFromHashParams = (
+    hashParams: URLSearchParams
+) => {
+    const value = getHashParamValueByKey('secondaryScene', hashParams);
     return decodeQueryParams4ImageryScene(value);
 };
 
-export const getListOfQueryParamsFromHashParams =
-    (): QueryParams4ImageryScene[] => {
-        const value =
-            getHashParamValueByKey('animationScenes') ||
-            getHashParamValueByKey('listOfScenes');
+export const getListOfQueryParamsFromHashParams = (
+    hashParams: URLSearchParams
+): QueryParams4ImageryScene[] => {
+    const value =
+        getHashParamValueByKey('animationScenes', hashParams) ||
+        getHashParamValueByKey('listOfScenes', hashParams);
 
-        if (!value) {
-            return null;
-        }
+    if (!value) {
+        return null;
+    }
 
-        return value.split(',').map((d) => {
-            return {
-                ...decodeQueryParams4ImageryScene(d),
-                uniqueId: nanoid(3),
-            } as QueryParams4ImageryScene;
-        });
-    };
+    return value.split(',').map((d) => {
+        return {
+            ...decodeQueryParams4ImageryScene(d),
+            uniqueId: nanoid(3),
+        } as QueryParams4ImageryScene;
+    });
+};

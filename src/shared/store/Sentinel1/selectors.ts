@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,27 +16,16 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Sentinel1.sentinel1Scenes.byObjectId,
-    (byObjectId) => byObjectId
-);
+export const selectAvailableScenesByObjectId = (state: RootState) =>
+    state.Sentinel1.sentinel1Scenes.byObjectId;
 
-export const selectSentinel1OrbitDirection = createSelector(
-    (state: RootState) => state.Sentinel1.orbitDirection,
-    (orbitDirection) => orbitDirection
-);
+export const selectSentinel1OrbitDirection = (state: RootState) =>
+    state.Sentinel1.orbitDirection;
 
-export const selectPolarizationFilter = createSelector(
-    (state: RootState) => state.Sentinel1.polarizationFilter,
-    (polarizationFilter) => polarizationFilter
-);
+export const selectPolarizationFilter = (state: RootState) =>
+    state.Sentinel1.polarizationFilter;
 
-export const selectSentinel1State = createSelector(
-    (state: RootState) => state.Sentinel1,
-    (Sentinel1) => Sentinel1
-);
+export const selectSentinel1State = (state: RootState) => state.Sentinel1;
 
-export const selectLockedRelativeOrbit = createSelector(
-    (state: RootState) => state.Sentinel1.lockedRelativeOrbitInfo,
-    (lockedRelativeOrbitInfo) => lockedRelativeOrbitInfo
-);
+export const selectLockedRelativeOrbit = (state: RootState) =>
+    state.Sentinel1.lockedRelativeOrbitInfo;

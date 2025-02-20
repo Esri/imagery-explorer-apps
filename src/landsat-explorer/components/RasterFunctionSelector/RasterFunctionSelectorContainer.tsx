@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@
  */
 
 import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useLandsatRasterFunctions } from './useLandsatRasterFunctions';
+import { RENDERER_TOOLTIP } from '@shared/constants/UI';
 
 export const RasterFunctionSelectorContainer = () => {
     const data = useLandsatRasterFunctions();
 
-    return (
-        <RasterFunctionSelector
-            headerTooltip={`Landsat sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.`}
-            data={data}
-        />
-    );
+    const tooltip = useMemo(() => {
+        return RENDERER_TOOLTIP.replace('{{satellite}}', 'Landsat');
+    }, []);
+
+    return <RasterFunctionSelector headerTooltip={tooltip} data={data} />;
 };

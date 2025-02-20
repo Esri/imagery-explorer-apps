@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import {
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
@@ -30,13 +30,16 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
+import { useLandsatMaskToolFullPixelValueRange } from './useLandsatMaskToolFullPixelValueRange';
 
 export const SurfaceTempCelsiusPixelRangeSlider = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
+    const selectedSpectralIndex = useAppSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
+    const maskOptions = useAppSelector(selectMaskLayerPixelValueRange);
+
+    const fullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
 
     if (selectedSpectralIndex !== 'temperature celcius') {
         return null;
@@ -45,8 +48,8 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
     return (
         <PixelRangeSlider
             values={maskOptions.selectedRange}
-            min={LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS}
-            max={LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS}
+            min={fullPixelValueRange[0]}
+            max={fullPixelValueRange[1]}
             steps={1}
             valuesOnChange={(values) => {
                 dispatch(updateMaskLayerSelectedRange(values));
@@ -59,11 +62,11 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
 };
 
 export const SurfaceTempFarhenheitPixelRangeSlider = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
+    const selectedSpectralIndex = useAppSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
+    const maskOptions = useAppSelector(selectMaskLayerPixelValueRange);
 
     const rangeValues = useMemo(() => {
         return [
@@ -72,6 +75,8 @@ export const SurfaceTempFarhenheitPixelRangeSlider = () => {
         ];
     }, [maskOptions]);
 
+    const fullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
+
     if (selectedSpectralIndex !== 'temperature farhenheit') {
         return null;
     }
@@ -79,8 +84,8 @@ export const SurfaceTempFarhenheitPixelRangeSlider = () => {
     return (
         <PixelRangeSlider
             values={rangeValues}
-            min={LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT}
-            max={LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT}
+            min={fullPixelValueRange[0]}
+            max={fullPixelValueRange[1]}
             steps={1}
             valuesOnChange={(values) => {
                 values = values.map((value) =>

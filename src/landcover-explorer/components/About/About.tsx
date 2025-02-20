@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  */
 
 import React from 'react';
-// import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+// import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { showAboutThisAppToggled } from '@shared/store/LandcoverUI/reducer';
 // import { selectShowAboutThisApp } from '@shared/store/LandcoverUI/selectors';
 // import { CloseButton } from '@shared/components/CloseButton';
@@ -25,9 +25,9 @@ import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import { About } from '@shared/components/About';
 
 const AboutLandcoverExplorer = () => {
-    // const dispatch = useDispatch();
+    // const dispatch = useAppDispatch();
 
-    const show = useSelector(selectShouldShowAboutThisApp);
+    const show = useAppSelector(selectShouldShowAboutThisApp);
 
     if (!show) {
         return null;

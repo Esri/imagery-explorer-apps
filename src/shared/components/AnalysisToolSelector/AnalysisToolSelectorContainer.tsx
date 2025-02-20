@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import {
     selectAppMode,
 } from '@shared/store/ImageryScene/selectors';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { AnalysisTool } from '@shared/store/ImageryScene/reducer';
 
 export type AnalyzeToolSelectorData = {
@@ -44,11 +44,11 @@ type Props = {
 };
 
 export const AnalysisToolSelectorContainer: FC<Props> = ({ data }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     if (mode !== 'analysis') {
         return null;

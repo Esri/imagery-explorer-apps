@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
 
 import React from 'react';
 import { useSentinel1TemporalProfileDataAsChartData } from './useTemporalProfileDataAsChartData';
-import { useCustomDomain4YScale } from './useCustomDomain4YScale';
+// import { useCustomDomain4YScale } from './useCustomDomain4YScale';
 import { TemporalProfileChart } from '@shared/components/TemporalProfileChart';
+import { useCustomDomain4YScale } from '@shared/components/TemporalProfileChart/useCustomDomain4YScale';
 
 export const Sentinel1TemporalProfileChart = () => {
     const chartData = useSentinel1TemporalProfileDataAsChartData();

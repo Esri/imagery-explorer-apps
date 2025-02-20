@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import {
     selectError4TemporalProfileTool,
 } from '@shared/store/TrendTool/selectors';
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { TemporalProfileChart } from './TemporalProfileChart';
 import {
     updateAcquisitionDate,
@@ -31,7 +31,6 @@ import {
 } from '@shared/store/ImageryScene/thunks';
 
 import { centerChanged } from '@shared/store/Map/reducer';
-import { batch } from 'react-redux';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 
@@ -50,21 +49,21 @@ export const TemporalProfileChartContainer: FC<Props> = ({
     chartData,
     customDomain4YScale,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    const queryLocation = useAppSelector(selectQueryLocation4TrendTool);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    const acquisitionYear = useAppSelector(selectAcquisitionYear4TrendTool);
 
-    const temporalProfileData = useSelector(selectTrendToolData);
+    const temporalProfileData = useAppSelector(selectTrendToolData);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const trendToolOption = useSelector(selectTrendToolOption);
+    const trendToolOption = useAppSelector(selectTrendToolOption);
 
-    const isLoading = useSelector(selectIsLoadingData4TrendingTool);
+    const isLoading = useAppSelector(selectIsLoadingData4TrendingTool);
 
-    const error = useSelector(selectError4TemporalProfileTool);
+    const error = useAppSelector(selectError4TemporalProfileTool);
 
     const message = useMemo(() => {
         if (isLoading) {
@@ -110,21 +109,19 @@ export const TemporalProfileChartContainer: FC<Props> = ({
                     return;
                 }
 
-                batch(() => {
-                    // update the center of the map using user selected query location to
-                    // invoke query that fetches the landsat scenes that intersects with the query location
-                    dispatch(centerChanged([queryLocation.x, queryLocation.y]));
+                // update the center of the map using user selected query location to
+                // invoke query that fetches the landsat scenes that intersects with the query location
+                dispatch(centerChanged([queryLocation.x, queryLocation.y]));
 
-                    // unselect the selected imagery scene so that a new scene can be selected
-                    dispatch(updateObjectIdOfSelectedScene(null));
+                // unselect the selected imagery scene so that a new scene can be selected
+                dispatch(updateObjectIdOfSelectedScene(null));
 
-                    dispatch(
-                        updateAcquisitionDate(
-                            clickedDataItem.formattedAcquisitionDate,
-                            true
-                        )
-                    );
-                });
+                dispatch(
+                    updateAcquisitionDate(
+                        clickedDataItem.formattedAcquisitionDate,
+                        true
+                    )
+                );
             }}
         />
     );

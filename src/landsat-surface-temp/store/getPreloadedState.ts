@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,8 +44,8 @@ import {
 } from '@shared/store/TrendTool/reducer';
 import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 
-const getPreloadedMapState = (): MapState => {
-    const mapLocation = getMapCenterFromHashParams();
+const getPreloadedMapState = (hashParams: URLSearchParams): MapState => {
+    const mapLocation = getMapCenterFromHashParams(hashParams);
 
     return {
         ...initialMapState,
@@ -54,11 +54,15 @@ const getPreloadedMapState = (): MapState => {
     };
 };
 
-const getPreloadedImageryScenesState = (): ImageryScenesState => {
+const getPreloadedImageryScenesState = (
+    hashParams: URLSearchParams
+): ImageryScenesState => {
     const mode: AppMode =
-        (getHashParamValueByKey('mode') as AppMode) || 'dynamic';
+        (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
 
-    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
+    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
+        hashParams
+    ) || {
         ...DefaultQueryParams4ImageryScene,
     };
 
@@ -82,8 +86,10 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     };
 };
 
-const getPreloadedMaskToolState = (): MaskToolState => {
-    const maskToolData = getMaskToolDataFromHashParams();
+const getPreloadedMaskToolState = (
+    hashParams: URLSearchParams
+): MaskToolState => {
+    const maskToolData = getMaskToolDataFromHashParams(hashParams);
 
     return {
         ...initialMaskToolState,
@@ -93,8 +99,10 @@ const getPreloadedMaskToolState = (): MaskToolState => {
     } as MaskToolState;
 };
 
-const getPreloadedTrendToolState = (): TrendToolState => {
-    const trendToolData = getTemporalProfileToolDataFromHashParams();
+const getPreloadedTrendToolState = (
+    hashParams: URLSearchParams
+): TrendToolState => {
+    const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
 
     return {
         ...initialTrendToolState,
@@ -104,10 +112,12 @@ const getPreloadedTrendToolState = (): TrendToolState => {
 };
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+
     return {
-        Map: getPreloadedMapState(),
-        ImageryScenes: getPreloadedImageryScenesState(),
-        MaskTool: getPreloadedMaskToolState(),
-        TrendTool: getPreloadedTrendToolState(),
+        Map: getPreloadedMapState(hashParams),
+        ImageryScenes: getPreloadedImageryScenesState(hashParams),
+        MaskTool: getPreloadedMaskToolState(hashParams),
+        TrendTool: getPreloadedTrendToolState(hashParams),
     };
 };

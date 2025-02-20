@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,14 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
     selectIsSwipeModeOn,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useImageryLayerByObjectId } from '../ImageryLayer/useImageLayer';
 import {
@@ -43,13 +43,15 @@ export const SwipeWidget4ImageryLayers: FC<Props> = ({
     serviceUrl,
     mapView,
 }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const isSwipeWidgetVisible = useSelector(selectIsSwipeModeOn);
+    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
 
-    const queryParams4LeftSide = useSelector(selectQueryParams4MainScene);
+    const queryParams4LeftSide = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4RightSide = useAppSelector(
+        selectQueryParams4SecondaryScene
+    );
 
     const leadingLayer = useImageryLayerByObjectId({
         url: serviceUrl,

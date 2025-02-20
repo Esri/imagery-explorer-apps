@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,17 +75,20 @@ export type UrlHashParamKey =
     | 'hideMapLabels' // hash params for map labels layer
     | 'hideBasemap' // hash params for map labels layer
     | 'tool' // hash params for active analysis tool
-    | 'sentinel1'; // hash params for Sentinel-1 scenes
+    | 'sentinel1' // hash params for Sentinel-1 scenes
+    | 'autoSwipeSpeed'; // hash params for auto-swipe feature
 
-const getHashParams = () => {
-    return new URLSearchParams(window.location.hash.slice(1));
-};
+const hashParams = new URLSearchParams();
+
+// const getHashParams = () => {
+//     return new URLSearchParams(window.location.hash.slice(1));
+// };
 
 /**
  * update Hash Params in the URL using data from hashParams
  */
 export const updateHashParams = (key: UrlHashParamKey, value: string) => {
-    const hashParams = getHashParams();
+    // const hashParams = getHashParams();
 
     if (value === undefined || value === null) {
         hashParams.delete(key);
@@ -93,11 +96,24 @@ export const updateHashParams = (key: UrlHashParamKey, value: string) => {
         hashParams.set(key, value);
     }
 
-    window.location.hash = hashParams.toString();
+    // window.location.hash = hashParams.toString();
+
+    // Get the current URL without the hash
+    const baseUrl = window.location.href.split('#')[0];
+
+    const newHash = hashParams.toString();
+
+    const newUrl = `${baseUrl}#${newHash}`;
+
+    // Update the URL using replaceState
+    window.history.replaceState(null, '', newUrl);
 };
 
-export const getHashParamValueByKey = (key: UrlHashParamKey): string => {
-    const hashParams = getHashParams();
+export const getHashParamValueByKey = (
+    key: UrlHashParamKey,
+    hashParams: URLSearchParams
+): string => {
+    // const hashParams = getHashParams();
 
     if (!hashParams.has(key)) {
         return null;

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,21 +24,21 @@ import {
 } from '@shared/store/TrendTool/selectors';
 import { resetTrendToolData } from '@shared/store/TrendTool/thunks';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 import { TemporalProfileToolControls } from './TemporalProfileToolControls';
 
 export const TemporalProfileToolControlsContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const queryLocation = useSelector(selectQueryLocation4TrendTool);
+    const queryLocation = useAppSelector(selectQueryLocation4TrendTool);
 
-    const acquisitionMonth = useSelector(selectAcquisitionMonth4TrendTool);
+    const acquisitionMonth = useAppSelector(selectAcquisitionMonth4TrendTool);
 
-    const acquisitionYear = useSelector(selectAcquisitionYear4TrendTool);
+    const acquisitionYear = useAppSelector(selectAcquisitionYear4TrendTool);
 
-    const selectedTrendToolOption = useSelector(selectTrendToolOption);
+    const selectedTrendToolOption = useAppSelector(selectTrendToolOption);
 
     return (
         <TemporalProfileToolControls

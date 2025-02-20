@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,11 +16,11 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import Calendar, { FormattedImageryScene } from './Calendar';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { Dropdown } from '@shared/components/Dropdown';
 // import { useMonthOptions } from './useMonthOptions';
 import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     // selectAcquisitionYear,
     selectCloudCover,
@@ -34,18 +34,6 @@ import {
     // updateCloudCover,
 } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
-// import {
-//     // selectIsAnimationPlaying,
-//     selectShouldHideCloudCoverInfo,
-// } from '@shared/store/UI/selectors';
-// import { CloudFilter } from '@shared/components/CloudFilter';
-// import {
-//     // acquisitionYearChanged,
-//     cloudCoverChanged,
-// } from '@shared/store/ImageryScene/reducer';
-// import { LandsatMissionFilter } from '../LandsatMissionFilter';
-// import { APP_NAME } from '@shared/config';
-// import { useFindSelectedSceneByDate } from './useFindSelectedSceneByDate';
 import { useAcquisitionDateFromSelectedScene } from './useAcquisitionDateFromSelectedScene';
 import { useFormattedScenes } from './useFormattedScenes';
 import { useShouldDisableCalendar } from './useShouldDisableCalendar';
@@ -54,7 +42,6 @@ import {
     getDateRangeForYear,
 } from '@shared/utils/date-time/getTimeRange';
 import { useAcquisitionYear } from './useAcquisitionYear';
-import { batch } from 'react-redux';
 import { useFindSelectedSceneByDate } from '@shared/hooks/useFindSelectedSceneByDate';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
@@ -63,17 +50,15 @@ type Props = {
 };
 
 const CalendarContainer: FC<Props> = ({ children }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
-
-    // const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
     const acquisitionDate = queryParams?.acquisitionDate;
 
     const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
-    // const cloudCoverThreshold = useSelector(selectCloudCover);
+    // const cloudCoverThreshold = useAppSelector(selectCloudCover);
 
     const acquisitionYear = useAcquisitionYear();
 
@@ -176,16 +161,12 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
                 onSelect={(formattedAcquisitionDate) => {
                     // console.log(formattedAcquisitionDate)
 
-                    batch(() => {
-                        // unselect the selected imagery scene so that a new scene can be selected
-                        dispatch(updateObjectIdOfSelectedScene(null));
+                    // unselect the selected imagery scene so that a new scene can be selected
+                    dispatch(updateObjectIdOfSelectedScene(null));
 
-                        // select a new acquisition date that will be used to find the scenes that was acquired on
-                        // this date
-                        dispatch(
-                            updateAcquisitionDate(formattedAcquisitionDate)
-                        );
-                    });
+                    // select a new acquisition date that will be used to find the scenes that was acquired on
+                    // this date
+                    dispatch(updateAcquisitionDate(formattedAcquisitionDate));
                 }}
             />
         </div>

@@ -1,52 +1,62 @@
 {
     "apps": {
-        "landsat": {
+        "landsatexplorer": {
             "title": "Esri | Landsat Explorer",
+            "satellite": "Landsat",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
             "description": "Landsat multispectral imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.",
             "animationMetadataSources": "Esri, USGS, NASA",
             "pathname": "/landsatexplorer",
-            "entrypoint": "/src/landsat-explorer/index.tsx"
+            "entrypoint": "/src/landsat-explorer/index.tsx",
+            "appId": "LSX"
         },
-        "landcover-explorer": {
+        "landcoverexplorer": {
             "title": "Esri | Sentinel-2 Land Cover Explorer",
+            "satellite": "Sentinel-2",
             "webmapId": "f8770e0adc5c41038026494b871ceb99",
             "description": "This application displays the land use/land cover (LULC) timeseries layer derived from ESA Sentinel-2 imagery at 10m resolution. ",
             "animationMetadataSources": "Esri, Impact Observatory",
             "pathname": "/landcoverexplorer",
-            "entrypoint": "/src/landcover-explorer/index.tsx"
+            "entrypoint": "/src/landcover-explorer/index.tsx",
+            "appId": "S2LCX"
         },
-        "sentinel1-explorer": {
+        "sentinel1explorer": {
             "title": "Esri | Sentinel-1 Explorer",
+            "satellite": "Sentinel-1",
             "webmapId": "260548c9e7934ef5b20a5f48467a3c1d",
             "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-1 provides",
             "animationMetadataSources": "Esri, European Space Agency",
             "pathname": "/sentinel1explorer",
-            "entrypoint": "/src/sentinel-1-explorer/index.tsx"
+            "entrypoint": "/src/sentinel-1-explorer/index.tsx",
+            "appId": "S1X"
+        },
+        "sentinel2explorer": {
+            "title": "Esri | Sentinel-2 Explorer",
+            "satellite": "Sentinel-2",
+            "webmapId": "81609bbe235942919ad27c77e42c600e",
+            "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-2 provides.",
+            "animationMetadataSources": "Esri, European Space Agency",
+            "pathname": "/sentinel2explorer",
+            "entrypoint": "/src/sentinel-2-explorer/index.tsx",
+            "appId": "S2X"
         },
         "spectral-sampling-tool": {
             "title": "Spectral Sampling Tool",
+            "satellite": "Landsat",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
             "description": "",
             "pathname": "/",
-            "entrypoint": "/src/spectral-sampling-tool/index.tsx"
+            "entrypoint": "/src/spectral-sampling-tool/index.tsx",
+            "appId": ""
         },
         "landsat-surface-temp": {
             "title": "Landsat Surface Temperature",
+            "satellite": "Landsat",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
             "description": "Explore Landsat surface temperature archive",
             "pathname": "/landsat-surface-temp",
-            "entrypoint": "/src/landsat-surface-temp/index.tsx"
-        }
-    },
-    "services": {
-        "landsat-level-2": {
-            "development": "https://utility.arcgis.com/usrsvcs/servers/f89d8adb0d5141a7a5820e8a6375480e/rest/services/LandsatC2L2/ImageServer",
-            "production": "https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer"
-        },
-        "sentinel-1": {
-            "development": "https://utility.arcgis.com/usrsvcs/servers/ae20c269388b4ea3acac60b9bf2a319f/rest/services/Sentinel1RTC/ImageServer",
-            "production": "https://utility.arcgis.com/usrsvcs/servers/6cd9e108e0b84784afb476269296fdd7/rest/services/Sentinel1RTC/ImageServer"
+            "entrypoint": "/src/landsat-surface-temp/index.tsx",
+            "appId": ""
         }
     }
 }

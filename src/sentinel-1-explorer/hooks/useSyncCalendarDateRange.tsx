@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import {
 import { syncImageryScenesDateRangeForTemporalCompositeTool } from '@shared/store/TemporalCompositeTool/thunks';
 import { getDateRangeForPast12Month } from '@shared/utils/date-time/getTimeRange';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 const DATE_RANGE_OF_PAST_12_MONTH = getDateRangeForPast12Month();
 
@@ -33,13 +33,13 @@ const DATE_RANGE_OF_PAST_12_MONTH = getDateRangeForPast12Month();
  * (past 12 months) using the updated date range selected by the user.
  */
 export const useSyncCalendarDateRange = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analyzeTool = useSelector(selectActiveAnalysisTool);
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
     useEffect(() => {
         if (!queryParams?.acquisitionDateRange) {

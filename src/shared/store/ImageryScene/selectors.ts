@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,26 +69,6 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     }
 );
 
-export const selectQueryParams4MainScene = createSelector(
-    (state: RootState) => state.ImageryScenes.queryParams4MainScene,
-    (queryParams4MainScene) => queryParams4MainScene
-);
-
-export const selectQueryParams4SecondaryScene = createSelector(
-    (state: RootState) => state.ImageryScenes.queryParams4SecondaryScene,
-    (queryParams4SecondaryScene) => queryParams4SecondaryScene
-);
-
-export const selectIsSecondarySceneActive = createSelector(
-    (state: RootState) => state.ImageryScenes.isSecondarySceneActive,
-    (isSecondarySceneActive) => isSecondarySceneActive
-);
-
-export const selectAppMode = createSelector(
-    (state: RootState) => state.ImageryScenes.mode,
-    (mode) => mode
-);
-
 export const selectIsSwipeModeOn = createSelector(
     (state: RootState) => state.ImageryScenes.mode,
     (mode) => mode === 'swipe'
@@ -111,25 +91,10 @@ export const selectSelectedItemFromListOfQueryParams = createSelector(
     }
 );
 
-export const selectIdOfSelectedItemInListOfQueryParams = createSelector(
-    (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
-    (selectedItemID) => selectedItemID
-);
-
-export const selectCloudCover = createSelector(
-    (state: RootState) => state.ImageryScenes.cloudCover,
-    (cloudCover) => cloudCover
-);
-
 // export const selectAcquisitionYear = createSelector(
 //     (state: RootState) => state.ImageryScenes.acquisitionYear,
 //     (acquisitionYear) => acquisitionYear
 // );
-
-export const selectActiveAnalysisTool = createSelector(
-    (state: RootState) => state.ImageryScenes.tool,
-    (tool) => tool
-);
 
 export const selectAvailableScenes = createSelector(
     (state: RootState) => state.ImageryScenes.availableImageryScenes,
@@ -139,7 +104,25 @@ export const selectAvailableScenes = createSelector(
     }
 );
 
-export const selectShouldForceSceneReselection = createSelector(
-    (state: RootState) => state.ImageryScenes.shouldForceSceneReselection,
-    (shouldForceSceneReselection) => shouldForceSceneReselection
-);
+export const selectQueryParams4MainScene = (state: RootState) =>
+    state.ImageryScenes.queryParams4MainScene;
+
+export const selectQueryParams4SecondaryScene = (state: RootState) =>
+    state.ImageryScenes.queryParams4SecondaryScene;
+
+export const selectIsSecondarySceneActive = (state: RootState) =>
+    state.ImageryScenes.isSecondarySceneActive;
+
+export const selectAppMode = (state: RootState) => state.ImageryScenes.mode;
+
+export const selectIdOfSelectedItemInListOfQueryParams = (state: RootState) =>
+    state.ImageryScenes.queryParamsList.selectedItemID;
+
+export const selectCloudCover = (state: RootState) =>
+    state.ImageryScenes.cloudCover;
+
+export const selectActiveAnalysisTool = (state: RootState) =>
+    state.ImageryScenes.tool;
+
+export const selectShouldForceSceneReselection = (state: RootState) =>
+    state.ImageryScenes.shouldForceSceneReselection;

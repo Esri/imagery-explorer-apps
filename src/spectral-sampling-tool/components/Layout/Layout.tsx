@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,17 +23,16 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 // import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
 import { SamplingPointsList } from '../SamplingPointsList';
 import { SamplingResults } from '../SamplingResults';
-import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
-import { LandsatRasterFunctionSelector } from '@landsat-explorer/components/RasterFunctionSelector';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
+import { Layout4Sentinel2 } from './Layout4Sentinel2';
+import { Layout4Landsat } from './Layout4Landsat';
+import { CloudFilter } from '@shared/components/CloudFilter';
 
 const Layout = () => {
-    useSaveAppState2HashParams();
+    const targetService = useAppSelector(selectTargetService);
 
-    /**
-     * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
-     * changes, it will dispatch the query that finds the available landsat scenes.
-     */
-    useQueryAvailableLandsatScenes();
+    useSaveAppState2HashParams();
 
     return (
         <>
@@ -50,11 +49,16 @@ const Layout = () => {
                 <div className="flex flex-grow justify-center shrink-0">
                     <>
                         <div className="ml-2 3xl:ml-0">
-                            <Calendar />
+                            <Calendar>
+                                <CloudFilter />
+                            </Calendar>
                         </div>
 
                         <div className="flex shrink-0 ml-4">
-                            <LandsatRasterFunctionSelector />
+                            {targetService === 'landsat' && <Layout4Landsat />}
+                            {targetService === 'sentinel-2' && (
+                                <Layout4Sentinel2 />
+                            )}
                         </div>
                     </>
                 </div>

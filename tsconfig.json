@@ -13,6 +13,7 @@
         "esModuleInterop": true ,
         // "suppressImplicitAnyIndexErrors": true,
         "downlevelIteration": true,
+        "isolatedModules": true,
         "typeRoots": [  
             "./src/types", 
             "./node_modules/@types"
@@ -21,6 +22,7 @@
         "paths": {
             "@shared/*": ["./src/shared/*"],
             "@landsat-explorer/*": ["./src/landsat-explorer/*"],
+            "@sentinel2-explorer/*": ["./src/sentinel-2-explorer/*"],
             "@landcover-explorer/*": ["./src/landcover-explorer/*"],
             "@typing/*": ["./src/types/*"]
         }
@@ -31,5 +33,5 @@
     ],
     "include": [
         "./src/**/**/*"
-    ]
+, "public/__tests__"    ]
 }

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -321,7 +321,19 @@ export const getLandCoverChangeInAcres = async ({
 
         const output: LandCoverChangeInAcres[] = [];
 
-        for (let i = 0; i < countsFromEarlierYear.length; i++) {
+        const len = Math.min(
+            countsFromEarlierYear.length,
+            countsFromLaterYear.length
+        );
+
+        for (let i = 0; i < len; i++) {
+            const landcoverClassificationData =
+                getLandCoverClassificationByPixelValue(i);
+
+            if (!landcoverClassificationData) {
+                continue;
+            }
+
             const countEarlierYear = countsFromEarlierYear[i];
             const countLaterYear = countsFromLaterYear[i];
 
@@ -352,8 +364,7 @@ export const getLandCoverChangeInAcres = async ({
                 (laterYearAreaInAcres / totalAreaLaterYear) * 100;
 
             output.push({
-                landcoverClassificationData:
-                    getLandCoverClassificationByPixelValue(i),
+                landcoverClassificationData,
                 earlierYearAreaInAcres,
                 earlierYearAreaInPercentage,
                 laterYearAreaInAcres,

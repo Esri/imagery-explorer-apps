@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,11 +28,11 @@ import {
 } from '@shared/store/MaskTool/selectors';
 import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
-    selectQueryParams4MainScene,
+    // selectQueryParams4MainScene,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
@@ -44,24 +44,27 @@ import {
     SurfaceTempFarhenheitPixelRangeSlider,
 } from './SurfaceTempPixelRangeSlider';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
+import { useLandsatMaskToolFullPixelValueRange } from './useLandsatMaskToolFullPixelValueRange';
 
 export const MaskToolContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedSpectralIndex = useSelector(selectSelectedIndex4MaskTool);
+    const selectedSpectralIndex = useAppSelector(selectSelectedIndex4MaskTool);
 
-    const maskOptions = useSelector(selectMaskLayerPixelValueRange);
+    const maskOptions = useAppSelector(selectMaskLayerPixelValueRange);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     const shouldBeDisabled = useMemo(() => {
         return !objectIdOfSelectedScene;
     }, [objectIdOfSelectedScene]);
+
+    const fullPixelValueRange = useLandsatMaskToolFullPixelValueRange();
 
     // useEffect(() => {
     //     if (!queryParams4MainScene?.rasterFunctionName) {
@@ -144,8 +147,8 @@ export const MaskToolContainer = () => {
                                 'temperature farhenheit' && (
                                 <PixelRangeSlider
                                     values={maskOptions.selectedRange}
-                                    min={-1}
-                                    max={1}
+                                    min={fullPixelValueRange[0]}
+                                    max={fullPixelValueRange[1]}
                                     valuesOnChange={(values) => {
                                         dispatch(
                                             updateMaskLayerSelectedRange(values)

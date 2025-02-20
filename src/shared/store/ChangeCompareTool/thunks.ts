@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 import { DateRange } from '@typing/shared';
 import { StoreDispatch, StoreGetState } from '../configureStore';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
@@ -25,7 +25,6 @@ import {
     queryParams4MainSceneChanged,
     queryParams4SecondarySceneChanged,
 } from '../ImageryScene/reducer';
-import { batch } from 'react-redux';
 
 // import Point from '@arcgis/core/geometry/Point';
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
@@ -81,15 +80,9 @@ export const syncImageryScenesDateRangeForChangeCompareTool =
                 updatedDateRange;
         }
 
-        batch(() => {
-            dispatch(
-                queryParams4MainSceneChanged(updatedQueryParams4MainScene)
-            );
+        dispatch(queryParams4MainSceneChanged(updatedQueryParams4MainScene));
 
-            dispatch(
-                queryParams4SecondarySceneChanged(
-                    updatedQueryParams4SecondaryScene
-                )
-            );
-        });
+        dispatch(
+            queryParams4SecondarySceneChanged(updatedQueryParams4SecondaryScene)
+        );
     };

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,27 +16,18 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectSelectedOption4ChangeCompareTool = createSelector(
-    (state: RootState) => state.ChangeCompareTool.selectedOption,
-    (selectedOption) => selectedOption
-);
+export const selectSelectedOption4ChangeCompareTool = (state: RootState) =>
+    state.ChangeCompareTool.selectedOption;
 
-export const selectChangeCompareLayerIsOn = createSelector(
-    (state: RootState) => state.ChangeCompareTool.changeCompareLayerIsOn,
-    (changeCompareLayerIsOn) => changeCompareLayerIsOn
-);
+export const selectChangeCompareLayerIsOn = (state: RootState) =>
+    state.ChangeCompareTool.changeCompareLayerIsOn;
 
-export const selectUserSelectedRangeInChangeCompareTool = createSelector(
-    (state: RootState) => state.ChangeCompareTool.selectedRange,
-    (selectedRange) => selectedRange
-);
+export const selectUserSelectedRangeInChangeCompareTool = (state: RootState) =>
+    state.ChangeCompareTool.selectedRange;
 
-export const selectFullPixelValuesRangeInChangeCompareTool = createSelector(
-    (state: RootState) => state.ChangeCompareTool.fullPixelValuesRange,
-    (fullPixelValuesRange) => fullPixelValuesRange
-);
+export const selectFullPixelValuesRangeInChangeCompareTool = (
+    state: RootState
+) => state.ChangeCompareTool.fullPixelValuesRange;
 
-export const selectChangeCompareToolState = createSelector(
-    (state: RootState) => state.ChangeCompareTool,
-    (ChangeCompareTool) => ChangeCompareTool
-);
+export const selectChangeCompareToolState = (state: RootState) =>
+    state.ChangeCompareTool;

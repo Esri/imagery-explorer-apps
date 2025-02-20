@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     showMapLabelToggled,
     showTerrainToggled,
@@ -70,7 +70,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({
 }: ToggleButtonProps) => {
     return (
         <div
-            className="w-1/2 cursor-pointer z-10 flex items-center"
+            className="mx-2 cursor-pointer z-10 flex items-center"
             onClick={onToggle}
         >
             {active ? CheckIcon : UncheckIcon}
@@ -80,18 +80,18 @@ const ToggleButton: FC<ToggleButtonProps> = ({
 };
 
 const LayersToggleControl = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const showMapLabel = useSelector(selectShowMapLabel);
+    const showMapLabel = useAppSelector(selectShowMapLabel);
 
-    const showTerrain = useSelector(selectShowTerrain);
+    const showTerrain = useAppSelector(selectShowTerrain);
 
     return (
         <div
             className={classNames(
-                'absolute bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-layer-toggle-top-position-mobile md:top-layer-toggle-top-position w-search-widget-width',
+                'absolute bg-custom-background flex py-2 px-2 text-custom-light-blue text-xs top-map-ui-top-position',
                 {
                     hidden: animationMode !== null,
                 }

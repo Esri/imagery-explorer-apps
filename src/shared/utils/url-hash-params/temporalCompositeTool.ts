@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,8 +52,9 @@ export const saveTemporalCompositeToolStateToHashParams = (
     updateHashParams('composite', encodeTemporalCompositeTool(data));
 };
 
-export const getTemporalCompositeToolDataFromHashParams =
-    (): TemporalCompositeToolState => {
-        const value = getHashParamValueByKey('composite');
-        return decodeTemporalCompositeTool(value);
-    };
+export const getTemporalCompositeToolDataFromHashParams = (
+    hashParams: URLSearchParams
+): TemporalCompositeToolState => {
+    const value = getHashParamValueByKey('composite', hashParams);
+    return decodeTemporalCompositeTool(value);
+};

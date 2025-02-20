@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,13 @@ export type SpectralSamplingData = {
     isLoading: boolean;
 };
 
+export type SpectralSamplingToolSupportedService = 'landsat' | 'sentinel-2';
+
 export type SpectralSamplingToolState = {
+    /**
+     * imagery service that the user is targeting to create spectral sampling of.
+     */
+    targetService: SpectralSamplingToolSupportedService;
     /**
      * name of the land cover classification (e.g. 'Desert', 'Lush Vegetation') that the user intends to create spectral sampling of.
      */
@@ -62,6 +68,7 @@ export type SpectralSamplingToolState = {
 };
 
 export const initialSpectralSamplingToolState: SpectralSamplingToolState = {
+    targetService: null,
     classificationName: '',
     data: {
         byId: {},

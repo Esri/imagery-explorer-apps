@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectQueryLocation4TrendTool = createSelector(
-    (state: RootState) => state.TrendTool.queryLocation,
-    (queryLocation) => queryLocation
-);
-
-export const selectAcquisitionMonth4TrendTool = createSelector(
-    (state: RootState) => state.TrendTool.acquisitionMonth,
-    (acquisitionMonth) => acquisitionMonth
-);
-
-export const selectAcquisitionYear4TrendTool = createSelector(
-    (state: RootState) => state.TrendTool.acquisitionYear,
-    (acquisitionYear) => acquisitionYear
-);
-
 export const selectTrendToolData = createSelector(
     (state: RootState) => state.TrendTool.temporalProfileData.objectIds,
     (state: RootState) => state.TrendTool.temporalProfileData.byObjectId,
@@ -38,28 +23,25 @@ export const selectTrendToolData = createSelector(
         return objectIds.map((id) => byObjectId[id]);
     }
 );
+export const selectSelectedIndex4TrendTool = (state: RootState) =>
+    state.TrendTool.selectedIndex;
 
-export const selectSelectedIndex4TrendTool = createSelector(
-    (state: RootState) => state.TrendTool.selectedIndex,
-    (selectedOption) => selectedOption
-);
+export const selectTrendToolOption = (state: RootState) =>
+    state.TrendTool.option;
 
-export const selectTrendToolOption = createSelector(
-    (state: RootState) => state.TrendTool.option,
-    (trendToolOption) => trendToolOption
-);
+export const selectTrendToolState = (state: RootState) => state.TrendTool;
 
-export const selectTrendToolState = createSelector(
-    (state: RootState) => state.TrendTool,
-    (profileTool) => profileTool
-);
+export const selectIsLoadingData4TrendingTool = (state: RootState) =>
+    state.TrendTool.loading;
 
-export const selectIsLoadingData4TrendingTool = createSelector(
-    (state: RootState) => state.TrendTool.loading,
-    (loading) => loading
-);
+export const selectError4TemporalProfileTool = (state: RootState) =>
+    state.TrendTool.error;
 
-export const selectError4TemporalProfileTool = createSelector(
-    (state: RootState) => state.TrendTool.error,
-    (error) => error
-);
+export const selectQueryLocation4TrendTool = (state: RootState) =>
+    state.TrendTool.queryLocation;
+
+export const selectAcquisitionMonth4TrendTool = (state: RootState) =>
+    state.TrendTool.acquisitionMonth;
+
+export const selectAcquisitionYear4TrendTool = (state: RootState) =>
+    state.TrendTool.acquisitionYear;

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,22 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import { useChartData } from './useChartData';
-import { SpectralProfileChart } from '@landsat-explorer/components/SpectralTool/SpectralProfileChart';
-import { Button } from '@shared/components/Button';
+import { SpectralProfileChart } from '@shared/components/SpectralProfileTool';
+// import { Button } from '@shared/components/Button';
 import { SaveSamplingResults } from './SaveSamplingResults';
+import { useNumOfBandsToDisplay } from './useNumOfBandsToDisplay';
+import { useBandNames } from './useBandNames';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
 
 export const SamplingResultsContainer = () => {
-    const chartData = useChartData();
+    const targetService = useAppSelector(selectTargetService);
+
+    const numOfBandsToDisplay = useNumOfBandsToDisplay();
+
+    const bandNames = useBandNames(numOfBandsToDisplay);
+
+    const chartData = useChartData(numOfBandsToDisplay);
 
     return (
         <div
@@ -45,10 +55,16 @@ export const SamplingResultsContainer = () => {
             ) : (
                 <>
                     <div className="w-full h-[150px] my-2">
-                        <SpectralProfileChart chartData={chartData} />
+                        <SpectralProfileChart
+                            chartData={chartData}
+                            bottomAxisTickText={bandNames}
+                        />
                     </div>
 
-                    <SaveSamplingResults />
+                    <SaveSamplingResults
+                        bandNames={bandNames}
+                        targetService={targetService}
+                    />
                 </>
             )}
         </div>

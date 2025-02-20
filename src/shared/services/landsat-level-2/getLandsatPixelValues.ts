@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,12 @@
 
 import { Point } from '@arcgis/core/geometry';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
-import { getPixelValues } from '../helpers/getPixelValues';
+import {
+    getPixelValues,
+    GetPixelValuesParams,
+} from '../helpers/getPixelValues';
 
-type GetPixelValuesParams = {
-    point: Point;
-    objectIds: number[];
-    abortController: AbortController;
-};
-
+type Params = Omit<GetPixelValuesParams, 'serviceURL'>;
 /**
  * Run identify task to get values of the pixel that intersects with the input point from the scene with input object id.
  * @param param0
@@ -32,7 +30,7 @@ export const getLandsatPixelValues = async ({
     point,
     objectIds,
     abortController,
-}: GetPixelValuesParams): Promise<number[]> => {
+}: Params): Promise<number[]> => {
     // const res = await identify({
     //     serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
     //     point,

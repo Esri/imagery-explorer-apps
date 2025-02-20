@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@
 import React, { FC } from 'react';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { modeChanged } from '@shared/store/ImageryScene/reducer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 
 type Props = {
     content: string;
 };
 
 export const DynamicModeInfo: FC<Props> = ({ content }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const openFindASceneMode = () => {
         dispatch(modeChanged('find a scene'));

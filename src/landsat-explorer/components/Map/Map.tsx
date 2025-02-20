@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,25 +21,21 @@ import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { MaskLayer } from '../MaskLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { AnalysisToolQueryLocation } from '@shared/components/AnalysisToolQueryLocation';
-import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
 import { Popup } from '../PopUp';
 import { MapPopUpAnchorPoint } from '@shared/components/MapPopUpAnchorPoint';
 import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 import { ChangeLayer } from '../ChangeLayer';
-import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
 import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
-import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
-import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
+import { MapActionButtonGroup } from '@shared/components/MapActionButton';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
-import { ZoomToExtent } from '@shared/components/ZoomToExtent';
 
 const Map = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <MapViewContainer
@@ -70,15 +66,11 @@ const Map = () => {
             />
             <HillshadeLayer />
 
-            <MapActionButtonsGroup>
-                <Zoom2NativeScale
-                    nativeScale={113386}
-                    tooltip={"Zoom to Landsat's native resolution"}
-                />
-                <ZoomToExtent serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL} />
-                <ScreenshotWidget />
-                <CopyLinkWidget />
-            </MapActionButtonsGroup>
+            <MapActionButtonGroup
+                nativeScale={113386}
+                serviceName={'Landsat'}
+                serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            />
 
             <Popup />
             <MapMagnifier />

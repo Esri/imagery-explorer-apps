@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToN
 /**
  * Parameters for the Get Pixel Values
  */
-type GetPixelValuesParams = {
+export type GetPixelValuesParams = {
     /**
      * URL of the imagery service
      */
@@ -104,20 +104,29 @@ export const getPixelValues = async ({
             const feature = features[i];
             const value = Values[i];
 
+            // console.log(value)
             const objectId = feature.attributes.objectid;
+
+            let containsNonNumericValue = false;
+
             const values = value.split(' ').map((d) => {
                 if (canBeConvertedToNumber(d) === false) {
+                    containsNonNumericValue = true;
                     return null;
                 }
 
                 return +d;
             });
 
+            if (containsNonNumericValue) {
+                continue;
+            }
+
             pixelValuesByObjectId[objectId] = values;
         }
     }
 
-    return objectIds
+    const output = objectIds
         .filter((objectId) => pixelValuesByObjectId[objectId] !== undefined)
         .map((objectId) => {
             return {
@@ -125,4 +134,6 @@ export const getPixelValues = async ({
                 values: pixelValuesByObjectId[objectId],
             };
         });
+
+    return output;
 };

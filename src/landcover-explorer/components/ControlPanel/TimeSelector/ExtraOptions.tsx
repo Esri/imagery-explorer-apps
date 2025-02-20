@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import {
 import { copyAnimationLink } from '@shared/store/UI/thunks';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type SaveOptionsProps = {
     donwloadButtonOnClick: () => void;
@@ -74,9 +74,9 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
     donwloadButtonOnClick,
     saveWebmapButtonOnClick,
 }) => {
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 
@@ -131,7 +131,7 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
     donwloadAnimationOnClick,
     speedOnChange,
 }: AnimationOptionsProps) => {
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     if (!animationMode) {
         return null;
@@ -164,9 +164,9 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 };
 
 export const ExtraOptions = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     return (
         <div className="w-full my-6 text-xs">

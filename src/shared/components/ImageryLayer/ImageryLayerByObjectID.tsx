@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect } from 'react';
 import { useImageryLayerByObjectId } from './useImageLayer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectQueryParams4SceneInSelectedMode,
     selectAppMode,
@@ -44,18 +44,18 @@ const ImageryLayerByObjectID: FC<Props> = ({
     groupLayer,
     defaultMosaicRule,
 }: Props) => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const { rasterFunctionName, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+    const changeCompareLayerIsOn = useAppSelector(selectChangeCompareLayerIsOn);
 
-    const isTemporalCompositeLayerOn = useSelector(
+    const isTemporalCompositeLayerOn = useAppSelector(
         selectIsTemporalCompositeLayerOn
     );
 

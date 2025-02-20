@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,8 @@ import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
 import { TotalVisibleAreaInfo } from '../TotalAreaInfo/TotalAreaInfo';
 
@@ -56,19 +56,19 @@ export const ChangeCompareToolControls: FC<Props> = ({
     comparisonTopic,
     preselectionText,
 }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const selectedRange = useSelector(
+    const selectedRange = useAppSelector(
         selectUserSelectedRangeInChangeCompareTool
     );
 
-    const fullPixelValueRange = useSelector(
+    const fullPixelValueRange = useAppSelector(
         selectFullPixelValuesRangeInChangeCompareTool
     );
 
-    const isChangeLayerOn = useSelector(selectChangeCompareLayerIsOn);
+    const isChangeLayerOn = useAppSelector(selectChangeCompareLayerIsOn);
 
     const getPixelRangeSlider = () => {
         const [min, max] = fullPixelValueRange;

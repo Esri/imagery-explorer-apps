@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,12 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import './AppHeader.css';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     shouldShowAboutThisAppToggled,
     showDocPanelToggled,
@@ -44,41 +42,46 @@ type Props = {
     docButtonTooltip?: string;
 };
 
-const IMAGERY_EXPLORER_APPS: {
+export const IMAGERY_EXPLORER_APPS: {
     appName: AppName;
     title: string;
     url: string;
 }[] = [
     {
-        appName: 'landcover-explorer',
+        appName: 'landcoverexplorer',
         title: 'Sentinel-2 Land Cover Explorer',
         url: '/landcoverexplorer',
     },
     {
-        appName: 'landsat',
+        appName: 'landsatexplorer',
         title: 'Landsat Explorer',
         url: '/landsatexplorer',
     },
     {
-        appName: 'sentinel1-explorer',
+        appName: 'sentinel1explorer',
         title: 'Sentinel-1 Explorer',
         url: '/sentinel1explorer',
+    },
+    {
+        appName: 'sentinel2explorer',
+        title: 'Sentinel-2 Explorer',
+        url: '/sentinel2explorer',
     },
 ];
 
 const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const [showImageryExplorerAppsList, setShowImageryExplorerAppsList] =
         useState<boolean>(false);
 
     const containerRef = useRef<HTMLDivElement>();
 
-    const mapCenter = useSelector(selectMapCenter);
+    const mapCenter = useAppSelector(selectMapCenter);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
     const launchImageryExplorerApp = (url: string) => {
         const key: UrlHashParamKey = 'mapCenter';
@@ -94,7 +97,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
     return (
         <div
             className={classNames(
-                'absolute z-10 text-custom-light-blue flex top-0 left-0 right-0 md:top-app-header-position md:left-app-header-position md:right-auto',
+                'absolute z-10 text-custom-light-blue flex top-0 left-0 right-0 md:top-map-ui-top-position md:left-map-ui-top-position md:right-auto',
                 {
                     hidden: isAnimationPlaying,
                 }

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { tooltipXPositionChanged } from '@shared/store/UI/reducer';
 
 /**
@@ -27,7 +27,7 @@ import { tooltipXPositionChanged } from '@shared/store/UI/reducer';
 const useGetTooltipPositionOnHover = (
     ref: React.MutableRefObject<HTMLDivElement>
 ) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const onEnter = (event: MouseEvent) => {

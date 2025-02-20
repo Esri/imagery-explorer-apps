@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,8 +57,9 @@ export const saveSpectralProfileToolStateToHashParams = debounce(
     500
 );
 
-export const getSpectralProfileToolDataFromHashParams =
-    (): SpectralProfileToolState => {
-        const value = getHashParamValueByKey('spectral');
-        return decodeSpectralProfileToolData(value);
-    };
+export const getSpectralProfileToolDataFromHashParams = (
+    hashParams: URLSearchParams
+): SpectralProfileToolState => {
+    const value = getHashParamValueByKey('spectral', hashParams);
+    return decodeSpectralProfileToolData(value);
+};

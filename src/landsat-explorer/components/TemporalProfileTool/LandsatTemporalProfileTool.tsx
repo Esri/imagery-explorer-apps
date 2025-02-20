@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,8 +44,8 @@ import {
 //     updateTrendToolData,
 // } from '@shared/store/TrendTool/thunks';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 // import {
 //     // getFormatedDateString,
 //     getMonthFromFormattedDateString,
@@ -59,7 +59,6 @@ import {
 import { SpectralIndex, TemporalProfileData } from '@typing/imagery-service';
 // import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { TrendChart } from '.';
-// import { batch } from 'react-redux';
 // import { debounce } from '@shared/utils/snippets/debounce';
 import { useUpdateTemporalProfileToolData } from '@shared/components/TemproalProfileTool/useUpdateTemporalProfileToolData';
 import { useSyncSelectedYearAndMonth4TemporalProfileTool } from '@shared/components/TemproalProfileTool/useSyncSelectedYearAndMonth';
@@ -72,16 +71,19 @@ import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getL
 import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selectors';
+import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
 
 export const LandsatTemporalProfileTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const missionsToBeExcluded = useSelector(selectLandsatMissionsToBeExcluded);
+    const missionsToBeExcluded = useAppSelector(
+        selectLandsatMissionsToBeExcluded
+    );
 
     const { rasterFunctionName, acquisitionDate, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
     /**
      * this function will be invoked by the updateTemporalProfileToolData thunk function
@@ -194,7 +196,7 @@ export const LandsatTemporalProfileTool = () => {
                         label: 'surface temp °C',
                     },
                 ]}
-                tooltipText={`The least cloudy scenes from the selected time interval will be sampled to show a temporal trend for the selected point and category.`}
+                tooltipText={TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT}
             />
 
             <div className="w-full h-[120px] my-2">

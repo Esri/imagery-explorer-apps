@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,24 @@ import { LandsatLayer } from '@landsat-explorer/components/LandsatLayer';
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { CustomEventHandlers } from './CustomEventHandler';
 import { SamplingPointsLayer } from '../SamplingPointsLayer';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
+import { Sentinel2Layer } from '@sentinel2-explorer/components/Sentinel2Layer';
+import { MapActionButtonGroup4SpectralSamplingTool } from './MapActionButtonGroup4SpectralSamplingTool';
 
 const Map = () => {
+    const targetService = useAppSelector(selectTargetService);
+
     return (
         <MapViewContainer>
             <GroupLayer>
-                <LandsatLayer />
+                {targetService === 'landsat' ? <LandsatLayer /> : <></>}
+                {targetService === 'sentinel-2' ? <Sentinel2Layer /> : <></>}
+                {/* <LandsatLayer /> */}
                 <SamplingPointsLayer />
             </GroupLayer>
             <CustomEventHandlers />
+            <MapActionButtonGroup4SpectralSamplingTool />
         </MapViewContainer>
     );
 };

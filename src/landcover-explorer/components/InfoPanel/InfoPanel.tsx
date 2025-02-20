@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
 
 import React, { useEffect, useState } from 'react';
 import LandcoverGraph from './LandcoverGraph/LandcoverGraphContainer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import Header from './Header/Header';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { showInfoPanelToggled } from '@shared/store/LandcoverExplorer/reducer';
 
 import {
@@ -45,13 +45,13 @@ import {
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 const InfoPanel = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const showInfoPanel = useSelector(selectShowInfoPanel);
+    const showInfoPanel = useAppSelector(selectShowInfoPanel);
 
-    const resolution = useSelector(selectMapResolution);
+    const resolution = useAppSelector(selectMapResolution);
 
-    const extent = useSelector(selectMapExtent);
+    const extent = useAppSelector(selectMapExtent);
 
     const [selectedCountryFromHashParam, setSelectedSubReginFromHashParam] =
         getRegionFromHashParams().split(',');

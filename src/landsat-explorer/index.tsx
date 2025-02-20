@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,15 +27,22 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
+import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
+import { initEsriOAuth } from '@shared/utils/esri-oauth';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
+
+    await initEsriOAuth({
+        appId: APP_ID,
+        portalUrl: AGOL_PORTAL_ROOT,
+    });
 
     try {
         const store = await getLandsatExplorerStore();
 
         const timeExtent = await getTimeExtentOfLandsatService();
-        console.log(timeExtent);
+        // console.log(timeExtent);
 
         root.render(
             <ReduxProvider store={store}>

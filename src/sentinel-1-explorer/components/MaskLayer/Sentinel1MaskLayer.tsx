@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import {
     selectMaskLayerPixelColor,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -48,50 +48,40 @@ import {
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { Sentinel1PixelValueRangeByIndex } from '../MaskTool/Sentinel1MaskTool';
 import { WaterLandMaskLayer } from './WaterLandMaskLayer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
+import { getSentinel1RasterFunctionNameByIndex } from '@shared/services/sentinel-1/helper';
+import { useSentinel1MaskToolFullPixelValueRange } from '../MaskTool/useSentinel1MaskToolFullPixelValueRange';
 
 type Props = {
     mapView?: MapView;
     groupLayer?: GroupLayer;
 };
 
-/**
- * Lookup table that maps RadarIndex values to corresponding Sentinel1FunctionName values.
- *
- * This table is used by the Mask Layer to select the appropriate raster function based on the specified index.
- */
-const RasterFunctionNameByIndx: Record<RadarIndex, Sentinel1FunctionName> = {
-    ship: 'VV and VH Power with Despeckle',
-    urban: 'VV and VH Power with Despeckle',
-    water: 'SWI Raw',
-    'water anomaly': 'Water Anomaly Index Raw',
-};
-
 export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const groupLayer4MaskAndWaterLandLayersRef = useRef<GroupLayer>();
 
-    const selectedIndex = useSelector(
+    const selectedIndex = useAppSelector(
         selectSelectedIndex4MaskTool
     ) as RadarIndex;
 
-    const { selectedRange } = useSelector(selectMaskLayerPixelValueRange);
+    const { selectedRange } = useAppSelector(selectMaskLayerPixelValueRange);
 
-    const pixelColor = useSelector(selectMaskLayerPixelColor);
+    const pixelColor = useAppSelector(selectMaskLayerPixelColor);
 
-    const opacity = useSelector(selectMaskLayerOpcity);
+    const opacity = useAppSelector(selectMaskLayerOpcity);
 
-    const shouldClip = useSelector(selectShouldClipMaskLayer);
+    const shouldClip = useAppSelector(selectShouldClipMaskLayer);
 
     const { objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
+    const anailysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const isVisible = useMemo(() => {
         if (mode !== 'analysis' || anailysisTool !== 'mask') {
@@ -105,13 +95,15 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
         return true;
     }, [mode, anailysisTool, objectIdOfSelectedScene]);
 
-    const fullPixelValueRange = useMemo(() => {
-        return (
-            Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
-                0, 0,
-            ]
-        );
-    }, [selectedIndex]);
+    // const fullPixelValueRange = useMemo(() => {
+    //     return (
+    //         Sentinel1PixelValueRangeByIndex[selectedIndex as RadarIndex] || [
+    //             0, 0,
+    //         ]
+    //     );
+    // }, [selectedIndex]);
+
+    const fullPixelValueRange = useSentinel1MaskToolFullPixelValueRange();
 
     const selectedPixelValueRange4Band2 = useMemo(() => {
         if (selectedIndex === 'ship' || selectedIndex === 'urban') {
@@ -123,7 +115,7 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
 
     const rasterFunction = useMemo(() => {
         return new RasterFunction({
-            functionName: RasterFunctionNameByIndx[selectedIndex],
+            functionName: getSentinel1RasterFunctionNameByIndex(selectedIndex),
         });
     }, [selectedIndex]);
 
@@ -184,7 +176,7 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
                 opacity={opacity}
                 pixelColor={pixelColor}
                 countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                    dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                    dispatch(countOfVisiblePixelsChanged(visiblePixels));
                 }}
             />
 

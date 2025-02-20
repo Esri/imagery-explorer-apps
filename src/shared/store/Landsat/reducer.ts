@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ export type LandsatState = {
     /**
      * Landsat scenes that intersect with center point of map view and were acquired during the input year.
      */
-    landsatScenes?: {
-        byObjectId?: {
+    landsatScenes: {
+        byObjectId: {
             [key: number]: LandsatScene;
         };
-        objectIds?: number[];
+        objectIds: number[];
     };
     /**
      * list of Landat missions to be excluded

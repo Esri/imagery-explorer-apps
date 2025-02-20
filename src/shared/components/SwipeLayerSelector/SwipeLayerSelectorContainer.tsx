@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,45 +14,69 @@
  */
 
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
     selectIsSecondarySceneActive,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { SwipeLayerSelector } from './SwipeLayerSelector';
 import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 import { swapMainAndSecondaryScenes } from '@shared/store/ImageryScene/thunks';
+import { AutoSwipeControls } from './AutoSwipeControls';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import classNames from 'classnames';
 
 export const SwipeLayerSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const appMode = useSelector(selectAppMode);
+    const appMode = useAppSelector(selectAppMode);
 
-    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
+    const isSecondarySceneActive = useAppSelector(selectIsSecondarySceneActive);
 
-    const queryParams4LeftSide = useSelector(selectQueryParams4MainScene);
+    const queryParams4LeftSide = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4RightSide = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4RightSide = useAppSelector(
+        selectQueryParams4SecondaryScene
+    );
+
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     if (appMode !== 'swipe') {
         return null;
     }
 
     return (
-        <SwipeLayerSelector
-            selectedSide={isSecondarySceneActive ? 'right' : 'left'}
-            queryParams4SceneOnLeft={queryParams4LeftSide}
-            queryParams4SceneOnRight={queryParams4RightSide}
-            onChange={(value) => {
-                const isSecondarySceneActive = value === 'right';
-                dispatch(isSecondarySceneActiveToggled(isSecondarySceneActive));
-            }}
-            swapButtonOnClick={() => {
-                dispatch(swapMainAndSecondaryScenes());
-            }}
-        />
+        <>
+            <div
+                className={classNames('w-full', {
+                    'is-disabled': isAnimationPlaying,
+                })}
+                style={{
+                    height: `calc(100% - 30px)`,
+                }}
+            >
+                <SwipeLayerSelector
+                    selectedSide={isSecondarySceneActive ? 'right' : 'left'}
+                    queryParams4SceneOnLeft={queryParams4LeftSide}
+                    queryParams4SceneOnRight={queryParams4RightSide}
+                    onChange={(value) => {
+                        const isSecondarySceneActive = value === 'right';
+                        dispatch(
+                            isSecondarySceneActiveToggled(
+                                isSecondarySceneActive
+                            )
+                        );
+                    }}
+                    swapButtonOnClick={() => {
+                        dispatch(swapMainAndSecondaryScenes());
+                    }}
+                />
+            </div>
+
+            <AutoSwipeControls />
+        </>
     );
 };

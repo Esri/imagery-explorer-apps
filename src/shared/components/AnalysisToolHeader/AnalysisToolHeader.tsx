@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ type Props = {
      * @returns
      */
     dropdownMenuSelectedItemOnChange: (val: string) => void;
+    children?: React.ReactNode;
 };
 
 export const AnalysisToolHeader: FC<Props> = ({
@@ -47,6 +48,7 @@ export const AnalysisToolHeader: FC<Props> = ({
     dropdownListOptions,
     selectedValue,
     tooltipText,
+    children,
     dropdownMenuSelectedItemOnChange,
 }) => {
     const dropdownData: DropdownData[] = useMemo(() => {
@@ -78,6 +80,8 @@ export const AnalysisToolHeader: FC<Props> = ({
                     onChange={dropdownMenuSelectedItemOnChange}
                 />
             </div>
+
+            {children}
         </div>
     );
 };

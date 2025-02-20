@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 const ICON_SIZE = 64;
 
@@ -52,9 +52,9 @@ const PauseButton = (
 );
 
 export const PlayPauseButton = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const status = useSelector(selectAnimationStatus);
+    const status = useAppSelector(selectAnimationStatus);
 
     return (
         <div className="cursor-pointer">

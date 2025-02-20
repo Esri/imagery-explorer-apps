@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,10 @@ type Props = {
      */
     selected: boolean;
     /**
+     * if true, the card should be disabled
+     */
+    disabled?: boolean;
+    /**
      * emits when user clicks on this card
      * @returns
      */
@@ -47,20 +51,20 @@ export const GirdCard: FC<Props> = ({
     label,
     thumbnail,
     selected,
+    disabled,
     onClick,
     onMouseEnter,
     onMouseLeave,
 }) => {
     return (
         <div
-            className={classNames(
-                'relative w-24 h-12 bg-cover cursor-pointer',
-                {
-                    'drop-shadow-custom-light-blue': selected,
-                }
-            )}
+            className={classNames('relative w-24 h-12 cursor-pointer', {
+                'drop-shadow-custom-light-blue': selected,
+                'is-disabled': disabled,
+            })}
             style={{
                 background: `url(${thumbnail})`,
+                backgroundSize: 'cover',
             }}
             onClick={onClick}
             onMouseEnter={onMouseEnter}

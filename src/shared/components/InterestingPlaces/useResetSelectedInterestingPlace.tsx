@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,17 @@ import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import { nameOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
 import { InterestingPlaceData } from '@typing/shared';
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useResetSelectedInterestingPlace = (
     selectedInterestingPlace: InterestingPlaceData
 ): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mapCenter = useSelector(selectMapCenter);
+    const mapCenter = useAppSelector(selectMapCenter);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
     useEffect(() => {
         if (!selectedInterestingPlace) {

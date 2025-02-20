@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,27 +16,17 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectQueryLocation4SpectralProfileTool = createSelector(
-    (state: RootState) => state.SpectralProfileTool.queryLocation,
-    (queryLocation) => queryLocation
-);
+export const selectQueryLocation4SpectralProfileTool = (state: RootState) =>
+    state.SpectralProfileTool.queryLocation;
 
-export const selectIsLoadingData4SpectralProfileTool = createSelector(
-    (state: RootState) => state.SpectralProfileTool.isLoading,
-    (isLoading) => isLoading
-);
+export const selectIsLoadingData4SpectralProfileTool = (state: RootState) =>
+    state.SpectralProfileTool.isLoading;
 
-export const selectData4SpectralProfileTool = createSelector(
-    (state: RootState) => state.SpectralProfileTool.spectralProfileData,
-    (spectralProfileData) => spectralProfileData
-);
+export const selectData4SpectralProfileTool = (state: RootState) =>
+    state.SpectralProfileTool.spectralProfileData;
 
-export const selectError4SpectralProfileTool = createSelector(
-    (state: RootState) => state.SpectralProfileTool.error,
-    (error) => error
-);
+export const selectError4SpectralProfileTool = (state: RootState) =>
+    state.SpectralProfileTool.error;
 
-export const selectSpectralProfileToolState = createSelector(
-    (state: RootState) => state.SpectralProfileTool,
-    (SpectralProfileTool) => SpectralProfileTool
-);
+export const selectSpectralProfileToolState = (state: RootState) =>
+    state.SpectralProfileTool;

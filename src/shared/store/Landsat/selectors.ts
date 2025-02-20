@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,10 @@ import { RootState } from '../configureStore';
 //     }
 // );
 
-export const selectAvailableScenesByObjectId = createSelector(
-    (state: RootState) => state.Landsat.landsatScenes.byObjectId,
-    (byObjectId) => byObjectId
-);
+export const selectAvailableScenesByObjectId = (state: RootState) => {
+    return state.Landsat.landsatScenes.byObjectId;
+};
 
-export const selectLandsatMissionsToBeExcluded = createSelector(
-    (state: RootState) => state.Landsat.missionsToBeExcluded,
-    (missionsToBeExcluded) => missionsToBeExcluded
-);
+export const selectLandsatMissionsToBeExcluded = (state: RootState) => {
+    return state.Landsat.missionsToBeExcluded;
+};

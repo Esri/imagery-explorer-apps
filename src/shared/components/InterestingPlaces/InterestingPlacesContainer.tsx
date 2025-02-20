@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,13 @@
 
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { InterestingPlaces } from './InterestingPlaces';
-import { batch } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
 import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { InterestingPlaceData } from '@typing/shared';
 import { nameOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectNameOfSelectedInterestingPlace } from '@shared/store/UI/selectors';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useResetSelectedInterestingPlace } from './useResetSelectedInterestingPlace';
@@ -42,9 +41,9 @@ export const InterestingPlacesContainer: FC<Props> = ({
     data,
     isThreeColumnGrid,
 }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const nameOfSelectedInterestingPlace = useSelector(
+    const nameOfSelectedInterestingPlace = useAppSelector(
         selectNameOfSelectedInterestingPlace
     );
 
@@ -66,15 +65,9 @@ export const InterestingPlacesContainer: FC<Props> = ({
             return;
         }
 
-        batch(() => {
-            dispatch(
-                centerChanged([...selectedInterestingPlace.location.center])
-            );
-            dispatch(zoomChanged(selectedInterestingPlace.location.zoom));
-            dispatch(
-                updateRasterFunctionName(selectedInterestingPlace.renderer)
-            );
-        });
+        dispatch(centerChanged([...selectedInterestingPlace.location.center]));
+        dispatch(zoomChanged(selectedInterestingPlace.location.zoom));
+        dispatch(updateRasterFunctionName(selectedInterestingPlace.renderer));
     }, [selectedInterestingPlace]);
 
     return (

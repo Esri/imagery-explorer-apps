@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@ import {
     // activeSceneChanged,
     changeCompareLayerIsOnUpdated,
 } from '@shared/store/ChangeCompareTool/reducer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     // selectActiveScene4ChangeCompareTool,
     selectChangeCompareLayerIsOn,
 } from '@shared/store/ChangeCompareTool/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     selectIsSecondarySceneActive,
     selectQueryParams4MainScene,
@@ -37,15 +37,15 @@ import {
 import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 
 export const ChangeCompareLayerSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const isSecondarySceneActive = useSelector(selectIsSecondarySceneActive);
+    const isSecondarySceneActive = useAppSelector(selectIsSecondarySceneActive);
 
-    const changeCompareLayerIsOn = useSelector(selectChangeCompareLayerIsOn);
+    const changeCompareLayerIsOn = useAppSelector(selectChangeCompareLayerIsOn);
 
-    const queryParams4SceneA = useSelector(selectQueryParams4MainScene);
+    const queryParams4SceneA = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SceneB = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4SceneB = useAppSelector(selectQueryParams4SecondaryScene);
 
     const viewChangeButtonDisabled =
         !queryParams4SceneA?.objectIdOfSelectedScene ||

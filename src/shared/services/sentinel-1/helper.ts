@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,33 @@
  */
 
 import { RadarIndex } from '@typing/imagery-service';
+import { Sentinel1FunctionName } from './config';
+
+/**
+ * Lookup table that maps RadarIndex values to corresponding Sentinel1FunctionName values.
+ *
+ * This table is used by the Mask Layer to select the appropriate raster function based on the specified index.
+ */
+const Sentinel1RasterFunctionNameByIndx: Record<
+    RadarIndex,
+    Sentinel1FunctionName
+> = {
+    ship: 'VV and VH Power with Despeckle',
+    urban: 'VV and VH Power with Despeckle',
+    water: 'SWI Raw',
+    'water anomaly': 'Water Anomaly Index Raw',
+};
+
+/**
+ * Get the Sentinel1FunctionName based on the RadarIndex
+ * @param radarIndex name of the radar index
+ * @returns the corresponding Sentinel1FunctionName
+ */
+export const getSentinel1RasterFunctionNameByIndex = (
+    radarIndex: RadarIndex
+) => {
+    return Sentinel1RasterFunctionNameByIndx[radarIndex];
+};
 
 export const calcRadarIndex = (
     indexName: RadarIndex,

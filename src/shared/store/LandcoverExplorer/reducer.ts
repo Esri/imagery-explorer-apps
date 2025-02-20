@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,19 +35,19 @@ export type LandcoverExplorerAppState = {
      * In Swipe Mode, user is allowed to pick up two years from the Time Slider and compare the map layers from those two years using the Swipe Mode
      * In Step Mode, user can only select one year at a time and the Swipe Widget will be disabled
      */
-    mode?: MapMode;
+    mode: MapMode;
     /**
      * the selected year in Step Mode, that will be used to display layers and fetch data for land cover graph
      */
-    year?: number;
+    year: number;
     /**
      * If true, show Sentinel 2 Layer instead of Land Cover Layer
      */
-    shouldShowSentinel2Layer?: boolean;
+    shouldShowSentinel2Layer: boolean;
     /**
      * The month that will be used to fetch sentinel-2 imagery layer
      */
-    sentinel2AquisitionMonth?: number;
+    sentinel2AquisitionMonth: number;
     // /**
     //  * Represents the level of detail (LOD) at the center of the view.
     //  */
@@ -65,16 +65,16 @@ export type LandcoverExplorerAppState = {
     //  * The extent represents the visible portion of a map within the view as an instance of Extent.
     //  */
     // extent?: Extent;
-    swipeWidget?: {
-        year4LeadingLayer?: number;
-        year4TrailingLayer?: number;
+    swipeWidget: {
+        year4LeadingLayer: number;
+        year4TrailingLayer: number;
         // position?: number;
     };
     /**
      * The active Land Cover type selected by the user that will be used to
      * get the raster functions to filter the Land Cover layer
      */
-    activeLandCoverType?: LandCoverClassification;
+    activeLandCoverType: LandCoverClassification;
     // /**
     //  * If true, Map Reference Labels layer will be on
     //  */
@@ -86,11 +86,11 @@ export type LandcoverExplorerAppState = {
     /**
      * Sentinel 2 Raster function that will be used to render the layer
      */
-    sentinel2RasterFunction?: Sentinel2RasterFunction;
+    sentinel2RasterFunction: Sentinel2RasterFunction;
     /**
      * If true, open info panel that shows detailed land cover info
      */
-    showInfoPanel?: boolean;
+    showInfoPanel: boolean;
     /**
      * If true, show leading and trailing year in Swipe Widget Reference Info Component
      */
@@ -106,7 +106,11 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     // center: null,
     // resolution: null,
     // extent: null,
-    swipeWidget: null,
+    swipeWidget: {
+        year4LeadingLayer: null,
+        year4TrailingLayer: null,
+        // position: 50,
+    },
     activeLandCoverType: null,
     // showMapLabel: true,
     // showTerrain: true,

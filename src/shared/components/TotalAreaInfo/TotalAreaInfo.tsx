@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ import { selectIsMapUpdating } from '@shared/store/Map/selectors';
 import { selectTotalVisibleArea } from '@shared/store/Map/selectors';
 import { numberWithCommas } from 'helper-toolkit-ts';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
     /**
@@ -28,9 +28,9 @@ type Props = {
 };
 
 export const TotalVisibleAreaInfo: FC<Props> = ({ label }: Props) => {
-    const totalArea = useSelector(selectTotalVisibleArea);
+    const totalArea = useAppSelector(selectTotalVisibleArea);
 
-    const isMapUpdating = useSelector(selectIsMapUpdating);
+    const isMapUpdating = useAppSelector(selectIsMapUpdating);
 
     if (totalArea === null) {
         return null;

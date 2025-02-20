@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import Point from '@arcgis/core/geometry/Point';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     // selectActiveAnalysisTool,
     selectAppMode,
@@ -25,7 +25,7 @@ import {
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 // import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
-// import { useDispatch } from 'react-redux';
+// import { useAppDispatch } from '@shared/store/configureStore';
 // import { popupAnchorLocationChanged } from '@shared/store/Map/reducer';
 import { getMainContent } from './helper';
 // import { watch } from '@arcgis/core/core/reactiveUtils';
@@ -44,11 +44,11 @@ type Props = {
 let controller: AbortController = null;
 
 export const PopupContainer: FC<Props> = ({ mapView }) => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useSelector(
+    const queryParams4SecondaryScene = useAppSelector(
         selectQueryParams4SecondaryScene
     );
 

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,13 @@
 
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 
+type GetFeatureByObjectIdOptions = {
+    abortController?: AbortController;
+    token?: string;
+};
+
+const cachedFeature = new Map<string, IFeature>();
+
 /**
  * Query Imagery Service to get a feature by ObjectID
  * @param serviceUrl URL of the Imagery Service
@@ -24,14 +31,26 @@ import { IFeature } from '@esri/arcgis-rest-feature-service';
 export const getFeatureByObjectId = async (
     serviceUrl: string,
     objectId: number,
-    abortController?: AbortController
+    options?: GetFeatureByObjectIdOptions
 ): Promise<IFeature> => {
+    const cacheKey = `${serviceUrl}/${objectId}`;
+
+    if (cachedFeature.has(cacheKey)) {
+        return cachedFeature.get(cacheKey);
+    }
+
     const queryParams = new URLSearchParams({
         f: 'json',
         returnGeometry: 'true',
         objectIds: objectId.toString(),
         outFields: '*',
     });
+
+    if (options?.token) {
+        queryParams.set('token', options.token);
+    }
+
+    const abortController = options?.abortController;
 
     const res = await fetch(`${serviceUrl}/query?${queryParams.toString()}`, {
         signal: abortController?.signal,
@@ -51,5 +70,7 @@ export const getFeatureByObjectId = async (
         return null;
     }
 
-    return data?.features[0] as IFeature;
+    cachedFeature.set(cacheKey, data.features[0]);
+
+    return cachedFeature.get(cacheKey) as IFeature;
 };

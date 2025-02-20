@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,16 +27,16 @@ import {
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const useSaveAppState2HashParams = () => {
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
     );
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     useEffect(() => {
         saveTimeExtentToHashParams(year4LeadingLayer, year4TrailingLayer);

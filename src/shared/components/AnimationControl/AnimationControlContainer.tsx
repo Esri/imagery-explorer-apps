@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  */
 
 import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { AnimationControl } from './AnimationControl';
 import {
     AnimationFramesList,
@@ -46,19 +46,19 @@ import { copyAnimationLink } from '@shared/store/UI/thunks';
 const ANIMATION_FRAMES_UPPER_LIMIT = 30;
 
 export const AnimationControlContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const animationFramesData = useAnimationFramesInfo();
 
     const shouldDisablePlayPauseButton = useShouldDisablePlayPauseButton();
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     const addNewAnimationFrame = () => {
         dispatch(addNewItemToQueryParamsList(nanoid(5), true));

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import Swipe from '@arcgis/core/widgets/Swipe';
 import MapView from '@arcgis/core/views/MapView';
 import { watch } from '@arcgis/core/core/reactiveUtils';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
+import { useAutoSwipe } from './useAutoSwipe';
 
 type Props = {
     /**
@@ -54,6 +55,8 @@ const SwipeWidget: FC<Props> = ({
     referenceInfoOnToggle,
 }: Props) => {
     const swipeWidgetRef = useRef<Swipe>();
+
+    useAutoSwipe(swipeWidgetRef.current);
 
     const init = async () => {
         // this swipe widget layers should be added at index of one so that the

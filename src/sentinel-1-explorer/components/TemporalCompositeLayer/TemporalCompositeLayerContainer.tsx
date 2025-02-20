@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
@@ -41,21 +41,21 @@ export const TemporalCompositeLayerContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const isTemporalCompositeLayerOn = useSelector(
+    const isTemporalCompositeLayerOn = useAppSelector(
         selectIsTemporalCompositeLayerOn
     );
 
-    const listOfQueryParams = useSelector(selectListOfQueryParams);
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
-    const selectedItemFromListOfQueryParams = useSelector(
+    const selectedItemFromListOfQueryParams = useAppSelector(
         selectSelectedItemFromListOfQueryParams
     );
 
-    const anailysisTool = useSelector(selectActiveAnalysisTool);
+    const anailysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const rasterFunctionName: Sentinel1FunctionName = useSelector(
+    const rasterFunctionName: Sentinel1FunctionName = useAppSelector(
         selectRasterFunction4TemporalCompositeTool
     ) as Sentinel1FunctionName;
 

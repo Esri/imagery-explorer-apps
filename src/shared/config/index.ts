@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,10 @@ type AppConfig = {
      */
     title: string;
     /**
+     * Name of the satellite (e.g., 'Landsat')
+     */
+    satellite: string;
+    /**
      * Item id of the web map to be used in the app
      */
     webmapId: string;
@@ -28,6 +32,11 @@ type AppConfig = {
      * Sources information to be added to output MP4 file
      */
     animationMetadataSources?: string;
+    /**
+     * App id to be used to create the OAuthInfo object
+     * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+     */
+    appId: string;
 };
 
 /**
@@ -35,10 +44,10 @@ type AppConfig = {
  */
 export type AppName = keyof typeof config.apps;
 
-/**
- * a type that represents the keys of the imagery services object in the `/src/config.json` file
- */
-export type ServiceName = keyof typeof config.services;
+// /**
+//  * a type that represents the keys of the imagery services object in the `/src/config.json` file
+//  */
+// export type ServiceName = keyof typeof config.services;
 
 /**
  * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
@@ -51,17 +60,70 @@ export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
  */
 export const appConfig: AppConfig = config.apps[APP_NAME];
 
-export const TIER =
+/**
+ * Tier of the app based on the SERVICE_TIER environment variable
+ */
+const TIER_BASED_ON_ENV = SERVICE_TIER
+    ? SERVICE_TIER === 'production'
+        ? 'production'
+        : 'development'
+    : undefined;
+// console.log('TIER_BASED_ON_ENV:', TIER_BASED_ON_ENV);
+
+/**
+ * Tier of the app based on the host name
+ */
+const TIER_BASED_ON_HOST =
     window.location.host === 'livingatlas.arcgis.com' ||
     window.location.host === 'livingatlasstg.arcgis.com'
         ? 'production'
         : 'development';
 
 /**
- * Get imagery service config by name
- * @param serviceName
- * @returns
+ * Tier of the app (production or development)
  */
-export const getServiceConfig = (serviceName: ServiceName) => {
-    return config.services[serviceName];
-};
+export const TIER = TIER_BASED_ON_ENV || TIER_BASED_ON_HOST;
+console.log(
+    `The application is using ${TIER} services based on ${
+        TIER_BASED_ON_ENV ? 'environment variable' : 'host name'
+    }.`
+);
+
+/**
+ * Root URL of the ArcGIS Online portal based on the tier
+ */
+const AGOL_PORTAL_ROOT_BASED_ON_TIER =
+    TIER === 'production'
+        ? `https://www.arcgis.com`
+        : `https://devext.arcgis.com`;
+console.log(`The application is using ${AGOL_PORTAL_ROOT_BASED_ON_TIER}.`);
+
+/**
+ * Root URL of the ArcGIS Portal
+ */
+export const AGOL_PORTAL_ROOT = AGOL_PORTAL_ROOT_BASED_ON_TIER;
+
+/**
+ * Root URL of the ArcGIS REST API
+ *
+ * @example https://www.arcgis.com/sharing/rest
+ *
+ * @see https://developers.arcgis.com/rest/
+ */
+export const ARCGIS_REST_API_ROOT = AGOL_PORTAL_ROOT + '/sharing/rest';
+
+// /**
+//  * Get imagery service config by name
+//  * @param serviceName
+//  * @returns
+//  */
+// export const getServiceConfig = (serviceName: ServiceName) => {
+//     return config.services[serviceName];
+// };
+
+/**
+ * App ID to be used to create the OAuthInfo object.
+ *
+ * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+ */
+export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';

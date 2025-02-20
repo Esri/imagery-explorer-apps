@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import { MAP_CENTER, MAP_ZOOM } from '../../constants/map';
 import Point from '@arcgis/core/geometry/Point';
 import { Extent } from '@arcgis/core/geometry';
 
+export type AutoSwipeStatus = 'playing' | 'pausing';
+
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
 export type MapState = {
@@ -46,11 +48,11 @@ export type MapState = {
      * Represents the size of one pixel in map units.
      * The value of resolution can be found by dividing the extent width by the view's width.
      */
-    resolution?: number;
+    resolution: number;
     /**
      * The extent represents the visible portion of a map within the view as an instance of Extent.
      */
-    extent?: Extent;
+    extent: Extent;
     /**
      * If true, Map Reference Labels layer will be on
      */
@@ -67,6 +69,14 @@ export type MapState = {
      * handler position of swipe widget ranged from 0 - 100
      */
     swipeWidgetHanlderPosition: number;
+    /**
+     * Status of the auto-swipe feature for the Swipe Widget.
+     */
+    autoSwipeStatus: AutoSwipeStatus;
+    /**
+     * The speed of the auto-swipe feature, specified in percent of position change per update.
+     */
+    autoSwipeSpeed: number;
     /**
      * anchor location of the map popup windown
      */
@@ -85,6 +95,17 @@ export type MapState = {
     countOfVisiblePixels: number;
 };
 
+/**
+ * Array of numbers representing the increment/decrement of the swipe widget position
+ * per auto-swipe update. Each value defines the possible percentage of total movement
+ * that the swipe widget can make during each update cycle.
+ *
+ * The values represent movement speed, with 1 being the slowest and 5 the fastest.
+ */
+export const AUTO_SWIPE_SPEEDS = [0.25, 0.5, 1, 2.5, 5];
+
+export const AUTO_SWIPE_SPEED_DEFAULTVALUE = AUTO_SWIPE_SPEEDS[2];
+
 export const initialMapState: MapState = {
     // webmapId: WEB_MAP_ID, // Topographic
     center: MAP_CENTER,
@@ -96,6 +117,8 @@ export const initialMapState: MapState = {
     showTerrain: true,
     showBasemap: true,
     swipeWidgetHanlderPosition: 50,
+    autoSwipeStatus: null,
+    autoSwipeSpeed: AUTO_SWIPE_SPEED_DEFAULTVALUE,
     popupAnchorLocation: null,
     isUpadting: false,
     totalVisibleAreaInSqKm: null,
@@ -154,6 +177,15 @@ const slice = createSlice({
         countOfVisiblePixelsChanged: (state, action: PayloadAction<number>) => {
             state.countOfVisiblePixels = action.payload;
         },
+        autoSwipeStatusChanged: (
+            state,
+            action: PayloadAction<AutoSwipeStatus>
+        ) => {
+            state.autoSwipeStatus = action.payload;
+        },
+        autoSwipeSpeedChanged: (state, action: PayloadAction<number>) => {
+            state.autoSwipeSpeed = action.payload;
+        },
     },
 });
 
@@ -174,6 +206,8 @@ export const {
     isUpdatingChanged,
     totalVisibleAreaInSqKmChanged,
     countOfVisiblePixelsChanged,
+    autoSwipeStatusChanged,
+    autoSwipeSpeedChanged,
 } = slice.actions;
 
 export default reducer;

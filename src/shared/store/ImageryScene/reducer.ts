@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -146,14 +146,14 @@ export type ImageryScenesState = {
      * query parameters for list of Imagery scenes that will be used in Animation Mode, Spectral Sampling Mode and etc.
      */
     queryParamsList: {
-        byId?: {
+        byId: {
             [key: string]: QueryParams4ImageryScene;
         };
-        ids?: string[];
+        ids: string[];
         /**
          * Id of the selected item. This Id helps identify which item should be updated.
          */
-        selectedItemID?: string;
+        selectedItemID: string;
     };
     /**
      * List of imagery scenes that intersect with center point of map view and were acquired within the user selected acquisition year.

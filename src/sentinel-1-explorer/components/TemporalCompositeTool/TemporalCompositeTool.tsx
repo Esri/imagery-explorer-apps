@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectListOfQueryParams,
@@ -38,19 +38,19 @@ import { initiateImageryScenes4TemporalCompositeTool } from '@shared/store/Tempo
 import { Tooltip } from '@shared/components/Tooltip';
 
 export const TemporalCompositeTool = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const tool = useSelector(selectActiveAnalysisTool);
+    const tool = useAppSelector(selectActiveAnalysisTool);
 
-    const isTemporalCompositeLayerOn = useSelector(
+    const isTemporalCompositeLayerOn = useAppSelector(
         selectIsTemporalCompositeLayerOn
     );
 
-    const rasterFunction = useSelector(
+    const rasterFunction = useAppSelector(
         selectRasterFunction4TemporalCompositeTool
     );
 
-    const listOfQueryParams = useSelector(selectListOfQueryParams);
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
     const rasterFunctionDropdownOptions: DropdownData[] = useMemo(() => {
         const VVdBRasterFunction: Sentinel1FunctionName = 'VV dB Colorized';
@@ -59,11 +59,11 @@ export const TemporalCompositeTool = () => {
         const data = [
             {
                 value: VVdBRasterFunction,
-                label: 'V V dB',
+                label: 'VV dB',
             },
             {
                 value: VHdBRasterFunction,
-                label: 'V H dB',
+                label: 'VH dB',
             },
         ];
 

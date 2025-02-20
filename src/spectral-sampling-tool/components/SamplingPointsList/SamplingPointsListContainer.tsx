@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 import React, { useEffect, useState } from 'react';
 import { SamplingPointsList } from './SamplingPointsList';
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { AddSamplingPointButton } from './AddSamplingPointButton';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     addNewItemToQueryParamsList,
     removeItemFromQueryParamsList,
@@ -29,7 +29,6 @@ import {
     removeSpectralSamplingPoint,
 } from '@shared/store/SpectralSamplingTool/thunks';
 import { nanoid } from 'nanoid';
-import { batch } from 'react-redux';
 import { useFormattedSpectralSamplingData } from './useFormattedSpectralSamplingData';
 import { selectedItemIdOfQueryParamsListChanged } from '@shared/store/ImageryScene/reducer';
 import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/SpectralSamplingTool/selectors';
@@ -41,12 +40,12 @@ import {
 import { ResetDialog } from './ResetDialog';
 
 export const SamplingPointsListContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const samplingListData = useFormattedSpectralSamplingData();
 
     // classification name of the current spectral sampling session
-    const classificationName = useSelector(
+    const classificationName = useAppSelector(
         selectClassifictionNameOfSpectralSamplingTask
     );
 
@@ -57,18 +56,14 @@ export const SamplingPointsListContainer = () => {
         // the sampling point data can be joined
         const idOfSamplingPoint2Add = nanoid(5);
 
-        batch(() => {
-            dispatch(addNewItemToQueryParamsList(idOfSamplingPoint2Add));
-            dispatch(addSpectralSamplingPoint(idOfSamplingPoint2Add));
-        });
+        dispatch(addNewItemToQueryParamsList(idOfSamplingPoint2Add));
+        dispatch(addSpectralSamplingPoint(idOfSamplingPoint2Add));
     };
 
     const samplingPointOnRemove = (idOfItemToRemove: string) => {
         console.log(idOfItemToRemove);
-        batch(() => {
-            dispatch(removeItemFromQueryParamsList(idOfItemToRemove));
-            dispatch(removeSpectralSamplingPoint(idOfItemToRemove));
-        });
+        dispatch(removeItemFromQueryParamsList(idOfItemToRemove));
+        dispatch(removeSpectralSamplingPoint(idOfItemToRemove));
     };
 
     useEffect(() => {

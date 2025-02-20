@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,18 @@
  * limitations under the License.
  */
 
-import { formatLandsatBandValuesAsLineChartDataItems } from '@landsat-explorer/components/SpectralTool/helper';
+import { formatBandValuesAsLineChartDataItems } from '@shared/components/SpectralProfileTool/helpers';
 import {
     selectIdOfItem2Highlight,
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
+    selectTargetService,
 } from '@shared/store/SpectralSamplingTool/selectors';
-import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumns';
+// import { averageMatrixColumns } from '@shared/utils/snippets/averageMatrixColumns';
 // import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { LineGroupData } from '@vannizhang/react-d3-charts/dist/MultipleLinesChart/types';
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { useAveragedBandValues } from './useAveragedSamplingResults';
 
 /**
@@ -33,12 +34,12 @@ import { useAveragedBandValues } from './useAveragedSamplingResults';
  * - a line represents the average spectral profile from all sampling point
  * @returns
  */
-export const useChartData = () => {
-    const samplingPointsData = useSelector(selectSpectralSamplingPointsData);
+export const useChartData = (numOfBandsToDisplay: number) => {
+    const samplingPointsData = useAppSelector(selectSpectralSamplingPointsData);
 
-    const idOfItem2Highlight = useSelector(selectIdOfItem2Highlight);
+    const idOfItem2Highlight = useAppSelector(selectIdOfItem2Highlight);
 
-    const selectedSamplingPointsData = useSelector(
+    const selectedSamplingPointsData = useAppSelector(
         selectSelectedSpectralSamplingPointData
     );
 
@@ -52,9 +53,10 @@ export const useChartData = () => {
         const output: LineGroupData[] = samplingPointsData
             .filter((d) => d.location && d.bandValues)
             .map((d, index) => {
-                const values = formatLandsatBandValuesAsLineChartDataItems(
-                    d.bandValues
-                );
+                const values = formatBandValuesAsLineChartDataItems({
+                    bandValues: d.bandValues,
+                    length: numOfBandsToDisplay,
+                });
 
                 return {
                     fill:
@@ -77,9 +79,10 @@ export const useChartData = () => {
             output.push({
                 fill: 'var(--custom-light-blue-90)',
                 key: 'average',
-                values: formatLandsatBandValuesAsLineChartDataItems(
-                    averageBandValues
-                ),
+                values: formatBandValuesAsLineChartDataItems({
+                    bandValues: averageBandValues,
+                    length: numOfBandsToDisplay,
+                }),
                 dashPattern: '9 3', // use dash pattern to provide user a hint that the feature of interest is just a reference
             });
         }
@@ -90,6 +93,7 @@ export const useChartData = () => {
         selectedSamplingPointsData,
         averageBandValues,
         idOfItem2Highlight,
+        numOfBandsToDisplay,
     ]);
 
     return chartData;

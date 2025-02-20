@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,14 @@ import {
     // QueryParams4ImageryScene,
 } from '@shared/store/ImageryScene/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
+import {
+    SpectralSamplingToolState,
+    initialSpectralSamplingToolState,
+    SpectralSamplingToolSupportedService,
+} from '@shared/store/SpectralSamplingTool/reducer';
 
-const getPreloadedMapState = (): MapState => {
-    const mapLocation = getMapCenterFromHashParams();
+const getPreloadedMapState = (hashParams: URLSearchParams): MapState => {
+    const mapLocation = getMapCenterFromHashParams(hashParams);
 
     return {
         ...initialMapState,
@@ -43,9 +48,22 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     };
 };
 
-export const getPreloadedState = async (): Promise<PartialRootState> => {
+const getProlodedSpectralSamplingState = (
+    targetService: SpectralSamplingToolSupportedService
+): SpectralSamplingToolState => {
+    return {
+        ...initialSpectralSamplingToolState,
+        targetService,
+    };
+};
+
+export const getPreloadedState = (
+    targetService: SpectralSamplingToolSupportedService
+): PartialRootState => {
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
     return {
         ImageryScenes: getPreloadedImageryScenesState(),
-        Map: getPreloadedMapState(),
+        Map: getPreloadedMapState(hashParams),
+        SpectralSamplingTool: getProlodedSpectralSamplingState(targetService),
     };
 };

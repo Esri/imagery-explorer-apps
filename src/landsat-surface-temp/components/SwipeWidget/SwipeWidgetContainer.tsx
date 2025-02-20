@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 import React, { FC, useEffect } from 'react';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useLandsatLayer } from '@landsat-explorer/components/LandsatLayer';
 import {
@@ -32,16 +32,16 @@ type Props = {
 };
 
 export const SwipeWidgetContainer: FC<Props> = ({ mapView }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const activeAnalysisTool = useSelector(selectActiveAnalysisTool);
+    const activeAnalysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const isSwipeWidgetVisible =
         mode === 'analysis' && activeAnalysisTool === 'trend';
 
-    const queryParams4MainScene = useSelector(selectQueryParams4MainScene);
+    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
     const leadingLayer = useLandsatLayer({
         visible:

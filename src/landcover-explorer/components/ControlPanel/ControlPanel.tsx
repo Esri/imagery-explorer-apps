@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 import './ControlPanel.css';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { year4LeadingLayerUpdated } from '@shared/store/LandcoverExplorer/reducer';
 // import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
@@ -35,11 +35,11 @@ import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
 import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
 
 const ControlPanel = () => {
-    // const dispatch = useDispatch();
+    // const dispatch = useAppDispatch();
 
-    // const hideControlPanel = useSelector(selectHideBottomPanel);
+    // const hideControlPanel = useAppSelector(selectHideBottomPanel);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

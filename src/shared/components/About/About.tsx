@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { CloseButton } from '../CloseButton';
 import { shouldShowAboutThisAppToggled } from '@shared/store/UI/reducer';
 
@@ -25,9 +25,9 @@ type Props = {
 };
 
 export const About: FC<Props> = ({ children }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const show = useSelector(selectShouldShowAboutThisApp);
+    const show = useAppSelector(selectShouldShowAboutThisApp);
 
     if (!show) {
         return null;

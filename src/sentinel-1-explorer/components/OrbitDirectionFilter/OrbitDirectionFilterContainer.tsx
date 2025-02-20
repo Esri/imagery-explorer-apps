@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,17 @@
 
 import React from 'react';
 import { OrbitDirectionFilter } from './OrbitDirectionFilter';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { orbitDirectionChanged } from '@shared/store/Sentinel1/reducer';
 
 export const OrbitDirectionFilterContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const selectedOrbitDirection = useSelector(selectSentinel1OrbitDirection);
+    const selectedOrbitDirection = useAppSelector(
+        selectSentinel1OrbitDirection
+    );
 
     return (
         <OrbitDirectionFilter

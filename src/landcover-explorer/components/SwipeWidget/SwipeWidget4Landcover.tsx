@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 import React, { FC } from 'react';
 import useLandCoverLayer from '../LandcoverLayer/useLandCoverLayer';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapMode,
     selectShouldShowSentinel2Layer,
@@ -24,7 +24,7 @@ import {
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import MapView from '@arcgis/core/views/MapView';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 
 type Props = {
@@ -32,15 +32,15 @@ type Props = {
 };
 
 export const SwipeWidget4Landcover: FC<Props> = ({ mapView }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
     );
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

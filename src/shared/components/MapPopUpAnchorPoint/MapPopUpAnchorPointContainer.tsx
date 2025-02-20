@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ import MapView from '@arcgis/core/views/MapView';
 import React, { FC } from 'react';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { MapPopUpAnchorPoint } from './MapPopUpAnchorPoint';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectMapPopupAnchorLocation } from '@shared/store/Map/selectors';
 
 type Props = {
@@ -29,7 +29,7 @@ export const MapPopUpAnchorPointContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const anchorLocation = useSelector(selectMapPopupAnchorLocation);
+    const anchorLocation = useAppSelector(selectMapPopupAnchorLocation);
 
     return (
         <MapPopUpAnchorPoint

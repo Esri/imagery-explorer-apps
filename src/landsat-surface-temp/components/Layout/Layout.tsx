@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ import React from 'react';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 import { MaskTool } from '../MaskTool';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
@@ -31,7 +31,7 @@ import { useOpenAboutThisAppLink } from '../../hooks/useOpenAboutThisAppLink';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 
 const Layout = () => {
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const dynamicModeOn = mode === 'dynamic';
 

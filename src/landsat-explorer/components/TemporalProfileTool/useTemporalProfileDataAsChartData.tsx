@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectTrendToolData,
     selectSelectedIndex4TrendTool,
@@ -96,13 +96,13 @@ const convertLandsatTemporalProfileData2ChartData = (
 };
 
 export const useTemporalProfileDataAsChartData = () => {
-    const temporalProfileData = useSelector(selectTrendToolData);
+    const temporalProfileData = useAppSelector(selectTrendToolData);
 
-    const spectralIndex: SpectralIndex = useSelector(
+    const spectralIndex: SpectralIndex = useAppSelector(
         selectSelectedIndex4TrendTool
     ) as SpectralIndex;
 
-    const trendToolOption = useSelector(selectTrendToolOption);
+    const trendToolOption = useAppSelector(selectTrendToolOption);
 
     const chartData = useMemo(() => {
         return convertLandsatTemporalProfileData2ChartData(

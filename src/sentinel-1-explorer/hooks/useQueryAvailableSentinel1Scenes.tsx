@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import { selectMapCenter } from '@shared/store/Map/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { queryAvailableSentinel1Scenes } from '@shared/store/Sentinel1/thunks';
@@ -43,29 +43,29 @@ import { usePrevious } from '@shared/hooks/usePrevious';
  * @returns
  */
 export const useQueryAvailableSentinel1Scenes = (): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
-    const analysisTool = useSelector(selectActiveAnalysisTool);
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams = useSelector(selectQueryParams4SceneInSelectedMode);
+    const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
     const acquisitionDateRange = queryParams?.acquisitionDateRange;
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     /**
      * current map center
      */
-    const center = useSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter);
 
-    const orbitDirection = useSelector(selectSentinel1OrbitDirection);
+    const orbitDirection = useAppSelector(selectSentinel1OrbitDirection);
 
     const previousOrbitDirection = usePrevious(orbitDirection);
 
     const { lockedRelativeOrbit } =
-        useSelector(selectLockedRelativeOrbit) || {};
+        useAppSelector(selectLockedRelativeOrbit) || {};
 
     /**
      * This custom hook helps to determine the Locked relative orbit to be used by the Analyze tools to ensure all Sentinel-1

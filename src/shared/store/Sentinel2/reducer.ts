@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,30 +19,60 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
+import { Sentinel2Scene } from '@typing/imagery-service';
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
 export type Sentinel2State = {
-    // ArcGIS Online Webmap Item Id
-    webmapId?: string;
+    /**
+     * Sentinel-2 scenes that intersect with center point of map view and were acquired during the input year.
+     */
+    sentinel2Scenes: {
+        byObjectId: {
+            [key: number]: Sentinel2Scene;
+        };
+        objectIds: number[];
+    };
 };
 
 export const initialSentinel2State: Sentinel2State = {
-    webmapId: '67372ff42cd145319639a99152b15bc3', // Topographic
+    sentinel2Scenes: {
+        byObjectId: {},
+        objectIds: [],
+    },
 };
 
 const slice = createSlice({
     name: 'Sentinel2',
     initialState: initialSentinel2State,
     reducers: {
-        webmapIdChanged: (state, action: PayloadAction<string>) => {
-            state.webmapId = action.payload;
+        sentinel2ScenesUpdated: (
+            state,
+            action: PayloadAction<Sentinel2Scene[]>
+        ) => {
+            const objectIds: number[] = [];
+
+            const byObjectId: {
+                [key: number]: Sentinel2Scene;
+            } = {};
+
+            for (const scene of action.payload) {
+                const { objectId } = scene;
+
+                objectIds.push(objectId);
+                byObjectId[objectId] = scene;
+            }
+
+            state.sentinel2Scenes = {
+                objectIds,
+                byObjectId,
+            };
         },
     },
 });
 
 const { reducer } = slice;
 
-export const { webmapIdChanged } = slice.actions;
+export const { sentinel2ScenesUpdated } = slice.actions;
 
 export default reducer;

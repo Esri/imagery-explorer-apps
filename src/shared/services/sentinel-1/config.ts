@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER, getServiceConfig } from '@shared/config';
+import { TIER } from '@shared/config';
 
-const serviceConfig = getServiceConfig('sentinel-1');
+// const serviceConfig = getServiceConfig('sentinel-1');
 // console.log('sentinel-1 service config', serviceConfig);
 
 // const serviceUrls = {
@@ -41,14 +41,25 @@ export const SENTINEL_1_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${S
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
  */
-const SENTINEL_1_ORIGINAL_SERVICE_URL =
+const SENTINEL_1_ORIGINAL_SERVICE_URL_PROD =
     'https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer';
+
+const SENTINEL_1_ORIGINAL_SERVICE_URL_DEV =
+    'https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer';
+
+/**
+ * This is the original service URL, which will prompt user to sign in by default as it requires subscription
+ */
+export const SENTINEL_1_ORIGINAL_SERVICE_URL =
+    TIER === 'development'
+        ? SENTINEL_1_ORIGINAL_SERVICE_URL_DEV
+        : SENTINEL_1_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in PROD enviroment
  */
 export const SENTINEL_1_SERVICE_URL_PROD =
-    serviceConfig.production || SENTINEL_1_ORIGINAL_SERVICE_URL;
+    SENTINEL1_SERVICE_PROXY_URL_PROD || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
 /**
  * Service URL to be used in DEV enviroment
@@ -56,7 +67,7 @@ export const SENTINEL_1_SERVICE_URL_PROD =
  * @see https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer/
  */
 export const SENTINEL_1_SERVICE_URL_DEV =
-    serviceConfig.development || SENTINEL_1_ORIGINAL_SERVICE_URL;
+    SENTINEL1_SERVICE_PROXY_URL_DEV || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
@@ -117,31 +128,31 @@ export const SENTINEL1_RASTER_FUNCTION_INFOS: {
     {
         name: 'False Color dB with DRA',
         description:
-            'VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth’s surface. VV is particularly good for are good for characterizing soil and water surfaces while VH for canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. The RGB image is composited as follows: Red=VV, Green=VH, B=VV/VH in decibel (dB) scale .',
+            'VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth’s surface. VV is particularly good for characterizing soil and water surfaces while VH for canopy vs bare ground.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> The RGB image is composited as follows: Red=VV, Green=VH, B=VV-VH in decibel (dB) scale.',
         label: 'False Color',
     },
     {
         name: 'VV dB Colorized',
         description:
-            'VV refers to a signal sent in a vertical orientation and returned in a vertical orientation. VV signals are strongest when they reflect off and return from vertically oriented surface features and are good for characterizing soil and water surfaces. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. This is a single band renderer with a color ramp applied for visualization.',
+            'VV refers to a signal sent in a vertical orientation and returned in a vertical orientation. VV signals are strongest when they reflect off and return from vertically oriented surface features and are good for characterizing soil and water surfaces.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> This is a single band renderer with a color ramp applied for visualization.',
         label: 'Colorized VV',
     },
     {
         name: 'VH dB Colorized',
         description:
-            'VH refers to a signal sent in a vertical orientation and returned in a horizontal orientation. This cross polarization typically occurs with volumetric targets such as tree canopies. VH signals are strongest when they reflect off and return from horizontally oriented surface features and are good for helping to distinguish canopy vs bare ground. See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations. This is a single band renderer with a color ramp applied for visualization.',
+            'VH refers to a signal sent in a vertical orientation and returned in a horizontal orientation. This cross polarization typically occurs with volumetric targets such as tree canopies. VH signals are strongest when they reflect off and return from horizontally oriented surface features and are good for helping to distinguish canopy vs bare ground.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> This is a single band renderer with a color ramp applied for visualization.',
         label: 'Colorized VH',
     },
     {
         name: 'SWI Colorized',
         description:
-            'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
+            'Sentinel-1 Water Index with a color map. Wetlands and moist areas range from light green to dark blue.<br /><br /> Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904.',
         label: 'Water Index ',
     },
     {
         name: 'Water Anomaly Index Colorized',
         description:
-            'A water anomaly index with a color map applied. Increased water anomalies are indicated by bright red, orange, and yellow colors. Water anomalies can include oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more. Computed as Ln(0.01/(0.01 + VV*2)).',
+            'A water anomaly index with a color map applied. Increased water anomalies are indicated by bright red, orange, and yellow colors. Water anomalies can include oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more.<br /><br /> Computed as Ln(0.01/(0.01 + VV*2)).',
         label: 'Water Anomaly',
     },
     // {

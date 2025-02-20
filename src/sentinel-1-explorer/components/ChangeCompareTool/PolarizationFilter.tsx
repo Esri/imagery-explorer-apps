@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,13 @@ import {
 } from '@shared/store/Sentinel1/reducer';
 import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
 import React, { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 
 export const PolarizationFilter = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const selectedPolarizationFilter = useSelector(selectPolarizationFilter);
+    const selectedPolarizationFilter = useAppSelector(selectPolarizationFilter);
 
     const dropdownMenuData = useMemo(() => {
         const data: DropdownData[] = [

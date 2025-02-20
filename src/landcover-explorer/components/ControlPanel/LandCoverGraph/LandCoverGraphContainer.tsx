@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  */
 
 import React, { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 // import { MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM } from '@landcover-explorer/constants/map';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
@@ -33,28 +33,28 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 
 const LandCoverGraphContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const isAnimationControlVisible =
         animationMode !== undefined && animationMode !== null;
 
-    const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
     );
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     const shouldShowChart = useMemo(() => {
         if (animationMode) {

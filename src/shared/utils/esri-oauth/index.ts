@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,17 @@ import IdentityManager from '@arcgis/core/identity/IdentityManager';
 import Portal from '@arcgis/core/portal/Portal';
 import Credential from '@arcgis/core/identity/Credential';
 import PortalUser from '@arcgis/core/portal/PortalUser';
+import { AGOL_PORTAL_ROOT } from '@shared/config';
 
 type Props = {
     appId: string;
     portalUrl?: string;
 };
 
-type OAuthResponse = {
-    credential: Credential;
-    portal: Portal;
-};
+// type OAuthResponse = {
+//     credential: Credential;
+//     portal: Portal;
+// };
 
 // type IPlatformSelfResponse = {
 //     expires_in: number;
@@ -51,7 +52,7 @@ let credential: Credential = null;
 export const initEsriOAuth = async ({
     appId,
     portalUrl = 'https://www.arcgis.com',
-}: Props): Promise<OAuthResponse> => {
+}: Props): Promise<void> => {
     try {
         // const platformSelfResponse = await platformSelf(appId, portalUrl);
 
@@ -87,16 +88,18 @@ export const initEsriOAuth = async ({
         // Setting authMode to immediate signs the user in once loaded
         userPortal.authMode = 'immediate';
 
+        // console.log('userPortal', userPortal);
+
         // Once loaded, user is signed in
         await userPortal.load();
     } catch (err) {
         console.log('anomynous user');
     }
 
-    return {
-        credential,
-        portal: userPortal,
-    };
+    // return {
+    //     credential,
+    //     portal: userPortal,
+    // };
 };
 
 export const signIn = async (): Promise<void> => {
@@ -107,31 +110,36 @@ export const signIn = async (): Promise<void> => {
 };
 
 export const signOut = async (): Promise<void> => {
-    const { appId, portalUrl } = oauthInfo;
-    const { token } = credential;
+    // const { appId, portalUrl } = oauthInfo;
+    // const { token } = credential;
 
-    try {
-        // need to call oauth2/signout to clear the encrypted cookie and signs the user out of the ArcGIS platform
-        // here to learn more: https://confluencewikidev.esri.com/display/AGO/oAuth+signout
-        await fetch(portalUrl + '/sharing/rest/oauth2/signout', {
-            method: 'post',
-            body: new URLSearchParams({
-                client_id: appId,
-                token,
-            }),
-        });
-    } catch (err) {
-        console.error(err);
-    }
+    // try {
+    //     // need to call oauth2/signout to clear the encrypted cookie and signs the user out of the ArcGIS platform
+    //     // here to learn more: https://confluencewikidev.esri.com/display/AGO/oAuth+signout
+    //     await fetch(portalUrl + '/sharing/rest/oauth2/signout', {
+    //         method: 'post',
+    //         body: new URLSearchParams({
+    //             client_id: appId,
+    //             token,
+    //         }),
+    //     });
+    // } catch (err) {
+    //     console.error(err);
+    // }
 
     esriId.destroyCredentials();
 
     window.location.reload();
 };
 
+export const destroyCredentials = () => {
+    esriId.destroyCredentials();
+    credential = null;
+};
+
 export const getPortalBaseUrl = () => {
     if (!userPortal) {
-        return null;
+        return AGOL_PORTAL_ROOT;
     }
 
     const { urlKey, url, customBaseUrl } = userPortal;
@@ -233,4 +241,24 @@ export const revalidateToken = async () => {
         // sign out if user token is invalid, means user has signed out from somewhere else
         signOut();
     }
+};
+
+export const getItemUrl = (itemId: string) => {
+    const portalUrl = getPortalBaseUrl();
+
+    return `${portalUrl}/home/item.html?id=${itemId}`;
+};
+
+/**
+ * Get URL of Profile and Settings page on ArcGIS Online
+ * @returns
+ */
+export const getProfileSettingsURL = () => {
+    if (isAnonymouns()) {
+        return null;
+    }
+
+    const portalBaseUrl = getPortalBaseUrl();
+
+    return `${portalBaseUrl}/home/user.html#settings`;
 };

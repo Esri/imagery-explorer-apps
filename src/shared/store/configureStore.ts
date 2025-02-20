@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,21 @@
 import {
     configureStore,
     // getDefaultMiddleware,
-    DeepPartial,
+    // DeepPartial,
 } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
 
 import rootReducer from './rootReducer';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export type PartialRootState = DeepPartial<RootState>;
+export type PartialRootState = Partial<RootState>;
 
 const configureAppStore = (preloadedState: PartialRootState = {}) => {
     const store = configureStore({
         reducer: rootReducer,
         // middleware: [...getDefaultMiddleware<RootState>()],
-        preloadedState: preloadedState as any,
+        preloadedState,
     });
 
     return store;
@@ -40,5 +41,10 @@ export type AppStore = ReturnType<typeof configureAppStore>;
 export type StoreDispatch = ReturnType<typeof configureAppStore>['dispatch'];
 
 export type StoreGetState = ReturnType<typeof configureAppStore>['getState'];
+
+// Use throughout app instead of plain `useDispatch` and `useSelector`
+// @see https://redux-toolkit.js.org/tutorials/typescript#define-typed-hooks
+export const useAppDispatch = useDispatch.withTypes<StoreDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();
 
 export default configureAppStore;

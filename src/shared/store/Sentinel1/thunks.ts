@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { batch } from 'react-redux';
 import { selectMapCenter } from '../Map/selectors';
 import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 import { sentinel1ScenesUpdated } from './reducer';
@@ -98,10 +97,8 @@ export const queryAvailableSentinel1Scenes =
                 objectIdOfSelectedScene
             );
 
-            batch(() => {
-                dispatch(sentinel1ScenesUpdated(scenes));
-                dispatch(availableImageryScenesUpdated(imageryScenes));
-            });
+            dispatch(sentinel1ScenesUpdated(scenes));
+            dispatch(availableImageryScenesUpdated(imageryScenes));
         } catch (err) {
             console.error(err.message);
         }

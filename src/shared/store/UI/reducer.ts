@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,19 +43,19 @@ export type UIState = {
     /**
      * if true, hide bottom panel
      */
-    hideBottomPanel?: boolean;
+    hideBottomPanel: boolean;
     /**
      * If true, show About This App Modal
      */
-    shouldShowAboutThisApp?: boolean;
+    shouldShowAboutThisApp: boolean;
     /**
      * status of the Animation mode
      */
-    animationStatus?: AnimationStatus;
+    animationStatus: AnimationStatus;
     /**
      * speed of Animation in milliseconds
      */
-    animationSpeed?: number;
+    animationSpeed: number;
     /**
      * if true, show animation download panel so user can save the current animation into a .mp4 file
      */
@@ -67,7 +67,7 @@ export type UIState = {
     /**
      * The X Position (relative to page) of Tooltip for the Bottom Panel
      */
-    tooltipXPosition?: number;
+    tooltipXPosition: number;
     /**
      * The data that will be used to populate the Tooltip component.
      */
@@ -79,15 +79,19 @@ export type UIState = {
     /**
      * If true, open download panel
      */
-    showDownloadPanel?: boolean;
+    showDownloadPanel: boolean;
     /**
      * if true, show Save Webmap Panel
      */
-    showSaveWebMapPanel?: boolean;
+    showSaveWebMapPanel: boolean;
     /**
      * if true, show Documentation Panel
      */
-    showDocPanel?: boolean;
+    showDocPanel: boolean;
+    /**
+     * if true, show Save Panel
+     */
+    showSavePanel: boolean;
 };
 
 export const initialUIState: UIState = {
@@ -103,6 +107,7 @@ export const initialUIState: UIState = {
     showDownloadPanel: false,
     showSaveWebMapPanel: false,
     showDocPanel: false,
+    showSavePanel: false,
 };
 
 const slice = createSlice({
@@ -161,6 +166,9 @@ const slice = createSlice({
         showDocPanelToggled: (state) => {
             state.showDocPanel = !state.showDocPanel;
         },
+        showSavePanelToggled: (state) => {
+            state.showSavePanel = !state.showSavePanel;
+        },
     },
 });
 
@@ -180,6 +188,7 @@ export const {
     showDownloadPanelToggled,
     showSaveWebMapPanelToggled,
     showDocPanelToggled,
+    showSavePanelToggled,
 } = slice.actions;
 
 export default reducer;

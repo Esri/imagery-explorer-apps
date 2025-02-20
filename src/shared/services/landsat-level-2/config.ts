@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER, getServiceConfig } from '@shared/config';
+import { TIER } from '@shared/config';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 
-const serviceConfig = getServiceConfig('landsat-level-2');
+// const serviceConfig = getServiceConfig('landsat-level-2');
 // console.log('landsat-level-2 service config', serviceConfig);
 //
 // const serviceUrls = {
@@ -41,20 +41,23 @@ export const LANDSAT_LEVEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?i
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
  */
-const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL =
+const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD =
     'https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer';
+
+const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV =
+    'https://landsatdev.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer';
 
 /**
  * Service URL to be used in PROD enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_PROD =
-    serviceConfig.production || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
+    LANDSAT_SERVICE_PROXY_URL_PROD || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in DEV enviroment
  */
 export const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
-    serviceConfig.development || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
+    LANDSAT_SERVICE_PROXY_URL_DEV || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
@@ -64,6 +67,16 @@ export const LANDSAT_LEVEL_2_SERVICE_URL =
     TIER === 'development'
         ? LANDSAT_LEVEL_2_SERVICE_URL_DEV
         : LANDSAT_LEVEL_2_SERVICE_URL_PROD;
+
+/**
+ * URL of the original Landsat Level-2 service.
+ * This URL requires user authentication and a subscription, so it should not be used directly in the map.
+ * The Raster Analysis service will use this URL to generate raster for the selected landsat scene.
+ */
+export const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL =
+    TIER === 'development'
+        ? LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV
+        : LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Field Names Look-up table for LandsatC2L2 (ImageServer)
@@ -180,12 +193,6 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
         label: 'Agriculture',
     },
     {
-        name: 'Bathymetric with DRA',
-        description:
-            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applications.',
-        label: 'Bathymetric',
-    },
-    {
         name: 'Urban with DRA',
         description:
             'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.',
@@ -219,6 +226,12 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
         description:
             'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
         label: 'Geology',
+    },
+    {
+        name: 'Bathymetric with DRA',
+        description:
+            'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applications.',
+        label: 'Bathymetric',
     },
     // {
     //     name: 'Surface Temperature Colorized (Celsius)',

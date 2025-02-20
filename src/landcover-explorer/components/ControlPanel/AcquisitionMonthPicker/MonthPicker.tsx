@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 import classNames from 'classnames';
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { sentinel2AquisitionMonthChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectSentinel2AquisitionMonth } from '@shared/store/LandcoverExplorer/selectors';
@@ -43,9 +43,9 @@ type Props = {
 };
 
 const MonthPicker: FC<Props> = ({ disabled }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const selectedMonth = useSelector(selectSentinel2AquisitionMonth);
+    const selectedMonth = useAppSelector(selectSentinel2AquisitionMonth);
 
     const dropdownData: DropdownData[] = useMemo(() => {
         return MONTH_ABBR.map((month, index) => {

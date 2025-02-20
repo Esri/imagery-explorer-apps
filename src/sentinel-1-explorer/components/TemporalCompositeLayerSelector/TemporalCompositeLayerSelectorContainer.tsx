@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { TemporalCompositeLayerSelector } from './TemporalCompositeLayerSelector';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import {
     initiateImageryScenes4TemporalCompositeTool,
     swapImageryScenesInTemporalCompositeTool,
 } from '@shared/store/TemporalCompositeTool/thunks';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIdOfSelectedItemInListOfQueryParams,
     selectListOfQueryParams,
@@ -31,15 +31,15 @@ import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalComposit
 import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
 
 export const TemporalCompositeLayerSelectorContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const listOfQueryParams = useSelector(selectListOfQueryParams);
+    const listOfQueryParams = useAppSelector(selectListOfQueryParams);
 
-    const idOfSelectedQueryParams = useSelector(
+    const idOfSelectedQueryParams = useAppSelector(
         selectIdOfSelectedItemInListOfQueryParams
     );
 
-    const isCompositeLayerOn = useSelector(selectIsTemporalCompositeLayerOn);
+    const isCompositeLayerOn = useAppSelector(selectIsTemporalCompositeLayerOn);
 
     const isViewCompositeLayerDisabled = useMemo(() => {
         if (!listOfQueryParams || !listOfQueryParams.length) {

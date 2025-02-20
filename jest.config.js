@@ -39,6 +39,14 @@ module.exports = {
         "^@shared(.*)$": "<rootDir>/src/shared$1",
     } ,
     globals: {
-        "WEBPACK_DEFINED_APP_NAME": "landsat"
+        "WEBPACK_DEFINED_APP_NAME": "landsat",
+        LANDSAT_SERVICE_PROXY_URL_DEV: "http://localhost:3000/landsat-dev",
+        LANDSAT_SERVICE_PROXY_URL_PROD: "https://api.example.com/landsat-prod",
+        SENTINEL2_SERVICE_PROXY_URL_DEV: "http://localhost:3000/sentinel2-dev",
+        SENTINEL2_SERVICE_PROXY_URL_PROD: "https://api.example.com/sentinel2-prod",
+        SENTINEL1_SERVICE_PROXY_URL_DEV: "http://localhost:3000/sentinel1-dev",
+        SENTINEL1_SERVICE_PROXY_URL_PROD: "https://api.example.com/sentinel1-prod",
+        SERVICE_TIER: "development",
+        CUSTOM_ARCGIS_PORTAL_ROOT: "https://www.arcgis.com",
     }
 };

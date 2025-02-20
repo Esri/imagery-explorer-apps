@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
     selectQueryParams4MainScene,
@@ -45,9 +45,10 @@ import {
     minus,
 } from '@arcgis/core/layers/support/rasterFunctionUtils';
 import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTotalAreaByPixelsCount';
+import { useSentinel1RasterFunction4LogDiff } from './useSentinel1RasterFunction4LogDiff';
 
 type Props = {
     mapView?: MapView;
@@ -68,29 +69,31 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    // const mode = useSelector(selectAppMode);
+    // const mode = useAppSelector(selectAppMode);
 
-    const dispatach = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const selectedOption: ChangeCompareToolOption4Sentinel1 = useSelector(
+    const selectedOption: ChangeCompareToolOption4Sentinel1 = useAppSelector(
         selectSelectedOption4ChangeCompareTool
     ) as ChangeCompareToolOption4Sentinel1;
 
-    const queryParams4SceneA = useSelector(selectQueryParams4MainScene);
+    const queryParams4SceneA = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SceneB = useSelector(selectQueryParams4SecondaryScene);
+    const queryParams4SceneB = useAppSelector(selectQueryParams4SecondaryScene);
 
-    const selectedRange = useSelector(
+    const selectedRange = useAppSelector(
         selectUserSelectedRangeInChangeCompareTool
     );
 
-    const fullPixelValueRange = useSelector(
+    const fullPixelValueRange = useAppSelector(
         selectFullPixelValuesRangeInChangeCompareTool
     );
 
-    const polarizationFilter = useSelector(selectPolarizationFilter);
+    // const polarizationFilter = useAppSelector(selectPolarizationFilter);
 
     const isVisible = useChangeCompareLayerVisibility();
+
+    const rasterFunction4LogDiff = useSentinel1RasterFunction4LogDiff();
 
     const rasterFunction: RasterFunction = useMemo(() => {
         if (!isVisible) {
@@ -115,9 +118,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
 
         if (selectedOption === 'log difference') {
             const rasterFunction: Sentinel1FunctionName =
-                polarizationFilter === 'VV'
-                    ? 'VV Amplitude with Despeckle'
-                    : 'VH Amplitude with Despeckle';
+                rasterFunction4LogDiff;
 
             return log10({
                 raster: divide({
@@ -172,7 +173,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
         selectedOption,
         queryParams4SceneA,
         queryParams4SceneB,
-        polarizationFilter,
+        rasterFunction4LogDiff,
     ]);
 
     useCalculateTotalAreaByPixelsCount({
@@ -194,7 +195,7 @@ export const ChangeCompareLayerContainer: FC<Props> = ({
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
             countOfPixelsOnChange={(totalPixels, visiblePixels) => {
-                dispatach(countOfVisiblePixelsChanged(visiblePixels));
+                dispatch(countOfVisiblePixelsChanged(visiblePixels));
             }}
         />
     );

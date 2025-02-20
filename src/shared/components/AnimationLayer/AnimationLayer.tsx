@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  */
 
 import React, { FC, useCallback, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import MapView from '@arcgis/core/views/MapView';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
 import classNames from 'classnames';
 import {
     animationStatusChanged,
@@ -56,15 +56,15 @@ export const AnimationLayer: FC<Props> = ({
     authoringAppName,
     mapView,
 }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const mediaLayerRef = useRef<MediaLayer>();
 
-    const animationStatus = useSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const animationSpeed = useSelector(selectAnimationSpeed);
+    const animationSpeed = useAppSelector(selectAnimationSpeed);
 
-    const queryParams4ScenesInAnimationMode = useSelector(
+    const queryParams4ScenesInAnimationMode = useAppSelector(
         selectListOfQueryParams
     );
 

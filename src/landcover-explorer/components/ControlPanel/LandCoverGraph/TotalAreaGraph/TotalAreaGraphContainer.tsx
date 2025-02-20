@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     getLandCoverAreaByYear,
     // getLandCoverChangeInAcres,
@@ -34,17 +34,17 @@ import {
 } from '@shared/store/Map/selectors';
 
 const TotalAreaGraphContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    // const { zoom } = useSelector(selectMapCenterAndZoom);
+    // const { zoom } = useAppSelector(selectMapCenterAndZoom);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
-    const resolution = useSelector(selectMapResolution);
+    const resolution = useAppSelector(selectMapResolution);
 
-    const extent = useSelector(selectMapExtent);
+    const extent = useAppSelector(selectMapExtent);
 
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
     const [chartData, setChartData] = useState<BarChartDataItem[]>();
 

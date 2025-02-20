@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { modeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectMapMode } from '@shared/store/LandcoverExplorer/selectors';
 import { saveMapModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
@@ -30,9 +30,9 @@ type Props = {
 };
 
 export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const activeMode = useSelector(selectMapMode);
+    const activeMode = useAppSelector(selectMapMode);
 
     const isSwipeBtnActive = activeMode === 'swipe';
     const isStepBtnActive = activeMode === 'step';

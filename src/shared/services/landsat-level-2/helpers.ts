@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,13 @@
  * limitations under the License.
  */
 
+import { ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { decimal2binary } from '@shared/utils/snippets/decimal2binary';
 import {
     kelvin2fahrenheit,
     kelvin2celsius,
 } from '@shared/utils/temperature-conversion';
-import { SpectralIndex } from '@typing/imagery-service';
+import { LandsatScene, SpectralIndex } from '@typing/imagery-service';
 
 type LandsatProductInfo = {
     /**
@@ -69,7 +70,7 @@ type LandsatProductInfo = {
  * @see https://pro.arcgis.com/en/pro-app/3.0/help/analysis/raster-functions/band-arithmetic-function.htm
  * @see https://www.esri.com/about/newsroom/arcuser/spectral-library/
  */
-const BandIndexesLookup: Record<SpectralIndex, string> = {
+const BandIndexesLookup: Partial<Record<SpectralIndex, string>> = {
     /**
      * The Normalized Difference Moisture Index (NDMI) is sensitive to the moisture levels in vegetation.
      * It is used to monitor droughts as well as monitor fuel levels in fire-prone areas.
@@ -258,15 +259,37 @@ export const getBandIndexesBySpectralIndex = (
     return BandIndexesLookup[spectralIndex];
 };
 
-export const getRasterFunctionBySpectralIndex = (
-    spectralIndex: SpectralIndex
-) => {
-    return {
-        rasterFunction: 'BandArithmetic',
-        rasterFunctionArguments: {
-            Method: 0,
-            BandIndexes: getBandIndexesBySpectralIndex(spectralIndex),
-        },
-        outputPixelType: 'F32',
+/**
+ * Converts a Landsat scene object to an imagery scene object.
+ *
+ * @param landsatScene - The Landsat scene object to convert.
+ * @returns The converted imagery scene object.
+ */
+export const convertLandsatSceneToImageryScene = (
+    landsatScene: LandsatScene
+): ImageryScene => {
+    const {
+        objectId,
+        name,
+        formattedAcquisitionDate,
+        acquisitionDate,
+        acquisitionYear,
+        acquisitionMonth,
+        cloudCover,
+        satellite,
+    } = landsatScene;
+
+    const imageryScene: ImageryScene = {
+        objectId,
+        sceneId: name,
+        formattedAcquisitionDate,
+        acquisitionDate,
+        acquisitionYear,
+        acquisitionMonth,
+        cloudCover,
+        satellite,
+        customTooltipText: [`${Math.ceil(cloudCover * 100)}% Cloudy`],
     };
+
+    return imageryScene;
 };

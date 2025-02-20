@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,8 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { batch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     // selectMapCenterAndZoom,
@@ -56,40 +55,37 @@ import {
 } from '@shared/store/Map/reducer';
 import MapView from '@shared/components/MapView/MapView';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
-import SearchWidget from '@shared/components/MapView/SearchWidget';
-import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
-import { Zoom2NativeScale } from '@shared/components/Zoom2NativeScale/Zoom2NativeScale';
-import { ScreenshotWidget } from '@shared/components/ScreenshotWidget/ScreenshotWidget';
-import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
+import { MapActionButtonGroup4LandcoverExplorer } from './MapActionButtonGroup4LandcoverExplorer';
+// import SearchWidget from '@shared/components/SearchWidget/SearchWidget';
 
 const MapViewContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const hideControlPanel = useSelector(selectHideBottomPanel);
+    const hideControlPanel = useAppSelector(selectHideBottomPanel);
 
-    const isSentinel2LayerOutOfVisibleRange = useSelector(
+    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
 
-    // const { year4LeadingLayer, year4TrailingLayer } = useSelector(
+    // const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
     //     selectYearsForSwipeWidgetLayers
     // );
 
-    // const shouldShowSentinel2Layer = useSelector(
+    // const shouldShowSentinel2Layer = useAppSelector(
     //     selectShouldShowSentinel2Layer
     // );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
-    // const { center, zoom } = useSelector(selectMapCenterAndZoom);
+    // const { center, zoom } = useAppSelector(selectMapCenterAndZoom);
 
-    const center = useSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter);
 
-    const zoom = useSelector(selectMapZoom);
+    const zoom = useAppSelector(selectMapZoom);
 
     /**
      * Show Swipe Widget when in swipe mode
@@ -113,10 +109,13 @@ const MapViewContainer = () => {
 
     return (
         <div
-            className={classNames('absolute top-0 left-0 w-full', {
-                'bottom-bottom-panel-height': hideControlPanel === false,
-                'bottom-0': hideControlPanel,
-            })}
+            className={classNames(
+                'absolute top-app-header-size md:top-0 left-0 w-full',
+                {
+                    'bottom-bottom-panel-height': hideControlPanel === false,
+                    'bottom-0': hideControlPanel,
+                }
+            )}
         >
             <MapView webmapId={WEB_MAP_ID} center={center} zoom={zoom}>
                 {/* <SwipeWidget
@@ -137,14 +136,12 @@ const MapViewContainer = () => {
                 <SwipeWidget4Sentinel2 />
                 <MapViewEventHandlers
                     extentOnChange={(extent, resolution, center, zoom) => {
-                        batch(() => {
-                            dispatch(resolutionUpdated(resolution));
-                            dispatch(extentUpdated(extent));
-                            // dispatch(mapCenterUpdated(center));
-                            // dispatch(zoomUpdated(zoom));
-                            dispatch(centerChanged(center));
-                            dispatch(zoomChanged(zoom));
-                        });
+                        dispatch(resolutionUpdated(resolution));
+                        dispatch(extentUpdated(extent));
+                        // dispatch(mapCenterUpdated(center));
+                        // dispatch(zoomUpdated(zoom));
+                        dispatch(centerChanged(center));
+                        dispatch(zoomChanged(zoom));
                     }}
                     // mapViewOnClick={fetchLandCoverData}
                     mapViewUpdatingOnChange={(val: boolean) => {
@@ -160,7 +157,7 @@ const MapViewContainer = () => {
 
                 <Popup />
 
-                <SearchWidget hide={animationMode !== null} />
+                {/* <SearchWidget hide={animationMode !== null} /> */}
 
                 <ReferenceLayers />
 
@@ -168,15 +165,7 @@ const MapViewContainer = () => {
 
                 <AnimationPanel />
 
-                <MapActionButtonsGroup>
-                    <Zoom2NativeScale
-                        nativeScale={37795}
-                        tooltip={"Zoom to Land cover layer's native resolution"}
-                    />
-                    {/* <ZoomToExtent /> */}
-                    <ScreenshotWidget />
-                    <CopyLinkWidget />
-                </MapActionButtonsGroup>
+                <MapActionButtonGroup4LandcoverExplorer />
             </MapView>
 
             <ReferenceLayersToggleControl />

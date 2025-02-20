@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 import React, { FC, useEffect } from 'react';
 
 import IMapView from '@arcgis/core/views/MapView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapMode,
     selectShouldShowSentinel2Layer,
@@ -30,13 +30,13 @@ type Props = {
 };
 
 const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
-    const year = useSelector(selectYear);
+    const year = useAppSelector(selectYear);
 
-    const mode = useSelector(selectMapMode);
+    const mode = useAppSelector(selectMapMode);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowSentinel2Layer = useSelector(
+    const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSentinel2Layer
     );
 

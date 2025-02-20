@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,16 @@ import { getLandsatScenes } from './getLandsatScenes';
 import { TemporalProfileData, LandsatScene } from '@typing/imagery-service';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 // import { getSamples, LandsatSampleData } from './getSamples';
-import { checkClearFlagInQABand } from './helpers';
+import {
+    checkClearFlagInQABand,
+    convertLandsatSceneToImageryScene,
+} from './helpers';
 import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
 // import { splitObjectIdsToSeparateGroups } from '../helpers/splitObjectIdsToSeparateGroups';
 import { PixelValuesData, getPixelValues } from '../helpers/getPixelValues';
+import { deduplicateImageryScenes4TemporalProfileTool } from '../helpers/deduplicateListOfScenes';
+// import { ImageryScene } from '@shared/store/ImageryScene/reducer';
+import { combinePixelValuesWithScenes } from '../helpers/combinePixelValuesWithScenes';
 
 type GetProfileDataOptions = {
     queryLocation: Point;
@@ -89,42 +95,31 @@ export const getDataForTrendTool = async ({
         return [];
     }
 
+    // landsat 7 had Scan Line Corrector failure which caused
+    // missing pixel values in a lot of scenes, therefore it's better to have those scenes excluded
+    // before selecting candidate scenes with least cloud coverage
+    const scenesWithLandsat7Removed = landsatScenes.filter(
+        (scene) => scene.satellite !== 'Landsat 7'
+    );
+
     // refine Landsat scenes based on cloud coverage.
-    const landsatScenesToSample = getLandsatScenesToSample(landsatScenes);
+    const landsatScenesToSample = deduplicateImageryScenes4TemporalProfileTool(
+        scenesWithLandsat7Removed.map((scene) =>
+            convertLandsatSceneToImageryScene(scene)
+        )
+    ); //getLandsatScenesToSample(landsatScenes);
 
-    // extract object IDs from refined Landsat scenes.
-    const objectIds = landsatScenesToSample.map((d) => d.objectId);
-
-    // // divide object IDs into separate groups for parallel fetching.
-    // const objectsIdsInSeparateGroups =
-    //     splitObjectIdsToSeparateGroups(objectIds);
-    // // console.log(objectsIdsInSeparateGroups)
-
-    // // fetch samples data in parallel for each group of object IDs.
-    // const samplesDataInSeparateGroups: LandsatSampleData[][] =
-    //     await Promise.all(
-    //         objectsIdsInSeparateGroups.map((oids) =>
-    //             getSamples(queryLocation, oids, abortController)
-    //         )
-    //     );
-
-    // // combine samples data from different groups into a single array.
-    // const samplesData: LandsatSampleData[] = samplesDataInSeparateGroups.reduce(
-    //     (combined, subsetOfSamplesData) => {
-    //         return [...combined, ...subsetOfSamplesData];
-    //     },
-    //     []
-    // );
-    // // console.log(samplesData);
+    // // extract object IDs from refined Landsat scenes.
+    // const objectIds = landsatScenesToSample.map((d) => d.objectId);
 
     const pixelValues = await getPixelValues({
         serviceURL: LANDSAT_LEVEL_2_SERVICE_URL,
         point: queryLocation,
-        objectIds,
+        objectIds: landsatScenesToSample.map((d) => d.objectId),
         abortController,
     });
 
-    const temporalProfileData = formatAsTemporalProfileData(
+    const temporalProfileData = combinePixelValuesWithScenes(
         pixelValues,
         landsatScenesToSample
     );
@@ -140,108 +135,108 @@ export const getDataForTrendTool = async ({
     return temporalProfileDataWithBadPixelsExcluded;
 };
 
-/**
- * Create Temporal Profiles Data by combining samples data and imagery scene data
- * @param samples
- * @param scenes
- * @returns
- */
-const formatAsTemporalProfileData = (
-    pixelValues: PixelValuesData[],
-    scenes: LandsatScene[]
-): TemporalProfileData[] => {
-    const output: TemporalProfileData[] = [];
+// /**
+//  * Create Temporal Profiles Data by combining samples data and imagery scene data
+//  * @param samples
+//  * @param scenes
+//  * @returns
+//  */
+// const formatAsTemporalProfileData = (
+//     pixelValues: PixelValuesData[],
+//     scenes: ImageryScene[]
+// ): TemporalProfileData[] => {
+//     const output: TemporalProfileData[] = [];
 
-    const sceneByObjectId = new Map<number, LandsatScene>();
+//     const sceneByObjectId = new Map<number, ImageryScene>();
 
-    for (const scene of scenes) {
-        sceneByObjectId.set(scene.objectId, scene);
-    }
+//     for (const scene of scenes) {
+//         sceneByObjectId.set(scene.objectId, scene);
+//     }
 
-    for (let i = 0; i < pixelValues.length; i++) {
-        const sampleData = pixelValues[i];
-        const { objectId, values } = sampleData;
+//     for (let i = 0; i < pixelValues.length; i++) {
+//         const sampleData = pixelValues[i];
+//         const { objectId, values } = sampleData;
 
-        if (sceneByObjectId.has(objectId) === false) {
-            continue;
-        }
+//         if (sceneByObjectId.has(objectId) === false) {
+//             continue;
+//         }
 
-        // const scene = scenes[i];
-        const {
-            acquisitionDate,
-            acquisitionMonth,
-            acquisitionYear,
-            formattedAcquisitionDate,
-        } = sceneByObjectId.get(objectId);
+//         // const scene = scenes[i];
+//         const {
+//             acquisitionDate,
+//             acquisitionMonth,
+//             acquisitionYear,
+//             formattedAcquisitionDate,
+//         } = sceneByObjectId.get(objectId);
 
-        output.push({
-            objectId,
-            acquisitionDate,
-            acquisitionMonth,
-            acquisitionYear,
-            formattedAcquisitionDate,
-            values,
-            // values: sampleData.value.split(' ').map((d) => +d),
-        });
-    }
+//         output.push({
+//             objectId,
+//             acquisitionDate,
+//             acquisitionMonth,
+//             acquisitionYear,
+//             formattedAcquisitionDate,
+//             values,
+//             // values: sampleData.value.split(' ').map((d) => +d),
+//         });
+//     }
 
-    return output;
-};
+//     return output;
+// };
 
-/**
- * The input Landsat Scenes contain multiple Scenes that were acquired from the same month and year.
- * This helper function filters the input Landsat Scenes and only keep one Landsat Scene for each month,
- * the selected scenes for a specific month is the one that with least cloud coverage for that month
- *
- * @param scenes input landsat scenes
- * @param samplingTemporalResolution landsat scenes
- * @returns LandsatScene[]
- */
-const getLandsatScenesToSample = (
-    scenes: LandsatScene[]
-    // samplingTemporalResolution: number
-): LandsatScene[] => {
-    if (!scenes.length) {
-        return [];
-    }
+// /**
+//  * The input Landsat Scenes contain multiple Scenes that were acquired from the same month and year.
+//  * This helper function filters the input Landsat Scenes and only keep one Landsat Scene for each month,
+//  * the selected scenes for a specific month is the one that with least cloud coverage for that month
+//  *
+//  * @param scenes input landsat scenes
+//  * @param samplingTemporalResolution landsat scenes
+//  * @returns LandsatScene[]
+//  */
+// const getLandsatScenesToSample = (
+//     scenes: LandsatScene[]
+//     // samplingTemporalResolution: number
+// ): LandsatScene[] => {
+//     if (!scenes.length) {
+//         return [];
+//     }
 
-    // landsat 7 had Scan Line Corrector failure which caused
-    // missing pixel values in a lot of scenes, therefore it's better to have those scenes excluded
-    // before selecting candidate scenes with least cloud coverage
-    const scenesWithLandsat7Removed = scenes.filter(
-        (scene) => scene.satellite !== 'Landsat 7'
-    );
+//     // landsat 7 had Scan Line Corrector failure which caused
+//     // missing pixel values in a lot of scenes, therefore it's better to have those scenes excluded
+//     // before selecting candidate scenes with least cloud coverage
+//     const scenesWithLandsat7Removed = scenes.filter(
+//         (scene) => scene.satellite !== 'Landsat 7'
+//     );
 
-    const candidates: LandsatScene[] = [scenesWithLandsat7Removed[0]];
+//     const candidates: LandsatScene[] = [scenesWithLandsat7Removed[0]];
 
-    for (let i = 1; i < scenesWithLandsat7Removed.length; i++) {
-        const prevScene = candidates[candidates.length - 1];
+//     for (let i = 1; i < scenesWithLandsat7Removed.length; i++) {
+//         const prevScene = candidates[candidates.length - 1];
 
-        const currentScene = scenesWithLandsat7Removed[i];
+//         const currentScene = scenesWithLandsat7Removed[i];
 
-        // if (
-        //     currentScene.acquisitionYear - prevScene.acquisitionYear <
-        //     samplingTemporalResolution
-        // ) {
-        //     continue;
-        // }
+//         // if (
+//         //     currentScene.acquisitionYear - prevScene.acquisitionYear <
+//         //     samplingTemporalResolution
+//         // ) {
+//         //     continue;
+//         // }
 
-        // add current scene to candidates if it was acquired from a different year or month
-        if (
-            prevScene?.acquisitionYear !== currentScene.acquisitionYear ||
-            prevScene?.acquisitionMonth !== currentScene.acquisitionMonth
-        ) {
-            candidates.push(currentScene);
-            continue;
-        }
+//         // add current scene to candidates if it was acquired from a different year or month
+//         if (
+//             prevScene?.acquisitionYear !== currentScene.acquisitionYear ||
+//             prevScene?.acquisitionMonth !== currentScene.acquisitionMonth
+//         ) {
+//             candidates.push(currentScene);
+//             continue;
+//         }
 
-        // if two landsat scenes that were acquired within the same year and month
-        // we should keep the one with smaller cloud coverage
-        if (currentScene.cloudCover < prevScene.cloudCover) {
-            candidates.pop();
-            candidates.push(currentScene);
-        }
-    }
+//         // if two landsat scenes that were acquired within the same year and month
+//         // we should keep the one with smaller cloud coverage
+//         if (currentScene.cloudCover < prevScene.cloudCover) {
+//             candidates.pop();
+//             candidates.push(currentScene);
+//         }
+//     }
 
-    return candidates;
-};
+//     return candidates;
+// };

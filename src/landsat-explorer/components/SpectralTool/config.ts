@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,18 @@
  * limitations under the License.
  */
 
+import {
+    LandCoverType,
+    SpectralProfileDataByLandCoverType,
+} from '@shared/components/SpectralProfileTool';
+
 /**
  * The typical spectral profiles data from the config file used by the legacy Landsat Explorer app,
  * and the data prepared using `/scripts/landsat-spectral-signatures`.
  *
  * @see https://github.com/Esri/Imagery-Apps/blob/master/Landsat%20Explorer/configs/Identify/config_Identify.json
  */
-export const SpectralProfileDataByFeatureOfInterest = {
+export const LandsatSpectralProfileData: SpectralProfileDataByLandCoverType = {
     // Cloud: [0.88802, 0.90596, 0.88938, 0.91148, 0.93778, 0.5457, 0.37914],
     // 'Snow/Ice': [1.0, 1.0, 1.0, 1.0, 0.99766, 0.09434, 0.09942],
     // Desert: [0.17706, 0.18228, 0.2431, 0.37778, 0.48144, 0.58394, 0.53018],
@@ -73,10 +78,3 @@ export const SpectralProfileDataByFeatureOfInterest = {
         0.1819168888888889,
     ],
 };
-
-export const FeatureOfInterests = Object.keys(
-    SpectralProfileDataByFeatureOfInterest
-);
-
-export type SpectralProfileFeatureOfInterest =
-    keyof typeof SpectralProfileDataByFeatureOfInterest;

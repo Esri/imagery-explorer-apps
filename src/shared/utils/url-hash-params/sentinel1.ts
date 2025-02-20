@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,9 @@ export const saveSentinel1StateToHashParams = (state: Sentinel1State) => {
     updateHashParams('sentinel1', encodeSentinel1Data(state));
 };
 
-export const getSentinel1StateFromHashParams = () => {
-    const value = getHashParamValueByKey('sentinel1');
+export const getSentinel1StateFromHashParams = (
+    hashParams: URLSearchParams
+) => {
+    const value = getHashParamValueByKey('sentinel1', hashParams);
     return decodeSentinel1Data(value);
 };

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,67 +16,46 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
-export const selectHideBottomPanel = createSelector(
-    (state: RootState) => state.UI.hideBottomPanel,
-    (hideBottomPanel) => hideBottomPanel
-);
-
-export const selectShouldShowAboutThisApp = createSelector(
-    (state: RootState) => state.UI.shouldShowAboutThisApp,
-    (shouldShowAboutThisApp) => shouldShowAboutThisApp
-);
-
-export const selectAnimationStatus = createSelector(
-    (state: RootState) => state.UI.animationStatus,
-    (animationStatus) => animationStatus
-);
-
 export const selectIsAnimationPlaying = createSelector(
     (state: RootState) => state.UI.animationStatus,
-    (animationStatus) => animationStatus !== null
+    (state: RootState) => state.Map.autoSwipeStatus,
+    (animationStatus, autoSwipeStatus) =>
+        animationStatus !== null || autoSwipeStatus !== null
 );
 
-export const selectAnimationSpeed = createSelector(
-    (state: RootState) => state.UI.animationSpeed,
-    (animationSpeed) => animationSpeed
-);
+export const selectAnimationSpeed = (state: RootState) =>
+    state.UI.animationSpeed;
 
-export const selectTooltipXPosition = createSelector(
-    (state: RootState) => state.UI.tooltipXPosition,
-    (tooltipXPosition) => tooltipXPosition
-);
+export const selectTooltipXPosition = (state: RootState) =>
+    state.UI.tooltipXPosition;
 
-export const selectTooltipData = createSelector(
-    (state: RootState) => state.UI.tooltipData,
-    (tooltipData) => tooltipData
-);
+export const selectTooltipData = (state: RootState) => state.UI.tooltipData;
 
-export const selectShouldShowDownloadAnimationPanel = createSelector(
-    (state: RootState) => state.UI.showDownloadAnimationPanel,
-    (showDownloadAnimationPanel) => showDownloadAnimationPanel
-);
+export const selectShouldShowDownloadAnimationPanel = (state: RootState) =>
+    state.UI.showDownloadAnimationPanel;
 
-export const selectNameOfSelectedInterestingPlace = createSelector(
-    (state: RootState) => state.UI.nameOfSelectedInterestingPlace,
-    (nameOfSelectedInterestingPlace) => nameOfSelectedInterestingPlace
-);
+export const selectNameOfSelectedInterestingPlace = (state: RootState) =>
+    state.UI.nameOfSelectedInterestingPlace;
 
-export const selectShowDownloadPanel = createSelector(
-    (state: RootState) => state.UI.showDownloadPanel,
-    (showDownloadPanel) => showDownloadPanel
-);
+export const selectShowDownloadPanel = (state: RootState) =>
+    state.UI.showDownloadPanel;
 
-export const selectShowSaveWebMapPanel = createSelector(
-    (state: RootState) => state.UI.showSaveWebMapPanel,
-    (showSaveWebMapPanel) => showSaveWebMapPanel
-);
+export const selectShowSaveWebMapPanel = (state: RootState) =>
+    state.UI.showSaveWebMapPanel;
 
-export const selectAnimationLinkIsCopied = createSelector(
-    (state: RootState) => state.UI.animationLinkIsCopied,
-    (animationLinkIsCopied) => animationLinkIsCopied
-);
+export const selectAnimationLinkIsCopied = (state: RootState) =>
+    state.UI.animationLinkIsCopied;
 
-export const selectShouldShowDocPanel = createSelector(
-    (state: RootState) => state.UI.showDocPanel,
-    (showDocPanel) => showDocPanel
-);
+export const selectShouldShowDocPanel = (state: RootState) =>
+    state.UI.showDocPanel;
+
+export const selectShowSavePanel = (state: RootState) => state.UI.showSavePanel;
+
+export const selectHideBottomPanel = (state: RootState) =>
+    state.UI.hideBottomPanel;
+
+export const selectShouldShowAboutThisApp = (state: RootState) =>
+    state.UI.shouldShowAboutThisApp;
+
+export const selectAnimationStatus = (state: RootState) =>
+    state.UI.animationStatus;

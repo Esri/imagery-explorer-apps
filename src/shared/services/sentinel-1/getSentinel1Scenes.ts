@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -233,6 +233,20 @@ export const getSentinel1Scenes = async ({
 };
 
 /**
+ * Retrieves a Sentinel-1 feature by its object ID.
+ *
+ * @param {number} objectId - The ID of the object to retrieve the feature for.
+ * @returns {Promise<any>} A promise that resolves to the feature object.
+ */
+export const getSentinel1FeatureByObjectId = async (objectId: number) => {
+    const feature = await getFeatureByObjectId(
+        SENTINEL_1_SERVICE_URL,
+        objectId
+    );
+    return feature;
+};
+
+/**
  * Query a feature from Sentinel-1 service using the input object Id,
  * and return the feature as formatted Sentinel Scene.
  * @param objectId The unique identifier of the feature
@@ -247,11 +261,7 @@ export const getSentinel1SceneByObjectId = async (
         return sentinel1SceneByObjectId.get(objectId);
     }
 
-    const feature = await getFeatureByObjectId(
-        SENTINEL_1_SERVICE_URL,
-        objectId,
-        abortController
-    );
+    const feature = await getSentinel1FeatureByObjectId(objectId);
 
     if (!feature) {
         return null;
@@ -274,7 +284,10 @@ export const getSentinel1SceneByObjectId = async (
 export const getExtentOfSentinel1SceneByObjectId = async (
     objectId: number
 ): Promise<IExtent> => {
-    const extent = await getExtentByObjectId(SENTINEL_1_SERVICE_URL, objectId);
+    const extent = await getExtentByObjectId({
+        serviceUrl: SENTINEL_1_SERVICE_URL,
+        objectId,
+    });
 
     return extent;
 };

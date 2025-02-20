@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,136 +74,160 @@ import {
 import { getSentinel1StateFromHashParams } from '@shared/utils/url-hash-params/sentinel1';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { sentinel1InterestingPlaces } from '../components/InterestingPlaces/';
+import { InterestingPlaceData } from '@typing/shared';
+import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
+import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
+import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
+import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
 
-/**
- * Map location info that contains center and zoom info from URL Hash Params
- */
-const mapLocationFromHashParams = getMapCenterFromHashParams();
+// /**
+//  * Map location info that contains center and zoom info from URL Hash Params
+//  */
+// const mapLocationFromHashParams = getMapCenterFromHashParams();
 
-/**
- * Use the location of a randomly selected interesting place if there is no map location info
- * found in the URL hash params.
- */
-const randomInterestingPlace = !mapLocationFromHashParams
-    ? getRandomElement(sentinel1InterestingPlaces)
-    : null;
+// /**
+//  * Use the location of a randomly selected interesting place if there is no map location info
+//  * found in the URL hash params.
+//  */
+// const randomInterestingPlace = !mapLocationFromHashParams
+//     ? getRandomElement(sentinel1InterestingPlaces)
+//     : null;
 
-const getPreloadedMapState = (): MapState => {
-    let mapLocation = mapLocationFromHashParams;
+// const getPreloadedMapState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData
+// ): MapState => {
+//     let mapLocation = getMapCenterFromHashParams(hashParams);
 
-    if (!mapLocation) {
-        mapLocation = randomInterestingPlace?.location;
-    }
+//     if (!mapLocation) {
+//         mapLocation = randomInterestingPlace?.location;
+//     }
 
-    // show map labels if there is no `hideMapLabels` in hash params
-    const showMapLabel = getHashParamValueByKey('hideMapLabels') === null;
+//     // show map labels if there is no `hideMapLabels` in hash params
+//     const showMapLabel =
+//         getHashParamValueByKey('hideMapLabels', hashParams) === null;
 
-    // show terrain if there is no `hideTerrain` in hash params
-    const showTerrain = getHashParamValueByKey('hideTerrain') === null;
+//     // show terrain if there is no `hideTerrain` in hash params
+//     const showTerrain =
+//         getHashParamValueByKey('hideTerrain', hashParams) === null;
 
-    const showBasemap = getHashParamValueByKey('hideBasemap') === null;
+//     const showBasemap =
+//         getHashParamValueByKey('hideBasemap', hashParams) === null;
 
-    return {
-        ...initialMapState,
-        center: mapLocation?.center || MAP_CENTER,
-        zoom: mapLocation?.zoom || MAP_ZOOM,
-        showMapLabel,
-        showTerrain,
-        showBasemap,
+//     return {
+//         ...initialMapState,
+//         center: mapLocation?.center || MAP_CENTER,
+//         zoom: mapLocation?.zoom || MAP_ZOOM,
+//         showMapLabel,
+//         showTerrain,
+//         showBasemap,
+//     };
+// };
+
+// const getPreloadedImageryScenesState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData
+// ): ImageryScenesState => {
+//     let mode: AppMode =
+//         (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
+
+//     // user is only allowed to use the "dynamic" mode when using mobile device
+//     if (IS_MOBILE_DEVICE) {
+//         mode = 'dynamic';
+//     }
+
+//     const defaultRasterFunction: Sentinel1FunctionName =
+//         'False Color dB with DRA';
+
+//     // Attempt to extract query parameters from the URL hash.
+//     // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
+//     // which will serve as the map center.
+//     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
+//         hashParams
+//     ) || {
+//         ...DefaultQueryParams4ImageryScene,
+//         rasterFunctionName:
+//             randomInterestingPlace?.renderer || defaultRasterFunction,
+//     };
+
+//     const queryParams4SecondaryScene =
+//         getQueryParams4SecondarySceneFromHashParams(hashParams) || {
+//             ...DefaultQueryParams4ImageryScene,
+//             rasterFunctionName: null,
+//         };
+
+//     const listOfQueryParams =
+//         getListOfQueryParamsFromHashParams(hashParams) || [];
+
+//     const queryParamsById: {
+//         [key: string]: QueryParams4ImageryScene;
+//     } = {};
+
+//     const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
+
+//     for (const queryParams of listOfQueryParams) {
+//         queryParamsById[queryParams.uniqueId] = queryParams;
+//     }
+
+//     return {
+//         ...initialImagerySceneState,
+//         mode,
+//         tool: tool || 'mask',
+//         queryParams4MainScene,
+//         queryParams4SecondaryScene,
+//         queryParamsList: {
+//             byId: queryParamsById,
+//             ids: listOfQueryParams.map((d) => d.uniqueId),
+//             selectedItemID: listOfQueryParams[0]
+//                 ? listOfQueryParams[0].uniqueId
+//                 : null,
+//         },
+//         // idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
+//         //     ? queryParams4ScenesInAnimation[0].uniqueId
+//         //     : null,
+//     };
+// };
+
+// const getPreloadedUIState = (
+//     hashParams: URLSearchParams,
+//     randomInterestingPlace: InterestingPlaceData
+// ): UIState => {
+//     const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
+
+//     const proloadedUIState: UIState = {
+//         ...initialUIState,
+//         nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
+//     };
+
+//     if (animationSpeed) {
+//         proloadedUIState.animationSpeed = animationSpeed;
+//         proloadedUIState.animationStatus = 'loading';
+//     }
+
+//     return proloadedUIState;
+// };
+
+const getPreloadedTemporalCompositeToolState = (
+    hashParams: URLSearchParams
+): TemporalCompositeToolState => {
+    const data = getTemporalCompositeToolDataFromHashParams(hashParams);
+
+    const defaultRasterFunction: Sentinel1FunctionName = 'VV dB Colorized';
+
+    const proloadedState: TemporalCompositeToolState = {
+        ...initialState4TemporalCompositeTool,
+        ...data,
+        rasterFunction: data?.rasterFunction || defaultRasterFunction,
     };
+
+    return proloadedState;
 };
 
-const getPreloadedImageryScenesState = (): ImageryScenesState => {
-    let mode: AppMode =
-        (getHashParamValueByKey('mode') as AppMode) || 'dynamic';
-
-    // user is only allowed to use the "dynamic" mode when using mobile device
-    if (IS_MOBILE_DEVICE) {
-        mode = 'dynamic';
-    }
-
-    const defaultRasterFunction: Sentinel1FunctionName =
-        'False Color dB with DRA';
-
-    // Attempt to extract query parameters from the URL hash.
-    // If not found, fallback to using the default values along with the raster function from a randomly selected interesting location,
-    // which will serve as the map center.
-    const queryParams4MainScene = getQueryParams4MainSceneFromHashParams() || {
-        ...DefaultQueryParams4ImageryScene,
-        rasterFunctionName:
-            randomInterestingPlace?.renderer || defaultRasterFunction,
-    };
-
-    const queryParams4SecondaryScene =
-        getQueryParams4SecondarySceneFromHashParams() || {
-            ...DefaultQueryParams4ImageryScene,
-            rasterFunctionName: null,
-        };
-
-    const listOfQueryParams = getListOfQueryParamsFromHashParams() || [];
-
-    const queryParamsById: {
-        [key: string]: QueryParams4ImageryScene;
-    } = {};
-
-    const tool = getHashParamValueByKey('tool') as AnalysisTool;
-
-    for (const queryParams of listOfQueryParams) {
-        queryParamsById[queryParams.uniqueId] = queryParams;
-    }
-
-    return {
-        ...initialImagerySceneState,
-        mode,
-        tool: tool || 'mask',
-        queryParams4MainScene,
-        queryParams4SecondaryScene,
-        queryParamsList: {
-            byId: queryParamsById,
-            ids: listOfQueryParams.map((d) => d.uniqueId),
-            selectedItemID: listOfQueryParams[0]
-                ? listOfQueryParams[0].uniqueId
-                : null,
-        },
-        // idOfSelectedItemInListOfQueryParams: queryParams4ScenesInAnimation[0]
-        //     ? queryParams4ScenesInAnimation[0].uniqueId
-        //     : null,
-    };
-};
-
-const getPreloadedUIState = (): UIState => {
-    const animationSpeed = getAnimationSpeedFromHashParams();
-
-    const proloadedUIState: UIState = {
-        ...initialUIState,
-        nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
-    };
-
-    if (animationSpeed) {
-        proloadedUIState.animationSpeed = animationSpeed;
-        proloadedUIState.animationStatus = 'loading';
-    }
-
-    return proloadedUIState;
-};
-
-const getPreloadedTemporalCompositeToolState =
-    (): TemporalCompositeToolState => {
-        const data = getTemporalCompositeToolDataFromHashParams();
-
-        const defaultRasterFunction: Sentinel1FunctionName = 'VV dB Colorized';
-
-        const proloadedState: TemporalCompositeToolState = {
-            ...initialState4TemporalCompositeTool,
-            ...data,
-            rasterFunction: data?.rasterFunction || defaultRasterFunction,
-        };
-
-        return proloadedState;
-    };
-
-const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
-    const changeCompareToolData = getChangeCompareToolDataFromHashParams();
+const getPreloadedChangeCompareToolState = (
+    hashParams: URLSearchParams
+): ChangeCompareToolState => {
+    const changeCompareToolData =
+        getChangeCompareToolDataFromHashParams(hashParams);
 
     const selectedOption: ChangeCompareToolOption4Sentinel1 =
         changeCompareToolData?.selectedOption
@@ -227,9 +251,11 @@ const getPreloadedChangeCompareToolState = (): ChangeCompareToolState => {
     };
 };
 
-const getPreloadedTrendToolState = (): TrendToolState => {
+const getPreloadedTrendToolState = (
+    hashParams: URLSearchParams
+): TrendToolState => {
     // const maskToolData = getMaskToolDataFromHashParams();
-    const trendToolData = getTemporalProfileToolDataFromHashParams();
+    const trendToolData = getTemporalProfileToolDataFromHashParams(hashParams);
 
     return {
         ...initialTrendToolState,
@@ -238,7 +264,9 @@ const getPreloadedTrendToolState = (): TrendToolState => {
     };
 };
 
-const getPreloadedMaskToolState = (): MaskToolState => {
+const getPreloadedMaskToolState = (
+    hashParams: URLSearchParams
+): MaskToolState => {
     const pixelValueRangeDataForSentinel1Explorer: MaskToolPixelValueRangeBySpectralIndex =
         {
             ...DefaultPixelValueRangeBySelectedIndex,
@@ -257,6 +285,7 @@ const getPreloadedMaskToolState = (): MaskToolState => {
         };
 
     const maskToolData = getMaskToolDataFromHashParams(
+        hashParams,
         pixelValueRangeDataForSentinel1Explorer
     );
 
@@ -274,9 +303,11 @@ const getPreloadedMaskToolState = (): MaskToolState => {
     };
 };
 
-const getPreloadedSentinel1State = (): Sentinel1State => {
+const getPreloadedSentinel1State = (
+    hashParams: URLSearchParams
+): Sentinel1State => {
     // const maskToolData = getMaskToolDataFromHashParams();
-    const sentinel1State = getSentinel1StateFromHashParams();
+    const sentinel1State = getSentinel1StateFromHashParams(hashParams);
 
     return {
         ...initialSentinel1State,
@@ -288,14 +319,38 @@ const getPreloadedSentinel1State = (): Sentinel1State => {
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
 
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+
+    /**
+     * Map location info that contains center and zoom info from URL Hash Params
+     */
+    const mapLocationFromHashParams = getMapCenterFromHashParams(hashParams);
+
+    /**
+     * Use the location of a randomly selected interesting place if there is no map location info
+     * found in the URL hash params.
+     */
+    const randomInterestingPlace = !mapLocationFromHashParams
+        ? getRandomElement(sentinel1InterestingPlaces)
+        : null;
+
+    const PublishAndDownloadJobs =
+        await getPreloadedState4PublishAndDownloadJobs();
+
     return {
-        Map: getPreloadedMapState(),
-        UI: getPreloadedUIState(),
-        ImageryScenes: getPreloadedImageryScenesState(),
-        TemporalCompositeTool: getPreloadedTemporalCompositeToolState(),
-        ChangeCompareTool: getPreloadedChangeCompareToolState(),
-        TrendTool: getPreloadedTrendToolState(),
-        MaskTool: getPreloadedMaskToolState(),
-        Sentinel1: getPreloadedSentinel1State(),
+        Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
+        UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
+        ImageryScenes: getPreloadedState4ImageryScenes(
+            hashParams,
+            randomInterestingPlace,
+            'False Color dB with DRA'
+        ),
+        TemporalCompositeTool:
+            getPreloadedTemporalCompositeToolState(hashParams),
+        ChangeCompareTool: getPreloadedChangeCompareToolState(hashParams),
+        TrendTool: getPreloadedTrendToolState(hashParams),
+        MaskTool: getPreloadedMaskToolState(hashParams),
+        Sentinel1: getPreloadedSentinel1State(hashParams),
+        PublishAndDownloadJobs,
     } as PartialRootState;
 };

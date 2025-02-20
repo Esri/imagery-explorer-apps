@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  */
 
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { DWONLOAD_MODE_WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { selectMapCenterAndZoom } from '@shared/store/LandcoverExplorer/selectors';
@@ -30,11 +30,11 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import MapView from '@shared/components/MapView/MapView';
 
 const DownloadPanel = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const showDownloadPanel = useSelector(selectShowDownloadPanel);
+    const showDownloadPanel = useAppSelector(selectShowDownloadPanel);
 
-    const center = useSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter);
 
     const availableYears = getAvailableYears();
 

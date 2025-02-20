@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@
  */
 
 import React, { useEffect } from 'react';
-import { useSelector, batch } from 'react-redux';
 import {
     selectAvailableScenes,
     selectQueryParams4SceneInSelectedMode,
     selectShouldForceSceneReselection,
 } from '@shared/store/ImageryScene/selectors';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { shouldForceSceneReselectionUpdated } from '@shared/store/ImageryScene/reducer';
@@ -30,19 +29,19 @@ import { shouldForceSceneReselectionUpdated } from '@shared/store/ImageryScene/r
  * whenever the available scenes and acquisition date changes
  */
 export const useFindSelectedSceneByDate = (): void => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { acquisitionDate, objectIdOfSelectedScene } =
-        useSelector(selectQueryParams4SceneInSelectedMode) || {};
+        useAppSelector(selectQueryParams4SceneInSelectedMode) || {};
 
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     /**
      * available imagery scenes that intersect with input map geometry and were acquired during the input year.
      */
-    const availableScenes = useSelector(selectAvailableScenes);
+    const availableScenes = useAppSelector(selectAvailableScenes);
 
-    const shouldForceSceneReselection = useSelector(
+    const shouldForceSceneReselection = useAppSelector(
         selectShouldForceSceneReselection
     );
 
@@ -74,12 +73,10 @@ export const useFindSelectedSceneByDate = (): void => {
             (d) => d.formattedAcquisitionDate === acquisitionDate
         );
 
-        batch(() => {
-            dispatch(
-                updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
-            );
+        dispatch(
+            updateObjectIdOfSelectedScene(selectedScene?.objectId || null)
+        );
 
-            dispatch(shouldForceSceneReselectionUpdated(false));
-        });
+        dispatch(shouldForceSceneReselectionUpdated(false));
     }, [availableScenes, acquisitionDate, objectIdOfSelectedScene]);
 };

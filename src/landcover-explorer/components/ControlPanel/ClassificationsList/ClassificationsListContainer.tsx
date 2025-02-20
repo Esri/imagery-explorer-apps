@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
  */
 
 import React, { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@shared/store/configureStore';
+import { useAppSelector } from '@shared/store/configureStore';
 import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { activeLandCoverTypeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
@@ -26,11 +26,11 @@ import { saveActiveLandCoverTypeToHashParams } from '@landcover-explorer/utils/U
 import ClassificationsList from './ClassificationsList';
 
 const ClassificationsListContainer = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const activeLandCoverType = useSelector(selectActiveLandCoverType);
+    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
-    const animationMode = useSelector(selectAnimationStatus);
+    const animationMode = useAppSelector(selectAnimationStatus);
 
     const data = useMemo(() => {
         return getLandCoverClassifications();

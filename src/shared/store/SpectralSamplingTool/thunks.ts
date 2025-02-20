@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,9 +28,11 @@ import {
 import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
+    selectTargetService,
 } from './selectors';
 import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
 import { queryParamsListChanged } from '../ImageryScene/reducer';
+import { getSentinel2PixelValues } from '@shared/services/sentinel-2/getSentinel2PixelValues';
 
 let abortController: AbortController = null;
 
@@ -79,6 +81,8 @@ export const updateLocationOfSpectralSamplingPoint =
     (point: Point) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         // dispatch(queryLocationChanged(point));
+
+        const targetService = selectTargetService(getState());
 
         const idOfSelectedSamplingPoint =
             selectIdOfSelectedItemInListOfQueryParams(getState());
@@ -139,13 +143,31 @@ export const updateLocationOfSpectralSamplingPoint =
         abortController = new AbortController();
 
         try {
-            const bandValues = await getLandsatPixelValues({
-                point,
-                objectIds: [
-                    queryParamsOfSelectedSpectralSamplingPoint.objectIdOfSelectedScene,
-                ],
-                abortController,
-            });
+            let bandValues: number[] = null;
+
+            if (targetService === 'landsat') {
+                bandValues = await getLandsatPixelValues({
+                    point,
+                    objectIds: [
+                        queryParamsOfSelectedSpectralSamplingPoint.objectIdOfSelectedScene,
+                    ],
+                    abortController,
+                });
+            } else if (targetService === 'sentinel-2') {
+                bandValues = await getSentinel2PixelValues({
+                    point,
+                    objectIds: [
+                        queryParamsOfSelectedSpectralSamplingPoint.objectIdOfSelectedScene,
+                    ],
+                    abortController,
+                });
+            }
+
+            if (!bandValues) {
+                throw new Error(
+                    'failed to get band values for the input location'
+                );
+            }
 
             updatedData4SelectedSamplingPoint = {
                 ...updatedData4SelectedSamplingPoint,

@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { batch } from 'react-redux';
 import { StoreDispatch, StoreGetState } from '../configureStore';
 import {
     QueryParams4ImageryScene,
@@ -317,19 +316,17 @@ export const swapMainAndSecondaryScenes =
                 getState()
             );
 
-            batch(() => {
-                dispatch(
-                    queryParams4MainSceneChanged({
-                        ...queryParams4SecondaryScene,
-                    })
-                );
+            dispatch(
+                queryParams4MainSceneChanged({
+                    ...queryParams4SecondaryScene,
+                })
+            );
 
-                dispatch(
-                    queryParams4SecondarySceneChanged({
-                        ...queryParams4MainScene,
-                    })
-                );
-            });
+            dispatch(
+                queryParams4SecondarySceneChanged({
+                    ...queryParams4MainScene,
+                })
+            );
         } catch (err) {
             console.error(err);
         }

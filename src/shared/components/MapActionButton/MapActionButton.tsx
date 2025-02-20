@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@
  * limitations under the License.
  */
 
-import {
-    selectAnimationStatus,
-    selectIsAnimationPlaying,
-} from '@shared/store/UI/selectors';
+// import {
+//     selectAnimationStatus,
+//     selectIsAnimationPlaying,
+// } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@shared/store/configureStore';
 
 type Props = {
     /**
@@ -62,12 +62,10 @@ export const MapActionButton: FC<Props> = ({
     children,
     onClickHandler,
 }) => {
-    const isAnimationPlaying = useSelector(selectIsAnimationPlaying);
-
     return (
         <div
             className={classNames('relative z-10', {
-                hidden: isAnimationPlaying,
+                // hidden: isAnimationPlaying,
                 'is-disabled': disabled,
             })}
             style={{

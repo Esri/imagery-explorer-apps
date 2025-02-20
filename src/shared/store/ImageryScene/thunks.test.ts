@@ -1,4 +1,4 @@
-/* Copyright 2024 Esri
+/* Copyright 2025 Esri
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ describe('thunks of ImageryScene slice of Redux Store', () => {
     };
 
     beforeEach(() => {
-        store = configureAppStore();
+        store = configureAppStore({});
     });
 
     describe('test updateQueryParams4SceneInSelectedMode thunk', () => {
