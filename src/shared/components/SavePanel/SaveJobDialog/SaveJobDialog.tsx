@@ -20,6 +20,7 @@ import { SaveOptionInfo, saveOptionInfoLookup } from '../constants';
 import { checkIsServiceNameAvailable } from '@shared/services/arcgis-online/checkIsServiceNameAvailable';
 import { useDefaultTitleAndSummary } from './useDefaultTitleAndSummary';
 import { formatHostedImageryServiceName } from '@shared/services/raster-analysis/createHostedImageryService';
+import { useValidateTextInput } from './useValidateTextInput';
 
 type SaveJobDialogProps = {
     saveJobType: PublishAndDownloadJobType;
@@ -31,6 +32,8 @@ type SaveJobDialogProps = {
 const TEXT_INPUT_STYLE = `w-full bg-transparent border border-custom-light-blue-50 p-2 text-sm outline-none placeholder:text-custom-light-blue-25 focus:border-custom-light-blue`;
 
 const TITLE_MAX_LENGTH = 98;
+
+const SUMMARY_MAX_LENGTH = 2048;
 
 export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     saveJobType,
@@ -49,9 +52,16 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     const [summary, setSummary] = useState<string>(defaultSummary);
 
     const [isTitleAvailable, setIsTitleAvailable] = useState<boolean>(true);
-    const [isTitleTooLong, setIsTitleTooLong] = useState<boolean>(false);
+    // const [isTitleTooLong, setIsTitleTooLong] = useState<boolean>(false);
     const [isCheckingTitleAvailability, setIsCheckingTitleAvailability] =
         useState<boolean>(false);
+
+    const validateTitleResponse = useValidateTextInput(title, TITLE_MAX_LENGTH);
+
+    const validateSummaryResponse = useValidateTextInput(
+        summary,
+        SUMMARY_MAX_LENGTH
+    );
 
     const debounceTimeOutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -66,7 +76,11 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                 const foramttedTitle = formatHostedImageryServiceName(title);
 
                 if (foramttedTitle.length > TITLE_MAX_LENGTH) {
-                    setIsCheckingTitleAvailability(false);
+                    // setIsCheckingTitleAvailability(false);
+                    return;
+                }
+
+                if (validateTitleResponse.isValid === false) {
                     return;
                 }
 
@@ -89,7 +103,9 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
         summary === '' ||
         isCheckingTitleAvailability ||
         isTitleAvailable === false ||
-        isTitleTooLong;
+        // isTitleTooLong ||
+        validateTitleResponse.isValid === false ||
+        validateSummaryResponse.isValid === false;
 
     useEffect(() => {
         // if the output name does not require unique name, then we can skip this step
@@ -100,10 +116,10 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
         checkTitleAvailability(title);
     }, [title, saveOptionInfo.requireUniqueOutputName]);
 
-    useEffect(() => {
-        const foramttedTitle = formatHostedImageryServiceName(title);
-        setIsTitleTooLong(foramttedTitle.length > TITLE_MAX_LENGTH);
-    }, [title]);
+    // useEffect(() => {
+    //     const foramttedTitle = formatHostedImageryServiceName(title);
+    //     setIsTitleTooLong(foramttedTitle.length > TITLE_MAX_LENGTH);
+    // }, [title]);
 
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-custom-background-90 backdrop-blur-sm z-10 flex justify-center">
@@ -123,7 +139,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                     ></input>
-                    {isTitleTooLong === false &&
+                    {validateTitleResponse.isValid &&
                         isCheckingTitleAvailability && (
                             <div className="text-sm text-custom-light-blue-50 mt-2 flex items-center">
                                 <calcite-loader active inline></calcite-loader>
@@ -132,7 +148,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                                 </span>
                             </div>
                         )}
-                    {isTitleTooLong === false &&
+                    {validateTitleResponse.isValid &&
                         isTitleAvailable === false &&
                         isCheckingTitleAvailability === false && (
                             <div className="text-sm text-red-500 mt-2">
@@ -140,10 +156,9 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                                 name.
                             </div>
                         )}
-                    {isTitleTooLong && (
+                    {validateTitleResponse.isValid === false && (
                         <div className="text-sm text-red-500 mt-2">
-                            The title is too long. Please keep it under 98
-                            characters.
+                            {validateTitleResponse.message}
                         </div>
                     )}
                 </div>
@@ -157,6 +172,11 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         value={summary}
                         onChange={(e) => setSummary(e.target.value)}
                     ></input>
+                    {validateSummaryResponse.isValid === false && (
+                        <div className="text-sm text-red-500 mt-2">
+                            {validateSummaryResponse.message}
+                        </div>
+                    )}
                 </div>
 
                 <div className=" mt-8 flex justify-end items-center">
