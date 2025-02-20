@@ -197,6 +197,10 @@ To build the app, you can run the command below, this will place all files neede
 npm run build:sentinel2
 ```
 
+### Resources
+- [Sentinel-2 Explorer: another level of Earth observation](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/sentinel-2-explorer-another-level-of-earth-observation/)
+- [Sentinel-2 Level-2A from Living Atlas](https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00)
+
 ### Sentinel-2 Level-2A Imagery Service Licensing
 - Source Sentinel-2 Imagery – The access and use of Copernicus Sentinel Data and Service Information is regulated under EU law. In particular, the law provides that users shall have a free, full and open access to Copernicus Sentinel Data and Service Information without any express or implied warranty, including as regards quality and suitability for any purpose. [More](https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice).
 - Sentinel-2 Image Service - This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
