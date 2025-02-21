@@ -17,6 +17,7 @@ import { ImagerySceneData4WebMap } from '@shared/services/arcgis-online/createWe
 import { useAppSelector } from '@shared/store/configureStore';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import {
+    selectActiveAnalysisTool,
     selectAppMode,
     selectListOfQueryParams,
     selectQueryParams4MainScene,
@@ -45,15 +46,22 @@ export const useImagerySceneData4WebMap = () => {
 
     const mode = useAppSelector(selectAppMode);
 
+    const analyzeTool = useAppSelector(selectActiveAnalysisTool);
+
     const output: ImagerySceneData4WebMap[] = React.useMemo(() => {
         let queryParams: QueryParams4ImageryScene[] = [];
 
-        if (mode === 'find a scene' || mode === 'analysis') {
+        if (mode === 'find a scene') {
             queryParams = [queryParams4MainScene];
         } else if (mode === 'swipe') {
             queryParams = [queryParams4MainScene, queryParams4SecondaryScene];
         } else if (mode === 'animate') {
             queryParams = [...queryParams4ListOfScenes];
+        } else if (mode === 'analysis') {
+            queryParams =
+                analyzeTool === 'change'
+                    ? [queryParams4MainScene, queryParams4SecondaryScene]
+                    : [queryParams4MainScene];
         }
 
         return queryParams
@@ -68,6 +76,7 @@ export const useImagerySceneData4WebMap = () => {
             }));
     }, [
         mode,
+        analyzeTool,
         queryParams4MainScene,
         queryParams4SecondaryScene,
         queryParams4ListOfScenes,
