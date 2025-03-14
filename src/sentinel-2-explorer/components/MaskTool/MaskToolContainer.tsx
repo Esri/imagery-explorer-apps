@@ -33,13 +33,16 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
-import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
+// import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { SpectralIndex } from '@typing/imagery-service';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 import { useSentinel2MaskToolFullPixelValueRange } from './useSentinel2MaskToolFullPixelValueRange';
+import { useTranslation } from 'react-i18next';
 
 export const MaskToolContainer = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const tool = useAppSelector(selectActiveAnalysisTool);
@@ -88,7 +91,7 @@ export const MaskToolContainer = () => {
                     // },
                 ]}
                 selectedValue={selectedSpectralIndex}
-                tooltipText={MASK_TOOL_HEADER_TOOLTIP}
+                tooltipText={t('mask_tool_tooltip')}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
                         selectedIndex4MaskToolChanged(val as SpectralIndex)

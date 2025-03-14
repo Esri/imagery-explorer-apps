@@ -19,6 +19,7 @@ import { GirdCard } from '../GirdCard/GirdCard';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 import { InterestingPlaceData } from '@typing/shared';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     data: InterestingPlaceData[];
@@ -46,6 +47,8 @@ export const InterestingPlaces: FC<Props> = ({
     const containerRef = useRef<HTMLDivElement>();
     useGetTooltipPositionOnHover(containerRef);
 
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames({
@@ -56,7 +59,9 @@ export const InterestingPlaces: FC<Props> = ({
             ref={containerRef}
         >
             <div className="text-center mb-3">
-                <span className="uppercase text-sm">Interesting Places</span>
+                <span className="uppercase text-sm">
+                    {t('interesting_places')}
+                </span>
             </div>
 
             <div

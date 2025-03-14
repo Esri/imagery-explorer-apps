@@ -30,6 +30,7 @@ import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -51,6 +52,8 @@ export const ChangeCompareToolHeader: FC<Props> = ({
 }: Props) => {
     const dispatch = useAppDispatch();
 
+    const { t } = useTranslation();
+
     const tool = useAppSelector(selectActiveAnalysisTool);
 
     const selectedOption = useAppSelector(
@@ -66,10 +69,7 @@ export const ChangeCompareToolHeader: FC<Props> = ({
             title="Change"
             dropdownListOptions={options}
             selectedValue={selectedOption}
-            tooltipText={
-                tooltipText ||
-                'Compare and report changes between two selected images. Change is always calculated and reported chronologically from oldest to newest.'
-            }
+            tooltipText={tooltipText || t('compare_and_report_changes')}
             dropdownMenuSelectedItemOnChange={(val) => {
                 dispatch(
                     selectedOption4ChangeCompareToolChanged(

@@ -42,7 +42,7 @@ export const COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS = 3000;
 /**
  * content of copy link message
  */
-export const COPIED_LINK_MESSAGE_STRING = 'link copied to clipboard';
+// export const COPIED_LINK_MESSAGE_STRING = 'link copied to clipboard';
 
 /**
  * tooltip content for the renderer tooltip

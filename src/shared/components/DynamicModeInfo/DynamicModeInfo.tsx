@@ -14,10 +14,11 @@
  */
 
 // import { APP_NAME } from '@shared/config';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { modeChanged } from '@shared/store/ImageryScene/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     content: string;
@@ -26,28 +27,55 @@ type Props = {
 export const DynamicModeInfo: FC<Props> = ({ content }) => {
     const dispatch = useAppDispatch();
 
+    const { t } = useTranslation();
+
     const openFindASceneMode = () => {
         dispatch(modeChanged('find a scene'));
     };
 
+    const instructionTextRef = useRef<HTMLParagraphElement>(null);
+
+    useEffect(() => {
+        const element = instructionTextRef.current;
+
+        if (!element) return;
+
+        const openFindASceneLink = element.querySelector('.open-find-a-scene');
+
+        if (!openFindASceneLink) return;
+
+        openFindASceneLink?.addEventListener('click', (e) => {
+            e.preventDefault();
+            dispatch(modeChanged('find a scene'));
+        });
+
+        // ('click', openFindASceneMode, { once: true });
+    }, []);
+
     return (
         <div className="max-w-sm ml-4 2xl:ml-10">
             <div className="text-center mb-3">
-                <span className="uppercase text-sm">Dynamic View</span>
+                <span className="uppercase text-sm">{t('dynamic_view')}</span>
             </div>
 
             <p className="text-sm opacity-80">{content}</p>
 
             {IS_MOBILE_DEVICE === false ? (
-                <p className="text-sm opacity-80 mt-2">
-                    To select an individual scene for a specific date, try the{' '}
+                <p
+                    className="text-sm opacity-80 mt-2"
+                    ref={instructionTextRef}
+                    dangerouslySetInnerHTML={{
+                        __html: t('dynamic_view_instruction'),
+                    }} // TODO: remove this
+                >
+                    {/* To select an individual scene for a specific date, try the{' '}
                     <span
                         className="underline cursor-pointer hover:opacity-100"
                         onClick={openFindASceneMode}
                     >
                         FIND A SCENE
                     </span>{' '}
-                    mode.
+                    mode. */}
                 </p>
             ) : null}
         </div>

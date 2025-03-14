@@ -16,6 +16,7 @@
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import { Slider } from '../Slider/Slider';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -39,6 +40,8 @@ type TitleTextProps = {
 };
 
 const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
+    const { t } = useTranslation();
+
     const getFormattedCouldCoverageInPercent = () => {
         if (isNaN(cloudCoverage)) {
             return 'N/A';
@@ -50,7 +53,7 @@ const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
     return (
         <div className="text-xs flex items-center">
             <span className="uppercase text-custom-light-blue-50 mr-[1px]">
-                Cloud
+                {t('cloud')}
             </span>
 
             <div className="w-[30px] text-right">

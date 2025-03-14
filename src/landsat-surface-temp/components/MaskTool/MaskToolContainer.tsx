@@ -34,7 +34,7 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
-import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
+// import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { SpectralIndex } from '@typing/imagery-service';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
@@ -48,8 +48,11 @@ import {
     SurfaceTempCelsiusPixelRangeSlider,
     SurfaceTempFarhenheitPixelRangeSlider,
 } from '@landsat-explorer/components/MaskTool/SurfaceTempPixelRangeSlider';
+import { useTranslation } from 'react-i18next';
 
 export const MaskToolContainer = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const tool = useAppSelector(selectActiveAnalysisTool);
@@ -82,7 +85,7 @@ export const MaskToolContainer = () => {
                     },
                 ]}
                 selectedValue={selectedSpectralIndex}
-                tooltipText={MASK_TOOL_HEADER_TOOLTIP}
+                tooltipText={t('mask_tool_tooltip')}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
                         selectedIndex4MaskToolChanged(val as SpectralIndex)

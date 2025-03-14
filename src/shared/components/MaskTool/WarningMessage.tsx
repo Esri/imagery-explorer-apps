@@ -14,15 +14,17 @@
  */
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const WarningMessage = () => {
+    const { t } = useTranslation();
     return (
         <div
             className={
                 'w-full mt-10 flex justify-center text-center text-sm is-disabled'
             }
         >
-            <p>Select a scene to calculate a mask for the selected index.</p>
+            <p>{t('select_scene_to_calculate_mask')}</p>
         </div>
     );
 };

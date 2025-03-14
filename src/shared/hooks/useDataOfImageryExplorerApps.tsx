@@ -40,13 +40,13 @@ export const useDataOfImageryExplorerApps = () => {
             },
             {
                 appName: 'sentinel1explorer',
-                title: t('sentinel1_explorer'),
+                title: t('sentinel_1_explorer'),
                 url: '/sentinel1explorer',
                 tooltip: t('launch_sentinel1_explorer'),
             },
             {
                 appName: 'sentinel2explorer',
-                title: t('sentinel2_explorer'),
+                title: t('sentinel_2_explorer'),
                 url: '/sentinel2explorer',
                 tooltip: t('launch_sentinel2_explorer'),
             },
