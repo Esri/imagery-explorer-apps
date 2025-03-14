@@ -21,6 +21,7 @@ import {
 import React, { CSSProperties, FC } from 'react';
 import { saveJobStatusLabels } from '../constants';
 import { getItemUrl } from '@shared/utils/esri-oauth';
+import { useTranslation } from 'react-i18next';
 
 type JobStatusProps = {
     job: PublishAndDownloadJob;
@@ -46,6 +47,8 @@ export const JobStatus: FC<JobStatusProps> = ({
     acceptCreditsButtonOnClick,
     cancelButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     const statusLabel = saveJobStatusLabels[job.status];
 
     if (
@@ -54,7 +57,9 @@ export const JobStatus: FC<JobStatusProps> = ({
     ) {
         return (
             <div>
-                <div className="mb-1">Required credits: {job.actualCost}</div>
+                <div className="mb-1">
+                    {t('required_credits')}: {job.actualCost}
+                </div>
 
                 <div
                     className="flex items-center"
@@ -68,7 +73,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                                 cancelButtonOnClick(job);
                             }}
                         >
-                            Cancel
+                            {t('cancel')}
                         </span>
                     </div>
 
@@ -81,7 +86,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                             acceptCreditsButtonOnClick(job);
                         }}
                     >
-                        <span className="uppercase">Accept</span>
+                        <span className="uppercase">{t('accept')}</span>
                     </calcite-button>
                 </div>
             </div>
@@ -119,7 +124,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                 href={getItemUrl(job.outputItemId)}
                 target="_blank"
             >
-                Open
+                {t('open')}
             </calcite-button>
         </div>
     );

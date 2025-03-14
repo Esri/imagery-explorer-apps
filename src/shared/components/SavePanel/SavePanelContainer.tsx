@@ -40,6 +40,7 @@ import { useImagerySceneData4WebMap } from './useImagerySceneData4WebMap';
 import { AddItemResponse } from '@shared/services/arcgis-online/addItem';
 import { ITEM_DESCRIPTION_TEMPLATE_4_WEB_APP } from './constants';
 import { useAppTitle } from '@shared/hooks/useAppTitle';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Raster functions for the publish jobs.
@@ -123,6 +124,8 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     publishChangeDetectionRasterFunction,
     estimatedCostByJobType,
 }) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     /**
@@ -164,11 +167,11 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
 
     const subHeader = useMemo(() => {
         if (imageryScenesData.length > 1) {
-            return 'Multiple Scenes Selected';
+            return t('multiple_scenes_selected');
         }
 
         if (sceneIds[0]) {
-            return `Scene ID: ${sceneIds[0]}`;
+            return `${t('scene_id')}: ${sceneIds[0]}`;
         }
 
         return null;

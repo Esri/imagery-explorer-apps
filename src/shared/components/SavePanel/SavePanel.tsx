@@ -43,6 +43,7 @@ import {
     PublishJobSubmitHandler,
 } from './SavePanelContainer';
 import { useAppDispatch } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 export type SaveJobButtonOnClickParams = {
     /**
@@ -107,6 +108,8 @@ export const SavePanel: FC<SavePanelProps> = ({
     saveButtonOnClick,
     publishJobSubmitHandler,
 }) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const shouldShowSavePanel = useAppSelector(selectShowSavePanel);
@@ -183,7 +186,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                     ) : null} */}
 
                     <div>
-                        <SaveOptionsListHeader title="Publish" />
+                        <SaveOptionsListHeader title={t('publish')} />
 
                         {publishOptions.map((d) => {
                             const { saveJobType, disabled, message } = d;

@@ -28,6 +28,7 @@ import {
     PublishAndDownloadJobStatus,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -39,6 +40,8 @@ type Props = {
 };
 
 export const JobListContainer: FC<Props> = ({ publishJobSubmitHandler }) => {
+    const { t } = useTranslation();
+
     const jobs = useAppSelector(selectAllSaveJobs);
 
     const dispatch = useAppDispatch();
@@ -49,8 +52,8 @@ export const JobListContainer: FC<Props> = ({ publishJobSubmitHandler }) => {
                 className="grid items-center mb-6 pb-1 border-b border-custom-light-blue-25"
                 style={{ gridTemplateColumns: '1fr 150px 60px' }}
             >
-                <div className="uppercase text-lg">Task History</div>
-                <div className="text-sm opacity-50">Status</div>
+                <div className="uppercase text-lg">{t('task_history')}</div>
+                <div className="text-sm opacity-50">{t('status')}</div>
                 <div
                     className="text-sm opacity-50 cursor-pointer underline"
                     title="Remove all pending jobs"
@@ -58,7 +61,7 @@ export const JobListContainer: FC<Props> = ({ publishJobSubmitHandler }) => {
                         dispatch(clearAllPublishAndDownloadJobs());
                     }}
                 >
-                    Clear All
+                    {t('clear_all')}
                 </div>
             </div>
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type ValidateTextInputResponse = {
     isValid: boolean;
@@ -15,27 +16,34 @@ export const useValidateTextInput = (
     textValue: string,
     maxLength: number
 ): ValidateTextInputResponse => {
+    const { t } = useTranslation();
+
     const response = useMemo(() => {
         const trimmed = textValue.trim();
 
         if (!textValue || !trimmed) {
-            return { isValid: false, message: 'Please enter a value' };
+            return { isValid: false, message: t('enter_a_value') };
         }
 
         if (textValue.length > maxLength) {
+            const message = t('text_too_long').replace(
+                '{maxLength}',
+                maxLength.toString()
+            );
+
             return {
                 isValid: false,
-                message: `The text is too long. Please keep it under ${maxLength} characters.`,
+                message,
             };
         }
 
         // should be considered invalid if the custom term contains any of the specified special characters
-        const forbiddenSpecialCharRegex = /[!@#$^&*()<>{}:;?|+=~`"/\\]/;
+        const forbiddenSpecialCharRegex = /[!@#$^&*()<>{};?|+=~`"/\\]/;
 
         if (forbiddenSpecialCharRegex.test(trimmed)) {
             return {
                 isValid: false,
-                message: 'Please remove invalid special characters',
+                message: t('remove_special_characters'),
             };
         }
 

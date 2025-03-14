@@ -21,6 +21,7 @@ import { checkIsServiceNameAvailable } from '@shared/services/arcgis-online/chec
 import { useDefaultTitleAndSummary } from './useDefaultTitleAndSummary';
 import { formatHostedImageryServiceName } from '@shared/services/raster-analysis/createHostedImageryService';
 import { useValidateTextInput } from './useValidateTextInput';
+import { useTranslation } from 'react-i18next';
 
 type SaveJobDialogProps = {
     saveJobType: PublishAndDownloadJobType;
@@ -41,6 +42,8 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     closeButtonOnClick,
     saveButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     const saveOptionInfo: SaveOptionInfo = saveOptionInfoLookup[saveJobType];
 
     const { defaultTitle, defaultSummary } = useDefaultTitleAndSummary(
@@ -132,7 +135,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                 </div>
 
                 <div>
-                    <h4 className="mb-1 font-light text-sm">Title</h4>
+                    <h4 className="mb-1 font-light text-sm">{t('title')}</h4>
                     <input
                         className={TEXT_INPUT_STYLE}
                         placeholder="Enter Title"
@@ -144,7 +147,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                             <div className="text-sm text-custom-light-blue-50 mt-2 flex items-center">
                                 <calcite-loader active inline></calcite-loader>
                                 <span className="ml-1">
-                                    Checking title availability...
+                                    {t('checking_title_availability')}...
                                 </span>
                             </div>
                         )}
@@ -152,8 +155,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         isTitleAvailable === false &&
                         isCheckingTitleAvailability === false && (
                             <div className="text-sm text-red-500 mt-2">
-                                This name already exists. Please choose a unique
-                                name.
+                                {t('name_already_exists')}
                             </div>
                         )}
                     {validateTitleResponse.isValid === false && (
@@ -164,7 +166,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                 </div>
 
                 <div className="mt-4">
-                    <h4 className="mb-1 font-light text-sm">Summary</h4>
+                    <h4 className="mb-1 font-light text-sm">{t('summary')}</h4>
                     <input
                         className={TEXT_INPUT_STYLE}
                         type="textarea"
@@ -184,7 +186,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         className=" mr-8 cursor-pointer"
                         onClick={closeButtonOnClick}
                     >
-                        <span className="uppercase">Cancel</span>
+                        <span className="uppercase">{t('cancel')}</span>
                     </div>
 
                     <Button
@@ -195,7 +197,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         appearance="transparent"
                         disabled={okButtonDisabled}
                     >
-                        OK
+                        {t('OK')}
                     </Button>
                 </div>
             </div>
