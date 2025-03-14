@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -26,6 +26,8 @@ import { APP_NAME, AppName } from '@shared/config';
 import { encodeMapCenter } from '@shared/utils/url-hash-params/map';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import { UrlHashParamKey } from '@shared/utils/url-hash-params';
+import { useTranslation } from 'react-i18next';
+import { useDataOfImageryExplorerApps } from '@shared/hooks/useDataOfImageryExplorerApps';
 
 type Props = {
     /**
@@ -42,34 +44,9 @@ type Props = {
     docButtonTooltip?: string;
 };
 
-export const IMAGERY_EXPLORER_APPS: {
-    appName: AppName;
-    title: string;
-    url: string;
-}[] = [
-    {
-        appName: 'landcoverexplorer',
-        title: 'Sentinel-2 Land Cover Explorer',
-        url: '/landcoverexplorer',
-    },
-    {
-        appName: 'landsatexplorer',
-        title: 'Landsat Explorer',
-        url: '/landsatexplorer',
-    },
-    {
-        appName: 'sentinel1explorer',
-        title: 'Sentinel-1 Explorer',
-        url: '/sentinel1explorer',
-    },
-    {
-        appName: 'sentinel2explorer',
-        title: 'Sentinel-2 Explorer',
-        url: '/sentinel2explorer',
-    },
-];
-
 const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
@@ -88,6 +65,8 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
         const targetURL = url + `#${key}=${encodeMapCenter(mapCenter, zoom)}`;
         window.open(targetURL, '_blank');
     };
+
+    const IMAGERY_EXPLORER_APPS = useDataOfImageryExplorerApps();
 
     useOnClickOutside(
         containerRef,
@@ -109,7 +88,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                 onClick={() => {
                     dispatch(shouldShowAboutThisAppToggled());
                 }}
-                title="About this app"
+                title={t('about_this_app')}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +150,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                     )}
                 >
                     <div className="px-2 py-2 text-xs text-custom-light-blue-50">
-                        <span>Image Explorer Apps</span>
+                        <span>{t('image_explorer_apps')}</span>
                     </div>
 
                     {IMAGERY_EXPLORER_APPS
@@ -183,8 +162,9 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                                     key={d.title}
                                     // href={d.url}
                                     // target="_blank"
-                                    title={`Launch the ${d.title} in a new tab`}
+                                    // title={`Launch the ${d.title} in a new tab`}
                                     // rel="noreferrer"
+                                    title={d.tooltip}
                                     onClick={launchImageryExplorerApp.bind(
                                         null,
                                         d.url

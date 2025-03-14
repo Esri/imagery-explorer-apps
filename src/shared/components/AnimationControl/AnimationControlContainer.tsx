@@ -42,10 +42,13 @@ import { useAnimationFramesInfo } from './useAnimationFramesInfo';
 import { useShouldDisablePlayPauseButton } from './useShouldDisablePlayPauseButton';
 import { nanoid } from 'nanoid';
 import { copyAnimationLink } from '@shared/store/UI/thunks';
+import { useTranslation } from 'react-i18next';
 
 const ANIMATION_FRAMES_UPPER_LIMIT = 30;
 
 export const AnimationControlContainer = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const animationStatus = useAppSelector(selectAnimationStatus);
@@ -121,8 +124,7 @@ export const AnimationControlContainer = () => {
             {animationFramesData && animationFramesData.length <= 1 ? (
                 <div className="absolute w-full left-0 bottom-0">
                     <p className="text-xs opacity-50">
-                        Add scenes to this list to create a chronological
-                        animation.
+                        {t('add_scenes_to_list')}
                     </p>
                 </div>
             ) : null}

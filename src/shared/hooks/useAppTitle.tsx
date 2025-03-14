@@ -13,15 +13,18 @@
  * limitations under the License.
  */
 
-import { IMAGERY_EXPLORER_APPS } from '@shared/components/AppHeader/AppHeader';
+// import { IMAGERY_EXPLORER_APPS } from '@shared/components/AppHeader/AppHeader';
 import { APP_NAME } from '@shared/config';
 import React, { useMemo } from 'react';
+import { useDataOfImageryExplorerApps } from './useDataOfImageryExplorerApps';
 
 /**
  * This hook returns the title of the app.
  * @returns
  */
 export const useAppTitle = () => {
+    const IMAGERY_EXPLORER_APPS = useDataOfImageryExplorerApps();
+
     const title = useMemo(() => {
         return (
             IMAGERY_EXPLORER_APPS.find((app) => app.appName === APP_NAME)

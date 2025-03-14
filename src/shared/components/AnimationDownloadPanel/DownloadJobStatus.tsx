@@ -16,6 +16,7 @@
 import React, { FC } from 'react';
 import { DownloadJobStatus } from './DownloadPanel';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     status: DownloadJobStatus;
@@ -36,6 +37,8 @@ export const DownloadJobStatusInfo: FC<Props> = ({
     cancelButtonOnClick,
     closeButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     if (!status) {
         return null;
     }
@@ -51,12 +54,12 @@ export const DownloadJobStatusInfo: FC<Props> = ({
             {status === 'pending' && (
                 <div className="flex items-center">
                     <calcite-loader inline />
-                    <span className="mr-1">Creating MP4.</span>
+                    <span className="mr-1">{t('creating_mp4')}</span>
                     <span
                         className="underline cursor-pointer opacity-70 hover:opacity-100"
                         onClick={cancelButtonOnClick}
                     >
-                        Cancel
+                        {t('cancel')}
                     </span>
                 </div>
             )}
@@ -65,8 +68,8 @@ export const DownloadJobStatusInfo: FC<Props> = ({
                 <div className="flex items-center">
                     <p className="mr-2">
                         {status === 'finished'
-                            ? 'Complete! Check browser downloads for the MP4 file.'
-                            : 'Failed to create MP4.'}
+                            ? t('complete_check_browser_downloads')
+                            : t('failed_to_create_mp4')}
                     </p>
 
                     <calcite-icon

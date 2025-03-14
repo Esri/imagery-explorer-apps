@@ -43,6 +43,7 @@ import {
 } from '@shared/utils/date-time/getTimeRange';
 import { useAcquisitionYear } from './useAcquisitionYear';
 import { useFindSelectedSceneByDate } from '@shared/hooks/useFindSelectedSceneByDate';
+import { useTranslation } from 'react-i18next';
 // import { useUpdateAcquisitionYear } from './useUpdateAcquisitionYear';
 
 type Props = {
@@ -50,6 +51,8 @@ type Props = {
 };
 
 const CalendarContainer: FC<Props> = ({ children }: Props) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
@@ -116,7 +119,9 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
             })}
         >
             <div className="text-center mb-2">
-                <span className="uppercase text-sm">Scene Selection</span>
+                <span className="uppercase text-sm">
+                    {t('scene_selection')}
+                </span>
             </div>
 
             <div className="flex mb-2 items-center justify-between">
