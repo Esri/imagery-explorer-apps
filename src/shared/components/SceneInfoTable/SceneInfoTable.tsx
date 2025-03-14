@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import { generateUID } from 'helper-toolkit-ts';
 import React, { FC, useState } from 'react';
 import { Tooltip } from '../Tooltip';
+import { useTranslation } from 'react-i18next';
 
 /**
  * data for a single row in Scene Info Table
@@ -44,6 +45,8 @@ type Props = {
 const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
     const [hasCopied2Clipboard, setHasCopied2Clipboard] =
         useState<boolean>(false);
+
+    const { t } = useTranslation();
 
     const valueOnClickHandler = async () => {
         if (!clickToCopy) {
@@ -82,8 +85,8 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
             <p>
                 ${
                     hasCopied2Clipboard
-                        ? `Copied to clipboard`
-                        : 'Click to copy to clipboard.'
+                        ? t('copied_to_clipboard')
+                        : t('click_to_copy_to_clipboard')
                 }
             </p>
         `;
@@ -120,18 +123,15 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
 };
 
 export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
+    const { t } = useTranslation();
+
     const getContent = () => {
         if (!data || !data.length) {
             return (
                 <div className="text-xs opacity-80 text-center mx-auto max-w-[240px]">
-                    <p className="my-3 mx-3">
-                        Select an acquisition date in Calendar to find a scene.
-                    </p>
+                    <p className="my-3 mx-3">{t('select_acquisition_date')}</p>
 
-                    <p>
-                        Scenes are displayed based on their intersection with
-                        the map&#39;s center.
-                    </p>
+                    <p>{t('scenes_displayed_based_on_intersection')}</p>
                 </div>
             );
         }
@@ -154,7 +154,7 @@ export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
             })}
         >
             <div className="text-center mb-3 mt-1">
-                <h4 className="uppercase text-sm">Scene Information</h4>
+                <h4 className="uppercase text-sm">{t('scene_information')}</h4>
             </div>
             {getContent()}
         </div>

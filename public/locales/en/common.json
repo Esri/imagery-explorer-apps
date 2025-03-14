@@ -94,7 +94,6 @@
     "spectral_profile_info": "__The spectral reflectance of different materials on the Earth's surface is variable. Spectral profiles can be used to identify different land cover types.",
     "spectral_profile_of_selected_location": "__Spectral profile of selected location",
     "spectral_profile_selected_location": "__Spectral Profile of Selected Location",
-
     "Snow and Ice": "__Snow and Ice",
     "Cloud": "__Cloud",
     "Sand": "__Sand",
@@ -105,8 +104,13 @@
     "Trees": "__Trees",
     "Turbid Water": "__Turbid Water",
     "Clear Water": "__Clear Water",
-
     "spectral_profile_of_feature_of_interest": "__Spectral profile of {feature_of_interest}",
     "selected_value": "__Selected Value",
-    "spectral_profiles": "__Spectral Profiles"
+    "spectral_profiles": "__Spectral Profiles",
+    "save_map_view_as_image": "__Save this map view as an image",
+    "click_to_copy_to_clipboard": "__Click to copy to clipboard.",
+    "copied_to_clipboard": "__Copied to clipboard",
+    "select_acquisition_date": "__Select an acquisition date in Calendar to find a scene.",
+    "scenes_displayed_based_on_intersection": "__Scenes are displayed based on their intersection with the map's center.",
+    "scene_information": "__Scene Information"
 }
