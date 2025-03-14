@@ -30,6 +30,7 @@ import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/con
 import { Sentinel1DocPanel } from './components/DocPanel';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
+import { initI18next } from '@shared/i18n/initI18next';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -39,6 +40,8 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
             appId: APP_ID,
             portalUrl: AGOL_PORTAL_ROOT,
         });
+
+        await initI18next();
 
         const store = await getSentinel1ExplorerStore();
 

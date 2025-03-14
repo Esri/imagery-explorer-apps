@@ -29,6 +29,7 @@ import Layout from './components/Layout/Layout';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { AboutSentinel2Explorer } from './components/About';
+import { initI18next } from '@shared/i18n/initI18next';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -38,6 +39,9 @@ import { AboutSentinel2Explorer } from './components/About';
             appId: APP_ID,
             portalUrl: AGOL_PORTAL_ROOT,
         });
+        // console.log('initEsriOAuth done');
+
+        await initI18next();
 
         const store = await getSentinel2ExplorerStore();
 
