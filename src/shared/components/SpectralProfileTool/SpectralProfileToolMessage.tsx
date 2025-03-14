@@ -19,8 +19,11 @@ import {
 } from '@shared/store/SpectralProfileTool/selectors';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 export const SpectralProfileToolMessage = () => {
+    const { t } = useTranslation();
+
     const isLoading = useAppSelector(selectIsLoadingData4SpectralProfileTool);
 
     const spectralProfileData = useAppSelector(selectData4SpectralProfileTool);
@@ -31,7 +34,7 @@ export const SpectralProfileToolMessage = () => {
 
     const spectralProfileToolMessage = useMemo(() => {
         if (isLoading) {
-            return 'fetching spectral profile data';
+            return t('fetching_spectral_profile_data');
         }
 
         if (error4SpectralProfileTool) {
@@ -39,7 +42,7 @@ export const SpectralProfileToolMessage = () => {
         }
 
         if (!spectralProfileData.length) {
-            return 'Select a scene and click on the map to identify the spectral profile for the point of interest.';
+            return t('select_scene_sepctral_profile');
         }
 
         return '';

@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+import { t } from 'i18next';
+
 export const getMonthAbbreviation = (monthNumber: number) => {
     const months = [
         'Jan',
@@ -29,11 +31,13 @@ export const getMonthAbbreviation = (monthNumber: number) => {
         'Dec',
     ];
 
-    if (monthNumber >= 1 && monthNumber <= 12) {
-        return months[monthNumber - 1];
+    if (monthNumber < 1 && monthNumber > 12) {
+        return t('invalid_month'); // Return an error message for invalid month numbers
     }
 
-    return 'Invalid Month';
+    const monthAbbr = months[monthNumber - 1];
+
+    return t(monthAbbr.toLowerCase());
 };
 
 export const MonthData = [

@@ -32,11 +32,13 @@ import {
 } from '@shared/store/Map/reducer';
 import { Slider } from '../Slider';
 import classNames from 'classnames';
-import { de } from 'date-fns/locale';
 import { delay } from '@shared/utils/snippets/delay';
+import { useTranslation } from 'react-i18next';
 
 export const AutoSwipeControls = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     const status = useAppSelector(selectAutoSwipeStatus);
 
@@ -98,7 +100,7 @@ export const AutoSwipeControls = () => {
                 />
 
                 <div className="text-xs text-center mt-1">
-                    <span>speed</span>
+                    <span>{t('speed')}</span>
                 </div>
             </div>
 
@@ -107,7 +109,7 @@ export const AutoSwipeControls = () => {
                     <div
                         className=" bg-custom-light-blue-5 px-1"
                         onClick={statusOnChange.bind(null, 'playing')}
-                        title="Enable auto-swipe"
+                        title={t('enable_auto_swipe')}
                     >
                         {StartPlayButton}
                     </div>
@@ -117,7 +119,9 @@ export const AutoSwipeControls = () => {
                         className="mr-1"
                         onClick={handleCopyLink}
                         title={
-                            linkCopied ? 'Link Copied!' : 'Copy Animation Link'
+                            linkCopied
+                                ? t('link_copied')
+                                : t('copy_animation_link')
                         }
                     >
                         {linkCopied ? (

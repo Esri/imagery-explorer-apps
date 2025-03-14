@@ -23,6 +23,7 @@ import {
     getMonthAbbrName,
     getMonthAbbreviation,
 } from '@shared/utils/date-time/monthHelpers';
+import { useTranslation } from 'react-i18next';
 // import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 
 type Props = {
@@ -77,6 +78,7 @@ export const TemporalProfileToolControls = ({
     closeButtonOnClick,
     trendOptionOnChange,
 }: Props) => {
+    const { t } = useTranslation();
     // const monthDropdownMenuData = useMonthOptions(acquisitionMonth);
 
     const trendOptionsDropdownMenuData = useTrendOptions(selectedTrendOption);
@@ -91,7 +93,7 @@ export const TemporalProfileToolControls = ({
         <div className="prfile-control-tools">
             <div className="flex items-center select-none">
                 <span className="ml-2 text-custom-light-blue-50 text-xs uppercase">
-                    Time:
+                    {t('time')}:
                 </span>
 
                 <div className="mx-1 w-1/3">
@@ -115,7 +117,7 @@ export const TemporalProfileToolControls = ({
                         className="shrink-0 flex items-center cursor-pointer"
                         onClick={closeButtonOnClick}
                     >
-                        <Tooltip content="Clear map selection">
+                        <Tooltip content={t('clear_map_selection')}>
                             <calcite-icon icon="x-circle" scale="s" />
                         </Tooltip>
                     </div>

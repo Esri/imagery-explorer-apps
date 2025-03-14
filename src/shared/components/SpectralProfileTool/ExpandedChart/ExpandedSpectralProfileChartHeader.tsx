@@ -15,13 +15,18 @@
 
 import React from 'react';
 import { ScreenshotSaver } from './ScreenshotSaver';
+import { useTranslation } from 'react-i18next';
 
 export const ExpandedSpectralProfileChartHeader = () => {
+    const { t } = useTranslation();
+
     return (
         <div className="w-full flex justify-center items-center">
             <div className="flex items-center">
                 <div className="bg-white w-[16px] h-[2px]"></div>
-                <h4 className="ml-3">Spectral Profile of Selected Location</h4>
+                <h4 className="ml-3">
+                    {t('spectral_profile_selected_location')}
+                </h4>
             </div>
 
             {/* <ScreenshotSaver />

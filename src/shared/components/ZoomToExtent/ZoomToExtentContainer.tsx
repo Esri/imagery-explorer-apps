@@ -30,6 +30,7 @@ import {
 //     // getLandsatFeatureByObjectId,
 // } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { getExtentByObjectId } from '@shared/services/helpers/getExtentById';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -40,6 +41,8 @@ type Props = {
 };
 
 export const ZoomToExtentContainer: FC<Props> = ({ serviceUrl, mapView }) => {
+    const { t } = useTranslation();
+
     // const animationStatus = useAppSelector(selectAnimationStatus);
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
@@ -89,7 +92,7 @@ export const ZoomToExtentContainer: FC<Props> = ({ serviceUrl, mapView }) => {
             disabled={disabled}
             hidden={isAnimationPlaying}
             showLoadingIndicator={isLoadingExtent}
-            tooltip={'Zoom to Extent'}
+            tooltip={t('zoom_to_extent')}
             onClick={() => {
                 if (!mapView) {
                     return;

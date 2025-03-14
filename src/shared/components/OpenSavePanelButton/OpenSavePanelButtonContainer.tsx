@@ -29,6 +29,7 @@ import { getExtentByObjectId } from '@shared/services/helpers/getExtentById';
 import { OpenSavePanelButton } from './OpenSavePanelButton';
 import { showSavePanelToggled } from '@shared/store/UI/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     // mapView?: MapView;
@@ -47,13 +48,15 @@ export const OpenSavePanelButtonContainer: FC<Props> = () => {
     //     return false;
     // }, []);
 
+    const { t } = useTranslation();
+
     return (
         <div className=" hidden md:block">
             <OpenSavePanelButton
                 disabled={false}
                 hidden={isAnimationPlaying}
                 showLoadingIndicator={false}
-                tooltip={'Open Save Panel'}
+                tooltip={t('open_save_panel')}
                 onClick={() => {
                     dispatch(showSavePanelToggled());
                 }}

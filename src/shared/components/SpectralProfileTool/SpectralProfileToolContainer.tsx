@@ -38,6 +38,7 @@ import { SpectralProfileToolMessage } from './SpectralProfileToolMessage';
 import { SpectralProfileChart } from './SpectralProfileChart';
 import { ExpandedSpectralProfileChart } from './ExpandedChart';
 import { set } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -101,6 +102,8 @@ export const SpectralProfileToolContainer: FC<Props> = ({
         setSelectedLandCoverType(mostSimilarLandCoverType);
     }, [spectralProfileData]);
 
+    const { t } = useTranslation();
+
     if (tool !== 'spectral') {
         return null;
     }
@@ -108,16 +111,17 @@ export const SpectralProfileToolContainer: FC<Props> = ({
     return (
         <div className={classNames('w-full h-full')}>
             <AnalysisToolHeader
-                title="Profile"
+                title={t('spectral_profile')}
                 dropdownListOptions={ListOfLandCoverTypes.map(
                     (landCoverType) => {
                         return {
                             value: landCoverType,
+                            label: t(landCoverType),
                         };
                     }
                 )}
                 selectedValue={selectedLandCoverType}
-                tooltipText={`The spectral reflectance of different materials on the Earth's surface is variable. Spectral profiles can be used to identify different land cover types.`}
+                tooltipText={t('spectral_profile_info')}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     setSelectedLandCoverType(val as LandCoverType);
                 }}

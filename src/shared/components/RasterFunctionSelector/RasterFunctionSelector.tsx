@@ -20,6 +20,7 @@ import { GirdCard } from '../GirdCard/GirdCard';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 import { Tooltip } from '../Tooltip';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -66,6 +67,8 @@ export const RasterFunctionSelector: FC<Props> = ({
     const containerRef = useRef<HTMLDivElement>();
     useGetTooltipPositionOnHover(containerRef);
 
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames('h-full w-auto select-none', {
@@ -88,7 +91,7 @@ export const RasterFunctionSelector: FC<Props> = ({
                     <calcite-icon scale="s" icon="information" />
                 </Tooltip>
 
-                <span className="uppercase ml-2 text-sm">Renderer</span>
+                <span className="uppercase ml-2 text-sm">{t('renderer')}</span>
             </div>
 
             <div className="flex flex-wrap max-w-[310px] justify-center gap-[5px] max-h-[155px] pr-1 overflow-x-hidden overflow-y-auto fancy-scrollbar">

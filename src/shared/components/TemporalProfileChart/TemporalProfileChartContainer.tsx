@@ -33,6 +33,7 @@ import {
 import { centerChanged } from '@shared/store/Map/reducer';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -65,13 +66,15 @@ export const TemporalProfileChartContainer: FC<Props> = ({
 
     const error = useAppSelector(selectError4TemporalProfileTool);
 
+    const { t } = useTranslation();
+
     const message = useMemo(() => {
         if (isLoading) {
-            return 'fetching temporal profile data';
+            return t('fetching_temporal_profile_data');
         }
 
         if (!temporalProfileData.length) {
-            return 'Select a scene and click a location within that scene to generate a temporal profile for the selected category.';
+            return t('select_scene_and_click_location');
         }
 
         return '';

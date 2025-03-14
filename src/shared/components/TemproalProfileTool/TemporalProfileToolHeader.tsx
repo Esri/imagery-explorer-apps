@@ -20,6 +20,7 @@ import { AnalysisToolHeader } from '../AnalysisToolHeader';
 import { RadarIndex, SpectralIndex } from '@typing/imagery-service';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { selectedIndex4TrendToolChanged } from '@shared/store/TrendTool/reducer';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     options: {
@@ -33,13 +34,15 @@ export const TemporalProfileToolHeader: FC<Props> = ({
     options,
     tooltipText,
 }) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const spectralIndex = useAppSelector(selectSelectedIndex4TrendTool);
 
     return (
         <AnalysisToolHeader
-            title="Trend"
+            title={t('trend')}
             dropdownListOptions={options}
             selectedValue={spectralIndex}
             dropdownMenuSelectedItemOnChange={(val) => {
