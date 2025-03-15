@@ -26,10 +26,9 @@ export const useValidateTextInput = (
         }
 
         if (textValue.length > maxLength) {
-            const message = t('text_too_long').replace(
-                '{maxLength}',
-                maxLength.toString()
-            );
+            const message = t('text_too_long', {
+                maxLength: maxLength.toString(),
+            });
 
             return {
                 isValid: false,

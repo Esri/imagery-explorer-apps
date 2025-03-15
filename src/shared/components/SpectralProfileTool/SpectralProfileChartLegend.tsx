@@ -71,12 +71,9 @@ export const SpectralProfileChartLegend: FC<Props> = ({
 
     const label4FeatureOfInterest = useMemo(() => {
         // get the text `Spectral profile of {feature_of_interest}`
-        const template = t('spectral_profile_of_feature_of_interest');
-
-        return template.replace(
-            '{feature_of_interest}',
-            t(featureOfInterestName)
-        );
+        return t('spectral_profile_of_feature_of_interest', {
+            feature_of_interest: t(featureOfInterestName),
+        });
     }, [featureOfInterestName]);
 
     if (!featureOfInterestName) {

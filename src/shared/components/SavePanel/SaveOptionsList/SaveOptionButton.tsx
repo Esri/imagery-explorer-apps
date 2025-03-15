@@ -69,10 +69,9 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
                 ></span>{' '}
                 {estimatedCost && estimatedCost > 0 ? (
                     <span>
-                        {t('estimated_cost').replace(
-                            '{estimatedCost}',
-                            estimatedCost.toString()
-                        )}
+                        {t('estimated_cost', {
+                            estimatedCost: estimatedCost.toString(),
+                        })}
                     </span>
                 ) : null}
             </div>

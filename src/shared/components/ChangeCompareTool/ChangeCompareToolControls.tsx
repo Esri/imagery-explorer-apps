@@ -155,9 +155,11 @@ export const ChangeCompareToolControls: FC<Props> = ({
             return t('estimated_change_area');
         }
 
-        const text = t('est_change_area_variable');
+        return t('est_change_area_variable', {
+            comparisonTopic,
+        });
 
-        return text.replace('{comparisonTopic}', comparisonTopic);
+        // return text.replace('{comparisonTopic}', comparisonTopic);
     }, [comparisonTopic]);
 
     if (tool !== 'change') {
