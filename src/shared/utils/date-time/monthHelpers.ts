@@ -13,22 +13,29 @@
  * limitations under the License.
  */
 
+import { APP_LANGUAGE } from '@shared/constants/UI';
 import { t } from 'i18next';
 
+/**
+ * Returns the abbreviation of the month for a given month number.
+ *
+ * @param {number} monthNumber - The number of the month (1 for January, 2 for February, etc.).
+ * @returns {string} The abbreviation of the month in lowercase, or an error message if the month number is invalid.
+ */
 export const getMonthAbbreviation = (monthNumber: number) => {
     const months = [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
+        'jan',
+        'feb',
+        'mar',
+        'apr',
+        'may',
+        'jun',
+        'jul',
+        'aug',
+        'sep',
+        'oct',
+        'nov',
+        'dec',
     ];
 
     if (monthNumber < 1 && monthNumber > 12) {
@@ -37,7 +44,7 @@ export const getMonthAbbreviation = (monthNumber: number) => {
 
     const monthAbbr = months[monthNumber - 1];
 
-    return t(monthAbbr.toLowerCase());
+    return t(monthAbbr);
 };
 
 export const MonthData = [
@@ -135,6 +142,10 @@ export const isLeapYear = (year: number) => {
 };
 
 export const getMonthAbbrName = (month: number) => {
+    if (APP_LANGUAGE !== 'en') {
+        return getMonthAbbreviation(month);
+    }
+
     const monthData = getMonthData(month);
     return monthData.label.slice(0, 1).toUpperCase();
 };

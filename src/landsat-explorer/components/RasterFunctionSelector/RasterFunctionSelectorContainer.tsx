@@ -16,14 +16,24 @@
 import { RasterFunctionSelector } from '@shared/components/RasterFunctionSelector';
 import React, { useMemo } from 'react';
 import { useLandsatRasterFunctions } from './useLandsatRasterFunctions';
-import { RENDERER_TOOLTIP } from '@shared/constants/UI';
+import { useTranslation } from 'react-i18next';
+// import { RENDERER_TOOLTIP } from '@shared/constants/UI';
 
 export const RasterFunctionSelectorContainer = () => {
     const data = useLandsatRasterFunctions();
 
-    const tooltip = useMemo(() => {
-        return RENDERER_TOOLTIP.replace('{{satellite}}', 'Landsat');
-    }, []);
+    const { t } = useTranslation();
 
-    return <RasterFunctionSelector headerTooltip={tooltip} data={data} />;
+    // const tooltip = useMemo(() => {
+    //     return RENDERER_TOOLTIP.replace('{{satellite}}', 'Landsat');
+    // }, []);
+
+    return (
+        <RasterFunctionSelector
+            headerTooltip={t('renderer_tooltip', {
+                satellite: 'Landsat',
+            })}
+            data={data}
+        />
+    );
 };

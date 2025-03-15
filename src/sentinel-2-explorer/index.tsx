@@ -30,6 +30,7 @@ import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { AboutSentinel2Explorer } from './components/About';
 import { initI18next } from '@shared/i18n/initI18next';
+import { APP_LANGUAGE } from '@shared/constants/UI';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -41,7 +42,7 @@ import { initI18next } from '@shared/i18n/initI18next';
         });
         // console.log('initEsriOAuth done');
 
-        await initI18next();
+        await initI18next(APP_LANGUAGE);
 
         const store = await getSentinel2ExplorerStore();
 

@@ -13,7 +13,13 @@
  * limitations under the License.
  */
 
+import { getAppLanguage } from '@shared/i18n/getAppLanguage';
 import { isMobileDevice } from 'helper-toolkit-ts';
+
+/**
+ * The language to use for the app. This is set by the `lang` query parameter in the URL.
+ */
+export const APP_LANGUAGE = getAppLanguage();
 
 /**
  * default format that will be used to format datetime info in the app.
@@ -22,7 +28,8 @@ import { isMobileDevice } from 'helper-toolkit-ts';
  * @example
  * `Feb 03, 2023`
  */
-export const DATE_FORMAT = `MMM dd, yyyy`;
+export const DATE_FORMAT =
+    APP_LANGUAGE === 'en' ? `MMM dd, yyyy` : 'yyyy-MM-dd';
 
 /**
  * if true, user is using this app via a mobile device
@@ -44,7 +51,7 @@ export const COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS = 3000;
  */
 // export const COPIED_LINK_MESSAGE_STRING = 'link copied to clipboard';
 
-/**
- * tooltip content for the renderer tooltip
- */
-export const RENDERER_TOOLTIP = `{{satellite}} sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.`;
+// /**
+//  * tooltip content for the renderer tooltip
+//  */
+// export const RENDERER_TOOLTIP = `{{satellite}} sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.`;

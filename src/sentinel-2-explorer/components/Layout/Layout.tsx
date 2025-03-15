@@ -36,7 +36,7 @@ import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashPa
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 // import { SpectralTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
-import { appConfig } from '@shared/config';
+import { APP_NAME, appConfig } from '@shared/config';
 // import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 // import { LandsatInterestingPlaces } from '../InterestingPlaces';
 // import { AnalyzeToolSelector4Landsat } from '../AnalyzeToolSelector/AnalyzeToolSelector';
@@ -53,8 +53,11 @@ import { Sentinel2SpectralProfileTool } from '../SpectralProfileTool';
 import { Sentinel2TemporalProfileTool } from '../Sentinel2TemporalProfileTool/Sentinel2TemporalProfileTool';
 import { Sentinel2SavePanel } from '../Sentinel2SavePanel';
 import { Sentinel2InterestingPlaces } from '../Sentinel2InterestingPlaces';
+import { useTranslation } from 'react-i18next';
 
 const Layout = () => {
+    const { t } = useTranslation();
+
     const mode = useAppSelector(selectAppMode);
 
     const analysisTool = useAppSelector(selectActiveAnalysisTool);
@@ -62,6 +65,10 @@ const Layout = () => {
     const dynamicModeOn = mode === 'dynamic';
 
     const shouldShowSecondaryControls = useShouldShowSecondaryControls();
+
+    const appTitle = t('esri_sentinel_2_explorer', {
+        ns: APP_NAME,
+    });
 
     /**
      * This custom hook gets invoked whenever the acquisition year, map center
@@ -74,7 +81,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appConfig.title} />
+                <AppHeader title={appTitle} />
                 <BottomPanel>
                     <div className="mx-auto">
                         <Sentinel2DynamicModeInfo />
@@ -88,7 +95,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={appConfig.title} />
+            <AppHeader title={appTitle} />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />
