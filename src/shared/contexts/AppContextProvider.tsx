@@ -27,6 +27,10 @@ type AppContextValue = {
      * Map object that can be used to get the label text of a raster function by it's name
      */
     rasterFunctionLabelMap: RrasterFunctionLabelMap;
+    /**
+     * raster function info of the imagery service
+     */
+    rasterFunctionInfo: RasterFunctionInfo[];
 };
 
 type AppContextProviderProps = {
@@ -65,6 +69,7 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({
     const [appContextValue, setAppContextValue] = useState<AppContextValue>({
         timeExtent,
         rasterFunctionLabelMap: getRasterFunctionLabelMap(rasterFunctionInfo),
+        rasterFunctionInfo,
     });
 
     // const init = async () => {

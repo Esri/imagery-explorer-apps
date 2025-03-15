@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
-    SENTINEL2_RASTER_FUNCTION_INFOS,
+    // SENTINEL2_RASTER_FUNCTION_INFOS,
     Sentinel2FunctionName,
 } from '@shared/services/sentinel-2/config';
 
@@ -35,6 +35,7 @@ import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 import MNDWILegend from './legends/MNDWI.png';
 import NDVILegend from './legends/NDVI.png';
 import NDMILegend from './legends/NDMI.png';
+import { AppContext } from '@shared/contexts/AppContextProvider';
 
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
     {
@@ -64,7 +65,9 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
 };
 
 export const getSentinel2RasterFunctionInfo = (): RasterFunctionInfo[] => {
-    return SENTINEL2_RASTER_FUNCTION_INFOS.map((d) => {
+    const { rasterFunctionInfo } = useContext(AppContext);
+
+    return rasterFunctionInfo.map((d) => {
         const name: Sentinel2FunctionName = d.name as Sentinel2FunctionName;
 
         const thumbnail = Sentinel2RendererThumbnailByName[name];
