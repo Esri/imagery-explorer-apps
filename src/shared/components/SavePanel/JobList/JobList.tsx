@@ -18,9 +18,7 @@ import {
     // PublishAndDownloadJobStatus,
     // PublishAndDownloadJobType,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
-import { da } from 'date-fns/locale';
 import React, { FC, useMemo } from 'react';
-import { jobTypeLabels, saveJobStatusLabels } from '../constants';
 import { JobStatus } from './JobStatus';
 import { JobInfo } from './JobInfo';
 import { JobIcon } from './JobIcon';
@@ -75,8 +73,6 @@ export const JobList: FC<JobListProps> = ({
     return (
         <div>
             {sortedByCreationTime.map((job) => {
-                // const statusLabel = saveJobStatusLabels[job.status];
-
                 return (
                     <div
                         key={job.id}

@@ -59,7 +59,7 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
 
     return (
         <div className=" ">
-            <div className="">{jobTypeLabel}</div>
+            <div className="">{t(jobTypeLabel)}</div>
 
             {extraJobInfo && (
                 <div className=" italic break-words max-w-[480px]">

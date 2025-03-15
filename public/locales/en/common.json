@@ -166,5 +166,24 @@
     "publish_current_state_web_app": "__Publish Current State as Web Application",
     "publish_scene_webmap": "__Publish Scene as ArcGIS Online Map",
     "publish_multi_layers_webmap": "__Publish Scenes as Multiple Layers Map",
-    "publish_single_layer_webmap": "__Publish Scenes as Single Layer Map"
+    "publish_single_layer_webmap": "__Publish Scenes as Single Layer Map",
+
+    "job_type_publish_scene": "__Scene as Hosted Imagery",
+    "job_type_publish_index_mask": "__Index Mask as Hosted Imagery",
+    "job_type_publish_change_detection": "__Change Detection as Hosted Imagery",
+    "job_type_save_web_app": "__Current State as Web Application",
+    "job_type_save_web_map": "__Scene as ArcGIS Online Web Map",
+    "job_type_save_web_map_with_multiple_scenes": "__Scenes as ArcGIS Online Web Map",
+
+    "job_status_pending_checking_cost": "__Checking credit usage",
+    "job_status_pending_user_approval": "__Pending User Approval",
+    "job_status_submitted": "__Pending",
+    "job_status_new": "__In Progress",
+    "job_status_executing": "__In Progress",
+    "job_status_cancelled": "__Cancelled",
+    "job_status_failed": "__Failed",
+    "job_status_succeeded": "__Succeeded",
+    "job_status_timed_out": "__Timed Out",
+    "job_status_waiting": "__Timed Out",
+    "job_status_expired": "__Expired"
 }

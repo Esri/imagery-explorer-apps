@@ -49,7 +49,7 @@ export const JobStatus: FC<JobStatusProps> = ({
 }) => {
     const { t } = useTranslation();
 
-    const statusLabel = saveJobStatusLabels[job.status];
+    const statusLabel = t(saveJobStatusLabels[job.status]);
 
     if (
         job.status ===
