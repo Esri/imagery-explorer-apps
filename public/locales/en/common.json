@@ -139,5 +139,32 @@
     "switch_account": "__Switch Account",
     "multiple_scenes_selected": "__Multiple Scenes Selected",
     "scene_id": "__Scene Id",
-    "publish": "__Publish"
+    "publish": "__Publish",
+    "publish_scene_description": "__Publish a hosted imagery layer of the current index mask. This action requires a <a class=\"underline\" href=\"https://www.esri.com/en-us/arcgis/products/user-types/explore/professional\" target=\"_blank\">Professional or above User Type</a> and a <a class=\"underline\" href=\"https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm\" target=\"_blank\">Publisher role</a> or higher.",
+    "publish_index_mask_description": "__Publish a hosted imagery layer of the current change detection output. This action requires a <a class=\"underline\" href=\"https://www.esri.com/en-us/arcgis/products/user-types/explore/professional\" target=\"_blank\">Professional or above User Type</a> and a <a class=\"underline\" href=\"https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm\" target=\"_blank\">Publisher role</a> or higher.",
+    "publish_change_detection_description": "__Publish a hosted imagery layer of the current change detection output. This action requires a <a class=\"underline\" href=\"https://www.esri.com/en-us/arcgis/products/user-types/explore/professional\" target=\"_blank\">Professional or above User Type</a> and a <a class=\"underline\" href=\"https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm\" target=\"_blank\">Publisher role</a> or higher.",
+    "publish_web_app_description": "__Create an instance of this application in its current state as an ArcGIS Online web application.",
+    "publish_webmap_description": "__Create an ArcGIS Online map containing the selected scene as a layer.",
+    "publish_multi_layers_webmap_description": "__Create an ArcGIS Online map with individual layers per scene.",
+    "publish_single_layer_webmap_description": "__Create an ArcGIS Online map with a single layer with multiple scenes.",
+    "scene": "__Scene",
+    "scenes": "__Scenes",
+    "index_mask": "__Index Mask",
+    "change_detection": "__Change Detection",
+    "current_state": "__Current State",
+
+    "hosted_imagery": "__Hosted Imagery",
+    "web_application": "__Web Application",
+    "arcgis_online_map": "__ArcGIS Online Map",
+    "multi_layers_map": "__Multiple Layers Map",
+    "single_layer_map": "__Single Layer Map",
+    "as": "__as",
+
+    "publish_scene_hosted_imagery": "__Publish Scene as Hosted Imagery",
+    "publish_index_mask_hosted_imagery": "__Publish Index Mask as Hosted Imagery",
+    "publish_change_detection_hosted_imagery": "__Publish Change Detection as Hosted Imagery",
+    "publish_current_state_web_app": "__Publish Current State as Web Application",
+    "publish_scene_webmap": "__Publish Scene as ArcGIS Online Map",
+    "publish_multi_layers_webmap": "__Publish Scenes as Multiple Layers Map",
+    "publish_single_layer_webmap": "__Publish Scenes as Single Layer Map"
 }

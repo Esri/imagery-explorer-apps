@@ -129,8 +129,9 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
             <div className="mx-4 md:max-w-3xl w-full mt-48 ">
                 <div className="mb-4 ">
                     <h3 className="text-xl">
-                        {saveOptionInfo.action} {saveOptionInfo.inputName} as{' '}
-                        {saveOptionInfo.outputName}
+                        {/* {saveOptionInfo.action} {saveOptionInfo.inputName} as{' '}
+                        {saveOptionInfo.outputName} */}
+                        {t(saveOptionInfo.title)}
                     </h3>
                 </div>
 

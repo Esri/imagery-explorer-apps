@@ -22,6 +22,15 @@ import {
  * Type definition for information related to save options.
  */
 export type SaveOptionInfo = {
+    /**
+     * The title of the save option, which is used as a label for the button.
+     * @example 'Publish Scene as Hosted Imagery'
+     */
+    title: string;
+    /**
+     * The action associated with the save option, either 'Publish' or 'Download'.
+     * @example 'Publish'
+     */
     action: 'Publish' | 'Download';
     /**
      * The name of the input type associated with the save option.
@@ -41,8 +50,8 @@ export type SaveOptionInfo = {
     requireUniqueOutputName: boolean;
 };
 
-const ProfessionalPlusUserTypeLink = `<a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional" target="_blank">Professional or above User Type</a>`;
-const PublisherRoleLink = `<a class="underline" href="https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm" target="_blank">Publisher role</a>`;
+// const ProfessionalPlusUserTypeLink = `<a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional" target="_blank">Professional or above User Type</a>`;
+// const PublisherRoleLink = `<a class="underline" href="https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm" target="_blank">Publisher role</a>`;
 
 /**
  * A lookup object that maps save options to their corresponding information.
@@ -55,57 +64,87 @@ export const saveOptionInfoLookup: Record<
     SaveOptionInfo
 > = {
     [PublishAndDownloadJobType.PublishScene]: {
+        title: 'publish_scene_hosted_imagery',
         action: 'Publish',
-        inputName: 'Scene',
+        inputName: 'scene',
+        outputName: 'hosted_imagery',
+        // inputName: 'Scene',
         requireUniqueOutputName: true,
-        outputName: 'Hosted Imagery',
-        description: `Publish a hosted imagery layer of the selected scene. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
+        // outputName: 'Hosted Imagery',
+        // The description text is moved to the i18n file to support localization,
+        // here we just use the key below to get the text
+        description: 'publish_scene_description',
+        // description: `Publish a hosted imagery layer of the selected scene. This action requires a <a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional" target="_blank">Professional or above User Type</a> and a <a class="underline" href="https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm" target="_blank">Publisher role</a> or higher.`,
     },
     [PublishAndDownloadJobType.PublishIndexMask]: {
+        title: 'publish_index_mask_hosted_imagery',
         action: 'Publish',
-        inputName: 'Index mask',
+        // inputName: 'Index mask',
+        inputName: 'index_mask',
+        outputName: 'hosted_imagery',
         requireUniqueOutputName: true,
-        outputName: 'Hosted Imagery',
-        description: `Publish a hosted imagery layer of the current index mask. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
+        // outputName: 'Hosted Imagery',
+        description: 'publish_index_mask_description',
+        // description: `Publish a hosted imagery layer of the current index mask. This action requires a <a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional" target="_blank">Professional or above User Type</a> and a <a class="underline" href="https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm" target="_blank">Publisher role</a> or higher.`,
     },
     [PublishAndDownloadJobType.PublishChangeDetection]: {
+        title: 'publish_change_detection_hosted_imagery',
         action: 'Publish',
-        inputName: 'Change Detection',
+        // inputName: 'Change Detection',
+        inputName: 'change_detection',
+        outputName: 'hosted_imagery',
         requireUniqueOutputName: true,
-        outputName: 'Hosted Imagery',
-        description: `Publish a hosted imagery layer of the current change detection output. This action requires a ${ProfessionalPlusUserTypeLink} and a ${PublisherRoleLink} or higher.`,
+        // outputName: 'Hosted Imagery',
+        description: 'publish_change_detection_description',
+        // description: `Publish a hosted imagery layer of the current change detection output. This action requires a <a class="underline" href="https://www.esri.com/en-us/arcgis/products/user-types/explore/professional" target="_blank">Professional or above User Type</a> and a <a class="underline" href="https://doc.arcgis.com/en/arcgis-online/administer/member-roles.htm" target="_blank">Publisher role</a> or higher.`,
     },
     [PublishAndDownloadJobType.SaveWebMappingApp]: {
+        title: 'publish_current_state_web_app',
         action: 'Publish',
-        inputName: 'Current State',
+        // inputName: 'Current State',
+        inputName: 'current_state',
+        outputName: 'web_application',
         requireUniqueOutputName: false,
-        outputName: 'Web Application',
-        description:
-            'Create an instance of this application in its current state as an ArcGIS Online web application.',
+        // outputName: 'Web Application',
+        description: 'publish_web_app_description',
+        // description:
+        //     'Create an instance of this application in its current state as an ArcGIS Online web application.',
     },
     [PublishAndDownloadJobType.SaveWebMap]: {
+        title: 'publish_scene_webmap',
         action: 'Publish',
-        inputName: 'Scene',
+        // inputName: 'Scene',
+        inputName: 'scene',
+        outputName: 'arcgis_online_map',
         requireUniqueOutputName: false,
-        outputName: 'ArcGIS Online Map',
-        description:
-            'Create an ArcGIS Online map containing the selected scene as a layer.',
+        // outputName: 'ArcGIS Online Map',
+        description: 'publish_webmap_description',
+        // description:
+        //     'Create an ArcGIS Online map containing the selected scene as a layer.',
     },
     [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]: {
+        title: 'publish_multi_layers_webmap',
         action: 'Publish',
-        inputName: 'Scenes',
+        // inputName: 'Scenes',
+        inputName: 'scenes',
+        outputName: 'multi_layers_map',
         requireUniqueOutputName: false,
-        outputName: 'Multiple Layers Map',
-        description:
-            'Create an ArcGIS Online map with individual layers per scene.',
+        // outputName: 'Multiple Layers Map',
+        description: 'publish_multi_layers_webmap_description',
+        // description:
+        //     'Create an ArcGIS Online map with individual layers per scene.',
     },
     [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: {
+        title: 'publish_single_layer_webmap',
         action: 'Publish',
-        inputName: 'Scenes',
+        // inputName: 'Scenes',
+        inputName: 'scenes',
+        outputName: 'single_layer_map',
         requireUniqueOutputName: false,
-        outputName: 'Single Layer Map',
-        description:
-            'Create an ArcGIS Online map with a single layer with multiple scenes.',
+        // outputName: 'Single Layer Map',
+        description: 'publish_single_layer_webmap_description',
+        // description:
+        //     'Create an ArcGIS Online map with a single layer with multiple scenes.',
     },
 };
 
