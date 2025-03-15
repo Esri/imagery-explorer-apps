@@ -31,6 +31,7 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { AboutSentinel2Explorer } from './components/About';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
+import { getTranslatedSentinel2RasterFunctionInfo } from './utils/getTranslatedSentinel2RasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -53,7 +54,9 @@ import { APP_LANGUAGE } from '@shared/constants/UI';
             <ReduxProvider store={store}>
                 <AppContextProvider
                     timeExtent={timeExtent}
-                    rasterFunctionInfo={SENTINEL2_RASTER_FUNCTION_INFOS}
+                    rasterFunctionInfo={getTranslatedSentinel2RasterFunctionInfo(
+                        SENTINEL2_RASTER_FUNCTION_INFOS
+                    )}
                 >
                     <ErrorBoundary>
                         <Map />

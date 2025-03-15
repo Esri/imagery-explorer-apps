@@ -213,5 +213,10 @@
     "about_the_app": "关于应用",
     "attribution_terms_of_use": "归属和使用条款",
     "interetsing_places_data_source": "有趣地方描述中的信息来源于维基百科。",
-    "renderer_tooltip": "{{satellite}} 传感器在电磁波谱的不同范围内收集影像。这些“波段”影像可以组合起来创建地球的渲染图，用于各种应用。"
+    "renderer_tooltip": "{{satellite}} 传感器在电磁波谱的不同范围内收集影像。这些“波段”影像可以组合起来创建地球的渲染图，用于各种应用。",
+    "select_a_date": "选择日期",
+    "cloudy": "多云",
+    "copy_link_tooltip": "复制此应用当前状态的链接",
+    "zoom_to_native_scale": "缩放到 {{serviceName}} 的原始分辨率",
+    "open_search_widget": "打开搜索小部件"
 }

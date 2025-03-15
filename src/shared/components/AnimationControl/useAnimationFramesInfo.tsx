@@ -26,8 +26,11 @@ import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
 // import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { AppContext } from '@shared/contexts/AppContextProvider';
+import { useTranslation } from 'react-i18next';
 
 export const useAnimationFramesInfo = () => {
+    const { t } = useTranslation();
+
     const { rasterFunctionLabelMap } = useContext(AppContext);
 
     const selectedAnimationFrameId = useAppSelector(
@@ -57,7 +60,7 @@ export const useAnimationFramesInfo = () => {
                 frameId: uniqueId,
                 acquisitionDateLabel: acquisitionDate
                     ? formatFormattedDateStrInUTCTimeZone(acquisitionDate)
-                    : 'Select a date',
+                    : t('select_a_date'),
                 rasterFunctionName: acquisitionDate ? rasterFunctionLabel : '',
                 selected: uniqueId === selectedAnimationFrameId,
             } as AnimationFrameInfo;

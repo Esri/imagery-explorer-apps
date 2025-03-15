@@ -64,31 +64,27 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
     'Urban for Visualization': null,
 };
 
-export const getSentinel2RasterFunctionInfo = (): RasterFunctionInfo[] => {
-    const { rasterFunctionInfo } = useContext(AppContext);
-
-    return rasterFunctionInfo.map((d) => {
-        const name: Sentinel2FunctionName = d.name as Sentinel2FunctionName;
-
-        const thumbnail = Sentinel2RendererThumbnailByName[name];
-        const legend = Sentinel2RendererLegendByName[name];
-
-        return {
-            ...d,
-            thumbnail,
-            legend,
-        } as RasterFunctionInfo;
-    });
-};
-
 /**
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
 export const useSentinel2RasterFunctions = (): RasterFunctionInfo[] => {
+    const { rasterFunctionInfo } = useContext(AppContext);
+
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        return getSentinel2RasterFunctionInfo();
-    }, []);
+        return rasterFunctionInfo.map((d) => {
+            const name: Sentinel2FunctionName = d.name as Sentinel2FunctionName;
+
+            const thumbnail = Sentinel2RendererThumbnailByName[name];
+            const legend = Sentinel2RendererLegendByName[name];
+
+            return {
+                ...d,
+                thumbnail,
+                legend,
+            } as RasterFunctionInfo;
+        });
+    }, [rasterFunctionInfo]);
 
     return rasterFunctionInfosWithThumbnail;
 };

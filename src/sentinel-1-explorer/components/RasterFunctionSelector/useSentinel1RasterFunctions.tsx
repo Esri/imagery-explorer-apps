@@ -57,31 +57,27 @@ const Sentinel1RendererLegendByName: Partial<
     'SWI Colorized': SAR_WaterIndex_Legend,
 };
 
-export const getSentinel1RasterFunctionInfo = (): RasterFunctionInfo[] => {
-    const { rasterFunctionInfo } = useContext(AppContext);
-
-    return rasterFunctionInfo.slice(0, 5).map((d) => {
-        const name: Sentinel1FunctionName = d.name as Sentinel1FunctionName;
-
-        const thumbnail = Sentinel1RendererThumbnailByName[name] || null;
-        const legend = Sentinel1RendererLegendByName[name] || null;
-
-        return {
-            ...d,
-            thumbnail,
-            legend,
-        } as RasterFunctionInfo;
-    });
-};
-
 /**
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
 export const useSentinel1RasterFunctions = (): RasterFunctionInfo[] => {
+    const { rasterFunctionInfo } = useContext(AppContext);
+
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        return getSentinel1RasterFunctionInfo();
-    }, []);
+        return rasterFunctionInfo.slice(0, 5).map((d) => {
+            const name: Sentinel1FunctionName = d.name as Sentinel1FunctionName;
+
+            const thumbnail = Sentinel1RendererThumbnailByName[name] || null;
+            const legend = Sentinel1RendererLegendByName[name] || null;
+
+            return {
+                ...d,
+                thumbnail,
+                legend,
+            } as RasterFunctionInfo;
+        });
+    }, [rasterFunctionInfo]);
 
     return rasterFunctionInfosWithThumbnail;
 };
