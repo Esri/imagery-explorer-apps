@@ -19,6 +19,7 @@ import { initialImagerySceneState } from './reducer';
 
 describe('getPreloadedState4ImageryScenes', () => {
     const randomInterestingPlace: InterestingPlaceData = {
+        key: 'interesting-place-1',
         name: 'Interesting Place 1',
         location: {
             center: [-117.1825, 34.0556],

@@ -14,7 +14,7 @@
  */
 
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
-import { nameOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
+import { keyOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
 import { InterestingPlaceData } from '@typing/shared';
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -42,14 +42,14 @@ export const useResetSelectedInterestingPlace = (
             Math.abs(zoom - location.zoom) > 0.5
         ) {
             // console.log()
-            dispatch(nameOfSelectedInterestingPlaceChanged(''));
+            dispatch(keyOfSelectedInterestingPlaceChanged(''));
         }
     }, [mapCenter, zoom]);
 
     useEffect(() => {
         return () => {
             // reset selected interesting place when component is unmounted
-            dispatch(nameOfSelectedInterestingPlaceChanged(''));
+            dispatch(keyOfSelectedInterestingPlaceChanged(''));
         };
     }, []);
 };

@@ -30,6 +30,7 @@ import { InterestingPlaceData } from '@typing/shared';
 
 export const data: InterestingPlaceData[] = [
     {
+        key: 'ganges-delta',
         name: 'Ganges Delta',
         location: {
             center: [89.08, 21.909],
@@ -41,6 +42,7 @@ export const data: InterestingPlaceData[] = [
             "The Ganges Delta is a river delta in Eastern South Asia. It is the world's largest river delta and it empties into the Bay of Bengal with the combined waters of several river systems.",
     },
     {
+        key: 'grand-canyon',
         name: 'Grand Canyon',
         location: {
             center: [-112.913, 36.242],
@@ -52,6 +54,7 @@ export const data: InterestingPlaceData[] = [
             'The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, United States. The Grand Canyon is 277 miles (446 km) long, up to 18 miles (29 km) wide and attains a depth of more than one mile (1,857 meters).',
     },
     {
+        key: 'lake-mackay',
         name: 'Lake Mackay',
         location: {
             center: [128.736, -22.494],
@@ -63,6 +66,7 @@ export const data: InterestingPlaceData[] = [
             'Lake Mackay, known as Wilkinkarra to the Indigenous Pintupi people. With a surface area of 3,494 sq km (1,349 sq mi), it is the largest of hundreds of ephemeral salt lakes scattered throughout Western Australia and the Northern Territory.',
     },
     {
+        key: 'richat',
         name: 'Richat',
         location: {
             center: [-11.398, 21.124],
@@ -75,6 +79,7 @@ export const data: InterestingPlaceData[] = [
             'The Richat Structure is a prominent circular geological feature in the Sahara Desert. It is an eroded geological dome, 40 km (25 mi) in diameter, exposing sedimentary rock in layers that appear as concentric rings.',
     },
     {
+        key: 'kalahari-dunes',
         name: 'Kalahari Dunes',
         location: {
             center: [18.476, -23.914],
@@ -86,6 +91,7 @@ export const data: InterestingPlaceData[] = [
             'The Kalahari Desert is a large semi-arid sandy savanna in Southern Africa. Linear dunes, such as these, typically form in arid environments with consistent wind patterns.',
     },
     {
+        key: 'kuiseb-canyon',
         name: 'Kuiseb Canyon',
         location: {
             center: [15.398, -23.68],
@@ -97,6 +103,7 @@ export const data: InterestingPlaceData[] = [
             'The Kuiseb Canyon has been carved out over millions of years by the ephemeral Kuiseb River in this barren and inaccessible area of Namibia, Africa. It is characterized by its rock formations, steep cliffs, and unique ecosystems.',
     },
     {
+        key: 'quelccaya',
         name: 'Quelccaya',
         location: {
             center: [-70.819, -13.943],
@@ -109,6 +116,7 @@ export const data: InterestingPlaceData[] = [
             'The Quelccaya Ice Cap is the second largest glaciated area in the tropics. Located in tropical highlands of the Andes mountains in southern Peru, the cap covers an area of 42.8 sq km (16.5 sq mi) with ice up to 200 meters (660 ft) thick.',
     },
     {
+        key: 'gosses-bluff',
         name: 'Gosses Bluff',
         location: {
             center: [132.307, -23.815],
@@ -120,6 +128,7 @@ export const data: InterestingPlaceData[] = [
             'Gosses Bluff, located in the Northern Territory of Australia, is the eroded remnant of an impact crater believed to have been formed by an asteroid impact about 142 million years ago. The circular bluff formation in the center of the crater is believed to be the crater’s central uplift, or rock displacement, from the original impact.',
     },
     {
+        key: 'three-gorges',
         name: 'Three Gorges',
         location: {
             center: [110.947, 30.862],
@@ -132,6 +141,7 @@ export const data: InterestingPlaceData[] = [
             "The Three Gorges Dam is a hydroelectric gravity dam that spans the Yangtze River in central China, downstream of the Three Gorges. It is the world's largest power station in terms of installed capacity, but it also serves to reduce the potential for flooding downstream, which historically plagued the Yangtze Plain.",
     },
     {
+        key: 'dasht-e-kevir',
         name: 'Dasht-e Kevir',
         location: {
             center: [54.557, 34.57],
@@ -143,6 +153,7 @@ export const data: InterestingPlaceData[] = [
             'Dasht-e Kavir, also known as the Great Salt Desert, is a large desert lying in the middle of the Iranian Plateau. The unique landscape here is comprised of sinuous valleys, shallow lakes, mudflats, and salt marshes.',
     },
     {
+        key: 'ouarkziz',
         name: 'Ouarkziz',
         location: {
             center: [-7.531, 29.021],
@@ -155,6 +166,7 @@ export const data: InterestingPlaceData[] = [
             'Ouarkziz is a meteorite impact crater in Algeria. It is 3.5 kilometers in diameter and the age is estimated to be less than 70 million years. Originally called Tindouf, the crater has been heavily eroded since its formation. Its circular morphology is highlighted by exposures of older sedimentary rock layers.',
     },
     {
+        key: 'etosha-pan',
         name: 'Etosha Pan',
         location: {
             center: [16.4, -18.746],

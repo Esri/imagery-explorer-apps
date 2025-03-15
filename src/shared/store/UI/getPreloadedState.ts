@@ -28,7 +28,7 @@ export const getPreloadedState4UI = (
 
     const proloadedUIState: UIState = {
         ...initialUIState,
-        nameOfSelectedInterestingPlace: randomInterestingPlace?.name || '',
+        keyOfSelectedInterestingPlace: randomInterestingPlace?.key || '',
         showSavePanel,
     };
 

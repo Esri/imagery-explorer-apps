@@ -21,9 +21,9 @@ import Richat from './thumbnails/Richat.jpg';
 import Torshavn from './thumbnails/Torshavn.jpg';
 
 import { InterestingPlaceData } from '@typing/shared';
-
 export const data: InterestingPlaceData[] = [
     {
+        key: 'singapore',
         name: 'Singapore',
         location: {
             center: [103.82475, 1.25343],
@@ -36,6 +36,7 @@ export const data: InterestingPlaceData[] = [
             'Due to its strategic location in maritime Southeast Asia, the city of Singapore is home to one of the busiest shipping ports in the world. One fifth of the worlds shipping containers pass through the Port of Singapore. Here you can visually depict shipping vessels in the waters off the southern tip of the Malay Peninsula.',
     },
     {
+        key: 'crater_lake',
         name: 'Crater Lake',
         location: {
             center: [-122.10872, 42.94143],
@@ -48,6 +49,7 @@ export const data: InterestingPlaceData[] = [
             'Crater Lake sits in a volcanic crater in South-central Oregon in the Western United States. The lake partially fills the caldera left by the collapse of Mount Mazama thousands of years ago. With a maximum depth of 2,148 feet (655 meters) it is the deepest lake in the United States and ranks tenth deepest in the world. Here, the body of the lake is depicted using the Sentinel-1 SAR Water Index (SWI).',
     },
     {
+        key: 'torshavn',
         name: 'Tórshavn',
         location: {
             center: [-6.75967, 62.00664],
@@ -60,6 +62,7 @@ export const data: InterestingPlaceData[] = [
             'Tórshavn is the capital and largest city of the Faroe Islands. It is among the cloudiest places in the world averaging only 2.4 hours of sunshine per day and 840 hours per year. Since SAR signals penetrate clouds, Sentinel-1 can collect imagery of the islands even when they are enshrouded with clouds.',
     },
     {
+        key: 'amazon_estuary',
         name: 'Amazon Estuary',
         location: {
             center: [-51.05776, -0.39478],
@@ -72,6 +75,7 @@ export const data: InterestingPlaceData[] = [
             'The Amazon River in South America is the largest river by discharge volume of water in the world and two of the top ten rivers by discharge are tributaries of the Amazon. The river has an average discharge of about 6,591–7,570 km³ (1,581–1,816 mi³) per year, greater than the next seven largest independent rivers combined. The high concentrations of sediment the Amazon carries, and discharges into the Atlantic Ocean, lights up here with this rendering of a water anomaly index.',
     },
     {
+        key: 'richat',
         name: 'Richat',
         location: {
             center: [-11.398, 21.124],
@@ -84,6 +88,7 @@ export const data: InterestingPlaceData[] = [
             'The Richat Structure, also known as the Eye of the Sahara, is a prominent circular geological feature in the Sahara Desert. It is an eroded geological dome, 40 km (25 mi) in diameter, exposing sedimentary rock in layers that appear as concentric rings.',
     },
     {
+        key: 'gunak_barlu',
         name: 'Gunak Barlu',
         location: {
             center: [132.21062, -11.36392],

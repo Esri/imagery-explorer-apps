@@ -23,7 +23,10 @@ import { useTranslation } from 'react-i18next';
 
 type Props = {
     data: InterestingPlaceData[];
-    nameOfSelectedPlace: string;
+    /**
+     * key of selected place
+     */
+    keyOfSelectedPlace: string;
     /**
      * if true, use 3 columns grid instead of 4 columns
      */
@@ -39,7 +42,7 @@ type Props = {
 
 export const InterestingPlaces: FC<Props> = ({
     data,
-    nameOfSelectedPlace,
+    keyOfSelectedPlace,
     isThreeColumnGrid,
     onChange,
     onHover,
@@ -73,13 +76,13 @@ export const InterestingPlaces: FC<Props> = ({
                 })}
             >
                 {data.map((d) => {
-                    const { name, thumbnail } = d;
+                    const { name, thumbnail, key } = d;
 
-                    const selected = nameOfSelectedPlace === name;
+                    const selected = keyOfSelectedPlace === key;
 
                     return (
                         <div
-                            key={name}
+                            key={key}
                             className="w-full he-full"
                             onMouseEnter={onHover.bind(null, d)}
                             onMouseLeave={onHover.bind(null, null)}
@@ -89,7 +92,7 @@ export const InterestingPlaces: FC<Props> = ({
                                 thumbnail={thumbnail}
                                 selected={selected}
                                 onClick={() => {
-                                    onChange(name);
+                                    onChange(key);
                                 }}
                             />
                         </div>

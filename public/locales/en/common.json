@@ -202,5 +202,17 @@
     "burn_index": "__burn index",
     "moisture": "__moisture",
     "vegetation": "__vegetation",
-    "water": "__water"
+    "water": "__water",
+
+    "name": "__Name",
+    "satellite": "__Satellite",
+    "sensor": "__Sensor",
+    "acquired": "__Acquired",
+    "cloud_cover": "__Cloud Cover",
+    "snow_ice": "__Snow/Ice",
+    "product_name": "__Product Name",
+    "relative_orbit": "__Relative Orbit",
+    "sun_elevation": "__Sun Elevation",
+    "sun_azimuth": "__Sun Azimuth",
+    "sun_elevation_azimuth": "__Sun Elevation/Azimuth"
 }

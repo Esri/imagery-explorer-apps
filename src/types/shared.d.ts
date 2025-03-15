@@ -15,6 +15,10 @@
 
 export type InterestingPlaceData = {
     /**
+     * key of this interesting place
+     */
+    key: string;
+    /**
      * name of this interesting place
      */
     name: string;
