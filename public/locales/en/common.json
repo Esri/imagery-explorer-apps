@@ -214,5 +214,10 @@
     "relative_orbit": "__Relative Orbit",
     "sun_elevation": "__Sun Elevation",
     "sun_azimuth": "__Sun Azimuth",
-    "sun_elevation_azimuth": "__Sun Elevation/Azimuth"
+    "sun_elevation_azimuth": "__Sun Elevation/Azimuth",
+
+    "about_the_data": "__About the Data",
+    "about_the_app": "__About the App",
+    "attribution_terms_of_use": "__Attribution and Terms of Use",
+    "interetsing_places_data_source": "__Information contained in the Interesting Places descriptions was sourced from Wikipedia."
 }
