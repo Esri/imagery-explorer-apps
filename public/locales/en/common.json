@@ -35,6 +35,7 @@
     "select_two_scenes": "__Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE.",
     "est_change_area_variable": "__Est. Change Area ({{comparisonTopic}})",
     "estimated_change_area": "__Estimated Change Area",
+    "estimated_mask_area": "__Estimated Mask Area",
     "cloud": "__Cloud",
     "powered_by_esri": "__Powered by Esri",
     "dynamic_view": "__Dynamic View",
@@ -185,5 +186,21 @@
     "job_status_succeeded": "__Succeeded",
     "job_status_timed_out": "__Timed Out",
     "job_status_waiting": "__Timed Out",
-    "job_status_expired": "__Expired"
+    "job_status_expired": "__Expired",
+    "index": "__Index",
+    "mask": "__Mask",
+    "temporal": "__Temporal",
+    "profile": "__Profile",
+    "spectral": "__Spectral",
+    "change": "__Change",
+    "detection": "__Detection",
+
+    "water_index": "__water index",
+    "vegetation_index": "__vegetation index",
+    "moisture_index": "__moisture index",
+    "urban_index": "__urban index",
+    "burn_index": "__burn index",
+    "moisture": "__moisture",
+    "vegetation": "__vegetation",
+    "water": "__water"
 }

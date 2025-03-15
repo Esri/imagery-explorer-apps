@@ -67,19 +67,19 @@ export const MaskToolContainer = () => {
     return (
         <div className={classNames('w-full h-full')}>
             <AnalysisToolHeader
-                title="Index"
+                title={t('index')}
                 dropdownListOptions={[
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'WATER INDEX',
+                        label: t('water_index').toUpperCase(),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'VEGETATION INDEX',
+                        label: t('vegetation_index').toUpperCase(),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'MOISTURE INDEX',
+                        label: t('moisture_index').toUpperCase(),
                     },
                     // {
                     //     value: 'urban' as SpectralIndex,
@@ -105,7 +105,9 @@ export const MaskToolContainer = () => {
                 <>
                     <div className={classNames('relative w-full h-[120px]')}>
                         <div className="absolute top-3 right-0">
-                            <TotalVisibleAreaInfo label="Estimated Mask Area" />
+                            <TotalVisibleAreaInfo
+                                label={t('estimated_mask_area')}
+                            />
                         </div>
 
                         <PixelRangeSlider

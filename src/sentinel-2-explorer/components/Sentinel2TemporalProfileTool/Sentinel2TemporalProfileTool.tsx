@@ -37,9 +37,12 @@ import { Sentinel2TemporalProfileChart } from './Sentinel2TemporalProfileChart';
 import { intersectWithSentinel2Scene } from '@shared/services/sentinel-2/getSentinel2Scenes';
 import { getSentinel2TemporalProfileData } from '@shared/services/sentinel-2/getSentinel2TemporalProfileData';
 import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
+import { useTranslation } from 'react-i18next';
 
 export const Sentinel2TemporalProfileTool = () => {
     const tool = useAppSelector(selectActiveAnalysisTool);
+
+    const { t } = useTranslation();
 
     /**
      * this function will be invoked by the updateTemporalProfileToolData thunk function
@@ -114,15 +117,15 @@ export const Sentinel2TemporalProfileTool = () => {
                 options={[
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'moisture',
+                        label: t('moisture'),
                     },
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'water',
+                        label: t('water'),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'vegetation',
+                        label: t('vegetation'),
                     },
                 ]}
                 tooltipText={TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT}

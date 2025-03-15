@@ -66,7 +66,7 @@ export const ChangeCompareToolHeader: FC<Props> = ({
 
     return (
         <AnalysisToolHeader
-            title="Change"
+            title={t('change')}
             dropdownListOptions={options}
             selectedValue={selectedOption}
             tooltipText={tooltipText || t('compare_and_report_changes')}

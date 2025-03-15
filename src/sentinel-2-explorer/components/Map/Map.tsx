@@ -33,9 +33,13 @@ import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { Sentinel2Layer } from '../Sentinel2Layer';
 import { Sentinel2MaskLayer } from '../MaskLayer';
 import { Sentinel2ChangeLayer } from '../ChangeCompareLayer';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 const Map = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     return (
         <MapViewContainer
@@ -70,7 +74,11 @@ const Map = () => {
 
             <Popup />
             <MapMagnifier />
-            <CustomMapArrtribution atrribution="Sentinel-2 imagery courtesy of European Space Agency, European Commission, and Microsoft" />
+            <CustomMapArrtribution
+                atrribution={t('sentinel_2_explorer_attribution', {
+                    ns: APP_NAME,
+                })}
+            />
         </MapViewContainer>
     );
 };

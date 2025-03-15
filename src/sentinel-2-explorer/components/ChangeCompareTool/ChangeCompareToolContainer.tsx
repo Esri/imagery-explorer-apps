@@ -35,11 +35,14 @@ import {
     ChangeCompareToolHeader,
     ChangeCompareToolControls,
 } from '@shared/components/ChangeCompareTool';
-
-const LEGEND_LABEL_TEXT = ['decrease', 'no change', 'increase'];
+import { useTranslation } from 'react-i18next';
 
 export const ChangeCompareToolContainer = () => {
     const tool = useAppSelector(selectActiveAnalysisTool);
+
+    const { t } = useTranslation();
+
+    const LEGEND_LABEL_TEXT = [t('decrease'), t('no_change'), t('increase')];
 
     if (tool !== 'change') {
         return null;
@@ -51,23 +54,23 @@ export const ChangeCompareToolContainer = () => {
                 options={[
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'WATER INDEX',
+                        label: t('water_index').toUpperCase(),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'VEGETATION INDEX',
+                        label: t('vegetation_index').toUpperCase(),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'MOISTURE INDEX',
+                        label: t('moisture_index').toUpperCase(),
                     },
                     {
                         value: 'urban' as SpectralIndex,
-                        label: 'URBAN INDEX',
+                        label: t('urban_index').toUpperCase(),
                     },
                     {
                         value: 'burn' as SpectralIndex,
-                        label: 'BURN INDEX',
+                        label: t('burn_index').toUpperCase(),
                     },
                 ]}
             />
