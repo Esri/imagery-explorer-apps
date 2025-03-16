@@ -54,7 +54,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                     <span>{t(side)}</span>
                 </div>
 
-                <div className="text-xs text-center lowercase">
+                <div className="text-xs text-center lowercase max-w-[126px] overflow-hidden text-ellipsis whitespace-nowrap">
                     {queryParams?.acquisitionDate ? (
                         <>
                             <span>{queryParams.acquisitionDate}</span>
