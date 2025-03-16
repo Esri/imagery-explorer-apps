@@ -1,0 +1,77 @@
+{
+    "landsat_explorer": "陆地卫星影像浏览器",
+    "esri_landsat_explorer": "ESRI | 陆地卫星影像浏览器",
+    "landsat_explorer_attribution": "陆地卫星影像由美国地质调查局、美国航空航天局和微软提供",
+
+    "natural_color_description": "自然色彩波段红、绿、蓝（4、3、2）显示，应用动态范围调整。",
+    "natural_color_label": "自然色彩",
+    "color_infrared_description": "波段近红外、红、绿（5、4、3）应用动态范围调整。健康植被显示为亮红色，受压植被呈暗红色。",
+    "color_infrared_label": "彩色红外",
+    "short_wave_infrared_description": "波段短波红外-2、短波红外-1、红（7、6、4）应用动态范围调整。",
+    "short_wave_infrared_label": "短波红外",
+    "agriculture_description": "波段短波红外-1、近红外、蓝（6、5、2）应用动态范围调整。茂盛的植被呈亮绿色，受压植被呈暗绿色，裸露区域呈棕色。",
+    "agriculture_label": "农业",
+    "urban_description": "波段短波红外-2、短波红外-1、红（7、6、4）应用动态范围调整。",
+    "urban_label": "城市",
+    "ndvi_colorized_description": "归一化植被指数(NDVI)彩色图。深绿色表示茂密旺盛的植被，棕色表示稀疏植被。",
+    "ndvi_colorized_label": "NDVI彩色图",
+    "surface_temperature_colorized_fahrenheit_description": "彩色地表温度",
+    "surface_temperature_colorized_fahrenheit_label": "地表温度",
+    "mndwi_colorized_description": "改进型归一化水体指数彩色图，计算方法为(b3 - b6) / (b3 + b6)。",
+    "mndwi_colorized_label": "MNDWI",
+    "ndmi_colorized_description": "归一化差异水分指数彩色图，计算方法为(b5 - b6) / (b5 + b6)。湿润区域从浅绿色到深蓝色不等。",
+    "ndmi_colorized_label": "NDMI",
+    "geology_description": "波段组合(7,6,2)能够更容易地可视化和提取主要结构特征，如逆断层和褶皱，火成岩和沉积岩的纹理特征，以及用于岩性和地质测绘，如识别热液蚀变岩等。此外，各种波段组合如4,3,2；7,6,5；7,5,2；7,4,2等也可用于确定特定地质特征。",
+    "geology_label": "地质",
+    "bathymetric_description": "波段红、绿、海岸/气溶胶（4、3、1）应用动态范围调整。适用于水深测绘应用。",
+    "bathymetric_label": "水深测量",
+    "dynamic_info_description": "在当前地图显示中，陆地卫星档案中最新且云量最少的场景被优先考虑，并动态融合为单一镶嵌图像图层。当您探索时，地图会继续动态获取和渲染最佳可用场景。",
+        
+    "ganges_delta_name": "恒河三角洲",
+    "ganges_delta_label": "恒河三角洲",
+    "ganges_delta_description": "恒河三角洲是位于东南亚的一个河流三角洲。它是世界上最大的河流三角洲，多条河流系统的汇合水流在此流入孟加拉湾。",
+        
+    "grand_canyon_name": "大峡谷",
+    "grand_canyon_label": "大峡谷",
+    "grand_canyon_description": "大峡谷是美国亚利桑那州科罗拉多河雕刻而成的陡峭峡谷。大峡谷长277英里（446公里），宽达18英里（29公里），深度超过一英里（1,857米）。",
+        
+    "lake_mackay_name": "麦凯湖",
+    "lake_mackay_label": "麦凯湖",
+    "lake_mackay_description": "麦凯湖，土著平图比人称为威尔金卡拉。它的表面积为3,494平方公里（1,349平方英里），是散布在西澳大利亚和北领地的数百个短暂盐湖中最大的一个。",
+        
+    "richat_name": "里沙特",
+    "richat_label": "里沙特结构（撒哈拉之眼）",
+    "richat_description": "里沙特结构是撒哈拉沙漠中一个显著的圆形地质特征。它是一个被侵蚀的地质穹顶，直径40公里（25英里），暴露的沉积岩层呈同心环状。",
+        
+    "kalahari_dunes_name": "卡拉哈里沙丘",
+    "kalahari_dunes_label": "卡拉哈里沙丘",
+    "kalahari_dunes_description": "卡拉哈里沙漠是南部非洲一个大型半干旱沙质稀树草原。像这样的线性沙丘通常在有一致风向模式的干旱环境中形成。",
+        
+    "kuiseb_canyon_name": "奎塞布峡谷",
+    "kuiseb_canyon_label": "奎塞布峡谷",
+    "kuiseb_canyon_description": "奎塞布峡谷是由非洲纳米比亚这个荒凉且难以到达的地区中的季节性奎塞布河在数百万年间雕刻而成。它以其岩层构造、陡峭悬崖和独特的生态系统为特征。",
+    
+    "quelccaya_name": "克尔卡亚",
+    "quelccaya_label": "克尔卡亚冰盖",
+    "quelccaya_description": "克尔卡亚冰盖是热带地区第二大冰川区域。位于秘鲁南部安第斯山脉的热带高地，该冰盖覆盖了42.8平方公里（16.5平方英里）的面积，冰层厚度达200米（660英尺）。",
+    
+    "gosses_bluff_name": "戈塞斯山丘",
+    "gosses_bluff_label": "戈塞斯山丘",
+    "gosses_bluff_description": "位于澳大利亚北领地的戈塞斯山丘，是一个被侵蚀的陨石撞击坑遗迹，据信是由约1.42亿年前的小行星撞击形成的。撞击坑中心的圆形山丘构造被认为是原始撞击产生的中央隆起或岩石位移。",
+    
+    "three_gorges_name": "三峡",
+    "three_gorges_label": "三峡大坝",
+    "three_gorges_description": "三峡大坝是一座横跨中国中部长江三峡下游的水电重力坝。它是世界上装机容量最大的发电站，但它也有助于减少下游洪灾的可能性，这种洪灾历来困扰着长江平原。",
+    
+    "dasht_e_kevir_name": "达什特-伊-卡维尔",
+    "dasht_e_kevir_label": "达什特-伊-卡维尔",
+    "dasht_e_kevir_description": "达什特-伊-卡维尔，也被称为大盐漠，是位于伊朗高原中部的一个大型沙漠。这里独特的景观由蜿蜒的山谷、浅湖、泥滩和盐沼组成。",
+    
+    "ouarkziz_name": "瓦尔克齐兹",
+    "ouarkziz_label": "瓦尔克齐兹陨石坑",
+    "ouarkziz_description": "瓦尔克齐兹是阿尔及利亚的一个陨石撞击坑。它直径3.5公里，据估计形成于不到7000万年前。这个最初被称为廷杜夫的陨石坑自形成以来已经严重侵蚀。其圆形形态由较老的沉积岩层的暴露而突显。",
+    
+    "etosha_pan_name": "埃托沙盆地",
+    "etosha_pan_label": "埃托沙盆地",
+    "etosha_pan_description": "埃托沙盆地是纳米比亚北部的一个大型内流盐盆。这个长达120公里（75英里）的广阔湖床会周期性地被一层薄水覆盖，由于表面的矿物质沉积，水质非常咸。"
+}

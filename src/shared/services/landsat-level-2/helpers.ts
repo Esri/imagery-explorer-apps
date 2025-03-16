@@ -20,6 +20,7 @@ import {
     kelvin2celsius,
 } from '@shared/utils/temperature-conversion';
 import { LandsatScene, SpectralIndex } from '@typing/imagery-service';
+import { t } from 'i18next';
 
 type LandsatProductInfo = {
     /**
@@ -288,7 +289,7 @@ export const convertLandsatSceneToImageryScene = (
         acquisitionMonth,
         cloudCover,
         satellite,
-        customTooltipText: [`${Math.ceil(cloudCover * 100)}% Cloudy`],
+        customTooltipText: [`${Math.ceil(cloudCover * 100)}% ${t('cloudy')}`],
     };
 
     return imageryScene;

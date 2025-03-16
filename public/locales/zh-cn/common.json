@@ -209,14 +209,23 @@
     "sun_elevation": "太阳高度",
     "sun_azimuth": "太阳方位角",
     "sun_elevation_azimuth": "太阳高度/方位角",
+    "path_row": "路径/行",
+    "correction": "校正",
     "about_the_data": "关于数据",
     "about_the_app": "关于应用",
     "attribution_terms_of_use": "归属和使用条款",
     "interetsing_places_data_source": "有趣地方描述中的信息来源于维基百科。",
     "renderer_tooltip": "{{satellite}} 传感器在电磁波谱的不同范围内收集影像。这些“波段”影像可以组合起来创建地球的渲染图，用于各种应用。",
     "select_a_date": "选择日期",
-    "cloudy": "多云",
+    "cloudy": "云覆盖",
     "copy_link_tooltip": "复制此应用当前状态的链接",
     "zoom_to_native_scale": "缩放到 {{serviceName}} 的原始分辨率",
-    "open_search_widget": "打开搜索小部件"
+    "open_search_widget": "打开搜索小部件",
+
+    "surface_temp_with_unit": "表面温度 {{unit}}",
+    "surface_temp": "表面温度",
+    "temporal_profile_tooltip": "将从所选时间间隔中采样云量最少的场景，以显示所选点和类别的时间趋势。",
+    "mission": "任务",
+    "all": "全部",
+    "none": "无"
 }
