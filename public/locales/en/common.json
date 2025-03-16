@@ -217,6 +217,8 @@
     "sun_elevation": "__Sun Elevation",
     "sun_azimuth": "__Sun Azimuth",
     "sun_elevation_azimuth": "__Sun Elevation/Azimuth",
+    "path_row": "__Path/Row",
+    "correction": "__Correction",
 
     "about_the_data": "__About the Data",
     "about_the_app": "__About the App",
@@ -225,6 +227,13 @@
 
     "renderer_tooltip": "__{{satellite}} sensors collect imagery at distinct ranges along the electromagnetic spectrum. These “bands” of imagery can be combined to create renderings of the Earth for a variety of applications.",
     "copy_link_tooltip": "__Copy link to this app in its current state",
-    "zoom_to_native_scale": "Zoom to {{serviceName}}'s native resolution",
-    "open_search_widget": "__Open Search Widget"
+    "zoom_to_native_scale": "__Zoom to {{serviceName}}'s native resolution",
+    "open_search_widget": "__Open Search Widget",
+
+    "surface_temp_with_unit": "__Surface Temp {{unit}}",
+    "surface_temp": "__Surface Temp",
+    "temporal_profile_tooltip": "__The least cloudy scenes from the selected time interval will be sampled to show a temporal trend for the selected point and category.",
+    "mission": "__Mission",
+    "all": "__All",
+    "none": "__None"
 }

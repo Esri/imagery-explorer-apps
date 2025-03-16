@@ -27,7 +27,7 @@
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
-import React from 'react';
+import React, { useMemo } from 'react';
 // import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 // import { getChangeCompareLayerColorrampAsCSSGradient } from '../ChangeLayer/helpers';
@@ -35,11 +35,15 @@ import {
     ChangeCompareToolHeader,
     ChangeCompareToolControls,
 } from '@shared/components/ChangeCompareTool';
-
-const LEGEND_LABEL_TEXT = ['decrease', 'no change', 'increase'];
+import { useTranslation } from 'react-i18next';
 
 export const ChangeCompareToolContainer = () => {
+    const { t } = useTranslation();
     const tool = useAppSelector(selectActiveAnalysisTool);
+
+    const LEGEND_LABEL_TEXT = useMemo(() => {
+        return [t('decrease'), t('no_change'), t('increase')];
+    }, []);
 
     if (tool !== 'change') {
         return null;
@@ -51,15 +55,18 @@ export const ChangeCompareToolContainer = () => {
                 options={[
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'WATER INDEX',
+                        // label: 'WATER INDEX',
+                        label: t('water_index'),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'VEGETATION INDEX',
+                        // label: 'VEGETATION INDEX',
+                        label: t('vegetation_index'),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'MOISTURE INDEX',
+                        // label: 'MOISTURE INDEX',
+                        label: t('moisture_index'),
                     },
                 ]}
             />

@@ -30,6 +30,8 @@ import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { initI18next } from '@shared/i18n/initI18next';
+import { APP_LANGUAGE } from '@shared/constants/UI';
+import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedSentinel2RasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -39,7 +41,7 @@ import { initI18next } from '@shared/i18n/initI18next';
         portalUrl: AGOL_PORTAL_ROOT,
     });
 
-    await initI18next();
+    await initI18next(APP_LANGUAGE);
 
     try {
         const store = await getLandsatExplorerStore();
@@ -51,7 +53,9 @@ import { initI18next } from '@shared/i18n/initI18next';
             <ReduxProvider store={store}>
                 <AppContextProvider
                     timeExtent={timeExtent}
-                    rasterFunctionInfo={LANDSAT_RASTER_FUNCTION_INFOS}
+                    rasterFunctionInfo={getTranslatedLandsatRasterFunctionInfo(
+                        LANDSAT_RASTER_FUNCTION_INFOS
+                    )}
                 >
                     <ErrorBoundary>
                         <Map />

@@ -35,6 +35,7 @@ import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
 import { identify } from '@shared/services/helpers/identify';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { getPixelValuesFromIdentifyTaskResponse } from '@shared/services/helpers/getPixelValuesFromIdentifyTaskResponse';
+import { DATE_FORMAT } from '@shared/constants/UI';
 // import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 
 type Props = {
@@ -105,7 +106,7 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
 
             const title = `${sceneData.satellite} | ${formatInUTCTimeZone(
                 sceneData.acquisitionDate,
-                'MMM dd, yyyy'
+                DATE_FORMAT
             )}`;
 
             setData({

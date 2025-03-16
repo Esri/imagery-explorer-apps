@@ -36,7 +36,7 @@ import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors
 import { Sentinel2TemporalProfileChart } from './Sentinel2TemporalProfileChart';
 import { intersectWithSentinel2Scene } from '@shared/services/sentinel-2/getSentinel2Scenes';
 import { getSentinel2TemporalProfileData } from '@shared/services/sentinel-2/getSentinel2TemporalProfileData';
-import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
+// import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
 import { useTranslation } from 'react-i18next';
 
 export const Sentinel2TemporalProfileTool = () => {
@@ -128,7 +128,7 @@ export const Sentinel2TemporalProfileTool = () => {
                         label: t('vegetation'),
                     },
                 ]}
-                tooltipText={TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT}
+                tooltipText={t('temporal_profile_tooltip')}
             />
 
             <div className="w-full h-[120px] my-2">

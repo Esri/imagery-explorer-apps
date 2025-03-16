@@ -1,4 +1,29 @@
 {
-    "landsat_explorer": "Landsat Explorer",
-    "esri_landsat_explorer": "ESRI | Landsat Explorer"
+    "landsat_explorer": "__Landsat Explorer",
+    "esri_landsat_explorer": "__ESRI | Landsat Explorer",
+    "landsat_explorer_attribution": "__Landsat imagery courtesy of USGS, NASA, and Microsoft",
+
+    "natural_color_description": "__Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",
+    "natural_color_label": "__Natural Color",
+    "color_infrared_description": "__Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.",
+    "color_infrared_label": "__Color IR",
+    "short_wave_infrared_description": "__Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.",
+    "short_wave_infrared_label": "__Short-wave IR",
+    "agriculture_description": "__Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.",
+    "agriculture_label": "__Agriculture",
+    "urban_description": "__Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.",
+    "urban_label": "__Urban",
+    "ndvi_colorized_description": "__Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.",
+    "ndvi_colorized_label": "__NDVI Colorized",
+    "surface_temperature_colorized_fahrenheit_description": "__Colorized surface temperature",
+    "surface_temperature_colorized_fahrenheit_label": "__Surface Temp",
+    "mndwi_colorized_description": "__Modified Normalized Difference Water Index with color map computed as (b3 - b6) / (b3 + b6).",
+    "mndwi_colorized_label": "__MNDWI",
+    "ndmi_colorized_description": "__Normalized Difference Moisture Index with color map computed as (b5 - b6) / (b5 + b6). Moist areas range from light green to dark blue.",
+    "ndmi_colorized_label": "__NDMI",
+    "geology_description": "__The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.",
+    "geology_label": "__Geology",
+    "bathymetric_description": "__Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applications.",
+    "bathymetric_label": "__Bathymetric",
+    "dynamic_info_description": "__In the current map display, the most recent and most cloud free scenes from the Landsat archive are prioritized and dynamically fused into a single mosaicked image layer. As you explore, the map continues to dynamically fetch and render the best available scenes."
 }

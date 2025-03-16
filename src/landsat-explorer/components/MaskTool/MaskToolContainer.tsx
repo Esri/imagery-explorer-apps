@@ -101,23 +101,32 @@ export const MaskToolContainer = () => {
                 dropdownListOptions={[
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'WATER INDEX',
+                        // label: 'WATER INDEX',
+                        label: t('water_index').toUpperCase(),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'VEGETATION INDEX',
+                        // label: 'VEGETATION INDEX',
+                        label: t('vegetation_index').toUpperCase(),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'MOISTURE INDEX',
+                        // label: 'MOISTURE INDEX',
+                        label: t('moisture_index').toUpperCase(),
                     },
                     {
                         value: 'temperature farhenheit' as SpectralIndex,
-                        label: 'SURFACE TEMP °F',
+                        // label: 'SURFACE TEMP °F',
+                        label: t('surface_teemp_with_unit', {
+                            unit: '°F',
+                        }).toUpperCase(),
                     },
                     {
                         value: 'temperature celcius' as SpectralIndex,
-                        label: 'SURFACE TEMP °C',
+                        // label: 'SURFACE TEMP °C',
+                        label: t('surface_teemp_with_unit', {
+                            unit: '°C',
+                        }).toUpperCase(),
                     },
                 ]}
                 selectedValue={selectedSpectralIndex}
@@ -135,7 +144,9 @@ export const MaskToolContainer = () => {
                 <>
                     <div className={classNames('relative w-full h-[120px]')}>
                         <div className="absolute top-3 right-0">
-                            <TotalVisibleAreaInfo label="Estimated Mask Area" />
+                            <TotalVisibleAreaInfo
+                                label={t('estimated_mask_area')}
+                            />
                         </div>
 
                         {selectedSpectralIndex === 'temperature celcius' && (

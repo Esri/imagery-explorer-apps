@@ -19,6 +19,7 @@ import {
 } from '@shared/services/landsat-level-2/helpers';
 import Point from '@arcgis/core/geometry/Point';
 import { getPopUpContentWithLocationInfo } from '@shared/components/MapPopup/helper';
+import { t } from 'i18next';
 
 // export const getLoadingIndicator = () => {
 //     const popupDiv = document.createElement('div');
@@ -64,7 +65,9 @@ export const getMainContent = (values: number[], mapPoint: Point) => {
     const content = `
         <div class='text-custom-light-blue text-xs'>
             <div class='mb-2'>
-                <span><span class='text-custom-light-blue-50'>Surface Temp:</span> ${surfaceTempInfo}</span><br />
+                <span><span class='text-custom-light-blue-50'>${t(
+                    'surface_temp'
+                )}:</span> ${surfaceTempInfo}</span><br />
                 <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span>
                 <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
             </div>

@@ -16,6 +16,7 @@
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { LANDSAT_MISSIONS } from '@shared/services/landsat-level-2/config';
 import React, { FC, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -133,6 +134,8 @@ export const LandsatMissionFilter: FC<Props> = ({
     missionsToBeExcluded,
     missionsToBeExcludedOnChange,
 }: Props) => {
+    const { t } = useTranslation();
+
     const containerRef = useRef<HTMLDivElement>();
 
     const [expanded, setExpanded] = useState<boolean>(false);
@@ -169,11 +172,11 @@ export const LandsatMissionFilter: FC<Props> = ({
 
     const getLabel4FilterButton = () => {
         if (missionsToBeExcluded.length === 0) {
-            return 'all';
+            return t('all');
         }
 
         if (missionsToBeExcluded.length === LANDSAT_MISSIONS.length) {
-            return 'none';
+            return t('none');
         }
 
         const missionsToBeIncluded = LANDSAT_MISSIONS.filter((mission) => {
@@ -186,7 +189,7 @@ export const LandsatMissionFilter: FC<Props> = ({
     return (
         <div ref={containerRef} className="flex items-center mr-3">
             <span className="uppercase text-custom-light-blue-50 mr-1 text-xs">
-                misson
+                {t('mission')}
             </span>
 
             <div className="relative w-16">
@@ -199,7 +202,7 @@ export const LandsatMissionFilter: FC<Props> = ({
                 {expanded && (
                     <div className="absolute w-full top-[100%] left-0 z-10 border border-custom-light-blue-5 bg-custom-background">
                         <FilterListItem
-                            title={'all'}
+                            title={t('all')}
                             checked={missionsToBeExcluded.length === 0}
                             // onClick={missionsToBeExcludedOnChange.bind(
                             //     null,

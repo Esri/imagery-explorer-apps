@@ -33,9 +33,13 @@ import { useAppDispatch } from '@shared/store/configureStore';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 const Map = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     return (
         <MapViewContainer
@@ -74,7 +78,11 @@ const Map = () => {
 
             <Popup />
             <MapMagnifier />
-            <CustomMapArrtribution atrribution="Landsat imagery courtesy of USGS, NASA, and Microsoft" />
+            <CustomMapArrtribution
+                atrribution={t('landsat_explorer_attribution', {
+                    ns: APP_NAME,
+                })}
+            />
         </MapViewContainer>
     );
 };

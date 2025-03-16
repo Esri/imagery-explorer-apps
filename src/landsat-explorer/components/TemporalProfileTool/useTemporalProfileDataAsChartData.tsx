@@ -31,6 +31,7 @@ import {
 } from '@shared/services/landsat-level-2/config';
 import { calcSpectralIndex } from '@shared/services/landsat-level-2/helpers';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { DATE_FORMAT_TEMPORAL_PROFILE } from '@shared/constants/UI';
 
 /**
  * Converts Landsat temporal profile data to chart data.
@@ -82,7 +83,7 @@ const convertLandsatTemporalProfileData2ChartData = (
 
         const tooltip = `${formatInUTCTimeZone(
             acquisitionDate,
-            'LLL yyyy'
+            DATE_FORMAT_TEMPORAL_PROFILE
         )}: ${y.toFixed(2)}`;
 
         return {

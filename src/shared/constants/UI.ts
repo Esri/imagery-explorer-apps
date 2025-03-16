@@ -31,6 +31,9 @@ export const APP_LANGUAGE = getAppLanguage();
 export const DATE_FORMAT =
     APP_LANGUAGE === 'en' ? `MMM dd, yyyy` : 'yyyy-MM-dd';
 
+export const DATE_FORMAT_TEMPORAL_PROFILE =
+    APP_LANGUAGE === 'en' ? `LLL yyyy` : 'yyyy-MM-dd';
+
 /**
  * if true, user is using this app via a mobile device
  */
