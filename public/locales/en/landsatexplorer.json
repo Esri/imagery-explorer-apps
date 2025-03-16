@@ -25,5 +25,53 @@
     "geology_label": "__Geology",
     "bathymetric_description": "__Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applications.",
     "bathymetric_label": "__Bathymetric",
-    "dynamic_info_description": "__In the current map display, the most recent and most cloud free scenes from the Landsat archive are prioritized and dynamically fused into a single mosaicked image layer. As you explore, the map continues to dynamically fetch and render the best available scenes."
+    "dynamic_info_description": "__In the current map display, the most recent and most cloud free scenes from the Landsat archive are prioritized and dynamically fused into a single mosaicked image layer. As you explore, the map continues to dynamically fetch and render the best available scenes.",
+        
+    "ganges_delta_name": "__Ganges Delta",
+    "ganges_delta_label": "__Ganges Delta",
+    "ganges_delta_description": "__The Ganges Delta is a river delta in Eastern South Asia. It is the world's largest river delta and it empties into the Bay of Bengal with the combined waters of several river systems.",
+        
+    "grand_canyon_name": "__Grand Canyon",
+    "grand_canyon_label": "__Grand Canyon",
+    "grand_canyon_description": "__The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, United States. The Grand Canyon is 277 miles (446 km) long, up to 18 miles (29 km) wide and attains a depth of more than one mile (1,857 meters).",
+        
+    "lake_mackay_name": "__Lake Mackay",
+    "lake_mackay_label": "__Lake Mackay",
+    "lake_mackay_description": "__Lake Mackay, known as Wilkinkarra to the Indigenous Pintupi people. With a surface area of 3,494 sq km (1,349 sq mi), it is the largest of hundreds of ephemeral salt lakes scattered throughout Western Australia and the Northern Territory.",
+        
+    "richat_name": "__Richat",
+    "richat_label": "__Richat Structure (Eye of the Sahara)",
+    "richat_description": "__The Richat Structure is a prominent circular geological feature in the Sahara Desert. It is an eroded geological dome, 40 km (25 mi) in diameter, exposing sedimentary rock in layers that appear as concentric rings.",
+        
+    "kalahari_dunes_name": "__Kalahari Dunes",
+    "kalahari_dunes_label": "__Kalahari Dunes",
+    "kalahari_dunes_description": "__The Kalahari Desert is a large semi-arid sandy savanna in Southern Africa. Linear dunes, such as these, typically form in arid environments with consistent wind patterns.",
+        
+    "kuiseb_canyon_name": "__Kuiseb Canyon",
+    "kuiseb_canyon_label": "__Kuiseb Canyon",
+    "kuiseb_canyon_description": "__The Kuiseb Canyon has been carved out over millions of years by the ephemeral Kuiseb River in this barren and inaccessible area of Namibia, Africa. It is characterized by its rock formations, steep cliffs, and unique ecosystems.",
+    
+    "quelccaya_name": "__Quelccaya",
+    "quelccaya_label": "__Quelccaya Ice Cap",
+    "quelccaya_description": "__The Quelccaya Ice Cap is the second largest glaciated area in the tropics. Located in tropical highlands of the Andes mountains in southern Peru, the cap covers an area of 42.8 sq km (16.5 sq mi) with ice up to 200 meters (660 ft) thick.",
+    
+    "gosses_bluff_name": "__Gosses Bluff",
+    "gosses_bluff_label": "__Gosses Bluff",
+    "gosses_bluff_description": "__Gosses Bluff, located in the Northern Territory of Australia, is the eroded remnant of an impact crater believed to have been formed by an asteroid impact about 142 million years ago. The circular bluff formation in the center of the crater is believed to be the crater's central uplift, or rock displacement, from the original impact.",
+    
+    "three_gorges_name": "__Three Gorges",
+    "three_gorges_label": "__Three Gorges Dam",
+    "three_gorges_description": "__The Three Gorges Dam is a hydroelectric gravity dam that spans the Yangtze River in central China, downstream of the Three Gorges. It is the world's largest power station in terms of installed capacity, but it also serves to reduce the potential for flooding downstream, which historically plagued the Yangtze Plain.",
+    
+    "dasht_e_kevir_name": "__Dasht-e Kevir",
+    "dasht_e_kevir_label": "__Dasht-e Kevir",
+    "dasht_e_kevir_description": "__Dasht-e Kavir, also known as the Great Salt Desert, is a large desert lying in the middle of the Iranian Plateau. The unique landscape here is comprised of sinuous valleys, shallow lakes, mudflats, and salt marshes.",
+    
+    "ouarkziz_name": "__Ouarkziz",
+    "ouarkziz_label": "__Ouarkziz Crater",
+    "ouarkziz_description": "__Ouarkziz is a meteorite impact crater in Algeria. It is 3.5 kilometers in diameter and the age is estimated to be less than 70 million years. Originally called Tindouf, the crater has been heavily eroded since its formation. Its circular morphology is highlighted by exposures of older sedimentary rock layers.",
+    
+    "etosha_pan_name": "__Etosha Pan",
+    "etosha_pan_label": "__Etosha Pan",
+    "etosha_pan_description": "__The Etosha Pan is a large endorheic salt pan in the north of Namibia. Measuring 120 km (75 mi) long, this vast lakebed is periodically flooded with a thin layer of water, which is heavily salted by the mineral deposits on the surface."
 }
