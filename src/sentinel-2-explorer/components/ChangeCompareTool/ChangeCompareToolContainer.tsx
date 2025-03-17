@@ -54,23 +54,23 @@ export const ChangeCompareToolContainer = () => {
                 options={[
                     {
                         value: 'water' as SpectralIndex,
-                        label: t('water_index').toUpperCase(),
+                        label: t('water_index'),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: t('vegetation_index').toUpperCase(),
+                        label: t('vegetation_index'),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: t('moisture_index').toUpperCase(),
+                        label: t('moisture_index'),
                     },
                     {
                         value: 'urban' as SpectralIndex,
-                        label: t('urban_index').toUpperCase(),
+                        label: t('urban_index'),
                     },
                     {
                         value: 'burn' as SpectralIndex,
-                        label: t('burn_index').toUpperCase(),
+                        label: t('burn_index'),
                     },
                 ]}
             />

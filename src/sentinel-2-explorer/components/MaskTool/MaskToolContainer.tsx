@@ -71,15 +71,15 @@ export const MaskToolContainer = () => {
                 dropdownListOptions={[
                     {
                         value: 'water' as SpectralIndex,
-                        label: t('water_index').toUpperCase(),
+                        label: t('water_index'),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: t('vegetation_index').toUpperCase(),
+                        label: t('vegetation_index'),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: t('moisture_index').toUpperCase(),
+                        label: t('moisture_index'),
                     },
                     // {
                     //     value: 'urban' as SpectralIndex,

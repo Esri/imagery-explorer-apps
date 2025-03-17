@@ -102,31 +102,31 @@ export const MaskToolContainer = () => {
                     {
                         value: 'water' as SpectralIndex,
                         // label: 'WATER INDEX',
-                        label: t('water_index').toUpperCase(),
+                        label: t('water_index'),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
                         // label: 'VEGETATION INDEX',
-                        label: t('vegetation_index').toUpperCase(),
+                        label: t('vegetation_index'),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
                         // label: 'MOISTURE INDEX',
-                        label: t('moisture_index').toUpperCase(),
+                        label: t('moisture_index'),
                     },
                     {
                         value: 'temperature farhenheit' as SpectralIndex,
                         // label: 'SURFACE TEMP °F',
-                        label: t('surface_teemp_with_unit', {
+                        label: t('surface_temp_with_unit', {
                             unit: '°F',
-                        }).toUpperCase(),
+                        }),
                     },
                     {
                         value: 'temperature celcius' as SpectralIndex,
                         // label: 'SURFACE TEMP °C',
-                        label: t('surface_teemp_with_unit', {
+                        label: t('surface_temp_with_unit', {
                             unit: '°C',
-                        }).toUpperCase(),
+                        }),
                     },
                 ]}
                 selectedValue={selectedSpectralIndex}

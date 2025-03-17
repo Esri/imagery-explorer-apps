@@ -13,11 +13,14 @@
  * limitations under the License.
  */
 
-import { appConfig } from '@shared/config';
+import { APP_NAME, appConfig } from '@shared/config';
 import { LANDSAT_LEVEL_2_ITEM_URL } from '@shared/services/landsat-level-2/config';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AboutLandsatExplorer = () => {
+    const { t } = useTranslation();
+
     return (
         <div
             className="py-10"
@@ -27,194 +30,161 @@ const AboutLandsatExplorer = () => {
         >
             <div className="flex items-center mb-8">
                 <div className=" text-custom-light-blue text-3xl pr-4 mr-4">
-                    <span>{appConfig.title}</span>
+                    <span>
+                        {t('esri_landsat_explorer', {
+                            ns: APP_NAME,
+                        })}
+                    </span>
                 </div>
             </div>
 
             <div className="mb-8 font-light">
                 <h3 className="text-2xl text-custom-light-blue mb-4">
-                    About the data
+                    {t('about_the_data')}
                 </h3>
 
                 <p className="mb-4">
-                    Jointly managed by NASA and the USGS, Landsat is the longest
-                    running spaceborne earth imaging and observation program in
-                    history. The Landsat program began in 1972, with the launch
-                    of Landsat 1. Beginning with Landsat 4, the program began
-                    providing mission to mission data continuity.
+                    {t('landsat_overview_paragraph1', {
+                        ns: APP_NAME,
+                    })}
                 </p>
 
                 <p className="mb-4">
-                    Landsat Collection 2 Level-2 science products, imagery from
-                    1982 to present, are made publicly available by the USGS.
-                    The continuity in this scientific record allows for critical
-                    and reliable observation and analysis of Earth processes and
-                    changes over time.
+                    {t('landsat_overview_paragraph2', {
+                        ns: APP_NAME,
+                    })}
                 </p>
 
-                <p className="mb-4">
-                    The Landsat Level-2 multispectral imagery is available in{' '}
-                    <a
-                        href="https://livingatlas.arcgis.com/en/home/"
-                        target="_blank"
-                        className="underline"
-                        rel="noreferrer"
-                    >
-                        ArcGIS Living Atlas of the World
-                    </a>{' '}
-                    as a dynamic time enabled image service, accessible across
-                    the ArcGIS system and used to power this app. For more about
-                    the service and the data, see{' '}
-                    <a
-                        href={LANDSAT_LEVEL_2_ITEM_URL}
-                        target="_blank"
-                        className="underline"
-                        rel="noreferrer"
-                    >
-                        Landsat Level-2
-                    </a>
-                    .
-                </p>
+                <p
+                    className="mb-4"
+                    dangerouslySetInnerHTML={{
+                        __html: t('landsat_overview_paragraph3', {
+                            ns: APP_NAME,
+                        }),
+                    }}
+                ></p>
             </div>
 
             <div className="mb-8 font-light">
                 <h3 className="text-2xl text-custom-light-blue mb-4">
-                    About the app
+                    {t('about_the_app')}
                 </h3>
 
                 <p className="mb-4">
-                    Landsat multispectral imagery helps to track and document
-                    land use and land change associated with climate change,
-                    urbanization, drought, wildfire, deforestation, and other
-                    natural processes and human activity.
+                    {t('about_app_paragraph1', {
+                        ns: APP_NAME,
+                    })}
                 </p>
 
                 <p>
-                    Through an intuitive user experience, this app leverages a
-                    variety of ArcGIS capabilities to explore and begin to
-                    unlock the wealth of information that Landsat provides. Some
-                    of the key capabilities include:
+                    {t('about_app_paragraph2', {
+                        ns: APP_NAME,
+                    })}
                 </p>
 
-                <ul className="list-disc list-inside">
+                <ul className="list-disc list-inside mt-2">
                     <li>
-                        Visual exploration of a Dynamic global mosaic of the
-                        best available Landsat scenes.
+                        {t('about_app_list_item_1', {
+                            ns: APP_NAME,
+                        })}
                     </li>
                     <li>
-                        On-the-fly multispectral band combinations and indices
-                        for visualization and analysis.
+                        {t('about_app_list_item_2', {
+                            ns: APP_NAME,
+                        })}
                     </li>
                     <li>
-                        Interactive Find a Scene by location, sensor, time, and
-                        cloud cover.
+                        {t('about_app_list_item_3', {
+                            ns: APP_NAME,
+                        })}
                     </li>
                     <li>
-                        Visual change by time, and comparison of different
-                        renderings, with Swipe and Animation modes.
+                        {t('about_app_list_item_4', {
+                            ns: APP_NAME,
+                        })}
                     </li>
                     <li>
-                        Analysis such as threshold masking and temporal profiles
-                        for vegetation, water, land surface temperature, and
-                        more.
+                        {t('about_app_list_item_5', {
+                            ns: APP_NAME,
+                        })}
                     </li>
                 </ul>
             </div>
 
             <div className="mb-4 font-light">
                 <h3 className="text-2xl text-custom-light-blue mb-4">
-                    Attribution and Terms of Use
+                    {t('attribution_terms_of_use')}
                 </h3>
 
                 <div className="mb-4">
-                    <p className="mb-1">
-                        <b className="font-bold">Landsat Level-2 Imagery </b>–
-                        Esri, USGS, NASA, Microsoft
-                    </p>
+                    <p
+                        className="mb-1"
+                        dangerouslySetInnerHTML={{
+                            __html: t('terms_of_use_service_header', {
+                                ns: APP_NAME,
+                            }),
+                        }}
+                    ></p>
                     <div className="ml-8 mb-2">
-                        <p>
-                            <b className="font-bold">
-                                Source Image Products - USGS
-                            </b>
-                            <br />
-                            USGS-authored or produced data and information are
-                            considered to be in the U.S. Public Domain and may
-                            be used without restriction.{' '}
-                            <a
-                                className="underline"
-                                rel="noreferrer"
-                                href="https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs"
-                                target="_blank"
-                            >
-                                Acknowledging or Crediting USGS
-                            </a>
+                        <p className="font-bold">
+                            {t('terms_of_use_service_section_1_header', {
+                                ns: APP_NAME,
+                            })}
                         </p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: t(
+                                    'terms_of_use_service_section_1_desc',
+                                    {
+                                        ns: APP_NAME,
+                                    }
+                                ),
+                            }}
+                        ></p>
                     </div>
 
                     <div className="ml-8">
-                        <p className="font-bold">Image Service - Esri</p>
-                        <p>
-                            This work is licensed under the Esri Master License
-                            Agreement.{' '}
-                            <a
-                                className="underline"
-                                href="https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                View Summary
-                            </a>{' '}
-                            |{' '}
-                            <a
-                                className="underline"
-                                href="https://www.esri.com/en-us/legal/terms/full-master-agreement"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                View Terms of Use
-                            </a>
+                        <p className="font-bold">
+                            {t('terms_of_use_service_section_2_header', {
+                                ns: APP_NAME,
+                            })}
                         </p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: t(
+                                    'terms_of_use_service_section_2_desc',
+                                    {
+                                        ns: APP_NAME,
+                                    }
+                                ),
+                            }}
+                        ></p>
                     </div>
                 </div>
 
                 <div className="mb-4">
                     <p className="font-bold mb-1">
-                        Landsat Explorer App - Esri
+                        {t('terms_of_use_app_header', {
+                            ns: APP_NAME,
+                        })}
                     </p>
+                    <p
+                        dangerouslySetInnerHTML={{
+                            __html: t('terms_of_use_app_paragraph1', {
+                                ns: APP_NAME,
+                            }),
+                        }}
+                    ></p>
                     <p>
-                        This app is licensed under the Esri Master License
-                        Agreement.{' '}
-                        <a
-                            className="underline"
-                            href="https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            View Summary
-                        </a>{' '}
-                        |{' '}
-                        <a
-                            className="underline"
-                            href="https://www.esri.com/en-us/legal/terms/full-master-agreement"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            View Terms of Use
-                        </a>
-                    </p>
-                    <p>
-                        This app is provided for informational purposes. The
-                        accuracy of the information provided is subject to the
-                        accuracy of the source data.
+                        {t('terms_of_use_app_paragraph2', {
+                            ns: APP_NAME,
+                        })}
                     </p>
                 </div>
             </div>
 
             <div className="mb-4 font-light">
-                <p>
-                    Information contained in the Interesting Places descriptions
-                    was sourced from Wikipedia.
-                </p>
+                <p>{t('interetsing_places_data_source')}</p>
             </div>
         </div>
     );
