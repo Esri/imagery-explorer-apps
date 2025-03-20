@@ -110,6 +110,29 @@
     "doc_image_interpretation_section_content_4": "__As noted in the previous section, Sentinel-1 is dual polarized. Each polarization, VV and VH, are stored as separate bands in the RTC image product, where band-1 is VV, and band-2 is VH. Each band can be used independently or in conjunction with one another, for visualization and analysis. VH signals are most prevalent in areas of volume scattering. This makes the VH useful in determining certain land cover types such as forested vs non-forested areas.",
     "doc_references_section_title": "__References and additional information",
     "doc_references_section_content_1": "__<a class=\"underline\" href=\"https://hyp3-docs.asf.alaska.edu/guides/introduction_to_sar/\" target=\"_blank\" rel=\"noreferrer\">ASF – Introduction to SAR</a>",
-    "doc_references_section_content_2": "__<a class=\"underline\" href=\"https://ntrs.nasa.gov/api/citations/20190002563/downloads/20190002563.pdf\" target=\"_blank\" rel=\"noreferrer\">SERVIR – The SAR Handbook</a>"
+    "doc_references_section_content_2": "__<a class=\"underline\" href=\"https://ntrs.nasa.gov/api/citations/20190002563/downloads/20190002563.pdf\" target=\"_blank\" rel=\"noreferrer\">SERVIR – The SAR Handbook</a>",
+  
+    "about_the_data_title": "__About the data",
+    "about_the_data_content_1": "__Sentinel-1 is a spaceborne Synthetic Aperture Radar (SAR) imaging system and mission from the European Space Agency and the European Commission. The mission launched and began collecting imagery in 2014.",
+    "about_the_data_content_2": "__The Sentinel-1 RTC data in this collection is an analysis ready product derived from the Ground Range Detected (GRD) Level-1 products produced by the European Space Agency. Radiometric Terrain Correction (RTC) accounts for terrain variations that affect both the position of a given point on the Earth's surface and the brightness of the radar return.",
+    "about_the_data_content_3": "__With the ability to see through cloud and smoke cover, and because it does not rely on solar illumination of the Earth's surface, Sentinel-1 is able to collect useful imagery in most weather conditions, during both day and night. This data is good for wide range of land and maritime applications, from mapping floods, to deforestation, to oil spills, and more.",
+    "about_the_app_title": "__About the app",
+    "about_the_app_content_1": "__Sentinel-1 SAR imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.",
+    "about_the_app_content_2": "__Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-1 provides. Some of the key capabilities include:",
+    "about_the_app_capability_1": "__Visual exploration of a dynamic global mosaic of the latest available scenes.",
+    "about_the_app_capability_2": "__On-the-fly band/polarization combinations and indices for visualization and analysis.",
+    "about_the_app_capability_3": "__Interactive Find a Scene by location, time, and orbit direction.",
+    "about_the_app_capability_4": "__Visual change by time and renderings with Swipe and Animation modes.",
+    "about_the_app_capability_5": "__Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.",
+    "about_attribution_and_terms_title": "__Attribution and Terms of Use",
+    "about_attribution_and_terms_content_1": "__Sentinel-1 RTC Imagery – Esri, Microsoft, European Space Agency, European Commission",
+    "about_attribution_and_terms_content_2": "__Sentinel-1 RTC Source Imagery – Microsoft",
+    "about_attribution_and_terms_content_3": "__The source imagery is hosted on Microsoft Planetary Computer under an open <a class=\"underline\" rel=\"noreferrer\" href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC BY 4.0 license</a>.",
+    "about_attribution_and_terms_content_4": "__Sentinel-1 RTC Image Service – Esri",
+    "about_attribution_and_terms_content_5": "__This work is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
+    "about_attribution_and_terms_content_6": "__Sentinel-1 Explorer - Esri",
+    "about_attribution_and_terms_content_7": "__This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
+    "about_attribution_and_terms_content_8": "__This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
+    "about_attribution_and_terms_content_9": "__Information contained in the Interesting Places descriptions was sourced from Wikipedia."
   
 }

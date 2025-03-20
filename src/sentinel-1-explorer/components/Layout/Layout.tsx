@@ -56,6 +56,9 @@ import { useTranslation } from 'react-i18next';
 
 export const Layout = () => {
     const { t } = useTranslation();
+
+    const appTitle = t('esri_sentinel_1_explorer', { ns: APP_NAME });
+
     const mode = useAppSelector(selectAppMode);
 
     const analysisTool = useAppSelector(selectActiveAnalysisTool);
@@ -88,7 +91,7 @@ export const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appConfig.title} showDocButton={true} />
+                <AppHeader title={appTitle} showDocButton={true} />
                 <BottomPanel>
                     <div className="mx-auto">
                         <Sentinel1DynamicModeInfo />
@@ -103,7 +106,7 @@ export const Layout = () => {
     return (
         <>
             <AppHeader
-                title={appConfig.title}
+                title={appTitle}
                 showDocButton={true}
                 docButtonTooltip={t('doc_button_tooltip', { ns: APP_NAME })}
             />
