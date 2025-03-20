@@ -1,4 +1,22 @@
 {
-    "sentinel_1_explorer": "Sentinel-1 Explorer",
-    "esri_sentinel_1_explorer": "ESRI | Sentinel-1 Explorer"
+    "sentinel_1_explorer": "__Sentinel-1 Explorer",
+    "esri_sentinel_1_explorer": "__ESRI | Sentinel-1 Explorer",
+    "temproal_profile_header_tooltip": "__The most recent scene within each month in the selected time interval, and with the same orbit direction, will be sampled to show a temporal profile and trend for the selected point and category.",
+    "composite": "__Composite",
+    "composite_header_tooltip": "__View changes over time for up to three selected images at once. Each selected image is used as an individual band in a dynamically generated three band RGB composite image. Color variations in the resulting composite image represent changes in the land cover over time. <br/>For example, elements with a high backscatter in the scene used as the red band will have a stronger red hue in the composite image. Elements with a high backscatter in the red scene and the blue scene, and low backscatter in the green scene, will appear purple. And so on. Areas with more consistent backscatter, meaning little to no change over time, will appear as shades of gray.",
+    "composite_instructions_layer_off": "__Select scenes to apply to the Red, Green, and Blue color bands to create a composite RGB image, a hue-based change detection.",
+    "composite_instructions_layer_on": "__The composite image blends the three Red, Green, and Blue input scenes into a composite RGB image. The resulting colors communicate the varied reflectance across dates.",
+    "render_composite_as": "__Render composite as",
+    "clear_scene_selection": "__Clear all scene selections",
+    "composite_legend_instruction": "__Lighter colors are higher overall backscatter and darker colors are lower.",
+    "higher_backscatter": "__Higher backscatter",
+    "lower_backscatter": "__Lower backscatter",
+    "choose_red_band": "__Choose Red band",
+    "choose_green_band": "__Choose Green band",
+    "choose_blue_band": "__Choose Blue band",
+    "view_composite": "__View composite",
+    "swap_red_green": "__swap red and green band",
+    "swap_green_blue": "__swap green and blue band",
+
+    "ship_urban_index_unavailable": "__Ship and Urban Index Masks are currently unavailable to Save"
 }

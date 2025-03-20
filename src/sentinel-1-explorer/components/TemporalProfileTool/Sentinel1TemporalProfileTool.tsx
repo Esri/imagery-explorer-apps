@@ -67,9 +67,13 @@ import { intersectWithSentinel1Scene } from '@shared/services/sentinel-1/getSent
 import { getSentinel1TemporalProfileData } from '@shared/services/sentinel-1/getTemporalProfileData';
 import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
 import { Sentinel1TemporalProfileChart } from './Sentinel1TemporalProfileChart';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const Sentinel1TemporalProfileTool = () => {
     // const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     const tool = useAppSelector(selectActiveAnalysisTool);
 
@@ -151,14 +155,16 @@ export const Sentinel1TemporalProfileTool = () => {
                 options={[
                     {
                         value: 'water' as RadarIndex,
-                        label: 'water',
+                        label: t('water'),
                     },
                     {
                         value: 'water anomaly' as RadarIndex,
-                        label: 'water anomaly',
+                        label: t('water_anomaly'),
                     },
                 ]}
-                tooltipText={`The most recent scene within each month in the selected time interval, and with the same orbit direction, will be sampled to show a temporal profile and trend for the selected point and category.`}
+                tooltipText={t('temproal_profile_header_tooltip', {
+                    ns: APP_NAME,
+                })}
             />
 
             <div className="w-full h-[120px] my-2">

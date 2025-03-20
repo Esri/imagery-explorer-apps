@@ -18,6 +18,8 @@ import RGBComposite from './img/RGBComposite.png';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { ColorGroup, getColorGroup } from './helpers';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     isTemporalCompositeLayerOn: boolean;
@@ -43,16 +45,17 @@ export const LegendLabel: FC<LegendLabelProps> = ({
     colorbandName,
     formattedAcquisitionDate,
 }) => {
+    const { t } = useTranslation();
     return (
         <>
-            <span className="uppercase">{colorbandName}</span>
+            <span className="uppercase">{t(colorbandName)}</span>
             <br />
             <span className="opacity-50">
                 {formattedAcquisitionDate
                     ? formatFormattedDateStrInUTCTimeZone(
                           formattedAcquisitionDate
                       )
-                    : 'unselected'}
+                    : t('unselected')}
             </span>
         </>
     );
@@ -70,6 +73,7 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
     acquisitionDateOfImageryScene4GreenBand,
     acquisitionDateOfImageryScene4BlueBand,
 }) => {
+    const { t } = useTranslation();
     const canvasRef = useRef<HTMLCanvasElement>();
     const contextRef = useRef<CanvasRenderingContext2D>();
 
@@ -121,11 +125,16 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
             acquisitionDateOfImageryScene4BlueBand
         );
 
+        const higherBackscatterLabel =
+            t('higher_backscatter', { ns: APP_NAME }) + ':';
+        const lowerBackscatterLabel =
+            t('lower_backscatter', { ns: APP_NAME }) + ':';
+
         if (tooltipData.colorGroup === 'Red') {
             return [
-                `Higher backscatter:`,
+                higherBackscatterLabel,
                 `${formattedDateRedBand}`,
-                `Lower backscatter:`,
+                lowerBackscatterLabel,
                 `${formattedDateGreenBand}`,
                 `${formattedDateBlueBand}`,
             ];
@@ -133,9 +142,9 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Green') {
             return [
-                `Higher backscatter:`,
+                higherBackscatterLabel,
                 ` ${formattedDateGreenBand}`,
-                `Lower backscatter:`,
+                lowerBackscatterLabel,
                 `${formattedDateRedBand}`,
                 `${formattedDateBlueBand}`,
             ];
@@ -143,9 +152,9 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Blue') {
             return [
-                `Higher backscatter:`,
+                higherBackscatterLabel,
                 `${formattedDateBlueBand}`,
-                `Lower backscatter:`,
+                lowerBackscatterLabel,
                 `${formattedDateRedBand}`,
                 `${formattedDateGreenBand}`,
             ];
@@ -153,30 +162,30 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
 
         if (tooltipData.colorGroup === 'Yellow') {
             return [
-                `Higher backscatter:`,
+                higherBackscatterLabel,
                 `${formattedDateRedBand}`,
                 `${formattedDateGreenBand}`,
-                `Lower backscatter:`,
+                lowerBackscatterLabel,
                 `${formattedDateBlueBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Magenta') {
             return [
-                `Higher backscatter: `,
+                higherBackscatterLabel,
                 `${formattedDateRedBand}`,
                 `${formattedDateBlueBand}`,
-                `Lower backscatter: `,
+                lowerBackscatterLabel,
                 `${formattedDateGreenBand}`,
             ];
         }
 
         if (tooltipData.colorGroup === 'Cyan') {
             return [
-                `Higher backscatter:`,
+                higherBackscatterLabel,
                 ` ${formattedDateGreenBand}`,
                 `${formattedDateBlueBand}`,
-                `Lower backscatter:`,
+                lowerBackscatterLabel,
                 `${formattedDateRedBand}`,
             ];
         }
@@ -277,8 +286,7 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
             </div>
 
             <p className="text-xs opacity-50">
-                Lighter colors are higher overall backscatter and darker colors
-                are lower.
+                {t('composite_legend_instruction', { ns: APP_NAME })}
             </p>
 
             {tooltipData && tooltipContent && (

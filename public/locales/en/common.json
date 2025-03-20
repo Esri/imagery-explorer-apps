@@ -205,6 +205,7 @@
     "moisture": "__moisture",
     "vegetation": "__vegetation",
     "water": "__water",
+    "water_anomaly": "__water anomaly",
 
     "name": "__Name",
     "satellite": "__Satellite",
@@ -235,5 +236,9 @@
     "temporal_profile_tooltip": "__The least cloudy scenes from the selected time interval will be sampled to show a temporal trend for the selected point and category.",
     "mission": "__Mission",
     "all": "__All",
-    "none": "__None"
+    "none": "__None",
+    "red": "__Red",
+    "green": "__Green",
+    "blue": "__Blue",
+    "unselected": "__Unselected"
 }
