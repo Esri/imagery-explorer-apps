@@ -31,6 +31,7 @@ import { Sentinel1DocPanel } from './components/DocPanel';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initI18next } from '@shared/i18n/initI18next';
+import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedSentinel1RasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -52,7 +53,9 @@ import { initI18next } from '@shared/i18n/initI18next';
             <ReduxProvider store={store}>
                 <AppContextProvider
                     timeExtent={timeExtent}
-                    rasterFunctionInfo={SENTINEL1_RASTER_FUNCTION_INFOS}
+                    rasterFunctionInfo={getTranslatedSentinel1RasterFunctionInfo(
+                        SENTINEL1_RASTER_FUNCTION_INFOS
+                    )}
                 >
                     <ErrorBoundary>
                         <Map />

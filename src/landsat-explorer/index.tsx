@@ -31,7 +31,7 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
-import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedSentinel2RasterFunctionInfo';
+import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedLandsatRasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));

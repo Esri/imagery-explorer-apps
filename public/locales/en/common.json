@@ -220,6 +220,9 @@
     "sun_elevation_azimuth": "__Sun Elevation/Azimuth",
     "path_row": "__Path/Row",
     "correction": "__Correction",
+    "polarization": "__Polarization",
+    "orbit_direction": "__Orbit Direction",
+    "absolute_orbit": "__Absolute Orbit",
 
     "about_the_data": "__About the Data",
     "about_the_app": "__About the App",

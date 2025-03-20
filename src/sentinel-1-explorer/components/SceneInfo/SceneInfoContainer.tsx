@@ -25,8 +25,11 @@ import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone
 import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
 import { Sentinel1Scene } from '@typing/imagery-service';
 import { getSentinel1SceneByObjectId } from '@shared/services/sentinel-1/getSentinel1Scenes';
+import { useTranslation } from 'react-i18next';
 
 export const SceneInfoContainer = () => {
+    const { t } = useTranslation();
+
     const mode = useAppSelector(selectAppMode);
 
     const fetchSceneByObjectId = useCallback(async (objectId: number) => {
@@ -56,7 +59,7 @@ export const SceneInfoContainer = () => {
             // the produt id is too long to be displayed in one row,
             // therefore we need to split it into two separate rows
             {
-                name: 'Scene ID',
+                name: t('scene_id'),
                 value: name, //name.slice(0, 22),
                 clickToCopy: true,
             },
@@ -69,27 +72,33 @@ export const SceneInfoContainer = () => {
             //     value: name.slice(44),
             // },
             {
-                name: 'Sensor',
+                // name: 'Sensor',
+                name: t('sensor'),
                 value: sensor,
             },
             {
-                name: 'Acquired',
+                // name: 'Acquired',
+                name: t('acquired'),
                 value: formatInUTCTimeZone(acquisitionDate, DATE_FORMAT),
             },
             {
-                name: 'Orbit Direction',
+                // name: 'Orbit Direction',
+                name: t('orbit_direction'),
                 value: orbitDirection,
             },
             {
-                name: 'Polarization',
+                // name: 'Polarization',
+                name: t('polarization'),
                 value: polarizationType,
             },
             {
-                name: 'Absolute Orbit',
+                // name: 'Absolute Orbit',
+                name: t('absolute_orbit'),
                 value: absoluteOrbit,
             },
             {
-                name: 'Relative Orbit',
+                // name: 'Relative Orbit',
+                name: t('relative_orbit'),
                 value: relativeOrbit,
             },
         ] as SceneInfoTableData[];
