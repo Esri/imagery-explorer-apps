@@ -46,6 +46,8 @@ import {
 } from '@shared/services/sentinel-1/config';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 import { useSentinel1MaskToolFullPixelValueRange } from './useSentinel1MaskToolFullPixelValueRange';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
     water: SENTINEL1_WATER_INDEX_PIXEL_RANGE,
@@ -55,6 +57,8 @@ export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
 };
 
 export const Sentinel1MaskTool = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const tool = useAppSelector(selectActiveAnalysisTool);
@@ -113,23 +117,23 @@ export const Sentinel1MaskTool = () => {
                 dropdownListOptions={[
                     {
                         value: 'water' as RadarIndex,
-                        label: 'Water',
+                        label: t('water'),
                     },
                     {
                         value: 'water anomaly' as RadarIndex,
-                        label: 'Water Anomaly',
+                        label: t('water_anomaly'),
                     },
                     {
                         value: 'ship' as RadarIndex,
-                        label: 'Ship',
+                        label: t('ship'),
                     },
                     {
                         value: 'urban' as RadarIndex,
-                        label: 'Built-up',
+                        label: t('built_up'),
                     },
                 ]}
                 selectedValue={selectedIndex}
-                tooltipText={`Radar backscatter values can be used to compute a variety of indices. Different thresholds can be applied to these SAR indices to mask and highlight different characteristics of the Earth's surface.`}
+                tooltipText={t('mask_tool_tooltip', { ns: APP_NAME })}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(selectedIndex4MaskToolChanged(val as RadarIndex));
                 }}
@@ -141,7 +145,9 @@ export const Sentinel1MaskTool = () => {
                 <>
                     <div className={classNames('relative w-full h-[120px]')}>
                         <div className="absolute top-3 right-0">
-                            <TotalVisibleAreaInfo label="Estimated Mask Area" />
+                            <TotalVisibleAreaInfo
+                                label={t('estimated_mask_area')}
+                            />
                         </div>
 
                         <PixelRangeSlider

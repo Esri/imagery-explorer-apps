@@ -32,7 +32,7 @@ import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 // import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
-import { appConfig } from '@shared/config';
+import { APP_NAME, appConfig } from '@shared/config';
 import { useQueryAvailableSentinel1Scenes } from '../../hooks/useQueryAvailableSentinel1Scenes';
 import { SceneInfo } from '../SceneInfo';
 import { Sentinel1FunctionSelector } from '../RasterFunctionSelector';
@@ -52,8 +52,10 @@ import { Sentinel1DynamicModeInfo } from '../Sentinel1DynamicModeInfo/Sentinel1D
 // import { Sentinel1DocPanel } from '../DocPanel';
 import { useSyncRenderers } from '@shared/hooks/useSyncRenderers';
 import { Sentinel1SavePanel } from '../Sentinel1SavePanel';
+import { useTranslation } from 'react-i18next';
 
 export const Layout = () => {
+    const { t } = useTranslation();
     const mode = useAppSelector(selectAppMode);
 
     const analysisTool = useAppSelector(selectActiveAnalysisTool);
@@ -103,7 +105,7 @@ export const Layout = () => {
             <AppHeader
                 title={appConfig.title}
                 showDocButton={true}
-                docButtonTooltip="Learn more about Sentinel-1 SAR imagery"
+                docButtonTooltip={t('doc_button_tooltip', { ns: APP_NAME })}
             />
             <BottomPanel>
                 <div className="flex flex-shrink-0">

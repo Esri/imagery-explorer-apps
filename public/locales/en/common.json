@@ -206,6 +206,8 @@
     "vegetation": "__vegetation",
     "water": "__water",
     "water_anomaly": "__water anomaly",
+    "ship": "__ship",
+    "built_up": "__built-up",
 
     "name": "__Name",
     "satellite": "__Satellite",

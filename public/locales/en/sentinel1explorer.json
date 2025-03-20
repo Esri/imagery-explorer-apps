@@ -35,5 +35,38 @@
     
     "water_anomaly_index_colorized_description": "__A water anomaly index with a color map applied. Increased water anomalies are indicated by bright red, orange, and yellow colors. Water anomalies can include oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more.<br /><br /> Computed as Ln(0.01/(0.01 + VV*2)).",
     "water_anomaly_index_colorized_label": "__Water Anomaly",
-    "renderer_header_tooltip": "__<div class='text-left'><p class='mb-2'>Sentinel-1 SAR sensors send and receive radar pulses that echo off the Earth's surface. The echoes returned to the sensor are known as radar backscatter. The amplitude (strength) of the backscatter varies depending on the characteristics of the surface at any given location, resulting in variable dark to bright pixels. Consider the following:</p><p>Smoother surfaces = Lower backscatter = Darker pixels</p><p>Rougher surfaces = Higher backscatter = Brighter pixels</p><p>Water bodies/wet soils = Lower backscatter = Darker pixels</p><p>Vertical objects = Higher backscatter = Brighter pixels</p><p>Thicker vegetation = Lower backscatter = Darker pixels</p><p class='mt-2'>NOTE: In some cases, multiple factors need to be considered simultaneously. For example, water bodies generally have greater signal reflectivity away from the sensor, resulting in lower backscatter and a darker appearance. However, a rough water surface will result in higher backscatter and appear brighter than a smooth water surface.</p></div>."
+    "renderer_header_tooltip": "__<div class='text-left'><p class='mb-2'>Sentinel-1 SAR sensors send and receive radar pulses that echo off the Earth's surface. The echoes returned to the sensor are known as radar backscatter. The amplitude (strength) of the backscatter varies depending on the characteristics of the surface at any given location, resulting in variable dark to bright pixels. Consider the following:</p><p>Smoother surfaces = Lower backscatter = Darker pixels</p><p>Rougher surfaces = Higher backscatter = Brighter pixels</p><p>Water bodies/wet soils = Lower backscatter = Darker pixels</p><p>Vertical objects = Higher backscatter = Brighter pixels</p><p>Thicker vegetation = Lower backscatter = Darker pixels</p><p class='mt-2'>NOTE: In some cases, multiple factors need to be considered simultaneously. For example, water bodies generally have greater signal reflectivity away from the sensor, resulting in lower backscatter and a darker appearance. However, a rough water surface will result in higher backscatter and appear brighter than a smooth water surface.</p></div>.",
+
+    "Ascending": "__Ascending",
+    "Descending": "__Descending",
+
+    "orbit_filter_tooltip": "__Sentinel-1 imagery is collected day and night, on both the light and dark sides of the Earth. As the satellite travels around the Earth, it naturally alternates orbit directions. The pass from north to south is Descending and the pass from south to north is Ascending. Orbit direction should be considered when comparing different images of the same location. For many applications, it is best to select images with the same orbit direction.",
+
+    "mask_tool_tooltip": "__Radar backscatter values can be used to compute a variety of indices. Different thresholds can be applied to these SAR indices to mask and highlight different characteristics of the Earth's surface.",
+    "senitnel1_explorer_attribution": "__Sentinel-1 imagery courtesy of European Space Agency, European Commission, and Microsoft",
+    "doc_button_tooltip": "__Learn more about Sentinel-1 SAR imagery",
+
+    "singapore_name": "__Singapore",
+    "singapore_label": "__Port of Singapore",
+    "singapore_description": "__Due to its strategic location in maritime Southeast Asia, the city of Singapore is home to one of the busiest shipping ports in the world. One fifth of the worlds shipping containers pass through the Port of Singapore. Here you can visually depict shipping vessels in the waters off the southern tip of the Malay Peninsula.",
+    
+    "crater_lake_name": "__Crater Lake",
+    "crater_lake_label": "__Crater Lake",
+    "crater_lake_description": "__Crater Lake sits in a volcanic crater in South-central Oregon in the Western United States. The lake partially fills the caldera left by the collapse of Mount Mazama thousands of years ago. With a maximum depth of 2,148 feet (655 meters) it is the deepest lake in the United States and ranks tenth deepest in the world. Here, the body of the lake is depicted using the Sentinel-1 SAR Water Index (SWI).",
+    
+    "torshavn_name": "__Tórshavn",
+    "torshavn_label": "__Tórshavn, Faroe Islands",
+    "torshavn_description": "__Tórshavn is the capital and largest city of the Faroe Islands. It is among the cloudiest places in the world averaging only 2.4 hours of sunshine per day and 840 hours per year. Since SAR signals penetrate clouds, Sentinel-1 can collect imagery of the islands even when they are enshrouded with clouds.",
+    
+    "amazon_estuary_name": "__Amazon Estuary",
+    "amazon_estuary_label": "__Amazon Estuary",
+    "amazon_estuary_description": "__The Amazon River in South America is the largest river by discharge volume of water in the world and two of the top ten rivers by discharge are tributaries of the Amazon. The river has an average discharge of about 6,591–7,570 km³ (1,581–1,816 mi³) per year, greater than the next seven largest independent rivers combined. The high concentrations of sediment the Amazon carries, and discharges into the Atlantic Ocean, lights up here with this rendering of a water anomaly index.",
+    
+    "richat_name": "__Richat",
+    "richat_label": "__Richat Structure (Eye of the Sahara)",
+    "richat_description": "__The Richat Structure, also known as the Eye of the Sahara, is a prominent circular geological feature in the Sahara Desert. It is an eroded geological dome, 40 km (25 mi) in diameter, exposing sedimentary rock in layers that appear as concentric rings.",
+    
+    "gunak_barlu_name": "__Gunak Barlu",
+    "gunak_barlu_label": "__Garig Gunak Barlu National Park",
+    "gunak_barlu_description": "__Garig Gunak Barlu is a national park in the Northern Territory of Australia on the Cobourg Peninsula. Its name derives from the local Garig language, and the words gunak (land) and barlu (deep water). It is categorized as an IUCN Category II protected area and is home to all six species of Australian marine turtles: green sea turtles, hawksbill sea turtles, flatback sea turtles, leatherback sea turtles, and olive ridley sea turtles."
 }
