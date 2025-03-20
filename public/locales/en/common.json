@@ -208,6 +208,7 @@
     "water_anomaly": "__water anomaly",
     "ship": "__ship",
     "built_up": "__built-up",
+    "log_difference": "__log difference",
 
     "name": "__Name",
     "satellite": "__Satellite",

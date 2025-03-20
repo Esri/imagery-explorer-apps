@@ -68,5 +68,13 @@
     
     "gunak_barlu_name": "__Gunak Barlu",
     "gunak_barlu_label": "__Garig Gunak Barlu National Park",
-    "gunak_barlu_description": "__Garig Gunak Barlu is a national park in the Northern Territory of Australia on the Cobourg Peninsula. Its name derives from the local Garig language, and the words gunak (land) and barlu (deep water). It is categorized as an IUCN Category II protected area and is home to all six species of Australian marine turtles: green sea turtles, hawksbill sea turtles, flatback sea turtles, leatherback sea turtles, and olive ridley sea turtles."
+    "gunak_barlu_description": "__Garig Gunak Barlu is a national park in the Northern Territory of Australia on the Cobourg Peninsula. Its name derives from the local Garig language, and the words gunak (land) and barlu (deep water). It is categorized as an IUCN Category II protected area and is home to all six species of Australian marine turtles: green sea turtles, hawksbill sea turtles, flatback sea turtles, leatherback sea turtles, and olive ridley sea turtles.",
+
+    "change_compare_header_tooltip": "__Compare and report changes between two selected images. Change is always calculated and reported chronologically from oldest to newest. The result of the calculation shows where and how values have changed over time. Specific types of change can be observed by selecting an index. All changes between the selected images can be observed by selecting the Log Difference option which includes all differences in backscatter.",
+    "change_compare_preselection_text": "__Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE. The orbit direction is locked with the first selection for consistency and more reliable change results.",
+
+    "backscatter": "__Backscatter",
+    "vv_amplitude": "__VV Amplitude",
+    "vh_amplitude": "__VH Amplitude",
+    "polarization": "__Polarization"
 }

@@ -49,6 +49,8 @@ import {
 import { useSyncCalendarDateRange } from '../../hooks/useSyncCalendarDateRange';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 import { usePrevious } from '@shared/hooks/usePrevious';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 /**
  * the index that user can select for the Change Compare Tool
@@ -57,25 +59,6 @@ export type ChangeCompareToolOption4Sentinel1 =
     | 'water anomaly'
     | 'water'
     | 'log difference';
-
-const ChangeCompareToolOptions: {
-    value: ChangeCompareToolOption4Sentinel1;
-    label: string;
-}[] = [
-    {
-        value: 'log difference',
-        label: 'Log difference',
-    },
-    // { value: 'vegetation', label: ' Dual-pol Radar Vegetation Index' },
-    {
-        value: 'water anomaly',
-        label: 'Water Anomaly',
-    },
-    {
-        value: 'water',
-        label: 'Water Index',
-    },
-];
 
 const [
     SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE_MIN,
@@ -118,6 +101,8 @@ export const ChangeCompareToolPixelValueRange4Sentinel1: Record<
 export const ChangeCompareToolContainer = () => {
     const dispatch = useAppDispatch();
 
+    const { t } = useTranslation();
+
     const tool = useAppSelector(selectActiveAnalysisTool);
 
     const selectedOption: ChangeCompareToolOption4Sentinel1 = useAppSelector(
@@ -131,12 +116,12 @@ export const ChangeCompareToolContainer = () => {
         //     return ['lower backscatter', 'higher backscatter'];
         // }
 
-        return ['decrease', '', 'increase'];
+        return [t('decrease'), '', t('increase')];
     }, [selectedOption]);
 
     const comparisonTopic = useMemo(() => {
         if (selectedOption === 'log difference') {
-            return 'Backscatter';
+            return t('backscatter', { ns: APP_NAME });
         }
 
         return '';
@@ -147,6 +132,25 @@ export const ChangeCompareToolContainer = () => {
 
         // return data?.label || selectedOption;
     }, [selectedOption]);
+
+    const ChangeCompareToolOptions: {
+        value: ChangeCompareToolOption4Sentinel1;
+        label: string;
+    }[] = [
+        {
+            value: 'log difference',
+            label: t('log_difference'),
+        },
+        // { value: 'vegetation', label: ' Dual-pol Radar Vegetation Index' },
+        {
+            value: 'water anomaly',
+            label: t('water_anomaly'),
+        },
+        {
+            value: 'water',
+            label: t('water_index'),
+        },
+    ];
 
     useSyncCalendarDateRange();
 
@@ -179,13 +183,17 @@ export const ChangeCompareToolContainer = () => {
         <div className={classNames('relative w-full h-full')}>
             <ChangeCompareToolHeader
                 options={ChangeCompareToolOptions}
-                tooltipText="Compare and report changes between two selected images. Change is always calculated and reported chronologically from oldest to newest. The result of the calculation shows where and how values have changed over time. Specific types of change can be observed by selecting an index. All changes between the selected images can be observed by selecting the Log Difference option which includes all differences in backscatter."
+                tooltipText={t('change_compare_header_tooltip', {
+                    ns: APP_NAME,
+                })}
             />
 
             <ChangeCompareToolControls
                 legendLabelText={legendLabelText}
                 comparisonTopic={comparisonTopic}
-                preselectionText="Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE. The orbit direction is locked with the first selection for consistency and more reliable change results."
+                preselectionText={t('change_compare_preselection_text', {
+                    ns: APP_NAME,
+                })}
             />
 
             {selectedOption === 'log difference' && (

@@ -22,9 +22,13 @@ import { selectPolarizationFilter } from '@shared/store/Sentinel1/selectors';
 import React, { useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const PolarizationFilter = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     const selectedPolarizationFilter = useAppSelector(selectPolarizationFilter);
 
@@ -32,12 +36,12 @@ export const PolarizationFilter = () => {
         const data: DropdownData[] = [
             {
                 value: 'VV' as Sentinel1PolarizationFilter,
-                label: 'VV Amplitude',
+                label: t('vv_amplitude', { ns: APP_NAME }),
                 selected: selectedPolarizationFilter === 'VV',
             },
             {
                 value: 'VH' as Sentinel1PolarizationFilter,
-                label: 'VH Amplitude',
+                label: t('vh_amplitude', { ns: APP_NAME }),
                 selected: selectedPolarizationFilter === 'VH',
             },
         ];
@@ -48,7 +52,7 @@ export const PolarizationFilter = () => {
     return (
         <div className="flex justify-right w-full">
             <div className="mr-2 text-right flex-grow">
-                <span className="text-xs">Polarization:</span>
+                <span className="text-xs">{t('polarization')}:</span>
             </div>
 
             <Dropdown

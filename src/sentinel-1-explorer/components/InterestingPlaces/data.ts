@@ -21,6 +21,22 @@ import Richat from './thumbnails/Richat.jpg';
 import Torshavn from './thumbnails/Torshavn.jpg';
 
 import { InterestingPlaceData } from '@typing/shared';
+
+/**
+ * Array of interesting places data for the Sentinel-1 Explorer application.
+ *
+ * Each object represents a location of interest with:
+ * - key: Unique identifier for the location
+ * - location: Geographic coordinates with center point and zoom level
+ * - renderer: The visualization method used for the SAR data
+ * - thumbnail: Reference to the thumbnail image
+ * - name: Key to the translation file for the location name
+ * - label: Key to the translation file for the location label/subtitle
+ * - description: Key to the translation file for the detailed description
+ *
+ * Note: There are commented-out sections containing the actual English text
+ * values, but the application uses translation keys instead.
+ */
 export const data: InterestingPlaceData[] = [
     {
         key: 'singapore',
