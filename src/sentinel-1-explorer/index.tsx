@@ -32,6 +32,7 @@ import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initI18next } from '@shared/i18n/initI18next';
 import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedSentinel1RasterFunctionInfo';
+import { APP_LANGUAGE } from '@shared/constants/UI';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -42,7 +43,7 @@ import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedS
             portalUrl: AGOL_PORTAL_ROOT,
         });
 
-        await initI18next();
+        await initI18next(APP_LANGUAGE);
 
         const store = await getSentinel1ExplorerStore();
 
