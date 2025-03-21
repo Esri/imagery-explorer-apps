@@ -32,6 +32,13 @@ type Props = {
  * @returns
  */
 const getImageURL = (year: number, imageName: string) => {
+    // PLEASE NOTE: This is a temporary solution until the file name of the 2024
+    // data is fixed. The file name of the 2024 data is not consistent with the
+    // file name of the 2017-2023 data.
+    if (year === 2024) {
+        return `${LULC_TIMESERIES_STORE}/lc${year}/${imageName}_${year}0101-${year}1231.tif`;
+    }
+
     const nextYear = year + 1;
     return `${LULC_TIMESERIES_STORE}/lc${year}/${imageName}_${year}0101-${nextYear}0101.tif`;
 };
@@ -148,7 +155,7 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
 
         const graphic = featureSet?.features[0];
 
-        mapView.popup.open({
+        mapView.openPopup({
             location: mapPoint,
             // features: featureSet.features,
             // featureMenuOpen: true
