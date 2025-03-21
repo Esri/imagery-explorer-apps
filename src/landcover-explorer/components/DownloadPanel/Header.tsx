@@ -31,7 +31,7 @@ const Header: FC<Props> = () => {
             const separator = index === years.length - 1 ? ' ' : ', ';
 
             return (
-                <>
+                <span key={year}>
                     <a
                         className="underline"
                         href={url}
@@ -41,7 +41,7 @@ const Header: FC<Props> = () => {
                         {year}
                     </a>
                     {separator}
-                </>
+                </span>
             );
         });
 
