@@ -21,6 +21,7 @@ import { modeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectMapMode } from '@shared/store/LandcoverExplorer/selectors';
 import { saveMapModeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { Button } from '@shared/components/Button';
+import { useTranslation } from 'react-i18next';
 
 // const BTN_CLASSNAMES =
 //     'p-1 mx-2 cursor-pointer uppercase flex items-center border-b';
@@ -31,6 +32,8 @@ type Props = {
 
 export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     const activeMode = useAppSelector(selectMapMode);
 
@@ -57,7 +60,7 @@ export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                         dispatch(modeChanged('step'));
                     }}
                 >
-                    <span className="uppercase">Animate</span>
+                    <span className="uppercase">{t('animate')}</span>
                 </Button>
             </div>
 
@@ -71,7 +74,7 @@ export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                         dispatch(modeChanged('swipe'));
                     }}
                 >
-                    <span className="uppercase">Swipe</span>
+                    <span className="uppercase">{t('swipe')}</span>
                 </Button>
             </div>
             {/* <div

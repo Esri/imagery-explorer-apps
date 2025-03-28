@@ -1,3 +1,23 @@
 {
-    
+    "sentinel_layer_title": "__Sentinel-2 Imagery",
+    "land_cover_layer_title": "__10m Land Cover",
+    "swipe_mode_subtitle": "__Choose Two Years to Compare",
+    "animate_mode_subtitle": "__Choose a Year to View",
+    "swipe_mode_zoom_message": "__Zoom in to compare Sentinel-2 Imagery Layers",
+    "animate_mode_zoom_message": "__Zoom in to enable time slider",
+    "sentinel2_renderers_title": "__Visual Renderings",
+    "sentinel2_renderers_subtitle": "__Click to Toggle Visibility",
+
+    "renderer_natural_color_label": "__Natural Color",
+    "renderer_natural_color_description": "__Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",
+    "renderer_swir_label": "__SWIR",
+    "renderer_swir_description": "__Bands shortwave infrared-2, shortwave infrared-1, red (12, 11, 4) with dynamic range adjustment applied.",
+    "renderer_agriculture_label": "__Agriculture",
+    "renderer_agriculture_description": "__Bands shortwave IR-1, near-IR, blue (11, 8, 2) with dynamic range adjustment applied. Vigorous vegetation bright green, stressed vegetation dull green, and bare areas as brown.",
+    "renderer_ndvi_label": "__NDVI",
+    "renderer_ndvi_description": "__Normalized difference vegetation index (NDVI) with colormap. Dark green represents vigorous vegetation and brown represents sparse vegetation. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.",
+    "renderer_color_ir_label": "__Color IR",
+    "renderer_color_ir_description": "__Bands near-infrared, red, green (8,4,3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red",
+    "renderer_ndmi_label": "__NDMI",
+    "renderer_ndmi_description": "__Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11)."
 }

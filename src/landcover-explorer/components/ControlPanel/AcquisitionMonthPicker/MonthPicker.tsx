@@ -22,6 +22,7 @@ import { sentinel2AquisitionMonthChanged } from '@shared/store/LandcoverExplorer
 import { selectSentinel2AquisitionMonth } from '@shared/store/LandcoverExplorer/selectors';
 import { saveActiveMonthToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
+import { useTranslation } from 'react-i18next';
 
 const MONTH_ABBR = [
     'JAN',
@@ -45,13 +46,17 @@ type Props = {
 const MonthPicker: FC<Props> = ({ disabled }: Props) => {
     const dispatch = useAppDispatch();
 
+    const { t } = useTranslation();
+
     const selectedMonth = useAppSelector(selectSentinel2AquisitionMonth);
 
     const dropdownData: DropdownData[] = useMemo(() => {
         return MONTH_ABBR.map((month, index) => {
             return {
                 value: index.toString(),
-                label: month,
+                label: t(month.toLowerCase(), {
+                    defaultValue: month, // Fallback to the month abbreviation if translation is not available
+                }),
                 selected: selectedMonth === index + 1,
             };
         });

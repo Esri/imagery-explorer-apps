@@ -22,6 +22,8 @@ import {
     RasterFunctionData,
     Sentinel2RasterFunction,
 } from './Sentinel2LayerRasterFunctionsListContainer';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     data: RasterFunctionData[];
@@ -47,11 +49,13 @@ const Sentinel2LayerRasterFunctionsList: FC<Props> = ({
     const containerRef = useRef<HTMLDivElement>();
     useGetTooltipPositionOnHover(containerRef);
 
+    const { t } = useTranslation();
+
     return (
         <div className="text-center mx-4 my-4 md:my-0" ref={containerRef}>
             <HeaderText
-                title="Visual Renderings"
-                subTitle="Click to Toggle Visibility"
+                title={t('sentinel2_renderers_title', { ns: APP_NAME })}
+                subTitle={t('sentinel2_renderers_subtitle', { ns: APP_NAME })}
             />
 
             <div
@@ -60,7 +64,14 @@ const Sentinel2LayerRasterFunctionsList: FC<Props> = ({
                 })}
             >
                 {data.map((d) => {
-                    const { name, label, description, thumbnail } = d;
+                    const {
+                        name,
+                        label,
+                        description,
+                        thumbnail,
+                        translationKeyDescription,
+                        translationKeyLabel,
+                    } = d;
 
                     const isSelected = name === selectedRasterFunction;
 
@@ -78,7 +89,9 @@ const Sentinel2LayerRasterFunctionsList: FC<Props> = ({
                             onClick={onSelect.bind(null, name)}
                             onMouseEnter={() => {
                                 itemOnHover({
-                                    content: description,
+                                    content: t(translationKeyDescription, {
+                                        ns: APP_NAME,
+                                    }),
                                 });
                             }}
                             onMouseLeave={() => {
@@ -87,7 +100,7 @@ const Sentinel2LayerRasterFunctionsList: FC<Props> = ({
                         >
                             <img src={thumbnail} />
                             <span className="ml-2 text-xs 2xl:text-sm">
-                                {label}
+                                {t(translationKeyLabel, { ns: APP_NAME })}
                             </span>
                         </div>
                     );

@@ -20,8 +20,12 @@ import {
 import React from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import HeaderText from '../HeaderText/HeaderText';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const TimeSelectorHeader = () => {
+    const { t } = useTranslation();
+
     const mode = useAppSelector(selectMapMode);
 
     const shouldShowSentinel2Layer = useAppSelector(
@@ -32,13 +36,13 @@ export const TimeSelectorHeader = () => {
         <HeaderText
             title={`${
                 shouldShowSentinel2Layer
-                    ? 'Sentinel-2 Imagery'
-                    : '10m Land Cover'
+                    ? t('sentinel_layer_title', { ns: APP_NAME })
+                    : t('land_cover_layer_title', { ns: APP_NAME })
             }`}
             subTitle={
                 mode === 'swipe'
-                    ? 'Choose Two Years to Compare'
-                    : 'Choose a Year to View'
+                    ? t('swipe_mode_subtitle', { ns: APP_NAME })
+                    : t('animate_mode_subtitle', { ns: APP_NAME })
             }
         />
     );
