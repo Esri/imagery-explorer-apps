@@ -17,11 +17,14 @@ import React, { CSSProperties, useState } from 'react';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
 import { delay } from '@shared/utils/snippets/delay';
 import {
-    COPIED_LINK_MESSAGE_STRING,
+    // COPIED_LINK_MESSAGE_STRING,
     COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS,
 } from '@shared/constants/UI';
+import { useTranslation } from 'react-i18next';
 
 export const CopyLinkWidget = () => {
+    const { t } = useTranslation();
+
     const [notificationMessage, setNotificationMessage] =
         useState<React.ReactNode>();
 
@@ -40,7 +43,7 @@ export const CopyLinkWidget = () => {
                         } as CSSProperties
                     }
                 />
-                <span className=" lin">{COPIED_LINK_MESSAGE_STRING}</span>
+                <span className=" lin">{t('link_copied_to_clipboard')}</span>
             </>
         );
 
@@ -54,7 +57,7 @@ export const CopyLinkWidget = () => {
             // topPosition={130}
             onClickHandler={onClickHandler}
             notificationMessage={notificationMessage}
-            tooltip={'Copy link to this app in its current state'}
+            tooltip={t('copy_link_tooltip')}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"

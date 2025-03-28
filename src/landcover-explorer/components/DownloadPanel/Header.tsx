@@ -16,12 +16,16 @@
 import React, { FC } from 'react';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { LULC_TIMESERIES_STORE } from '@landcover-explorer/constants';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     // closeButtonOnClick: () => void;
 };
 
 const Header: FC<Props> = () => {
+    const { t } = useTranslation();
+
     const years = getAvailableYears();
 
     const getBulkDownloadLinks = () => {
@@ -47,9 +51,8 @@ const Header: FC<Props> = () => {
 
         return (
             <span>
-                Alternatively, click on the following links to bulk download all
-                tiles for each year as a zip file: <br /> {links}(Each annual
-                zip download is approximately 60 GB).
+                {t('bulk_download_instruction', { ns: APP_NAME })}: <br />{' '}
+                {links}({t('zip_file_size_info', { ns: APP_NAME })}).
             </span>
         );
     };
@@ -58,13 +61,16 @@ const Header: FC<Props> = () => {
         <div className="relative text-custom-light-blue flex justify-between items-center mb-4 z-10">
             <div className="flex items-center justify-between w-full">
                 <h5 className="uppercase mr-4 mb-2 text-xl">
-                    Sentinel-2 10m Land Use/Land Cover Download
+                    {t('download_panel_header', {
+                        ns: APP_NAME,
+                    })}
                 </h5>
 
                 <div className="text-sm text-left">
                     <span>
-                        Click on the map to select a tile and year to download
-                        individual GeoTIFF files.
+                        {t('download_panel_instruction', {
+                            ns: APP_NAME,
+                        })}
                     </span>{' '}
                     <br />
                     {getBulkDownloadLinks()}

@@ -14,6 +14,7 @@
  */
 
 import { Point } from '@arcgis/core/geometry';
+import { t } from 'i18next';
 
 /**
  * Check and see if user clicked on the left side of the swipe widget
@@ -61,7 +62,7 @@ export const getPopUpContentWithLocationInfo = (
     const locationInfoHTML = `
         <div 
             class='popup-location-info-container text-custom-light-blue text-xs cursor-pointer' 
-            title="Click to copy the coordinates of this location"
+            title="${t('click_to_copy_coordinates')}"
         >
             <div class='popup-location-info-content'>
                 ${coordinatesHTML}
@@ -86,8 +87,9 @@ export const getPopUpContentWithLocationInfo = (
             )}`
         );
 
-        locationInfoContent.innerHTML =
-            '<span>Cooridnates copied to clipboard</span>';
+        locationInfoContent.innerHTML = `<span>${t(
+            'coordinates_copied_to_clipboard'
+        )}</span>`;
 
         setTimeout(() => {
             locationInfoContent.innerHTML = coordinatesHTML;

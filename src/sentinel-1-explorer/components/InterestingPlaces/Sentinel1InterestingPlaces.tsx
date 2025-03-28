@@ -13,10 +13,23 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { data } from './data';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const Sentinel1InterestingPlaces = () => {
-    return <InterestingPlaces data={data} isThreeColumnGrid={true} />;
+    const { t } = useTranslation();
+
+    const translatedData = useMemo(() => {
+        return data.map((place) => ({
+            ...place,
+            name: t(place.name, { ns: APP_NAME }),
+            label: t(place.label, { ns: APP_NAME }),
+            description: t(place.description, { ns: APP_NAME }),
+        }));
+    }, [data]);
+
+    return <InterestingPlaces data={translatedData} isThreeColumnGrid={true} />;
 };

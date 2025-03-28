@@ -13,10 +13,31 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { data } from './data';
 import { InterestingPlaces } from '@shared/components/InterestingPlaces';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const LandsatInterestingPlaces = () => {
-    return <InterestingPlaces data={data} />;
+    const { t } = useTranslation();
+
+    const localizedData = useMemo(() => {
+        return data.map((item) => {
+            return {
+                ...item,
+                label: t(item.label, {
+                    ns: APP_NAME,
+                }),
+                description: t(item.description, {
+                    ns: APP_NAME,
+                }),
+                name: t(item.name, {
+                    ns: APP_NAME,
+                }),
+            };
+        });
+    }, [data]);
+
+    return <InterestingPlaces data={localizedData} />;
 };

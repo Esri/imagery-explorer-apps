@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
-    SENTINEL1_RASTER_FUNCTION_INFOS,
+    // SENTINEL1_RASTER_FUNCTION_INFOS,
     Sentinel1FunctionName,
 } from '@shared/services/sentinel-1/config';
 
@@ -31,6 +31,7 @@ import SAR_FalseColorComposite_Legend from './legends/SAR_FalseColorComposite_Le
 import SAR_SingleBandV2_Legend from './legends/SAR_SingleBandV2_Legend.png';
 import SAR_WaterAnomaly_Legend from './legends/SAR_WaterAnomaly_Legend.png';
 import SAR_WaterIndex_Legend from './legends/SAR_WaterIndex_Legend.png';
+import { AppContext } from '@shared/contexts/AppContextProvider';
 
 const Sentinel1RendererThumbnailByName: Partial<
     Record<Sentinel1FunctionName, string>
@@ -56,29 +57,27 @@ const Sentinel1RendererLegendByName: Partial<
     'SWI Colorized': SAR_WaterIndex_Legend,
 };
 
-export const getSentinel1RasterFunctionInfo = (): RasterFunctionInfo[] => {
-    return SENTINEL1_RASTER_FUNCTION_INFOS.slice(0, 5).map((d) => {
-        const name: Sentinel1FunctionName = d.name as Sentinel1FunctionName;
-
-        const thumbnail = Sentinel1RendererThumbnailByName[name] || null;
-        const legend = Sentinel1RendererLegendByName[name] || null;
-
-        return {
-            ...d,
-            thumbnail,
-            legend,
-        } as RasterFunctionInfo;
-    });
-};
-
 /**
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
 export const useSentinel1RasterFunctions = (): RasterFunctionInfo[] => {
+    const { rasterFunctionInfo } = useContext(AppContext);
+
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        return getSentinel1RasterFunctionInfo();
-    }, []);
+        return rasterFunctionInfo.slice(0, 5).map((d) => {
+            const name: Sentinel1FunctionName = d.name as Sentinel1FunctionName;
+
+            const thumbnail = Sentinel1RendererThumbnailByName[name] || null;
+            const legend = Sentinel1RendererLegendByName[name] || null;
+
+            return {
+                ...d,
+                thumbnail,
+                legend,
+            } as RasterFunctionInfo;
+        });
+    }, [rasterFunctionInfo]);
 
     return rasterFunctionInfosWithThumbnail;
 };

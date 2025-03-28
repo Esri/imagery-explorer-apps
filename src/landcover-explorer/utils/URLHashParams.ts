@@ -32,12 +32,12 @@ type UrlHashParamKey =
     | 'saveWebMap';
 
 const SupportedSentinel2RasterFunctions: Sentinel2RasterFunction[] = [
-    'Natural Color with DRA',
-    'Agriculture with DRA',
-    'Color Infrared with DRA',
-    'Short-wave Infrared with DRA',
-    'NDVI Colormap',
-    'NDMI Colorized',
+    'Natural Color for Visualization',
+    'Agriculture for Visualization',
+    'Color Infrared for Visualization',
+    'Short-wave Infrared for Visualization',
+    'NDVI Colorized for Visualization',
+    'NDMI Colorized for Visualization',
 ];
 
 let hashParams: URLSearchParams = null; //new URLSearchParams(window.location.hash.slice(1));

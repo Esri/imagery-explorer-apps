@@ -20,6 +20,7 @@ import {
 } from '@shared/utils/esri-oauth';
 import React, { FC } from 'react';
 import './SignedUserHeader.css';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     onSignOut: () => void;
@@ -27,6 +28,8 @@ type Props = {
 };
 
 export const SignedUserHeader: FC<Props> = ({ onSignOut, onSwitchAccount }) => {
+    const { t } = useTranslation();
+
     const signedInUser = getSignedInUser();
 
     const profileSettingsPageURL = getProfileSettingsURL();
@@ -77,13 +80,13 @@ export const SignedUserHeader: FC<Props> = ({ onSignOut, onSwitchAccount }) => {
                             className="underline cursor-pointer"
                             onClick={onSignOut}
                         >
-                            log out
+                            {t('log_out')}
                         </span>
                         <span
                             className="underline cursor-pointer ml-2"
                             onClick={onSwitchAccount}
                         >
-                            switch account
+                            {t('switch_account')}
                         </span>
                     </div>
                     {/* <calcite-icon

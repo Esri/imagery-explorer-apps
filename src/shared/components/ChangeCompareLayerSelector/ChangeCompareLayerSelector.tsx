@@ -19,6 +19,7 @@ import { Button } from '../Button';
 import { Dropdown } from '../Dropdown';
 import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
+import { useTranslation } from 'react-i18next';
 
 export type ActiveScene4ChangeCompareTool = 'scene a' | 'scene b';
 
@@ -67,19 +68,23 @@ const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
     nameOfScene,
     queryParams4ActiveScene,
 }) => {
+    const { t } = useTranslation();
+
+    const nameLabel = nameOfScene === 'scene a' ? t('scene_a') : t('scene_b');
+
     if (!queryParams4ActiveScene || !queryParams4ActiveScene.acquisitionDate) {
         return (
             <div className="text-xs normal-case">
-                <span>choose</span>
+                <span>{t('choose')}</span>
                 <br />
-                <span className="uppercase">{nameOfScene}</span>
+                <span className="uppercase">{nameLabel}</span>
             </div>
         );
     }
 
     return (
         <div className="text-xs normal-case">
-            <span className="uppercase">{nameOfScene}</span>
+            <span className="uppercase">{nameLabel}</span>
             <br />
             <span className="">{queryParams4ActiveScene.acquisitionDate}</span>
         </div>
@@ -96,6 +101,8 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
     // selectedSpectralIndexOnChange,
     viewChangeButtonDisabled,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div>
             {/* <div className="mb-2">
@@ -199,9 +206,9 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     }
                 >
                     <div className="text-xs normal-case">
-                        <span className="uppercase">view change</span>
+                        <span className="uppercase">{t('view_change')}</span>
                         <br />
-                        <span>Scene A - Scene B</span>
+                        <span>{t('scene_a_scene_b')}</span>
                     </div>
                 </Button>
             </div>

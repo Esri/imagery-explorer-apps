@@ -34,8 +34,8 @@ export const selectTooltipData = (state: RootState) => state.UI.tooltipData;
 export const selectShouldShowDownloadAnimationPanel = (state: RootState) =>
     state.UI.showDownloadAnimationPanel;
 
-export const selectNameOfSelectedInterestingPlace = (state: RootState) =>
-    state.UI.nameOfSelectedInterestingPlace;
+export const selectKeyOfSelectedInterestingPlace = (state: RootState) =>
+    state.UI.keyOfSelectedInterestingPlace;
 
 export const selectShowDownloadPanel = (state: RootState) =>
     state.UI.showDownloadPanel;

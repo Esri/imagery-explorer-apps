@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
-    SENTINEL2_RASTER_FUNCTION_INFOS,
+    // SENTINEL2_RASTER_FUNCTION_INFOS,
     Sentinel2FunctionName,
 } from '@shared/services/sentinel-2/config';
 
@@ -35,6 +35,7 @@ import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 import MNDWILegend from './legends/MNDWI.png';
 import NDVILegend from './legends/NDVI.png';
 import NDMILegend from './legends/NDMI.png';
+import { AppContext } from '@shared/contexts/AppContextProvider';
 
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
     {
@@ -63,29 +64,27 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
     'Urban for Visualization': null,
 };
 
-export const getSentinel2RasterFunctionInfo = (): RasterFunctionInfo[] => {
-    return SENTINEL2_RASTER_FUNCTION_INFOS.map((d) => {
-        const name: Sentinel2FunctionName = d.name as Sentinel2FunctionName;
-
-        const thumbnail = Sentinel2RendererThumbnailByName[name];
-        const legend = Sentinel2RendererLegendByName[name];
-
-        return {
-            ...d,
-            thumbnail,
-            legend,
-        } as RasterFunctionInfo;
-    });
-};
-
 /**
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
 export const useSentinel2RasterFunctions = (): RasterFunctionInfo[] => {
+    const { rasterFunctionInfo } = useContext(AppContext);
+
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        return getSentinel2RasterFunctionInfo();
-    }, []);
+        return rasterFunctionInfo.map((d) => {
+            const name: Sentinel2FunctionName = d.name as Sentinel2FunctionName;
+
+            const thumbnail = Sentinel2RendererThumbnailByName[name];
+            const legend = Sentinel2RendererLegendByName[name];
+
+            return {
+                ...d,
+                thumbnail,
+                legend,
+            } as RasterFunctionInfo;
+        });
+    }, [rasterFunctionInfo]);
 
     return rasterFunctionInfosWithThumbnail;
 };

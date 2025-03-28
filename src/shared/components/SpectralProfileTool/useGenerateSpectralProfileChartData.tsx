@@ -22,6 +22,7 @@ import {
     formatBandValuesAsLineChartDataItems,
     getFillColorByLandCoverType,
 } from '@shared/components/SpectralProfileTool/helpers';
+import { useTranslation } from 'react-i18next';
 
 /**
  * A custom hook that converts the band values from a user-selected location and
@@ -43,6 +44,8 @@ export const useGenerateSpectralProfileChartData = (
     spectralProfileDataByLandCoverTypes: SpectralProfileDataByLandCoverType,
     landCoverType: LandCoverType
 ) => {
+    const { t } = useTranslation();
+
     const chartData: LineGroupData[] = useMemo(() => {
         if (
             !bandValuesFromSelectedLocation ||
@@ -68,14 +71,14 @@ export const useGenerateSpectralProfileChartData = (
         const lineChartData4SelectedLocation =
             formatBandValuesAsLineChartDataItems({
                 bandValues: bandValuesFromSelectedLocation,
-                title: 'Selected Value',
+                title: t('selected_value'),
                 length,
             });
 
         const lineChartData4SelectedLandCoverType =
             formatBandValuesAsLineChartDataItems({
                 bandValues: bandValuesFromSelectedLandCoverType,
-                title: landCoverType,
+                title: t(landCoverType),
                 length,
             });
 

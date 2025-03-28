@@ -17,6 +17,7 @@ import React, { FC } from 'react';
 import { AnimationStatus } from '../../store/UI/reducer';
 import classNames from 'classnames';
 import { AnimationSpeedControl } from './AnimationSpeedControl';
+import { useTranslation } from 'react-i18next';
 
 const ICON_SIZE = 22;
 
@@ -164,6 +165,8 @@ export const AnimationControl: FC<Props> = ({
     statusOnChange,
     speedOnChange,
 }: Props) => {
+    const { t } = useTranslation();
+
     const isAnimtaionOn = status === 'playing' || status === 'pausing';
 
     return (
@@ -186,7 +189,7 @@ export const AnimationControl: FC<Props> = ({
                                 fontSize: `.7rem`,
                             }}
                         >
-                            Add A Scene
+                            {t('add_a_scene')}
                         </span>
                     </div>
                 )}
@@ -213,7 +216,7 @@ export const AnimationControl: FC<Props> = ({
                     <div
                         className=" bg-custom-light-blue-5 px-1"
                         onClick={statusOnChange.bind(null, 'loading')}
-                        title="Play animation"
+                        title={t('play_animation')}
                     >
                         {StartPlayButton}
                     </div>
@@ -228,14 +231,17 @@ export const AnimationControl: FC<Props> = ({
                     </div>
                 )}
                 {isAnimtaionOn && (
-                    <div onClick={copyLinkOnClick} title="Copy animation link">
+                    <div
+                        onClick={copyLinkOnClick}
+                        title={t('copy_animation_link')}
+                    >
                         {CopyLinkButton}
                     </div>
                 )}
                 {isAnimtaionOn && (
                     <div
                         onClick={donwloadButtonOnClick}
-                        title="Download animation"
+                        title={t('download_animation')}
                     >
                         {DownloadButton}
                     </div>

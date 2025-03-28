@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
-    LANDSAT_RASTER_FUNCTION_INFOS,
+    // LANDSAT_RASTER_FUNCTION_INFOS,
     LandsatRasterFunctionName,
 } from '@shared/services/landsat-level-2/config';
 
@@ -36,6 +36,7 @@ import LandsatNDVILegend from './legends/Landsat/NDVI.png';
 import LandsatNDMILegend from './legends/Landsat/NDMI.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
 import { RasterFunctionInfo } from '@typing/imagery-service';
+import { AppContext } from '@shared/contexts/AppContextProvider';
 
 const LandsatRendererThumbnailByName: Record<
     LandsatRasterFunctionName,
@@ -70,30 +71,28 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
     'NDMI Colorized': LandsatNDMILegend,
 };
 
-export const getLandsatRasterFunctionInfo = (): RasterFunctionInfo[] => {
-    return LANDSAT_RASTER_FUNCTION_INFOS.map((d) => {
-        const name: LandsatRasterFunctionName =
-            d.name as LandsatRasterFunctionName;
-
-        const thumbnail = LandsatRendererThumbnailByName[name];
-        const legend = LandsatRendererLegendByName[name];
-
-        return {
-            ...d,
-            thumbnail,
-            legend,
-        } as RasterFunctionInfo;
-    });
-};
-
 /**
  * Get raster function information that includes thumbnail and legend
  * @returns
  */
 export const useLandsatRasterFunctions = (): RasterFunctionInfo[] => {
+    const { rasterFunctionInfo } = useContext(AppContext);
+
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
-        return getLandsatRasterFunctionInfo();
-    }, []);
+        return rasterFunctionInfo.map((d) => {
+            const name: LandsatRasterFunctionName =
+                d.name as LandsatRasterFunctionName;
+
+            const thumbnail = LandsatRendererThumbnailByName[name];
+            const legend = LandsatRendererLegendByName[name];
+
+            return {
+                ...d,
+                thumbnail,
+                legend,
+            } as RasterFunctionInfo;
+        });
+    }, [rasterFunctionInfo]);
 
     return rasterFunctionInfosWithThumbnail;
 };

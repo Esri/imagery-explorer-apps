@@ -37,9 +37,13 @@ import { useAppDispatch } from '@shared/store/configureStore';
 import { Sentinel1MaskLayer } from '../MaskLayer';
 import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootprintLayer';
 import { MapActionButtonGroup } from '@shared/components/MapActionButton';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 // import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 
 export const Map = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     return (
@@ -76,7 +80,11 @@ export const Map = () => {
 
             <Popup />
             <MapMagnifier />
-            <CustomMapArrtribution atrribution="Sentinel-1 imagery courtesy of European Space Agency, European Commission, and Microsoft" />
+            <CustomMapArrtribution
+                atrribution={t('senitnel1_explorer_attribution', {
+                    ns: APP_NAME,
+                })}
+            />
         </MapViewContainer>
     );
 };

@@ -38,7 +38,7 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { LandsatSpectralProfileTool } from '../SpectralTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { ChangeCompareTool } from '../ChangeCompareTool';
-import { appConfig } from '@shared/config';
+import { APP_NAME, appConfig } from '@shared/config';
 import { useQueryAvailableLandsatScenes } from '@landsat-explorer/hooks/useQueryAvailableLandsatScenes';
 import { LandsatRasterFunctionSelector } from '../RasterFunctionSelector';
 import { LandsatInterestingPlaces } from '../InterestingPlaces';
@@ -48,8 +48,15 @@ import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecon
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamicModeInfo';
 import { LandsatSavePanel } from '../LandsatSavePanel/LandsatSavePanel';
+import { useTranslation } from 'react-i18next';
 
 const Layout = () => {
+    const { t } = useTranslation();
+
+    const appTitle = t('esri_landsat_explorer', {
+        ns: APP_NAME,
+    });
+
     const mode = useAppSelector(selectAppMode);
 
     const analysisTool = useAppSelector(selectActiveAnalysisTool);
@@ -72,7 +79,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appConfig.title} />
+                <AppHeader title={appTitle} />
                 <BottomPanel>
                     <div className="mx-auto">
                         <LandsatDynamicModeInfo />
@@ -86,7 +93,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={appConfig.title} />
+            <AppHeader title={appTitle} />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />

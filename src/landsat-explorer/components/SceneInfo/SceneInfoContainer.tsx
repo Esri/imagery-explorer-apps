@@ -25,8 +25,11 @@ import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone
 import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
 import { LandsatScene } from '@typing/imagery-service';
 import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
+import { useTranslation } from 'react-i18next';
 
 export const SceneInfoContainer = () => {
+    const { t } = useTranslation();
+
     const mode = useAppSelector(selectAppMode);
 
     const fetchSceneByObjectId = useCallback(async (objectId: number) => {
@@ -62,7 +65,8 @@ export const SceneInfoContainer = () => {
             // the produt id is too long to be displayed in one row,
             // therefore we need to split it into two separate rows
             {
-                name: 'Scene ID',
+                // name: 'Scene ID',
+                name: t('scene_id'),
                 value: name, //name.slice(0, 17),
                 clickToCopy: true,
             },
@@ -71,19 +75,23 @@ export const SceneInfoContainer = () => {
             //     value: name.slice(17),
             // },
             {
-                name: 'Satellite',
+                // name: 'Satellite',
+                name: t('satellite'),
                 value: satellite,
             },
             {
-                name: 'Sensor',
+                // name: 'Sensor',
+                name: t('sensor'),
                 value: sensor,
             },
             {
-                name: 'Correction',
+                // name: 'Correction',
+                name: t('correction'),
                 value: correctionLevel,
             },
             {
-                name: 'Path, Row',
+                // name: 'Path, Row',
+                name: t('path_row'),
                 value: path.toString() + ', ' + row.toString(),
             },
             // {
@@ -91,19 +99,23 @@ export const SceneInfoContainer = () => {
             //     value: row.toString(),
             // },
             {
-                name: 'Acquired',
+                // name: 'Acquired',
+                name: t('acquired'),
                 value: formatInUTCTimeZone(acquisitionDate, DATE_FORMAT),
             },
             {
-                name: 'Sun Elevation',
+                // name: 'Sun Elevation',
+                name: t('sun_elevation'),
                 value: sunElevation.toFixed(3),
             },
             {
-                name: 'Sun Azimuth',
+                // name: 'Sun Azimuth',
+                name: t('sun_azimuth'),
                 value: sunAzimuth.toFixed(3),
             },
             {
-                name: 'Cloud Cover',
+                // name: 'Cloud Cover',
+                name: t('cloud_cover'),
                 value: `${formattedCloudCover}%`,
             },
         ];

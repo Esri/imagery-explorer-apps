@@ -36,7 +36,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
-import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
+// import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { SpectralIndex } from '@typing/imagery-service';
 import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
@@ -45,8 +45,11 @@ import {
 } from './SurfaceTempPixelRangeSlider';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 import { useLandsatMaskToolFullPixelValueRange } from './useLandsatMaskToolFullPixelValueRange';
+import { useTranslation } from 'react-i18next';
 
 export const MaskToolContainer = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const tool = useAppSelector(selectActiveAnalysisTool);
@@ -98,27 +101,36 @@ export const MaskToolContainer = () => {
                 dropdownListOptions={[
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'WATER INDEX',
+                        // label: 'WATER INDEX',
+                        label: t('water_index'),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'VEGETATION INDEX',
+                        // label: 'VEGETATION INDEX',
+                        label: t('vegetation_index'),
                     },
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'MOISTURE INDEX',
+                        // label: 'MOISTURE INDEX',
+                        label: t('moisture_index'),
                     },
                     {
                         value: 'temperature farhenheit' as SpectralIndex,
-                        label: 'SURFACE TEMP °F',
+                        // label: 'SURFACE TEMP °F',
+                        label: t('surface_temp_with_unit', {
+                            unit: '°F',
+                        }),
                     },
                     {
                         value: 'temperature celcius' as SpectralIndex,
-                        label: 'SURFACE TEMP °C',
+                        // label: 'SURFACE TEMP °C',
+                        label: t('surface_temp_with_unit', {
+                            unit: '°C',
+                        }),
                     },
                 ]}
                 selectedValue={selectedSpectralIndex}
-                tooltipText={MASK_TOOL_HEADER_TOOLTIP}
+                tooltipText={t('mask_tool_tooltip')}
                 dropdownMenuSelectedItemOnChange={(val) => {
                     dispatch(
                         selectedIndex4MaskToolChanged(val as SpectralIndex)
@@ -132,7 +144,9 @@ export const MaskToolContainer = () => {
                 <>
                     <div className={classNames('relative w-full h-[120px]')}>
                         <div className="absolute top-3 right-0">
-                            <TotalVisibleAreaInfo label="Estimated Mask Area" />
+                            <TotalVisibleAreaInfo
+                                label={t('estimated_mask_area')}
+                            />
                         </div>
 
                         {selectedSpectralIndex === 'temperature celcius' && (

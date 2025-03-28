@@ -16,6 +16,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DropdownData } from '@shared/components/Dropdown';
 import { useAvailableAcquisitionYears } from './useAvailableAcquisitionYears';
+import { useTranslation } from 'react-i18next';
 
 /**
  * This custom hook fetches the time extent of the active imagery service and finds the years that come with available data.
@@ -29,6 +30,7 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
     acquisitionYear: number,
     shouldIncludePast12MonthsAsOption?: boolean
 ): DropdownData[] => {
+    const { t } = useTranslation();
     /**
      * Array of years derived from the data obtained from the chosen imagery service.
      *
@@ -55,7 +57,7 @@ export const useAcquisitionYearsAsDropdownMenuOptions = (
         if (shouldIncludePast12MonthsAsOption) {
             options.push({
                 value: '',
-                label: 'Past 12 Months'.toUpperCase(),
+                label: t('past_12_months').toUpperCase(),
                 selected: acquisitionYear === null,
             });
         }

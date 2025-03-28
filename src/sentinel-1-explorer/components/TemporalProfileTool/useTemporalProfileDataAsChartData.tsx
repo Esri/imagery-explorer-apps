@@ -28,6 +28,7 @@ import {
     calcRadarIndex,
     getSentinel1PixelValueRangeByRadarIndex,
 } from '@shared/services/sentinel-1/helper';
+import { DATE_FORMAT_TEMPORAL_PROFILE } from '@shared/constants/UI';
 
 /**
  * Converts Sentinel-1 temporal profile data to chart data.
@@ -63,7 +64,7 @@ const convertSentinel1TemporalProfileData2ChartData = (
 
         const tooltip = `${formatInUTCTimeZone(
             acquisitionDate,
-            'LLL yyyy'
+            DATE_FORMAT_TEMPORAL_PROFILE
         )}: ${y.toFixed(4)}`;
 
         return {

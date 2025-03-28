@@ -15,6 +15,7 @@
 
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { Slider } from '../Slider';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -153,6 +154,8 @@ export const AnimationSpeedSlider: FC<AnimationSpeedSliderProps> = ({
  * @returns
  */
 export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             // id="cloud-filter-container"
@@ -179,7 +182,7 @@ export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
             />
 
             <div className="text-xs text-center mt-1">
-                <span>speed</span>
+                <span>{t('speed')}</span>
             </div>
         </div>
     );

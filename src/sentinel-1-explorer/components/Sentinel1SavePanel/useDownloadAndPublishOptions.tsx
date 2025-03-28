@@ -30,6 +30,8 @@ import {
 } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 import { selectSelectedIndex4MaskTool } from '@shared/store/MaskTool/selectors';
 import { RadarIndex } from '@typing/imagery-service';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 /**
  * Custom hook that provides options for downloading and publishing based on the application mode,
@@ -38,6 +40,8 @@ import { RadarIndex } from '@typing/imagery-service';
  * @returns {Object} An object containing `publishOptions`.
  */
 export const useSentinel1PublishOptions = () => {
+    const { t } = useTranslation();
+
     const mode = useAppSelector(selectAppMode);
 
     const analyzeTool = useAppSelector(selectActiveAnalysisTool);
@@ -124,7 +128,7 @@ export const useSentinel1PublishOptions = () => {
                 saveJobType: PublishAndDownloadJobType.PublishIndexMask,
                 disabled,
                 message: disabled
-                    ? 'Ship and Urban Index Masks are currently unavailable to Save'
+                    ? t('ship_urban_index_unavailable', { ns: APP_NAME })
                     : '',
             });
         }

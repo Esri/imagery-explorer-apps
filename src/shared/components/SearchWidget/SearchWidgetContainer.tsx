@@ -21,12 +21,15 @@ import SearchWidget from './SearchWidget';
 import MapView from '@arcgis/core/views/MapView';
 import classNames from 'classnames';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     mapView?: MapView;
 };
 
 export const SearchWidgetContainer: FC<Props> = ({ mapView }) => {
+    const { t } = useTranslation();
+
     const containerRef = React.useRef<HTMLDivElement>();
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
@@ -44,7 +47,7 @@ export const SearchWidgetContainer: FC<Props> = ({ mapView }) => {
     return (
         <div className="relative" ref={containerRef}>
             <MapActionButton
-                tooltip="Open Search Widget"
+                tooltip={t('open_search_widget')}
                 onClickHandler={() => {
                     setIsSearchWidgetOpen(!isSearchWidgetOpen);
                 }}

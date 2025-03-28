@@ -18,6 +18,8 @@ import { Slider } from '../Slider';
 import { ColorPicker } from './ColorPicker';
 import classNames from 'classnames';
 import { Tooltip } from '../Tooltip';
+import { use } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -45,14 +47,13 @@ export const RenderingControls: FC<Props> = ({
     shouldClipOnToggle,
     transparenceOnChange,
 }: Props) => {
+    const { t } = useTranslation();
+
     return (
         <div className="flex items-center calcite-mode-dark select-none">
             <div className="flex items-center">
                 <div className="cursor-pointer" onClick={shouldClipOnToggle}>
-                    <Tooltip
-                        content="Show selected index pixels as a clipping mask, rather than as a solid color."
-                        width={200}
-                    >
+                    <Tooltip content={t('clipping_mask_info')} width={200}>
                         {shouldClip ? (
                             <calcite-icon icon="check-square" scale="s" />
                         ) : (
@@ -61,7 +62,7 @@ export const RenderingControls: FC<Props> = ({
                     </Tooltip>
                 </div>
                 <span className="text-xs ml-2 max-w-[90px] leading-none">
-                    Clip to mask
+                    {t('clip_to_mask')}
                 </span>
             </div>
 

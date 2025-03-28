@@ -23,6 +23,7 @@ import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 import { imageDataToBlob } from '@shared/utils/snippets/imageData2Blob';
 import { delay } from '@shared/utils/snippets/delay';
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     mapView?: MapView;
@@ -30,6 +31,8 @@ type Props = {
 
 export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
     const shouldHideBottomPanel = useAppSelector(selectHideBottomPanel);
+
+    const { t } = useTranslation();
 
     const [isCapturingScreenshot, setIsCapturingScreenshot] =
         useState<boolean>(false);
@@ -65,7 +68,7 @@ export const ScreenshotWidget: FC<Props> = ({ mapView }) => {
             <MapActionButton
                 // topMarging={4}
                 showLoadingIndicator={isCapturingScreenshot}
-                tooltip="Save this map view as an image"
+                tooltip={t('save_map_view_as_image')}
                 disabled={disabled}
                 onClickHandler={onClickHandler}
             >

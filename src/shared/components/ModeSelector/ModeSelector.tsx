@@ -18,6 +18,7 @@ import { Button } from '../Button';
 import { AppMode } from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
 import { ContainerOfSecondaryControls } from './ContainerOfSecondaryControls';
+import { useTranslation } from 'react-i18next';
 
 const modes: AppMode[] = ['swipe', 'animate', 'analysis'];
 const exploreModes: AppMode[] = ['dynamic', 'find a scene'];
@@ -46,12 +47,18 @@ export const ModeSelector: FC<Props> = ({
     disabled,
     selectedModeOnChange,
 }: Props) => {
+    const { t } = useTranslation();
+
     const getFormattedModeName = (mode: AppMode) => {
         if (mode === 'analysis') {
-            return 'Analyze';
+            return t('analysis');
         }
 
-        return mode;
+        if (mode === 'find a scene') {
+            return t('find_a_scene');
+        }
+
+        return t(mode);
     };
 
     const isExploreButtonSelected =
@@ -82,7 +89,7 @@ export const ModeSelector: FC<Props> = ({
                             isExploreButtonSelected ? 'right' : null
                         }
                     >
-                        <span className="uppercase">Explore</span>
+                        <span className="uppercase">{t('explore')}</span>
                     </Button>
                 </div>
 
@@ -130,7 +137,7 @@ export const ModeSelector: FC<Props> = ({
                                     selectedModeOnChange(mode);
                                 }}
                             >
-                                <span className="uppercase">{mode}</span>
+                                <span className="uppercase">{t(mode)}</span>
                             </Button>
                         </div>
                     ))}

@@ -16,6 +16,7 @@
 import { Button } from '@shared/components/Button';
 import classNames from 'classnames';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type SaveOptionButtonProps = {
     title: string;
@@ -42,6 +43,8 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
     disabled,
     onClick,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames(SAVE_OPTION_ROW_CLASS, 'my-6', {
@@ -66,8 +69,9 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
                 ></span>{' '}
                 {estimatedCost && estimatedCost > 0 ? (
                     <span>
-                        The estimated cost of this task is {estimatedCost}{' '}
-                        credits.
+                        {t('estimated_cost', {
+                            estimatedCost: estimatedCost.toString(),
+                        })}
                     </span>
                 ) : null}
             </div>

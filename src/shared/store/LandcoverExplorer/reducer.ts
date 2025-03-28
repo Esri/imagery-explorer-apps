@@ -114,7 +114,7 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     activeLandCoverType: null,
     // showMapLabel: true,
     // showTerrain: true,
-    sentinel2RasterFunction: 'Natural Color with DRA',
+    sentinel2RasterFunction: 'Natural Color for Visualization', // Default raster function for Sentinel-2 layer
     showInfoPanel: false,
     showSwipeWidgetYearIndicator: false,
 };

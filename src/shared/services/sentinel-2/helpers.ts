@@ -16,6 +16,7 @@
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';
 import { Sentinel2Scene, SpectralIndex } from '@typing/imagery-service';
+import { t } from 'i18next';
 
 type Sentinel2MissionId = 'S2A' | 'S2B';
 
@@ -170,7 +171,7 @@ export const convertSentinel2SceneToImageryScene = (
         acquisitionMonth,
         cloudCover,
         satellite: 'Sentinel-2',
-        customTooltipText: [`${Math.ceil(cloudCover * 100)}% Cloudy`],
+        customTooltipText: [`${Math.ceil(cloudCover * 100)}% ${t('cloudy')}`],
     };
 
     return imageryScene;

@@ -20,6 +20,7 @@ import {
 } from '@shared/store/PublishAndDownloadJobs/reducer';
 import React, { FC, useMemo } from 'react';
 import { jobTypeLabels } from '../constants';
+import { useTranslation } from 'react-i18next';
 
 type JobInfoProps = {
     job: PublishAndDownloadJob;
@@ -27,6 +28,8 @@ type JobInfoProps = {
 
 export const JobInfo: FC<JobInfoProps> = ({ job }) => {
     const jobTypeLabel = jobTypeLabels[job.type];
+
+    const { t } = useTranslation();
 
     const extraJobInfo = useMemo(() => {
         if (job.errormessage) {
@@ -43,7 +46,7 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
             return null;
         }
 
-        return job.sceneId || 'No selected scene';
+        return job.sceneId || t('no_selected_scene');
     }, [job]);
 
     if (
@@ -51,17 +54,12 @@ export const JobInfo: FC<JobInfoProps> = ({ job }) => {
         job.publishToHostedImageryService &&
         job.outputItemId === undefined
     ) {
-        return (
-            <p>
-                Submitting the raster analysis job. Please do not close the
-                browser tab.
-            </p>
-        );
+        return <p>{t('submitting_raster_analysis_job')}</p>;
     }
 
     return (
         <div className=" ">
-            <div className="">{jobTypeLabel}</div>
+            <div className="">{t(jobTypeLabel)}</div>
 
             {extraJobInfo && (
                 <div className=" italic break-words max-w-[480px]">

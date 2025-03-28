@@ -19,10 +19,14 @@ import { GirdCard } from '../GirdCard/GirdCard';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 import { InterestingPlaceData } from '@typing/shared';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     data: InterestingPlaceData[];
-    nameOfSelectedPlace: string;
+    /**
+     * key of selected place
+     */
+    keyOfSelectedPlace: string;
     /**
      * if true, use 3 columns grid instead of 4 columns
      */
@@ -38,13 +42,15 @@ type Props = {
 
 export const InterestingPlaces: FC<Props> = ({
     data,
-    nameOfSelectedPlace,
+    keyOfSelectedPlace,
     isThreeColumnGrid,
     onChange,
     onHover,
 }) => {
     const containerRef = useRef<HTMLDivElement>();
     useGetTooltipPositionOnHover(containerRef);
+
+    const { t } = useTranslation();
 
     return (
         <div
@@ -56,7 +62,9 @@ export const InterestingPlaces: FC<Props> = ({
             ref={containerRef}
         >
             <div className="text-center mb-3">
-                <span className="uppercase text-sm">Interesting Places</span>
+                <span className="uppercase text-sm">
+                    {t('interesting_places')}
+                </span>
             </div>
 
             <div
@@ -68,13 +76,13 @@ export const InterestingPlaces: FC<Props> = ({
                 })}
             >
                 {data.map((d) => {
-                    const { name, thumbnail } = d;
+                    const { name, thumbnail, key } = d;
 
-                    const selected = nameOfSelectedPlace === name;
+                    const selected = keyOfSelectedPlace === key;
 
                     return (
                         <div
-                            key={name}
+                            key={key}
                             className="w-full he-full"
                             onMouseEnter={onHover.bind(null, d)}
                             onMouseLeave={onHover.bind(null, null)}
@@ -84,7 +92,7 @@ export const InterestingPlaces: FC<Props> = ({
                                 thumbnail={thumbnail}
                                 selected={selected}
                                 onClick={() => {
-                                    onChange(name);
+                                    onChange(key);
                                 }}
                             />
                         </div>

@@ -18,6 +18,7 @@ import { Button } from '../Button';
 import { QueryParams4ImageryScene } from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
 import { AppContext } from '@shared/contexts/AppContextProvider';
+import { useTranslation } from 'react-i18next';
 // import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
 type Side4SwipeMode = 'left' | 'right';
@@ -37,6 +38,8 @@ export const SwipeLayerSelector: FC<Props> = ({
     onChange,
     swapButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     const { rasterFunctionLabelMap } = useContext(AppContext);
 
     const getButtonContent = (side: Side4SwipeMode) => {
@@ -48,10 +51,10 @@ export const SwipeLayerSelector: FC<Props> = ({
         return (
             <>
                 <div>
-                    <span>{side}</span>
+                    <span>{t(side)}</span>
                 </div>
 
-                <div className="text-xs text-center lowercase">
+                <div className="text-xs text-center lowercase max-w-[126px] overflow-hidden text-ellipsis whitespace-nowrap">
                     {queryParams?.acquisitionDate ? (
                         <>
                             <span>{queryParams.acquisitionDate}</span>
@@ -65,7 +68,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                             </span>
                         </>
                     ) : (
-                        <span>No Scene Selected</span>
+                        <span>{t('no_scene_selected')}</span>
                     )}
                 </div>
             </>

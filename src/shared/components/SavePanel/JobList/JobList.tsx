@@ -18,12 +18,11 @@ import {
     // PublishAndDownloadJobStatus,
     // PublishAndDownloadJobType,
 } from '@shared/store/PublishAndDownloadJobs/reducer';
-import { da } from 'date-fns/locale';
 import React, { FC, useMemo } from 'react';
-import { jobTypeLabels, saveJobStatusLabels } from '../constants';
 import { JobStatus } from './JobStatus';
 import { JobInfo } from './JobInfo';
 import { JobIcon } from './JobIcon';
+import { useTranslation } from 'react-i18next';
 
 type JobListProps = {
     /**
@@ -54,6 +53,8 @@ export const JobList: FC<JobListProps> = ({
     acceptCreditsButtonOnClick,
     cancelButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     /**
      * Sort the jobs by creation time in descending order.
      */
@@ -63,15 +64,15 @@ export const JobList: FC<JobListProps> = ({
 
     if (!data.length) {
         return (
-            <div className="text-center w-full opacity-50">No pending jobs</div>
+            <div className="text-center w-full opacity-50">
+                {t('no_pending_jobs')}
+            </div>
         );
     }
 
     return (
         <div>
             {sortedByCreationTime.map((job) => {
-                // const statusLabel = saveJobStatusLabels[job.status];
-
                 return (
                     <div
                         key={job.id}

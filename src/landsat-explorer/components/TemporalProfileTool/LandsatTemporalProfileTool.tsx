@@ -71,9 +71,11 @@ import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getL
 import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selectors';
-import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
+// import { TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT } from '@shared/components/TemproalProfileTool/constants';
+import { useTranslation } from 'react-i18next';
 
 export const LandsatTemporalProfileTool = () => {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
 
     const tool = useAppSelector(selectActiveAnalysisTool);
@@ -177,26 +179,32 @@ export const LandsatTemporalProfileTool = () => {
                 options={[
                     {
                         value: 'moisture' as SpectralIndex,
-                        label: 'moisture',
+                        label: t('moisture'),
                     },
                     {
                         value: 'water' as SpectralIndex,
-                        label: 'water',
+                        label: t('water'),
                     },
                     {
                         value: 'vegetation' as SpectralIndex,
-                        label: 'vegetation',
+                        label: t('vegetation'),
                     },
                     {
                         value: 'temperature farhenheit' as SpectralIndex,
-                        label: 'surface temp °F',
+                        // label: 'surface temp °F',
+                        label: t('surface_temp_with_unit', {
+                            unit: '°F',
+                        }),
                     },
                     {
                         value: 'temperature celcius' as SpectralIndex,
-                        label: 'surface temp °C',
+                        // label: 'surface temp °C',
+                        label: t('surface_temp_with_unit', {
+                            unit: '°C',
+                        }),
                     },
                 ]}
-                tooltipText={TEMPROAL_PROFILE_TOOL_TOOLTIP_TEXT}
+                tooltipText={t('temporal_profile_tooltip')}
             />
 
             <div className="w-full h-[120px] my-2">

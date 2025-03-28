@@ -14,10 +14,18 @@
  */
 
 import { DynamicModeInfo } from '@shared/components/DynamicModeInfo';
+import { APP_NAME } from '@shared/config';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Sentinel2DynamicModeInfo = () => {
+    const { t } = useTranslation();
+
     return (
-        <DynamicModeInfo content="In the current map display, the most recent and most cloud free scenes from the Sentinel-2 archive are prioritized and dynamically fused into a single mosaicked image layer. As you explore, the map continues to dynamically fetch and render the best available scenes." />
+        <DynamicModeInfo
+            content={t('dynamic_mode_info', {
+                ns: APP_NAME,
+            })}
+        />
     );
 };

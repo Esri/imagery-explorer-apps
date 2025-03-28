@@ -16,6 +16,7 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { SAVE_OPTION_ROW_CLASS } from './SaveOptionButton';
+import { useTranslation } from 'react-i18next';
 
 type SaveOptionsListHeaderProps = {
     title: string;
@@ -24,6 +25,8 @@ type SaveOptionsListHeaderProps = {
 export const SaveOptionsListHeader: FC<SaveOptionsListHeaderProps> = ({
     title,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames(
@@ -32,7 +35,7 @@ export const SaveOptionsListHeader: FC<SaveOptionsListHeaderProps> = ({
             )}
         >
             <div className="uppercase text-lg">{title}</div>
-            <div className="opacity-50">About</div>
+            <div className="opacity-50">{t('about')}</div>
         </div>
     );
 };

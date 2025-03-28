@@ -18,6 +18,7 @@ import { selectTotalVisibleArea } from '@shared/store/Map/selectors';
 import { numberWithCommas } from 'helper-toolkit-ts';
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -31,6 +32,8 @@ export const TotalVisibleAreaInfo: FC<Props> = ({ label }: Props) => {
     const totalArea = useAppSelector(selectTotalVisibleArea);
 
     const isMapUpdating = useAppSelector(selectIsMapUpdating);
+
+    const { t } = useTranslation();
 
     if (totalArea === null) {
         return null;
@@ -53,7 +56,7 @@ export const TotalVisibleAreaInfo: FC<Props> = ({ label }: Props) => {
             {isMapUpdating ? (
                 <div className="flex justify-end">
                     <calcite-loader inline />
-                    <span>Loading...</span>
+                    <span>{t('loading')}...</span>
                 </div>
             ) : (
                 <p>

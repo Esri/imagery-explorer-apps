@@ -21,6 +21,8 @@ import { CopyLinkWidget } from '@shared/components/CopyLinkWidget';
 import { ZoomWidget } from '@shared/components/MapView/ZoomWidget';
 import { SearchWidget } from '@shared/components/SearchWidget';
 import React, { FC } from 'react';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     mapView?: MapView;
@@ -29,6 +31,8 @@ type Props = {
 export const MapActionButtonGroup4LandcoverExplorer: FC<Props> = ({
     mapView,
 }) => {
+    const { t } = useTranslation();
+
     if (!mapView) return null;
 
     return (
@@ -38,7 +42,7 @@ export const MapActionButtonGroup4LandcoverExplorer: FC<Props> = ({
             <Zoom2NativeScale
                 mapView={mapView}
                 nativeScale={37795}
-                tooltip={"Zoom to Land cover layer's native resolution"}
+                tooltip={t('zoom_to_native_resolution', { ns: APP_NAME })}
             />
             <ScreenshotWidget mapView={mapView} />
             <CopyLinkWidget />

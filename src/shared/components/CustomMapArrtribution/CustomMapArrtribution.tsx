@@ -22,6 +22,7 @@ import {
 } from '@shared/store/Map/selectors';
 import { numberWithCommas } from 'helper-toolkit-ts';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -37,6 +38,8 @@ type Props = {
  * @returns
  */
 const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
+    const { t } = useTranslation();
+
     const mapScale = useAppSelector(selectMapScale);
     const resolution = useAppSelector(selectMapResolution);
 
@@ -69,7 +72,7 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
             >
                 <div className="pointer-events-none">
                     <span>
-                        Powered by Esri
+                        {t('powered_by_esri')}
                         {'  |  '}
                         {atrribution}
                     </span>

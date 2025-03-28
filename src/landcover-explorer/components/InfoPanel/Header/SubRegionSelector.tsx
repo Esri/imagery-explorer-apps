@@ -19,6 +19,8 @@ import {
     SubRegion,
 } from '@landcover-explorer/services/landcover-statistics/query';
 import SelectorList, { SelectorListData } from './SelectorList';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     selectedCountry: string;
@@ -31,6 +33,7 @@ const SubRegionSelector: FC<Props> = ({
     selectedSubRegion,
     onChange,
 }) => {
+    const { t } = useTranslation();
     const [subRegions, setSubRegions] = useState<SubRegion[]>([]);
 
     const [listData, setListData] = useState<SelectorListData[]>([]);
@@ -62,10 +65,10 @@ const SubRegionSelector: FC<Props> = ({
 
     return (
         <SelectorList
-            title="Sub-Region"
+            title={t('sub_region', { ns: APP_NAME })}
             data={listData}
             valueOfSelectedItem={selectedSubRegion}
-            placeholderText={'All'}
+            placeholderText={t('all')}
             searchable={true}
             onChange={onChange}
         />

@@ -73,9 +73,9 @@ export type UIState = {
      */
     tooltipData?: TooltipData;
     /**
-     * name of selected interesting place
+     * key of selected interesting place
      */
-    nameOfSelectedInterestingPlace: string;
+    keyOfSelectedInterestingPlace: string;
     /**
      * If true, open download panel
      */
@@ -103,7 +103,7 @@ export const initialUIState: UIState = {
     animationLinkIsCopied: false,
     tooltipXPosition: 0,
     tooltipData: null,
-    nameOfSelectedInterestingPlace: '',
+    keyOfSelectedInterestingPlace: '',
     showDownloadPanel: false,
     showSaveWebMapPanel: false,
     showDocPanel: false,
@@ -151,11 +151,11 @@ const slice = createSlice({
         tooltipDataChanged: (state, action: PayloadAction<TooltipData>) => {
             state.tooltipData = action.payload;
         },
-        nameOfSelectedInterestingPlaceChanged: (
+        keyOfSelectedInterestingPlaceChanged: (
             state,
             action: PayloadAction<string>
         ) => {
-            state.nameOfSelectedInterestingPlace = action.payload;
+            state.keyOfSelectedInterestingPlace = action.payload;
         },
         showDownloadPanelToggled: (state, action: PayloadAction<boolean>) => {
             state.showDownloadPanel = action.payload;
@@ -184,7 +184,7 @@ export const {
     animationSpeedChanged,
     tooltipDataChanged,
     tooltipXPositionChanged,
-    nameOfSelectedInterestingPlaceChanged,
+    keyOfSelectedInterestingPlaceChanged,
     showDownloadPanelToggled,
     showSaveWebMapPanelToggled,
     showDocPanelToggled,

@@ -24,6 +24,7 @@ import React, { FC } from 'react';
 // import OpenIcon from './OpenIcon';
 // import SaveWebMapIcon from './SaveWebMapIcon';
 import { Button } from '@shared/components/Button';
+import { useTranslation } from 'react-i18next';
 
 type LayerSelectorButtonProps = {
     /**
@@ -83,6 +84,8 @@ const LayerSelector: FC<Props> = ({
 }: // downloadLandcoverButtonOnClick,
 // saveWebMapButtonOnClick,
 Props) => {
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames('relative flex flex-col', {
@@ -102,7 +105,7 @@ Props) => {
                         shouldShowSentinel2Layer === false ? 'right' : null
                     }
                 >
-                    <span className="uppercase">Land Cover</span>
+                    <span className="uppercase">{t('land_cover')}</span>
                 </Button>
             </div>
 
@@ -117,7 +120,7 @@ Props) => {
                         shouldShowSentinel2Layer ? 'right' : null
                     }
                 >
-                    <span className="uppercase">Imagery</span>
+                    <span className="uppercase">{t('imagery')}</span>
                 </Button>
             </div>
 

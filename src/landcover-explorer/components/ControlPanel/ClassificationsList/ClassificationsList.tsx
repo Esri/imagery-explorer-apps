@@ -22,6 +22,8 @@ import {
 import { TooltipData } from '@shared/store/UI/reducer';
 import HeaderText from '../HeaderText/HeaderText';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -56,14 +58,16 @@ const ClassificationsList: FC<Props> = ({
     const containerRef = useRef<HTMLDivElement>();
     useGetTooltipPositionOnHover(containerRef);
 
+    const { t } = useTranslation();
+
     return (
         <div
             className="text-center mx-4 my-12 md:my-0 shrink-0"
             ref={containerRef}
         >
             <HeaderText
-                title="Land Use/Land Cover Classes"
-                subTitle="Click to Toggle Visibility"
+                title={t('classes_selector_title', { ns: APP_NAME })} // Translate the title
+                subTitle={t('classes_selector_subTitle', { ns: APP_NAME })} // Translate the subtitle
             />
 
             <div
@@ -81,6 +85,23 @@ const ClassificationsList: FC<Props> = ({
                         const [Red, Green, Blue] = Color;
 
                         const isSelected = ClassName === selectedLandCover;
+
+                        // const classNameTranslationKey = ClassName.replace(/\s/g, '_'); // Replace spaces with underscores for translation key
+                        const descriptionTranslationKey =
+                            ClassName + '_description'; // Create a translation key for the description
+
+                        const classNameTranslated = t(ClassName, {
+                            ns: APP_NAME,
+                            defaultValue: ClassName, // Fallback to the original ClassName if translation is not available
+                        }); // Translate the ClassName
+
+                        const descriptionTranslated = t(
+                            descriptionTranslationKey,
+                            {
+                                ns: APP_NAME,
+                                defaultValue: Description, // Fallback to the original Description if translation is not available
+                            }
+                        ); // Translate the Description
 
                         return (
                             <div
@@ -101,8 +122,8 @@ const ClassificationsList: FC<Props> = ({
                                 }}
                                 onMouseEnter={() => {
                                     itemOnHover({
-                                        title: ClassName,
-                                        content: Description,
+                                        title: classNameTranslated,
+                                        content: descriptionTranslated,
                                     });
                                 }}
                                 onMouseLeave={() => {
@@ -117,7 +138,8 @@ const ClassificationsList: FC<Props> = ({
                                 ></div>
 
                                 <span className="ml-2 text-xs 2xl:text-sm">
-                                    {ClassName}
+                                    {/* {ClassName} */}
+                                    {classNameTranslated}
                                 </span>
                             </div>
                         );

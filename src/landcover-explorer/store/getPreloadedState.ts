@@ -59,7 +59,7 @@ const getPreloadedStateForLandcoverExplorerApp =
 
         const sentinel2RasterFunction =
             (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
-            'Natural Color with DRA';
+            'Natural Color for Visualization';
 
         const startYear = timeExtent?.startYear || availableYears[0];
         const endYear =

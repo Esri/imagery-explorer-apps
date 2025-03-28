@@ -40,6 +40,7 @@ import { TrendToolOption } from '@shared/store/TrendTool/reducer';
 import { calcTrendLine } from './helpers';
 import { getMonthAbbreviation } from '@shared/utils/date-time/monthHelpers';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -74,6 +75,8 @@ export const TemporalProfileChart: FC<Props> = ({
     selectedAcquisitionDate,
     onClickHandler,
 }: Props) => {
+    const { t } = useTranslation();
+
     // const trendToolOption = useAppSelector(selectTrendToolOption);
 
     // const queryParams4SelectedScene =
@@ -144,7 +147,9 @@ export const TemporalProfileChart: FC<Props> = ({
                           x: getMonthFromFormattedDateString(
                               selectedAcquisitionDate
                           ),
-                          tooltip: `Selected Image: <br />${formatInUTCTimeZone(
+                          tooltip: `${t(
+                              'selected_image'
+                          )}: <br />${formatInUTCTimeZone(
                               timestampOfAcquisitionDate,
                               DATE_FORMAT
                           )}`,
@@ -156,7 +161,7 @@ export const TemporalProfileChart: FC<Props> = ({
         return [
             {
                 x: timestampOfAcquisitionDate,
-                tooltip: `Selected Image: <br />${formatInUTCTimeZone(
+                tooltip: `${t('selected_image')}: <br />${formatInUTCTimeZone(
                     timestampOfAcquisitionDate,
                     DATE_FORMAT
                 )}`,

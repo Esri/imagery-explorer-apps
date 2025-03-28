@@ -15,7 +15,9 @@
 
 import { Button } from '@shared/components/Button';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
+import { APP_NAME } from '@shared/config';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     isTemporalCompositeLayerOn: boolean;
@@ -42,19 +44,26 @@ export const TemproalCompositeToolControls: FC<Props> = ({
     rasterFunctionOnChange,
     clearSelectedScenesButtonOnClick,
 }) => {
+    const { t } = useTranslation();
     return (
         <div>
             <div className="mt-2 w-full text-center">
                 <p className="text-xs opacity-50">
                     {isTemporalCompositeLayerOn === false
-                        ? 'Select scenes to apply to the Red, Green, and Blue color bands to create a composite RGB image, a hue-based change detection.'
-                        : 'The composite image blends the three Red, Green, and Blue input scenes into a composite RGB image. The resulting colors communicate the varied reflectance across dates.'}
+                        ? t('composite_instructions_layer_off', {
+                              ns: APP_NAME,
+                          })
+                        : t('composite_instructions_layer_on', {
+                              ns: APP_NAME,
+                          })}
                 </p>
             </div>
 
             <div className="flex justify-right w-full mt-4">
                 <div className="mr-2 text-right flex-grow">
-                    <span className="text-xs">Render composite as:</span>
+                    <span className="text-xs">
+                        {t('render_composite_as', { ns: APP_NAME })}:
+                    </span>
                 </div>
 
                 <Dropdown
@@ -69,7 +78,9 @@ export const TemproalCompositeToolControls: FC<Props> = ({
                     className="inline-block cursor-pointer bg-custom-light-blue-5 border border-custom-light-blue-25 px-2"
                     onClick={clearSelectedScenesButtonOnClick}
                 >
-                    <span className="text-xs">Clear all scene selections</span>
+                    <span className="text-xs">
+                        {t('clear_scene_selection', { ns: APP_NAME })}
+                    </span>
                 </div>
             </div>
         </div>

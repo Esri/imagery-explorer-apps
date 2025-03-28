@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -66,6 +67,15 @@ export const SpectralProfileChartLegend: FC<Props> = ({
     featureOfInterestName,
     featureOfInterestFillColor,
 }) => {
+    const { t } = useTranslation();
+
+    const label4FeatureOfInterest = useMemo(() => {
+        // get the text `Spectral profile of {feature_of_interest}`
+        return t('spectral_profile_of_feature_of_interest', {
+            feature_of_interest: t(featureOfInterestName),
+        });
+    }, [featureOfInterestName]);
+
     if (!featureOfInterestName) {
         return null;
     }
@@ -73,12 +83,12 @@ export const SpectralProfileChartLegend: FC<Props> = ({
     return (
         <div className="w-full mt-3">
             <LegendItem
-                label="Spectral profile of selected location"
+                label={t('spectral_profile_of_selected_location')}
                 fill="var(--custom-light-blue-90)"
             />
 
             <LegendItem
-                label={'Spectral profile of ' + featureOfInterestName}
+                label={label4FeatureOfInterest}
                 fill={featureOfInterestFillColor} //"var(--custom-light-blue-50)"
                 strokeDasharray="3 1"
             />

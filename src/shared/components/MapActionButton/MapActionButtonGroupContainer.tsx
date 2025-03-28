@@ -23,6 +23,7 @@ import { ZoomToExtent } from '../ZoomToExtent';
 import { ZoomWidget } from '../MapView/ZoomWidget';
 import { Zoom2NativeScale } from '../Zoom2NativeScale/Zoom2NativeScale';
 import { SearchWidget } from '../SearchWidget';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     mapView?: MapView;
@@ -46,6 +47,8 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
     serviceName,
     nativeScale,
 }) => {
+    const { t } = useTranslation();
+
     if (!mapView) return null;
 
     return (
@@ -55,7 +58,7 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
             <Zoom2NativeScale
                 mapView={mapView}
                 nativeScale={nativeScale}
-                tooltip={`Zoom to ${serviceName}'s native resolution`}
+                tooltip={t('zoom_to_native_scale', { serviceName })}
             />
             <ZoomToExtent mapView={mapView} serviceUrl={serviceUrl} />
 

@@ -16,9 +16,11 @@
 import { Button } from '@shared/components/Button';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
 import { Tooltip } from '@shared/components/Tooltip';
+import { APP_NAME } from '@shared/config';
 import { Sentinel1OrbitDirection } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     selectedOrbitDirection: Sentinel1OrbitDirection;
@@ -34,12 +36,14 @@ export const OrbitDirectionFilter: FC<Props> = ({
     selectedOrbitDirection,
     orbitDirectionOnChange,
 }) => {
+    const { t } = useTranslation();
     const data: DropdownData[] = useMemo(() => {
         const values: Sentinel1OrbitDirection[] = ['Ascending', 'Descending'];
 
         return values.map((val) => {
             return {
                 value: val,
+                label: t(val, { ns: APP_NAME }),
                 selected: val === selectedOrbitDirection,
             } as DropdownData;
         });
@@ -55,9 +59,7 @@ export const OrbitDirectionFilter: FC<Props> = ({
             /> */}
 
             <Tooltip
-                content={
-                    'Sentinel-1 imagery is collected day and night, on both the light and dark sides of the Earth. As the satellite travels around the Earth, it naturally alternates orbit directions. The pass from north to south is Descending and the pass from south to north is Ascending. Orbit direction should be considered when comparing different images of the same location. For many applications, it is best to select images with the same orbit direction.'
-                }
+                content={t('orbit_filter_tooltip', { ns: APP_NAME })}
                 width={280}
             >
                 <div className="flex items-center mr-1">
@@ -80,7 +82,9 @@ export const OrbitDirectionFilter: FC<Props> = ({
                             'bg-custom-light-blue-5': d.selected === false,
                         })}
                     >
-                        <span className="text-xs uppercase">{d.value}</span>
+                        <span className="text-xs uppercase">
+                            {d.label || d.value}
+                        </span>
                     </div>
                 );
             })}

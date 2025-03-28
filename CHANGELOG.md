@@ -4,12 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## [2025-03-28]
 
 ### Added
-### Changed
-### Removed
-### Fixed
+- Add support for internationalization via `i18next` to allow the application to be translated into multiple languages. 
+- Add `/public/locales` directory to store translation files for different languages. This will allow the application to support multiple languages based on user preferences or browser settings.
 
 ## [2025-02-19]
 

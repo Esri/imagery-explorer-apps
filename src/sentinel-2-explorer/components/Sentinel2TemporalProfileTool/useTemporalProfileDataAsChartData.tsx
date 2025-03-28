@@ -25,6 +25,7 @@ import { SpectralIndex } from '@typing/imagery-service';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { calcSentinel2SpectralIndex } from '@shared/services/sentinel-2/helpers';
+import { DATE_FORMAT_TEMPORAL_PROFILE } from '@shared/constants/UI';
 
 /**
  * Converts Sentinel-2 temporal profile data to chart data.
@@ -60,7 +61,7 @@ const convertSentinel2TemporalProfileData2ChartData = (
 
         const tooltip = `${formatInUTCTimeZone(
             acquisitionDate,
-            'LLL yyyy'
+            DATE_FORMAT_TEMPORAL_PROFILE
         )}: ${y.toFixed(2)}`;
 
         return {

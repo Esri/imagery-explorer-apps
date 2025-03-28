@@ -16,30 +16,42 @@
 import React from 'react';
 import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { AnalyzeToolSelectorData } from '@shared/components/AnalysisToolSelector/AnalysisToolSelectorContainer';
-
-const data: AnalyzeToolSelectorData[] = [
-    {
-        tool: 'mask',
-        title: 'Index',
-        subtitle: 'mask',
-    },
-    {
-        tool: 'trend',
-        title: 'Temporal',
-        subtitle: 'profile',
-    },
-    {
-        tool: 'change',
-        title: 'Change',
-        subtitle: 'detecion',
-    },
-    {
-        tool: 'temporal composite',
-        title: 'Temporal',
-        subtitle: 'composite',
-    },
-];
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const Sentinel1AnalyzeToolSelector = () => {
+    const { t } = useTranslation();
+
+    const data: AnalyzeToolSelectorData[] = [
+        {
+            tool: 'mask',
+            // title: 'Index',
+            // subtitle: 'mask',
+            title: t('index'),
+            subtitle: t('mask'),
+        },
+        {
+            tool: 'trend',
+            // title: 'Temporal',
+            // subtitle: 'profile',
+            title: t('temporal'),
+            subtitle: t('profile'),
+        },
+        {
+            tool: 'change',
+            // title: 'Change',
+            // subtitle: 'detecion',
+            title: t('change'),
+            subtitle: t('detection'),
+        },
+        {
+            tool: 'temporal composite',
+            // title: 'Temporal',
+            // subtitle: 'composite',
+            title: t('temporal'),
+            subtitle: t('composite', { ns: APP_NAME }),
+        },
+    ];
+
     return <AnalysisToolSelector data={data} />;
 };

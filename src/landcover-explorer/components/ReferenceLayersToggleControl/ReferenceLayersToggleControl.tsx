@@ -26,6 +26,7 @@ import {
     selectShowTerrain,
 } from '@shared/store/Map/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { useTranslation } from 'react-i18next';
 
 type ToggleButtonProps = {
     label: string;
@@ -82,6 +83,8 @@ const ToggleButton: FC<ToggleButtonProps> = ({
 const LayersToggleControl = () => {
     const dispatch = useAppDispatch();
 
+    const { t } = useTranslation();
+
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const showMapLabel = useAppSelector(selectShowMapLabel);
@@ -103,7 +106,7 @@ const LayersToggleControl = () => {
             }}
         >
             <ToggleButton
-                label="Map Labels"
+                label={t('map_labels')} // Translate the label for Map Labels
                 active={showMapLabel}
                 onToggle={() => {
                     // console.log('toggle map labels');
@@ -112,7 +115,7 @@ const LayersToggleControl = () => {
             />
 
             <ToggleButton
-                label="Terrain"
+                label={t('terrain')} // Translate the label for Terrain
                 active={showTerrain}
                 onToggle={() => {
                     // console.log('toggle Terrain');

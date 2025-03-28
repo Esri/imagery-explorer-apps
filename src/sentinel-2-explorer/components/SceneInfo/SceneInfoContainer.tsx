@@ -25,8 +25,11 @@ import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone
 import { Sentinel2Scene } from '@typing/imagery-service';
 import { getSentinel2SceneByObjectId } from '@shared/services/sentinel-2/getSentinel2Scenes';
 import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
+import { useTranslation } from 'react-i18next';
 
 export const SceneInfoContainer = () => {
+    const { t } = useTranslation();
+
     const mode = useAppSelector(selectAppMode);
 
     const fetchSceneByObjectId = useCallback(async (objectId: number) => {
@@ -57,45 +60,54 @@ export const SceneInfoContainer = () => {
 
         return [
             {
-                name: 'Scene ID',
+                name: t('scene_id'), //'Scene ID',
                 value: name, //name.slice(0, 17),
                 clickToCopy: true,
             },
             {
-                name: 'Satellite',
+                // name: 'Satellite',
+                name: t('satellite'),
                 value: satellite,
             },
             {
-                name: 'Sensor',
+                // name: 'Sensor',
+                name: t('sensor'),
                 value: sensor,
             },
 
             {
-                name: 'Acquired',
+                // name: 'Acquired',
+                name: t('acquired'),
                 value: formatInUTCTimeZone(acquisitionDate, DATE_FORMAT),
             },
             {
-                name: 'Cloud Cover',
+                // name: 'Cloud Cover',
+                name: t('cloud_cover'),
                 value: `${formattedCloudCover}%`,
             },
             {
-                name: 'Snow/Ice',
+                // name: 'Snow/Ice',
+                name: t('snow_ice'),
                 value: `${snowIcePercentage}%`,
             },
             {
-                name: 'Product Name',
+                // name: 'Product Name',
+                name: t('product_name'),
                 value: productName,
             },
             {
-                name: 'Relative Orbit',
+                // name: 'Relative Orbit',
+                name: t('relative_orbit'),
                 value: relativeOrbit,
             },
             {
-                name: 'Sun Elevation',
+                // name: 'Sun Elevation',
+                name: t('sun_elevation'),
                 value: `${sunElevation}°`,
             },
             {
-                name: 'Sun Azimuth',
+                // name: 'Sun Azimuth',
+                name: t('sun_azimuth'),
                 value: `${sunAzimuth}°`,
             },
         ];

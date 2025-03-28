@@ -28,6 +28,7 @@ import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 type ToggleButtonProps = {
     label: string;
@@ -94,6 +95,8 @@ export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
 
     const showBasemap = useAppSelector(selectShowBasemap);
 
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames(
@@ -107,7 +110,7 @@ export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
             }}
         >
             <ToggleButton
-                label="Map Labels"
+                label={t('map_labels')}
                 active={showMapLabel}
                 onToggle={() => {
                     // console.log('toggle map labels');
@@ -116,7 +119,7 @@ export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
             />
 
             <ToggleButton
-                label="Terrain"
+                label={t('terrain')}
                 active={showTerrain}
                 onToggle={() => {
                     // console.log('toggle Terrain');
@@ -125,7 +128,7 @@ export const ReferenceLayersToggleControl: FC<Props> = ({ shoudHide }) => {
             />
 
             <ToggleButton
-                label="Basemap"
+                label={t('basemap')}
                 active={showBasemap}
                 onToggle={() => {
                     // console.log('toggle Terrain');

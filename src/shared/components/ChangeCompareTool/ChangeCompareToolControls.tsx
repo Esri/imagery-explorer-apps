@@ -28,11 +28,12 @@ import {
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
 import { TotalVisibleAreaInfo } from '../TotalAreaInfo/TotalAreaInfo';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -56,6 +57,8 @@ export const ChangeCompareToolControls: FC<Props> = ({
     comparisonTopic,
     preselectionText,
 }: Props) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const tool = useAppSelector(selectActiveAnalysisTool);
@@ -114,11 +117,11 @@ export const ChangeCompareToolControls: FC<Props> = ({
             content = (
                 <div className="flex items-center text-xs">
                     <div className="w-1/2">
-                        <span>{legendLabelText[0] || 'decrease'}</span>
+                        <span>{legendLabelText[0] || t('decrease')}</span>
                     </div>
 
                     <div className="w-1/2 text-right">
-                        <span>{legendLabelText[1] || 'increase'}</span>
+                        <span>{legendLabelText[1] || t('increase')}</span>
                     </div>
                 </div>
             );
@@ -128,13 +131,13 @@ export const ChangeCompareToolControls: FC<Props> = ({
             content = (
                 <div className="flex items-center text-xs">
                     <div className="w-1/3">
-                        <span>{legendLabelText[0] || 'decrease'}</span>
+                        <span>{legendLabelText[0] || t('decrease')}</span>
                     </div>
                     <div className="w-1/3 text-center">
-                        <span>{legendLabelText[1] || 'no change'}</span>
+                        <span>{legendLabelText[1] || t('no_change')}</span>
                     </div>
                     <div className="w-1/3 text-right">
-                        <span>{legendLabelText[2] || 'increase'}</span>
+                        <span>{legendLabelText[2] || t('increase')}</span>
                     </div>
                 </div>
             );
@@ -147,6 +150,18 @@ export const ChangeCompareToolControls: FC<Props> = ({
         return <div className="w-full mt-12">{content}</div>;
     };
 
+    const totalVisibleAreaInfo = useMemo(() => {
+        if (!comparisonTopic) {
+            return t('estimated_change_area');
+        }
+
+        return t('est_change_area_variable', {
+            comparisonTopic,
+        });
+
+        // return text.replace('{comparisonTopic}', comparisonTopic);
+    }, [comparisonTopic]);
+
     if (tool !== 'change') {
         return null;
     }
@@ -155,8 +170,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
         return (
             <div className="mt-6 text-center">
                 <p className="text-sm opacity-50 ">
-                    {preselectionText ||
-                        'Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE.'}
+                    {preselectionText || t('select_two_scenes')}
                 </p>
             </div>
         );
@@ -166,13 +180,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
         <div className={classNames('relative w-full h-[0px] pt-[50px]')}>
             <div className="absolute top-3 w-full text-right ">
                 {/* <span className="text-xs">{legendTitle}</span> */}
-                <TotalVisibleAreaInfo
-                    label={
-                        comparisonTopic
-                            ? `Est. Change Area (${comparisonTopic})`
-                            : `Estimated Change Area`
-                    }
-                />
+                <TotalVisibleAreaInfo label={totalVisibleAreaInfo} />
             </div>
 
             <div className="relative w-full">

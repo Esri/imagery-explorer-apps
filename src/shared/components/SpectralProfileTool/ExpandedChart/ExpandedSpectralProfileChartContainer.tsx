@@ -33,6 +33,7 @@ import { ExpandedSpectralProfileChart } from './ExpandedSpectralProfileChart';
 import { ExpandedSpectralProfileChartLegend } from './ExpandedSpectralProfileChartLegend';
 import { CloseButton } from '@shared/components/CloseButton';
 import { ExpandedSpectralProfileChartHeader } from './ExpandedSpectralProfileChartHeader';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -56,6 +57,8 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
     bandNames,
     closeButtonClickHandler,
 }) => {
+    const { t } = useTranslation();
+
     const spectralProfileData = useAppSelector(selectData4SpectralProfileTool);
 
     const [excludedLandCoverTypes, setExcludedLandCoverTypes] = useState<
@@ -100,7 +103,7 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
             const lineChartData4SelectedLandCoverType =
                 formatBandValuesAsLineChartDataItems({
                     bandValues: bandValuesFromSelectedLandCoverType,
-                    title: landCoverType,
+                    title: t(landCoverType),
                     length,
                 });
 
@@ -120,7 +123,7 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
         const lineChartData4SelectedLocation =
             formatBandValuesAsLineChartDataItems({
                 bandValues: spectralProfileData,
-                title: 'Selected Value',
+                title: t('selected_value'),
                 length,
             });
 

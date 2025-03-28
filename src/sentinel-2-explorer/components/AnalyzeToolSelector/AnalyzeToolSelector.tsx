@@ -13,33 +13,38 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { AnalysisToolSelector } from '@shared/components/AnalysisToolSelector';
 import { AnalyzeToolSelectorData } from '@shared/components/AnalysisToolSelector/AnalysisToolSelectorContainer';
-
-const data: AnalyzeToolSelectorData[] = [
-    {
-        tool: 'mask',
-        title: 'Index',
-        subtitle: 'mask',
-    },
-    {
-        tool: 'trend',
-        title: 'Temporal',
-        subtitle: 'profile',
-    },
-    {
-        tool: 'spectral',
-        title: 'Spectral',
-        subtitle: 'profile',
-    },
-    {
-        tool: 'change',
-        title: 'Change',
-        subtitle: 'detection',
-    },
-];
+import { useTranslation } from 'react-i18next';
 
 export const Sentinel2AnalyzeToolSelector = () => {
+    const { t } = useTranslation();
+
+    const data: AnalyzeToolSelectorData[] = useMemo(() => {
+        return [
+            {
+                tool: 'mask',
+                title: t('index'),
+                subtitle: t('mask').toLowerCase(),
+            },
+            {
+                tool: 'trend',
+                title: t('temporal'),
+                subtitle: t('profile').toLowerCase(),
+            },
+            {
+                tool: 'spectral',
+                title: t('spectral'),
+                subtitle: t('profile').toLowerCase(),
+            },
+            {
+                tool: 'change',
+                title: t('change'),
+                subtitle: t('detection').toLowerCase(),
+            },
+        ];
+    }, []);
+
     return <AnalysisToolSelector data={data} />;
 };

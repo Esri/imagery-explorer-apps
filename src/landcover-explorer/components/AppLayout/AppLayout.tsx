@@ -23,11 +23,13 @@ import InfoPanel from '@landcover-explorer/components/InfoPanel/InfoPanel';
 import MapView from '@landcover-explorer/components/MapView/MapViewContainer';
 import { SaveWebMap } from '@landcover-explorer/components/SaveWebMap';
 import { AppHeader } from '@shared/components/AppHeader';
-import { appConfig } from '@shared/config';
+import { APP_NAME, appConfig } from '@shared/config';
 import { useSaveAppState2HashParams } from '@landcover-explorer/hooks/useSaveAppState2HashParams';
 import { useRevalidateToken } from '@shared/hooks/useRevalidateToken';
+import { useTranslation } from 'react-i18next';
 
 const AppLayout = () => {
+    const { t } = useTranslation();
     useSaveAppState2HashParams();
     useRevalidateToken();
 
@@ -40,7 +42,11 @@ const AppLayout = () => {
             {/* <AppTitle /> */}
             <About />
             <SaveWebMap />
-            <AppHeader title={appConfig.title} />
+            <AppHeader
+                title={t('esri_land_cover_explorer_title', {
+                    ns: APP_NAME,
+                })}
+            />
         </ErrorBoundary>
     );
 };

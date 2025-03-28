@@ -33,6 +33,7 @@ import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 type SaveOptionsProps = {
     donwloadButtonOnClick: () => void;
@@ -74,6 +75,8 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
     donwloadButtonOnClick,
     saveWebmapButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useAppSelector(
@@ -104,7 +107,7 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
             </div> */}
 
             <OptionButton
-                label="Download GeoTIFF"
+                label={t('donwload_geotiff')}
                 icon="download-to"
                 onClick={donwloadButtonOnClick}
             />
@@ -117,7 +120,7 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
             </div> */}
 
             <OptionButton
-                label="Publish to ArcGIS"
+                label={t('publish_to_arcgis')}
                 icon="launch"
                 onClick={saveWebmapButtonOnClick}
             />
@@ -131,6 +134,7 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
     donwloadAnimationOnClick,
     speedOnChange,
 }: AnimationOptionsProps) => {
+    const { t } = useTranslation();
     const animationMode = useAppSelector(selectAnimationStatus);
 
     if (!animationMode) {
@@ -145,17 +149,17 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
                     speedOnChange={speedOnChange}
                 />
 
-                <span className="ml-3">Speed</span>
+                <span className="ml-3">{t('speed')}</span>
             </div>
 
             <OptionButton
-                label="Copy Link"
+                label={t('copy_link')}
                 icon="link"
                 onClick={copyLinkOnClick}
             />
 
             <OptionButton
-                label="Download MP4"
+                label={t('donwload_mp4')}
                 icon="download-to"
                 onClick={donwloadAnimationOnClick}
             />

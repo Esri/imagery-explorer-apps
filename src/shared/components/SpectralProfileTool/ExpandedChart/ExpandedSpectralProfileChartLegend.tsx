@@ -17,6 +17,7 @@ import React, { FC, useMemo } from 'react';
 import { LandCoverType, ListOfLandCoverTypes } from '../config';
 import { getFillColorByLandCoverType } from '../helpers';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type LegendData = {
     label: string;
@@ -38,10 +39,12 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
     landCoverTypeOnHover,
     toggleSelectAll,
 }) => {
+    const { t } = useTranslation();
+
     const legendData: LegendData[] = useMemo(() => {
         return ListOfLandCoverTypes.map((landCoverType: LandCoverType) => {
             return {
-                label: landCoverType,
+                label: t(landCoverType),
                 color: getFillColorByLandCoverType(landCoverType),
                 value: landCoverType,
                 selected: excludedLandCoverTypes.has(landCoverType) === false,
@@ -66,7 +69,9 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                         scale="s"
                         onClick={toggleSelectAll}
                     ></calcite-icon>
-                    <span className="text-sm ml-3">Spectral Profiles</span>
+                    <span className="text-sm ml-3">
+                        {t('spectral_profiles')}
+                    </span>
                 </div>
                 {legendData.map((data: LegendData, index: number) => {
                     return (

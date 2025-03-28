@@ -29,6 +29,9 @@ import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
+import { initI18next } from '@shared/i18n/initI18next';
+import { APP_LANGUAGE } from '@shared/constants/UI';
+import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedLandsatRasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -37,6 +40,8 @@ import { initEsriOAuth } from '@shared/utils/esri-oauth';
         appId: APP_ID,
         portalUrl: AGOL_PORTAL_ROOT,
     });
+
+    await initI18next(APP_LANGUAGE);
 
     try {
         const store = await getLandsatExplorerStore();
@@ -48,7 +53,9 @@ import { initEsriOAuth } from '@shared/utils/esri-oauth';
             <ReduxProvider store={store}>
                 <AppContextProvider
                     timeExtent={timeExtent}
-                    rasterFunctionInfo={LANDSAT_RASTER_FUNCTION_INFOS}
+                    rasterFunctionInfo={getTranslatedLandsatRasterFunctionInfo(
+                        LANDSAT_RASTER_FUNCTION_INFOS
+                    )}
                 >
                     <ErrorBoundary>
                         <Map />

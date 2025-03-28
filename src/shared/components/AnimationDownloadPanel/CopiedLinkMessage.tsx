@@ -13,14 +13,17 @@
  * limitations under the License.
  */
 
-import { COPIED_LINK_MESSAGE_STRING } from '@shared/constants/UI';
+// import { COPIED_LINK_MESSAGE_STRING } from '@shared/constants/UI';
 import { selectAnimationLinkIsCopied } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
 
 export const CopiedLinkMessage = () => {
     const linkIsCopied = useAppSelector(selectAnimationLinkIsCopied);
+
+    const { t } = useTranslation();
 
     if (!linkIsCopied) {
         return null;
@@ -36,7 +39,7 @@ export const CopiedLinkMessage = () => {
         >
             <div className=" flex items-center">
                 <calcite-icon scale="s" icon="check" />
-                <span className="ml-1">{COPIED_LINK_MESSAGE_STRING}</span>
+                <span className="ml-1">{t('link_copied_to_clipboard')}</span>
             </div>
         </div>
     );

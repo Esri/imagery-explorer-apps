@@ -20,9 +20,9 @@ import { centerChanged, zoomChanged } from '@shared/store/Map/reducer';
 import { updateRasterFunctionName } from '@shared/store/ImageryScene/thunks';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { InterestingPlaceData } from '@typing/shared';
-import { nameOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
+import { keyOfSelectedInterestingPlaceChanged } from '@shared/store/UI/reducer';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectNameOfSelectedInterestingPlace } from '@shared/store/UI/selectors';
+import { selectKeyOfSelectedInterestingPlace } from '@shared/store/UI/selectors';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useResetSelectedInterestingPlace } from './useResetSelectedInterestingPlace';
 
@@ -43,20 +43,20 @@ export const InterestingPlacesContainer: FC<Props> = ({
 }) => {
     const dispatch = useAppDispatch();
 
-    const nameOfSelectedInterestingPlace = useAppSelector(
-        selectNameOfSelectedInterestingPlace
+    const keyOfSelectedInterestingPlace = useAppSelector(
+        selectKeyOfSelectedInterestingPlace
     );
 
     const selectedInterestingPlace: InterestingPlaceData = useMemo(() => {
-        if (!nameOfSelectedInterestingPlace) {
+        if (!keyOfSelectedInterestingPlace) {
             return null;
         }
 
         const dataItem = data.find(
-            (d) => d.name === nameOfSelectedInterestingPlace
+            (d) => d.key === keyOfSelectedInterestingPlace
         );
         return dataItem;
-    }, [nameOfSelectedInterestingPlace]);
+    }, [keyOfSelectedInterestingPlace]);
 
     useResetSelectedInterestingPlace(selectedInterestingPlace);
 
@@ -73,10 +73,10 @@ export const InterestingPlacesContainer: FC<Props> = ({
     return (
         <InterestingPlaces
             data={data}
-            nameOfSelectedPlace={nameOfSelectedInterestingPlace}
+            keyOfSelectedPlace={keyOfSelectedInterestingPlace}
             isThreeColumnGrid={isThreeColumnGrid}
             onChange={(name) => {
-                dispatch(nameOfSelectedInterestingPlaceChanged(name));
+                dispatch(keyOfSelectedInterestingPlaceChanged(name));
             }}
             onHover={(interestingPlaceOnHover) => {
                 const data = interestingPlaceOnHover

@@ -19,9 +19,13 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 import React from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const Sentinel2OutOfVisibleRangeWarning = () => {
     const mode = useAppSelector(selectMapMode);
+
+    const { t } = useTranslation();
 
     const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
@@ -35,8 +39,8 @@ export const Sentinel2OutOfVisibleRangeWarning = () => {
         <div className="mt-6 text-center text-sm opacity-50">
             <p>
                 {mode === 'swipe'
-                    ? 'Zoom in to compare Sentinel-2 Imagery Layers'
-                    : 'Zoom in to enable time slider'}
+                    ? t('swipe_mode_zoom_message', { ns: APP_NAME })
+                    : t('animate_mode_zoom_message', { ns: APP_NAME })}
             </p>
         </div>
     );

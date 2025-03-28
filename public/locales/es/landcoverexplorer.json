@@ -1,0 +1,114 @@
+{
+    "esri_land_cover_explorer_title": "Esri | Sentinel-2 Land Cover Explorer",
+    "sentinel_layer_title": "Sentinel-2 Imagery",
+    "land_cover_layer_title": "10m Land Cover",
+    "swipe_mode_subtitle": "Choose Two Years to Compare",
+    "animate_mode_subtitle": "Choose a Year to View",
+    "swipe_mode_zoom_message": "Zoom in to compare Sentinel-2 Imagery Layers",
+    "animate_mode_zoom_message": "Zoom in to enable time slider",
+    "sentinel2_renderers_title": "Visual Renderings",
+    "sentinel2_renderers_subtitle": "Click to Toggle Visibility",
+
+    "renderer_natural_color_label": "Natural Color",
+    "renderer_natural_color_description": "Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",
+    "renderer_swir_label": "SWIR",
+    "renderer_swir_description": "Bands shortwave infrared-2, shortwave infrared-1, red (12, 11, 4) with dynamic range adjustment applied.",
+    "renderer_agriculture_label": "Agriculture",
+    "renderer_agriculture_description": "Bands shortwave IR-1, near-IR, blue (11, 8, 2) with dynamic range adjustment applied. Vigorous vegetation bright green, stressed vegetation dull green, and bare areas as brown.",
+    "renderer_ndvi_label": "NDVI",
+    "renderer_ndvi_description": "Normalized difference vegetation index (NDVI) with colormap. Dark green represents vigorous vegetation and brown represents sparse vegetation. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.",
+    "renderer_color_ir_label": "Color IR",
+    "renderer_color_ir_description": "Bands near-infrared, red, green (8,4,3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red",
+    "renderer_ndmi_label": "NDMI",
+    "renderer_ndmi_description": "Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11).",
+
+    "Water": "Water",
+    "Water_description": "Areas where water was predominantly present throughout the year; may not cover areas with sporadic or ephemeral water; contains little to no sparse vegetation, no rock outcrop nor built up features like docks.",
+    
+    "Trees": "Trees",
+    "Trees_description": "Any significant clustering of tall (~15-m or higher) dense vegetation, typically with a closed or dense canopy.",
+    
+    "Flooded Vegetation": "Flooded Vegetation",
+    "Flooded": "Flooded",
+    "Flooded Vegetation_description": "Areas of any type of vegetation with obvious intermixing of water throughout a majority of the year; seasonally flooded area that is a mix of grass/shrub/trees/bare ground.",
+    
+    "Crops": "Crops",
+    "Crops_description": "Human planted/plotted cereals, grasses, and crops not at tree height.",
+    
+    "Built Area": "Built Area",
+    "Built": "Built",
+    "Built Area_description": "Human made structures; major road and rail networks; large homogenous impervious surfaces including parking structures, office buildings and residential housing.",
+    
+    "Bare Ground": "Bare Ground",
+    "Bare": "Bare",
+    "Bare Ground_description": "Areas of rock or soil with very sparse to no vegetation for the entire year; large areas of sand and deserts with no to little vegetation.",
+    
+    "Snow/Ice": "Snow/Ice",
+    "Snow/Ice_description": "Large homogenous areas of permanent snow or ice, typically only in mountain areas or highest latitudes.",
+    
+    "Clouds": "Clouds",
+    "Clouds_description": "No land cover information due to persistent cloud cover.",
+    
+    "Rangeland": "Rangeland",
+    "Range": "Range",
+    "Rangeland_description": "Open areas covered in homogenous grasses with little to no taller vegetation; wild cereals and grasses, Mix of small clusters of plants or single plants dispersed on a landscape that shows exposed soil or rock; scrub-filled clearings within forests that are clearly not taller than trees.",
+    
+    "No_Data": "No Data",
+    "No_Data_description": "no data",
+
+    "classes_selector_title": "Land Use/Land Cover Classes",
+    "classes_selector_subTitle": "Click to Toggle Visibility",
+
+    "Land_Cover_Change": "Land Cover Change",
+    "Land_Cover_Totals": "Land Cover Totals",
+    "Expanded_Summary_Chart": "Expanded Summary Chart",
+    "animation_graph_disabled_message": "Graph is disabled when animation is on",
+    "zoom_to_see_change_graph": " Zoom in to see Land Cover Change Graph",
+    "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph",
+    "at_year": "at {{year}}",
+    "from_to_year": "from {{fromYear}} to {{toYear}}",
+
+    "change_compare_graph_tooltip_template": "{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area.",
+
+    "sentinel2_acquisition_date": "Sentinel-2 L2A image acquired on {{date}}",
+    "latitude_abbreviation": "Lat",
+    "longitude_abbreviation": "Lon",
+    "zoom_to_native_resolution": "Zoom to Land cover layer's native resolution",
+
+    "download_panel_header": "Sentinel-2 10m Land Use/Land Cover Download",
+    "download_panel_instruction": "Click on the map to select a tile and year to download individual GeoTIFF files.",
+    "bulk_download_instruction": "Alternatively, click on the following links to bulk download all tiles for each year as a zip file",
+    "zip_file_size_info": "Each annual zip download is approximately 60 GB",
+
+    "landcover_dataset_license": "This dataset is available under a Creative Commons by Attribution (CC BY 4.0) license. See <a href=\"https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d\" target=\"_blank\" class=\"underline\" rel=\"noreferrer\">Terms of Use and Credits</a> to cite the work.",
+    "region": "Region",
+    "current_map_extent": "Current Map Extent",
+    "sub_region": "Sub-Region",
+
+    "about_panel_header": "ESRI | Sentinel-2 Land Cover Explorer",
+    "about_data_title": "About the data",
+    "about_data_paragraph_1": "Land use land cover (LULC) maps are an increasingly important tool for decision-makers in many industry sectors and developing nations around the world. The information provided by these maps helps inform policy and land management decisions by better understanding and quantifying the impacts of earth processes and human activity.",
+    "about_data_paragraph_2": "<a class=\"underline\" href=\"https://livingatlas.arcgis.com/en/home/\" target=\"_blank\" rel=\"noreferrer\">ArcGIS Living Atlas of the World</a> provides a detailed, accurate, and timely LULC map of the world. The data is the result of a collaboration between Esri and Impact Observatory. For more information about the data, see <a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d\" target=\"_blank\" rel=\"noreferrer\">Sentinel-2 10m Land Use/Land Cover Time Series</a>.",
+
+    "about_app_title": "About the app",
+    "about_app_paragraph_1": "One of the foremost capabilities of this app is the dynamic change analysis. The app provides dynamic visual and statistical change by comparing annual slices of the Sentinel-2 10m Land Use/Land Cover data as you explore the map.",
+    "about_app_paragraph_2": "Overview of capabilities:",
+    "about_app_capability_1": "Visual change analysis with either 'Step Mode' or 'Swipe Mode'",
+    "about_app_capability_2": "Dynamic statistical change analysis by year, map extent, and class",
+    "about_app_capability_3": "Filter by selected land cover class",
+    "about_app_capability_4": "Regional class statistics summarized by administrative boundaries",
+    "about_app_capability_5": "Imagery mode for visual investigation and validation of land cover",
+    "about_app_capability_6": "Select imagery renderings (e.g. SWIR to visualize forest burn scars)",
+    "about_app_capability_7": "Data download for offline use",
+
+    "attribution_title": "Attribution and Terms of Use",
+    "lulc_attribution_title": "<span class=\"font-bold\">Sentinel-2 10m Land Use/Land Cover </span> – Esri and Impact Observatory",
+    "lulc_attribution_license": "This work is licensed under a Creative Commons by Attribution (CC BY 4.0) license. <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0\" target=\"_blank\" rel=\"noreferrer\">View License Deed </a> | <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0/legalcode\" target=\"_blank\" rel=\"noreferrer\">View Legal Code</a>",
+
+    "imagery_attribution_title": "<span class=\"font-bold\">Sentinel-2 Level-2A Imagery</span> – Esri, Microsoft, ESA, and the European Commission",
+    "imagery_attribution_license": "This work is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
+
+    "app_attribution_title": "<span class=\"font-bold\">Sentinel-2 Land Cover Explorer App</span> - Esri",
+    "app_attribution_license": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
+    "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data."
+}

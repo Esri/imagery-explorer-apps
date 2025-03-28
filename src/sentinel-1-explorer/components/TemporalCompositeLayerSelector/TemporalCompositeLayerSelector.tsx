@@ -26,6 +26,8 @@ import CompositeIndicatorGreen from './images/Composite_Green.png';
 import CompositeIndicatorBlue from './images/Composite_Blue.png';
 import CompositeIndicatorRGB from './images/Composite_RGB.png';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     /**
@@ -83,7 +85,7 @@ const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
     if (!queryParams || !queryParams.acquisitionDate) {
         return (
             <div className="text-xs normal-case">
-                <span>Choose {nameOfScene}</span>
+                <span>{nameOfScene}</span>
                 {/* <br />
                 <span className="uppercase">{nameOfScene}</span> */}
             </div>
@@ -112,6 +114,8 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
     viewCompositeLayerButtonOnClick,
     swapButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     if (
         !queryParams4ImagerySceneOfRedBand ||
         !queryParams4ImagerySceneOfGreenBand ||
@@ -154,7 +158,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                         <br />
                         <span className="uppercase">scene for Red</span> */}
                         <ButtonTextLabel
-                            nameOfScene="red band"
+                            nameOfScene={t('choose_red_band', { ns: APP_NAME })}
                             queryParams={queryParams4ImagerySceneOfRedBand}
                         />
                     </div>
@@ -168,7 +172,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
 
             <div
                 className="flex justify-center cursor-pointer w-full"
-                title="swap red and green band"
+                title={t('swap_red_green', { ns: APP_NAME })}
                 onClick={swapButtonOnClick.bind(null, 0, 1)}
             >
                 <calcite-icon icon="arrow-up-down" scale="s" />
@@ -194,7 +198,9 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                         <br />
                         <span className="uppercase">scene for Green</span> */}
                         <ButtonTextLabel
-                            nameOfScene="green band"
+                            nameOfScene={t('choose_green_band', {
+                                ns: APP_NAME,
+                            })}
                             queryParams={queryParams4ImagerySceneOfGreenBand}
                         />
                     </div>
@@ -208,7 +214,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
 
             <div
                 className="flex justify-center cursor-pointer w-full"
-                title="swap green and blue band"
+                title={t('swap_green_blue', { ns: APP_NAME })}
                 onClick={swapButtonOnClick.bind(null, 1, 2)}
             >
                 <calcite-icon icon="arrow-up-down" scale="s" />
@@ -235,7 +241,9 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                         <span className="uppercase">scene for Blue</span> */}
 
                         <ButtonTextLabel
-                            nameOfScene="blue band"
+                            nameOfScene={t('choose_blue_band', {
+                                ns: APP_NAME,
+                            })}
                             queryParams={queryParams4ImagerySceneOfBlueBand}
                         />
                     </div>
@@ -261,7 +269,9 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     }
                 >
                     <div className="text-xs normal-case">
-                        <span className="uppercase">view composite</span>
+                        <span className="uppercase">
+                            {t('view_composite', { ns: APP_NAME })}
+                        </span>
                     </div>
                 </Button>
 

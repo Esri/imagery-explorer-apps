@@ -14,23 +14,23 @@
  */
 
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     error?: Error;
 };
 
 export const ErrorPage: FC<Props> = ({ error }) => {
+    const { t } = useTranslation();
+
     return (
         <div className="flex justify-center items-center w-screen h-screen theme-background text-custom-light-blue">
             <div className="max-w-2xl">
-                <p>
-                    This app is temporarily unavailable due to an issue fetching
-                    data from one of the data services.
-                </p>
+                <p>{t('app_temporarily_unavailable')}</p>
 
                 {error && error.message ? (
                     <p className="mt-4 text-sm">
-                        Error Message: {error.message}
+                        {t('error_message')}: {error.message}
                     </p>
                 ) : null}
             </div>
