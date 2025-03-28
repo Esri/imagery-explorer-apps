@@ -28,8 +28,12 @@ import { CloseButton } from '@shared/components/CloseButton';
 // import MapView from '../MapView/MapView';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import MapView from '@shared/components/MapView/MapView';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 const DownloadPanel = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const showDownloadPanel = useAppSelector(selectShowDownloadPanel);
@@ -79,19 +83,14 @@ const DownloadPanel = () => {
                 </div>
 
                 <div className="mt-4">
-                    <p className="text-sm text-custom-light-blue">
-                        This dataset is available under a Creative Commons by
-                        Attribution (CC BY 4.0) license. See{' '}
-                        <a
-                            href="https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d"
-                            target={'_blank'}
-                            className="underline"
-                            rel="noreferrer"
-                        >
-                            Terms of Use and Credits
-                        </a>{' '}
-                        to cite the work.
-                    </p>
+                    <p
+                        className="text-sm text-custom-light-blue"
+                        dangerouslySetInnerHTML={{
+                            __html: t('landcover_dataset_license', {
+                                ns: APP_NAME,
+                            }),
+                        }}
+                    ></p>
                 </div>
             </div>
         </div>

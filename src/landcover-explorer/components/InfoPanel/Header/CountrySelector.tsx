@@ -16,6 +16,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { getCountries } from '@landcover-explorer/services/landcover-statistics/query';
 import SelectorList, { SelectorListData } from './SelectorList';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     selectedCountry: string;
@@ -23,6 +25,8 @@ type Props = {
 };
 
 const CountrySelector: FC<Props> = ({ selectedCountry, onChange }) => {
+    const { t } = useTranslation();
+
     const [countries, setCountries] = useState<string[]>([]);
 
     const [listData, setListData] = useState<SelectorListData[]>([]);
@@ -49,10 +53,10 @@ const CountrySelector: FC<Props> = ({ selectedCountry, onChange }) => {
 
     return (
         <SelectorList
-            title="Region"
+            title={t('region', { ns: APP_NAME })}
             data={listData}
             valueOfSelectedItem={selectedCountry}
-            placeholderText={'Current Map Extent'}
+            placeholderText={t('current_map_extent', { ns: APP_NAME })}
             searchable={true}
             onChange={onChange}
         />
