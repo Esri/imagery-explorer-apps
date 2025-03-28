@@ -252,5 +252,10 @@
     "green": "__Green",
     "blue": "__Blue",
     "unselected": "__Unselected",
-    "land_cover": "__Land Cover"
+    "land_cover": "__Land Cover",
+
+    "your_web_map_is_ready": "__Your Web Map is Ready",
+    "creating_web_map": "__Creating Web Map",
+    "create_web_map": "__Create Web Map",
+    "tags": "__Tags"
 }

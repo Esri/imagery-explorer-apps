@@ -31,12 +31,12 @@ import { saveSentinel2RasterFunctionToHashParams } from '@landcover-explorer/uti
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 export type Sentinel2RasterFunction =
-    | 'Natural Color with DRA'
-    | 'Agriculture with DRA'
-    | 'Color Infrared with DRA'
-    | 'Short-wave Infrared with DRA'
-    | 'NDVI Colormap'
-    | 'NDMI Colorized';
+    | 'Natural Color for Visualization'
+    | 'Agriculture for Visualization'
+    | 'Color Infrared for Visualization'
+    | 'Short-wave Infrared for Visualization'
+    | 'NDVI Colorized for Visualization'
+    | 'NDMI Colorized for Visualization';
 
 export type RasterFunctionData = {
     name: Sentinel2RasterFunction;
@@ -49,7 +49,7 @@ export type RasterFunctionData = {
 
 export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
     {
-        name: 'Natural Color with DRA',
+        name: 'Natural Color for Visualization',
         label: 'Natural Color',
         description:
             'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.',
@@ -59,7 +59,7 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
         translationKeyDescription: 'renderer_natural_color_description',
     },
     {
-        name: 'Short-wave Infrared with DRA',
+        name: 'Short-wave Infrared for Visualization',
         label: 'SWIR',
         description:
             'Bands shortwave infrared-2, shortwave infrared-1, red (12, 11, 4) with dynamic range adjustment applied.',
@@ -68,7 +68,7 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
         translationKeyDescription: 'renderer_swir_description',
     },
     {
-        name: 'Agriculture with DRA',
+        name: 'Agriculture for Visualization',
         label: 'Agriculture',
         description:
             'Bands shortwave IR-1, near-IR, blue (11, 8, 2) with dynamic range adjustment applied. Vigorous vegetation bright green, stressed vegetation dull green, and bare areas as brown.',
@@ -77,7 +77,7 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
         translationKeyDescription: 'renderer_agriculture_description',
     },
     {
-        name: 'NDVI Colormap',
+        name: 'NDVI Colorized for Visualization',
         label: 'NDVI',
         description:
             'Normalized difference vegetation index (NDVI) with colormap. Dark green represents vigorous vegetation and brown represents sparse vegetation. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.',
@@ -86,7 +86,7 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
         translationKeyDescription: 'renderer_ndvi_description',
     },
     {
-        name: 'Color Infrared with DRA',
+        name: 'Color Infrared for Visualization',
         label: 'Color IR',
         description:
             'Bands near-infrared, red, green (8,4,3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red',
@@ -95,7 +95,7 @@ export const Sentinel2RasterFunctionsData: RasterFunctionData[] = [
         translationKeyDescription: 'renderer_color_ir_description',
     },
     {
-        name: 'NDMI Colorized',
+        name: 'NDMI Colorized for Visualization',
         label: 'NDMI',
         description:
             'Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11).',

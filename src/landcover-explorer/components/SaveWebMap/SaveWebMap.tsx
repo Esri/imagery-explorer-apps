@@ -18,6 +18,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { CreateWebMapResponse } from './createWebMap';
 import { CloseButton } from '@shared/components/CloseButton';
+import { useTranslation } from 'react-i18next';
 
 export type WebMapMetadata = {
     /**
@@ -113,6 +114,8 @@ export const SaveWebMap: FC<Props> = ({
     signInButtonOnClick,
     openWebmapButtonOnClick,
 }: Props) => {
+    const { t } = useTranslation();
+
     const [title, setTitle] = useState<string>(
         'Sentinel-2 Land Cover Exlorer export map'
     );
@@ -147,7 +150,7 @@ export const SaveWebMap: FC<Props> = ({
             return (
                 <div className="max-w-sm mx-auto flex items-center justify-center">
                     <p className=" text-custom-light-blue-90 mr-2">
-                        Your Web Map is Ready!
+                        {t('your_web_map_is_ready')}!
                     </p>
 
                     <div
@@ -160,7 +163,7 @@ export const SaveWebMap: FC<Props> = ({
                         // }}
                         onClick={openWebmapButtonOnClick}
                     >
-                        Open
+                        {t('open')}
                     </div>
                 </div>
             );
@@ -174,14 +177,18 @@ export const SaveWebMap: FC<Props> = ({
                     })}
                 >
                     <TextInput
-                        title={'Title'}
+                        title={t('title')} // Translate the title text
                         isRequired={true}
                         value={title}
                         onChange={setTitle}
                     />
-                    <TextInput title={'Tags'} value={tags} onChange={setTags} />
                     <TextInput
-                        title={'Summary'}
+                        title={t('tags')}
+                        value={tags}
+                        onChange={setTags}
+                    />
+                    <TextInput
+                        title={t('summary')} // Translate the summary text
                         value={summary}
                         onChange={(val) => {
                             setSummary(val);
@@ -196,7 +203,7 @@ export const SaveWebMap: FC<Props> = ({
                         })}
                         onClick={closeButtonOnClick}
                     >
-                        Cancel
+                        {t('cancel')}
                     </div>
 
                     <div
@@ -212,8 +219,8 @@ export const SaveWebMap: FC<Props> = ({
                         }}
                     >
                         {isSavingChanges
-                            ? 'Creating Web Map...'
-                            : 'Create Web Map'}
+                            ? t('creating_web_map') // Translate the creating web map text
+                            : t('create_web_map')}
                     </div>
                 </div>
             </>

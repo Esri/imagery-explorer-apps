@@ -67,5 +67,10 @@
     "at_year": "__at {{year}}",
     "from_to_year": "__from {{fromYear}} to {{toYear}}",
 
-    "change_compare_graph_tooltip_template": "__{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area."
+    "change_compare_graph_tooltip_template": "__{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area.",
+
+    "sentinel2_acquisition_date": "Sentinel-2 L2A image acquired on {{date}}",
+    "latitude_abbreviation": "__Lat",
+    "longitude_abbreviation": "__Lon",
+    "zoom_to_native_resolution": "__Zoom to Land cover layer's native resolution"
 }

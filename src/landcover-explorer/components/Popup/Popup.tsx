@@ -36,6 +36,9 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 import { format } from 'date-fns';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
+import { DATE_FORMAT } from '@shared/constants/UI';
 
 type Props = {
     mapView?: IMapView;
@@ -60,6 +63,8 @@ const didClickOnLeftSideOfSwipeWidget = (
 };
 
 const Popup: FC<Props> = ({ mapView }: Props) => {
+    const { t } = useTranslation();
+
     const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
@@ -97,13 +102,17 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     ) => {
         const popupDiv = document.createElement('div');
 
-        const htmlString4AcquisitionDate = acquisitionDate
+        const acquisitionDateFormatted = acquisitionDate
+            ? format(acquisitionDate, DATE_FORMAT)
+            : '';
+
+        const htmlString4AcquisitionDate = acquisitionDateFormatted
             ? `
                 <div class='mx-2 mt-4 pb-2 text-center'>
-                    <span>Sentinel-2 L2A image acquired ${format(
-                        acquisitionDate,
-                        'MMM dd, yyyy'
-                    )}</span>
+                    <span>${t('sentinel2_acquisition_date', {
+                        ns: APP_NAME,
+                        date: acquisitionDateFormatted, // Pass the formatted date dynamically for translation
+                    })}</span>
                 </div>
             `
             : '';
@@ -118,6 +127,11 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
 
                       const backgroundColor = `rgb(${R}, ${G}, ${B})`;
 
+                      const classNameTranslated = t(data.ClassName, {
+                          ns: APP_NAME,
+                          defaultValue: data.ClassName, // Fallback to the original ClassName if translation is not available
+                      });
+
                       return `
                         <div class='flex my-2 items-center'>
                             <div class='active-year-indicator rounded-full mr-2 bg-custom-light-blue-80 ${
@@ -125,7 +139,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
                             }'></div>
                             <span>${year}</span>
                             <div class='rounded-full w-4 h-4 border-2 border-white mx-2' style="background-color:${backgroundColor};"></div>
-                            <span>${data.ClassName}</span>
+                            <span>${classNameTranslated}</span>
                         </div>
                     `;
                   })
@@ -166,9 +180,11 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
 
         const lat = Math.round(mapPoint.latitude * 1000) / 1000;
         const lon = Math.round(mapPoint.longitude * 1000) / 1000;
-        const title = `Lat ${lat}, Lon ${lon}`;
+        const title =
+            `${t('latitude_abbreviation', { ns: APP_NAME })} ${lat}` +
+            `${t('longitude_abbreviation', { ns: APP_NAME })} ${lon}`;
 
-        mapView.popup.open({
+        mapView.openPopup({
             title,
             location: mapPoint,
             content: getLoadingIndicator(),
