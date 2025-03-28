@@ -13,8 +13,10 @@
  * limitations under the License.
  */
 
+import { t } from 'i18next';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
 import { DEFAULT_RENDERING_RULE } from './config';
+import { APP_NAME } from '@shared/config';
 
 /**
  * Feature from Attribute Table
@@ -206,7 +208,13 @@ export const getDistinctLandCoverClassificationPixelValues = () => {
 export const getLandCoverClassificationShortName = (
     classification: LandCoverClassification
 ) => {
-    return LandcoverClassificationShortNames[classification] || classification;
+    const translationKey = LandcoverClassificationShortNames[classification]; //|| classification;
+
+    return t(translationKey, {
+        ns: APP_NAME,
+        defaultValue:
+            LandcoverClassificationShortNames[classification] || classification,
+    });
 };
 
 export const getRasterFunctionByLandCoverClassName = (

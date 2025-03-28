@@ -31,9 +31,13 @@ import HeaderText from '../HeaderText/HeaderText';
 import TotalAreaGraph from './TotalAreaGraph/TotalAreaGraphContainer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 const LandCoverGraphContainer = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     const mode = useAppSelector(selectMapMode);
 
@@ -74,10 +78,19 @@ const LandCoverGraphContainer = () => {
 
     const getSubtitle = () => {
         if (mode === 'swipe') {
-            return `from ${year4LeadingLayer} to ${year4TrailingLayer}`;
+            // return `from ${year4LeadingLayer} to ${year4TrailingLayer}`;
+            return t('from_to_year', {
+                ns: APP_NAME, // Use the namespace for translation
+                fromYear: year4LeadingLayer, // Pass the leading year dynamically for translation,
+                toYear: year4TrailingLayer, // Pass the trailing year dynamically for translation
+            });
         }
 
-        return `at ${year}`;
+        // return `at ${year}`;
+        return t('at_year', {
+            ns: APP_NAME, // Use the namespace for translation
+            year: year, // Pass the year dynamically for translation
+        });
     };
 
     return (
@@ -91,9 +104,13 @@ const LandCoverGraphContainer = () => {
         >
             <HeaderText
                 title={`${
-                    mode === 'swipe' ? 'Land Cover Change' : 'Land Cover Totals'
+                    mode === 'swipe'
+                        ? t('Land_Cover_Change', { ns: APP_NAME })
+                        : t('Land_Cover_Totals', { ns: APP_NAME })
                 }`}
-                expandButtonTooltip={'Expanded Summary Chart'}
+                expandButtonTooltip={t('Expanded_Summary_Chart', {
+                    ns: APP_NAME,
+                })} // Translate the tooltip for the expand button
                 subTitle={getSubtitle()}
                 expandButtonOnClick={() => {
                     dispatch(showInfoPanelToggled(true));
@@ -103,11 +120,21 @@ const LandCoverGraphContainer = () => {
             {shouldShowChart === false ? (
                 <div className="w-full flex justify-center items-center text-sm opacity-50 mt-16">
                     {animationMode ? (
-                        <p> Graph is disabled when animation is on</p>
+                        <p>
+                            {' '}
+                            {t('animation_graph_disabled_message', {
+                                ns: APP_NAME,
+                            })}
+                        </p>
                     ) : (
                         <p>
-                            Zoom in to see Land Cover{' '}
-                            {mode === 'swipe' ? 'Change' : 'Totals'} Graph
+                            {mode === 'swipe'
+                                ? t('zoom_to_see_change_graph', {
+                                      ns: APP_NAME,
+                                  })
+                                : t('zoom_to_see_totals_graph', {
+                                      ns: APP_NAME,
+                                  })}
                         </p>
                     )}
                 </div>

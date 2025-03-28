@@ -48,10 +48,14 @@ import {
     selectMapResolution,
     selectMapZoom,
 } from '@shared/store/Map/selectors';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 const ChangeCompareGraphContainer = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     // const { zoom } = useAppSelector(selectMapCenterAndZoom);
     const zoom = useAppSelector(selectMapZoom);
@@ -146,17 +150,32 @@ const ChangeCompareGraphContainer = () => {
 
         const { ClassName } = landcoverClassificationData;
 
+        const classNameTranslated = t(ClassName, {
+            ns: APP_NAME,
+        });
+
+        const content = t('change_compare_graph_tooltip_template', {
+            ns: APP_NAME, // Use the namespace for translation
+            pctEarlierYear: formatAreaPercentage(earlierYearAreaInPercentage),
+            pctLaterYear: formatAreaPercentage(laterYearAreaInPercentage),
+            plusOrMinusSign: differenceInPercentage >= 0 ? '+' : '',
+            pctChange: formatAreaPercentage(differenceInPercentage),
+            fromYear: year4LeadingLayer,
+            toYear: year4TrailingLayer,
+        });
+
         const tooltipData = {
-            title: ClassName,
-            content: `${formatAreaPercentage(
-                earlierYearAreaInPercentage
-            )}% in ${year4LeadingLayer} and ${formatAreaPercentage(
-                laterYearAreaInPercentage
-            )}% in ${year4TrailingLayer}, a change of ${
-                differenceInPercentage >= 0 ? '+' : ''
-            }${formatAreaPercentage(
-                differenceInPercentage
-            )}%  of the total area.`,
+            title: classNameTranslated,
+            content,
+            // content: `${formatAreaPercentage(
+            //     earlierYearAreaInPercentage
+            // )}% in ${year4LeadingLayer} and ${formatAreaPercentage(
+            //     laterYearAreaInPercentage
+            // )}% in ${year4TrailingLayer}, a change of ${
+            //     differenceInPercentage >= 0 ? '+' : ''
+            // }${formatAreaPercentage(
+            //     differenceInPercentage
+            // )}%  of the total area.`,
         } as TooltipData;
 
         dispatch(updateTooltipData(tooltipData));

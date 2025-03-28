@@ -19,5 +19,53 @@
     "renderer_color_ir_label": "__Color IR",
     "renderer_color_ir_description": "__Bands near-infrared, red, green (8,4,3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red",
     "renderer_ndmi_label": "__NDMI",
-    "renderer_ndmi_description": "__Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11)."
+    "renderer_ndmi_description": "__Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11).",
+
+    "Water": "__Water",
+    "Water_description": "__Areas where water was predominantly present throughout the year; may not cover areas with sporadic or ephemeral water; contains little to no sparse vegetation, no rock outcrop nor built up features like docks.",
+    
+    "Trees": "__Trees",
+    "Trees_description": "__Any significant clustering of tall (~15-m or higher) dense vegetation, typically with a closed or dense canopy.",
+    
+    "Flooded Vegetation": "__Flooded Vegetation",
+    "Flooded": "__Flooded",
+    "Flooded Vegetation_description": "__Areas of any type of vegetation with obvious intermixing of water throughout a majority of the year; seasonally flooded area that is a mix of grass/shrub/trees/bare ground.",
+    
+    "Crops": "__Crops",
+    "Crops_description": "__Human planted/plotted cereals, grasses, and crops not at tree height.",
+    
+    "Built Area": "__Built Area",
+    "Built": "__Built",
+    "Built Area_description": "__Human made structures; major road and rail networks; large homogenous impervious surfaces including parking structures, office buildings and residential housing.",
+    
+    "Bare Ground": "__Bare Ground",
+    "Bare": "__Bare",
+    "Bare Ground_description": "__Areas of rock or soil with very sparse to no vegetation for the entire year; large areas of sand and deserts with no to little vegetation.",
+    
+    "Snow/Ice": "__Snow/Ice",
+    "Snow/Ice_description": "__Large homogenous areas of permanent snow or ice, typically only in mountain areas or highest latitudes.",
+    
+    "Clouds": "__Clouds",
+    "Clouds_description": "__No land cover information due to persistent cloud cover.",
+    
+    "Rangeland": "__Rangeland",
+    "Range": "__Range",
+    "Rangeland_description": "__Open areas covered in homogenous grasses with little to no taller vegetation; wild cereals and grasses, Mix of small clusters of plants or single plants dispersed on a landscape that shows exposed soil or rock; scrub-filled clearings within forests that are clearly not taller than trees.",
+    
+    "No_Data": "__No Data",
+    "No_Data_description": "__no data",
+
+    "classes_selector_title": "__Land Use/Land Cover Classes",
+    "classes_selector_subTitle": "__Click to Toggle Visibility",
+
+    "Land_Cover_Change": "__Land Cover Change",
+    "Land_Cover_Totals": "__Land Cover Totals",
+    "Expanded_Summary_Chart": "__Expanded Summary Chart",
+    "animation_graph_disabled_message": "__Graph is disabled when animation is on",
+    "zoom_to_see_change_graph": " __Zoom in to see Land Cover Change Graph",
+    "zoom_to_see_totals_graph": "__Zoom in to see Land Cover Totals Graph",
+    "at_year": "__at {{year}}",
+    "from_to_year": "__from {{fromYear}} to {{toYear}}",
+
+    "change_compare_graph_tooltip_template": "__{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area."
 }
