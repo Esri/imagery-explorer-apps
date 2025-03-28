@@ -25,6 +25,7 @@ import { initEsriOAuth } from '../shared/utils/esri-oauth';
 import { APP_ID } from './constants';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import { initI18next } from '@shared/i18n/initI18next';
+import { APP_LANGUAGE } from '@shared/constants/UI';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -34,7 +35,7 @@ import { initI18next } from '@shared/i18n/initI18next';
             appId: APP_ID,
         });
 
-        await initI18next();
+        await initI18next(APP_LANGUAGE);
 
         // Load service information (Raster Attributes, Time Extent and etc) of Sentinel-2-10m-Landcover layer
         await loadServiceInfo();
