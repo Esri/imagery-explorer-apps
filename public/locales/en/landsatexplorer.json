@@ -1,6 +1,6 @@
 {
     "landsat_explorer": "Landsat Explorer",
-    "esri_landsat_explorer": "ESRI | Landsat Explorer",
+    "esri_landsat_explorer": "Esri | Landsat Explorer",
     "landsat_explorer_attribution": "Landsat imagery courtesy of USGS, NASA, and Microsoft",
 
     "natural_color_description": "Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",

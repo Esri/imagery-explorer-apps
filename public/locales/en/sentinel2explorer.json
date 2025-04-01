@@ -1,6 +1,6 @@
 {
     "sentinel_2_explorer": "Sentinel-2 Explorer",
-    "esri_sentinel_2_explorer": "ESRI | Sentinel-2 Explorer",
+    "esri_sentinel_2_explorer": "Esri | Sentinel-2 Explorer",
     "sentinel_2_explorer_attribution": "Sentinel-2 imagery courtesy of European Space Agency, European Commission, and Microsoft",
     "dynamic_mode_info": "In the current map display, the most recent and most cloud free scenes from the Sentinel-2 archive are prioritized and dynamically fused into a single mosaicked image layer. As you explore, the map continues to dynamically fetch and render the best available scenes.",
     "fucino_name": "Fucino",
