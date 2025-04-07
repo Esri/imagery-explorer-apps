@@ -39,6 +39,7 @@ import { LockedRelativeOrbitFootprintLayer } from '../LockedRelativeOrbitFootpri
 import { MapActionButtonGroup } from '@shared/components/MapActionButton';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { FootPrintOfSelectedScene } from '@shared/components/FootPrintOfSelectedScene';
 // import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 
 export const Map = () => {
@@ -52,6 +53,7 @@ export const Map = () => {
                 dispatch(updateQueryLocation4TrendTool(point));
             }}
         >
+            <FootPrintOfSelectedScene serviceUrl={SENTINEL_1_SERVICE_URL} />
             <GroupLayer
                 // this group layer should be added at index of one so that the
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
