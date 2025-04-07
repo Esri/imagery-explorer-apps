@@ -2,6 +2,8 @@ import { APP_NAME } from '@shared/config';
 import { HistoricalLandCoverData } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatHistoricalData } from './formateHistoricalData';
+import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 
 type Props = {
     data: HistoricalLandCoverData[];
@@ -12,7 +14,12 @@ export const DownloadHistoricalData: FC<Props> = ({ data }) => {
 
     const handleDownload = () => {
         // Implement download functionality here
-        console.log('Download button clicked', data);
+        // console.log('Download button clicked', data);
+
+        const csvData = formatHistoricalData(data);
+        const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+
+        downloadBlob(blob, 'historical_data.csv');
     };
 
     if (!data || data.length === 0) {
