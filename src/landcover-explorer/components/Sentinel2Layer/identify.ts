@@ -17,10 +17,11 @@ import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFun
 
 import IPoint from '@arcgis/core/geometry/Point';
 import { getMosaicRuleByAcquisitionDate } from './exportImage';
-import {
-    SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
-    SENTINEL_2_IMAGE_SERVICE_URL,
-} from './config';
+import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
+// import {
+//     SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
+//     SENTINEL_2_IMAGE_SERVICE_URL,
+// } from './config';
 
 type IdentifyParams = {
     geometry: IPoint;
@@ -72,7 +73,7 @@ export const identify = async ({
         processAsMultidimensional: 'false',
     });
 
-    const requestURL = `${SENTINEL_2_IMAGE_SERVICE_URL}/identify?${params.toString()}`;
+    const requestURL = `${SENTINEL_2_SERVICE_URL}/identify?${params.toString()}`;
 
     try {
         const res = await fetch(requestURL);

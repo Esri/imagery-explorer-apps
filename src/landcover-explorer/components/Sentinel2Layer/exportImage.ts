@@ -16,12 +16,16 @@
 import { addMonths, format } from 'date-fns';
 import IExtent from '@arcgis/core/geometry/Extent';
 import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+// import {
+//     SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
+//     // SENTINEL_2_IMAGE_SERVICE_URL,
+// } from './config';
 import {
-    SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
-    SENTINEL_2_IMAGE_SERVICE_URL,
-} from './config';
+    SENTINEL_2_SERVICE_URL,
+    FIELD_NAMES,
+} from '@shared/services/sentinel-2/config';
 
-const { AcquisitionDate, CloudCover } = SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES;
+// const { AcquisitionDate, CloudCover } = FIELD_NAMES;
 
 type ExportImageParams = {
     /**
@@ -70,12 +74,12 @@ export const getMosaicRuleByAcquisitionDate = (
     return {
         mosaicMethod: 'esriMosaicAttribute',
         // only get sentinel-2 imagery from the input month
-        where: `${AcquisitionDate} BETWEEN timestamp '${format(
+        where: `${FIELD_NAMES.ACQUISITION_DATE} BETWEEN timestamp '${format(
             startDate,
             'yyyy-MM-dd'
         )} 06:00:00' AND timestamp '${format(endDate, 'yyyy-MM-dd')} 05:59:59'`,
         // sort by cloud cover to get imagery with least cloud coverage
-        sortField: CloudCover,
+        sortField: FIELD_NAMES.CLOUD_COVER,
         sortValue: 0,
         ascending: true,
         mosaicOperation: 'MT_FIRST',
@@ -104,7 +108,7 @@ export const exportImage = async ({
         renderingRule: JSON.stringify({ rasterFunction: rasterFunctionName }),
     });
 
-    const requestURL = `${SENTINEL_2_IMAGE_SERVICE_URL}/exportImage?${params.toString()}`;
+    const requestURL = `${SENTINEL_2_SERVICE_URL}/exportImage?${params.toString()}`;
 
     const res = await fetch(requestURL, { signal: abortController.signal });
 
