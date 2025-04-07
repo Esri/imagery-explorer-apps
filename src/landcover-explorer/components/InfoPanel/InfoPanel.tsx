@@ -39,6 +39,7 @@ import {
     selectMapExtent,
     selectMapResolution,
 } from '@shared/store/Map/selectors';
+import { DownloadHistoricalData } from './DownloadHistoricalData/DownloadHistoricalData';
 
 // import { numberFns } from 'helper-toolkit-ts';
 // import { saveHistoricalLandCoverDataAsCSV } from './helper';
@@ -220,6 +221,8 @@ const InfoPanel = () => {
                             onChange={setSelectedSubRegin}
                         />
                     )}
+
+                    <DownloadHistoricalData />
                 </Header>
 
                 <LandcoverGraph

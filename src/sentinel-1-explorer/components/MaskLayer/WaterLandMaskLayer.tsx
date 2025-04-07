@@ -46,7 +46,7 @@ const getRasterFunction = (visibleCategory: WaterLandMaskLayerCategory) => {
         includedRanges:
             visibleCategory === 'land'
                 ? [[0, 1]] // Pixels in the range [0, 1] are included for 'Not water' and 'No observations'.
-                : [[3]], // Pixels in the range [3] are included for 'Permanent water'.
+                : [[3, 3]], // Pixels in the range [3] are included for 'Permanent water'.
         noDataValues: [],
     });
 };
