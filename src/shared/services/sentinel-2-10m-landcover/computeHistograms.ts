@@ -123,6 +123,11 @@ export type LandCoverArea = {
      */
     areaInPercentage: number;
     /**
+     * area (in percentage) of a specific land cover type between two years
+     * this is the raw value, not formatted, which is used for the CSV download
+     */
+    areaInPercentageRaw: number;
+    /**
      * Detailed Land Cover Classification Data
      */
     landcoverClassificationData: LandcoverClassificationData;
@@ -138,6 +143,11 @@ export type AreaByYear = {
      * area (in percentage) of a specific land cover type between two years
      */
     areaInPercentage: number;
+    /**
+     * area (in percentage) of a specific land cover type between two years
+     * this is the raw value, not formatted, which is used for the CSV download
+     */
+    areaInPercentageRaw: number;
 };
 
 export type HistoricalLandCoverData = {
@@ -270,6 +280,7 @@ export const getLandCoverAreaByYear = async ({
             output.push({
                 area: areaInAcres,
                 areaInPercentage: formatAreaPercentage(areaInPercentage),
+                areaInPercentageRaw: areaInPercentage,
                 landcoverClassificationData:
                     getLandCoverClassificationByPixelValue(i),
             });
@@ -403,6 +414,7 @@ export const getHistoricalLandCoverDataByMapExtent = async (
                 year,
                 area: 0,
                 areaInPercentage: 0,
+                areaInPercentageRaw: 0,
             };
         });
 
@@ -451,6 +463,10 @@ export const getHistoricalLandCoverDataByMapExtent = async (
                 historicalLandCoverDataByLandCoverId.get(j).areaByYear[
                     i
                 ].areaInPercentage = formatAreaPercentage(areaInPercentage);
+
+                historicalLandCoverDataByLandCoverId.get(j).areaByYear[
+                    i
+                ].areaInPercentageRaw = areaInPercentage;
             }
         }
 

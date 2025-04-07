@@ -19,7 +19,7 @@ export const DownloadHistoricalData: FC<Props> = ({ data }) => {
         const csvData = formatHistoricalData(data);
         const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
 
-        downloadBlob(blob, 'historical_data.csv');
+        downloadBlob(blob, 'historical-landcover-data.csv');
     };
 
     if (!data || data.length === 0) {
@@ -35,14 +35,16 @@ export const DownloadHistoricalData: FC<Props> = ({ data }) => {
                 } as React.CSSProperties
             }
         >
-            <div className="mb-2">{t('download')}</div>
+            <div className="mb-2">
+                {t('download_historical_data', { ns: APP_NAME })}
+            </div>
             <calcite-button
                 icon-start="download"
                 appearance="outline"
                 Kind="neutral"
                 onClick={handleDownload}
             >
-                {t('donwload_historical_data', {
+                {t('donwload_as_csv', {
                     ns: APP_NAME,
                 })}
             </calcite-button>

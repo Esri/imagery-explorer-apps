@@ -20,8 +20,8 @@ export const formatHistoricalData = (
 
         const areaByYearMap = new Map();
 
-        for (const { year, areaInPercentage } of areaByYear) {
-            areaByYearMap.set(year, areaInPercentage);
+        for (const { year, areaInPercentageRaw } of areaByYear) {
+            areaByYearMap.set(year, areaInPercentageRaw.toFixed(2));
         }
 
         const valuesByYear = years.map((year) => areaByYearMap.get(year) || 0);

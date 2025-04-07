@@ -317,6 +317,7 @@ const formatLandCoverStatsFeatures = (
                 year,
                 area: 0,
                 areaInPercentage: 0,
+                areaInPercentageRaw: 0,
             };
         });
 
