@@ -222,7 +222,7 @@ const InfoPanel = () => {
                         />
                     )}
 
-                    <DownloadHistoricalData />
+                    <DownloadHistoricalData data={historicalLandCoverData} />
                 </Header>
 
                 <LandcoverGraph

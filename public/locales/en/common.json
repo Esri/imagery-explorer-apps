@@ -242,6 +242,7 @@
     "donwload_mp4": "Download MP4",
     "donwload_geotiff": "Download GeoTIFF",
     "publish_to_arcgis": "Publish to ArcGIS",
+    "download": "Download",
 
     "surface_temp_with_unit": "Surface Temp {{unit}}",
     "surface_temp": "Surface Temp",
