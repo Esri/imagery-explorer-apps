@@ -1,0 +1,1 @@
+export { FootPrintOfSelectedScene } from './FootPrintOfSelectedScene';

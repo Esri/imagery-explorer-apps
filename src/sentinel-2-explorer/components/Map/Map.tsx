@@ -35,6 +35,7 @@ import { Sentinel2MaskLayer } from '../MaskLayer';
 import { Sentinel2ChangeLayer } from '../ChangeCompareLayer';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
+import { FootPrintOfSelectedScene } from '@shared/components/FootPrintOfSelectedScene';
 
 const Map = () => {
     const dispatch = useAppDispatch();
@@ -48,6 +49,7 @@ const Map = () => {
                 dispatch(updateQueryLocation4SpectralProfileTool(point));
             }}
         >
+            <FootPrintOfSelectedScene serviceUrl={SENTINEL_2_SERVICE_URL} />
             <GroupLayer
                 // this group layer should be added at index of one so that the
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
