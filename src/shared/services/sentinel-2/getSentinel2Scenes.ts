@@ -70,6 +70,7 @@ const {
     SUN_ZENITH,
     SUN_AZIMUTH,
     CATEGORY,
+    NO_DATA_PERCENTAGE,
 } = FIELD_NAMES;
 
 /**
@@ -117,13 +118,16 @@ export const getFormattedSentinel2Scenes = (
             acquisitionMonth,
             satellite: attributes[SATELLITE],
             sensor: attributes[SENSOR],
-            snowIcePercentage: Math.floor(
-                attributes[SNOW_ICE_PERCENTAGE] * 100
-            ),
+            snowIcePercentage: attributes[SNOW_ICE_PERCENTAGE]
+                ? Math.floor(attributes[SNOW_ICE_PERCENTAGE] * 100)
+                : 0,
             productName: attributes[PRODUCT],
             relativeOrbit: attributes[RELATIVE_ORBIT],
             sunElevation: (90 - attributes[SUN_ZENITH]).toFixed(2),
             sunAzimuth: attributes[SUN_AZIMUTH].toFixed(2),
+            noDataPixelPercentage: attributes[NO_DATA_PERCENTAGE]
+                ? Math.round(attributes[NO_DATA_PERCENTAGE])
+                : 0,
         };
 
         return sentinel2Scene;
@@ -196,6 +200,7 @@ export const getSentinel2Scenes = async ({
             SUN_ZENITH,
             SUN_AZIMUTH,
             CATEGORY,
+            NO_DATA_PERCENTAGE,
         ].join(','),
         orderByFields: ACQUISITION_DATE,
         resultOffset: '0',

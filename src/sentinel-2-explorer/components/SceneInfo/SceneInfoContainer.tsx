@@ -91,6 +91,10 @@ export const SceneInfoContainer = () => {
                 value: `${snowIcePercentage}%`,
             },
             {
+                name: t('no_data_pixel'), // 'No Data Pixel',
+                value: `${data.noDataPixelPercentage}%`,
+            },
+            {
                 // name: 'Product Name',
                 name: t('product_name'),
                 value: productName,
@@ -102,13 +106,8 @@ export const SceneInfoContainer = () => {
             },
             {
                 // name: 'Sun Elevation',
-                name: t('sun_elevation'),
-                value: `${sunElevation}°`,
-            },
-            {
-                // name: 'Sun Azimuth',
-                name: t('sun_azimuth'),
-                value: `${sunAzimuth}°`,
+                name: t('sun_elevation_azimuth'),
+                value: `${sunElevation}°/${sunAzimuth}°`,
             },
         ];
     }, [data]);

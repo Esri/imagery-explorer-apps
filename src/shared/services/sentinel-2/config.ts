@@ -87,6 +87,7 @@ export enum FIELD_NAMES {
     ABSOLUTE_ORBIT = 'absoluteorbit',
     CATEGORY = 'category',
     MONTH = 'month',
+    NO_DATA_PERCENTAGE = 'nodatapixelpercentage',
 }
 
 /**

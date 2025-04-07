@@ -182,7 +182,7 @@ export type Sentinel2Scene = {
      */
     sensor: string;
     /**
-     * percentage of snow and ice cover, the value ranges from 0 - 1
+     * percentage of snow and ice cover, the value ranges from 0 - 100
      */
     snowIcePercentage: number;
     /**
@@ -202,6 +202,10 @@ export type Sentinel2Scene = {
      * azimuth of the sun in degrees:
      */
     sunAzimuth: string;
+    /**
+     * percentage of no data pixels in the scene, the value ranges from 0 - 100
+     */
+    noDataPixelPercentage: number;
 };
 
 /**
