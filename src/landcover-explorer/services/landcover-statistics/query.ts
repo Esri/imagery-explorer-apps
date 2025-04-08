@@ -365,6 +365,9 @@ const formatLandCoverStatsFeatures = (
 
             historicalData.areaByYear[yearIdx].areaInPercentage =
                 formatAreaPercentage((count / totalPixelCounts) * 100);
+
+            historicalData.areaByYear[yearIdx].areaInPercentageRaw =
+                (count / totalPixelCounts) * 100;
         }
     }
 

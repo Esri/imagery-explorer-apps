@@ -7,6 +7,14 @@ import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
 
 type Props = {
     data: HistoricalLandCoverData[];
+    /**
+     * Name of selected country, if selected country is defined (and selectedSubRegion is not defined), show land cover stats for selected country
+     */
+    selectedCountry: string;
+    /**
+     * ISO Code of selected region. if selected sub region is defined, show land cover stats for selected sub region
+     */
+    selectedSubRegion: string;
 };
 
 /**
@@ -16,7 +24,11 @@ type Props = {
  * @param {HistoricalLandCoverData[]} props.data - The historical land cover data to be downloaded.
  * @returns {JSX.Element|null} The rendered component or null if no data is provided.
  */
-export const DownloadHistoricalData: FC<Props> = ({ data }) => {
+export const DownloadHistoricalData: FC<Props> = ({
+    data,
+    selectedCountry,
+    selectedSubRegion,
+}: Props): JSX.Element | null => {
     const { t } = useTranslation();
 
     const handleDownload = () => {
@@ -24,7 +36,18 @@ export const DownloadHistoricalData: FC<Props> = ({ data }) => {
         const csvData = formatHistoricalData(data);
         const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
 
-        downloadBlob(blob, 'historical-landcover-data.csv');
+        const nameOfSelectedRegion =
+            selectedCountry || selectedSubRegion
+                ? [selectedCountry, selectedSubRegion]
+                      .filter((region) => region)
+                      .join('_')
+                : '';
+
+        const fileName = nameOfSelectedRegion
+            ? `historical-landcover-data-${nameOfSelectedRegion}.csv`
+            : 'historical-landcover-data.csv';
+
+        downloadBlob(blob, fileName);
     };
 
     if (!data || data.length === 0) {

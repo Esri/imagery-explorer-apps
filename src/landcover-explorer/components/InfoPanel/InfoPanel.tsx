@@ -222,7 +222,11 @@ const InfoPanel = () => {
                         />
                     )}
 
-                    <DownloadHistoricalData data={historicalLandCoverData} />
+                    <DownloadHistoricalData
+                        data={historicalLandCoverData}
+                        selectedCountry={selectedCountry}
+                        selectedSubRegion={selectedSubRegion}
+                    />
                 </Header>
 
                 <div className="w-full h-full overflow-y-auto pb-12">
