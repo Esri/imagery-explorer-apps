@@ -9,13 +9,18 @@ type Props = {
     data: HistoricalLandCoverData[];
 };
 
+/**
+ * DownloadHistoricalData component allows users to download historical land cover data as a CSV file.
+ *
+ * @param {Object} props - The component props.
+ * @param {HistoricalLandCoverData[]} props.data - The historical land cover data to be downloaded.
+ * @returns {JSX.Element|null} The rendered component or null if no data is provided.
+ */
 export const DownloadHistoricalData: FC<Props> = ({ data }) => {
     const { t } = useTranslation();
 
     const handleDownload = () => {
-        // Implement download functionality here
-        // console.log('Download button clicked', data);
-
+        // Convert data to CSV format
         const csvData = formatHistoricalData(data);
         const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
 

@@ -1,5 +1,18 @@
 import { HistoricalLandCoverData } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
 
+/**
+ * Formats historical land cover data into a CSV string.
+ *
+ * @param data - An array of historical land cover data objects.
+ * Each object contains information about land cover classification and area percentages by year.
+ *
+ * @returns A CSV string representation of the historical land cover data.
+ * If the input data is empty or undefined, an empty string is returned.
+ *
+ * The CSV format includes:
+ * - A header row with "LandCover" followed by column headers for each year (e.g., "% in 2000").
+ * - Data rows where each row corresponds to a land cover classification and its area percentages for each year.
+ */
 export const formatHistoricalData = (
     data: HistoricalLandCoverData[]
 ): string => {
@@ -11,7 +24,9 @@ export const formatHistoricalData = (
         new Set(data.flatMap((item) => item.areaByYear.map(({ year }) => year)))
     ).sort();
 
-    const csvHeader = ['LandCover', ...years].join(',') + '\n';
+    const headersByYear = years.map((year) => `% in ${year}`);
+
+    const csvHeader = ['LandCover', ...headersByYear].join(',') + '\n';
     const csvRows: string[] = [];
 
     for (const item of data) {
