@@ -48,12 +48,17 @@ type Props = {
      * name of the app/service to be added as prefix to the filename of the output .mp4 file
      */
     authoringAppName: string;
+    /**
+     * The animation metadata sources.
+     */
+    animationMetadataSources: string;
     mapView?: MapView;
 };
 
 export const AnimationLayer: FC<Props> = ({
     imageryServiceUrl,
     authoringAppName,
+    animationMetadataSources,
     mapView,
 }: Props) => {
     const dispatch = useAppDispatch();
@@ -95,6 +100,7 @@ export const AnimationLayer: FC<Props> = ({
     const frameData4DownloadJob = useFrameDataForDownloadJob({
         mediaLayerElements,
         sortedQueryParams4ScenesInAnimationMode,
+        animationMetadataSources,
     });
 
     /**

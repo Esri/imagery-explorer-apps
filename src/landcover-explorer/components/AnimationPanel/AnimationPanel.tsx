@@ -41,9 +41,16 @@ import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/
 
 type Props = {
     mapView?: IMapView;
+    /**
+     * The animation metadata sources.
+     */
+    animationMetadataSources: string;
 };
 
-const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
+const AnimationPanel: FC<Props> = ({
+    mapView,
+    animationMetadataSources,
+}: Props) => {
     const dispatch = useAppDispatch();
 
     const animationMode = useAppSelector(selectAnimationStatus);
@@ -53,7 +60,11 @@ const AnimationPanel: FC<Props> = ({ mapView }: Props) => {
     const mediaLayerElements = useMediaLayerImageElement(mapView);
 
     const frameData4DownloadJob: AnimationFrameData[] =
-        useFrameDataForDownloadJob({ mediaLayerElements, mapView });
+        useFrameDataForDownloadJob({
+            mediaLayerElements,
+            mapView,
+            animationMetadataSources,
+        });
 
     const animationSpeed = useAppSelector(selectAnimationSpeed);
 

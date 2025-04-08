@@ -56,9 +56,13 @@ import {
 import MapView from '@shared/components/MapView/MapView';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 import { MapActionButtonGroup4LandcoverExplorer } from './MapActionButtonGroup4LandcoverExplorer';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 // import SearchWidget from '@shared/components/SearchWidget/SearchWidget';
 
 const MapViewContainer = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const mode = useAppSelector(selectMapMode);
@@ -163,7 +167,11 @@ const MapViewContainer = () => {
 
                 <CustomMapArrtribution atrribution="Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory" />
 
-                <AnimationPanel />
+                <AnimationPanel
+                    animationMetadataSources={t('animation_metadata', {
+                        ns: APP_NAME,
+                    })}
+                />
 
                 <MapActionButtonGroup4LandcoverExplorer />
             </MapView>

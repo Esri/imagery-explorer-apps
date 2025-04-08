@@ -65,6 +65,9 @@ const Map = () => {
             <AnimationLayer
                 imageryServiceUrl={SENTINEL_2_SERVICE_URL}
                 authoringAppName="sentinel2"
+                animationMetadataSources={t('animation_metadata', {
+                    ns: APP_NAME,
+                })}
             />
             <HillshadeLayer />
 

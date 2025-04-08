@@ -71,6 +71,9 @@ const Map = () => {
             <AnimationLayer
                 imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
                 authoringAppName="landsat"
+                animationMetadataSources={t('animation_metadata', {
+                    ns: APP_NAME,
+                })}
             />
             <HillshadeLayer />
 
