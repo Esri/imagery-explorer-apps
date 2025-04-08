@@ -28,7 +28,7 @@ import { useAppDispatch } from '@shared/store/configureStore';
 import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
-import { appConfig } from '@shared/config';
+// import { appConfig } from '@shared/config';
 import {
     convertImages2Video,
     AnimationFrameData,
@@ -127,7 +127,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 animationSpeed,
                 outputWidth: width,
                 outputHeight: height,
-                authoringApp: appConfig.title,
+                authoringApp: authoringAppName,
                 abortController: abortController.current,
             });
 
