@@ -43,7 +43,7 @@ const Header: FC<Props> = ({ children }: Props) => {
                 </svg>
             </div> */}
 
-            <div className="flex items-center">{children}</div>
+            <div className="lg:flex items-center">{children}</div>
         </div>
     );
 };

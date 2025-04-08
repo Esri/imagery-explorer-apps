@@ -201,7 +201,7 @@ const SelectorList: FC<Props> = ({
     };
 
     return (
-        <div className="relative mr-4" ref={containterRef}>
+        <div className="relative mr-4 mb-4 lg:mb-0 z-10" ref={containterRef}>
             <h5 className="mb-2">{title}</h5>
 
             <div className="relative">
