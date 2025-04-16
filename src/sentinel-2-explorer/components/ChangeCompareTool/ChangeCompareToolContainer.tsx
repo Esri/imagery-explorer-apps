@@ -64,14 +64,14 @@ export const ChangeCompareToolContainer = () => {
                         value: 'moisture' as SpectralIndex,
                         label: t('moisture_index'),
                     },
-                    {
-                        value: 'urban' as SpectralIndex,
-                        label: t('urban_index'),
-                    },
-                    {
-                        value: 'burn' as SpectralIndex,
-                        label: t('burn_index'),
-                    },
+                    // {
+                    //     value: 'urban' as SpectralIndex,
+                    //     label: t('urban_index'),
+                    // },
+                    // {
+                    //     value: 'burn' as SpectralIndex,
+                    //     label: t('burn_index'),
+                    // },
                 ]}
             />
             <ChangeCompareToolControls legendLabelText={LEGEND_LABEL_TEXT} />
