@@ -110,5 +110,9 @@
 
     "app_attribution_title": "<span class=\"font-bold\">Sentinel-2 Land Cover Explorer App</span> - Esri",
     "app_attribution_license": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-    "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data."
+    "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
+    "download_historical_data": "Download Historical Data",
+    "donwload_as_csv": "Download Historical Data as CSV",
+
+    "animation_metadata": "Esri, Impact Observatory"
 }

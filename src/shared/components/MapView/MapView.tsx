@@ -20,6 +20,7 @@ import ArcGISMapView from '@arcgis/core/views/MapView';
 import WebMap from '@arcgis/core/WebMap';
 import TileInfo from '@arcgis/core/layers/support/TileInfo';
 import classNames from 'classnames';
+import Color from '@arcgis/core/Color';
 
 interface Props {
     /**

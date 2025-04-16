@@ -35,6 +35,7 @@ import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralP
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { FootPrintOfSelectedScene } from '@shared/components/FootPrintOfSelectedScene';
 
 const Map = () => {
     const dispatch = useAppDispatch();
@@ -49,6 +50,9 @@ const Map = () => {
                 dispatch(updateQueryLocation4SpectralProfileTool(point));
             }}
         >
+            <FootPrintOfSelectedScene
+                serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            />
             <GroupLayer
                 // this group layer should be added at index of one so that the
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
@@ -67,6 +71,9 @@ const Map = () => {
             <AnimationLayer
                 imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
                 authoringAppName="landsat"
+                animationMetadataSources={t('animation_metadata', {
+                    ns: APP_NAME,
+                })}
             />
             <HillshadeLayer />
 

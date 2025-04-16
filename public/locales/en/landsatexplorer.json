@@ -96,6 +96,7 @@
 
     "terms_of_use_app_header": "Landsat Explorer App - Esri",
     "terms_of_use_app_paragraph1": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-    "terms_of_use_app_paragraph2": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data."
+    "terms_of_use_app_paragraph2": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
 
+    "animation_metadata": "Esri, USGS, NASA"
 }

@@ -25,7 +25,7 @@ import {
 } from '@shared/services/sentinel-1/config';
 import {
     colormap,
-    compositeBands,
+    compositeBand,
 } from '@arcgis/core/layers/support/rasterFunctionUtils.js';
 import Color from '@arcgis/core/Color';
 import AlgorithmicColorRamp from '@arcgis/core/rest/support/AlgorithmicColorRamp';
@@ -146,7 +146,7 @@ export const getCompositeBandsRasterFunction = (
         return null;
     }
 
-    return compositeBands({
+    return compositeBand({
         outputPixelType: 'u8',
         rasters: [
             objectIdOfRedBand,

@@ -317,6 +317,7 @@ const formatLandCoverStatsFeatures = (
                 year,
                 area: 0,
                 areaInPercentage: 0,
+                areaInPercentageRaw: 0,
             };
         });
 
@@ -364,6 +365,9 @@ const formatLandCoverStatsFeatures = (
 
             historicalData.areaByYear[yearIdx].areaInPercentage =
                 formatAreaPercentage((count / totalPixelCounts) * 100);
+
+            historicalData.areaByYear[yearIdx].areaInPercentageRaw =
+                (count / totalPixelCounts) * 100;
         }
     }
 

@@ -29,10 +29,6 @@ type AppConfig = {
      */
     webmapId: string;
     /**
-     * Sources information to be added to output MP4 file
-     */
-    animationMetadataSources?: string;
-    /**
      * App id to be used to create the OAuthInfo object
      * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
      */

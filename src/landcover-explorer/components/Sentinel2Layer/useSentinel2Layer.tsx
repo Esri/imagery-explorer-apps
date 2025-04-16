@@ -16,16 +16,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 // import IMapView from '@arcgis/core/views/MapView';
-import {
-    SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
-    SENTINEL_2_IMAGE_SERVICE_URL,
-} from './config';
+// import {
+//     // SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
+//     // SENTINEL_2_IMAGE_SERVICE_URL,
+// } from './config';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectSentinel2AquisitionMonth,
     selectSentinel2RasterFunction,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { getMosaicRuleByAcquisitionDate } from './exportImage';
+import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 
 type UseLandCoverLayerParams = {
     year: number;
@@ -33,7 +34,7 @@ type UseLandCoverLayerParams = {
     // mapView?: IMapView;
 };
 
-const { AcquisitionDate, CloudCover } = SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES;
+// const { AcquisitionDate, CloudCover } = SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES;
 
 export const createMosaicRuleByYear = (year: number, month: number) => {
     // const monthStr = month < 10 ? '0' + month : month.toString();
@@ -70,7 +71,7 @@ const useSentinel2Layer = ({
     const getSentinel2Layer = async () => {
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
-            url: SENTINEL_2_IMAGE_SERVICE_URL,
+            url: SENTINEL_2_SERVICE_URL,
             mosaicRule: createMosaicRuleByYear(year, aquisitionMonth) as any,
             rasterFunction: {
                 functionName: selectedRasterFunction,

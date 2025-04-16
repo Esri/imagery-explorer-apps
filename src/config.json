@@ -4,8 +4,7 @@
             "title": "Esri | Landsat Explorer",
             "satellite": "Landsat",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
-            "description": "Landsat multispectral imagery helps to track and document land use and land change associated with climate change, urbanization, drought, wildfire, deforestation, and other natural processes and human activity.",
-            "animationMetadataSources": "Esri, USGS, NASA",
+            "description": "Explore and begin to unlock the wealth of information provided by Landsat through an intuitive user experience leveraging a variety of ArcGIS capabilities.",
             "pathname": "/landsatexplorer",
             "entrypoint": "/src/landsat-explorer/index.tsx",
             "appId": "LSX"
@@ -14,8 +13,7 @@
             "title": "Esri | Sentinel-2 Land Cover Explorer",
             "satellite": "Sentinel-2",
             "webmapId": "f8770e0adc5c41038026494b871ceb99",
-            "description": "This application displays the land use/land cover (LULC) timeseries layer derived from ESA Sentinel-2 imagery at 10m resolution. ",
-            "animationMetadataSources": "Esri, Impact Observatory",
+            "description": "This application displays the land use/land cover (LULC) timeseries layer derived from ESA Sentinel-2 imagery at 10m resolution.",
             "pathname": "/landcoverexplorer",
             "entrypoint": "/src/landcover-explorer/index.tsx",
             "appId": "S2LCX"
@@ -24,8 +22,7 @@
             "title": "Esri | Sentinel-1 Explorer",
             "satellite": "Sentinel-1",
             "webmapId": "260548c9e7934ef5b20a5f48467a3c1d",
-            "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-1 provides",
-            "animationMetadataSources": "Esri, European Space Agency",
+            "description": "Explore and begin to unlock the wealth of information provided by Sentinel-1 through an intuitive user experience leveraging a variety of ArcGIS capabilities.",
             "pathname": "/sentinel1explorer",
             "entrypoint": "/src/sentinel-1-explorer/index.tsx",
             "appId": "S1X"
@@ -34,8 +31,7 @@
             "title": "Esri | Sentinel-2 Explorer",
             "satellite": "Sentinel-2",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
-            "description": "Through an intuitive user experience, this app leverages a variety of ArcGIS capabilities to explore and begin to unlock the wealth of information that Sentinel-2 provides.",
-            "animationMetadataSources": "Esri, European Space Agency",
+            "description": "Explore and begin to unlock the wealth of information provided by Sentinel-2 through an intuitive user experience leveraging a variety of ArcGIS capabilities.",
             "pathname": "/sentinel2explorer",
             "entrypoint": "/src/sentinel-2-explorer/index.tsx",
             "appId": "S2X"

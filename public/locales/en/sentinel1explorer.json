@@ -133,6 +133,7 @@
     "about_attribution_and_terms_content_6": "Sentinel-1 Explorer - Esri",
     "about_attribution_and_terms_content_7": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
     "about_attribution_and_terms_content_8": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
-    "about_attribution_and_terms_content_9": "Information contained in the Interesting Places descriptions was sourced from Wikipedia."
-  
+    "about_attribution_and_terms_content_9": "Information contained in the Interesting Places descriptions was sourced from Wikipedia.",
+
+    "animation_metadata": "Esri, European Space Agency"
 }

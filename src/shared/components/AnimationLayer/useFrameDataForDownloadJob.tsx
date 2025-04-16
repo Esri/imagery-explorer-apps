@@ -14,7 +14,7 @@
  */
 
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
-import { appConfig } from '@shared/config';
+// import { appConfig } from '@shared/config';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { selectMapCenter } from '@shared/store/Map/selectors';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
@@ -36,6 +36,10 @@ type Props = {
      * An array of ImageElement objects representing media layer elements.
      */
     mediaLayerElements: ImageElement[];
+    /**
+     * The animation metadata sources.
+     */
+    animationMetadataSources: string;
 };
 
 /**
@@ -47,6 +51,7 @@ type Props = {
 export const useFrameDataForDownloadJob = ({
     sortedQueryParams4ScenesInAnimationMode,
     mediaLayerElements,
+    animationMetadataSources,
 }: Props) => {
     const mapCenter = useAppSelector(selectMapCenter);
 
@@ -101,7 +106,7 @@ export const useFrameDataForDownloadJob = ({
                         queryParams.acquisitionDate
                     }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
                         3
-                    )}  |  ${appConfig.animationMetadataSources}`,
+                    )}  |  ${animationMetadataSources}`,
                 } as AnimationFrameData;
             });
 

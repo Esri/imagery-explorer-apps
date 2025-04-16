@@ -39,6 +39,7 @@ import {
     selectMapExtent,
     selectMapResolution,
 } from '@shared/store/Map/selectors';
+import { DownloadHistoricalData } from './DownloadHistoricalData/DownloadHistoricalData';
 
 // import { numberFns } from 'helper-toolkit-ts';
 // import { saveHistoricalLandCoverDataAsCSV } from './helper';
@@ -199,7 +200,7 @@ const InfoPanel = () => {
             />
 
             <div
-                className="w-full mx-10 pb-6 overflow-x-auto overflow-y-hidden"
+                className="w-full mx-10 pb-6 overflow-y-hidden"
                 style={{
                     maxWidth: '90vw',
                 }}
@@ -220,12 +221,20 @@ const InfoPanel = () => {
                             onChange={setSelectedSubRegin}
                         />
                     )}
+
+                    <DownloadHistoricalData
+                        data={historicalLandCoverData}
+                        selectedCountry={selectedCountry}
+                        selectedSubRegion={selectedSubRegion}
+                    />
                 </Header>
 
-                <LandcoverGraph
-                    chartData={chartData}
-                    // uniqueLandCoverClasses={uniqueLandCoverClasses}
-                />
+                <div className="w-full h-full overflow-y-auto pb-12">
+                    <LandcoverGraph
+                        chartData={chartData}
+                        // uniqueLandCoverClasses={uniqueLandCoverClasses}
+                    />
+                </div>
             </div>
         </div>
     );
