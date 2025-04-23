@@ -31,9 +31,9 @@ import LandsatMNDWIThumbnail from './thumbnails/Landsat/Render_MNDWI.png';
 import LandsatNDMIThumbnail from './thumbnails/Landsat/Render_NDMI.png';
 import LandsatUrbanThumbnail from './thumbnails/Landsat/Render_Urban.jpg';
 
-import LandsatMNDWILegend from './legends/Landsat/MNDWI.png';
-import LandsatNDVILegend from './legends/Landsat/NDVI.png';
-import LandsatNDMILegend from './legends/Landsat/NDMI.png';
+import LandsatMNDWILegend from './legends/Landsat/MNDWI_noText.png';
+import LandsatNDVILegend from './legends/Landsat/NDVI_noText.png';
+import LandsatNDMILegend from './legends/Landsat/NDMI_noText.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 import { AppContext } from '@shared/contexts/AppContextProvider';
