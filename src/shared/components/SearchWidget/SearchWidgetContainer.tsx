@@ -22,6 +22,7 @@ import MapView from '@arcgis/core/views/MapView';
 import classNames from 'classnames';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
+import './SearchWidget.css';
 
 type Props = {
     mapView?: MapView;
@@ -57,7 +58,7 @@ export const SearchWidgetContainer: FC<Props> = ({ mapView }) => {
 
             <div
                 className={classNames(
-                    'absolute top-0 left-full ml-[2px] w-[230px] h-map-action-button-size',
+                    'absolute top-0 left-full ml-[2px] w-[212px] h-map-action-button-size',
                     {
                         hidden: !isSearchWidgetOpen,
                     }
