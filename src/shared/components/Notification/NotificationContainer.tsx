@@ -13,33 +13,36 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Notification } from './Notification';
 import { useShouldHideNitification } from './useShouldHideNitification';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
+import { selectHideNotification } from '@shared/store/UI/selectors';
+import { hideNotificationToggled } from '@shared/store/UI/reducer';
 
-export const NotificationContainer = () => {
-    const { shouldHide, hideNotification } = useShouldHideNitification();
+type NotificationContainerProps = {
+    message: string;
+};
 
-    if (shouldHide) {
+export const NotificationContainer: FC<NotificationContainerProps> = ({
+    message,
+}) => {
+    // const { shouldHide, hideNotification } = useShouldHideNitification();
+
+    const dispatch = useAppDispatch();
+
+    const shouldHide = useAppSelector(selectHideNotification);
+
+    if (shouldHide || !message) {
         return null;
     }
 
     return (
-        <Notification closeButtonOnClick={hideNotification}>
-            <p className="text-sm max-w-3xl">
-                Level-1 product processing of Landsat 7, Landsat 8, and Landsat
-                9 scenes acquired December 19, 2023, to the present has been
-                paused while engineers investigate an issue with the processing
-                systems.{' '}
-                <a
-                    className=" underline"
-                    href="https://www.usgs.gov/landsat-missions/news/landsat-level-1-product-processing-temporarily-paused"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    Learn more
-                </a>
-            </p>
-        </Notification>
+        <Notification
+            message={message}
+            closeButtonOnClick={() => {
+                dispatch(hideNotificationToggled());
+            }}
+        ></Notification>
     );
 };
