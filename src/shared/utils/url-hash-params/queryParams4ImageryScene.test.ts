@@ -50,7 +50,7 @@ describe('test getQueryParams4MainSceneFromHashParams', () => {
                 endDate: '2022-12-31',
             },
             objectIdOfSelectedScene: 12345,
-            rasterFunctionName: 'Agriculture with DRA',
+            rasterFunctionName: 'Agriculture for Visualization',
             uniqueId: null,
         });
     });
@@ -71,7 +71,7 @@ describe('test getQueryParams4MainSceneFromHashParams', () => {
                 endDate: '2024-01-31',
             },
             objectIdOfSelectedScene: null,
-            rasterFunctionName: 'Color Infrared with DRA',
+            rasterFunctionName: 'Color Infrared for Visualization',
             uniqueId: null,
         });
     });
