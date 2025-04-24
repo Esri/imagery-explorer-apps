@@ -16,6 +16,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Notification } from './Notification';
 import { useShouldHideNitification } from './useShouldHideNitification';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
+import { selectHideNotification } from '@shared/store/UI/selectors';
+import { hideNotificationToggled } from '@shared/store/UI/reducer';
 
 type NotificationContainerProps = {
     message: string;
@@ -24,16 +27,22 @@ type NotificationContainerProps = {
 export const NotificationContainer: FC<NotificationContainerProps> = ({
     message,
 }) => {
-    const { shouldHide, hideNotification } = useShouldHideNitification();
+    // const { shouldHide, hideNotification } = useShouldHideNitification();
 
-    if (shouldHide) {
+    const dispatch = useAppDispatch();
+
+    const shouldHide = useAppSelector(selectHideNotification);
+
+    if (shouldHide || !message) {
         return null;
     }
 
     return (
         <Notification
             message={message}
-            closeButtonOnClick={hideNotification}
+            closeButtonOnClick={() => {
+                dispatch(hideNotificationToggled());
+            }}
         ></Notification>
     );
 };
