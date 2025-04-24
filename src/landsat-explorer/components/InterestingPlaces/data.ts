@@ -39,7 +39,7 @@ export const data: InterestingPlaceData[] = [
             center: [89.08, 21.909],
             zoom: 11.557,
         },
-        renderer: 'Short-wave Infrared with DRA',
+        renderer: 'Short-wave Infrared for Visualization',
         thumbnail: Ganges,
         // description:
         //     "The Ganges Delta is a river delta in Eastern South Asia. It is the world's largest river delta and it empties into the Bay of Bengal with the combined waters of several river systems.",
@@ -54,7 +54,7 @@ export const data: InterestingPlaceData[] = [
             center: [-112.913, 36.242],
             zoom: 12.43,
         },
-        renderer: 'Short-wave Infrared with DRA',
+        renderer: 'Short-wave Infrared for Visualization',
         thumbnail: GrandCanyon,
         // description:
         //     'The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, United States. The Grand Canyon is 277 miles (446 km) long, up to 18 miles (29 km) wide and attains a depth of more than one mile (1,857 meters).',
@@ -69,7 +69,7 @@ export const data: InterestingPlaceData[] = [
             center: [128.736, -22.494],
             zoom: 12,
         },
-        renderer: 'Agriculture with DRA',
+        renderer: 'Agriculture for Visualization',
         thumbnail: LakeMackay,
         // description:
         //     'Lake Mackay, known as Wilkinkarra to the Indigenous Pintupi people. With a surface area of 3,494 sq km (1,349 sq mi), it is the largest of hundreds of ephemeral salt lakes scattered throughout Western Australia and the Northern Territory.',
@@ -84,7 +84,7 @@ export const data: InterestingPlaceData[] = [
             center: [-11.398, 21.124],
             zoom: 12.43,
         },
-        renderer: 'Geology with DRA',
+        renderer: 'Geology for Visualization',
         thumbnail: Richat,
         // label: 'Richat Structure (Eye of the Sahara)',
         // description:
@@ -100,7 +100,7 @@ export const data: InterestingPlaceData[] = [
             center: [18.476, -23.914],
             zoom: 11.692,
         },
-        renderer: 'Geology with DRA',
+        renderer: 'Geology for Visualization',
         thumbnail: KalahariDunes,
         // description:
         //     'The Kalahari Desert is a large semi-arid sandy savanna in Southern Africa. Linear dunes, such as these, typically form in arid environments with consistent wind patterns.',
@@ -115,7 +115,7 @@ export const data: InterestingPlaceData[] = [
             center: [15.398, -23.68],
             zoom: 12.43,
         },
-        renderer: 'Color Infrared with DRA',
+        renderer: 'Color Infrared for Visualization',
         thumbnail: KuisebCanyon,
         // description:
         //     'The Kuiseb Canyon has been carved out over millions of years by the ephemeral Kuiseb River in this barren and inaccessible area of Namibia, Africa. It is characterized by its rock formations, steep cliffs, and unique ecosystems.',
@@ -130,7 +130,7 @@ export const data: InterestingPlaceData[] = [
             center: [-70.819, -13.943],
             zoom: 12.43,
         },
-        renderer: 'Short-wave Infrared with DRA',
+        renderer: 'Short-wave Infrared for Visualization',
         thumbnail: Quelccaya,
         // label: 'Quelccaya Ice Cap',
         // description:
@@ -146,7 +146,7 @@ export const data: InterestingPlaceData[] = [
             center: [132.307, -23.815],
             zoom: 12,
         },
-        renderer: 'Agriculture with DRA',
+        renderer: 'Agriculture for Visualization',
         thumbnail: GossesBluff,
         // description:
         //     'Gosses Bluff, located in the Northern Territory of Australia, is the eroded remnant of an impact crater believed to have been formed by an asteroid impact about 142 million years ago. The circular bluff formation in the center of the crater is believed to be the crater’s central uplift, or rock displacement, from the original impact.',
@@ -161,7 +161,7 @@ export const data: InterestingPlaceData[] = [
             center: [110.947, 30.862],
             zoom: 12.43,
         },
-        renderer: 'Agriculture with DRA',
+        renderer: 'Agriculture for Visualization',
         thumbnail: ThreeGorges,
         // label: 'Three Gorges Dam',
         // description:
@@ -177,7 +177,7 @@ export const data: InterestingPlaceData[] = [
             center: [54.557, 34.57],
             zoom: 11,
         },
-        renderer: 'Short-wave Infrared with DRA',
+        renderer: 'Short-wave Infrared for Visualization',
         thumbnail: DashteKevir,
         // description:
         //     'Dasht-e Kavir, also known as the Great Salt Desert, is a large desert lying in the middle of the Iranian Plateau. The unique landscape here is comprised of sinuous valleys, shallow lakes, mudflats, and salt marshes.',
@@ -192,7 +192,7 @@ export const data: InterestingPlaceData[] = [
             center: [-7.531, 29.021],
             zoom: 12,
         },
-        renderer: 'Agriculture with DRA',
+        renderer: 'Agriculture for Visualization',
         thumbnail: Ouarkziz,
         // label: 'Ouarkziz Crater',
         // description:
@@ -208,7 +208,7 @@ export const data: InterestingPlaceData[] = [
             center: [16.4, -18.746],
             zoom: 10,
         },
-        renderer: 'Short-wave Infrared with DRA',
+        renderer: 'Short-wave Infrared for Visualization',
         thumbnail: EtoshaPan,
         // description:
         //     'The Etosha Pan is a large endorheic salt pan in the north of Namibia. Measuring 120 km (75 mi) long, this vast lakebed is periodically flooded with a thin layer of water, which is heavily salted by the mineral deposits on the surface.',

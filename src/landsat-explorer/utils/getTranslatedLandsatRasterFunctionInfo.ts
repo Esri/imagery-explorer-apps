@@ -10,52 +10,52 @@ const translationKeyLookup: Record<
         descriptionTranslationKey: string;
     }
 > = {
-    'Natural Color with DRA': {
+    'Natural Color for Visualization': {
         labelTranslationKey: 'natural_color_label',
         descriptionTranslationKey: 'natural_color_description',
     },
-    'Agriculture with DRA': {
+    'Agriculture for Visualization': {
         labelTranslationKey: 'agriculture_label',
         descriptionTranslationKey: 'agriculture_description',
     },
-    'Bathymetric with DRA': {
+    'Bathymetric for Visualization': {
         labelTranslationKey: 'bathymetric_label',
         descriptionTranslationKey: 'bathymetric_description',
     },
-    'Color Infrared with DRA': {
+    'Color Infrared for Visualization': {
         labelTranslationKey: 'color_infrared_label',
         descriptionTranslationKey: 'color_infrared_description',
     },
-    'Short-wave Infrared with DRA': {
+    'Short-wave Infrared for Visualization': {
         labelTranslationKey: 'short_wave_infrared_label',
         descriptionTranslationKey: 'short_wave_infrared_description',
     },
-    'Geology with DRA': {
+    'Geology for Visualization': {
         labelTranslationKey: 'geology_label',
         descriptionTranslationKey: 'geology_description',
     },
-    'Urban with DRA': {
+    'Urban for Visualization': {
         labelTranslationKey: 'urban_label',
         descriptionTranslationKey: 'urban_description',
     },
-    'NDVI Colorized': {
+    'NDVI Colorized for Visualization': {
         labelTranslationKey: 'ndvi_colorized_label',
         descriptionTranslationKey: 'ndvi_colorized_description',
     },
-    'NDMI Colorized': {
+    'NDMI Colorized for Visualization': {
         labelTranslationKey: 'ndmi_colorized_label',
         descriptionTranslationKey: 'ndmi_colorized_description',
     },
-    'MNDWI Colorized': {
+    'MNDWI Colorized for Visualization': {
         labelTranslationKey: 'mndwi_colorized_label',
         descriptionTranslationKey: 'mndwi_colorized_description',
     },
-    'Surface Temperature Colorized (Celsius)': {
+    'Surface Temperature Colorized (Celsius) for Visualization': {
         labelTranslationKey: 'surface_temperature_colorized_fahrenheit_label',
         descriptionTranslationKey:
             'surface_temperature_colorized_fahrenheit_description',
     },
-    'Surface Temperature Colorized (Fahrenheit)': {
+    'Surface Temperature Colorized (Fahrenheit) for Visualization': {
         labelTranslationKey: 'surface_temperature_colorized_fahrenheit_label',
         descriptionTranslationKey:
             'surface_temperature_colorized_fahrenheit_description',

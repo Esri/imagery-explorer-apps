@@ -29,7 +29,7 @@ describe('getPreloadedState4ImageryScenes', () => {
         thumbnail: null,
     };
 
-    const defaultRasterFunction = 'Natural Color with DRA';
+    const defaultRasterFunction = 'Natural Color for Visualization';
 
     it('should return initial state with dynamic mode', () => {
         const hashParams = new URLSearchParams();

@@ -132,21 +132,21 @@ export const FIELD_NAMES = {
  * List of Raster Functions for the Landsat Level-2 service
  */
 const LANDSAT_RASTER_FUNCTIONS = [
-    'Natural Color with DRA',
-    'Color Infrared with DRA',
-    'NDVI Colorized',
-    'Agriculture with DRA',
-    'Bathymetric with DRA',
-    'Geology with DRA',
-    'Short-wave Infrared with DRA',
-    'Surface Temperature Colorized (Fahrenheit)',
-    'Surface Temperature Colorized (Celsius)',
-    'MNDWI Colorized',
-    'Urban with DRA',
-    'NDMI Colorized',
+    'Natural Color for Visualization',
+    'Color Infrared for Visualization',
+    'NDVI Colorized for Visualization',
+    'Agriculture for Visualization',
+    'Bathymetric for Visualization',
+    'Geology for Visualization',
+    'Short-wave Infrared for Visualization',
+    'Surface Temperature Colorized (Fahrenheit) for Visualization',
+    'Surface Temperature Colorized (Celsius) for Visualization',
+    'MNDWI Colorized for Visualization',
+    'Urban for Visualization',
+    'NDMI Colorized for Visualization',
     // 'Short-wave Infrared',
     // 'Color Infrared',
-    // 'Geology with DRA',
+    // 'Geology for Visualization',
     // 'Natural Color',
     // 'Geology',
     // 'Bathymetric',
@@ -169,66 +169,66 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     label: string;
 }[] = [
     {
-        name: 'Natural Color with DRA',
+        name: 'Natural Color for Visualization',
         description:
             'Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.',
         label: 'Natural Color',
     },
     {
-        name: 'Color Infrared with DRA',
+        name: 'Color Infrared for Visualization',
         description:
             'Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.',
         label: 'Color IR',
     },
     {
-        name: 'Short-wave Infrared with DRA',
+        name: 'Short-wave Infrared for Visualization',
         description:
             'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.',
         label: 'Short-wave IR',
     },
     {
-        name: 'Agriculture with DRA',
+        name: 'Agriculture for Visualization',
         description:
             'Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.',
         label: 'Agriculture',
     },
     {
-        name: 'Urban with DRA',
+        name: 'Urban for Visualization',
         description:
             'Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.',
         label: 'Urban',
     },
     {
-        name: 'NDVI Colorized',
+        name: 'NDVI Colorized for Visualization',
         description:
             'Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.',
         label: 'NDVI Colorized',
     },
     {
-        name: 'Surface Temperature Colorized (Fahrenheit)',
+        name: 'Surface Temperature Colorized (Fahrenheit) for Visualization',
         description: 'Colorized surface temperature',
         label: 'Surface Temp',
     },
     {
-        name: 'MNDWI Colorized',
+        name: 'MNDWI Colorized for Visualization',
         description:
             'Modified Normalized Difference Water Index with color map computed as (b3 - b6) / (b3 + b6).',
         label: 'MNDWI',
     },
     {
-        name: 'NDMI Colorized',
+        name: 'NDMI Colorized for Visualization',
         description:
             'Normalized Difference Moisture Index with color map computed as (b5 - b6) / (b5 + b6). Moist areas range from light green to dark blue.',
         label: 'NDMI',
     },
     {
-        name: 'Geology with DRA',
+        name: 'Geology for Visualization',
         description:
             'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
         label: 'Geology',
     },
     {
-        name: 'Bathymetric with DRA',
+        name: 'Bathymetric for Visualization',
         description:
             'Bands red, green, coastal/aerosol (4, 3, 1) with dynamic range adjustment applied. Useful in bathymetric mapping applications.',
         label: 'Bathymetric',
@@ -251,7 +251,7 @@ export const LANDSAT_RASTER_FUNCTION_INFOS: {
     //     label: 'Color IR',
     // },
     // {
-    //     name: 'Geology with DRA',
+    //     name: 'Geology for Visualization',
     //     description:
     //         'The band combination (7,6,2) enables easier visualization and extraction of delineation of major structural features like thrust faults and folds, textural characteristics of igneous and sedimentary rocks, and for lithological and geological mapping like recognizing hydrothermal altered rocks, etc. Additionally, various band combinations like 4,3,2 ; 7,6,5; 7,5,2; 7,4,2 etc. can also be used to determine specific geological features.',
     //     label: '',
