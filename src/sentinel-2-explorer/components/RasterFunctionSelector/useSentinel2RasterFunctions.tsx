@@ -32,9 +32,9 @@ import ThumbnailGeology from './thumbnails/Sentinel2_Geology.jpg';
 import ThumbnailMNDWI from './thumbnails/Sentinel2_NDWI.jpg';
 import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 
-import MNDWILegend from './legends/MNDWI.png';
-import NDVILegend from './legends/NDVI.png';
-import NDMILegend from './legends/NDMI.png';
+import MNDWILegend from './legends/MNDWI_noText.png';
+import NDVILegend from './legends/NDVI_noText.png';
+import NDMILegend from './legends/NDMI_noText.png';
 import { AppContext } from '@shared/contexts/AppContextProvider';
 
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =

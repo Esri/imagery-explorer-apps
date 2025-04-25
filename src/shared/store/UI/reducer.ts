@@ -92,6 +92,10 @@ export type UIState = {
      * if true, show Save Panel
      */
     showSavePanel: boolean;
+    /**
+     * if true, hide notification
+     */
+    hideNotification: boolean;
 };
 
 export const initialUIState: UIState = {
@@ -108,6 +112,7 @@ export const initialUIState: UIState = {
     showSaveWebMapPanel: false,
     showDocPanel: false,
     showSavePanel: false,
+    hideNotification: false,
 };
 
 const slice = createSlice({
@@ -169,6 +174,9 @@ const slice = createSlice({
         showSavePanelToggled: (state) => {
             state.showSavePanel = !state.showSavePanel;
         },
+        hideNotificationToggled: (state) => {
+            state.hideNotification = !state.hideNotification;
+        },
     },
 });
 
@@ -189,6 +197,7 @@ export const {
     showSaveWebMapPanelToggled,
     showDocPanelToggled,
     showSavePanelToggled,
+    hideNotificationToggled,
 } = slice.actions;
 
 export default reducer;

@@ -67,10 +67,10 @@ const getPreloadedImageryScenesState = (
     };
 
     const rasterFunction4MainScene: LandsatRasterFunctionName =
-        'Surface Temperature Colorized (Fahrenheit)';
+        'Surface Temperature Colorized (Fahrenheit) for Visualization';
 
     const rasterFunction4SecondaryScene: LandsatRasterFunctionName =
-        'Natural Color with DRA';
+        'Natural Color for Visualization';
 
     return {
         ...initialImagerySceneState,

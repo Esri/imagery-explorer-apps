@@ -27,10 +27,10 @@ import Render_WaterAnomaly from './thumbnails/Render_WaterAnomaly.jpg';
 import Render_WaterIndex from './thumbnails/Render_WaterIndex.jpg';
 import Render_FalseColor from './thumbnails/Render_FalseColor.jpg';
 
-import SAR_FalseColorComposite_Legend from './legends/SAR_FalseColorComposite_Legend.png';
-import SAR_SingleBandV2_Legend from './legends/SAR_SingleBandV2_Legend.png';
-import SAR_WaterAnomaly_Legend from './legends/SAR_WaterAnomaly_Legend.png';
-import SAR_WaterIndex_Legend from './legends/SAR_WaterIndex_Legend.png';
+import SAR_FalseColorComposite_Legend from './legends/SAR_FalseColorComposite_Legend_noText.png';
+import SAR_SingleBandV2_Legend from './legends/SAR_SingleBand_Legend_noText.png';
+import SAR_WaterAnomaly_Legend from './legends/SAR_WaterAnomaly_Legend_noText.png';
+import SAR_WaterIndex_Legend from './legends/SAR_WaterIndex_Legend_noText.png';
 import { AppContext } from '@shared/contexts/AppContextProvider';
 
 const Sentinel1RendererThumbnailByName: Partial<

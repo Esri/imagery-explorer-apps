@@ -1,0 +1,7 @@
+.calcite-mode-dark #root .esri-search .esri-search__container  {
+    --calcite-color-foreground-1: var(--custom-background);
+    --calcite-color-foreground-2: var(--custom-background);
+    --calcite-color-foreground-3: var(--custom-background);
+    --calcite-color-text-3: var(--custom-light-blue-80);
+    --calcite-color-text-1: var(--custom-light-blue);
+}

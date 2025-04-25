@@ -29,7 +29,7 @@ describe('getPreloadedState4ImageryScenes', () => {
         thumbnail: null,
     };
 
-    const defaultRasterFunction = 'Natural Color with DRA';
+    const defaultRasterFunction = 'Natural Color for Visualization';
 
     it('should return initial state with dynamic mode', () => {
         const hashParams = new URLSearchParams();
@@ -77,7 +77,7 @@ describe('getPreloadedState4ImageryScenes', () => {
             queryParams4MainScene: {
                 uniqueId: null,
                 objectIdOfSelectedScene: 0,
-                rasterFunctionName: 'Natural Color with DRA',
+                rasterFunctionName: 'Natural Color for Visualization',
                 acquisitionDate: '2024-06-16',
                 acquisitionDateRange: {
                     startDate: '2024-01-01',
@@ -87,7 +87,7 @@ describe('getPreloadedState4ImageryScenes', () => {
             queryParams4SecondaryScene: {
                 uniqueId: null,
                 objectIdOfSelectedScene: 1,
-                rasterFunctionName: 'Color Infrared with DRA',
+                rasterFunctionName: 'Color Infrared for Visualization',
                 acquisitionDate: '2025-01-12',
                 acquisitionDateRange: {
                     startDate: '2025-01-01',
@@ -115,7 +115,7 @@ describe('getPreloadedState4ImageryScenes', () => {
                     '1': {
                         uniqueId: '1',
                         objectIdOfSelectedScene: 100,
-                        rasterFunctionName: 'Natural Color with DRA',
+                        rasterFunctionName: 'Natural Color for Visualization',
                         acquisitionDate: '2023-02-01',
                         acquisitionDateRange: {
                             startDate: '2023-01-01',
@@ -125,7 +125,8 @@ describe('getPreloadedState4ImageryScenes', () => {
                     '2': {
                         uniqueId: '2',
                         objectIdOfSelectedScene: 101,
-                        rasterFunctionName: 'Short-wave Infrared with DRA',
+                        rasterFunctionName:
+                            'Short-wave Infrared for Visualization',
                         acquisitionDate: '2024-04-01',
                         acquisitionDateRange: {
                             startDate: '2024-01-01',
@@ -135,7 +136,7 @@ describe('getPreloadedState4ImageryScenes', () => {
                     '3': {
                         uniqueId: '3',
                         objectIdOfSelectedScene: 102,
-                        rasterFunctionName: 'NDVI Colorized',
+                        rasterFunctionName: 'NDVI Colorized for Visualization',
                         acquisitionDate: '2025-01-01',
                         acquisitionDateRange: {
                             startDate: '2025-01-01',

@@ -22,7 +22,47 @@ import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { getHashParamValueByKey, updateHashParams } from '.';
 import { nanoid } from 'nanoid';
 
-const encodeQueryParams4ImageryScene = (
+const rasterFunctionNameLookup: Record<string, string> = {
+    'Natural Color with DRA': 'Natural Color for Visualization',
+    'Agriculture with DRA': 'Agriculture for Visualization',
+    'Color Infrared with DRA': 'Color Infrared for Visualization',
+    'Geology with DRA': 'Geology for Visualization',
+    'Short-wave Infrared with DRA': 'Short-wave Infrared for Visualization',
+    'Urban with DRA': 'Urban for Visualization',
+    'Bathymetric with DRA': 'Bathymetric for Visualization',
+    'Surface Temperature (Celsius)':
+        'Surface Temperature (Celsius) for Analysis',
+    'Surface Temperature (Fahrenheit)':
+        'Surface Temperature (Fahrenheit) for Analysis',
+    'NDWI Raw': 'NDWI Raw for Analysis',
+    'NDBI Raw': 'NDBI Raw for Analysis',
+    'NDVI Raw': 'NDVI Raw for Analysis',
+    'NDMI Raw': 'NDMI Raw for Analysis',
+    'MNDWI Raw': 'MNDWI Raw for Analysis',
+    'NBR Raw': 'NBR Raw for Analysis',
+    'MSAVI Raw': 'MSAVI Raw for Analysis',
+    'NDVI Colorized': 'NDVI Colorized for Visualization',
+    'NNDWI Colorized': 'NDWI Colorized for Visualization',
+    'MNDWI Colorized': 'MNDWI Colorized for Visualization',
+    'NDMI Colorized': 'NDMI Colorized for Visualization',
+    'Surface Temperature Colorized (Celsius)':
+        'Surface Temperature Colorized (Celsius) for Visualization',
+    'Surface Temperature Colorized (Fahrenheit)':
+        'Surface Temperature Colorized (Fahrenheit) for Visualization',
+};
+
+/**
+ * Retrieves the updated raster function name based on a lookup table.
+ * If the provided name does not exist in the lookup table, the original name is returned.
+ *
+ * @param oldName - The original raster function name to be updated.
+ * @returns The updated raster function name if found in the lookup table; otherwise, the original name.
+ */
+const getUpdatedRasterFunctionName = (oldName: string): string => {
+    return rasterFunctionNameLookup[oldName] || oldName;
+};
+
+export const encodeQueryParams4ImageryScene = (
     data: QueryParams4ImageryScene
 ): string => {
     if (!data) {
@@ -48,9 +88,13 @@ const decodeQueryParams4ImageryScene = (
 
     const acquisitionYear = getYearFromFormattedDateString(acquisitionDate);
 
+    // console.log(
+    //     rasterFunctionName
+    // )
+
     return {
         acquisitionDate,
-        rasterFunctionName,
+        rasterFunctionName: getUpdatedRasterFunctionName(rasterFunctionName),
         objectIdOfSelectedScene: objectId ? +objectId : null,
         // cloudCover: 0.5,
         uniqueId: null,

@@ -59,3 +59,6 @@ export const selectShouldShowAboutThisApp = (state: RootState) =>
 
 export const selectAnimationStatus = (state: RootState) =>
     state.UI.animationStatus;
+
+export const selectHideNotification = (state: RootState) =>
+    state.UI.hideNotification;

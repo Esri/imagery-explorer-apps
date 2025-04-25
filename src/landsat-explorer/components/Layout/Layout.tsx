@@ -49,6 +49,7 @@ import { CloudFilter } from '@shared/components/CloudFilter';
 import { LandsatDynamicModeInfo } from '../LandsatDynamicModeInfo/LandsatDynamicModeInfo';
 import { LandsatSavePanel } from '../LandsatSavePanel/LandsatSavePanel';
 import { useTranslation } from 'react-i18next';
+import { Notification } from '@shared/components/Notification';
 
 const Layout = () => {
     const { t } = useTranslation();

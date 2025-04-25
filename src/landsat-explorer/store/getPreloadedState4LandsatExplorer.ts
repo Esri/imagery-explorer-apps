@@ -95,7 +95,7 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         : null;
 
     const defaultRasterFunction: LandsatRasterFunctionName =
-        'Natural Color with DRA';
+        'Natural Color for Visualization';
 
     return {
         Map: getPreloadedState4Map(hashParams, randomInterestingPlace),

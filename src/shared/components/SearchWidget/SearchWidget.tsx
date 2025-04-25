@@ -76,7 +76,7 @@ const SearchWidget: React.FC<Props> = ({
 
     return (
         <div
-            className={classNames('relative w-full z-20', {
+            className={classNames('relative w-full z-20 bg-custom-background', {
                 'opacity-0': hide,
             })}
             ref={containerRef}

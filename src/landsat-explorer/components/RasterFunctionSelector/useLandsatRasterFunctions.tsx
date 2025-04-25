@@ -31,9 +31,9 @@ import LandsatMNDWIThumbnail from './thumbnails/Landsat/Render_MNDWI.png';
 import LandsatNDMIThumbnail from './thumbnails/Landsat/Render_NDMI.png';
 import LandsatUrbanThumbnail from './thumbnails/Landsat/Render_Urban.jpg';
 
-import LandsatMNDWILegend from './legends/Landsat/MNDWI.png';
-import LandsatNDVILegend from './legends/Landsat/NDVI.png';
-import LandsatNDMILegend from './legends/Landsat/NDMI.png';
+import LandsatMNDWILegend from './legends/Landsat/MNDWI_noText.png';
+import LandsatNDVILegend from './legends/Landsat/NDVI_noText.png';
+import LandsatNDMILegend from './legends/Landsat/NDMI_noText.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
 import { RasterFunctionInfo } from '@typing/imagery-service';
 import { AppContext } from '@shared/contexts/AppContextProvider';
@@ -42,33 +42,37 @@ const LandsatRendererThumbnailByName: Record<
     LandsatRasterFunctionName,
     string
 > = {
-    'Agriculture with DRA': LandsatAgricultureThumbnail,
-    'Bathymetric with DRA': LandsatBathymetricThumbnail,
-    'Color Infrared with DRA': LandsatColorIRThumbnail,
-    'Natural Color with DRA': LandsatNaturalColorThumbnail,
-    'Geology with DRA': LandsatGeologyThumbnail,
-    'NDVI Colorized': LandsatNDVIThumbnail,
-    'Short-wave Infrared with DRA': LandsatShortWaveIRThumbnail,
-    'Surface Temperature Colorized (Fahrenheit)': LandsatThermalThumbnail,
-    'Surface Temperature Colorized (Celsius)': LandsatThermalThumbnail,
-    'MNDWI Colorized': LandsatMNDWIThumbnail,
-    'Urban with DRA': LandsatUrbanThumbnail,
-    'NDMI Colorized': LandsatNDMIThumbnail,
+    'Agriculture for Visualization': LandsatAgricultureThumbnail,
+    'Bathymetric for Visualization': LandsatBathymetricThumbnail,
+    'Color Infrared for Visualization': LandsatColorIRThumbnail,
+    'Natural Color for Visualization': LandsatNaturalColorThumbnail,
+    'Geology for Visualization': LandsatGeologyThumbnail,
+    'NDVI Colorized for Visualization': LandsatNDVIThumbnail,
+    'Short-wave Infrared for Visualization': LandsatShortWaveIRThumbnail,
+    'Surface Temperature Colorized (Fahrenheit) for Visualization':
+        LandsatThermalThumbnail,
+    'Surface Temperature Colorized (Celsius) for Visualization':
+        LandsatThermalThumbnail,
+    'MNDWI Colorized for Visualization': LandsatMNDWIThumbnail,
+    'Urban for Visualization': LandsatUrbanThumbnail,
+    'NDMI Colorized for Visualization': LandsatNDMIThumbnail,
 };
 
 const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
-    'Agriculture with DRA': null,
-    'Bathymetric with DRA': null,
-    'Color Infrared with DRA': null,
-    'Natural Color with DRA': null,
-    'Geology with DRA': null,
-    'NDVI Colorized': LandsatNDVILegend,
-    'Short-wave Infrared with DRA': null,
-    'Surface Temperature Colorized (Fahrenheit)': LandsatThermalLegend,
-    'Surface Temperature Colorized (Celsius)': LandsatThermalLegend,
-    'MNDWI Colorized': LandsatMNDWILegend,
-    'Urban with DRA': null,
-    'NDMI Colorized': LandsatNDMILegend,
+    'Agriculture for Visualization': null,
+    'Bathymetric for Visualization': null,
+    'Color Infrared for Visualization': null,
+    'Natural Color for Visualization': null,
+    'Geology for Visualization': null,
+    'NDVI Colorized for Visualization': LandsatNDVILegend,
+    'Short-wave Infrared for Visualization': null,
+    'Surface Temperature Colorized (Fahrenheit) for Visualization':
+        LandsatThermalLegend,
+    'Surface Temperature Colorized (Celsius) for Visualization':
+        LandsatThermalLegend,
+    'MNDWI Colorized for Visualization': LandsatMNDWILegend,
+    'Urban for Visualization': null,
+    'NDMI Colorized for Visualization': LandsatNDMILegend,
 };
 
 /**
