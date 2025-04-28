@@ -76,10 +76,9 @@ export const loadTimeInfo = async (): Promise<TimeInfo> => {
  */
 export const populateAvailableYears = (timeExtent: number[]) => {
     const [start, end] = timeExtent;
+    const startYear = new Date(start).getUTCFullYear();
 
-    const startYear = new Date(start).getFullYear();
-
-    const endYear = new Date(end).getFullYear();
+    const endYear = new Date(end).getUTCFullYear();
 
     const years = [];
 
