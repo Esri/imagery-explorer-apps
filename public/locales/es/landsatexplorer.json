@@ -1,6 +1,6 @@
 {
     "landsat_explorer": "Landsat Explorer",
-    "esri_landsat_explorer": "ESRI | Landsat Explorer",
+    "esri_landsat_explorer": "Esri | Landsat Explorer",
     "landsat_explorer_attribution": "Landsat imagery courtesy of USGS, NASA, and Microsoft",
 
     "natural_color_description": "Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",
@@ -13,11 +13,11 @@
     "agriculture_label": "Agriculture",
     "urban_description": "Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.",
     "urban_label": "Urban",
-    "ndvi_colorized_description": "Normalized difference vegetation index (NDVI) with color map. Dark green is thick vigorous vegetation and brown represents sparse vegetation.",
+    "ndvi_colorized_description": "Normalized difference vegetation index (NDVI) with color map. <br/><br/>Dark green is thick vigorous vegetation, brown represents sparse vegetation, and white is indicative of water.",
     "ndvi_colorized_label": "NDVI Colorized",
     "surface_temperature_colorized_fahrenheit_description": "Colorized surface temperature",
     "surface_temperature_colorized_fahrenheit_label": "Surface Temp",
-    "mndwi_colorized_description": "Modified Normalized Difference Water Index with color map computed as (b3 - b6) / (b3 + b6).",
+    "mndwi_colorized_description": "Modified Normalized Difference Water Index with color map computed as (b3 - b6) / (b3 + b6).<br/><br/>Tan to white indicates dry surfaces. Light blue to dark blue indicates low to high water content.",
     "mndwi_colorized_label": "MNDWI",
     "ndmi_colorized_description": "Normalized Difference Moisture Index with color map computed as (b5 - b6) / (b5 + b6). Moist areas range from light green to dark blue.",
     "ndmi_colorized_label": "NDMI",
@@ -96,6 +96,7 @@
 
     "terms_of_use_app_header": "Landsat Explorer App - Esri",
     "terms_of_use_app_paragraph1": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-    "terms_of_use_app_paragraph2": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data."
+    "terms_of_use_app_paragraph2": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
 
+    "animation_metadata": "Esri, USGS, NASA"
 }

@@ -1,6 +1,6 @@
 {
     "sentinel_2_explorer": "Sentinel-2 Explorer",
-    "esri_sentinel_2_explorer": "ESRI | Sentinel-2 Explorer",
+    "esri_sentinel_2_explorer": "Esri | Sentinel-2 Explorer",
     "sentinel_2_explorer_attribution": "Sentinel-2 imagery courtesy of European Space Agency, European Commission, and Microsoft",
     "dynamic_mode_info": "In the current map display, the most recent and most cloud free scenes from the Sentinel-2 archive are prioritized and dynamically fused into a single mosaicked image layer. As you explore, the map continues to dynamically fetch and render the best available scenes.",
     "fucino_name": "Fucino",
@@ -41,7 +41,7 @@
     "short_wave_infrared_label": "Short-wave IR",
     "urban_description": "Bands shortwave IR-2, shortwave IR-1, red (12, 11, 4) with dynamic range adjustment applied.",
     "urban_label": "Urban",
-    "ndvi_colorized_description": "Normalized difference vegetation index (NDVI) with colormap. Dark green represents vigorous vegetation and brown represents sparse vegetation. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.",
+    "ndvi_colorized_description": "Normalized difference vegetation index (NDVI) with colormap. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.<br/><br />Dark green is thick vigorous vegetation, brown represents sparse vegetation, and white is indicative of water.",
     "ndvi_colorized_label": "NDVI",
     "ndmi_colorized_description": "Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11).",
     "ndmi_colorized_label": "NDMI",
@@ -72,6 +72,7 @@
 
     "terms_of_use_app_header": "Sentinel-2 Explorer App - Esri",
     "terms_of_use_app_section_1": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-    "terms_of_use_app_section_2": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data."
+    "terms_of_use_app_section_2": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
+    "animation_metadata": "Esri, European Space Agency"
 
 }
