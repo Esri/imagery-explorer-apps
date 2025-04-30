@@ -41,7 +41,7 @@
     "short_wave_infrared_label": "Short-wave IR",
     "urban_description": "Bands shortwave IR-2, shortwave IR-1, red (12, 11, 4) with dynamic range adjustment applied.",
     "urban_label": "Urban",
-    "ndvi_colorized_description": "Normalized difference vegetation index (NDVI) with colormap. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.<br/><br />Dark green is thick vigorous vegetation, brown represents sparse vegetation, and white is indicative of water.",
+    "ndvi_colorized_description": "Normalized difference vegetation index (NDVI) with colormap. It is computed as (b8 - b4) / (b8 + b4) and is suitable for vegetation, land cover and plant health monitoring.<br/><br />Dark green is thick vigorous vegetation, brown to tan represents sparse or dry vegetation to bare ground, and white is indicative of water.",
     "ndvi_colorized_label": "NDVI",
     "ndmi_colorized_description": "Normalized Difference Moisture Index with color map. Wetlands and moist areas appear blue whereas dry areas are represented by deep yellow and brown color. It is computed as NIR(B8)-SWIR1(B11)/NIR(B8)+SWIR1(B11).",
     "ndmi_colorized_label": "NDMI",
