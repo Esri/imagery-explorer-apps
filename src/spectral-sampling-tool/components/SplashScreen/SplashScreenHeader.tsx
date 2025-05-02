@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 export const SplashScreenHeader = () => {
     const { t } = useTranslation();
     return (
-        <div className="w-full mb-8">
+        <div className="w-full mb-12">
             <div className="w-full flex justify-center text-center  mb-4">
                 <h3
                     className="text-2xl max-w-xs"

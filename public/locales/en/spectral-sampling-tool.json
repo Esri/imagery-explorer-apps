@@ -5,5 +5,10 @@
     "splash_screen_subheader_1": "Choose a Multispectral Imagery Source",
     "splash_screen_subheader_2": "Name the session (i.e. Bare Dry Soil)",
     "splash_screen_subheader_3": "Collect spectral samples",
-    "splash_screen_subheader_4": "Download spectral information"
+    "splash_screen_subheader_4": "Download spectral information",
+    "continue_previous_session": "Continue previous session",
+    "continue_previous_session_header": "Continue with the previous session",
+    "no_previous_session": "You have no previous session to continue.",
+    "create_new_session": "Begin session",
+    "create_new_session_header": "Choose a Multispectral Imagery Source and name your new session."
 }

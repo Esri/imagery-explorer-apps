@@ -34,7 +34,7 @@ export const SplashScreen: FC<Pros> = ({
                 <SplashScreenHeader />
 
                 <div className="relative md:flex items-stretch ">
-                    <div className="w-full md:w-[250px] shrink-0 grow-0 h-[300px]">
+                    <div className="w-full md:w-[250px] shrink-0 grow-0">
                         <CreateNewSession />
                     </div>
 
