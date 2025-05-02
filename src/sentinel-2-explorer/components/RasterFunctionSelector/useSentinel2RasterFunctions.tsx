@@ -72,6 +72,10 @@ export const useSentinel2RasterFunctions = (): RasterFunctionInfo[] => {
     const { rasterFunctionInfo } = useContext(AppContext);
 
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
+        if (!rasterFunctionInfo) {
+            return [];
+        }
+
         return rasterFunctionInfo.map((d) => {
             const name: Sentinel2FunctionName = d.name as Sentinel2FunctionName;
 

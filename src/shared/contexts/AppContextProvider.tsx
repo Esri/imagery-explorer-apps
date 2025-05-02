@@ -68,7 +68,9 @@ const AppContextProvider: React.FC<AppContextProviderProps> = ({
 }: AppContextProviderProps) => {
     const [appContextValue, setAppContextValue] = useState<AppContextValue>({
         timeExtent,
-        rasterFunctionLabelMap: getRasterFunctionLabelMap(rasterFunctionInfo),
+        rasterFunctionLabelMap: rasterFunctionInfo
+            ? getRasterFunctionLabelMap(rasterFunctionInfo)
+            : null,
         rasterFunctionInfo,
     });
 

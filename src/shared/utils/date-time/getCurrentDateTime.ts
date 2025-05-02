@@ -14,17 +14,17 @@
  */
 
 /**
- * Get current year using local date
+ * Get current year based on UTC time
  * @returns current year in format of `yyyy`, e.g., 2023
  */
 export const getCurrentYear = () => {
-    return new Date().getFullYear();
+    return new Date().getUTCFullYear();
 };
 
 /**
- * Get current month using local date
+ * Get current month based on UTC time
  * @returns current year in format of `yyyy`, e.g., 2023
  */
 export const getCurrentMonth = () => {
-    return new Date().getMonth() + 1;
+    return new Date().getUTCMonth() + 1;
 };

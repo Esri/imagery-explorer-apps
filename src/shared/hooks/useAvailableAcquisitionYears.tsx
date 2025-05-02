@@ -33,6 +33,8 @@ export const useAvailableAcquisitionYears = () => {
 
     useEffect(() => {
         if (!timeExtent) {
+            const currentYear = getCurrentYear();
+            setYears([currentYear]);
             return;
         }
 
@@ -41,7 +43,7 @@ export const useAvailableAcquisitionYears = () => {
 
         const years: number[] = [];
 
-        const startYear = new Date(start).getFullYear();
+        const startYear = new Date(start).getUTCFullYear();
 
         const endYear = getCurrentYear(); //new Date(end).getFullYear();
 

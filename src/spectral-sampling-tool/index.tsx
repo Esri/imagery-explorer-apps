@@ -31,6 +31,7 @@ import {
 } from './utils/getTargetService';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
+import { initI18next } from '@shared/i18n/initI18next';
 
 (async () => {
     await initEsriOAuth({
@@ -38,30 +39,33 @@ import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
         portalUrl: AGOL_PORTAL_ROOT,
     });
 
+    await initI18next();
+
     const root = createRoot(document.getElementById('root'));
 
-    const targetService = getTargetService();
+    const store = getSpectralSampingToolStore();
 
-    const store = getSpectralSampingToolStore(targetService);
+    // const timeExtent = await getTimeExtentByTargetService(targetService);
+    // console.log('timeExtent', timeExtent);
 
-    const timeExtent = await getTimeExtentByTargetService(targetService);
-    console.log('timeExtent', timeExtent);
-
-    const rasterFunctionInfo =
-        getRasterFunctionInfoByTargetService(targetService);
+    // const rasterFunctionInfo =
+    //     getRasterFunctionInfoByTargetService(targetService);
 
     root.render(
         <ReduxProvider store={store}>
-            <AppContextProvider
-                timeExtent={timeExtent}
-                rasterFunctionInfo={rasterFunctionInfo}
-            >
-                <ErrorBoundary>
-                    <Map />
-                    <Layout />
-                    <About />
-                </ErrorBoundary>
-            </AppContextProvider>
+            <ErrorBoundary>
+                <AppContextProvider
+                    // the time extent and raster function info will be determined later once the user selects a target service
+                    timeExtent={null}
+                    rasterFunctionInfo={null}
+                >
+                    <ErrorBoundary>
+                        <Map />
+                        <Layout />
+                        <About />
+                    </ErrorBoundary>
+                </AppContextProvider>
+            </ErrorBoundary>
         </ReduxProvider>
     );
 })();

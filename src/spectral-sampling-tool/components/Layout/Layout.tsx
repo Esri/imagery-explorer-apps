@@ -37,6 +37,7 @@ const Layout = () => {
     return (
         <>
             <AppHeader title={appConfig.title} />
+
             <BottomPanel>
                 <div className="w-44 shrink-0">
                     <SamplingPointsList />

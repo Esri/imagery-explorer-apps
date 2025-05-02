@@ -83,6 +83,10 @@ export const useLandsatRasterFunctions = (): RasterFunctionInfo[] => {
     const { rasterFunctionInfo } = useContext(AppContext);
 
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
+        if (!rasterFunctionInfo) {
+            return [];
+        }
+
         return rasterFunctionInfo.map((d) => {
             const name: LandsatRasterFunctionName =
                 d.name as LandsatRasterFunctionName;
