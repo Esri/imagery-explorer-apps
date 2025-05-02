@@ -23,19 +23,12 @@ import {
     ImageryServiceTimeExtentData,
     RasterFunctionInfo,
 } from '@typing/imagery-service';
-import { getRasterFunctionLabelMap } from './helpers';
-
-type RrasterFunctionLabelMap = Map<string, string>;
 
 export type ImageryServiceState = {
     /**
      * time extent of the imagery service
      */
     timeExtent: ImageryServiceTimeExtentData;
-    /**
-     * Map object that can be used to get the label text of a raster function by it's name
-     */
-    rasterFunctionLabelMap: RrasterFunctionLabelMap;
     /**
      * raster function info of the imagery service
      */
@@ -44,7 +37,7 @@ export type ImageryServiceState = {
 
 export const initialImageryServiceState: ImageryServiceState = {
     timeExtent: null,
-    rasterFunctionLabelMap: new Map(),
+    // rasterFunctionLabelMap: new Map(),
     rasterFunctionInfo: [],
 };
 
@@ -52,25 +45,27 @@ export const imageryServiceSlice = createSlice({
     name: 'ImageryService',
     initialState: initialImageryServiceState,
     reducers: {
-        setTimeExtent: (
+        imageryServiceTimeExtentUpdated: (
             state,
             action: PayloadAction<ImageryServiceTimeExtentData>
         ) => {
             state.timeExtent = action.payload;
         },
-        setRasterFunctionInfo: (
+        imageryServiceRasterFunctionInfoUpdated: (
             state,
             action: PayloadAction<RasterFunctionInfo[]>
         ) => {
             state.rasterFunctionInfo = action.payload;
-            state.rasterFunctionLabelMap = getRasterFunctionLabelMap(
-                action.payload
-            );
+            // state.rasterFunctionLabelMap = getRasterFunctionLabelMap(
+            //     action.payload
+            // );
         },
     },
 });
 
-export const { setTimeExtent, setRasterFunctionInfo } =
-    imageryServiceSlice.actions;
+export const {
+    imageryServiceTimeExtentUpdated,
+    imageryServiceRasterFunctionInfoUpdated,
+} = imageryServiceSlice.actions;
 
 export default imageryServiceSlice.reducer;

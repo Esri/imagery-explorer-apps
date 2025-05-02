@@ -24,6 +24,7 @@ import {
     samplingDataUpdated,
     dataOfSelectedSamplingPointChanged,
     classificationNameUpdated,
+    targetServiceUpdated,
 } from './reducer';
 import {
     selectSelectedSpectralSamplingPointData,
@@ -220,6 +221,8 @@ export const resetCurrentSamplingSession =
         );
 
         dispatch(classificationNameUpdated(''));
+
+        dispatch(targetServiceUpdated(null));
 
         // dispatch(queryLocationChanged(point));
     };

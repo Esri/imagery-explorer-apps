@@ -3,7 +3,6 @@ import {
     RasterFunctionInfo,
 } from '@typing/imagery-service';
 import { ImageryServiceState, initialImageryServiceState } from './reducer';
-import { getRasterFunctionLabelMap } from './helpers';
 
 export const getPreloadedState4ImageryService = (
     timeExtent: ImageryServiceTimeExtentData,
@@ -13,6 +12,5 @@ export const getPreloadedState4ImageryService = (
         ...initialImageryServiceState,
         timeExtent,
         rasterFunctionInfo: rasterFunctionInfo || [],
-        rasterFunctionLabelMap: getRasterFunctionLabelMap(rasterFunctionInfo),
     };
 };
