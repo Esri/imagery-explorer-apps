@@ -35,7 +35,9 @@ import ThumbnailUrban from './thumbnails/Sentinel2_Urban.jpg';
 import MNDWILegend from './legends/MNDWI_noText.png';
 import NDVILegend from './legends/NDVI_noText.png';
 import NDMILegend from './legends/NDMI_noText.png';
-import { AppContext } from '@shared/contexts/AppContextProvider';
+// import { AppContext } from '@shared/contexts/AppContextProvider';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectImageryServiceRasterFunctionInfo } from '@shared/store/ImageryService/selectors';
 
 const Sentinel2RendererThumbnailByName: Record<Sentinel2FunctionName, string> =
     {
@@ -69,7 +71,11 @@ const Sentinel2RendererLegendByName: Record<Sentinel2FunctionName, string> = {
  * @returns
  */
 export const useSentinel2RasterFunctions = (): RasterFunctionInfo[] => {
-    const { rasterFunctionInfo } = useContext(AppContext);
+    // const { rasterFunctionInfo } = useContext(AppContext);
+
+    const rasterFunctionInfo = useAppSelector(
+        selectImageryServiceRasterFunctionInfo
+    );
 
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
         if (!rasterFunctionInfo) {

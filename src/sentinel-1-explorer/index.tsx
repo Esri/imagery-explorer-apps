@@ -24,14 +24,14 @@ import { Map } from './components/Map/Map';
 import { Layout } from './components/Layout/Layout';
 import { AboutSentinel1Explorer } from './components/About';
 import { ErrorPage } from '@shared/components/ErrorPage';
-import { getTimeExtentOfSentinel1Service } from '@shared/services/sentinel-1/getTimeExtent';
-import AppContextProvider from '@shared/contexts/AppContextProvider';
-import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/config';
+// import { getTimeExtentOfSentinel1Service } from '@shared/services/sentinel-1/getTimeExtent';
+// import AppContextProvider from '@shared/contexts/AppContextProvider';
+// import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/config';
 import { Sentinel1DocPanel } from './components/DocPanel';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initI18next } from '@shared/i18n/initI18next';
-import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedSentinel1RasterFunctionInfo';
+// import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedSentinel1RasterFunctionInfo';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 
 (async () => {
@@ -47,24 +47,14 @@ import { APP_LANGUAGE } from '@shared/constants/UI';
 
         const store = await getSentinel1ExplorerStore();
 
-        const timeExtent = await getTimeExtentOfSentinel1Service();
-        // console.log(timeExtent);
-
         root.render(
             <ReduxProvider store={store}>
-                <AppContextProvider
-                    timeExtent={timeExtent}
-                    rasterFunctionInfo={getTranslatedSentinel1RasterFunctionInfo(
-                        SENTINEL1_RASTER_FUNCTION_INFOS
-                    )}
-                >
-                    <ErrorBoundary>
-                        <Map />
-                        <Layout />
-                        <AboutSentinel1Explorer />
-                        <Sentinel1DocPanel />
-                    </ErrorBoundary>
-                </AppContextProvider>
+                <ErrorBoundary>
+                    <Map />
+                    <Layout />
+                    <AboutSentinel1Explorer />
+                    <Sentinel1DocPanel />
+                </ErrorBoundary>
             </ReduxProvider>
         );
     } catch (err) {

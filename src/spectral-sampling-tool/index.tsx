@@ -23,12 +23,12 @@ import { About } from '@shared/components/About';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { getSpectralSampingToolStore } from './store';
-import AppContextProvider from '@shared/contexts/AppContextProvider';
-import {
-    getTargetService,
-    getTimeExtentByTargetService,
-    getRasterFunctionInfoByTargetService,
-} from './utils/getTargetService';
+// import AppContextProvider from '@shared/contexts/AppContextProvider';
+// import {
+//     getTargetService,
+//     getTimeExtentByTargetService,
+//     getRasterFunctionInfoByTargetService,
+// } from './utils/getTargetService';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
 import { initI18next } from '@shared/i18n/initI18next';
@@ -45,26 +45,12 @@ import { initI18next } from '@shared/i18n/initI18next';
 
     const store = getSpectralSampingToolStore();
 
-    // const timeExtent = await getTimeExtentByTargetService(targetService);
-    // console.log('timeExtent', timeExtent);
-
-    // const rasterFunctionInfo =
-    //     getRasterFunctionInfoByTargetService(targetService);
-
     root.render(
         <ReduxProvider store={store}>
             <ErrorBoundary>
-                <AppContextProvider
-                    // the time extent and raster function info will be determined later once the user selects a target service
-                    timeExtent={null}
-                    rasterFunctionInfo={null}
-                >
-                    <ErrorBoundary>
-                        <Map />
-                        <Layout />
-                        <About />
-                    </ErrorBoundary>
-                </AppContextProvider>
+                <Map />
+                <Layout />
+                <About />
             </ErrorBoundary>
         </ReduxProvider>
     );

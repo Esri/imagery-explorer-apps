@@ -24,14 +24,14 @@ import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { AboutLandsatExplorer } from './components/About';
 import { ErrorPage } from '@shared/components/ErrorPage';
-import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
-import AppContextProvider from '@shared/contexts/AppContextProvider';
-import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
+// import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+// import AppContextProvider from '@shared/contexts/AppContextProvider';
+// import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
-import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedLandsatRasterFunctionInfo';
+// import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedLandsatRasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -46,23 +46,13 @@ import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedLan
     try {
         const store = await getLandsatExplorerStore();
 
-        const timeExtent = await getTimeExtentOfLandsatService();
-        // console.log(timeExtent);
-
         root.render(
             <ReduxProvider store={store}>
-                <AppContextProvider
-                    timeExtent={timeExtent}
-                    rasterFunctionInfo={getTranslatedLandsatRasterFunctionInfo(
-                        LANDSAT_RASTER_FUNCTION_INFOS
-                    )}
-                >
-                    <ErrorBoundary>
-                        <Map />
-                        <Layout />
-                        <AboutLandsatExplorer />
-                    </ErrorBoundary>
-                </AppContextProvider>
+                <ErrorBoundary>
+                    <Map />
+                    <Layout />
+                    <AboutLandsatExplorer />
+                </ErrorBoundary>
             </ReduxProvider>
         );
     } catch (err) {

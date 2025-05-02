@@ -17,8 +17,10 @@ import React, { FC, useContext } from 'react';
 import { Button } from '../Button';
 import { QueryParams4ImageryScene } from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
-import { AppContext } from '@shared/contexts/AppContextProvider';
+// import { AppContext } from '@shared/contexts/AppContextProvider';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectImageryServiceRasterFunctionLabelMap } from '@shared/store/ImageryService/selectors';
 // import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
 type Side4SwipeMode = 'left' | 'right';
@@ -40,7 +42,11 @@ export const SwipeLayerSelector: FC<Props> = ({
 }) => {
     const { t } = useTranslation();
 
-    const { rasterFunctionLabelMap } = useContext(AppContext);
+    // const { rasterFunctionLabelMap } = useContext(AppContext);
+
+    const rasterFunctionLabelMap = useAppSelector(
+        selectImageryServiceRasterFunctionLabelMap
+    );
 
     const getButtonContent = (side: Side4SwipeMode) => {
         const queryParams =

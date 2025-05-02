@@ -1,3 +1,4 @@
 {
-    
+    "spectral_sampling_tool": "Spectral Sampling Tool",
+    "failed_to_create_new_session": "Failed to create new session: {{error}}"
 }
