@@ -1,4 +1,9 @@
 {
     "spectral_sampling_tool": "Spectral Sampling Tool",
-    "failed_to_create_new_session": "Failed to create new session: {{error}}"
+    "failed_to_create_new_session": "Failed to create new session: {{error}}",
+    "splash_screen_header": "Welcome to the <br />Spectral Sampling Tool",
+    "splash_screen_subheader_1": "Choose a Multispectral Imagery Source",
+    "splash_screen_subheader_2": "Name the session (i.e. Bare Dry Soil)",
+    "splash_screen_subheader_3": "Collect spectral samples",
+    "splash_screen_subheader_4": "Download spectral information"
 }
