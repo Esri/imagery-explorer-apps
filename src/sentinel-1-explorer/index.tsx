@@ -33,6 +33,7 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initI18next } from '@shared/i18n/initI18next';
 // import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedSentinel1RasterFunctionInfo';
 import { APP_LANGUAGE } from '@shared/constants/UI';
+import '@shared/components/calcite-components';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));

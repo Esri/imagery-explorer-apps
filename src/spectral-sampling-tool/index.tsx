@@ -23,6 +23,7 @@ import { About } from '@shared/components/About';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { getSpectralSampingToolStore } from './store';
+import '@shared/components/calcite-components';
 // import AppContextProvider from '@shared/contexts/AppContextProvider';
 // import {
 //     getTargetService,

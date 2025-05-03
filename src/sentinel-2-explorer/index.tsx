@@ -31,6 +31,7 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { AboutSentinel2Explorer } from './components/About';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
+import '@shared/components/calcite-components';
 // import { getTranslatedSentinel2RasterFunctionInfo } from './utils/getTranslatedSentinel2RasterFunctionInfo';
 
 (async () => {

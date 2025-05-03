@@ -26,6 +26,7 @@ import { APP_ID } from './constants';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
+import '@shared/components/calcite-components';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));

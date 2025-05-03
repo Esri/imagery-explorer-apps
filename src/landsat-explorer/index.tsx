@@ -31,6 +31,7 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
+import '@shared/components/calcite-components';
 // import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedLandsatRasterFunctionInfo';
 
 (async () => {
