@@ -10,5 +10,7 @@
     "continue_previous_session_header": "Continue with the previous session",
     "no_previous_session": "You have no previous session to continue.",
     "create_new_session": "Begin session",
-    "create_new_session_header": "Choose a Multispectral Imagery Source and name your new session."
+    "create_new_session_header": "Choose a Multispectral Imagery Source and name your new session.",
+    "session_name_placeholder": "Session name",
+    "session_name_description": "example: Bare Dry Soil"
 }
