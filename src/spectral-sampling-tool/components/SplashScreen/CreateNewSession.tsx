@@ -3,10 +3,20 @@ import { Button } from '@shared/components/Button';
 import { APP_NAME } from '@shared/config';
 import { SpectralSamplingToolSupportedService } from '@shared/store/SpectralSamplingTool/reducer';
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const CreateNewSession = () => {
+type Props = {
+    // emits when the user clicks on the create new session button
+    createNewSessionButtonOnClick: (
+        targetService: SpectralSamplingToolSupportedService,
+        sessionName: string
+    ) => void;
+};
+
+export const CreateNewSession: FC<Props> = ({
+    createNewSessionButtonOnClick,
+}) => {
     const { t } = useTranslation();
 
     const [targetService, setTargetService] =
@@ -74,6 +84,7 @@ export const CreateNewSession = () => {
                 >
                     <CalciteInputText
                         value={sessionName}
+                        minLength={2}
                         maxLength={100}
                         clearable
                         onCalciteInputTextInput={(e) => {
@@ -96,10 +107,22 @@ export const CreateNewSession = () => {
 
                 <Button
                     onClickHandler={() => {
-                        console.log('Create new session button clicked');
+                        if (!targetService || !sessionName) {
+                            console.error(
+                                'Target service or session name is not set'
+                            );
+                            return;
+                        }
+                        // console.log('Creating new session', { targetService, sessionName });
+                        createNewSessionButtonOnClick(
+                            targetService,
+                            sessionName
+                        );
                     }}
                     scale="s"
-                    disabled={!targetService || !sessionName}
+                    disabled={
+                        !targetService || !sessionName || sessionName.length < 2
+                    }
                 >
                     {t('create_new_session', { ns: APP_NAME })}
                 </Button>

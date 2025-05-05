@@ -35,17 +35,22 @@ export const ContinuePreviousSession = () => {
                     <h4>{t('no_previous_session', { ns: APP_NAME })}</h4>
                 )}
             </div>
-            <div>
-                <Button
-                    onClickHandler={() => {
-                        console.log('Continue previous session button clicked');
-                    }}
-                    scale="s"
-                    disabled={!previousSession}
-                >
-                    {t('continue_previous_session', { ns: APP_NAME })}
-                </Button>
-            </div>
+
+            {previousSession && (
+                <div>
+                    <Button
+                        onClickHandler={() => {
+                            console.log(
+                                'Continue previous session button clicked'
+                            );
+                        }}
+                        scale="s"
+                        disabled={!previousSession}
+                    >
+                        {t('continue_previous_session', { ns: APP_NAME })}
+                    </Button>
+                </div>
+            )}
         </div>
     );
 };

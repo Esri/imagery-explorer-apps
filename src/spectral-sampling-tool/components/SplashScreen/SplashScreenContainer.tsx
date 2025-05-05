@@ -67,6 +67,7 @@ export const SplashScreenContainer = () => {
             isLoading={isLoading}
             error={error}
             createNewSessionButtonOnClick={createNewSessionButtonOnClick}
+            // createNewSessionButtonOnClick={createNewSessionButtonOnClick}
         />
     );
 };

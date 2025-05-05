@@ -35,7 +35,11 @@ export const SplashScreen: FC<Pros> = ({
 
                 <div className="relative md:flex items-stretch ">
                     <div className="w-full md:w-[250px] shrink-0 grow-0">
-                        <CreateNewSession />
+                        <CreateNewSession
+                            createNewSessionButtonOnClick={
+                                createNewSessionButtonOnClick
+                            }
+                        />
                     </div>
 
                     <VerticalDivider />
