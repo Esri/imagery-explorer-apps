@@ -37,7 +37,7 @@ export const useValidateTextInput = (
         }
 
         // should be considered invalid if the custom term contains any of the specified special characters
-        const forbiddenSpecialCharRegex = /[!@#$^&*()<>{};?|+=~`"/\\]/;
+        const forbiddenSpecialCharRegex = /[!@#$^*<>{}?+=~`"/\\]/;
 
         if (forbiddenSpecialCharRegex.test(trimmed)) {
             return {
