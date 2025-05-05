@@ -38,6 +38,7 @@ import {
     idOfItem2HighlightChanged,
 } from '@shared/store/SpectralSamplingTool/reducer';
 import { ResetDialog } from './ResetDialog';
+import { deleteSessionDataFromIndexedDB } from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
 
 export const SamplingPointsListContainer = () => {
     const dispatch = useAppDispatch();
@@ -89,7 +90,11 @@ export const SamplingPointsListContainer = () => {
         return (
             <ResetDialog
                 cancelButtonOnClick={setShouldShowResetDialog.bind(null, false)}
-                resetButtonOnClick={() => {
+                resetButtonOnClick={async () => {
+                    // delete the session data from IndexedDB so the user won't be
+                    // prompted to restore the session when the app is reloaded
+                    await deleteSessionDataFromIndexedDB();
+
                     dispatch(resetCurrentSamplingSession());
 
                     // close the reset dialog

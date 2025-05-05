@@ -5,13 +5,22 @@ import { SplashScreenHeader } from './SplashScreenHeader';
 import { CreateNewSession } from './CreateNewSession';
 import { ContinuePreviousSession } from './ContinuePreviousSession';
 import { VerticalDivider } from './VerticalDivider';
+import { SpectralSamplingToolSessionData } from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
 
 type Pros = {
     isLoading: boolean;
     error?: string | null;
     createNewSessionButtonOnClick: (
-        targetService: SpectralSamplingToolSupportedService | null,
-        sessionName: string | null
+        targetService: SpectralSamplingToolSupportedService,
+        sessionName: string
+    ) => void;
+    /**
+     * Emits when the user clicks on the continue previous session button.
+     * @param previousSession
+     * @returns
+     */
+    countinuePreviousSessionButtonOnClick: (
+        previousSession: SpectralSamplingToolSessionData
     ) => void;
 };
 
@@ -19,6 +28,7 @@ export const SplashScreen: FC<Pros> = ({
     isLoading,
     error,
     createNewSessionButtonOnClick,
+    countinuePreviousSessionButtonOnClick,
 }) => {
     const { t } = useTranslation();
     return (
@@ -45,7 +55,11 @@ export const SplashScreen: FC<Pros> = ({
                     <VerticalDivider />
 
                     <div className="w-full md:w-[250px] shrink-0 grow-0 ">
-                        <ContinuePreviousSession />
+                        <ContinuePreviousSession
+                            onClickHandler={
+                                countinuePreviousSessionButtonOnClick
+                            }
+                        />
                     </div>
                 </div>
             </div>

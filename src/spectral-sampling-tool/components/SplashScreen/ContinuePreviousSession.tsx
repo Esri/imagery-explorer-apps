@@ -5,19 +5,21 @@ import {
     selectClassifictionNameOfSpectralSamplingTask,
     selectTargetService,
 } from '@shared/store/SpectralSamplingTool/selectors';
-import React from 'react';
+import { SpectralSamplingToolSessionData } from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
+import { useRetrievePreviousSession } from '@spectral-sampling-tool/hooks/useRetrievePreviousSession';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const ContinuePreviousSession = () => {
+type ContinuePreviousSessionProps = {
+    onClickHandler: (previousSession: SpectralSamplingToolSessionData) => void;
+};
+
+export const ContinuePreviousSession: FC<ContinuePreviousSessionProps> = ({
+    onClickHandler,
+}) => {
     const { t } = useTranslation();
 
-    const targetService = useAppSelector(selectTargetService);
-
-    const sessionName = useAppSelector(
-        selectClassifictionNameOfSpectralSamplingTask
-    );
-
-    const previousSession = false;
+    const previousSession = useRetrievePreviousSession();
 
     return (
         <div className="w-full">
@@ -25,8 +27,9 @@ export const ContinuePreviousSession = () => {
                 <h4>{t('continue_previous_session', { ns: APP_NAME })}</h4>
 
                 {previousSession ? (
-                    <h4 className="italic">
-                        {targetService} | {sessionName}
+                    <h4 className="italic text-sm">
+                        {previousSession?.targetService} |{' '}
+                        {previousSession?.sessionName}
                     </h4>
                 ) : (
                     <h4 className="italic mt-4 text-sm">
@@ -39,9 +42,11 @@ export const ContinuePreviousSession = () => {
                 <div>
                     <Button
                         onClickHandler={() => {
-                            console.log(
-                                'Continue previous session button clicked'
-                            );
+                            // console.log(
+                            //     'Continue previous session button clicked',
+                            //     previousSession
+                            // );
+                            onClickHandler(previousSession);
                         }}
                         scale="s"
                         disabled={!previousSession}

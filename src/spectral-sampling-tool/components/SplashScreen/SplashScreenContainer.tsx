@@ -14,7 +14,11 @@ import {
     imageryServiceRasterFunctionInfoUpdated,
     imageryServiceTimeExtentUpdated,
 } from '@shared/store/ImageryService/reducer';
-import { resetCurrentSamplingSession } from '@shared/store/SpectralSamplingTool/thunks';
+import {
+    resetCurrentSamplingSession,
+    resumePreviousSession,
+} from '@shared/store/SpectralSamplingTool/thunks';
+import { SpectralSamplingToolSessionData } from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
 
 export const SplashScreenContainer = () => {
     const dispatch = useAppDispatch();
@@ -62,11 +66,26 @@ export const SplashScreenContainer = () => {
             setIsLoading(false);
         }
     };
+
+    const continuePreviousSessionButtonOnClick = async (
+        data: SpectralSamplingToolSessionData
+    ) => {
+        if (!data) {
+            console.log('no session data found');
+            return;
+        }
+
+        dispatch(resumePreviousSession(data));
+    };
+
     return (
         <SplashScreen
             isLoading={isLoading}
             error={error}
             createNewSessionButtonOnClick={createNewSessionButtonOnClick}
+            countinuePreviousSessionButtonOnClick={
+                continuePreviousSessionButtonOnClick
+            }
             // createNewSessionButtonOnClick={createNewSessionButtonOnClick}
         />
     );

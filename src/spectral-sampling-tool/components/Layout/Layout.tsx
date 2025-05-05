@@ -31,6 +31,7 @@ import { CloudFilter } from '@shared/components/CloudFilter';
 import { useTranslation } from 'react-i18next';
 import { ta } from 'date-fns/locale';
 import { SplashScreen } from '../SplashScreen';
+import { useSaveCurrentSession } from '@spectral-sampling-tool/hooks/useSaveCurrentSession';
 
 const Layout = () => {
     const { t } = useTranslation();
@@ -39,9 +40,10 @@ const Layout = () => {
 
     useSaveAppState2HashParams();
 
-    useEffect(() => {
-        console.log(targetService);
-    }, [targetService]);
+    /**
+     * This hook is used to save the current session to the indexedDB
+     */
+    useSaveCurrentSession();
 
     return (
         <>

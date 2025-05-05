@@ -34,6 +34,10 @@ import {
 import { getLandsatPixelValues } from '@shared/services/landsat-level-2/getLandsatPixelValues';
 import { queryParamsListChanged } from '../ImageryScene/reducer';
 import { getSentinel2PixelValues } from '@shared/services/sentinel-2/getSentinel2PixelValues';
+import {
+    deleteSessionDataFromIndexedDB,
+    SpectralSamplingToolSessionData,
+} from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
 
 let abortController: AbortController = null;
 
@@ -225,4 +229,35 @@ export const resetCurrentSamplingSession =
         dispatch(targetServiceUpdated(null));
 
         // dispatch(queryLocationChanged(point));
+    };
+
+export const resumePreviousSession =
+    (sessionData: SpectralSamplingToolSessionData) =>
+    (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const {
+            targetService,
+            sessionName,
+            queryParamsForSamplingPoints,
+            samplingPoints,
+        } = sessionData || {};
+
+        if (!targetService || !sessionName) {
+            console.log(
+                'no target service or session name found in the session data'
+            );
+            return;
+        }
+
+        dispatch(samplingDataUpdated(samplingPoints || []));
+
+        dispatch(
+            queryParamsListChanged({
+                queryParams: queryParamsForSamplingPoints || [],
+                selectedItemID: queryParamsForSamplingPoints[0]?.uniqueId || '',
+            })
+        );
+
+        dispatch(classificationNameUpdated(sessionName));
+
+        dispatch(targetServiceUpdated(targetService));
     };
