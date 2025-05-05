@@ -44,9 +44,9 @@ export const useDefaultTitleAndSummary = (
         [PublishAndDownloadJobType.SaveWebMap]: `Web map created by ${foramttedTitle}. Scene ID: ${mainSceneId}`,
         [PublishAndDownloadJobType.SaveWebMapWithMultipleScenes]: `Web map created by ${foramttedTitle}.`,
         [PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer]: `Web map created by ${foramttedTitle}.`,
-        [PublishAndDownloadJobType.PublishScene]: `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${mainSceneId}`,
-        [PublishAndDownloadJobType.PublishIndexMask]: `Hosted Imagery Servce created by ${foramttedTitle}. Scene ID: ${mainSceneId}`,
-        [PublishAndDownloadJobType.PublishChangeDetection]: `Hosted Imagery Servce created by ${foramttedTitle}. Scene IDs: ${mainSceneId} | ${secondarySceneId}`,
+        [PublishAndDownloadJobType.PublishScene]: `Hosted Imagery Service created by ${foramttedTitle}. Scene ID: ${mainSceneId}`,
+        [PublishAndDownloadJobType.PublishIndexMask]: `Hosted Imagery Service created by ${foramttedTitle}. Scene ID: ${mainSceneId}`,
+        [PublishAndDownloadJobType.PublishChangeDetection]: `Hosted Imagery Service created by ${foramttedTitle}. Scene IDs: ${mainSceneId} | ${secondarySceneId}`,
         // 'Download Index Mask': '',
     };
 
