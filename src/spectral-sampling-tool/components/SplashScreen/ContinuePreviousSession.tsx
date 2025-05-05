@@ -22,17 +22,16 @@ export const ContinuePreviousSession = () => {
     return (
         <div className="w-full">
             <div className="opacity-50 mb-4">
+                <h4>{t('continue_previous_session', { ns: APP_NAME })}</h4>
+
                 {previousSession ? (
-                    <>
-                        <h4>
-                            {t('continue_previous_session', { ns: APP_NAME })}
-                        </h4>
-                        <h4 className="italic">
-                            {targetService} | {sessionName}
-                        </h4>
-                    </>
+                    <h4 className="italic">
+                        {targetService} | {sessionName}
+                    </h4>
                 ) : (
-                    <h4>{t('no_previous_session', { ns: APP_NAME })}</h4>
+                    <h4 className="italic mt-4 text-sm">
+                        {t('no_previous_session', { ns: APP_NAME })}
+                    </h4>
                 )}
             </div>
 
