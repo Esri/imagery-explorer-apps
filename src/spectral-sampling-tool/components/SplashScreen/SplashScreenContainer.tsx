@@ -26,9 +26,8 @@ export const SplashScreenContainer = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
 
-    const createNewSessionButtonOnClick = async (
-        targetService: SpectralSamplingToolSupportedService,
-        sessionName: string
+    const getPrerequisiteData = async (
+        targetService: SpectralSamplingToolSupportedService
     ) => {
         try {
             setIsLoading(true);
@@ -51,20 +50,27 @@ export const SplashScreenContainer = () => {
             dispatch(
                 imageryServiceRasterFunctionInfoUpdated(rasterFunctionInfo)
             );
-
-            // Reset the current sampling session
-            // to remove all sampling points and query params associated with it
-            dispatch(resetCurrentSamplingSession());
-
-            // Update the spectral sampling tool state
-            // with the selected target service and session name
-            dispatch(classificationNameUpdated(sessionName));
-            dispatch(targetServiceUpdated(targetService));
         } catch (e) {
             setError(e.message);
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const createNewSessionButtonOnClick = async (
+        targetService: SpectralSamplingToolSupportedService,
+        sessionName: string
+    ) => {
+        await getPrerequisiteData(targetService);
+
+        // Reset the current sampling session
+        // to remove all sampling points and query params associated with it
+        dispatch(resetCurrentSamplingSession());
+
+        // Update the spectral sampling tool state
+        // with the selected target service and session name
+        dispatch(classificationNameUpdated(sessionName));
+        dispatch(targetServiceUpdated(targetService));
     };
 
     const continuePreviousSessionButtonOnClick = async (
@@ -74,6 +80,8 @@ export const SplashScreenContainer = () => {
             console.log('no session data found');
             return;
         }
+
+        await getPrerequisiteData(data.targetService);
 
         dispatch(resumePreviousSession(data));
     };
