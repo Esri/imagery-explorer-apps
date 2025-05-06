@@ -13,8 +13,10 @@
  * limitations under the License.
  */
 
+import { APP_NAME } from '@shared/config';
 import classNames from 'classnames';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -33,6 +35,8 @@ export const AddSamplingPointButton: FC<Props> = ({
     shouldDisableAddButton,
     addButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames(
@@ -50,7 +54,7 @@ export const AddSamplingPointButton: FC<Props> = ({
                     fontSize: `.7rem`,
                 }}
             >
-                Add a sample point
+                {t('add_sample_point', { ns: APP_NAME })}
             </span>
         </div>
     );

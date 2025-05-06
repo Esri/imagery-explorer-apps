@@ -14,5 +14,10 @@
     "create_new_session_instruction_service": "Choose a Multispectral Imagery Source",
     "create_new_session_instruction_session_name": "Provide a name for the session (e.g. Bare Dry Soil)",
     "session_name_placeholder": "Session name",
-    "session_name_description": "example: Bare Dry Soil"
+    "session_name_description": "example: Bare Dry Soil",
+    "add_sample_point": "Add sample point",
+    "reset_session": "Reset session",
+    "select_date": "Select date from calendar",
+    "select_location": "Click map location",
+    "download_sampling_results": "Download sampling results as CSV"
 }

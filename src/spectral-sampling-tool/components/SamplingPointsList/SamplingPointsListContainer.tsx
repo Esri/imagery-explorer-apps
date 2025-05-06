@@ -39,9 +39,14 @@ import {
 } from '@shared/store/SpectralSamplingTool/reducer';
 import { ResetDialog } from './ResetDialog';
 import { deleteSessionDataFromIndexedDB } from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
+import { CalciteButton } from '@esri/calcite-components-react';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 export const SamplingPointsListContainer = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     const samplingListData = useFormattedSpectralSamplingData();
 
@@ -106,7 +111,7 @@ export const SamplingPointsListContainer = () => {
 
     return (
         <div className="w-full h-full relative">
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
                 <h5 className="text-sm text-ellipsis flex-grow">
                     {classificationName}:
                 </h5>
@@ -121,7 +126,7 @@ export const SamplingPointsListContainer = () => {
                         icon="reset"
                     />
                 </div>
-            </div>
+            </div> */}
 
             <SamplingPointsList
                 data={samplingListData}
@@ -134,10 +139,25 @@ export const SamplingPointsListContainer = () => {
                 }}
             />
 
-            <AddSamplingPointButton
-                shouldDisableAddButton={samplingListData?.length >= 100}
-                addButtonOnClick={samplingPointOnAdd}
-            />
+            <div className="flex items-center justify-between mt-1">
+                <AddSamplingPointButton
+                    shouldDisableAddButton={samplingListData?.length >= 100}
+                    addButtonOnClick={samplingPointOnAdd}
+                />
+
+                <CalciteButton
+                    style={{
+                        '--calcite-button-text-color':
+                            'var(--custom-light-blue)',
+                    }}
+                    scale="s"
+                    iconStart="reset"
+                    appearance="transparent"
+                    kind="neutral"
+                    title={t('reset_session', { ns: APP_NAME })}
+                    onClick={setShouldShowResetDialog.bind(null, true)}
+                />
+            </div>
 
             {samplingListData && samplingListData.length <= 1 ? (
                 <div className="absolute w-full left-0 bottom-0">
