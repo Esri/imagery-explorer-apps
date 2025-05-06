@@ -37,7 +37,7 @@
             "appId": "S2X"
         },
         "spectral-sampling-tool": {
-            "title": "Spectral Sampling Tool",
+            "title": "Spectral Sampler",
             "satellite": "Landsat",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
             "description": "",

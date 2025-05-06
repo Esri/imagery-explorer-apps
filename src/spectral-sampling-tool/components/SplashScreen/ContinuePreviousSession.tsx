@@ -23,16 +23,18 @@ export const ContinuePreviousSession: FC<ContinuePreviousSessionProps> = ({
 
     return (
         <div className="w-full">
-            <div className="opacity-50 mb-4">
-                <h4>{t('continue_previous_session', { ns: APP_NAME })}</h4>
+            <div className=" mb-4">
+                <h4 className="opacity-80 text-lg">
+                    {t('continue_previous_session', { ns: APP_NAME })}
+                </h4>
 
                 {previousSession ? (
-                    <h4 className="italic text-sm">
+                    <h4 className="italic text-sm opacity-50">
                         {previousSession?.targetService} |{' '}
                         {previousSession?.sessionName}
                     </h4>
                 ) : (
-                    <h4 className="italic mt-4 text-sm">
+                    <h4 className="italic mt-4 text-sm opacity-50">
                         {t('no_previous_session', { ns: APP_NAME })}
                     </h4>
                 )}

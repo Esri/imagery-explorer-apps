@@ -1,16 +1,18 @@
 {
-    "spectral_sampling_tool": "Spectral Sampling Tool",
+    "spectral_sampling_tool": "Spectral Sampler",
     "failed_to_create_new_session": "Failed to create new session: {{error}}",
-    "splash_screen_header": "Welcome to the <br />Spectral Sampling Tool",
+    "splash_screen_header": "Welcome to the <br />Spectral Sampler",
     "splash_screen_subheader_1": "Choose a Multispectral Imagery Source",
-    "splash_screen_subheader_2": "Name the session (i.e. Bare Dry Soil)",
+    "splash_screen_subheader_2": "Name the session (e.g. Bare Dry Soil)",
     "splash_screen_subheader_3": "Collect spectral samples",
     "splash_screen_subheader_4": "Download spectral information",
     "continue_previous_session": "Continue previous session",
     "continue_previous_session_header": "Continue with the previous session",
     "no_previous_session": "You have no previous session to continue.",
     "create_new_session": "Begin session",
-    "create_new_session_header": "Choose a Multispectral Imagery Source and name your new session.",
+    "create_new_session_header": "Create new session", 
+    "create_new_session_instruction_service": "Choose a Multispectral Imagery Source",
+    "create_new_session_instruction_session_name": "Provide a name for the session (e.g. Bare Dry Soil)",
     "session_name_placeholder": "Session name",
     "session_name_description": "example: Bare Dry Soil"
 }

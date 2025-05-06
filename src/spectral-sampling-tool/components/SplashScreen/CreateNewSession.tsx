@@ -45,11 +45,17 @@ export const CreateNewSession: FC<Props> = ({
 
     return (
         <div>
-            <div className="opacity-50 mb-4">
+            <div className="opacity-80 text-lg mb-4">
                 <h4>{t('create_new_session_header', { ns: APP_NAME })}</h4>
             </div>
             <div>
                 <div className="w-full mb-6 p-1">
+                    <h5 className="mb-1 text-sm opacity-50">
+                        {t('create_new_session_instruction_service', {
+                            ns: APP_NAME,
+                        })}
+                        :
+                    </h5>
                     {TargetServicesListData.map((item) => (
                         <div
                             key={item.value}
@@ -82,6 +88,12 @@ export const CreateNewSession: FC<Props> = ({
                         '--calcite-color-text-1': 'var(--custom-light-blue)',
                     }}
                 >
+                    <h5 className="mb-1 text-sm opacity-50">
+                        {t('create_new_session_instruction_session_name', {
+                            ns: APP_NAME,
+                        })}
+                        :
+                    </h5>
                     <CalciteInputText
                         value={sessionName}
                         minLength={2}
@@ -100,9 +112,9 @@ export const CreateNewSession: FC<Props> = ({
                         })}
                     />
 
-                    <p className="italic opacity-50 text-sm mt-1">
+                    {/* <p className="italic opacity-50 text-sm mt-1">
                         {t('session_name_description', { ns: APP_NAME })}
-                    </p>
+                    </p> */}
                 </div>
 
                 <Button
