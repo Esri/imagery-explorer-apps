@@ -47,7 +47,7 @@ export const SaveSamplingResults: FC<Props> = ({
         <div className="text-right pr-4 flex items-center justify-end">
             <calcite-icon icon="download-to" scale="s" />
             <span
-                className="cursor-pointer underline text-xs"
+                className="cursor-pointer underline text-sm"
                 onClick={() => {
                     saveSamplingResults({
                         data: samplingPointsData,

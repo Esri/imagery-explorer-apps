@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SamplingPointsList } from './SamplingPointsList';
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -49,6 +49,24 @@ export const SamplingPointsListContainer = () => {
     const { t } = useTranslation();
 
     const samplingListData = useFormattedSpectralSamplingData();
+
+    const countOfSamplingPointsWithoutDateOrLocation = useMemo(() => {
+        return samplingListData.filter((item) => {
+            return !item.acquisitionDate || !item.location;
+        }).length;
+    }, [samplingListData]);
+
+    const shouldDisableAddButton = useMemo(() => {
+        if (samplingListData?.length >= 100) {
+            return true;
+        }
+
+        if (countOfSamplingPointsWithoutDateOrLocation > 0) {
+            return true;
+        }
+
+        return false;
+    }, [countOfSamplingPointsWithoutDateOrLocation, samplingListData?.length]);
 
     // classification name of the current spectral sampling session
     const classificationName = useAppSelector(
@@ -141,7 +159,7 @@ export const SamplingPointsListContainer = () => {
 
             <div className="flex items-center justify-between mt-1">
                 <AddSamplingPointButton
-                    shouldDisableAddButton={samplingListData?.length >= 100}
+                    shouldDisableAddButton={shouldDisableAddButton}
                     addButtonOnClick={samplingPointOnAdd}
                 />
 
@@ -159,13 +177,13 @@ export const SamplingPointsListContainer = () => {
                 />
             </div>
 
-            {samplingListData && samplingListData.length <= 1 ? (
+            {/* {countOfSamplingPointsWithoutDateOrLocation === 0 ? (
                 <div className="absolute w-full left-0 bottom-0">
                     <p className="text-xs opacity-50">
                         Add sampling points to this list.
                     </p>
                 </div>
-            ) : null}
+            ) : null} */}
         </div>
     );
 };
