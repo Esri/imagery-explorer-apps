@@ -36,12 +36,12 @@
             "entrypoint": "/src/sentinel-2-explorer/index.tsx",
             "appId": "S2X"
         },
-        "spectral-sampler": {
+        "spectralsampler": {
             "title": "Spectral Sampler",
             "satellite": "Landsat",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
             "description": "",
-            "pathname": "/spectral-sampler",
+            "pathname": "/spectralsampler",
             "entrypoint": "/src/spectral-sampling-tool/index.tsx",
             "appId": ""
         },
