@@ -20,10 +20,10 @@ type AppConfig = {
      * Title of the explorer app (e.g., 'Esri | Landsat Explorer')
      */
     title: string;
-    /**
-     * Name of the satellite (e.g., 'Landsat')
-     */
-    satellite: string;
+    // /**
+    //  * Name of the satellite (e.g., 'Landsat')
+    //  */
+    // satellite: string;
     /**
      * Item id of the web map to be used in the app
      */

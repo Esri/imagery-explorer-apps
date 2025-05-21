@@ -76,6 +76,10 @@ type SavePanelProps = {
      * Options for publishing the scene.
      */
     publishOptions: PublishAndDownloadJobOptionData[];
+    /**
+     * The satellite name used in the title and summary of the output ArchGIS Online item.
+     */
+    satellite: string;
     // /**
     //  * Options for downloading the scene.
     //  */
@@ -104,6 +108,7 @@ export const SavePanel: FC<SavePanelProps> = ({
     subHeader,
     publishOptions,
     estimatedCostByJobType,
+    satellite,
     // downloadOptions,
     saveButtonOnClick,
     publishJobSubmitHandler,
@@ -224,6 +229,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                 <SaveJobDialog
                     saveJobType={activeSaveJobDialog}
                     sceneIds={sceneIds}
+                    satellite={satellite}
                     closeButtonOnClick={() => setActiveSaveJobDialog(undefined)}
                     saveButtonOnClick={(title, summary) => {
                         // console.log(title, summary);

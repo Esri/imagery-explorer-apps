@@ -124,7 +124,7 @@ export const LandsatSavePanel = () => {
             sceneIds={sceneIds}
             publishOptions={publishOptions}
             originalServiceUrl={LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL}
-            serviceName={'LandsatLevel2'}
+            serviceName={'Landsat'}
             tags={TAGS}
             description={LANDSAT_LEVEL_2_SERVICE_DESCRIPTION}
             accessInformation={LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION}
