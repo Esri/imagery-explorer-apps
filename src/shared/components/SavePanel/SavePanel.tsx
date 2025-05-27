@@ -208,7 +208,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                                 <SaveOptionButton
                                     key={saveJobType}
                                     title={t(inputName)}
-                                    subtitle={t('as') + ' ' + t(outputName)}
+                                    subtitle={t(outputName)}
                                     desciprtion={t(description)}
                                     estimatedCost={estimatedCost}
                                     disabled={disabled}
