@@ -147,10 +147,10 @@ export const saveOptionInfoLookup: Record<
         action: 'Publish',
         // inputName: 'Scenes',
         inputName: 'scenes',
-        outputName: 'single_layer_map',
+        outputName: 'publish_output_single_layer_map',
         requireUniqueOutputName: false,
         // outputName: 'Single Layer Map',
-        description: 'publish_output_single_layer_map',
+        description: 'publish_single_layer_webmap_description',
         // description:
         //     'Create an ArcGIS Online map with a single layer with multiple scenes.',
     },
