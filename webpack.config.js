@@ -79,6 +79,7 @@ module.exports =  (env, options)=> {
                 '@landsat-explorer': path.resolve(__dirname, 'src/landsat-explorer/'),
                 '@sentinel2-explorer': path.resolve(__dirname, 'src/sentinel-2-explorer/'),
                 '@landcover-explorer': path.resolve(__dirname, 'src/landcover-explorer/'),
+                '@spectral-sampling-tool': path.resolve(__dirname, 'src/spectral-sampling-tool/'),
                 '@typing': path.resolve(__dirname, 'src/types/'),
             },
         },

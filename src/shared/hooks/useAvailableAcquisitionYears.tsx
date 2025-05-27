@@ -18,7 +18,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 // import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
-import { AppContext } from '@shared/contexts/AppContextProvider';
+// import { AppContext } from '@shared/contexts/AppContextProvider';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectImageryServiceTimeExtent } from '@shared/store/ImageryService/selectors';
 
 /**
  * This custom hook retrieves the time extent data of an Imagery Service
@@ -29,10 +31,14 @@ import { AppContext } from '@shared/contexts/AppContextProvider';
 export const useAvailableAcquisitionYears = () => {
     const [years, setYears] = useState<number[]>([]);
 
-    const { timeExtent } = useContext(AppContext);
+    // const { timeExtent } = useContext(AppContext);
+
+    const timeExtent = useAppSelector(selectImageryServiceTimeExtent);
 
     useEffect(() => {
         if (!timeExtent) {
+            const currentYear = getCurrentYear();
+            setYears([currentYear]);
             return;
         }
 
@@ -41,7 +47,7 @@ export const useAvailableAcquisitionYears = () => {
 
         const years: number[] = [];
 
-        const startYear = new Date(start).getFullYear();
+        const startYear = new Date(start).getUTCFullYear();
 
         const endYear = getCurrentYear(); //new Date(end).getFullYear();
 

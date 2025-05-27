@@ -17,6 +17,7 @@ import React, { useEffect, useRef, useState, FC } from 'react';
 import './ColorPicker.css';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import classNames from 'classnames';
+import { CalciteColorPicker } from '@esri/calcite-components-react';
 
 type Props = {
     color: number[];
@@ -26,7 +27,7 @@ type Props = {
 export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
     const containerRef = useRef<HTMLDivElement>();
 
-    const calciteColorPickerRef = useRef<any>();
+    // const calciteColorPickerRef = useRef<any>();
 
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
 
@@ -35,20 +36,17 @@ export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
     });
 
     useEffect(() => {
-        calciteColorPickerRef.current.addEventListener(
-            'calciteColorPickerChange',
-            (evt: any) => {
-                console.log(evt.target.value);
-
-                if (!evt?.target?.value) {
-                    return;
-                }
-
-                const { r, g, b } = evt.target.value || {};
-
-                onChange([r, g, b]);
-            }
-        );
+        // calciteColorPickerRef.current.addEventListener(
+        //     'calciteColorPickerChange',
+        //     (evt: any) => {
+        //         console.log(evt.target.value);
+        //         if (!evt?.target?.value) {
+        //             return;
+        //         }
+        //         const { r, g, b } = evt.target.value || {};
+        //         onChange([r, g, b]);
+        //     }
+        // );
     }, []);
 
     return (
@@ -58,12 +56,35 @@ export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
                     hidden: showColorPicker === false,
                 })}
             >
-                <calcite-color-picker
+                {/* <calcite-color-picker
                     ref={calciteColorPickerRef}
                     format="rgb"
                     saved-disabled
                     channels-disabled
                     scale="s"
+                /> */}
+                <CalciteColorPicker
+                    // ref={calciteColorPickerRef}
+                    format="rgb"
+                    savedDisabled
+                    channelsDisabled
+                    scale="s"
+                    value={{
+                        r: color[0],
+                        g: color[1],
+                        b: color[2],
+                    }}
+                    onCalciteColorPickerChange={(evt: any) => {
+                        console.log(evt.target.value);
+
+                        if (!evt?.target?.value) {
+                            return;
+                        }
+
+                        const { r, g, b } = evt.target.value || {};
+
+                        onChange([r, g, b]);
+                    }}
                 />
             </div>
 

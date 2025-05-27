@@ -31,6 +31,8 @@ import {
 } from '@typing/imagery-service';
 import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
 import { SENTINEL2_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-2/config';
+import { getTranslatedSentinel2RasterFunctionInfo } from '@sentinel2-explorer/utils/getTranslatedSentinel2RasterFunctionInfo';
+import { getTranslatedLandsatRasterFunctionInfo } from '@landsat-explorer/utils/getTranslatedLandsatRasterFunctionInfo';
 
 export const getTargetService = (): SpectralSamplingToolSupportedService => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -60,11 +62,15 @@ export const getRasterFunctionInfoByTargetService = (
     targetService: SpectralSamplingToolSupportedService
 ): RasterFunctionInfo[] => {
     if (targetService === 'landsat') {
-        return LANDSAT_RASTER_FUNCTION_INFOS;
+        return getTranslatedLandsatRasterFunctionInfo(
+            LANDSAT_RASTER_FUNCTION_INFOS
+        );
     }
 
     if (targetService === 'sentinel-2') {
-        return SENTINEL2_RASTER_FUNCTION_INFOS;
+        return getTranslatedSentinel2RasterFunctionInfo(
+            SENTINEL2_RASTER_FUNCTION_INFOS
+        );
     }
 
     return null;

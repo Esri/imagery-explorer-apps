@@ -20,10 +20,10 @@ import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import { ErrorPage } from '@shared/components/ErrorPage';
-import AppContextProvider from '@shared/contexts/AppContextProvider';
+// import AppContextProvider from '@shared/contexts/AppContextProvider';
 import { getSentinel2ExplorerStore } from './store';
-import { getTimeExtentOfSentinel2Service } from '@shared/services/sentinel-2/getTimeExtent';
-import { SENTINEL2_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-2/config';
+// import { getTimeExtentOfSentinel2Service } from '@shared/services/sentinel-2/getTimeExtent';
+// import { SENTINEL2_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-2/config';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
@@ -31,7 +31,8 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 import { AboutSentinel2Explorer } from './components/About';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
-import { getTranslatedSentinel2RasterFunctionInfo } from './utils/getTranslatedSentinel2RasterFunctionInfo';
+import '@shared/components/calcite-components';
+// import { getTranslatedSentinel2RasterFunctionInfo } from './utils/getTranslatedSentinel2RasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -47,23 +48,16 @@ import { getTranslatedSentinel2RasterFunctionInfo } from './utils/getTranslatedS
 
         const store = await getSentinel2ExplorerStore();
 
-        const timeExtent = await getTimeExtentOfSentinel2Service();
+        // const timeExtent = await getTimeExtentOfSentinel2Service();
         // console.log(timeExtent);
 
         root.render(
             <ReduxProvider store={store}>
-                <AppContextProvider
-                    timeExtent={timeExtent}
-                    rasterFunctionInfo={getTranslatedSentinel2RasterFunctionInfo(
-                        SENTINEL2_RASTER_FUNCTION_INFOS
-                    )}
-                >
-                    <ErrorBoundary>
-                        <Map />
-                        <Layout />
-                        <AboutSentinel2Explorer />
-                    </ErrorBoundary>
-                </AppContextProvider>
+                <ErrorBoundary>
+                    <Map />
+                    <Layout />
+                    <AboutSentinel2Explorer />
+                </ErrorBoundary>
             </ReduxProvider>
         );
     } catch (err) {

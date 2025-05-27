@@ -36,7 +36,9 @@ import LandsatNDVILegend from './legends/Landsat/NDVI_noText.png';
 import LandsatNDMILegend from './legends/Landsat/NDMI_noText.png';
 import LandsatThermalLegend from './legends/Landsat/Thermal.png';
 import { RasterFunctionInfo } from '@typing/imagery-service';
-import { AppContext } from '@shared/contexts/AppContextProvider';
+// import { AppContext } from '@shared/contexts/AppContextProvider';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectImageryServiceRasterFunctionInfo } from '@shared/store/ImageryService/selectors';
 
 const LandsatRendererThumbnailByName: Record<
     LandsatRasterFunctionName,
@@ -80,9 +82,17 @@ const LandsatRendererLegendByName: Record<LandsatRasterFunctionName, string> = {
  * @returns
  */
 export const useLandsatRasterFunctions = (): RasterFunctionInfo[] => {
-    const { rasterFunctionInfo } = useContext(AppContext);
+    // const { rasterFunctionInfo } = useContext(AppContext);
+
+    const rasterFunctionInfo = useAppSelector(
+        selectImageryServiceRasterFunctionInfo
+    );
 
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
+        if (!rasterFunctionInfo) {
+            return [];
+        }
+
         return rasterFunctionInfo.map((d) => {
             const name: LandsatRasterFunctionName =
                 d.name as LandsatRasterFunctionName;

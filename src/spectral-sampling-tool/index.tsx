@@ -23,14 +23,16 @@ import { About } from '@shared/components/About';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { getSpectralSampingToolStore } from './store';
-import AppContextProvider from '@shared/contexts/AppContextProvider';
-import {
-    getTargetService,
-    getTimeExtentByTargetService,
-    getRasterFunctionInfoByTargetService,
-} from './utils/getTargetService';
+import '@shared/components/calcite-components';
+// import AppContextProvider from '@shared/contexts/AppContextProvider';
+// import {
+//     getTargetService,
+//     getTimeExtentByTargetService,
+//     getRasterFunctionInfoByTargetService,
+// } from './utils/getTargetService';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
 import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
+import { initI18next } from '@shared/i18n/initI18next';
 
 (async () => {
     await initEsriOAuth({
@@ -38,30 +40,19 @@ import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
         portalUrl: AGOL_PORTAL_ROOT,
     });
 
+    await initI18next();
+
     const root = createRoot(document.getElementById('root'));
 
-    const targetService = getTargetService();
-
-    const store = getSpectralSampingToolStore(targetService);
-
-    const timeExtent = await getTimeExtentByTargetService(targetService);
-    console.log('timeExtent', timeExtent);
-
-    const rasterFunctionInfo =
-        getRasterFunctionInfoByTargetService(targetService);
+    const store = getSpectralSampingToolStore();
 
     root.render(
         <ReduxProvider store={store}>
-            <AppContextProvider
-                timeExtent={timeExtent}
-                rasterFunctionInfo={rasterFunctionInfo}
-            >
-                <ErrorBoundary>
-                    <Map />
-                    <Layout />
-                    <About />
-                </ErrorBoundary>
-            </AppContextProvider>
+            <ErrorBoundary>
+                <Map />
+                <Layout />
+                <About />
+            </ErrorBoundary>
         </ReduxProvider>
     );
 })();

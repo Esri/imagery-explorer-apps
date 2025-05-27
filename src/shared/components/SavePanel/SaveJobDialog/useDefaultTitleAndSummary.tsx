@@ -18,10 +18,20 @@ import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/
 import React, { useMemo } from 'react';
 
 export const useDefaultTitleAndSummary = (
+    /**
+     * The type of save job.
+     */
     saveJobType: PublishAndDownloadJobType,
-    sceneIds: string[]
+    /**
+     * The scene IDs used in the title and summary.
+     */
+    sceneIds: string[],
+    /**
+     * The satellite name used in the title and summary.
+     */
+    satellite: string
 ) => {
-    const { title, satellite } = appConfig;
+    const { title } = appConfig;
 
     const foramttedTitle = title.split(' | ')[1] || title;
 

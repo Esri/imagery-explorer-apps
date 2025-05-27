@@ -43,7 +43,10 @@ import {
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { initialUIState, UIState } from '@shared/store/UI/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
-import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
+import {
+    SENTINEL1_RASTER_FUNCTION_INFOS,
+    Sentinel1FunctionName,
+} from '@shared/services/sentinel-1/config';
 import {
     TemporalCompositeToolState,
     initialState4TemporalCompositeTool,
@@ -79,6 +82,9 @@ import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
+import { getTimeExtentOfSentinel1Service } from '@shared/services/sentinel-1/getTimeExtent';
+import { getTranslatedSentinel1RasterFunctionInfo } from '../utils/getTranslatedSentinel1RasterFunctionInfo';
+import { getPreloadedState4ImageryService } from '@shared/store/ImageryService/getPrelaodedState';
 
 // /**
 //  * Map location info that contains center and zoom info from URL Hash Params
@@ -337,6 +343,12 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
     const PublishAndDownloadJobs =
         await getPreloadedState4PublishAndDownloadJobs();
 
+    const timeExtent = await getTimeExtentOfSentinel1Service();
+
+    const rasterFunctionInfo = getTranslatedSentinel1RasterFunctionInfo(
+        SENTINEL1_RASTER_FUNCTION_INFOS
+    );
+
     return {
         Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
         UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
@@ -352,5 +364,9 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         MaskTool: getPreloadedMaskToolState(hashParams),
         Sentinel1: getPreloadedSentinel1State(hashParams),
         PublishAndDownloadJobs,
+        ImageryService: getPreloadedState4ImageryService(
+            timeExtent,
+            rasterFunctionInfo
+        ),
     } as PartialRootState;
 };

@@ -297,6 +297,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
         <SavePanel
             sceneIds={sceneIds}
             subHeader={subHeader}
+            satellite={serviceName}
             publishOptions={publishOptions}
             estimatedCostByJobType={estimatedCostByJobType}
             saveButtonOnClick={saveButtonOnClickHandler}

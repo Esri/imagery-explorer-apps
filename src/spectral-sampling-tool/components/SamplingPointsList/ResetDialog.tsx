@@ -15,6 +15,7 @@
 
 import { Button } from '@shared/components/Button';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     cancelButtonOnClick: () => void;
@@ -25,6 +26,8 @@ export const ResetDialog: FC<Props> = ({
     cancelButtonOnClick,
     resetButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div>
             <p className="text-xs">
@@ -34,7 +37,7 @@ export const ResetDialog: FC<Props> = ({
 
             <div className="my-1">
                 <Button scale="s" onClickHandler={cancelButtonOnClick}>
-                    Go back
+                    {t('cancel')}
                 </Button>
             </div>
 

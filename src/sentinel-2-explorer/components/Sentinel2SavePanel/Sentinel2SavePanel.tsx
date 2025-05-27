@@ -125,7 +125,7 @@ export const Sentinel2SavePanel = () => {
             sceneIds={sceneIds}
             publishOptions={publishOptions}
             originalServiceUrl={SENTINEL_2_ORIGINAL_SERVICE_URL}
-            serviceName={'Sentinel2'}
+            serviceName={'Sentinel-2'}
             tags={TAGS}
             description={SENTINEL2_SERVICE_DESCRIPTION}
             accessInformation={SENTINEL2_SERVICE_ACCESS_INFOMRATION}

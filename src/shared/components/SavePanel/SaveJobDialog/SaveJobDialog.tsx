@@ -26,6 +26,10 @@ import { useTranslation } from 'react-i18next';
 type SaveJobDialogProps = {
     saveJobType: PublishAndDownloadJobType;
     sceneIds: string[];
+    /**
+     * The satellite name used in the title and summary.
+     */
+    satellite: string;
     closeButtonOnClick: () => void;
     saveButtonOnClick: (title: string, summary: string) => void;
 };
@@ -39,6 +43,7 @@ const SUMMARY_MAX_LENGTH = 2048;
 export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     saveJobType,
     sceneIds,
+    satellite,
     closeButtonOnClick,
     saveButtonOnClick,
 }) => {
@@ -48,7 +53,8 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
 
     const { defaultTitle, defaultSummary } = useDefaultTitleAndSummary(
         saveJobType,
-        sceneIds
+        sceneIds,
+        satellite
     );
 
     const [title, setTitle] = useState<string>(defaultTitle);

@@ -24,8 +24,14 @@ module.exports = {
           DEFAULT: 'rgb(191,238,254)',
           90: 'var(--custom-light-blue-90)',
           80: 'var(--custom-light-blue-80)',
+          70: 'var(--custom-light-blue-70)',
+          60: 'var(--custom-light-blue-60)',
           50: 'var(--custom-light-blue-50)',
+          40: 'var(--custom-light-blue-40)',
+          30: 'var(--custom-light-blue-30)',
           25: 'var(--custom-light-blue-25)',
+          20: 'var(--custom-light-blue-20)',
+          10: 'var(--custom-light-blue-10)',
           5: 'var(--custom-light-blue-5)',
           0: 'var(--custom-light-blue-0)'
         },
@@ -34,7 +40,16 @@ module.exports = {
           95: 'var(--custom-background-95)',
           90: 'var(--custom-background-90)',
           85: 'var(--custom-background-85)',
+          80: 'var(--custom-background-80)',
           70: 'var(--custom-background-70)',
+          60: 'var(--custom-background-60)',
+          50: 'var(--custom-background-50)',
+          40: 'var(--custom-background-40)',
+          30: 'var(--custom-background-30)',
+          20: 'var(--custom-background-20)',
+          10: 'var(--custom-background-10)',
+          5: 'var(--custom-background-5)',
+          0: 'var(--custom-background-0)'
         },
         'calendar': {
           border: {

@@ -25,13 +25,17 @@ import { sortQueryParams4ScenesByAcquisitionDate } from './helpers';
 // import { DATE_FORMAT } from '@shared/constants/UI';
 // import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
-import { AppContext } from '@shared/contexts/AppContextProvider';
+// import { AppContext } from '@shared/contexts/AppContextProvider';
 import { useTranslation } from 'react-i18next';
+import { selectImageryServiceRasterFunctionLabelMap } from '@shared/store/ImageryService/selectors';
 
 export const useAnimationFramesInfo = () => {
     const { t } = useTranslation();
 
-    const { rasterFunctionLabelMap } = useContext(AppContext);
+    // const { rasterFunctionLabelMap } = useContext(AppContext);
+    const rasterFunctionLabelMap = useAppSelector(
+        selectImageryServiceRasterFunctionLabelMap
+    );
 
     const selectedAnimationFrameId = useAppSelector(
         selectIdOfSelectedItemInListOfQueryParams

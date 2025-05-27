@@ -31,7 +31,9 @@ import SAR_FalseColorComposite_Legend from './legends/SAR_FalseColorComposite_Le
 import SAR_SingleBandV2_Legend from './legends/SAR_SingleBand_Legend_noText.png';
 import SAR_WaterAnomaly_Legend from './legends/SAR_WaterAnomaly_Legend_noText.png';
 import SAR_WaterIndex_Legend from './legends/SAR_WaterIndex_Legend_noText.png';
-import { AppContext } from '@shared/contexts/AppContextProvider';
+// import { AppContext } from '@shared/contexts/AppContextProvider';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectImageryServiceRasterFunctionInfo } from '@shared/store/ImageryService/selectors';
 
 const Sentinel1RendererThumbnailByName: Partial<
     Record<Sentinel1FunctionName, string>
@@ -62,7 +64,11 @@ const Sentinel1RendererLegendByName: Partial<
  * @returns
  */
 export const useSentinel1RasterFunctions = (): RasterFunctionInfo[] => {
-    const { rasterFunctionInfo } = useContext(AppContext);
+    // const { rasterFunctionInfo } = useContext(AppContext);
+
+    const rasterFunctionInfo = useAppSelector(
+        selectImageryServiceRasterFunctionInfo
+    );
 
     const rasterFunctionInfosWithThumbnail = useMemo(() => {
         return rasterFunctionInfo.slice(0, 5).map((d) => {

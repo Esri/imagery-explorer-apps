@@ -28,11 +28,13 @@ import TemporalCompositeTool from './TemporalCompositeTool/reducer';
 import LandcoverExplorer from './LandcoverExplorer/reducer';
 import Sentinel1 from './Sentinel1/reducer';
 import PublishAndDownloadJobs from './PublishAndDownloadJobs/reducer';
+import ImageryService from './ImageryService/reducer';
 
 const reducers = combineReducers({
     Map,
     UI,
     ImageryScenes,
+    ImageryService,
     Sentinel2,
     Landsat,
     LandcoverExplorer,

@@ -48,22 +48,22 @@ const getPreloadedImageryScenesState = (): ImageryScenesState => {
     };
 };
 
-const getProlodedSpectralSamplingState = (
-    targetService: SpectralSamplingToolSupportedService
-): SpectralSamplingToolState => {
-    return {
-        ...initialSpectralSamplingToolState,
-        targetService,
+const getProlodedSpectralSamplingState =
+    (): // targetService: SpectralSamplingToolSupportedService
+    SpectralSamplingToolState => {
+        return {
+            ...initialSpectralSamplingToolState,
+            // targetService,
+        };
     };
-};
 
-export const getPreloadedState = (
-    targetService: SpectralSamplingToolSupportedService
-): PartialRootState => {
-    const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    return {
-        ImageryScenes: getPreloadedImageryScenesState(),
-        Map: getPreloadedMapState(hashParams),
-        SpectralSamplingTool: getProlodedSpectralSamplingState(targetService),
+export const getPreloadedState =
+    (): // targetService: SpectralSamplingToolSupportedService
+    PartialRootState => {
+        const hashParams = new URLSearchParams(window.location.hash.slice(1));
+        return {
+            ImageryScenes: getPreloadedImageryScenesState(),
+            Map: getPreloadedMapState(hashParams),
+            SpectralSamplingTool: getProlodedSpectralSamplingState(),
+        };
     };
-};

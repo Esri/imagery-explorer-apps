@@ -73,11 +73,23 @@ import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 // import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
-import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import {
+    LANDSAT_RASTER_FUNCTION_INFOS,
+    LandsatRasterFunctionName,
+} from '@shared/services/landsat-level-2/config';
+import { getPreloadedState4ImageryService } from '@shared/store/ImageryService/getPrelaodedState';
+import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+import { getTranslatedLandsatRasterFunctionInfo } from '@landsat-explorer/utils/getTranslatedLandsatRasterFunctionInfo';
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     const PublishAndDownloadJobs =
         await getPreloadedState4PublishAndDownloadJobs();
+
+    const timeExtent = await getTimeExtentOfLandsatService();
+
+    const rasterFunctionInfo = getTranslatedLandsatRasterFunctionInfo(
+        LANDSAT_RASTER_FUNCTION_INFOS
+    );
 
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
@@ -113,5 +125,9 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         SpectralProfileTool: getPreloadedState4SpectralProfileTool(hashParams),
         ChangeCompareTool: getPreloadedState4ChangeCompareTool(hashParams),
         PublishAndDownloadJobs,
+        ImageryService: getPreloadedState4ImageryService(
+            timeExtent,
+            rasterFunctionInfo
+        ),
     };
 };
