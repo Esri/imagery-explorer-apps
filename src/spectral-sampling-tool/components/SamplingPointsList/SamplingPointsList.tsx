@@ -17,6 +17,8 @@ import React, { FC } from 'react';
 import { FormattedSpectralSamplingData } from './useFormattedSpectralSamplingData';
 import classNames from 'classnames';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     data: FormattedSpectralSamplingData[];
@@ -46,6 +48,8 @@ export const SamplingPointsList: FC<Props> = ({
     onRemove,
     item2HighlightOnToggle,
 }) => {
+    const { t } = useTranslation();
+
     const getContent = (item: FormattedSpectralSamplingData) => {
         if (!item) {
             return null;
@@ -54,11 +58,11 @@ export const SamplingPointsList: FC<Props> = ({
         const { acquisitionDate, location, isLoading } = item;
 
         if (!acquisitionDate) {
-            return 'Select a Date';
+            return t('select_date', { ns: APP_NAME });
         }
 
         if (!location) {
-            return 'Select a Location';
+            return t('select_location', { ns: APP_NAME });
         }
 
         if (isLoading) {

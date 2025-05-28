@@ -81,6 +81,12 @@ const slice = createSlice({
     name: 'SpectralSamplingTool',
     initialState: initialSpectralSamplingToolState,
     reducers: {
+        targetServiceUpdated: (
+            state,
+            action: PayloadAction<SpectralSamplingToolSupportedService>
+        ) => {
+            state.targetService = action.payload;
+        },
         classificationNameUpdated: (state, action: PayloadAction<string>) => {
             state.classificationName = action.payload;
         },
@@ -126,6 +132,7 @@ const slice = createSlice({
 const { reducer } = slice;
 
 export const {
+    targetServiceUpdated,
     classificationNameUpdated,
     samplingDataUpdated,
     dataOfSelectedSamplingPointChanged,

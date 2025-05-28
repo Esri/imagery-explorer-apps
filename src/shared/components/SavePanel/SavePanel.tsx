@@ -39,7 +39,7 @@ import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
 import {
-    EstimatedCostByJobType,
+    // EstimatedCostByJobType,
     PublishJobSubmitHandler,
 } from './SavePanelContainer';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -76,15 +76,19 @@ type SavePanelProps = {
      * Options for publishing the scene.
      */
     publishOptions: PublishAndDownloadJobOptionData[];
+    /**
+     * The satellite name used in the title and summary of the output ArchGIS Online item.
+     */
+    satellite: string;
     // /**
     //  * Options for downloading the scene.
     //  */
     // downloadOptions: PublishAndDownloadJobOptionData[];
-    /**
-     * Estimated cost of the raster analysis job.
-     * The cost is in credits.
-     */
-    estimatedCostByJobType: EstimatedCostByJobType;
+    // /**
+    //  * Estimated cost of the raster analysis job.
+    //  * The cost is in credits.
+    //  */
+    // estimatedCostByJobType: EstimatedCostByJobType;
     /**
      * Emits when a save button is clicked.
      * @param {SaveOption} option - The save button that was clicked.
@@ -103,7 +107,8 @@ export const SavePanel: FC<SavePanelProps> = ({
     sceneIds,
     subHeader,
     publishOptions,
-    estimatedCostByJobType,
+    // estimatedCostByJobType,
+    satellite,
     // downloadOptions,
     saveButtonOnClick,
     publishJobSubmitHandler,
@@ -194,18 +199,18 @@ export const SavePanel: FC<SavePanelProps> = ({
                             const { inputName, outputName, description } =
                                 saveOptionInfoLookup[saveJobType];
 
-                            const estimatedCost =
-                                estimatedCostByJobType[
-                                    saveJobType as PublishJob
-                                ] || 0;
+                            // const estimatedCost =
+                            //     estimatedCostByJobType[
+                            //         saveJobType as PublishJob
+                            //     ] || 0;
 
                             return (
                                 <SaveOptionButton
                                     key={saveJobType}
                                     title={t(inputName)}
-                                    subtitle={t('as') + ' ' + t(outputName)}
+                                    subtitle={t(outputName)}
                                     desciprtion={t(description)}
-                                    estimatedCost={estimatedCost}
+                                    // estimatedCost={estimatedCost}
                                     disabled={disabled}
                                     message={message}
                                     onClick={() => {
@@ -224,6 +229,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                 <SaveJobDialog
                     saveJobType={activeSaveJobDialog}
                     sceneIds={sceneIds}
+                    satellite={satellite}
                     closeButtonOnClick={() => setActiveSaveJobDialog(undefined)}
                     saveButtonOnClick={(title, summary) => {
                         // console.log(title, summary);

@@ -42,7 +42,13 @@ import {
     initialTrendToolState,
     TrendToolState,
 } from '@shared/store/TrendTool/reducer';
-import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import {
+    LANDSAT_RASTER_FUNCTION_INFOS,
+    LandsatRasterFunctionName,
+} from '@shared/services/landsat-level-2/config';
+import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
+import { getTranslatedLandsatRasterFunctionInfo } from '@landsat-explorer/utils/getTranslatedLandsatRasterFunctionInfo';
+import { getPreloadedState4ImageryService } from '@shared/store/ImageryService/getPrelaodedState';
 
 const getPreloadedMapState = (hashParams: URLSearchParams): MapState => {
     const mapLocation = getMapCenterFromHashParams(hashParams);
@@ -114,10 +120,20 @@ const getPreloadedTrendToolState = (
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
+    const timeExtent = await getTimeExtentOfLandsatService();
+
+    const rasterFunctionInfo = getTranslatedLandsatRasterFunctionInfo(
+        LANDSAT_RASTER_FUNCTION_INFOS
+    );
+
     return {
         Map: getPreloadedMapState(hashParams),
         ImageryScenes: getPreloadedImageryScenesState(hashParams),
         MaskTool: getPreloadedMaskToolState(hashParams),
         TrendTool: getPreloadedTrendToolState(hashParams),
+        ImageryService: getPreloadedState4ImageryService(
+            timeExtent,
+            rasterFunctionInfo
+        ),
     };
 };

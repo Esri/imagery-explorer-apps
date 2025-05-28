@@ -13,11 +13,11 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { Calendar } from '@shared/components/Calendar';
 import { AppHeader } from '@shared/components/AppHeader';
-import { appConfig } from '@shared/config';
+import { APP_NAME, appConfig } from '@shared/config';
 // import { SceneInfo as LandsatSceneInfo } from '@landsat-explorer/components/SceneInfo';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 // import { ContainerOfSecondaryControls } from '@shared/components/ModeSelector';
@@ -28,15 +28,29 @@ import { selectTargetService } from '@shared/store/SpectralSamplingTool/selector
 import { Layout4Sentinel2 } from './Layout4Sentinel2';
 import { Layout4Landsat } from './Layout4Landsat';
 import { CloudFilter } from '@shared/components/CloudFilter';
+import { useTranslation } from 'react-i18next';
+import { ta } from 'date-fns/locale';
+import { SplashScreen } from '../SplashScreen';
+import { useSaveCurrentSession } from '@spectral-sampling-tool/hooks/useSaveCurrentSession';
 
 const Layout = () => {
+    const { t } = useTranslation();
+
     const targetService = useAppSelector(selectTargetService);
 
     useSaveAppState2HashParams();
 
+    /**
+     * This hook is used to save the current session to the indexedDB
+     */
+    useSaveCurrentSession();
+
     return (
         <>
-            <AppHeader title={appConfig.title} />
+            <AppHeader title={t('spectral_sampling_tool', { ns: APP_NAME })} />
+
+            {!targetService && <SplashScreen />}
+
             <BottomPanel>
                 <div className="w-44 shrink-0">
                     <SamplingPointsList />

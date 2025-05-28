@@ -22,11 +22,17 @@ import { InterestingPlaceData } from '@typing/shared';
 // import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 import { getPreloadedState4SpectralProfileTool } from '@shared/store/SpectralProfileTool/getPreloadedState';
-import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+import {
+    SENTINEL2_RASTER_FUNCTION_INFOS,
+    Sentinel2FunctionName,
+} from '@shared/services/sentinel-2/config';
 import { getPreloadedState4PublishAndDownloadJobs } from '@shared/store/PublishAndDownloadJobs/getPreloadedState';
 import { getMapCenterFromHashParams } from '@shared/utils/url-hash-params';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { sentinel2InterestingPlaces } from '@sentinel2-explorer/components/Sentinel2InterestingPlaces';
+import { getTimeExtentOfSentinel2Service } from '@shared/services/sentinel-2/getTimeExtent';
+import { getTranslatedSentinel2RasterFunctionInfo } from '@sentinel2-explorer/utils/getTranslatedSentinel2RasterFunctionInfo';
+import { getPreloadedState4ImageryService } from '@shared/store/ImageryService/getPrelaodedState';
 
 export const getPreloadedState = async (): Promise<PartialRootState> => {
     // get default raster function and location and pass to the getPreloadedMapState, getPreloadedUIState and getPreloadedImageryScenesState
@@ -52,6 +58,12 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
     const PublishAndDownloadJobs =
         await getPreloadedState4PublishAndDownloadJobs();
 
+    const timeExtent = await getTimeExtentOfSentinel2Service();
+
+    const rasterFunctionInfo = getTranslatedSentinel2RasterFunctionInfo(
+        SENTINEL2_RASTER_FUNCTION_INFOS
+    );
+
     const preloadedState: PartialRootState = {
         Map: getPreloadedState4Map(hashParams, randomInterestingPlace),
         UI: getPreloadedState4UI(hashParams, randomInterestingPlace),
@@ -65,6 +77,10 @@ export const getPreloadedState = async (): Promise<PartialRootState> => {
         MaskTool: getPreloadedState4MaskTool(hashParams),
         SpectralProfileTool: getPreloadedState4SpectralProfileTool(hashParams),
         PublishAndDownloadJobs,
+        ImageryService: getPreloadedState4ImageryService(
+            timeExtent,
+            rasterFunctionInfo
+        ),
     };
 
     return preloadedState;

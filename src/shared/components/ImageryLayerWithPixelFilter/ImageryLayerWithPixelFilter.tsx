@@ -139,6 +139,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
             blendMode: blendMode || null,
             opacity: opacity || 1,
             effect: 'drop-shadow(2px, 2px, 3px, #000)',
+            interpolation: 'nearest',
         });
 
         groupLayer.add(layerRef.current);

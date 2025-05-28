@@ -21,6 +21,8 @@ import { selectClassifictionNameOfSpectralSamplingTask } from '@shared/store/Spe
 import { saveSamplingResults } from './helpers';
 import { useAveragedBandValues } from './useAveragedSamplingResults';
 import { SpectralSamplingToolSupportedService } from '@shared/store/SpectralSamplingTool/reducer';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     bandNames: string[];
@@ -31,6 +33,8 @@ export const SaveSamplingResults: FC<Props> = ({
     bandNames,
     targetService,
 }) => {
+    const { t } = useTranslation();
+
     const samplingPointsData = useFormattedSpectralSamplingData();
 
     const averagedBandValues = useAveragedBandValues();
@@ -43,7 +47,7 @@ export const SaveSamplingResults: FC<Props> = ({
         <div className="text-right pr-4 flex items-center justify-end">
             <calcite-icon icon="download-to" scale="s" />
             <span
-                className="cursor-pointer underline text-xs"
+                className="cursor-pointer underline text-sm"
                 onClick={() => {
                     saveSamplingResults({
                         data: samplingPointsData,
@@ -54,7 +58,7 @@ export const SaveSamplingResults: FC<Props> = ({
                     });
                 }}
             >
-                Download
+                {t('download_sampling_results', { ns: APP_NAME })}
             </span>
         </div>
     );

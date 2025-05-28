@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SamplingPointsList } from './SamplingPointsList';
 import { selectListOfQueryParams } from '@shared/store/ImageryScene/selectors';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -38,11 +38,35 @@ import {
     idOfItem2HighlightChanged,
 } from '@shared/store/SpectralSamplingTool/reducer';
 import { ResetDialog } from './ResetDialog';
+import { deleteSessionDataFromIndexedDB } from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
+import { CalciteButton } from '@esri/calcite-components-react';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 export const SamplingPointsListContainer = () => {
     const dispatch = useAppDispatch();
 
+    const { t } = useTranslation();
+
     const samplingListData = useFormattedSpectralSamplingData();
+
+    const countOfSamplingPointsWithoutDateOrLocation = useMemo(() => {
+        return samplingListData.filter((item) => {
+            return !item.acquisitionDate || !item.location;
+        }).length;
+    }, [samplingListData]);
+
+    const shouldDisableAddButton = useMemo(() => {
+        if (samplingListData?.length >= 100) {
+            return true;
+        }
+
+        if (countOfSamplingPointsWithoutDateOrLocation > 0) {
+            return true;
+        }
+
+        return false;
+    }, [countOfSamplingPointsWithoutDateOrLocation, samplingListData?.length]);
 
     // classification name of the current spectral sampling session
     const classificationName = useAppSelector(
@@ -89,7 +113,11 @@ export const SamplingPointsListContainer = () => {
         return (
             <ResetDialog
                 cancelButtonOnClick={setShouldShowResetDialog.bind(null, false)}
-                resetButtonOnClick={() => {
+                resetButtonOnClick={async () => {
+                    // delete the session data from IndexedDB so the user won't be
+                    // prompted to restore the session when the app is reloaded
+                    await deleteSessionDataFromIndexedDB();
+
                     dispatch(resetCurrentSamplingSession());
 
                     // close the reset dialog
@@ -101,7 +129,7 @@ export const SamplingPointsListContainer = () => {
 
     return (
         <div className="w-full h-full relative">
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
                 <h5 className="text-sm text-ellipsis flex-grow">
                     {classificationName}:
                 </h5>
@@ -116,7 +144,7 @@ export const SamplingPointsListContainer = () => {
                         icon="reset"
                     />
                 </div>
-            </div>
+            </div> */}
 
             <SamplingPointsList
                 data={samplingListData}
@@ -129,18 +157,33 @@ export const SamplingPointsListContainer = () => {
                 }}
             />
 
-            <AddSamplingPointButton
-                shouldDisableAddButton={samplingListData?.length >= 100}
-                addButtonOnClick={samplingPointOnAdd}
-            />
+            <div className="flex items-center justify-between mt-1">
+                <AddSamplingPointButton
+                    shouldDisableAddButton={shouldDisableAddButton}
+                    addButtonOnClick={samplingPointOnAdd}
+                />
 
-            {samplingListData && samplingListData.length <= 1 ? (
+                <CalciteButton
+                    style={{
+                        '--calcite-button-text-color':
+                            'var(--custom-light-blue)',
+                    }}
+                    scale="s"
+                    iconStart="reset"
+                    appearance="transparent"
+                    kind="neutral"
+                    title={t('reset_session', { ns: APP_NAME })}
+                    onClick={setShouldShowResetDialog.bind(null, true)}
+                />
+            </div>
+
+            {/* {countOfSamplingPointsWithoutDateOrLocation === 0 ? (
                 <div className="absolute w-full left-0 bottom-0">
                     <p className="text-xs opacity-50">
                         Add sampling points to this list.
                     </p>
                 </div>
-            ) : null}
+            ) : null} */}
         </div>
     );
 };

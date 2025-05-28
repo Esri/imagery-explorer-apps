@@ -100,11 +100,11 @@ export type SavePanelContainerProps = {
      * Raster function for publishing the change detection.
      */
     publishChangeDetectionRasterFunction?: any;
-    /**
-     * Estimated cost of the raster analysis job.
-     * The cost is in credits.
-     */
-    estimatedCostByJobType: EstimatedCostByJobType;
+    // /**
+    //  * Estimated cost of the raster analysis job.
+    //  * The cost is in credits.
+    //  */
+    // estimatedCostByJobType: EstimatedCostByJobType;
 };
 
 export type PublishJobSubmitHandler = (job: PublishAndDownloadJob) => void;
@@ -122,7 +122,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
     publishSceneRasterFunction,
     publishIndexMaskRasterFunction,
     publishChangeDetectionRasterFunction,
-    estimatedCostByJobType,
+    // estimatedCostByJobType,
 }) => {
     const { t } = useTranslation();
 
@@ -261,8 +261,8 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
         const rasterFunction =
             rasterFunctions[saveJobType as PublishJob] || null;
 
-        const estimatedCost =
-            estimatedCostByJobType[saveJobType as PublishJob] || 0;
+        // const estimatedCost =
+        //     estimatedCostByJobType[saveJobType as PublishJob] || 0;
 
         const job = await dispatch(
             createNewPublishAndDownloadJob({
@@ -271,7 +271,7 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
                 summary,
                 sceneIds,
                 rasterFunction,
-                estimatedCost,
+                // estimatedCost,
             })
         );
 
@@ -297,8 +297,9 @@ export const SavePanelContainer: FC<SavePanelContainerProps> = ({
         <SavePanel
             sceneIds={sceneIds}
             subHeader={subHeader}
+            satellite={serviceName}
             publishOptions={publishOptions}
-            estimatedCostByJobType={estimatedCostByJobType}
+            // estimatedCostByJobType={estimatedCostByJobType}
             saveButtonOnClick={saveButtonOnClickHandler}
             publishJobSubmitHandler={publishJobSubmitHandler}
         />

@@ -45,15 +45,15 @@ import {
     TAGS,
 } from './config';
 
-/**
- * Estimated cost of the raster analysis job for Landsat service.
- * The cost is in credits.
- */
-export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
-    [PublishAndDownloadJobType.PublishScene]: 3,
-    [PublishAndDownloadJobType.PublishIndexMask]: 4,
-    [PublishAndDownloadJobType.PublishChangeDetection]: 5,
-};
+// /**
+//  * Estimated cost of the raster analysis job for Landsat service.
+//  * The cost is in credits.
+//  */
+// export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
+//     [PublishAndDownloadJobType.PublishScene]: 3,
+//     [PublishAndDownloadJobType.PublishIndexMask]: 4,
+//     [PublishAndDownloadJobType.PublishChangeDetection]: 5,
+// };
 
 export const LandsatSavePanel = () => {
     // const landsatScene = useSelectedLandsatScene();
@@ -124,7 +124,7 @@ export const LandsatSavePanel = () => {
             sceneIds={sceneIds}
             publishOptions={publishOptions}
             originalServiceUrl={LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL}
-            serviceName={'LandsatLevel2'}
+            serviceName={'Landsat'}
             tags={TAGS}
             description={LANDSAT_LEVEL_2_SERVICE_DESCRIPTION}
             accessInformation={LANDSAT_LEVEL_2_SERVICE_ACCESS_INFOMRATION}
@@ -132,7 +132,7 @@ export const LandsatSavePanel = () => {
             licenseInfoForHostedImageryService={
                 LANDSAT_LEVEL_2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE
             }
-            estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
+            // estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}
             publishChangeDetectionRasterFunction={

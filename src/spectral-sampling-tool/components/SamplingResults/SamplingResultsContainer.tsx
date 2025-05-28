@@ -22,7 +22,10 @@ import { SaveSamplingResults } from './SaveSamplingResults';
 import { useNumOfBandsToDisplay } from './useNumOfBandsToDisplay';
 import { useBandNames } from './useBandNames';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectTargetService } from '@shared/store/SpectralSamplingTool/selectors';
+import {
+    selectClassifictionNameOfSpectralSamplingTask,
+    selectTargetService,
+} from '@shared/store/SpectralSamplingTool/selectors';
 
 export const SamplingResultsContainer = () => {
     const targetService = useAppSelector(selectTargetService);
@@ -33,6 +36,10 @@ export const SamplingResultsContainer = () => {
 
     const chartData = useChartData(numOfBandsToDisplay);
 
+    const sessionName = useAppSelector(
+        selectClassifictionNameOfSpectralSamplingTask
+    );
+
     return (
         <div
             className={classNames('w-[300px] h-full mx-2', {
@@ -41,7 +48,8 @@ export const SamplingResultsContainer = () => {
         >
             <div className="text-center">
                 <span className="uppercase text-sm ml-1">
-                    Spectral Sampling Results
+                    {/* Spectral Sampling Results */}
+                    {targetService} | {sessionName}
                 </span>
             </div>
 
@@ -54,7 +62,7 @@ export const SamplingResultsContainer = () => {
                 </div>
             ) : (
                 <>
-                    <div className="w-full h-[150px] my-2">
+                    <div className="w-full h-[140px] my-2">
                         <SpectralProfileChart
                             chartData={chartData}
                             bottomAxisTickText={bandNames}

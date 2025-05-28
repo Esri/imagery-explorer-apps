@@ -24,6 +24,7 @@
             "@landsat-explorer/*": ["./src/landsat-explorer/*"],
             "@sentinel2-explorer/*": ["./src/sentinel-2-explorer/*"],
             "@landcover-explorer/*": ["./src/landcover-explorer/*"],
+            "@spectral-sampling-tool/*": ["./src/spectral-sampling-tool/*"],
             "@typing/*": ["./src/types/*"]
         }
     },

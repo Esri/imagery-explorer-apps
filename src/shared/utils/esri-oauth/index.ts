@@ -110,22 +110,22 @@ export const signIn = async (): Promise<void> => {
 };
 
 export const signOut = async (): Promise<void> => {
-    // const { appId, portalUrl } = oauthInfo;
-    // const { token } = credential;
+    const { appId, portalUrl } = oauthInfo;
+    const { token } = credential;
 
-    // try {
-    //     // need to call oauth2/signout to clear the encrypted cookie and signs the user out of the ArcGIS platform
-    //     // here to learn more: https://confluencewikidev.esri.com/display/AGO/oAuth+signout
-    //     await fetch(portalUrl + '/sharing/rest/oauth2/signout', {
-    //         method: 'post',
-    //         body: new URLSearchParams({
-    //             client_id: appId,
-    //             token,
-    //         }),
-    //     });
-    // } catch (err) {
-    //     console.error(err);
-    // }
+    try {
+        // need to call oauth2/signout to clear the encrypted cookie and signs the user out of the ArcGIS platform
+        // here to learn more: https://confluencewikidev.esri.com/display/AGO/oAuth+signout
+        await fetch(portalUrl + '/sharing/rest/oauth2/signout', {
+            method: 'post',
+            body: new URLSearchParams({
+                client_id: appId,
+                token,
+            }),
+        });
+    } catch (err) {
+        console.error(err);
+    }
 
     esriId.destroyCredentials();
 
