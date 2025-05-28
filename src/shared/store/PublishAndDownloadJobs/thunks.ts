@@ -55,10 +55,10 @@ type CreateNewSaveJobParams = {
      * raster function of the raster analysis job
      */
     rasterFunction?: any;
-    /**
-     * estimated cost of the raster analysis job
-     */
-    estimatedCost?: number;
+    // /**
+    //  * estimated cost of the raster analysis job
+    //  */
+    // estimatedCost?: number;
 };
 
 export const createNewPublishAndDownloadJob =
@@ -68,8 +68,8 @@ export const createNewPublishAndDownloadJob =
         summary,
         sceneIds,
         rasterFunction,
-        estimatedCost,
-    }: CreateNewSaveJobParams) =>
+    }: // estimatedCost,
+    CreateNewSaveJobParams) =>
     async (dispatch: StoreDispatch): Promise<PublishAndDownloadJob> => {
         const user = getSignedInUser();
 
@@ -101,7 +101,7 @@ export const createNewPublishAndDownloadJob =
             sceneId,
             appName: APP_NAME,
             rasterFunction,
-            estimatedCost,
+            // estimatedCost,
         };
 
         await savePublishAndDownloadJob2IndexedDB(newJob);

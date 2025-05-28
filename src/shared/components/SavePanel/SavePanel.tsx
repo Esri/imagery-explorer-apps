@@ -39,7 +39,7 @@ import { SignedUserHeader } from './SignedUserHeader/SignedUserHeader';
 import { SaveJobDialog } from './SaveJobDialog/SaveJobDialog';
 import { PublishAndDownloadJobOptionData } from './useDownloadAndPublishOptions';
 import {
-    EstimatedCostByJobType,
+    // EstimatedCostByJobType,
     PublishJobSubmitHandler,
 } from './SavePanelContainer';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -84,11 +84,11 @@ type SavePanelProps = {
     //  * Options for downloading the scene.
     //  */
     // downloadOptions: PublishAndDownloadJobOptionData[];
-    /**
-     * Estimated cost of the raster analysis job.
-     * The cost is in credits.
-     */
-    estimatedCostByJobType: EstimatedCostByJobType;
+    // /**
+    //  * Estimated cost of the raster analysis job.
+    //  * The cost is in credits.
+    //  */
+    // estimatedCostByJobType: EstimatedCostByJobType;
     /**
      * Emits when a save button is clicked.
      * @param {SaveOption} option - The save button that was clicked.
@@ -107,7 +107,7 @@ export const SavePanel: FC<SavePanelProps> = ({
     sceneIds,
     subHeader,
     publishOptions,
-    estimatedCostByJobType,
+    // estimatedCostByJobType,
     satellite,
     // downloadOptions,
     saveButtonOnClick,
@@ -199,10 +199,10 @@ export const SavePanel: FC<SavePanelProps> = ({
                             const { inputName, outputName, description } =
                                 saveOptionInfoLookup[saveJobType];
 
-                            const estimatedCost =
-                                estimatedCostByJobType[
-                                    saveJobType as PublishJob
-                                ] || 0;
+                            // const estimatedCost =
+                            //     estimatedCostByJobType[
+                            //         saveJobType as PublishJob
+                            //     ] || 0;
 
                             return (
                                 <SaveOptionButton
@@ -210,7 +210,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                                     title={t(inputName)}
                                     subtitle={t(outputName)}
                                     desciprtion={t(description)}
-                                    estimatedCost={estimatedCost}
+                                    // estimatedCost={estimatedCost}
                                     disabled={disabled}
                                     message={message}
                                     onClick={() => {

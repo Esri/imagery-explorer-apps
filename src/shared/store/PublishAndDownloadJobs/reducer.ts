@@ -171,10 +171,10 @@ export type PublishAndDownloadJob = {
      * progress of the job, 0-100
      */
     progress?: number;
-    /**
-     * estimated cost of the raster analysis job
-     */
-    estimatedCost?: number;
+    // /**
+    //  * estimated cost of the raster analysis job
+    //  */
+    // estimatedCost?: number;
     /**
      * actual cost of the raster analysis job
      */

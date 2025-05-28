@@ -45,15 +45,15 @@ import {
     SENTINEL2_SERVICE_LICENSE_INFO_WEB_MAP,
 } from './config';
 
-/**
- * Estimated cost of the raster analysis job for Sentinel-2 service.
- * The cost is in credits.
- */
-export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
-    [PublishAndDownloadJobType.PublishScene]: 3,
-    [PublishAndDownloadJobType.PublishIndexMask]: 4,
-    [PublishAndDownloadJobType.PublishChangeDetection]: 5,
-};
+// /**
+//  * Estimated cost of the raster analysis job for Sentinel-2 service.
+//  * The cost is in credits.
+//  */
+// export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
+//     [PublishAndDownloadJobType.PublishScene]: 3,
+//     [PublishAndDownloadJobType.PublishIndexMask]: 4,
+//     [PublishAndDownloadJobType.PublishChangeDetection]: 5,
+// };
 
 export const Sentinel2SavePanel = () => {
     // const sentinel2Scene = useSelectedSentinel2Scene();
@@ -133,7 +133,7 @@ export const Sentinel2SavePanel = () => {
             licenseInfoForHostedImageryService={
                 SENTINEL2_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE
             }
-            estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
+            // estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}
             publishChangeDetectionRasterFunction={

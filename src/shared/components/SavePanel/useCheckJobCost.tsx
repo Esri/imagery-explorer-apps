@@ -56,9 +56,9 @@ export const useCheckJobCost = (
                 actualCost,
             };
 
-            // If the actual cost is greater than the estimated cost, ask for user approval
+            // If the actual cost is greater than 0, ask for user approval
             // before submitting the job, otherwise submit the job
-            if (actualCost > job.estimatedCost) {
+            if (actualCost > 0) {
                 dispatch(
                     updatePublishAndDownloadJob({
                         ...updatedJobData,

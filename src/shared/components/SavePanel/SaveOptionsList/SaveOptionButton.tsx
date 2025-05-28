@@ -22,7 +22,7 @@ type SaveOptionButtonProps = {
     title: string;
     subtitle: string;
     desciprtion: string;
-    estimatedCost: number;
+    // estimatedCost: number;
     disabled: boolean;
     /**
      * extra message to show
@@ -38,7 +38,7 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
     title,
     subtitle,
     desciprtion,
-    estimatedCost,
+    // estimatedCost,
     message,
     disabled,
     onClick,
@@ -67,13 +67,13 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
                         __html: message || desciprtion,
                     }}
                 ></span>{' '}
-                {estimatedCost && estimatedCost > 0 ? (
+                {/* {estimatedCost && estimatedCost > 0 ? (
                     <span>
                         {t('estimated_cost', {
                             estimatedCost: estimatedCost.toString(),
                         })}
                     </span>
-                ) : null}
+                ) : null} */}
             </div>
         </div>
     );

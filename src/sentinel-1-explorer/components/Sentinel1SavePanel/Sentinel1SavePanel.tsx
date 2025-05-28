@@ -59,15 +59,15 @@ import {
     TAGS,
 } from './config';
 
-/**
- * Estimated cost of the raster analysis job for Sentinel-1 service.
- * The cost is in credits.
- */
-export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
-    [PublishAndDownloadJobType.PublishScene]: 5,
-    [PublishAndDownloadJobType.PublishIndexMask]: 7,
-    [PublishAndDownloadJobType.PublishChangeDetection]: 13,
-};
+// /**
+//  * Estimated cost of the raster analysis job for Sentinel-1 service.
+//  * The cost is in credits.
+//  */
+// export const EstimatedRasterAnalysisJobCost: Record<PublishJob, number> = {
+//     [PublishAndDownloadJobType.PublishScene]: 5,
+//     [PublishAndDownloadJobType.PublishIndexMask]: 7,
+//     [PublishAndDownloadJobType.PublishChangeDetection]: 13,
+// };
 
 export const Sentinel1SavePanel = () => {
     // const sentinel1Scene = useSelectedSentinel1Scene();
@@ -153,7 +153,7 @@ export const Sentinel1SavePanel = () => {
             licenseInfoForHostedImageryService={
                 SENTINEL1_SERVICE_LICENSE_INFO_HOSTED_IMAGERY_SERVICE
             }
-            estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
+            // estimatedCostByJobType={EstimatedRasterAnalysisJobCost}
             publishSceneRasterFunction={publishSceneRasterFunction}
             publishIndexMaskRasterFunction={publishIndexMaskRasterFunction}
             publishChangeDetectionRasterFunction={
