@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectShowSavePanel } from '@shared/store/UI/selectors';
 import { CloseButton } from '../CloseButton';
@@ -122,6 +122,8 @@ export const SavePanel: FC<SavePanelProps> = ({
     const [activeSaveJobDialog, setActiveSaveJobDialog] =
         useState<PublishAndDownloadJobType>();
 
+    const signedIn = isAnonymouns() === false;
+
     useEffect(() => {
         setOpenSavePanelInSessionStorage(shouldShowSavePanel);
 
@@ -129,9 +131,10 @@ export const SavePanel: FC<SavePanelProps> = ({
             return;
         }
 
-        if (isAnonymouns()) {
-            signIn();
-        }
+        // if (isAnonymouns()) {
+        //     // if the user is not signed in, we need to sign in
+        //     signIn();
+        // }
     }, [shouldShowSavePanel]);
 
     if (!shouldShowSavePanel) {
@@ -147,6 +150,11 @@ export const SavePanel: FC<SavePanelProps> = ({
             />
 
             <SignedUserHeader
+                onSignIn={() => {
+                    // console.log('sign in');
+                    setOpenSavePanelInSessionStorage(true);
+                    signIn();
+                }}
                 onSignOut={() => {
                     // console.log('sign out');
                     // hide the save panel before signing out so that the user is not redirected to the sign-in page
@@ -163,33 +171,10 @@ export const SavePanel: FC<SavePanelProps> = ({
                 <Header
                     // sceneId={sceneId}
                     subHeader={subHeader}
+                    signedIn={signedIn}
                 />
 
                 <div className="relative w-full mt-12 mx-auto">
-                    {/* {downloadOptions?.length ? (
-                        <div>
-                            <SaveOptionsListHeader title="Download" />
-
-                            {downloadOptions.map((option) => {
-                                const { inputName, outputName, description } =
-                                    saveOptionInfoLookup[option];
-
-                                return (
-                                    <SaveOptionButton
-                                        key={option}
-                                        title={inputName}
-                                        subtitle={'as ' + outputName}
-                                        desciprtion={description}
-                                        disabled={false}
-                                        onClick={() => {
-                                            setActiveSaveJobDialog(option);
-                                        }}
-                                    />
-                                );
-                            })}
-                        </div>
-                    ) : null} */}
-
                     <div>
                         <SaveOptionsListHeader title={t('publish')} />
 
@@ -211,7 +196,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                                     subtitle={t(outputName)}
                                     desciprtion={t(description)}
                                     // estimatedCost={estimatedCost}
-                                    disabled={disabled}
+                                    disabled={disabled || !signedIn}
                                     message={message}
                                     onClick={() => {
                                         setActiveSaveJobDialog(saveJobType);
