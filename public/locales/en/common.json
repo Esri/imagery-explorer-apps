@@ -139,6 +139,8 @@
     "save_options": "Save Options",
     "dialog_can_be_closed": "This dialog can safely be closed while request is processed.",
     "log_out": "Log Out",
+    "sign_in": "Sign In",
+    "sign_in_to_your_account": "Sign in to your ArcGIS Online account",
     "switch_account": "Switch Account",
     "multiple_scenes_selected": "Multiple Scenes Selected",
     "scene_id": "Scene Id",
@@ -266,5 +268,6 @@
     "creating_web_map": "Creating Web Map",
     "create_web_map": "Create Web Map",
     "tags": "Tags",
-    "or": "Or"
+    "or": "Or",
+    "sign_in_to_save_jobs_description": "Sign in to your ArcGIS Online account first to use the save options."
 }
