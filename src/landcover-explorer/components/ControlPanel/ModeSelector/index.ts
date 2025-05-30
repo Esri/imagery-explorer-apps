@@ -13,4 +13,4 @@
  * limitations under the License.
  */
 
-export { ModeSelectorContainer as ModeSelector } from './ModeSelectorContainer';
+export { ModeSelectorContainer as LandcoverExplorerModeSelector } from './ModeSelectorContainer';

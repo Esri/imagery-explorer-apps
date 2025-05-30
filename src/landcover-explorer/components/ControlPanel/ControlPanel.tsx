@@ -19,7 +19,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 // import { year4LeadingLayerUpdated } from '@shared/store/LandcoverExplorer/reducer';
 // import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
-import LayerSelector from './LayerSelector/LayerSelectorContainer';
+import { LandcoverExplorerLayerSelector } from './LayerSelector';
 import { TimeSelector } from './TimeSelector';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 // import Tooltip from './Tooltip/TooltipContainer';
@@ -29,7 +29,7 @@ import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsLi
 import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 // import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
-import { ModeSelector } from './ModeSelector';
+import { LandcoverExplorerModeSelector } from './ModeSelector';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
 import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
@@ -62,8 +62,8 @@ const ControlPanel = () => {
         <BottomPanel>
             <div className="relative w-full h-full p-2 flex text-custom-light-blue justify-between">
                 <div className="flex">
-                    <LayerSelector />
-                    <ModeSelector />
+                    <LandcoverExplorerLayerSelector />
+                    <LandcoverExplorerModeSelector />
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">

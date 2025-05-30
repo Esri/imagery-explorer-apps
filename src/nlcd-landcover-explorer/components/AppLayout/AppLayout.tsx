@@ -24,6 +24,9 @@ import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import { NLCDLandcoverMapViewContainer } from '../MapView';
 
+import { LandcoverExplorerLayerSelector } from '@landcover-explorer/components/ControlPanel/LayerSelector';
+import { LandcoverExplorerModeSelector } from '@landcover-explorer/components/ControlPanel/ModeSelector';
+
 export const AppLayout = () => {
     const { t } = useTranslation();
     // useSaveAppState2HashParams();
@@ -39,7 +42,26 @@ export const AppLayout = () => {
             <AboutNLCDLandcoverExplorer />
             <NLCDLandcoverMapViewContainer />
             <BottomPanel>
-                <p>NLCD</p>
+                <div className="relative w-full h-full p-2 flex text-custom-light-blue justify-between">
+                    <div className="flex">
+                        <LandcoverExplorerLayerSelector />
+                        <LandcoverExplorerModeSelector />
+                    </div>
+
+                    <div className="flex flex-grow justify-center shrink-0">
+                        {/* <TimeSelector /> */}
+                        {/* 
+                        {shouldShowSentinel2Layer === false && (
+                            <ClassificationsList />
+                        )}
+
+                        {shouldShowSentinel2Layer && (
+                            <Sentinel2LayerRasterFunctionsList />
+                        )}
+
+                        <LandCoverGraph /> */}
+                    </div>
+                </div>
             </BottomPanel>
         </ErrorBoundary>
     );

@@ -18,15 +18,15 @@ import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { shouldShowSatelliteImageryLayerToggled } from '@shared/store/LandcoverExplorer/reducer';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
-import {
-    showDownloadPanelToggled,
-    showSaveWebMapPanelToggled,
-} from '@shared/store/UI/reducer';
+// import {
+//     showDownloadPanelToggled,
+//     showSaveWebMapPanelToggled,
+// } from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { saveshowImageryLayerToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import LayerSelector from './LayerSelector';
 
-const LayerSelectorContainer = () => {
+export const LayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
 
     const animationMode = useAppSelector(selectAnimationStatus);
