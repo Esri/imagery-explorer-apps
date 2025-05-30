@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { useAppSelector } from '@shared/store/configureStore';
 import { LandcoverExplorerMapViewContainer } from '@landcover-explorer/components/MapView';
+import { NLCDLandcoverLayer } from '../NLCDLandcoverLayer/NLCDLandcoverLayer';
 
 export const NLCDLandcoverMapViewContainer = () => {
     const { t } = useTranslation();
@@ -18,6 +19,8 @@ export const NLCDLandcoverMapViewContainer = () => {
             <Sentinel2Layer />
             <LandcoverLayer />
             <Popup /> */}
+
+            <NLCDLandcoverLayer />
         </LandcoverExplorerMapViewContainer>
     );
 };

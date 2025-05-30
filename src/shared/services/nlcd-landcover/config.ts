@@ -9,3 +9,5 @@ export const NLCD_LANDCOVER_IMAGE_SERVICE_URL =
     TIER === 'development'
         ? NLCD_LANDCOVER_IMAGE_SERVICE_URL_DEV
         : NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD;
+
+export const NLCD_LANDCOVER_IMAGE_SERVICE_DEFAULT_RASTER_FUNCTION_NAME = `Saturated Cartographic and Analytic Renderer`;

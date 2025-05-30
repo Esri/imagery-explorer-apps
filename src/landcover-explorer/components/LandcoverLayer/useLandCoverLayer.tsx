@@ -69,27 +69,35 @@ const useLandCoverLayer = ({
      * get land cover layer using time extent for the input year
      */
     const getLandCoverLayer = async () => {
-        const timeExtent = await getTimeExtentByYear(year, serviceUrl);
+        try {
+            const timeExtent = await getTimeExtentByYear(year, serviceUrl);
 
-        layerRef.current = new ImageryLayer({
-            // URL to the imagery service
-            url: serviceUrl,
-            timeExtent,
-            rasterFunction: {
-                functionName: rasterFunctionName,
-                // getRasterFunctionByLandCoverClassName(activeLandCoverType),
-            },
-            effect: LandCoverLayerEffect,
-            blendMode: LandCoverLayerBlendMode,
-            visible,
-        });
+            layerRef.current = new ImageryLayer({
+                // URL to the imagery service
+                url: serviceUrl,
+                timeExtent,
+                rasterFunction: {
+                    functionName: rasterFunctionName,
+                    // getRasterFunctionByLandCoverClassName(activeLandCoverType),
+                },
+                effect: LandCoverLayerEffect,
+                blendMode: LandCoverLayerBlendMode,
+                visible,
+            });
 
-        setLandCoverLayer(layerRef.current);
+            setLandCoverLayer(layerRef.current);
+        } catch (error) {
+            console.error('Error creating land cover layer:', error);
+        }
     };
 
     const updateTimeExtent = async () => {
-        const timeExtent = await getTimeExtentByYear(year, serviceUrl);
-        layerRef.current.timeExtent = timeExtent as any;
+        try {
+            const timeExtent = await getTimeExtentByYear(year, serviceUrl);
+            layerRef.current.timeExtent = timeExtent as any;
+        } catch (error) {
+            console.error('Error updating time extent:', error);
+        }
     };
 
     useEffect(() => {

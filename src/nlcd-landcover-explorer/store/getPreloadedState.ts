@@ -41,61 +41,19 @@ import { isMobileDevice } from 'helper-toolkit-ts';
 import { PartialRootState } from '@shared/store/configureStore';
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
+import { getPreloadedStateForLandcoverExplorerApp } from '@landcover-explorer/store/getPreloadedState';
+import { LandcoverExplorerAppState } from '@shared/store/LandcoverExplorer/reducer';
 
 const isMobileView = isMobileDevice();
 
-// const getPreloadedStateForLandcoverExplorerApp =
-//     (): LandcoverExplorerAppState => {
-//         const availableYears = getAvailableYears();
+const getPreloadedStateForNLCDLandcoverExplorerApp =
+    (): LandcoverExplorerAppState => {
+        const state = getPreloadedStateForLandcoverExplorerApp();
 
-//         const timeExtent = getTimeExtentFromHashParams();
-//         const activelandCoverType = getActiveLandCoverTypeFromHashParams();
-//         const shouldShowSentinel2Layer = getShowImageryLayerFromHashParams();
-
-//         const mode = (getMapModeFromHashParams() as MapMode) || 'step';
-
-//         const year = getActiveYearFromHashParams();
-//         const sentinel2AquisitionMonth = getActiveMonthFromHashParams();
-
-//         const sentinel2RasterFunction =
-//             (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
-//             'Natural Color for Visualization';
-
-//         const startYear = timeExtent?.startYear || availableYears[0];
-//         const endYear =
-//             timeExtent?.endYear || availableYears[availableYears.length - 1];
-
-//         const region = getRegionFromHashParams();
-
-//         return {
-//             ...initialLandcoverExplorerAppState,
-//             // swipe mode can only be enabled in desktop view with wide screen
-//             mode: isMobileView ? 'step' : mode,
-//             // use year from hash params or the most recent year by default
-//             year: year ? +year : availableYears[availableYears.length - 1],
-//             sentinel2AquisitionMonth: sentinel2AquisitionMonth
-//                 ? +sentinel2AquisitionMonth
-//                 : 9,
-//             // zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
-//             // center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
-//             activeLandCoverType: activelandCoverType as LandCoverClassification,
-//             // sentinel-2 layer can only be displayed in desktop view with wide screen
-//             shouldShowSentinel2Layer: isMobileView
-//                 ? false
-//                 : shouldShowSentinel2Layer,
-//             swipeWidget: {
-//                 year4LeadingLayer: startYear,
-//                 year4TrailingLayer: endYear,
-//                 // position: 50,
-//             },
-//             sentinel2RasterFunction,
-//             /**
-//              * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
-//              * so it can show the land cover chart using data from land cover stats table
-//              */
-//             showInfoPanel: region !== '',
-//         };
-//     };
+        return {
+            ...state,
+        };
+    };
 
 // const getPreloadedUIState = (): UIState => {
 //     const showDownloadPanel = getDonwloadModeFromHashParams();
@@ -129,7 +87,7 @@ const getPreloadedMapState = (): MapState => {
 
 export const getPreloadedState = (): PartialRootState => {
     return {
-        // LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp(),
+        LandcoverExplorer: getPreloadedStateForNLCDLandcoverExplorerApp(),
         // UI: getPreloadedUIState(),
         Map: getPreloadedMapState(),
     };

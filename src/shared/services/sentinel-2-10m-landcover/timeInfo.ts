@@ -14,6 +14,7 @@
  */
 
 import { addYears } from 'date-fns';
+import { ta } from 'date-fns/locale';
 // import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
 
 /**
@@ -127,6 +128,10 @@ export const getTimeExtentByYear = async (
     targetYear: number,
     imageryServiceURL: string
 ): Promise<TimeExtentData> => {
+    if (!targetYear) {
+        throw new Error('Target year is required to get time extent data.');
+    }
+
     if (!timeInfo) {
         await loadTimeInfo(imageryServiceURL);
     }

@@ -1,3 +1,4 @@
+import { NLCD_LANDCOVER_IMAGE_SERVICE_DEFAULT_RASTER_FUNCTION_NAME } from '@shared/services/nlcd-landcover/config';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
 import React, { useMemo } from 'react';
@@ -14,7 +15,7 @@ export const useNLCDLandCoverLayerRasterFunctionName = () => {
 
     const rasterFunctionName = useMemo(() => {
         // return getRasterFunctionByLandCoverClassName(activeLandCoverType);
-        return 'Esri Cartographic and Analytic Renderer';
+        return NLCD_LANDCOVER_IMAGE_SERVICE_DEFAULT_RASTER_FUNCTION_NAME;
     }, [activeLandCoverType]);
 
     return rasterFunctionName;

@@ -44,53 +44,74 @@ import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 const isMobileView = isMobileDevice();
 
-const getPreloadedStateForLandcoverExplorerApp =
+/**
+ * Returns the preloaded state for the Landcover Explorer app, using values from URL hash parameters if available.
+ * Falls back to defaults for any missing parameters.
+ * Handles mobile/desktop-specific logic for map mode and satellite imagery layer visibility.
+ * Also determines if the Info Panel should be shown based on the presence of a region in the hash params.
+ */
+export const getPreloadedStateForLandcoverExplorerApp =
     (): LandcoverExplorerAppState => {
+        // Get the list of available years for land cover data
         const availableYears = getAvailableYears();
 
+        // Parse time extent (start/end year) from URL hash params
         const timeExtent = getTimeExtentFromHashParams();
+
+        // Get active land cover type from URL hash params
         const activelandCoverType = getActiveLandCoverTypeFromHashParams();
+
+        // Determine if the satellite imagery layer should be shown (from hash params)
         const shouldShowSatelliteImageryLayer =
             getShowImageryLayerFromHashParams();
 
+        // Get map mode (step/swipe), default to 'step'
         const mode = (getMapModeFromHashParams() as MapMode) || 'step';
 
+        // Get the active year from hash params
         const year = getActiveYearFromHashParams();
+
+        // Get the selected month for satellite imagery acquisition
         const satelliteImageryLayerAquisitionMonth =
             getActiveMonthFromHashParams();
 
+        // Get the selected raster function for Sentinel-2 imagery
         const satelliteImageryLayerRasterFunction =
             (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
             'Natural Color for Visualization';
 
+        // Determine start and end years for swipe widget
         const startYear = timeExtent?.startYear || availableYears[0];
         const endYear =
             timeExtent?.endYear || availableYears[availableYears.length - 1];
 
+        // Get region info from hash params
         const region = getRegionFromHashParams();
 
         return {
             ...initialLandcoverExplorerAppState,
-            // swipe mode can only be enabled in desktop view with wide screen
+            // Swipe mode can only be enabled in desktop view with wide screen
             mode: isMobileView ? 'step' : mode,
-            // use year from hash params or the most recent year by default
+            // Use year from hash params or the most recent year by default
             year: year ? +year : availableYears[availableYears.length - 1],
+            // Use month from hash params or default to September (9)
             satelliteImageryLayerAquisitionMonth:
                 satelliteImageryLayerAquisitionMonth
                     ? +satelliteImageryLayerAquisitionMonth
                     : 9,
-            // zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
-            // center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
+            // Set active land cover type from hash params
             activeLandCoverType: activelandCoverType as LandCoverClassification,
-            // sentinel-2 layer can only be displayed in desktop view with wide screen
+            // Sentinel-2 layer can only be displayed in desktop view with wide screen
             shouldShowSatelliteImageryLayer: isMobileView
                 ? false
                 : shouldShowSatelliteImageryLayer,
+            // Configure swipe widget years
             swipeWidget: {
                 year4LeadingLayer: startYear,
                 year4TrailingLayer: endYear,
                 // position: 50,
             },
+            // Set raster function for satellite imagery layer
             satelliteImageryLayerRasterFunction,
             /**
              * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
