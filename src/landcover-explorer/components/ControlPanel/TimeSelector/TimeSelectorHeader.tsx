@@ -15,7 +15,7 @@
 
 import {
     selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
 import React from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -29,7 +29,7 @@ export const TimeSelectorHeader = () => {
     const mode = useAppSelector(selectMapMode);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     return (

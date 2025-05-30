@@ -24,9 +24,9 @@ import { exportImage as exportImageFromLandCoverLayer } from '../LandcoverLayer/
 import { exportImage as exportImageFromSentinel2Layer } from '../Sentinel2Layer/exportImage';
 import {
     selectActiveLandCoverType,
-    selectSentinel2AquisitionMonth,
-    selectSentinel2RasterFunction,
-    selectShouldShowSentinel2Layer,
+    selectSatelliteImageryLayerAquisitionMonth,
+    selectSatelliteImageryLayerRasterFunction,
+    selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
@@ -40,15 +40,15 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
     const years = getAvailableYears();
 
     const sentinel2AquisitionMonth = useAppSelector(
-        selectSentinel2AquisitionMonth
+        selectSatelliteImageryLayerAquisitionMonth
     );
 
     const sentinel2RasterFunction = useAppSelector(
-        selectSentinel2RasterFunction
+        selectSatelliteImageryLayerRasterFunction
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const activeLandCoverType = useAppSelector(selectActiveLandCoverType);

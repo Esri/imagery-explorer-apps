@@ -19,7 +19,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     // selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
     // selectSwipePosition,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -73,7 +73,7 @@ const MapInfoIndicators: FC<Props> = ({
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(

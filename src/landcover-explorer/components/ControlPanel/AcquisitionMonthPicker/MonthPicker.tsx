@@ -18,8 +18,8 @@ import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
-import { sentinel2AquisitionMonthChanged } from '@shared/store/LandcoverExplorer/reducer';
-import { selectSentinel2AquisitionMonth } from '@shared/store/LandcoverExplorer/selectors';
+import { satelliteImageryLayerAquisitionMonthChanged } from '@shared/store/LandcoverExplorer/reducer';
+import { selectSatelliteImageryLayerAquisitionMonth } from '@shared/store/LandcoverExplorer/selectors';
 import { saveActiveMonthToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
 import { useTranslation } from 'react-i18next';
@@ -48,7 +48,9 @@ const MonthPicker: FC<Props> = ({ disabled }: Props) => {
 
     const { t } = useTranslation();
 
-    const selectedMonth = useAppSelector(selectSentinel2AquisitionMonth);
+    const selectedMonth = useAppSelector(
+        selectSatelliteImageryLayerAquisitionMonth
+    );
 
     const dropdownData: DropdownData[] = useMemo(() => {
         return MONTH_ABBR.map((month, index) => {
@@ -77,7 +79,9 @@ const MonthPicker: FC<Props> = ({ disabled }: Props) => {
                 onChange={(indexOfSelectedMOnth) => {
                     const monthVal = parseInt(indexOfSelectedMOnth) + 1;
 
-                    dispatch(sentinel2AquisitionMonthChanged(monthVal));
+                    dispatch(
+                        satelliteImageryLayerAquisitionMonthChanged(monthVal)
+                    );
                     // setShouldShowOptions(false);
                 }}
             />

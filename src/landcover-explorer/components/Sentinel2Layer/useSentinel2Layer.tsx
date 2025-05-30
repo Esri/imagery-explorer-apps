@@ -22,8 +22,8 @@ import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 // } from './config';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectSentinel2AquisitionMonth,
-    selectSentinel2RasterFunction,
+    selectSatelliteImageryLayerAquisitionMonth,
+    selectSatelliteImageryLayerRasterFunction,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { getMosaicRuleByAcquisitionDate } from './exportImage';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
@@ -60,10 +60,12 @@ const useSentinel2Layer = ({
     const [sentinel2Layer, setSentinel2Layer] = useState<ImageryLayer>();
 
     const selectedRasterFunction = useAppSelector(
-        selectSentinel2RasterFunction
+        selectSatelliteImageryLayerRasterFunction
     );
 
-    const aquisitionMonth = useAppSelector(selectSentinel2AquisitionMonth);
+    const aquisitionMonth = useAppSelector(
+        selectSatelliteImageryLayerAquisitionMonth
+    );
 
     /**
      * get sentinel 2 layer using mosaic created using the input year

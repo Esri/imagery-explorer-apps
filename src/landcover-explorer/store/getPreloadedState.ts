@@ -50,14 +50,16 @@ const getPreloadedStateForLandcoverExplorerApp =
 
         const timeExtent = getTimeExtentFromHashParams();
         const activelandCoverType = getActiveLandCoverTypeFromHashParams();
-        const shouldShowSentinel2Layer = getShowImageryLayerFromHashParams();
+        const shouldShowSatelliteImageryLayer =
+            getShowImageryLayerFromHashParams();
 
         const mode = (getMapModeFromHashParams() as MapMode) || 'step';
 
         const year = getActiveYearFromHashParams();
-        const sentinel2AquisitionMonth = getActiveMonthFromHashParams();
+        const satelliteImageryLayerAquisitionMonth =
+            getActiveMonthFromHashParams();
 
-        const sentinel2RasterFunction =
+        const satelliteImageryLayerRasterFunction =
             (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
             'Natural Color for Visualization';
 
@@ -73,22 +75,23 @@ const getPreloadedStateForLandcoverExplorerApp =
             mode: isMobileView ? 'step' : mode,
             // use year from hash params or the most recent year by default
             year: year ? +year : availableYears[availableYears.length - 1],
-            sentinel2AquisitionMonth: sentinel2AquisitionMonth
-                ? +sentinel2AquisitionMonth
-                : 9,
+            satelliteImageryLayerAquisitionMonth:
+                satelliteImageryLayerAquisitionMonth
+                    ? +satelliteImageryLayerAquisitionMonth
+                    : 9,
             // zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
             // center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
             activeLandCoverType: activelandCoverType as LandCoverClassification,
             // sentinel-2 layer can only be displayed in desktop view with wide screen
-            shouldShowSentinel2Layer: isMobileView
+            shouldShowSatelliteImageryLayer: isMobileView
                 ? false
-                : shouldShowSentinel2Layer,
+                : shouldShowSatelliteImageryLayer,
             swipeWidget: {
                 year4LeadingLayer: startYear,
                 year4TrailingLayer: endYear,
                 // position: 50,
             },
-            sentinel2RasterFunction,
+            satelliteImageryLayerRasterFunction,
             /**
              * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
              * so it can show the land cover chart using data from land cover stats table

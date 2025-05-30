@@ -20,7 +20,7 @@ import useSentinel2Layer from './useSentinel2Layer';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
     selectIsSentinel2LayerOutOfVisibleRange,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -38,7 +38,7 @@ const Sentinel2Layer: FC<Props> = ({ mapView }: Props) => {
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const isSentinel2LayerOutOfVisibleRange = useAppSelector(

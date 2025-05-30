@@ -21,7 +21,7 @@ import {
     selectIsSentinel2LayerOutOfVisibleRange,
     // selectMapCenterAndZoom,
     selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
     selectYear,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -46,7 +46,7 @@ const LandCoverGraphContainer = () => {
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const animationMode = useAppSelector(selectAnimationStatus);

@@ -13,17 +13,21 @@
  * limitations under the License.
  */
 
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 
 import IMapView from '@arcgis/core/views/MapView';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
+    selectActiveLandCoverType,
     selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import useLandCoverLayer from './useLandCoverLayer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
+import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { useSentinel2LandCoverLayerRasterFunctionName } from './useSentinel2LandCoverLayerRasterFunctionName';
 
 type Props = {
     mapView?: IMapView;
@@ -37,7 +41,7 @@ const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const getVisibility = () => {
@@ -52,8 +56,12 @@ const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
         return mode === 'step';
     };
 
+    const rasterFunctionName = useSentinel2LandCoverLayerRasterFunctionName();
+
     const layer = useLandCoverLayer({
+        serviceUrl: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
         year,
+        rasterFunctionName,
         visible: getVisibility(),
     });
 

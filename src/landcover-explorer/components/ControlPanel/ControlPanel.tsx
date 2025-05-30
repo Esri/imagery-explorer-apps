@@ -21,7 +21,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
 import LayerSelector from './LayerSelector/LayerSelectorContainer';
 import { TimeSelector } from './TimeSelector';
-import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
+import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 // import Tooltip from './Tooltip/TooltipContainer';
 // import ToggleButton from './ToggleButton/ToggleButtonContainer';
 // import { selectShouldHideControlPanel } from '@shared/store/LandcoverUI/selectors';
@@ -40,7 +40,7 @@ const ControlPanel = () => {
     // const hideControlPanel = useAppSelector(selectHideBottomPanel);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     if (IS_MOBILE_DEVICE) {

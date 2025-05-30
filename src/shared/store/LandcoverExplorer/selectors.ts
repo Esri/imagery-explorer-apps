@@ -76,16 +76,18 @@ export const selectYearsForSwipeWidgetLayers = createSelector(
 // );
 
 export const selectIsSentinel2LayerOutOfVisibleRange = createSelector(
-    (state: RootState) => state.LandcoverExplorer.shouldShowSentinel2Layer,
+    (state: RootState) =>
+        state.LandcoverExplorer.shouldShowSatelliteImageryLayer,
     (state: RootState) => state.Map.zoom,
-    (shouldShowSentinel2Layer, zoom) => {
+    (shouldShowSatelliteImageryLayer, zoom) => {
         return (
-            shouldShowSentinel2Layer && zoom < MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER
+            shouldShowSatelliteImageryLayer &&
+            zoom < MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER
         );
     }
 );
-export const selectSentinel2AquisitionMonth = (state: RootState) =>
-    state.LandcoverExplorer.sentinel2AquisitionMonth;
+export const selectSatelliteImageryLayerAquisitionMonth = (state: RootState) =>
+    state.LandcoverExplorer.satelliteImageryLayerAquisitionMonth;
 
 export const selectMapMode = (state: RootState) => state.LandcoverExplorer.mode;
 
@@ -97,11 +99,11 @@ export const selectShowInfoPanel = (state: RootState) =>
 export const selectShowSwipeWidgetYearIndicator = (state: RootState) =>
     state.LandcoverExplorer.showSwipeWidgetYearIndicator;
 
-export const selectShouldShowSentinel2Layer = (state: RootState) =>
-    state.LandcoverExplorer.shouldShowSentinel2Layer;
+export const selectShouldShowSatelliteImageryLayer = (state: RootState) =>
+    state.LandcoverExplorer.shouldShowSatelliteImageryLayer;
 
 export const selectActiveLandCoverType = (state: RootState) =>
     state.LandcoverExplorer.activeLandCoverType;
 
-export const selectSentinel2RasterFunction = (state: RootState) =>
-    state.LandcoverExplorer.sentinel2RasterFunction;
+export const selectSatelliteImageryLayerRasterFunction = (state: RootState) =>
+    state.LandcoverExplorer.satelliteImageryLayerRasterFunction;

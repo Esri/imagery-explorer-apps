@@ -20,7 +20,7 @@ import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     // selectMapCenterAndZoom,
     selectIsSentinel2LayerOutOfVisibleRange,
-    // selectShouldShowSentinel2Layer,
+    // selectShouldShowSatelliteImageryLayer,
     // selectYearsForSwipeWidgetLayers,
     selectMapMode,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -80,7 +80,7 @@ const MapViewContainer = () => {
     // );
 
     // const shouldShowSentinel2Layer = useAppSelector(
-    //     selectShouldShowSentinel2Layer
+    //     selectShouldShowSatelliteImageryLayer
     // );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);

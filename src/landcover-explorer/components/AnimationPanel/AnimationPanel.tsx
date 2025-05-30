@@ -37,7 +37,7 @@ import { AnimationDownloadPanel } from '@shared/components/AnimationDownloadPane
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 import { CloseButton } from '@shared/components/CloseButton';
-import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
+import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 
 type Props = {
     mapView?: IMapView;
@@ -69,7 +69,7 @@ const AnimationPanel: FC<Props> = ({
     const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     useMediaLayerAnimation(mediaLayerElements);

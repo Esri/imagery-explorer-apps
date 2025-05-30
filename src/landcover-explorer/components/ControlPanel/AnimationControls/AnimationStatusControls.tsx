@@ -20,7 +20,7 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
 import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
 
@@ -34,7 +34,7 @@ export const AnimationControls = () => {
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const shouldShowMonthPicker =

@@ -19,7 +19,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
@@ -43,7 +43,7 @@ export const SwipeWidget4Sentinel2: FC<Props> = ({ mapView }) => {
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const isSentinel2LayerOutOfVisibleRange = useAppSelector(

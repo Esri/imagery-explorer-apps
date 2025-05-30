@@ -17,7 +17,7 @@ import {
     AnimationSpeedControl,
     AnimationSpeedSlider,
 } from '@shared/components/AnimationControl/AnimationSpeedControl';
-import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
+import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import {
     animationSpeedChanged,
     showDownloadAnimationPanelChanged,
@@ -80,7 +80,7 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     if (animationMode !== null) {

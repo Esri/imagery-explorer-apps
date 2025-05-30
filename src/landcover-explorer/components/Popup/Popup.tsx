@@ -27,9 +27,9 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSentinel2LayerOutOfVisibleRange,
     selectMapMode,
-    selectSentinel2AquisitionMonth,
-    selectSentinel2RasterFunction,
-    selectShouldShowSentinel2Layer,
+    selectSatelliteImageryLayerAquisitionMonth,
+    selectSatelliteImageryLayerRasterFunction,
+    selectShouldShowSatelliteImageryLayer,
     // selectSwipePosition,
     selectYear,
     selectYearsForSwipeWidgetLayers,
@@ -70,12 +70,16 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
-    const rasterFunction = useAppSelector(selectSentinel2RasterFunction);
+    const rasterFunction = useAppSelector(
+        selectSatelliteImageryLayerRasterFunction
+    );
 
-    const aquisitionMonth = useAppSelector(selectSentinel2AquisitionMonth);
+    const aquisitionMonth = useAppSelector(
+        selectSatelliteImageryLayerAquisitionMonth
+    );
 
     const swipePosition = useAppSelector(selectSwipeWidgetHandlerPosition);
 

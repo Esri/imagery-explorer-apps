@@ -23,9 +23,9 @@ import ThumbnailNDMI from './thumbnails/Imagery_NDMI.png';
 import ThumbnailNDVI from './thumbnails/Imagery_NDVI.png';
 import ThumbnailSWIR from './thumbnails/Imagery_SWIR.png';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { sentinel2RasterFunctionChanged } from '@shared/store/LandcoverExplorer/reducer';
+import { satelliteImageryLayerRasterFunctionChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectSentinel2RasterFunction } from '@shared/store/LandcoverExplorer/selectors';
+import { selectSatelliteImageryLayerRasterFunction } from '@shared/store/LandcoverExplorer/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { saveSentinel2RasterFunctionToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
@@ -111,7 +111,7 @@ const ImageryRasterFunctionsListContainer = () => {
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const selectedRasterFunction = useAppSelector(
-        selectSentinel2RasterFunction
+        selectSatelliteImageryLayerRasterFunction
     );
 
     useEffect(() => {
@@ -124,7 +124,9 @@ const ImageryRasterFunctionsListContainer = () => {
             data={Sentinel2RasterFunctionsData}
             disabled={animationMode !== null}
             onSelect={(rasterFunction) => {
-                dispatch(sentinel2RasterFunctionChanged(rasterFunction));
+                dispatch(
+                    satelliteImageryLayerRasterFunctionChanged(rasterFunction)
+                );
             }}
             itemOnHover={(data) => {
                 dispatch(updateTooltipData(data));

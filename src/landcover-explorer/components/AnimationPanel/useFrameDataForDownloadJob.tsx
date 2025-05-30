@@ -25,7 +25,7 @@ import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client
 // import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import MapView from '@arcgis/core/views/MapView';
 import { combineLandcoverImageWithMapScreenshot } from './helpers';
-import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
+import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 
 /**
@@ -59,7 +59,7 @@ export const useFrameDataForDownloadJob = ({
     const years = getAvailableYears();
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const [frameData, setFrameData] = useState<AnimationFrameData[]>([]);
