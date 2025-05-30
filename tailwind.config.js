@@ -84,7 +84,8 @@ module.exports = {
         'space-between-main-secondary-selectors': 'var(--space-between-main-secondary-selectors)',
         'analysis-tool-container-width': '255px',
         // 'search-widget-width': '270px',
-        'map-action-button-size': '32px'
+        'map-action-button-size': '32px',
+        "landcover-explorer-time-slider-width": '400px',
       },
       dropShadow: {
         'custom-light-blue': '0px 0px 4px rgba(191,238,254, 1)',

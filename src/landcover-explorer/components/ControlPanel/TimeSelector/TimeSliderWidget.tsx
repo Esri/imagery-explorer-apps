@@ -29,6 +29,7 @@ import {
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
+import { getSliderTickValues } from './helpers';
 
 type TimeSliderMode = 'time-window' | 'instant';
 
@@ -144,7 +145,7 @@ const TimeSliderWidget: FC<Props> = ({
                 tickConfigs: [
                     {
                         mode: 'position',
-                        values: yearsAsDateObj.map((year) => year.getTime()),
+                        values: getSliderTickValues(yearsAsDateObj, 10),
                         labelsVisible: true,
                         labelFormatFunction: (value: any) => {
                             return new Date(value).getFullYear();

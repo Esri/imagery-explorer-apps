@@ -33,6 +33,7 @@ import { LandcoverExplorerModeSelector } from './ModeSelector';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
 import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
+import { Sentinel2LandcoverTimeSelecterHeader } from './TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
 
 const ControlPanel = () => {
     // const dispatch = useAppDispatch();
@@ -48,7 +49,7 @@ const ControlPanel = () => {
             <BottomPanel>
                 <div className="mx-auto">
                     <div className="pt-4">
-                        <TimeSelectorHeader />
+                        <Sentinel2LandcoverTimeSelecterHeader />
                         <TimeSliderWidgetContainer />
                     </div>
                     <ClassificationsList />

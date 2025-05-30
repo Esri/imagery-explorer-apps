@@ -270,5 +270,7 @@
     "tags": "Tags",
     "or": "Or",
     "sign_in_to_save_jobs_description": "<span class='sign-in-button underline cursor-pointer'>Sign in</span> to your ArcGIS Online account first to use the save options.",
-    "zoom_in_to_enable_imagery_layer": "Zoom in to enable {{layerName}} Imagery"
+    "zoom_in_to_enable_imagery_layer": "Zoom in to enable {{layerName}} Imagery",
+    "swipe_mode_subtitle": "Choose Two Years to Compare",
+    "animate_mode_subtitle": "Choose a Year to View"
 }

@@ -26,6 +26,7 @@ import { NLCDLandcoverMapViewContainer } from '../MapView';
 
 import { LandcoverExplorerLayerSelector } from '@landcover-explorer/components/ControlPanel/LayerSelector';
 import { LandcoverExplorerModeSelector } from '@landcover-explorer/components/ControlPanel/ModeSelector';
+import { NLCDTimeSelector } from '../TimeSelector/NLCDTimeSelector';
 
 export const AppLayout = () => {
     const { t } = useTranslation();
@@ -49,7 +50,7 @@ export const AppLayout = () => {
                     </div>
 
                     <div className="flex flex-grow justify-center shrink-0">
-                        {/* <TimeSelector /> */}
+                        <NLCDTimeSelector />
                         {/* 
                         {shouldShowSentinel2Layer === false && (
                             <ClassificationsList />

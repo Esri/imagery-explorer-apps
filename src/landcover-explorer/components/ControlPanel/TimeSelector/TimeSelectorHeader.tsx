@@ -17,32 +17,41 @@ import {
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
-import React from 'react';
+import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import HeaderText from '../HeaderText/HeaderText';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 
-export const TimeSelectorHeader = () => {
+type Props = {
+    titleForLandCover: string;
+    titleForImagery: string;
+};
+
+export const TimeSelectorHeader: FC<Props> = ({
+    titleForImagery,
+    titleForLandCover,
+}) => {
     const { t } = useTranslation();
 
     const mode = useAppSelector(selectMapMode);
 
-    const shouldShowSentinel2Layer = useAppSelector(
+    const showSatelliteImagery = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
 
     return (
         <HeaderText
-            title={`${
-                shouldShowSentinel2Layer
-                    ? t('sentinel_layer_title', { ns: APP_NAME })
-                    : t('land_cover_layer_title', { ns: APP_NAME })
-            }`}
+            // title={`${
+            //     shouldShowSentinel2Layer
+            //         ? t('sentinel_layer_title', { ns: APP_NAME })
+            //         : t('land_cover_layer_title', { ns: APP_NAME })
+            // }`}
+            title={showSatelliteImagery ? titleForImagery : titleForLandCover}
             subTitle={
                 mode === 'swipe'
-                    ? t('swipe_mode_subtitle', { ns: APP_NAME })
-                    : t('animate_mode_subtitle', { ns: APP_NAME })
+                    ? t('swipe_mode_subtitle')
+                    : t('animate_mode_subtitle')
             }
         />
     );

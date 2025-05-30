@@ -2,8 +2,6 @@
     "esri_land_cover_explorer_title": "Esri | Sentinel-2 Land Cover Explorer",
     "sentinel_layer_title": "Sentinel-2 Imagery",
     "land_cover_layer_title": "10m Land Cover",
-    "swipe_mode_subtitle": "Choose Two Years to Compare",
-    "animate_mode_subtitle": "Choose a Year to View",
     "swipe_mode_zoom_message": "Zoom in to compare Sentinel-2 Imagery Layers",
     "animate_mode_zoom_message": "Zoom in to enable time slider",
     "sentinel2_renderers_title": "Visual Renderings",

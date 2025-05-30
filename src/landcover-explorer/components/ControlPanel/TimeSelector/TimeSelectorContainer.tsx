@@ -38,6 +38,7 @@ import { AnimationControls } from '../AnimationControls/AnimationStatusControls'
 import { ExtraOptions } from './ExtraOptions';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { TimeSelectorHeader } from './TimeSelectorHeader';
+import { Sentinel2LandcoverTimeSelecterHeader } from './Sentinel2LandcoverTimeSelecterHeader';
 
 export const TimeSelectorContainer = () => {
     const isSentinel2LayerOutOfVisibleRange = useAppSelector(
@@ -52,8 +53,8 @@ export const TimeSelectorContainer = () => {
         shouldShowSentinel2Layer && isSentinel2LayerOutOfVisibleRange === false;
 
     return (
-        <div className="w-[400px] text-center mx-6">
-            <TimeSelectorHeader />
+        <div className="w-landcover-explorer-time-slider-width text-center mx-6">
+            <Sentinel2LandcoverTimeSelecterHeader />
 
             <ExtraOptions />
 
