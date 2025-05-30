@@ -54,7 +54,10 @@ export const exportImage = async ({
 }: ExportImageParams) => {
     const { xmin, xmax, ymin, ymax } = extent;
 
-    const { start } = await getTimeExtentByYear(year);
+    const { start } = await getTimeExtentByYear(
+        year,
+        SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL
+    );
 
     const params = new URLSearchParams({
         f: 'image',

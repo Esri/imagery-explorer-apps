@@ -53,7 +53,10 @@ const useLandCoverLayer = ({
      * get land cover layer using time extent for the input year
      */
     const getLandCoverLayer = async () => {
-        const timeExtent = await getTimeExtentByYear(year);
+        const timeExtent = await getTimeExtentByYear(
+            year,
+            SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL
+        );
 
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
@@ -72,7 +75,10 @@ const useLandCoverLayer = ({
     };
 
     const updateTimeExtent = async () => {
-        const timeExtent = await getTimeExtentByYear(year);
+        const timeExtent = await getTimeExtentByYear(
+            year,
+            SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL
+        );
         layerRef.current.timeExtent = timeExtent as any;
     };
 

@@ -14,14 +14,28 @@
  */
 
 import { addYears } from 'date-fns';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
+// import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
 
+/**
+ * Time Info for LandCover Layer
+ */
 type TimeInfo = {
     timeExtent: number[];
     defaultTimeInterval: number;
     defaultTimeIntervalUnits: string;
 };
 
+/**
+ * Time Extent Data for LandCover Layer
+ *
+ * @example
+ * ```
+ * {
+ *   start: 1501545600000,
+ *   end: 1609459200000
+ * }
+ * ```
+ */
 export type TimeExtentData = {
     /**
      * start time in unix time stampe
@@ -34,12 +48,13 @@ export type TimeExtentData = {
 };
 
 /**
- * Sentinel2_10m_LandCover's Time Info
+ * Time Info for LandCover Layer
+ * This will be populated when the `loadTimeInfo` function is called.
  */
 let timeInfo: TimeInfo;
 
 /**
- * List of years that there are data available from Sentinel2_10m_LandCover layer
+ * List of years that there are data available from the Landcover Imagery Service
  *
  * @example
  * ```
@@ -49,19 +64,29 @@ let timeInfo: TimeInfo;
 let availableYears: number[] = [];
 
 /**
- * Load Time Info from Sentinel2_10m_LandCover's JSON
+ * Load Time Info from LandCover Imagery Service's JSON
  *
- * https://env1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer?f=json
+ * @example https://env1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer?f=json
+ * @example https://di-nlcddev.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer?f=pjson
  * @returns
  */
-export const loadTimeInfo = async (): Promise<TimeInfo> => {
-    const requestURL = SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL + '?f=json';
+export const loadTimeInfo = async (
+    imageryServiceURL: string
+): Promise<TimeInfo> => {
+    // const requestURL = SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL + '?f=json';
+    const requestURL = imageryServiceURL + '?f=json';
 
     const res = await fetch(requestURL);
 
     const data = await res.json();
 
     timeInfo = data?.timeInfo;
+
+    if (!timeInfo) {
+        throw new Error(
+            `Time Info is not available from the service: ${imageryServiceURL}`
+        );
+    }
 
     availableYears = populateAvailableYears(timeInfo.timeExtent);
 
@@ -93,16 +118,17 @@ export const populateAvailableYears = (timeExtent: number[]) => {
 };
 
 /**
- * Get Time Extent data for Sentinel2_10m_LandCover that matches the input target year
+ * Get Time Extent data for Landcover Imagery Service that matches the input target year
  *
  * @param year
  * @returns
  */
 export const getTimeExtentByYear = async (
-    targetYear: number
+    targetYear: number,
+    imageryServiceURL: string
 ): Promise<TimeExtentData> => {
     if (!timeInfo) {
-        await loadTimeInfo();
+        await loadTimeInfo(imageryServiceURL);
     }
 
     const [startTimeInUnixTimestamp, endTimeInUnixTimestamp] =

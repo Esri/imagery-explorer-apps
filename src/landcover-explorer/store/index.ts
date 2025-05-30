@@ -16,7 +16,7 @@
 import configureAppStore from '@shared/store/configureStore';
 import { getPreloadedState } from './getPreloadedState';
 
-export const getLandsatcoverExplorerStore = () => {
+export const getLandcoverExplorerStore = () => {
     const preloadedState = getPreloadedState();
     return configureAppStore(preloadedState);
 };

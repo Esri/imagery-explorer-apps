@@ -13,14 +13,15 @@
  * limitations under the License.
  */
 
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
-import { loadRasterAttributeTable } from './rasterAttributeTable';
-import { loadTimeInfo } from './timeInfo';
+import { loadTimeInfo } from '../sentinel-2-10m-landcover/timeInfo';
+import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from './config';
+// import { loadRasterAttributeTable } from './rasterAttributeTable';
+// import { loadTimeInfo } from './timeInfo';
 
 /**
- * Load service information (Raster Attributes, Time Extent and etc) of Sentinel-2-10m-Landcover layer
+ * Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer
  */
-export const loadServiceInfo = async () => {
-    await loadRasterAttributeTable();
-    await loadTimeInfo(SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL);
+export const loadNLCDLandcoverServiceInfo = async () => {
+    // await loadRasterAttributeTable();
+    await loadTimeInfo(NLCD_LANDCOVER_IMAGE_SERVICE_URL);
 };

@@ -17,16 +17,16 @@ import '@shared/styles/index.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
+import '@shared/components/calcite-components';
 
-import { getLandcoverExplorerStore } from './store';
-import AppLayout from './components/AppLayout/AppLayout';
-import { loadServiceInfo } from '@shared/services/sentinel-2-10m-landcover/loadServiceInfo';
+import { getNLCDLandcoverExplorerStore } from './store';
+import { AppLayout } from './components/AppLayout/AppLayout';
 import { initEsriOAuth } from '../shared/utils/esri-oauth';
-import { APP_ID } from './constants';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
-import '@shared/components/calcite-components';
+import { APP_ID } from '@shared/config';
+import { loadNLCDLandcoverServiceInfo } from '@shared/services/nlcd-landcover/loadServiceInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -38,10 +38,10 @@ import '@shared/components/calcite-components';
 
         await initI18next(APP_LANGUAGE);
 
-        // Load service information (Raster Attributes, Time Extent and etc) of Sentinel-2-10m-Landcover layer
-        await loadServiceInfo();
+        // Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer
+        await loadNLCDLandcoverServiceInfo();
 
-        const store = getLandcoverExplorerStore();
+        const store = getNLCDLandcoverExplorerStore();
 
         root.render(
             <ReduxProvider store={store}>

@@ -13,14 +13,10 @@
  * limitations under the License.
  */
 
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
-import { loadRasterAttributeTable } from './rasterAttributeTable';
-import { loadTimeInfo } from './timeInfo';
+import configureAppStore from '@shared/store/configureStore';
+import { getPreloadedState } from './getPreloadedState';
 
-/**
- * Load service information (Raster Attributes, Time Extent and etc) of Sentinel-2-10m-Landcover layer
- */
-export const loadServiceInfo = async () => {
-    await loadRasterAttributeTable();
-    await loadTimeInfo(SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL);
+export const getNLCDLandcoverExplorerStore = () => {
+    const preloadedState = getPreloadedState();
+    return configureAppStore(preloadedState);
 };
