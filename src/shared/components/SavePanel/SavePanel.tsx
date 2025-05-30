@@ -137,6 +137,11 @@ export const SavePanel: FC<SavePanelProps> = ({
         // }
     }, [shouldShowSavePanel]);
 
+    const signInButtonOnClick = () => {
+        setOpenSavePanelInSessionStorage(true);
+        signIn();
+    };
+
     if (!shouldShowSavePanel) {
         return null;
     }
@@ -150,11 +155,7 @@ export const SavePanel: FC<SavePanelProps> = ({
             />
 
             <SignedUserHeader
-                onSignIn={() => {
-                    // console.log('sign in');
-                    setOpenSavePanelInSessionStorage(true);
-                    signIn();
-                }}
+                onSignIn={signInButtonOnClick}
                 onSignOut={() => {
                     // console.log('sign out');
                     // hide the save panel before signing out so that the user is not redirected to the sign-in page
@@ -172,6 +173,7 @@ export const SavePanel: FC<SavePanelProps> = ({
                     // sceneId={sceneId}
                     subHeader={subHeader}
                     signedIn={signedIn}
+                    signInButtonOnClick={signInButtonOnClick}
                 />
 
                 <div className="relative w-full mt-12 mx-auto">

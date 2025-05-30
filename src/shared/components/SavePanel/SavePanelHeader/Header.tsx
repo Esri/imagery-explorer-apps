@@ -14,16 +14,40 @@
  */
 
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type HeaderProps = {
     subHeader?: string;
     signedIn: boolean;
+    signInButtonOnClick: () => void;
 };
 
-export const Header: FC<HeaderProps> = ({ subHeader, signedIn }) => {
+export const Header: FC<HeaderProps> = ({
+    subHeader,
+    signedIn,
+    signInButtonOnClick,
+}) => {
     const { t } = useTranslation();
+
+    const messageContainerRef = React.useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!messageContainerRef.current) {
+            return;
+        }
+
+        const signInButton =
+            messageContainerRef.current.querySelector('.sign-in-button');
+
+        if (signInButton) {
+            signInButton.addEventListener('click', () => {
+                // Handle sign-in button click
+                console.log('Sign-in button clicked');
+                signInButtonOnClick();
+            });
+        }
+    }, []);
 
     return (
         <div className="w-full">
@@ -35,20 +59,24 @@ export const Header: FC<HeaderProps> = ({ subHeader, signedIn }) => {
             </div>
 
             <div className="flex justify-center">
-                <ul
-                    className={classNames('list-inside text-sm', {
+                <div
+                    ref={messageContainerRef}
+                    className={classNames(' text-sm', {
                         'opacity-50': signedIn,
                     })}
-                >
-                    <li>
-                        {signedIn
+                    dangerouslySetInnerHTML={{
+                        __html: signedIn
                             ? t('dialog_can_be_closed')
-                            : t('sign_in_to_save_jobs_description')}
-                    </li>
+                            : t('sign_in_to_save_jobs_description'),
+                    }}
+                >
+                    {/* <li>
+
+                    </li> */}
                     {/* <li>
                         Downloads are available for one hour after creation.
                     </li> */}
-                </ul>
+                </div>
             </div>
         </div>
     );
