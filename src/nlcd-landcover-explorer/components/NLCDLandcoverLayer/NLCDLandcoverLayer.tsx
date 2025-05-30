@@ -23,26 +23,25 @@ import {
     selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
-import useLandCoverLayer from './useLandCoverLayer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
-import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { useSentinel2LandCoverLayerRasterFunctionName } from './useSentinel2LandCoverLayerRasterFunctionName';
-import { useLandcoverLayerVisibility } from './useLandcoverLayerVisibility';
+import useLandCoverLayer from '@landcover-explorer/components/LandcoverLayer/useLandCoverLayer';
+import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
+import { useLandcoverLayerVisibility } from '@landcover-explorer/components/LandcoverLayer/useLandcoverLayerVisibility';
+import { useNLCDLandCoverLayerRasterFunctionName } from './useNLCDLandCoverLayerRasterFunctionName';
 
 type Props = {
     mapView?: IMapView;
 };
 
-const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
+export const NLCDLandcoverLayer: FC<Props> = ({ mapView }: Props) => {
     const year = useAppSelector(selectYear);
 
     const visible = useLandcoverLayerVisibility();
 
-    const rasterFunctionName = useSentinel2LandCoverLayerRasterFunctionName();
+    const rasterFunctionName = useNLCDLandCoverLayerRasterFunctionName();
 
     const layer = useLandCoverLayer({
-        serviceUrl: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+        serviceUrl: NLCD_LANDCOVER_IMAGE_SERVICE_URL,
         year,
         rasterFunctionName,
         visible,
@@ -56,5 +55,3 @@ const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
 
     return null;
 };
-
-export default LandcoverLayer;
