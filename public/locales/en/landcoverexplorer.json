@@ -114,5 +114,6 @@
     "download_historical_data": "Download Historical Data",
     "donwload_as_csv": "Download Historical Data as CSV",
 
-    "animation_metadata": "Esri, Impact Observatory"
+    "animation_metadata": "Esri, Impact Observatory",
+    "map_attribution": "Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory"
 }

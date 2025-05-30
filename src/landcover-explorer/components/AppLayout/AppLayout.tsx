@@ -20,13 +20,14 @@ import ControlPanel from '@landcover-explorer/components/ControlPanel/ControlPan
 import DownloadPanel from '@landcover-explorer/components/DownloadPanel/DownloadPanel';
 import ErrorBoundary from '@landcover-explorer/components/ErrorBoundary/ErrorBoundary';
 import InfoPanel from '@landcover-explorer/components/InfoPanel/InfoPanel';
-import MapView from '@landcover-explorer/components/MapView/MapViewContainer';
+// import MapView from '@landcover-explorer/components/MapView/MapViewContainer';
 import { SaveWebMap } from '@landcover-explorer/components/SaveWebMap';
 import { AppHeader } from '@shared/components/AppHeader';
 import { APP_NAME, appConfig } from '@shared/config';
 import { useSaveAppState2HashParams } from '@landcover-explorer/hooks/useSaveAppState2HashParams';
 import { useRevalidateToken } from '@shared/hooks/useRevalidateToken';
 import { useTranslation } from 'react-i18next';
+import { Sentinel2LandcoverMapView } from '../MapView/Sentinel2LandcoverMapView';
 
 const AppLayout = () => {
     const { t } = useTranslation();
@@ -35,7 +36,7 @@ const AppLayout = () => {
 
     return (
         <ErrorBoundary>
-            <MapView />
+            <Sentinel2LandcoverMapView />
             <ControlPanel />
             <InfoPanel />
             <DownloadPanel />

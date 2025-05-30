@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { AboutNLCDLandcoverExplorer } from '../About/About';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
-import { NLCDLandcoverMapView } from '../MapView';
+import { NLCDLandcoverMapViewContainer } from '../MapView';
 
 export const AppLayout = () => {
     const { t } = useTranslation();
@@ -37,7 +37,7 @@ export const AppLayout = () => {
                 })}
             />
             <AboutNLCDLandcoverExplorer />
-            <NLCDLandcoverMapView />
+            <NLCDLandcoverMapViewContainer />
             <BottomPanel>
                 <p>NLCD</p>
             </BottomPanel>

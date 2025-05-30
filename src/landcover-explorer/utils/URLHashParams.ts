@@ -46,6 +46,10 @@ let hashParams: URLSearchParams = null; //new URLSearchParams(window.location.ha
  * update Hash Params in the URL using data from hashParams
  */
 export const updateHashParams = (key: UrlHashParamKey, value: string) => {
+    if (hashParams === null) {
+        hashParams = new URLSearchParams(window.location.hash.slice(1));
+    }
+
     if (value === undefined || value === null) {
         hashParams.delete(key);
     } else {

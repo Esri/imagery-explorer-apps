@@ -26,6 +26,8 @@ import {
 import { selectShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -36,6 +38,11 @@ type Props = {
      * Indicate if swipe widget is currently visible
      */
     isSwipeWidgetVisible: boolean;
+    /**
+     * Name of the satellite imagery layer, used for zoom in message
+     * e.g. "Sentinel-2" or "Landsat"
+     */
+    nameOfSatelliteImageryLayer: string;
 };
 
 const MessageClassNames =
@@ -59,7 +66,10 @@ const Sentinel2LoadingIndicator = () => {
 const MapInfoIndicators: FC<Props> = ({
     isUpdating,
     isSwipeWidgetVisible,
+    nameOfSatelliteImageryLayer,
 }: Props) => {
+    const { t } = useTranslation();
+
     const position = useAppSelector(selectSwipeWidgetHandlerPosition);
 
     const animationMode = useAppSelector(selectAnimationStatus);
@@ -108,7 +118,9 @@ const MapInfoIndicators: FC<Props> = ({
                 {shouldShowSentinel2Layer &&
                     isSentinel2LayerOutOfVisibleRange && (
                         <div className={MessageClassNames}>
-                            Zoom in to enable Sentinel-2 Imagery
+                            {t('zoom_in_to_enable_imagery_layer', {
+                                layerName: nameOfSatelliteImageryLayer,
+                            })}
                         </div>
                     )}
 

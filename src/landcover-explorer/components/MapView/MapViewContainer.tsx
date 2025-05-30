@@ -13,13 +13,13 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     // selectMapCenterAndZoom,
-    selectIsSentinel2LayerOutOfVisibleRange,
+    // selectIsSentinel2LayerOutOfVisibleRange,
     // selectShouldShowSatelliteImageryLayer,
     // selectYearsForSwipeWidgetLayers,
     selectMapMode,
@@ -40,8 +40,8 @@ import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/Refere
 import ReferenceLayers from './ReferenceLayers';
 import { saveMapCenterToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
-import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
-import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
+// import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
+// import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import AnimationPanel from '../AnimationPanel/AnimationPanel';
 import MapInfoIndicators from './MapReferenceInfo';
 // import MapView from './MapView';
@@ -54,13 +54,27 @@ import {
     zoomChanged,
 } from '@shared/store/Map/reducer';
 import MapView from '@shared/components/MapView/MapView';
-import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
+// import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 import { MapActionButtonGroup4LandcoverExplorer } from './MapActionButtonGroup4LandcoverExplorer';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
-// import SearchWidget from '@shared/components/SearchWidget/SearchWidget';
 
-const MapViewContainer = () => {
+type MapViewContainerProps = {
+    attribution: string;
+    /**
+     * name of the satellite imagery layer that will be displayed as a reference layer. (e.g. "Sentinel-2")
+     */
+    nameOfSatelliteImageryLayer: string;
+    isSatelliteImageryOutOfVisibleRange: boolean;
+    children?: React.ReactNode;
+};
+
+export const MapViewContainer: FC<MapViewContainerProps> = ({
+    attribution,
+    nameOfSatelliteImageryLayer,
+    isSatelliteImageryOutOfVisibleRange,
+    children,
+}) => {
     const { t } = useTranslation();
 
     const dispatch = useAppDispatch();
@@ -71,16 +85,8 @@ const MapViewContainer = () => {
 
     const hideControlPanel = useAppSelector(selectHideBottomPanel);
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
-    );
-
-    // const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
-    //     selectYearsForSwipeWidgetLayers
-    // );
-
-    // const shouldShowSentinel2Layer = useAppSelector(
-    //     selectShouldShowSatelliteImageryLayer
+    // const isSentinel2LayerOutOfVisibleRange = useAppSelector(
+    //     selectIsSentinel2LayerOutOfVisibleRange
     // );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
@@ -92,12 +98,11 @@ const MapViewContainer = () => {
     const zoom = useAppSelector(selectMapZoom);
 
     /**
-     * Show Swipe Widget when in swipe mode
-     * if viewing sentinel 2 layer, swipe widget can only be used if sentinel-2 layer is within visisble zoom levels,
-     * which requires map zoom to be 11 or bigger
+     * Display the Swipe Widget only in swipe mode.
+     * For the Sentinel-2 layer, the Swipe Widget is available only when the layer is within visible zoom levels (zoom 11 or higher).
      */
     const isSwipeWidgetVisible =
-        mode === 'swipe' && isSentinel2LayerOutOfVisibleRange === false;
+        mode === 'swipe' && isSatelliteImageryOutOfVisibleRange === false;
 
     useEffect(() => {
         saveMapCenterToHashParams(center, zoom);
@@ -122,50 +127,21 @@ const MapViewContainer = () => {
             )}
         >
             <MapView webmapId={WEB_MAP_ID} center={center} zoom={zoom}>
-                {/* <SwipeWidget
-                    shouldShowSentinel2Layer={shouldShowSentinel2Layer}
-                    yearForLeadingLayer={year4LeadingLayer}
-                    yearForTailingLayer={year4TrailingLayer}
-                    visible={isSwipeWidgetVisible}
-                    positionOnChange={(position) => {
-                        dispatch(swipeWidgetHanlderPositionChanged(position));
-                    }}
-                    referenceInfoOnToggle={(shouldDisplay) => {
-                        dispatch(
-                            toggleShowSwipeWidgetYearIndicator(shouldDisplay)
-                        );
-                    }}
-                /> */}
-                <SwipeWidget4Landcover />
-                <SwipeWidget4Sentinel2 />
                 <MapViewEventHandlers
                     extentOnChange={(extent, resolution, center, zoom) => {
                         dispatch(resolutionUpdated(resolution));
                         dispatch(extentUpdated(extent));
-                        // dispatch(mapCenterUpdated(center));
-                        // dispatch(zoomUpdated(zoom));
                         dispatch(centerChanged(center));
                         dispatch(zoomChanged(zoom));
                     }}
-                    // mapViewOnClick={fetchLandCoverData}
                     mapViewUpdatingOnChange={(val: boolean) => {
                         setIsUpdating(val);
                     }}
                 />
 
-                {/* sentinel 2 layer that will be displayed in step mode, or when swipe widget is disabled */}
-                <Sentinel2Layer />
-
-                {/* land cover 2 layer that will be displayed in step mode */}
-                <LandcoverLayer />
-
-                <Popup />
-
-                {/* <SearchWidget hide={animationMode !== null} /> */}
-
                 <ReferenceLayers />
 
-                <CustomMapArrtribution atrribution="Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory" />
+                <CustomMapArrtribution atrribution={attribution} />
 
                 <AnimationPanel
                     animationMetadataSources={t('animation_metadata', {
@@ -174,16 +150,24 @@ const MapViewContainer = () => {
                 />
 
                 <MapActionButtonGroup4LandcoverExplorer />
+
+                {/* <SwipeWidget4Landcover />
+                <SwipeWidget4Sentinel2 />
+                <Sentinel2Layer />
+                <LandcoverLayer />
+                <Popup /> */}
+
+                {/* <SearchWidget hide={animationMode !== null} /> */}
+                {children}
             </MapView>
 
             <ReferenceLayersToggleControl />
 
             <MapInfoIndicators
                 isUpdating={isUpdating}
+                nameOfSatelliteImageryLayer={nameOfSatelliteImageryLayer}
                 isSwipeWidgetVisible={isSwipeWidgetVisible}
             />
-
-            {/* <ToggleAttribution /> */}
         </div>
     );
 };
