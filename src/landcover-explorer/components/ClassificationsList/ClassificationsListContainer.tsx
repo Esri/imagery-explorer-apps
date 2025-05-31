@@ -13,10 +13,10 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useMemo } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
-import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { activeLandCoverTypeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
 // import { tooltipDataChanged } from '@shared/store/UI/reducer';
@@ -24,17 +24,25 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import { saveActiveLandCoverTypeToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import ClassificationsList from './ClassificationsList';
+// import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { LandcoverClassificationData } from '@typing/landcover';
 
-const ClassificationsListContainer = () => {
+type Props = {
+    classificationData: LandcoverClassificationData[];
+};
+
+export const ClassificationsListContainer: FC<Props> = ({
+    classificationData,
+}) => {
     const dispatch = useAppDispatch();
 
     const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const data = useMemo(() => {
-        return getLandCoverClassifications();
-    }, []);
+    // const data = useMemo(() => {
+    //     return getSentinel2LandCoverClassifications();
+    // }, []);
 
     useEffect(() => {
         saveActiveLandCoverTypeToHashParams(activeLandCoverType);
@@ -47,7 +55,7 @@ const ClassificationsListContainer = () => {
             activeLandCoverOnChange={(newVal) => {
                 dispatch(activeLandCoverTypeChanged(newVal));
             }}
-            data={data}
+            data={classificationData}
             itemOnHover={(data) => {
                 dispatch(updateTooltipData(data));
             }}
@@ -55,4 +63,4 @@ const ClassificationsListContainer = () => {
     );
 };
 
-export default ClassificationsListContainer;
+// export default ClassificationsListContainer;

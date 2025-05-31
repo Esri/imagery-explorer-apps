@@ -26,7 +26,7 @@ import {
 import useLandCoverLayer from './useLandCoverLayer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
-import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { useSentinel2LandCoverLayerRasterFunctionName } from './useSentinel2LandCoverLayerRasterFunctionName';
 import { useLandcoverLayerVisibility } from './useLandcoverLayerVisibility';
 

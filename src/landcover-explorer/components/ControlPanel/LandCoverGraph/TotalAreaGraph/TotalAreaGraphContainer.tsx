@@ -21,7 +21,7 @@ import {
     // getLandCoverChangeInAcres,
     LandCoverArea,
 } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
-import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
 import TotalsGraph from './TotalAreaGraph';
@@ -81,7 +81,7 @@ const TotalAreaGraphContainer = () => {
         const data: BarChartDataItem[] = landCoverTotalsData.map((d) => {
             const { area, areaInPercentage, landcoverClassificationData } = d;
 
-            const { ClassName, Description, Color } =
+            const { ClassName, Description, Color, shortName } =
                 landcoverClassificationData;
 
             const [R, G, B] = Color;
@@ -89,7 +89,7 @@ const TotalAreaGraphContainer = () => {
             // const formatedArea = abbreviateNumber(area);
 
             return {
-                x: getLandCoverClassificationShortName(ClassName),
+                x: shortName, //getLandCoverClassificationShortName(ClassName),
                 y: area,
                 fill: `rgb(${R}, ${G}, ${B})`,
                 label: ClassName,

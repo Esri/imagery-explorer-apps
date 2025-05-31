@@ -21,7 +21,7 @@ import {
     getLandCoverChangeInAcres,
     LandCoverChangeInAcres,
 } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
-import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
     // selectMapCenterAndZoom,
     // selectMapExtent,
@@ -104,7 +104,7 @@ const ChangeCompareGraphContainer = () => {
                     landcoverClassificationData,
                 } = d;
 
-                const { ClassName, Description, Color } =
+                const { ClassName, Description, Color, shortName } =
                     landcoverClassificationData;
 
                 const [R, G, B] = Color;
@@ -112,7 +112,7 @@ const ChangeCompareGraphContainer = () => {
                 // const formatedDiffInAcres = abbreviateNumber(differenceInAcres);
 
                 return {
-                    x: getLandCoverClassificationShortName(ClassName),
+                    x: shortName, //getLandCoverClassificationShortName(ClassName),
                     label: ClassName,
                     y: differenceInPercentage,
                     fill: `rgb(${R}, ${G}, ${B})`,

@@ -154,11 +154,14 @@ export const loadRasterAttributeTable = async () => {
             Description,
             ClassName: ClassName as LandCoverClassification,
             Color: [Red, Green, Blue],
+            shortName: getLandCoverClassificationShortName(
+                ClassName as LandCoverClassification
+            ),
         });
     }
 };
 
-export const getLandCoverClassifications =
+export const getSentinel2LandCoverClassifications =
     (): LandcoverClassificationData[] => {
         return [...landcoverClassificationDataMap.values()];
     };
@@ -173,7 +176,7 @@ export const getDistinctLandCoverClassificationPixelValues = () => {
     return [...landcoverClassificationDataMap.keys()];
 };
 
-export const getLandCoverClassificationShortName = (
+const getLandCoverClassificationShortName = (
     classification: LandCoverClassification
 ) => {
     const translationKey = LandcoverClassificationShortNames[classification]; //|| classification;
@@ -185,7 +188,14 @@ export const getLandCoverClassificationShortName = (
     });
 };
 
-export const getRasterFunctionByLandCoverClassName = (
+/**
+ * Retrieves the raster function associated with a given Sentinel-2 land cover classification name.
+ *
+ * @param name - The land cover classification name (optional).
+ * @returns The raster function corresponding to the provided classification name,
+ *          or the default 'Cartographic Renderer - Legend and Attribute Table' if not found.
+ */
+export const getRasterFunctionBySentinel2LandCoverClassName = (
     name?: LandCoverClassification
 ) => {
     return (

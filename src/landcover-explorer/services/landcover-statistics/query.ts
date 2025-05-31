@@ -23,7 +23,7 @@ import {
     formatAreaPercentage,
     HistoricalLandCoverData,
 } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
-import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 
 import { LAND_COVER_STATISTICS_SERVICE_URL, FIELD_NAMES } from './config';
 import { LandCoverClassification } from '@typing/landcover';
@@ -300,7 +300,7 @@ const formatLandCoverStatsFeatures = (
 
     const uniqueYears = features.map((feature) => +feature.attributes[YEAR]);
 
-    const LandCoverClassifications = getLandCoverClassifications();
+    const LandCoverClassifications = getSentinel2LandCoverClassifications();
 
     const historicalLandCoverDataByClassName = new Map<
         LandCoverClassification,

@@ -29,7 +29,7 @@ import {
     selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { getRasterFunctionBySentinel2LandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 
 const useMediaLayerImageElement = (mapView?: IMapView) => {
@@ -87,7 +87,7 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
                           height,
                           year,
                           rasterFunctionName:
-                              getRasterFunctionByLandCoverClassName(
+                              getRasterFunctionBySentinel2LandCoverClassName(
                                   activeLandCoverType
                               ),
                           abortController: abortControllerRef.current,

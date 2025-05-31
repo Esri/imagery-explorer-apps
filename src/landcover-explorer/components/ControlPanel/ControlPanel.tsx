@@ -14,11 +14,11 @@
  */
 
 import './ControlPanel.css';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 // import { year4LeadingLayerUpdated } from '@shared/store/LandcoverExplorer/reducer';
 // import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
-import ClassificationsList from './ClassificationsList/ClassificationsListContainer';
+
 import { LandcoverExplorerLayerSelector } from './LayerSelector';
 import { TimeSelector } from './TimeSelector';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
@@ -34,6 +34,8 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
 import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
 import { Sentinel2LandcoverTimeSelecterHeader } from './TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
+import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { ClassificationsList } from '../ClassificationsList';
 
 const ControlPanel = () => {
     // const dispatch = useAppDispatch();
@@ -44,6 +46,10 @@ const ControlPanel = () => {
         selectShouldShowSatelliteImageryLayer
     );
 
+    const classificationData = useMemo(() => {
+        return getSentinel2LandCoverClassifications();
+    }, []);
+
     if (IS_MOBILE_DEVICE) {
         return (
             <BottomPanel>
@@ -52,7 +58,9 @@ const ControlPanel = () => {
                         <Sentinel2LandcoverTimeSelecterHeader />
                         <TimeSliderWidgetContainer />
                     </div>
-                    <ClassificationsList />
+                    <ClassificationsList
+                        classificationData={classificationData}
+                    />
                     <LandCoverGraph />
                 </div>
             </BottomPanel>
@@ -71,7 +79,9 @@ const ControlPanel = () => {
                     <TimeSelector />
 
                     {shouldShowSentinel2Layer === false && (
-                        <ClassificationsList />
+                        <ClassificationsList
+                            classificationData={classificationData}
+                        />
                     )}
 
                     {shouldShowSentinel2Layer && (

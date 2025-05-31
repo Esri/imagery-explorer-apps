@@ -34,4 +34,8 @@ export type LandcoverClassificationData = {
      * Short description of that land cover
      */
     Description: string;
+    /**
+     * Short name used for display purposes
+     */
+    shortName: string;
 };

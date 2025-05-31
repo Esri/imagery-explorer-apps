@@ -20,14 +20,14 @@ import {
     LandcoverClassificationData,
 } from '@typing/landcover';
 import { TooltipData } from '@shared/store/UI/reducer';
-import HeaderText from '../HeaderText/HeaderText';
+import HeaderText from '../ControlPanel/HeaderText/HeaderText';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
-     * array of Land Cover classifications data (from Sentinel2_10m_LandCover layer) that contains Name, Color and Description of each land cover type
+     * array of Land Cover classifications data that contains Name, Color and Description of each land cover type
      */
     data: LandcoverClassificationData[];
     /**
