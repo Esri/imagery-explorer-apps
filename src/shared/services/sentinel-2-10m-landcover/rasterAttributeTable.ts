@@ -17,6 +17,8 @@ import { t } from 'i18next';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
 import { DEFAULT_RENDERING_RULE } from './config';
 import { APP_NAME } from '@shared/config';
+import { LandCoverClassification } from '@typing/landcover';
+import { LandcoverClassificationData } from '@typing/landcover';
 
 /**
  * Feature from Attribute Table
@@ -36,18 +38,6 @@ type RasterAttributeTableFeature = {
         Value: number;
     };
 };
-
-export type LandCoverClassification =
-    | 'Water'
-    | 'Trees'
-    | 'Flooded Vegetation'
-    | 'Crops'
-    | 'Built Area'
-    | 'Bare Ground'
-    | 'Snow/Ice'
-    | 'Clouds'
-    | 'Rangeland'
-    | 'No Data';
 
 export const RasterFunctionsByClassificationName: Record<
     LandCoverClassification,
@@ -79,28 +69,6 @@ const LandcoverClassificationShortNames: Record<
     Trees: 'Trees',
     Water: 'Water',
     'No Data': 'No Data',
-};
-
-/**
- * Pixel data of Sentinel2_10m_LandCover services
- */
-export type LandcoverClassificationData = {
-    /**
-     * pixel value
-     */
-    Value: number;
-    /**
-     * Classification Name represent a specific land cover, (e.g. "Trees")
-     */
-    ClassName: LandCoverClassification;
-    /**
-     * color as [red, green, blue]
-     */
-    Color: number[];
-    /**
-     * Short description of that land cover
-     */
-    Description: string;
 };
 
 type RasterAttributeTableResponse = {

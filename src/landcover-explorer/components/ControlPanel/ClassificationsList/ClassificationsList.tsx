@@ -18,7 +18,7 @@ import React, { FC, useRef } from 'react';
 import {
     LandCoverClassification,
     LandcoverClassificationData,
-} from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+} from '@typing/landcover';
 import { TooltipData } from '@shared/store/UI/reducer';
 import HeaderText from '../HeaderText/HeaderText';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';

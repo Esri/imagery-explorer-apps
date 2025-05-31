@@ -14,7 +14,7 @@
  */
 
 import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
-import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { LandCoverClassification } from '@typing/landcover';
 import { MapMode } from '@shared/store/LandcoverExplorer/reducer';
 
 type UrlHashParamKey =

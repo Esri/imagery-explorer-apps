@@ -20,11 +20,9 @@ import {
 
 import IPoint from '@arcgis/core/geometry/Point';
 import { getAvailableYears } from './timeInfo';
-import {
-    getLandCoverClassificationByPixelValue,
-    LandcoverClassificationData,
-} from './rasterAttributeTable';
+import { getLandCoverClassificationByPixelValue } from './rasterAttributeTable';
 import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
+import { LandcoverClassificationData } from '@typing/landcover';
 
 export type LandcoverClassificationsByYear = {
     year: number;

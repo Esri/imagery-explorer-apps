@@ -23,12 +23,10 @@ import {
     formatAreaPercentage,
     HistoricalLandCoverData,
 } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
-import {
-    getLandCoverClassifications,
-    LandCoverClassification,
-} from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { getLandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 
 import { LAND_COVER_STATISTICS_SERVICE_URL, FIELD_NAMES } from './config';
+import { LandCoverClassification } from '@typing/landcover';
 
 const {
     COUNTRY,
@@ -46,7 +44,7 @@ const {
     RANGE,
 } = FIELD_NAMES;
 
-type PixelCountByLandCover = Record<LandCoverClassification, number>;
+type PixelCountByLandCover = Partial<Record<LandCoverClassification, number>>;
 
 type GetHistoricalLandCoverDataByRegionParams = {
     countryName?: string;

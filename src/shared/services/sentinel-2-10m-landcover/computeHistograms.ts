@@ -20,10 +20,10 @@ import { DEFAULT_RENDERING_RULE } from './config';
 import {
     getDistinctLandCoverClassificationPixelValues,
     getLandCoverClassificationByPixelValue,
-    LandcoverClassificationData,
 } from './rasterAttributeTable';
 import { getAvailableYears } from './timeInfo';
 import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
+import { LandcoverClassificationData } from '@typing/landcover';
 
 type ComputeHistogramsParams = {
     extent: Extent;
