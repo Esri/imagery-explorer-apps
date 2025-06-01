@@ -27,9 +27,17 @@ import { NLCDLandcoverMapViewContainer } from '../MapView';
 import { LandcoverExplorerLayerSelector } from '@landcover-explorer/components/ControlPanel/LayerSelector';
 import { LandcoverExplorerModeSelector } from '@landcover-explorer/components/ControlPanel/ModeSelector';
 import { NLCDTimeSelector } from '../TimeSelector/NLCDTimeSelector';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
+import { NLCDClassificationList } from '../ClassificationList/NLCDClassificationList';
 
 export const AppLayout = () => {
     const { t } = useTranslation();
+
+    const shouldShowSatelliteImagery = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
+    );
+
     // useSaveAppState2HashParams();
     useRevalidateToken();
 
@@ -51,12 +59,12 @@ export const AppLayout = () => {
 
                     <div className="flex flex-grow justify-center shrink-0">
                         <NLCDTimeSelector />
-                        {/* 
-                        {shouldShowSentinel2Layer === false && (
-                            <ClassificationsList />
+
+                        {shouldShowSatelliteImagery === false && (
+                            <NLCDClassificationList />
                         )}
 
-                        {shouldShowSentinel2Layer && (
+                        {/* {shouldShowSentinel2Layer && (
                             <Sentinel2LayerRasterFunctionsList />
                         )}
 

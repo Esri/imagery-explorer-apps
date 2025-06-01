@@ -66,8 +66,8 @@ const ClassificationsList: FC<Props> = ({
             ref={containerRef}
         >
             <HeaderText
-                title={t('classes_selector_title', { ns: APP_NAME })} // Translate the title
-                subTitle={t('classes_selector_subTitle', { ns: APP_NAME })} // Translate the subtitle
+                title={t('classes_selector_title')} // Translate the title
+                subTitle={t('classes_selector_subTitle')} // Translate the subtitle
             />
 
             <div

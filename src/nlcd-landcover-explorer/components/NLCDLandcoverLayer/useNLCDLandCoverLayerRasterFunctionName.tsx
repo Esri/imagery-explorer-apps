@@ -1,6 +1,7 @@
-import { NLCD_LANDCOVER_IMAGE_SERVICE_DEFAULT_RASTER_FUNCTION_NAME } from '@shared/services/nlcd-landcover/config';
+import { getRasterFunctionByNLCDLandCoverClassName } from '@shared/services/nlcd-landcover/classifications';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
+import { NLCDLandCoverClassification } from '@typing/landcover';
 import React, { useMemo } from 'react';
 
 /**
@@ -14,8 +15,9 @@ export const useNLCDLandCoverLayerRasterFunctionName = () => {
     const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
     const rasterFunctionName = useMemo(() => {
-        // return getRasterFunctionByLandCoverClassName(activeLandCoverType);
-        return NLCD_LANDCOVER_IMAGE_SERVICE_DEFAULT_RASTER_FUNCTION_NAME;
+        return getRasterFunctionByNLCDLandCoverClassName(
+            activeLandCoverType as NLCDLandCoverClassification
+        );
     }, [activeLandCoverType]);
 
     return rasterFunctionName;

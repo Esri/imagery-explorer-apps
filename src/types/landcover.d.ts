@@ -12,7 +12,9 @@ export type Sentinel2LandCoverClassification =
 
 export type NLCDLandCoverClassification = 'Developed' | 'Forest';
 
-export type LandCoverClassification = Sentinel2LandCoverClassification;
+export type LandCoverClassification =
+    | Sentinel2LandCoverClassification
+    | NLCDLandCoverClassification;
 
 /**
  * Pixel data of Landcover imagery service

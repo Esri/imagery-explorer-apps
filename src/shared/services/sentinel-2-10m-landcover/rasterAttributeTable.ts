@@ -17,7 +17,10 @@ import { t } from 'i18next';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
 import { DEFAULT_RENDERING_RULE } from './config';
 import { APP_NAME } from '@shared/config';
-import { LandCoverClassification } from '@typing/landcover';
+import {
+    LandCoverClassification,
+    Sentinel2LandCoverClassification,
+} from '@typing/landcover';
 import { LandcoverClassificationData } from '@typing/landcover';
 
 /**
@@ -40,7 +43,7 @@ type RasterAttributeTableFeature = {
 };
 
 export const RasterFunctionsByClassificationName: Record<
-    LandCoverClassification,
+    Sentinel2LandCoverClassification,
     string
 > = {
     Water: 'Water Areas Only',
@@ -56,7 +59,7 @@ export const RasterFunctionsByClassificationName: Record<
 };
 
 const LandcoverClassificationShortNames: Record<
-    LandCoverClassification,
+    Sentinel2LandCoverClassification,
     string
 > = {
     'Bare Ground': 'Bare',
@@ -152,10 +155,10 @@ export const loadRasterAttributeTable = async () => {
         landcoverClassificationDataMap.set(Value, {
             Value,
             Description,
-            ClassName: ClassName as LandCoverClassification,
+            ClassName: ClassName as Sentinel2LandCoverClassification,
             Color: [Red, Green, Blue],
             shortName: getLandCoverClassificationShortName(
-                ClassName as LandCoverClassification
+                ClassName as Sentinel2LandCoverClassification
             ),
         });
     }
@@ -177,7 +180,7 @@ export const getDistinctLandCoverClassificationPixelValues = () => {
 };
 
 const getLandCoverClassificationShortName = (
-    classification: LandCoverClassification
+    classification: Sentinel2LandCoverClassification
 ) => {
     const translationKey = LandcoverClassificationShortNames[classification]; //|| classification;
 
@@ -196,7 +199,7 @@ const getLandCoverClassificationShortName = (
  *          or the default 'Cartographic Renderer - Legend and Attribute Table' if not found.
  */
 export const getRasterFunctionBySentinel2LandCoverClassName = (
-    name?: LandCoverClassification
+    name?: Sentinel2LandCoverClassification
 ) => {
     return (
         RasterFunctionsByClassificationName[name] ||
