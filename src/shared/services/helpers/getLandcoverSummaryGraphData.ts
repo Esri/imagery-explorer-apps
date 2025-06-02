@@ -1,6 +1,6 @@
 import { Extent } from '@arcgis/core/geometry';
 import { LandcoverClassificationData } from '@typing/landcover';
-import { computeHistograms } from '../helpers/computeHistograms';
+import { computeHistograms } from './computeHistograms';
 
 type GetLandCoverChangeParams = {
     /**

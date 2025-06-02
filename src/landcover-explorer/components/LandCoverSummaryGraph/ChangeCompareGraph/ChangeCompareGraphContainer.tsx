@@ -20,7 +20,7 @@ import {
     formatAreaPercentage,
     getLandCoverChangeInAcres,
     LandCoverChangeInAcres,
-} from '@shared/services/sentinel-2-10m-landcover/getLandcoverSummaryGraphData';
+} from '@shared/services/helpers/getLandcoverSummaryGraphData';
 // import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
     // selectMapCenterAndZoom,

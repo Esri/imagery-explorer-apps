@@ -20,7 +20,7 @@ import {
     getLandCoverAreaByYear,
     // getLandCoverChangeInAcres,
     LandCoverArea,
-} from '@shared/services/sentinel-2-10m-landcover/getLandcoverSummaryGraphData';
+} from '@shared/services/helpers/getLandcoverSummaryGraphData';
 // import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';

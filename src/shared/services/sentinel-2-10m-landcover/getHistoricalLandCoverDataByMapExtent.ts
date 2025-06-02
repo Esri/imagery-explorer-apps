@@ -31,7 +31,7 @@ import {
     convertNumOfPixel2Acres,
     formatAreaPercentage,
     getTotalAreaInAcres,
-} from './getLandcoverSummaryGraphData';
+} from '../helpers/getLandcoverSummaryGraphData';
 
 export type AreaByYear = {
     year: number;
