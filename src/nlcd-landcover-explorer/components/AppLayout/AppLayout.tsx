@@ -31,6 +31,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { NLCDClassificationList } from '../ClassificationList/NLCDClassificationList';
 import { NLCDLandCoverSummaryGraph } from '../NLCDLandCoverSummaryGraph/NLCDLandCoverSummaryGraph';
+import { LandsatRenderersList } from '../LandsatRenderersList/LandsatRenderersList';
 
 export const AppLayout = () => {
     const { t } = useTranslation();
@@ -65,9 +66,7 @@ export const AppLayout = () => {
                             <NLCDClassificationList />
                         )}
 
-                        {/* {shouldShowSentinel2Layer && (
-                            <Sentinel2LayerRasterFunctionsList />
-                        )} */}
+                        {shouldShowSatelliteImagery && <LandsatRenderersList />}
 
                         <NLCDLandCoverSummaryGraph />
                     </div>

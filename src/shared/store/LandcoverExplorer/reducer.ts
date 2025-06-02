@@ -19,9 +19,14 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+// import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { LandCoverClassification } from '@typing/landcover';
-import { Extent } from '@arcgis/core/geometry';
+
+export type ImageryRasterFunction4LandcoverApp =
+    | Sentinel2FunctionName
+    | LandsatRasterFunctionName;
 
 export type MapMode = 'swipe' | 'step';
 
@@ -64,7 +69,7 @@ export type LandcoverExplorerAppState = {
     /**
      * Raster function name for satellite imagery layer (sentinel-2/landsat)
      */
-    satelliteImageryLayerRasterFunction: Sentinel2RasterFunction;
+    satelliteImageryLayerRasterFunction: ImageryRasterFunction4LandcoverApp;
     /**
      * If true, open info panel that shows detailed land cover info
      */
@@ -133,7 +138,7 @@ const slice = createSlice({
         },
         satelliteImageryLayerRasterFunctionChanged: (
             state,
-            action: PayloadAction<Sentinel2RasterFunction>
+            action: PayloadAction<ImageryRasterFunction4LandcoverApp>
         ) => {
             state.satelliteImageryLayerRasterFunction = action.payload;
         },

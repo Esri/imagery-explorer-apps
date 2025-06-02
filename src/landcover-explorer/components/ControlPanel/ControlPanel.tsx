@@ -25,7 +25,7 @@ import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverEx
 // import Tooltip from './Tooltip/TooltipContainer';
 // import ToggleButton from './ToggleButton/ToggleButtonContainer';
 // import { selectShouldHideControlPanel } from '@shared/store/LandcoverUI/selectors';
-import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+// import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 // import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 // import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
@@ -37,6 +37,7 @@ import { Sentinel2LandcoverTimeSelecterHeader } from './TimeSelector/Sentinel2La
 import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { ClassificationsList } from '../ClassificationsList';
 import { Sentinel2LandCoverGraph } from './Sentinel2LandCoverGraph/Sentinel2LandCoverGraph';
+import { Sentinel2LayerRasterFunctionsListContainer } from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 
 const ControlPanel = () => {
     // const dispatch = useAppDispatch();
@@ -86,7 +87,7 @@ const ControlPanel = () => {
                     )}
 
                     {shouldShowSentinel2Layer && (
-                        <Sentinel2LayerRasterFunctionsList />
+                        <Sentinel2LayerRasterFunctionsListContainer />
                     )}
 
                     <Sentinel2LandCoverGraph />

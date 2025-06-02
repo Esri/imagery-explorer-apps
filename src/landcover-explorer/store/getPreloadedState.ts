@@ -14,6 +14,7 @@
  */
 
 import {
+    ImageryRasterFunction4LandcoverApp,
     initialLandcoverExplorerAppState,
     LandcoverExplorerAppState,
     MapMode,
@@ -36,7 +37,7 @@ import {
 import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
 import { LandCoverClassification } from '@typing/landcover';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+// import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { isMobileDevice } from 'helper-toolkit-ts';
 import { PartialRootState } from '@shared/store/configureStore';
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
@@ -77,7 +78,7 @@ export const getPreloadedStateForLandcoverExplorerApp =
 
         // Get the selected raster function for Sentinel-2 imagery
         const satelliteImageryLayerRasterFunction =
-            (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
+            (getSentinel2RasterFunctionFromHashParams() as ImageryRasterFunction4LandcoverApp) ||
             'Natural Color for Visualization';
 
         // Determine start and end years for swipe widget

@@ -283,5 +283,7 @@
     "Expanded_Summary_Chart": "Expanded Summary Chart",
     "animation_graph_disabled_message": "Graph is disabled when animation is on",
     "zoom_to_see_change_graph": " Zoom in to see Land Cover Change Graph",
-    "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph"
+    "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph",
+    "imagery_renderers_title": "Visual Renderings",
+    "imagery_renderers_subtitle": "Click to Toggle Visibility"
 }

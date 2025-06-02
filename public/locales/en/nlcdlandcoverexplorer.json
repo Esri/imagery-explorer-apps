@@ -3,5 +3,17 @@
     "animation_metadata": "__ANIMATION METADATA",
     "map_attribution": "__MAP_ATTRIBUTION",
     "landsat_layer_title": "Landsat Imagery",
-    "land_cover_layer_title": "NLCD Land Cover"
+    "land_cover_layer_title": "NLCD Land Cover",
+    "renderer_natural_color_label": "Natural Color",
+    "renderer_natural_color_description": "Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",
+    "renderer_swir_label": "SWIR",
+    "renderer_swir_description": "Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.",
+    "renderer_agriculture_label": "Agriculture",
+    "renderer_agriculture_description": "Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.",
+    "renderer_ndvi_label": "NDVI",
+    "renderer_ndvi_description": "Normalized difference vegetation index (NDVI) with a color map applied. <br/><br/>NDVI is calculated as (NIR - R) / (NIR + R). <br/><br/>Dark green is thick vigorous vegetation, brown to tan represents sparse or dry vegetation to bare ground, and white is indicative of water.",
+    "renderer_color_ir_label": "Color IR",
+    "renderer_color_ir_description": "Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.",
+    "renderer_ndmi_label": "NDMI",
+    "renderer_ndmi_description": "Normalized Difference Moisture Index with a color map applied. <br/><br/>NDMI is calculated as (NIR - SWIR1) / (NIR + SWIR1). <br/><br/>Areas of higher moisture content range from dark blue to light blue while the driest areas range from tan to white."
 }

@@ -15,7 +15,7 @@
 
 import { addMonths, format } from 'date-fns';
 import IExtent from '@arcgis/core/geometry/Extent';
-import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+// import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 // import {
 //     SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
 //     // SENTINEL_2_IMAGE_SERVICE_URL,
@@ -24,6 +24,7 @@ import {
     SENTINEL_2_SERVICE_URL,
     FIELD_NAMES,
 } from '@shared/services/sentinel-2/config';
+import { ImageryRasterFunction4LandcoverApp } from '@shared/store/LandcoverExplorer/reducer';
 
 // const { AcquisitionDate, CloudCover } = FIELD_NAMES;
 
@@ -51,7 +52,7 @@ type ExportImageParams = {
     /**
      * Sentinel 2 layer raster function name that will be used in the rendering rule
      */
-    rasterFunctionName: Sentinel2RasterFunction;
+    rasterFunctionName: ImageryRasterFunction4LandcoverApp;
     abortController: AbortController;
 };
 

@@ -4,8 +4,6 @@
     "land_cover_layer_title": "10m Land Cover",
     "swipe_mode_zoom_message": "Zoom in to compare Sentinel-2 Imagery Layers",
     "animate_mode_zoom_message": "Zoom in to enable time slider",
-    "sentinel2_renderers_title": "Visual Renderings",
-    "sentinel2_renderers_subtitle": "Click to Toggle Visibility",
 
     "renderer_natural_color_label": "Natural Color",
     "renderer_natural_color_description": "Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",

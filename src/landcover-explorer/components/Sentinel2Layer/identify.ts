@@ -13,11 +13,12 @@
  * limitations under the License.
  */
 
-import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+// import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 
 import IPoint from '@arcgis/core/geometry/Point';
 import { getMosaicRuleByAcquisitionDate } from './exportImage';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
+import { ImageryRasterFunction4LandcoverApp } from '@shared/store/LandcoverExplorer/reducer';
 // import {
 //     SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
 //     SENTINEL_2_IMAGE_SERVICE_URL,
@@ -26,7 +27,7 @@ import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 type IdentifyParams = {
     geometry: IPoint;
     resolution: number;
-    rasterFunction: Sentinel2RasterFunction;
+    rasterFunction: ImageryRasterFunction4LandcoverApp;
     year: number;
     month: number;
 };

@@ -13,9 +13,12 @@
  * limitations under the License.
  */
 
-import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+// import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { LandCoverClassification } from '@typing/landcover';
-import { MapMode } from '@shared/store/LandcoverExplorer/reducer';
+import {
+    ImageryRasterFunction4LandcoverApp,
+    MapMode,
+} from '@shared/store/LandcoverExplorer/reducer';
 
 type UrlHashParamKey =
     | 'mapCenter'
@@ -31,14 +34,15 @@ type UrlHashParamKey =
     | 'region'
     | 'saveWebMap';
 
-const SupportedSentinel2RasterFunctions: Sentinel2RasterFunction[] = [
-    'Natural Color for Visualization',
-    'Agriculture for Visualization',
-    'Color Infrared for Visualization',
-    'Short-wave Infrared for Visualization',
-    'NDVI Colorized for Visualization',
-    'NDMI Colorized for Visualization',
-];
+const SupportedSentinel2RasterFunctions: ImageryRasterFunction4LandcoverApp[] =
+    [
+        'Natural Color for Visualization',
+        'Agriculture for Visualization',
+        'Color Infrared for Visualization',
+        'Short-wave Infrared for Visualization',
+        'NDVI Colorized for Visualization',
+        'NDMI Colorized for Visualization',
+    ];
 
 let hashParams: URLSearchParams = null; //new URLSearchParams(window.location.hash.slice(1));
 
@@ -166,7 +170,7 @@ export const getActiveMonthFromHashParams = () => {
 };
 
 export const saveSentinel2RasterFunctionToHashParams = (
-    rasterFunctionName: Sentinel2RasterFunction
+    rasterFunctionName: ImageryRasterFunction4LandcoverApp
 ) => {
     const idx = SupportedSentinel2RasterFunctions.indexOf(rasterFunctionName);
 
