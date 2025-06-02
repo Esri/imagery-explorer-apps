@@ -15,6 +15,15 @@ const RasterFunctionsByClassificationName: Record<
     Forest: NLCD_LANDCOVER_RASTER_FUNCTIONS.FOREST,
 };
 
+/**
+ * https://di-nlcddev.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer/rasterAttributeTable?renderingRule=%7B%22rasterFunction%22%3A%22Saturated%20Cartographic%20and%20Analytic%20Renderer%22%7D&f=json
+ */
+export const getNLCDLandCoverRasterAttributeTable = async (
+    renderingRule: string
+): Promise<any> => {
+    // call helper function to get the raster attribute table
+};
+
 export const getNLCDLandCoverClassifications =
     (): LandcoverClassificationData[] => {
         return [

@@ -20,7 +20,7 @@ import {
 
 import IPoint from '@arcgis/core/geometry/Point';
 import { getAvailableYears } from './timeInfo';
-import { getLandCoverClassificationByPixelValue } from './rasterAttributeTable';
+import { getSentinel2LandCoverClassificationByPixelValue } from './rasterAttributeTable';
 import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
 import { LandcoverClassificationData } from '@typing/landcover';
 
@@ -116,7 +116,7 @@ export const identifyLandcoverClassificationsByLocation = async (
 
             output.push({
                 year: availableYears[i],
-                data: getLandCoverClassificationByPixelValue(+value),
+                data: getSentinel2LandCoverClassificationByPixelValue(+value),
             });
         }
 

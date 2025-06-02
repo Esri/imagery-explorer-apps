@@ -19,7 +19,7 @@ import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
 import { DEFAULT_RENDERING_RULE } from './config';
 import {
     getDistinctLandCoverClassificationPixelValues,
-    getLandCoverClassificationByPixelValue,
+    getSentinel2LandCoverClassificationByPixelValue,
 } from './rasterAttributeTable';
 import { getAvailableYears } from './timeInfo';
 import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
@@ -282,7 +282,7 @@ export const getLandCoverAreaByYear = async ({
                 areaInPercentage: formatAreaPercentage(areaInPercentage),
                 areaInPercentageRaw: areaInPercentage,
                 landcoverClassificationData:
-                    getLandCoverClassificationByPixelValue(i),
+                    getSentinel2LandCoverClassificationByPixelValue(i),
             });
         }
 
@@ -339,7 +339,7 @@ export const getLandCoverChangeInAcres = async ({
 
         for (let i = 0; i < len; i++) {
             const landcoverClassificationData =
-                getLandCoverClassificationByPixelValue(i);
+                getSentinel2LandCoverClassificationByPixelValue(i);
 
             if (!landcoverClassificationData) {
                 continue;
@@ -421,7 +421,7 @@ export const getHistoricalLandCoverDataByMapExtent = async (
         historicalLandCoverDataByLandCoverId.set(pixelValue, {
             areaByYear,
             landCoverClassificationData:
-                getLandCoverClassificationByPixelValue(pixelValue),
+                getSentinel2LandCoverClassificationByPixelValue(pixelValue),
         });
     }
 

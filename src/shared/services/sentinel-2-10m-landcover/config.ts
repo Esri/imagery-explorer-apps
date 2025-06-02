@@ -31,6 +31,8 @@ export const SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL =
 // export const SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL =
 //     SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL_PROD;
 
+export const SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION = `Cartographic Renderer - Legend and Attribute Table`;
+
 export const DEFAULT_RENDERING_RULE = {
-    rasterFunction: 'Cartographic Renderer - Legend and Attribute Table',
+    rasterFunction: SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
 };

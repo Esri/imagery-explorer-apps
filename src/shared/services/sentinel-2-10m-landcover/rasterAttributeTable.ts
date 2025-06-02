@@ -14,33 +14,18 @@
  */
 
 import { t } from 'i18next';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
-import { DEFAULT_RENDERING_RULE } from './config';
+import {
+    SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
+    SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+} from './config';
+// import { DEFAULT_RENDERING_RULE } from './config';
 import { APP_NAME } from '@shared/config';
 import {
-    LandCoverClassification,
+    // LandCoverClassification,
     Sentinel2LandCoverClassification,
 } from '@typing/landcover';
 import { LandcoverClassificationData } from '@typing/landcover';
-
-/**
- * Feature from Attribute Table
- */
-type RasterAttributeTableFeature = {
-    attributes: {
-        OBJECTID: number;
-        Blue: number;
-        Green: number;
-        Red: number;
-        ClassName: string;
-        // Count: number; // "Count" field is no longer included in the Raster Attribute table sicn September 2023.
-        Description: string;
-        Examples: string;
-        PopupText: string;
-        UlcPopupText: string;
-        Value: number;
-    };
-};
+import { getRasterAttributeTable } from '../helpers/getRasterAttributeTable';
 
 export const RasterFunctionsByClassificationName: Record<
     Sentinel2LandCoverClassification,
@@ -74,10 +59,6 @@ const LandcoverClassificationShortNames: Record<
     'No Data': 'No Data',
 };
 
-type RasterAttributeTableResponse = {
-    features: RasterAttributeTableFeature[];
-};
-
 /**
  * Map stores pixel data from Raster attribute table using Value as the key
  */
@@ -85,63 +66,13 @@ const landcoverClassificationDataMap: Map<number, LandcoverClassificationData> =
     new Map();
 
 /**
- * The rasterAttributeTable resource returns categorical mapping of pixel values (for example, a class, color, value).
- * This resource is supported if the hasRasterAttributeTable property of the service is true.
- *
- * https://developers.arcgis.com/rest/services-reference/enterprise/raster-attribute-table.htm
- *
- * @example
- *
- * Get Attribute Table of Sentinel2_10m_LandCover
- * ```js
- * https://env1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer/rasterAttributeTable?renderingRule=%7B%22rasterFunction%22%3A%22Cartographic%20Renderer%20-%20Legend%20and%20Attribute%20Table%22%7D&f=json
- * ```
- *
- * Returns
- * ```js
- * {
- *   features: [
- *     ...
- *      {
- *           OBJECTID: 3,
- *           Value: 2,
- *           Count: 292251633,
- *           ClassName: "Trees",
- *           Red: 53,
- *           Green: 130,
- *           Blue: 33,
- *           UlcPopupText: "Trees",
- *           PopupText: "trees",
- *           Description: "Any significant clustering of tall (~15-m or higher) dense vegetation...",
- *           Examples: "Wooded vegetation,  clusters of dense tall vegetation within savannas..."
- *       }
- *   ]
- * }
- * ```
- *
- */
-const getRasterAttributeTable = async () => {
-    const params = new URLSearchParams({
-        renderingRule: JSON.stringify(DEFAULT_RENDERING_RULE),
-        f: 'json',
-    });
-
-    const requestURL =
-        SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL +
-        `/rasterAttributeTable?${params.toString()}`;
-
-    const res = await fetch(requestURL);
-
-    const data = (await res.json()) as RasterAttributeTableResponse;
-
-    return data;
-};
-
-/**
  * Fetch Raster Attribute Table of Sentinel2_10m_LandCover and save the pixel data in a Map
  */
-export const loadRasterAttributeTable = async () => {
-    const { features } = await getRasterAttributeTable();
+export const loadSentinel2LandcoverRasterAttributeTable = async () => {
+    const { features } = await getRasterAttributeTable(
+        SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+        SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION
+    );
 
     if (!features || !features.length) {
         throw new Error('failed to getRasterAttributeTable');
@@ -169,7 +100,7 @@ export const getSentinel2LandCoverClassifications =
         return [...landcoverClassificationDataMap.values()];
     };
 
-export const getLandCoverClassificationByPixelValue = (
+export const getSentinel2LandCoverClassificationByPixelValue = (
     pixelValue: number
 ): LandcoverClassificationData => {
     return landcoverClassificationDataMap.get(pixelValue) || null;
