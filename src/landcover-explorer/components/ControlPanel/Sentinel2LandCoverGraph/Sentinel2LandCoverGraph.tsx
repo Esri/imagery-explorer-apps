@@ -6,9 +6,9 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import React, { useMemo } from 'react';
-import LandCoverGraphContainer from './LandCoverGraphContainer';
-import { TotalAreaGraph } from './TotalAreaGraph';
-import { ChangeCompareGraph } from './ChangeCompareGraph';
+import LandCoverGraphContainer from '../../LandCoverSummaryGraph/LandCoverSummaryGraphContainer';
+import { TotalAreaGraph } from '../../LandCoverSummaryGraph/TotalAreaGraph';
+import { ChangeCompareGraph } from '../../LandCoverSummaryGraph/ChangeCompareGraph';
 
 export const Sentinel2LandCoverGraph = () => {
     const mode = useAppSelector(selectMapMode);

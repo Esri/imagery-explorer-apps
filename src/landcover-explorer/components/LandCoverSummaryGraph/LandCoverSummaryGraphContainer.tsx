@@ -28,7 +28,7 @@ import {
 import { showInfoPanelToggled } from '@shared/store/LandcoverExplorer/reducer';
 import ChangeCompareGraph from './ChangeCompareGraph/ChangeCompareGraphContainer';
 import TotalAreaGraph from './TotalAreaGraph/TotalAreaGraphContainer';
-import HeaderText from '../HeaderText/HeaderText';
+import HeaderText from '../ControlPanel/HeaderText/HeaderText';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';

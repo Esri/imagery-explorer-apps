@@ -36,7 +36,7 @@ import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
 import { Sentinel2LandcoverTimeSelecterHeader } from './TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
 import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { ClassificationsList } from '../ClassificationsList';
-import { Sentinel2LandCoverGraph } from './LandCoverGraph/Sentinel2LandCoverGraph';
+import { Sentinel2LandCoverGraph } from './Sentinel2LandCoverGraph/Sentinel2LandCoverGraph';
 
 const ControlPanel = () => {
     // const dispatch = useAppDispatch();
