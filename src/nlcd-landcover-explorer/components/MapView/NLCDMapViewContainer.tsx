@@ -4,9 +4,14 @@ import { APP_NAME } from '@shared/config';
 import { useAppSelector } from '@shared/store/configureStore';
 import { LandcoverExplorerMapViewContainer } from '@landcover-explorer/components/MapView';
 import { NLCDLandcoverLayer } from '../NLCDLandcoverLayer/NLCDLandcoverLayer';
+import { SwipeWidget4Landcover } from '@landcover-explorer/components/SwipeWidget';
+import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
+import { useNLCDLandCoverLayerRasterFunctionName } from '../NLCDLandcoverLayer/useNLCDLandCoverLayerRasterFunctionName';
 
 export const NLCDLandcoverMapViewContainer = () => {
     const { t } = useTranslation();
+
+    const rasterFunctionName = useNLCDLandCoverLayerRasterFunctionName();
 
     return (
         <LandcoverExplorerMapViewContainer
@@ -21,6 +26,10 @@ export const NLCDLandcoverMapViewContainer = () => {
             <Popup /> */}
 
             <NLCDLandcoverLayer />
+            <SwipeWidget4Landcover
+                serviceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
+                rasterFunctionName={rasterFunctionName}
+            />
         </LandcoverExplorerMapViewContainer>
     );
 };

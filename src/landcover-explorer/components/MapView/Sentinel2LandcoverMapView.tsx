@@ -8,6 +8,8 @@ import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import Popup from '../Popup/Popup';
+import { useSentinel2LandCoverLayerRasterFunctionName } from '../LandcoverLayer/useSentinel2LandCoverLayerRasterFunctionName';
+import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 
 export const Sentinel2LandcoverMapView = () => {
     const { t } = useTranslation();
@@ -15,6 +17,8 @@ export const Sentinel2LandcoverMapView = () => {
     const isSentinel2LayerOutOfVisibleRange = useAppSelector(
         selectIsSentinel2LayerOutOfVisibleRange
     );
+
+    const rasterFunctionName = useSentinel2LandCoverLayerRasterFunctionName();
 
     return (
         <LandcoverExplorerMapViewContainer
@@ -24,7 +28,11 @@ export const Sentinel2LandcoverMapView = () => {
                 isSentinel2LayerOutOfVisibleRange
             } // This should be derived from state or props
         >
-            <SwipeWidget4Landcover />
+            <SwipeWidget4Landcover
+                serviceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}
+                rasterFunctionName={rasterFunctionName}
+                // mapView={undefined} // Assuming mapView is not needed here
+            />
             <SwipeWidget4Sentinel2 />
             <Sentinel2Layer />
             <LandcoverLayer />
