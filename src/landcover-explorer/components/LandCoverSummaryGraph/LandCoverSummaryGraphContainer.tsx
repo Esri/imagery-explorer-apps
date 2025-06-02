@@ -51,7 +51,7 @@ type LandCoverGraphContainerProps = {
     children: React.ReactNode;
 };
 
-const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
+export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
     showChart,
     shouldShowExpandButton,
     children,

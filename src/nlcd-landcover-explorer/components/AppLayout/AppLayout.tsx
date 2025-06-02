@@ -30,6 +30,7 @@ import { NLCDTimeSelector } from '../TimeSelector/NLCDTimeSelector';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { NLCDClassificationList } from '../ClassificationList/NLCDClassificationList';
+import { NLCDLandCoverSummaryGraph } from '../NLCDLandCoverSummaryGraph/NLCDLandCoverSummaryGraph';
 
 export const AppLayout = () => {
     const { t } = useTranslation();
@@ -66,9 +67,9 @@ export const AppLayout = () => {
 
                         {/* {shouldShowSentinel2Layer && (
                             <Sentinel2LayerRasterFunctionsList />
-                        )}
+                        )} */}
 
-                        <LandCoverGraph /> */}
+                        <NLCDLandCoverSummaryGraph />
                     </div>
                 </div>
             </BottomPanel>
