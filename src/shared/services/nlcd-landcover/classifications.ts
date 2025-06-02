@@ -21,8 +21,10 @@ const RasterFunctionsByClassificationName: Record<
 /**
  * Map stores pixel data from Raster attribute table using Value as the key
  */
-const landcoverClassificationDataMap: Map<number, LandcoverClassificationData> =
-    new Map();
+export const nlcdLandcoverClassificationDataMap: Map<
+    number,
+    LandcoverClassificationData
+> = new Map();
 
 /**
  * Fetch Raster Attribute Table of NLCD Land Cover and save the pixel data in a Map
@@ -44,7 +46,7 @@ export const getNLCDLandCoverRasterAttributeTable = async (): Promise<void> => {
 
         const { Value, Description, ClassName, Red, Green, Blue } = attributes;
 
-        landcoverClassificationDataMap.set(Value, {
+        nlcdLandcoverClassificationDataMap.set(Value, {
             Value,
             Description,
             ClassName: ClassName as NLCDLandCoverClassification,
@@ -58,17 +60,17 @@ export const getNLCDLandCoverRasterAttributeTable = async (): Promise<void> => {
 
 export const getNLCDLandCoverClassifications =
     (): LandcoverClassificationData[] => {
-        return [...landcoverClassificationDataMap.values()];
+        return [...nlcdLandcoverClassificationDataMap.values()];
     };
 
 export const getNLCDLandCoverClassificationByPixelValue = (
     pixelValue: number
 ): LandcoverClassificationData => {
-    return landcoverClassificationDataMap.get(pixelValue) || null;
+    return nlcdLandcoverClassificationDataMap.get(pixelValue) || null;
 };
 
 export const getDistinctNLCDLandCoverClassificationPixelValues = () => {
-    return [...landcoverClassificationDataMap.keys()];
+    return [...nlcdLandcoverClassificationDataMap.keys()];
 };
 
 const getLandCoverClassificationShortName = (

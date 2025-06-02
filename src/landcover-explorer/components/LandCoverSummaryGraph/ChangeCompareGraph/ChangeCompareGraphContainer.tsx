@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
@@ -50,14 +50,38 @@ import {
 } from '@shared/store/Map/selectors';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
-import {
-    SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
-    SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
-} from '@shared/services/sentinel-2-10m-landcover/config';
-import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import {
+//     SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
+//     SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+// } from '@shared/services/sentinel-2-10m-landcover/config';
+// import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
-export const ChangeCompareGraphContainer = () => {
+import { LandcoverClassificationData } from '@typing/landcover';
+
+type Props = {
+    /**
+     * URL of the Land Cover service to fetch data from.
+     */
+    serviceUrl: string;
+    /**
+     * Raster function to apply when fetching data.
+     */
+    rasterFunction: string;
+    /**
+     * Map of land cover classification data by pixel values.
+     */
+    mapOfLandCoverClassificationPixelValues: Map<
+        number,
+        LandcoverClassificationData
+    >;
+};
+
+export const ChangeCompareGraphContainer: FC<Props> = ({
+    serviceUrl,
+    rasterFunction,
+    mapOfLandCoverClassificationPixelValues,
+}) => {
     const dispatch = useAppDispatch();
 
     const { t } = useTranslation();
@@ -95,10 +119,9 @@ export const ChangeCompareGraphContainer = () => {
             resolution,
             earlierYear: year4LeadingLayer,
             laterYear: year4TrailingLayer,
-            serviceUrl: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
-            rasterFunction: SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
-            mapOfLandCoverClassificationPixelValues:
-                sentinel2LandcoverClassificationDataMap,
+            serviceUrl,
+            rasterFunction,
+            mapOfLandCoverClassificationPixelValues,
         });
 
         setLandCoverChangeData(res);

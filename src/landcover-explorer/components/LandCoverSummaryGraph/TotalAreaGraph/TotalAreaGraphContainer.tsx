@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
@@ -33,14 +33,33 @@ import {
     selectMapZoom,
 } from '@shared/store/Map/selectors';
 import { useTranslation } from 'react-i18next';
-import { APP_NAME } from '@shared/config';
-import {
-    SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
-    SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
-} from '@shared/services/sentinel-2-10m-landcover/config';
-import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { APP_NAME } from '@shared/config';
 
-export const TotalAreaGraphContainer = () => {
+import { LandcoverClassificationData } from '@typing/landcover';
+
+type Props = {
+    /**
+     * URL of the Land Cover service to fetch data from.
+     */
+    serviceUrl: string;
+    /**
+     * Raster function to apply when fetching data.
+     */
+    rasterFunction: string;
+    /**
+     * Map of land cover classification data by pixel values.
+     */
+    mapOfLandCoverClassificationPixelValues: Map<
+        number,
+        LandcoverClassificationData
+    >;
+};
+
+export const TotalAreaGraphContainer: FC<Props> = ({
+    serviceUrl,
+    rasterFunction,
+    mapOfLandCoverClassificationPixelValues,
+}) => {
     const dispatch = useAppDispatch();
 
     const { t } = useTranslation();
@@ -72,10 +91,9 @@ export const TotalAreaGraphContainer = () => {
                 extent,
                 resolution,
                 year,
-                serviceUrl: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
-                rasterFunction: SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
-                mapOfLandCoverClassificationPixelValues:
-                    sentinel2LandcoverClassificationDataMap,
+                serviceUrl,
+                rasterFunction,
+                mapOfLandCoverClassificationPixelValues,
             });
 
             setLandCoverTotalsData(res);
