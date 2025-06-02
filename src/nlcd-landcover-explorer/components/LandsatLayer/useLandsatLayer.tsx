@@ -1,46 +1,24 @@
-/* Copyright 2025 Esri
- *
- * Licensed under the Apache License Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import React, { useEffect, useRef, useState } from 'react';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
-// import IMapView from '@arcgis/core/views/MapView';
-// import {
-//     // SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
-//     // SENTINEL_2_IMAGE_SERVICE_URL,
-// } from './config';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectSatelliteImageryLayerAquisitionMonth,
     selectSatelliteImageryLayerRasterFunction,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { getMosaicRuleByAcquisitionDate } from './exportImage';
-import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
+import React, { useEffect, useRef, useState } from 'react';
+import { getLandsatMosaicRuleByAcquisitionDate } from './helper';
 
-type UseLandCoverLayerParams = {
+type Params = {
     year: number;
-    visible?: boolean;
+    visible: boolean;
     // mapView?: IMapView;
 };
-
-// const { AcquisitionDate, CloudCover } = SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES;
 
 const createMosaicRuleByYear = (year: number, month: number) => {
     // const monthStr = month < 10 ? '0' + month : month.toString();
 
     const { where, sortField, sortValue, ascending } =
-        getMosaicRuleByAcquisitionDate(year, month);
+        getLandsatMosaicRuleByAcquisitionDate(year, month);
 
     return {
         method: `attribute`,
@@ -51,13 +29,14 @@ const createMosaicRuleByYear = (year: number, month: number) => {
     };
 };
 
-const useSentinel2Layer = ({
+export const useLandsatLayer = ({
     year,
-    visible = true,
-}: UseLandCoverLayerParams) => {
+    visible,
+}: // mapView,
+Params) => {
     const layerRef = useRef<ImageryLayer>();
 
-    const [sentinel2Layer, setSentinel2Layer] = useState<ImageryLayer>();
+    const [landsatLayer, setLandsatLayer] = useState<ImageryLayer>();
 
     const selectedRasterFunction = useAppSelector(
         selectSatelliteImageryLayerRasterFunction
@@ -73,7 +52,7 @@ const useSentinel2Layer = ({
     const getSentinel2Layer = async () => {
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
-            url: SENTINEL_2_SERVICE_URL,
+            url: LANDSAT_LEVEL_2_SERVICE_URL,
             mosaicRule: createMosaicRuleByYear(year, aquisitionMonth) as any,
             rasterFunction: {
                 functionName: selectedRasterFunction,
@@ -82,7 +61,7 @@ const useSentinel2Layer = ({
             // blendMode: 'multiply'
         });
 
-        setSentinel2Layer(layerRef.current);
+        setLandsatLayer(layerRef.current);
     };
 
     useEffect(() => {
@@ -114,7 +93,5 @@ const useSentinel2Layer = ({
         layerRef.current.visible = visible;
     }, [visible]);
 
-    return sentinel2Layer;
+    return landsatLayer;
 };
-
-export default useSentinel2Layer;

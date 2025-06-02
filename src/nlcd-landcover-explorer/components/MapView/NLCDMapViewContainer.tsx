@@ -7,6 +7,7 @@ import { NLCDLandcoverLayer } from '../NLCDLandcoverLayer/NLCDLandcoverLayer';
 import { SwipeWidget4Landcover } from '@landcover-explorer/components/SwipeWidget';
 import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
 import { useNLCDLandCoverLayerRasterFunctionName } from '../NLCDLandcoverLayer/useNLCDLandCoverLayerRasterFunctionName';
+import { LandsatLayer } from '../LandsatLayer/LandsatLayer';
 
 export const NLCDLandcoverMapViewContainer = () => {
     const { t } = useTranslation();
@@ -26,6 +27,7 @@ export const NLCDLandcoverMapViewContainer = () => {
             <Popup /> */}
 
             <NLCDLandcoverLayer />
+            <LandsatLayer />
             <SwipeWidget4Landcover
                 serviceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
                 rasterFunctionName={rasterFunctionName}

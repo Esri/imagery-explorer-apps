@@ -97,21 +97,5 @@ export const LandsatRenderersList = () => {
         return Sentinel2RasterFunctionsData;
     }, []);
 
-    return (
-        // <Sentinel2LayerRasterFunctionsList
-        //     selectedRasterFunction={selectedRasterFunction}
-        //     data={Sentinel2RasterFunctionsData}
-        //     disabled={animationMode !== null}
-        //     onSelect={(rasterFunction) => {
-        //         dispatch(
-        //             satelliteImageryLayerRasterFunctionChanged(rasterFunction)
-        //         );
-        //     }}
-        //     itemOnHover={(data) => {
-        //         dispatch(updateTooltipData(data));
-        //     }}
-        // />
-
-        <SatelliteImageryRenderersList data={data} />
-    );
+    return <SatelliteImageryRenderersList data={data} />;
 };
