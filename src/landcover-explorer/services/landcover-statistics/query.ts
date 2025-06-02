@@ -20,13 +20,13 @@ import {
 } from '@esri/arcgis-rest-feature-service';
 import {
     AreaByYear,
-    formatAreaPercentage,
     HistoricalLandCoverData,
-} from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
+} from '@shared/services/sentinel-2-10m-landcover/getHistoricalLandCoverDataByMapExtent';
 import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 
 import { LAND_COVER_STATISTICS_SERVICE_URL, FIELD_NAMES } from './config';
 import { LandCoverClassification } from '@typing/landcover';
+import { formatAreaPercentage } from '@shared/services/sentinel-2-10m-landcover/getLandcoverSummaryGraphData';
 
 const {
     COUNTRY,

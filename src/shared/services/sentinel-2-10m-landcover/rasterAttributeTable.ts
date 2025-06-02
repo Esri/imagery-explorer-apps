@@ -62,8 +62,10 @@ const LandcoverClassificationShortNames: Record<
 /**
  * Map stores pixel data from Raster attribute table using Value as the key
  */
-const landcoverClassificationDataMap: Map<number, LandcoverClassificationData> =
-    new Map();
+export const sentinel2LandcoverClassificationDataMap: Map<
+    number,
+    LandcoverClassificationData
+> = new Map();
 
 /**
  * Fetch Raster Attribute Table of Sentinel2_10m_LandCover and save the pixel data in a Map
@@ -83,7 +85,7 @@ export const loadSentinel2LandcoverRasterAttributeTable = async () => {
 
         const { Value, Description, ClassName, Red, Green, Blue } = attributes;
 
-        landcoverClassificationDataMap.set(Value, {
+        sentinel2LandcoverClassificationDataMap.set(Value, {
             Value,
             Description,
             ClassName: ClassName as Sentinel2LandCoverClassification,
@@ -97,17 +99,17 @@ export const loadSentinel2LandcoverRasterAttributeTable = async () => {
 
 export const getSentinel2LandCoverClassifications =
     (): LandcoverClassificationData[] => {
-        return [...landcoverClassificationDataMap.values()];
+        return [...sentinel2LandcoverClassificationDataMap.values()];
     };
 
 export const getSentinel2LandCoverClassificationByPixelValue = (
     pixelValue: number
 ): LandcoverClassificationData => {
-    return landcoverClassificationDataMap.get(pixelValue) || null;
+    return sentinel2LandcoverClassificationDataMap.get(pixelValue) || null;
 };
 
 export const getDistinctLandCoverClassificationPixelValues = () => {
-    return [...landcoverClassificationDataMap.keys()];
+    return [...sentinel2LandcoverClassificationDataMap.keys()];
 };
 
 const getLandCoverClassificationShortName = (

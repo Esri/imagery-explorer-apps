@@ -20,7 +20,7 @@ import {
     getLandCoverAreaByYear,
     // getLandCoverChangeInAcres,
     LandCoverArea,
-} from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
+} from '@shared/services/sentinel-2-10m-landcover/getLandcoverSummaryGraphData';
 // import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { updateTooltipData } from '@shared/store/UI/thunks';
@@ -34,6 +34,11 @@ import {
 } from '@shared/store/Map/selectors';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import {
+    SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
+    SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+} from '@shared/services/sentinel-2-10m-landcover/config';
+import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 
 export const TotalAreaGraphContainer = () => {
     const dispatch = useAppDispatch();
@@ -67,6 +72,10 @@ export const TotalAreaGraphContainer = () => {
                 extent,
                 resolution,
                 year,
+                serviceUrl: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+                rasterFunction: SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
+                mapOfLandCoverClassificationPixelValues:
+                    sentinel2LandcoverClassificationDataMap,
             });
 
             setLandCoverTotalsData(res);

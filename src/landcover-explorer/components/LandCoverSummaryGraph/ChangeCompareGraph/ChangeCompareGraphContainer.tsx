@@ -20,7 +20,7 @@ import {
     formatAreaPercentage,
     getLandCoverChangeInAcres,
     LandCoverChangeInAcres,
-} from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
+} from '@shared/services/sentinel-2-10m-landcover/getLandcoverSummaryGraphData';
 // import { getLandCoverClassificationShortName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import {
     // selectMapCenterAndZoom,
@@ -50,6 +50,11 @@ import {
 } from '@shared/store/Map/selectors';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
+import {
+    SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
+    SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+} from '@shared/services/sentinel-2-10m-landcover/config';
+import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
 export const ChangeCompareGraphContainer = () => {
@@ -90,6 +95,10 @@ export const ChangeCompareGraphContainer = () => {
             resolution,
             earlierYear: year4LeadingLayer,
             laterYear: year4TrailingLayer,
+            serviceUrl: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+            rasterFunction: SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
+            mapOfLandCoverClassificationPixelValues:
+                sentinel2LandcoverClassificationDataMap,
         });
 
         setLandCoverChangeData(res);

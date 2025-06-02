@@ -23,7 +23,7 @@ import { showInfoPanelToggled } from '@shared/store/LandcoverExplorer/reducer';
 import {
     getHistoricalLandCoverDataByMapExtent,
     HistoricalLandCoverData,
-} from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
+} from '@shared/services/sentinel-2-10m-landcover/getHistoricalLandCoverDataByMapExtent';
 import { selectShowInfoPanel } from '@shared/store/LandcoverExplorer/selectors';
 // import { QuickD3ChartData, QuickD3ChartDataItem } from '../QuickD3Chart/types';
 import CountrySelector from './Header/CountrySelector';

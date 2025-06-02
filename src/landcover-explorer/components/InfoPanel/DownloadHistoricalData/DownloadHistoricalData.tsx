@@ -1,5 +1,5 @@
 import { APP_NAME } from '@shared/config';
-import { HistoricalLandCoverData } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
+import { HistoricalLandCoverData } from '@shared/services/sentinel-2-10m-landcover/getHistoricalLandCoverDataByMapExtent';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatHistoricalData } from './formateHistoricalData';
