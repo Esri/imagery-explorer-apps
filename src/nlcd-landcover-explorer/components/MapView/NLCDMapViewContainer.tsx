@@ -8,6 +8,7 @@ import { SwipeWidget4Landcover } from '@landcover-explorer/components/SwipeWidge
 import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
 import { useNLCDLandCoverLayerRasterFunctionName } from '../NLCDLandcoverLayer/useNLCDLandCoverLayerRasterFunctionName';
 import { LandsatLayer } from '../LandsatLayer/LandsatLayer';
+import { SwipeWidget4LandsatLayers } from '../SwipeWidget/SwipeWidget4Landsat';
 
 export const NLCDLandcoverMapViewContainer = () => {
     const { t } = useTranslation();
@@ -20,10 +21,7 @@ export const NLCDLandcoverMapViewContainer = () => {
             nameOfSatelliteImageryLayer={'Sentinel-2'}
             isSatelliteImageryOutOfVisibleRange={false} // This should be derived from state or props
         >
-            {/* <SwipeWidget4Landcover />
-            <SwipeWidget4Sentinel2 />
-            <Sentinel2Layer />
-            <LandcoverLayer />
+            {/* 
             <Popup /> */}
 
             <NLCDLandcoverLayer />
@@ -32,6 +30,7 @@ export const NLCDLandcoverMapViewContainer = () => {
                 serviceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
                 rasterFunctionName={rasterFunctionName}
             />
+            <SwipeWidget4LandsatLayers />
         </LandcoverExplorerMapViewContainer>
     );
 };
