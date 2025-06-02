@@ -52,7 +52,7 @@ import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 // import { abbreviateNumber } from '@landcover-explorer/utils/number';
 
-const ChangeCompareGraphContainer = () => {
+export const ChangeCompareGraphContainer = () => {
     const dispatch = useAppDispatch();
 
     const { t } = useTranslation();

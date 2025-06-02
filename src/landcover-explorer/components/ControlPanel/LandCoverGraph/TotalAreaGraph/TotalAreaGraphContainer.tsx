@@ -35,7 +35,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 
-const TotalAreaGraphContainer = () => {
+export const TotalAreaGraphContainer = () => {
     const dispatch = useAppDispatch();
 
     const { t } = useTranslation();

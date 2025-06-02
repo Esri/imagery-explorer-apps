@@ -26,16 +26,17 @@ import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverEx
 // import ToggleButton from './ToggleButton/ToggleButtonContainer';
 // import { selectShouldHideControlPanel } from '@shared/store/LandcoverUI/selectors';
 import Sentinel2LayerRasterFunctionsList from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
-import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
+// import LandCoverGraph from './LandCoverGraph/LandCoverGraphContainer';
 // import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { LandcoverExplorerModeSelector } from './ModeSelector';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
-import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
+// import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
 import { Sentinel2LandcoverTimeSelecterHeader } from './TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
 import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { ClassificationsList } from '../ClassificationsList';
+import { Sentinel2LandCoverGraph } from './LandCoverGraph/Sentinel2LandCoverGraph';
 
 const ControlPanel = () => {
     // const dispatch = useAppDispatch();
@@ -61,7 +62,7 @@ const ControlPanel = () => {
                     <ClassificationsList
                         classificationData={classificationData}
                     />
-                    <LandCoverGraph />
+                    <Sentinel2LandCoverGraph />
                 </div>
             </BottomPanel>
         );
@@ -88,7 +89,7 @@ const ControlPanel = () => {
                         <Sentinel2LayerRasterFunctionsList />
                     )}
 
-                    <LandCoverGraph />
+                    <Sentinel2LandCoverGraph />
                 </div>
             </div>
         </BottomPanel>

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 // import { MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM } from '@landcover-explorer/constants/map';
@@ -27,32 +27,53 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 import { showInfoPanelToggled } from '@shared/store/LandcoverExplorer/reducer';
 import ChangeCompareGraph from './ChangeCompareGraph/ChangeCompareGraphContainer';
-import HeaderText from '../HeaderText/HeaderText';
 import TotalAreaGraph from './TotalAreaGraph/TotalAreaGraphContainer';
+import HeaderText from '../HeaderText/HeaderText';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 
-const LandCoverGraphContainer = () => {
+type LandCoverGraphContainerProps = {
+    /**
+     * Flag to determine if the chart should be shown or not.
+     * This is used to control the visibility of the chart based on various conditions.
+     */
+    showChart: boolean;
+    /**
+     * Flag to determine if the expand button should be shown or not.
+     */
+    shouldShowExpandButton: boolean;
+    /**
+     * Optional children to render inside the container.
+     * This can be used to pass additional components or elements.
+     */
+    children: React.ReactNode;
+};
+
+const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
+    showChart,
+    shouldShowExpandButton,
+    children,
+}) => {
     const dispatch = useAppDispatch();
 
     const { t } = useTranslation();
 
     const mode = useAppSelector(selectMapMode);
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
-    );
+    // const isSentinel2LayerOutOfVisibleRange = useAppSelector(
+    //     selectIsSentinel2LayerOutOfVisibleRange
+    // );
 
-    const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSatelliteImageryLayer
-    );
+    // const shouldShowSentinel2Layer = useAppSelector(
+    //     selectShouldShowSatelliteImageryLayer
+    // );
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const isAnimationControlVisible =
-        animationMode !== undefined && animationMode !== null;
+    // const isAnimationControlVisible =
+    //     animationMode !== undefined && animationMode !== null;
 
     const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers
@@ -65,22 +86,14 @@ const LandCoverGraphContainer = () => {
             return false;
         }
 
-        if (shouldShowSentinel2Layer) {
-            return isSentinel2LayerOutOfVisibleRange === false;
-        }
-
-        return true;
-    }, [
-        animationMode,
-        shouldShowSentinel2Layer,
-        isSentinel2LayerOutOfVisibleRange,
-    ]);
+        return showChart;
+    }, [animationMode, showChart]);
 
     const getSubtitle = () => {
         if (mode === 'swipe') {
             // return `from ${year4LeadingLayer} to ${year4TrailingLayer}`;
             return t('from_to_year', {
-                ns: APP_NAME, // Use the namespace for translation
+                // ns: APP_NAME, // Use the namespace for translation
                 fromYear: year4LeadingLayer, // Pass the leading year dynamically for translation,
                 toYear: year4TrailingLayer, // Pass the trailing year dynamically for translation
             });
@@ -88,7 +101,7 @@ const LandCoverGraphContainer = () => {
 
         // return `at ${year}`;
         return t('at_year', {
-            ns: APP_NAME, // Use the namespace for translation
+            // ns: APP_NAME, // Use the namespace for translation
             year: year, // Pass the year dynamically for translation
         });
     };
@@ -105,16 +118,20 @@ const LandCoverGraphContainer = () => {
             <HeaderText
                 title={`${
                     mode === 'swipe'
-                        ? t('Land_Cover_Change', { ns: APP_NAME })
-                        : t('Land_Cover_Totals', { ns: APP_NAME })
+                        ? t('Land_Cover_Change')
+                        : t('Land_Cover_Totals')
                 }`}
                 expandButtonTooltip={t('Expanded_Summary_Chart', {
-                    ns: APP_NAME,
+                    // ns: APP_NAME,
                 })} // Translate the tooltip for the expand button
                 subTitle={getSubtitle()}
-                expandButtonOnClick={() => {
-                    dispatch(showInfoPanelToggled(true));
-                }}
+                expandButtonOnClick={
+                    shouldShowExpandButton
+                        ? () => {
+                              dispatch(showInfoPanelToggled(true));
+                          }
+                        : undefined
+                }
             />
 
             {shouldShowChart === false ? (
@@ -123,28 +140,29 @@ const LandCoverGraphContainer = () => {
                         <p>
                             {' '}
                             {t('animation_graph_disabled_message', {
-                                ns: APP_NAME,
+                                // ns: APP_NAME,
                             })}
                         </p>
                     ) : (
                         <p>
                             {mode === 'swipe'
                                 ? t('zoom_to_see_change_graph', {
-                                      ns: APP_NAME,
+                                      //   ns: APP_NAME,
                                   })
                                 : t('zoom_to_see_totals_graph', {
-                                      ns: APP_NAME,
+                                      //   ns: APP_NAME,
                                   })}
                         </p>
                     )}
                 </div>
             ) : (
                 <div className="w-full h-40">
-                    {mode === 'swipe' ? (
+                    {/* {mode === 'swipe' ? (
                         <ChangeCompareGraph />
                     ) : (
                         <TotalAreaGraph />
-                    )}
+                    )} */}
+                    {children}
                 </div>
             )}
         </div>

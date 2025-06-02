@@ -273,6 +273,15 @@
     "zoom_in_to_enable_imagery_layer": "Zoom in to enable {{layerName}} Imagery",
     "swipe_mode_subtitle": "Choose Two Years to Compare",
     "animate_mode_subtitle": "Choose a Year to View",
-        "classes_selector_title": "Land Use/Land Cover Classes",
-    "classes_selector_subTitle": "Click to Toggle Visibility"
+    "classes_selector_title": "Land Use/Land Cover Classes",
+    "classes_selector_subTitle": "Click to Toggle Visibility",
+    "at_year": "at {{year}}",
+    "from_to_year": "from {{fromYear}} to {{toYear}}",
+    
+    "Land_Cover_Change": "Land Cover Change",
+    "Land_Cover_Totals": "Land Cover Totals",
+    "Expanded_Summary_Chart": "Expanded Summary Chart",
+    "animation_graph_disabled_message": "Graph is disabled when animation is on",
+    "zoom_to_see_change_graph": " Zoom in to see Land Cover Change Graph",
+    "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph"
 }

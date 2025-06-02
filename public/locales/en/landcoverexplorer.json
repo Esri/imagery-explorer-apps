@@ -60,8 +60,6 @@
     "animation_graph_disabled_message": "Graph is disabled when animation is on",
     "zoom_to_see_change_graph": " Zoom in to see Land Cover Change Graph",
     "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph",
-    "at_year": "at {{year}}",
-    "from_to_year": "from {{fromYear}} to {{toYear}}",
 
     "change_compare_graph_tooltip_template": "{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area.",
 
