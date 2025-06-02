@@ -11,8 +11,8 @@ export const NLCD_LANDCOVER_IMAGE_SERVICE_URL =
         : NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD;
 
 export enum NLCD_LANDCOVER_RASTER_FUNCTIONS {
-    DEVELOPED = 'Developed Renderer',
-    FOREST = 'Forest Renderer',
+    'DEVELOPED_HIGH_DENSITY' = 'Developed Renderer',
+    'MIXED_FOREST' = 'Forest Renderer',
     SATURATED_CARTOGRAPHIC = 'Saturated Cartographic and Analytic Renderer',
 }
 

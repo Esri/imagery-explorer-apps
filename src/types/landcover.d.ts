@@ -10,7 +10,9 @@ export type Sentinel2LandCoverClassification =
     | 'Rangeland'
     | 'No Data';
 
-export type NLCDLandCoverClassification = 'Developed' | 'Forest';
+export type NLCDLandCoverClassification =
+    | 'Developed High Intensity'
+    | 'Mixed Forest';
 
 export type LandCoverClassification =
     | Sentinel2LandCoverClassification

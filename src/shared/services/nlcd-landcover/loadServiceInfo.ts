@@ -14,14 +14,13 @@
  */
 
 import { loadTimeInfo } from '../sentinel-2-10m-landcover/timeInfo';
+import { getNLCDLandCoverRasterAttributeTable } from './classifications';
 import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from './config';
-// import { loadRasterAttributeTable } from './rasterAttributeTable';
-// import { loadTimeInfo } from './timeInfo';
 
 /**
  * Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer
  */
 export const loadNLCDLandcoverServiceInfo = async () => {
-    // await loadRasterAttributeTable();
+    await getNLCDLandCoverRasterAttributeTable();
     await loadTimeInfo(NLCD_LANDCOVER_IMAGE_SERVICE_URL);
 };
