@@ -32,6 +32,7 @@ export const NLCDLandCoverSummaryGraph = () => {
         <LandCoverSummaryGraphContainer
             showChart={shouldShowChart}
             shouldShowExpandButton={false}
+            width={500}
         >
             {mode === 'swipe' ? (
                 <ChangeCompareGraph
@@ -42,6 +43,7 @@ export const NLCDLandCoverSummaryGraph = () => {
                     mapOfLandCoverClassificationPixelValues={
                         mapOfLandCoverClassificationPixelValues
                     }
+                    scale="s"
                 />
             ) : (
                 <TotalAreaGraph
@@ -52,6 +54,7 @@ export const NLCDLandCoverSummaryGraph = () => {
                     mapOfLandCoverClassificationPixelValues={
                         mapOfLandCoverClassificationPixelValues
                     }
+                    scale="s"
                 />
             )}
         </LandCoverSummaryGraphContainer>

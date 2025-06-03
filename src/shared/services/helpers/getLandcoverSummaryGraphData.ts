@@ -208,6 +208,10 @@ export const getLandCoverAreaByYear = async ({
                 continue;
             }
 
+            if (areaInPercentage < 0.1) {
+                continue; // Skip very small areas
+            }
+
             output.push({
                 area: areaInAcres,
                 areaInPercentage: formatAreaPercentage(areaInPercentage),
@@ -312,6 +316,14 @@ export const getLandCoverChangeInAcres = async ({
 
             const laterYearAreaInPercentage =
                 (laterYearAreaInAcres / totalAreaLaterYear) * 100;
+
+            if (
+                Math.abs(
+                    laterYearAreaInPercentage - earlierYearAreaInPercentage
+                ) < 0.1
+            ) {
+                continue; // Skip very small areas
+            }
 
             output.push({
                 landcoverClassificationData,

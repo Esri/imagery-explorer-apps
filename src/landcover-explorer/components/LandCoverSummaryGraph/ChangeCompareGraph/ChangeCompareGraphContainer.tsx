@@ -75,12 +75,17 @@ type Props = {
         number,
         LandcoverClassificationData
     >;
+    /**
+     * Szie of the chart
+     */
+    scale?: 's' | 'm';
 };
 
 export const ChangeCompareGraphContainer: FC<Props> = ({
     serviceUrl,
     rasterFunction,
     mapOfLandCoverClassificationPixelValues,
+    scale = 'm',
 }) => {
     const dispatch = useAppDispatch();
 
@@ -233,6 +238,7 @@ export const ChangeCompareGraphContainer: FC<Props> = ({
         <ChangeCompareGraph
             data={chartData}
             itemOnHover={openTooltipForItemOnHover}
+            scale={scale}
         />
     );
 };

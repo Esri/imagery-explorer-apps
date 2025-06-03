@@ -49,11 +49,16 @@ type LandCoverGraphContainerProps = {
      * This can be used to pass additional components or elements.
      */
     children: React.ReactNode;
+    /**
+     * The fixed width of the container. In pixels.
+     */
+    width?: number;
 };
 
 export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
     showChart,
     shouldShowExpandButton,
+    width,
     children,
 }) => {
     const dispatch = useAppDispatch();
@@ -106,14 +111,29 @@ export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
         });
     };
 
+    const containerStyle = useMemo(() => {
+        if (width === undefined) {
+            return undefined;
+        }
+
+        return {
+            width: `${width}px`,
+        };
+    }, [width]);
+
     return (
         <div
             className={classNames(
-                'text-center mx-6 w-auto 2xl:w-96',
-                'pb-8 md:pb-0' // in mobile view, we need to add some padding space at the bottom because this component is the last one in the bottom panel
-                // 'md:w-64': isAnimationControlVisible,
-                // 'md:w-96': isAnimationControlVisible === false,
+                'text-center mx-6',
+                'pb-8 md:pb-0', // in mobile view, we need to add some padding space at the bottom because this component is the last one in the bottom panel
+                {
+                    'w-full': width === undefined,
+                    '2xl:w-96': width === undefined, // Default width for larger screens
+                    // 'w-[470px]': wider === true, // Default width for wider prop
+                    // '2xl:w-[470px]': wider === true, // Make the container wider if the wider prop is true
+                }
             )}
+            style={containerStyle}
         >
             <HeaderText
                 title={`${

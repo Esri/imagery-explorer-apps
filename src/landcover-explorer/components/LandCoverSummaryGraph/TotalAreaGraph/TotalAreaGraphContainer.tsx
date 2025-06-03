@@ -53,12 +53,17 @@ type Props = {
         number,
         LandcoverClassificationData
     >;
+    /**
+     * Szie of the chart
+     */
+    scale?: 's' | 'm';
 };
 
 export const TotalAreaGraphContainer: FC<Props> = ({
     serviceUrl,
     rasterFunction,
     mapOfLandCoverClassificationPixelValues,
+    scale = 'm',
 }) => {
     const dispatch = useAppDispatch();
 
@@ -166,7 +171,11 @@ export const TotalAreaGraphContainer: FC<Props> = ({
     }, [resolution, extent, year, zoom]);
 
     return (
-        <TotalsGraph data={chartData} itemOnHover={openTooltipForItemOnHover} />
+        <TotalsGraph
+            data={chartData}
+            itemOnHover={openTooltipForItemOnHover}
+            scale={scale}
+        />
     );
 };
 

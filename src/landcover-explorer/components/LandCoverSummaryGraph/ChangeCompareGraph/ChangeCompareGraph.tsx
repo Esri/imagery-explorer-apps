@@ -23,13 +23,20 @@ import { DivergingBarChartDataItem } from '@vannizhang/react-d3-charts/dist/Dive
 
 type Props = {
     data: DivergingBarChartDataItem[];
+    scale?: 's' | 'm';
     itemOnHover: (index: number) => void;
 };
 
-const ChangeCompareGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
+const ChangeCompareGraph: FC<Props> = ({
+    data,
+    scale = 'm',
+    itemOnHover,
+}: Props) => {
     const containerRef = useRef<HTMLDivElement>();
 
     useGetTooltipPositionOnHover(containerRef);
+
+    const chartTextFontSize = scale === 'm' ? '11px' : '.625rem';
 
     const customDomain4YScale = useMemo(() => {
         if (!data) {
@@ -93,8 +100,8 @@ const ChangeCompareGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
                 {
                     '--axis-tick-line-color': 'rgba(0,0,0,0)',
                     '--axis-tick-text-color': 'var(--custom-light-blue-90)',
-                    '--axis-tick-text-font-size': '11px',
-                    '--bar-label-text-font-size': '11px',
+                    '--axis-tick-text-font-size': chartTextFontSize,
+                    '--bar-label-text-font-size': chartTextFontSize,
                     '--bar-label-text-color': 'var(--custom-light-blue-90)',
                     '--divider-line-color': 'var(--custom-light-blue-25)',
                 } as React.CSSProperties

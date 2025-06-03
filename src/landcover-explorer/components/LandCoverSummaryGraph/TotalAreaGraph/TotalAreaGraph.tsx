@@ -25,13 +25,20 @@ import { BarChartDataItem } from '@vannizhang/react-d3-charts/dist/BarChart/type
 
 type Props = {
     data: BarChartDataItem[];
+    scale?: 's' | 'm';
     itemOnHover: (index: number) => void;
 };
 
-const TotalAreaGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
+const TotalAreaGraph: FC<Props> = ({
+    data,
+    scale = 'm',
+    itemOnHover,
+}: Props) => {
     const containerRef = useRef<HTMLDivElement>();
 
     useGetTooltipPositionOnHover(containerRef);
+
+    const chartTextFontSize = scale === 'm' ? '11px' : '.625rem';
 
     const getContent = () => {
         if (!data) {
@@ -93,8 +100,8 @@ const TotalAreaGraph: FC<Props> = ({ data, itemOnHover }: Props) => {
                 {
                     '--axis-tick-line-color': 'var(--custom-light-blue-50)',
                     '--axis-tick-text-color': 'var(--custom-light-blue-90)',
-                    '--axis-tick-text-font-size': '11px',
-                    '--bar-label-text-font-size': '11px',
+                    '--axis-tick-text-font-size': chartTextFontSize,
+                    '--bar-label-text-font-size': chartTextFontSize,
                     '--bar-label-text-color': 'var(--custom-light-blue-90)',
                     '--bar-label-text-translate-y-position-sticky': '-22px',
                 } as React.CSSProperties
