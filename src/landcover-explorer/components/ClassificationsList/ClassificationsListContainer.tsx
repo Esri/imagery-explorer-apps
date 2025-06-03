@@ -41,7 +41,7 @@ type Props = {
 
 export const ClassificationsListContainer: FC<Props> = ({
     classificationData,
-    numberOfColumns = 3, // Default to 3 columns if not provided
+    // numberOfColumns = 3, // Default to 3 columns if not provided
     scale = 'm', // Default to medium scale if not provided
 }) => {
     const dispatch = useAppDispatch();
@@ -62,7 +62,7 @@ export const ClassificationsListContainer: FC<Props> = ({
         <ClassificationsList
             selectedLandCover={activeLandCoverType}
             disabled={animationMode !== null}
-            numberOfColumns={numberOfColumns}
+            // numberOfColumns={numberOfColumns}
             activeLandCoverOnChange={(newVal) => {
                 dispatch(activeLandCoverTypeChanged(newVal));
             }}

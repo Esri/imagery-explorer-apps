@@ -273,8 +273,8 @@
     "zoom_in_to_enable_imagery_layer": "Zoom in to enable {{layerName}} Imagery",
     "swipe_mode_subtitle": "Choose Two Years to Compare",
     "animate_mode_subtitle": "Choose a Year to View",
-    "classes_selector_title": "Land Use/Land Cover Classes",
-    "classes_selector_subTitle": "Click to Toggle Visibility",
+    "classes_selector_title": "Classes",
+    "classes_selector_subTitle": "Click to Choose",
     "at_year": "at {{year}}",
     "from_to_year": "from {{fromYear}} to {{toYear}}",
     

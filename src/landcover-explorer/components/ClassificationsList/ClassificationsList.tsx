@@ -34,10 +34,10 @@ type Props = {
      * a specific land cover type selected by the user that will be used to filter the Land Cover Layer
      */
     selectedLandCover: LandCoverClassification;
-    /**
-     * number of columns in the grid, default is 3
-     */
-    numberOfColumns?: 2 | 3; // Optional prop to specify the number of columns in the grid
+    // /**
+    //  * number of columns in the grid, default is 3
+    //  */
+    // numberOfColumns?: 2 | 3; // Optional prop to specify the number of columns in the grid
     /**
      * The scale of the component, can be 's' for small or 'm' for medium
      */
@@ -59,7 +59,7 @@ type Props = {
 const ClassificationsList: FC<Props> = ({
     data,
     selectedLandCover,
-    numberOfColumns = 3, // Default to 3 columns if not provided
+    // numberOfColumns = 3, // Default to 3 columns if not provided
     scale = 'm', // Default scale is medium
     itemOnHover,
     activeLandCoverOnChange,
@@ -84,10 +84,11 @@ const ClassificationsList: FC<Props> = ({
                     'mt-0', // only add top margin space for the desktop view
                     {
                         'disabled-when-animation-mode-is-on': disabled,
-                        'grid-cols-3': numberOfColumns === 3,
-                        'h-28': numberOfColumns === 3,
-                        'grid-cols-2': numberOfColumns === 2,
-                        'h-[140px]': numberOfColumns === 2,
+                        'grid-cols-3': scale === 'm',
+                        'h-28': scale === 'm',
+                        '2xl:grid-cols-2': scale === 's',
+                        'md:grid-cols-1': scale === 's',
+                        'h-[140px]': scale === 's',
                         'md:mt-8': scale === 'm', // Add top margin for medium scale
                         'md:mt-3': scale === 's', // Add top margin for small scale
                     }
