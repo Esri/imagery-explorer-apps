@@ -43,6 +43,7 @@ import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 import { getPreloadedStateForLandcoverExplorerApp } from '@landcover-explorer/store/getPreloadedState';
 import { LandcoverExplorerAppState } from '@shared/store/LandcoverExplorer/reducer';
+import { getMapCenterFromHashParams } from '@landcover-explorer/utils/URLHashParams';
 
 const isMobileView = isMobileDevice();
 
@@ -76,12 +77,12 @@ const getPreloadedStateForNLCDLandcoverExplorerApp =
 // };
 
 const getPreloadedMapState = (): MapState => {
-    // const { zoom, center } = getMapCenterFromHashParams() || {};
+    const { zoom, center } = getMapCenterFromHashParams() || {};
 
     return {
         ...initialMapState,
-        zoom: DEFAULT_MAP_ZOOM,
-        center: getRandomElement(DEFAULT_MAP_CENTERS),
+        zoom: zoom || DEFAULT_MAP_ZOOM,
+        center: center || getRandomElement(DEFAULT_MAP_CENTERS),
     };
 };
 

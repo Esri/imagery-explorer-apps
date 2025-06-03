@@ -40,7 +40,7 @@ export const AppLayout = () => {
         selectShouldShowSatelliteImageryLayer
     );
 
-    // useSaveAppState2HashParams();
+    useSaveAppState2HashParams();
     useRevalidateToken();
 
     return (
