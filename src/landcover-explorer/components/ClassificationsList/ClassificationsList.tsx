@@ -35,6 +35,10 @@ type Props = {
      */
     selectedLandCover: LandCoverClassification;
     /**
+     * number of columns in the grid, default is 3
+     */
+    numberOfColumns?: 2 | 3; // Optional prop to specify the number of columns in the grid
+    /**
      * Fires when user clicks a land cover item in the list
      */
     activeLandCoverOnChange: (data?: LandCoverClassification) => void;
@@ -51,6 +55,7 @@ type Props = {
 const ClassificationsList: FC<Props> = ({
     data,
     selectedLandCover,
+    numberOfColumns = 3, // Default to 3 columns if not provided
     itemOnHover,
     activeLandCoverOnChange,
     disabled,
@@ -72,9 +77,16 @@ const ClassificationsList: FC<Props> = ({
 
             <div
                 className={classNames(
-                    'grid grid-cols-3 h-28 text-sm',
+                    'grid text-sm',
+                    'overflow-y-auto fancy-scrollbar',
                     'mt-0 md:mt-8', // only add top margin space for the desktop view
-                    { 'disabled-when-animation-mode-is-on': disabled }
+                    {
+                        'disabled-when-animation-mode-is-on': disabled,
+                        'grid-cols-3': numberOfColumns === 3,
+                        'h-28': numberOfColumns === 3,
+                        'grid-cols-2': numberOfColumns === 2,
+                        'h-[140px]': numberOfColumns === 2,
+                    }
                 )}
             >
                 {data
@@ -137,7 +149,7 @@ const ClassificationsList: FC<Props> = ({
                                     }}
                                 ></div>
 
-                                <span className="ml-2 text-xs 2xl:text-sm">
+                                <span className="ml-2 text-xs 2xl:text-sm text-ellipsis">
                                     {/* {ClassName} */}
                                     {classNameTranslated}
                                 </span>

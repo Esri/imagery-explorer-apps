@@ -8,5 +8,10 @@ export const NLCDClassificationList = () => {
         return getNLCDLandCoverClassifications();
     }, []);
 
-    return <ClassificationsList classificationData={classificationData} />;
+    return (
+        <ClassificationsList
+            classificationData={classificationData}
+            numberOfColumns={2}
+        />
+    );
 };

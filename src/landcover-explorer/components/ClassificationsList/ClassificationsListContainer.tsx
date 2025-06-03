@@ -29,10 +29,15 @@ import { LandcoverClassificationData } from '@typing/landcover';
 
 type Props = {
     classificationData: LandcoverClassificationData[];
+    /**
+     * number of columns in the grid, default is 3
+     */
+    numberOfColumns?: 2 | 3; // Optional prop to specify the number of columns in the grid
 };
 
 export const ClassificationsListContainer: FC<Props> = ({
     classificationData,
+    numberOfColumns = 3, // Default to 3 columns if not provided
 }) => {
     const dispatch = useAppDispatch();
 
@@ -52,6 +57,7 @@ export const ClassificationsListContainer: FC<Props> = ({
         <ClassificationsList
             selectedLandCover={activeLandCoverType}
             disabled={animationMode !== null}
+            numberOfColumns={numberOfColumns}
             activeLandCoverOnChange={(newVal) => {
                 dispatch(activeLandCoverTypeChanged(newVal));
             }}
