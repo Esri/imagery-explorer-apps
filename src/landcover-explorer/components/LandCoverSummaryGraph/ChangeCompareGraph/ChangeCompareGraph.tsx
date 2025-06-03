@@ -76,9 +76,9 @@ const ChangeCompareGraph: FC<Props> = ({
                 }}
                 margin={{
                     top: 20,
-                    right: 10,
+                    right: 5,
                     bottom: 50,
-                    left: 20,
+                    left: 25,
                 }}
                 innerPadding={0.4}
                 onBarMouseEnter={(d) => {

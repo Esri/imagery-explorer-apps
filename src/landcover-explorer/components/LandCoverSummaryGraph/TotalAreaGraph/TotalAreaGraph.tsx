@@ -83,9 +83,9 @@ const TotalAreaGraph: FC<Props> = ({
                     innerPadding={0.4}
                     margin={{
                         top: 35,
-                        right: 10,
+                        right: 5,
                         bottom: 50,
-                        left: 20,
+                        left: 25,
                     }}
                 />
             </div>
