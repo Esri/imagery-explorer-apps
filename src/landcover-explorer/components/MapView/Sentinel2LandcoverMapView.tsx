@@ -10,6 +10,7 @@ import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import Popup from '../Popup/Popup';
 import { useSentinel2LandCoverLayerRasterFunctionName } from '../LandcoverLayer/useSentinel2LandCoverLayerRasterFunctionName';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
+import { SENTINEL2_NATIVE_SCALE } from '@shared/services/sentinel-2/config';
 
 export const Sentinel2LandcoverMapView = () => {
     const { t } = useTranslation();
@@ -27,6 +28,7 @@ export const Sentinel2LandcoverMapView = () => {
             isSatelliteImageryOutOfVisibleRange={
                 isSentinel2LayerOutOfVisibleRange
             } // This should be derived from state or props
+            nativeScale={SENTINEL2_NATIVE_SCALE} // Sentinel-2 10m resolution
         >
             <SwipeWidget4Landcover
                 serviceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}

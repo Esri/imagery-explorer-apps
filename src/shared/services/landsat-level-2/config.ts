@@ -355,3 +355,5 @@ export const LANDSAT_BAND_NAMES = [
 export const LANDSAT_LEVEL_2_SERVICE_SORT_FIELD = 'best';
 
 export const LANDSAT_LEVEL_2_SERVICE_SORT_VALUE = '0';
+
+export const LANDSAT_NATIVE_SCALE = 113386;

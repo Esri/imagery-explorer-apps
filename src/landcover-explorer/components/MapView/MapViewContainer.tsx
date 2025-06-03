@@ -67,12 +67,14 @@ type MapViewContainerProps = {
     nameOfSatelliteImageryLayer: string;
     isSatelliteImageryOutOfVisibleRange: boolean;
     children?: React.ReactNode;
+    nativeScale: number;
 };
 
 export const MapViewContainer: FC<MapViewContainerProps> = ({
     attribution,
     nameOfSatelliteImageryLayer,
     isSatelliteImageryOutOfVisibleRange,
+    nativeScale,
     children,
 }) => {
     const { t } = useTranslation();
@@ -149,7 +151,9 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                     })}
                 />
 
-                <MapActionButtonGroup4LandcoverExplorer />
+                <MapActionButtonGroup4LandcoverExplorer
+                    nativeScale={nativeScale}
+                />
 
                 {/* <SwipeWidget4Landcover />
                 <SwipeWidget4Sentinel2 />

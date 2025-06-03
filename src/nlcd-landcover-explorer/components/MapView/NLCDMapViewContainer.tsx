@@ -9,6 +9,7 @@ import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcove
 import { useNLCDLandCoverLayerRasterFunctionName } from '../NLCDLandcoverLayer/useNLCDLandCoverLayerRasterFunctionName';
 import { LandsatLayer } from '../LandsatLayer/LandsatLayer';
 import { SwipeWidget4LandsatLayers } from '../SwipeWidget/SwipeWidget4Landsat';
+import { LANDSAT_NATIVE_SCALE } from '@shared/services/landsat-level-2/config';
 
 export const NLCDLandcoverMapViewContainer = () => {
     const { t } = useTranslation();
@@ -18,8 +19,9 @@ export const NLCDLandcoverMapViewContainer = () => {
     return (
         <LandcoverExplorerMapViewContainer
             attribution={t('map_attribution', { ns: APP_NAME })}
-            nameOfSatelliteImageryLayer={'Sentinel-2'}
+            nameOfSatelliteImageryLayer={'Landsat'}
             isSatelliteImageryOutOfVisibleRange={false} // This should be derived from state or props
+            nativeScale={LANDSAT_NATIVE_SCALE}
         >
             {/* 
             <Popup /> */}

@@ -26,10 +26,15 @@ import { useTranslation } from 'react-i18next';
 
 type Props = {
     mapView?: MapView;
+    /**
+     * The native scale of the land cover layer.
+     */
+    nativeScale: number;
 };
 
 export const MapActionButtonGroup4LandcoverExplorer: FC<Props> = ({
     mapView,
+    nativeScale,
 }) => {
     const { t } = useTranslation();
 
@@ -41,7 +46,7 @@ export const MapActionButtonGroup4LandcoverExplorer: FC<Props> = ({
             <ZoomWidget mapView={mapView} />
             <Zoom2NativeScale
                 mapView={mapView}
-                nativeScale={37795}
+                nativeScale={nativeScale}
                 tooltip={t('zoom_to_native_resolution', { ns: APP_NAME })}
             />
             <ScreenshotWidget mapView={mapView} />
