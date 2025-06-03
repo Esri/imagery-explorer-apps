@@ -81,13 +81,15 @@ const ClassificationsList: FC<Props> = ({
                 className={classNames(
                     'grid gap-1 text-sm',
                     'overflow-y-auto fancy-scrollbar',
-                    'mt-0 md:mt-8', // only add top margin space for the desktop view
+                    'mt-0', // only add top margin space for the desktop view
                     {
                         'disabled-when-animation-mode-is-on': disabled,
                         'grid-cols-3': numberOfColumns === 3,
                         'h-28': numberOfColumns === 3,
                         'grid-cols-2': numberOfColumns === 2,
                         'h-[140px]': numberOfColumns === 2,
+                        'md:mt-8': scale === 'm', // Add top margin for medium scale
+                        'md:mt-3': scale === 's', // Add top margin for small scale
                     }
                 )}
             >
