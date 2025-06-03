@@ -11,8 +11,26 @@ export type Sentinel2LandCoverClassification =
     | 'No Data';
 
 export type NLCDLandCoverClassification =
+    | 'Open Water'
+    | 'Perennial Snow/Ice'
+    | 'Developed Open Space'
+    | 'Developed Low Intensity'
+    | 'Developed Medium Intensity'
     | 'Developed High Intensity'
-    | 'Mixed Forest';
+    | 'Barren Land'
+    | 'Deciduous Forest'
+    | 'Evergreen Forest'
+    | 'Mixed Forest'
+    | 'Dwarf Scrub'
+    | 'Shrub/Scrub'
+    | 'Grassland/Herbaceous'
+    | 'Sedge/Herbaceous'
+    | 'Lichens'
+    | 'Moss'
+    | 'Pasture/Hay'
+    | 'Cultivated Crops'
+    | 'Woody Wetlands'
+    | 'Emergent Herbaceous Wetlands';
 
 export type LandCoverClassification =
     | Sentinel2LandCoverClassification

@@ -11,11 +11,55 @@ import { getRasterAttributeTable } from '../helpers/getRasterAttributeTable';
 
 const RasterFunctionsByClassificationName: Record<
     NLCDLandCoverClassification,
-    string
+    string | null
 > = {
+    'Open Water': null,
+    'Perennial Snow/Ice': null,
+    'Developed Open Space': null,
+    'Developed Low Intensity': null,
+    'Developed Medium Intensity': null,
     'Developed High Intensity':
         NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_HIGH_DENSITY,
+    'Barren Land': null,
+    'Deciduous Forest': null,
+    'Evergreen Forest': null,
     'Mixed Forest': NLCD_LANDCOVER_RASTER_FUNCTIONS.MIXED_FOREST,
+    'Dwarf Scrub': null,
+    'Shrub/Scrub': null,
+    'Grassland/Herbaceous': null,
+    'Sedge/Herbaceous': null,
+    Lichens: null,
+    Moss: null,
+    'Pasture/Hay': null,
+    'Cultivated Crops': null,
+    'Woody Wetlands': null,
+    'Emergent Herbaceous Wetlands': null,
+};
+
+const NLCDLandCoverClassificationShortNames: Record<
+    NLCDLandCoverClassification,
+    string
+> = {
+    'Open Water': 'Water',
+    'Perennial Snow/Ice': 'Snow',
+    'Developed Open Space': 'Dev Open',
+    'Developed Low Intensity': 'Dev Low',
+    'Developed Medium Intensity': 'Dev Med',
+    'Developed High Intensity': 'Dev High',
+    'Barren Land': 'Barren',
+    'Deciduous Forest': 'Decid',
+    'Evergreen Forest': 'Evergrn',
+    'Mixed Forest': 'Mixed',
+    'Dwarf Scrub': 'Dwarf',
+    'Shrub/Scrub': 'Shrub',
+    'Grassland/Herbaceous': 'Grass',
+    'Sedge/Herbaceous': 'Sedge',
+    Lichens: 'Lichen',
+    Moss: 'Moss',
+    'Pasture/Hay': 'Pasture',
+    'Cultivated Crops': 'Crops',
+    'Woody Wetlands': 'Wood Wet',
+    'Emergent Herbaceous Wetlands': 'Herb Wet',
 };
 
 /**
@@ -84,7 +128,9 @@ const getLandCoverClassificationShortName = (
     //         LandcoverClassificationShortNames[classification] || classification,
     // });
 
-    return classification; // For now, just return the classification name directly
+    return (
+        NLCDLandCoverClassificationShortNames[classification] || classification
+    ); // For now, just return the classification name directly
 };
 
 /**
