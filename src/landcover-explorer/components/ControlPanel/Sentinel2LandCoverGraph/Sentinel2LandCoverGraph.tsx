@@ -18,31 +18,31 @@ import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentin
 export const Sentinel2LandCoverGraph = () => {
     const mode = useAppSelector(selectMapMode);
 
-    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
-        selectIsSatelliteImageryLayerOutOfVisibleRange
-    );
+    // const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+    //     selectIsSatelliteImageryLayerOutOfVisibleRange
+    // );
 
-    const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSatelliteImageryLayer
-    );
+    // const shouldShowSentinel2Layer = useAppSelector(
+    //     selectShouldShowSatelliteImageryLayer
+    // );
 
-    const animationMode = useAppSelector(selectAnimationStatus);
+    // const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowChart = useMemo(() => {
-        if (animationMode) {
-            return false;
-        }
+    // const shouldShowChart = useMemo(() => {
+    //     if (animationMode) {
+    //         return false;
+    //     }
 
-        if (shouldShowSentinel2Layer) {
-            return isSatelliteImagertLayerOutOfVisibleRange === false;
-        }
+    //     if (shouldShowSentinel2Layer) {
+    //         return isSatelliteImagertLayerOutOfVisibleRange === false;
+    //     }
 
-        return true;
-    }, [
-        animationMode,
-        shouldShowSentinel2Layer,
-        isSatelliteImagertLayerOutOfVisibleRange,
-    ]);
+    //     return true;
+    // }, [
+    //     animationMode,
+    //     shouldShowSentinel2Layer,
+    //     isSatelliteImagertLayerOutOfVisibleRange,
+    // ]);
 
     const mapOfLandCoverClassificationPixelValues = useMemo(() => {
         return sentinel2LandcoverClassificationDataMap;
@@ -50,7 +50,7 @@ export const Sentinel2LandCoverGraph = () => {
 
     return (
         <LandCoverGraphContainer
-            showChart={shouldShowChart}
+            // showChart={shouldShowChart}
             shouldShowExpandButton={true}
         >
             {mode === 'swipe' ? (

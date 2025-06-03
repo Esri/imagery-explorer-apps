@@ -82,7 +82,7 @@ const MapInfoIndicators: FC<Props> = ({
         selectShowSwipeWidgetYearIndicator
     );
 
-    const shouldShowSentinel2Layer = useAppSelector(
+    const shouldShowSatellteLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
 
@@ -110,12 +110,12 @@ const MapInfoIndicators: FC<Props> = ({
                 }}
             >
                 {isUpdating &&
-                    shouldShowSentinel2Layer &&
+                    shouldShowSatellteLayer &&
                     isSatelliteImagertLayerOutOfVisibleRange === false && (
                         <Sentinel2LoadingIndicator />
                     )}
 
-                {shouldShowSentinel2Layer &&
+                {shouldShowSatellteLayer &&
                     isSatelliteImagertLayerOutOfVisibleRange && (
                         <div className={MessageClassNames}>
                             {t('zoom_in_to_enable_imagery_layer', {
@@ -160,7 +160,7 @@ const MapInfoIndicators: FC<Props> = ({
                     </div>
                 )}
 
-                {isUpdating && shouldShowSentinel2Layer && (
+                {isUpdating && shouldShowSatellteLayer && (
                     <Sentinel2LoadingIndicator />
                 )}
             </div>

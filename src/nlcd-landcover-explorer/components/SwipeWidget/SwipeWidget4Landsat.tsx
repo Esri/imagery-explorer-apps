@@ -45,8 +45,14 @@ export const SwipeWidget4LandsatLayers: FC<Props> = ({ mapView }) => {
         selectShouldShowSatelliteImageryLayer
     );
 
+    const isSatelliteImageryLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
+    );
+
     const isSwipeWidgetVisible =
-        mode === 'swipe' && shouldShowSatelliteImageryLayer === true;
+        mode === 'swipe' &&
+        shouldShowSatelliteImageryLayer === true &&
+        isSatelliteImageryLayerOutOfVisibleRange === false;
 
     const leadingLayer = useLandsatLayer({
         year: year4LeadingLayer,

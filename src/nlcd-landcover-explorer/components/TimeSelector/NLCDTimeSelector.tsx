@@ -13,6 +13,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NLCDTimeSelectorHeader } from './NLCDTimeSelectorHeader';
 import { AcquisitionMonthPickerStepMode } from '@landcover-explorer/components/TimeSelector/AcquisitionMonthPicker/AcquisitionMonthPickerStepMode';
+import { SatelliteImageryLayerOutOfVisibleRangeWarning } from '@landcover-explorer/components/TimeSelector/SatelliteImageryLayerOutOfVisibleRangeWarning';
 
 export const NLCDTimeSelector = () => {
     const { t } = useTranslation();
@@ -47,6 +48,8 @@ export const NLCDTimeSelector = () => {
                     shouldShowMonthPicker={shouldShowMonthPicker}
                 />
             </div>
+
+            <SatelliteImageryLayerOutOfVisibleRangeWarning satelliteName="Landsat" />
         </div>
     );
 };

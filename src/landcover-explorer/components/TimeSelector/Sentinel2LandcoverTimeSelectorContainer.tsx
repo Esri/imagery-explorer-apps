@@ -33,7 +33,7 @@ import {
 // import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
 import { TimeSliderWidgetContainer } from './TimeSliderWidget';
 import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
-import { Sentinel2OutOfVisibleRangeWarning } from './Sentinel2OutOfVisibleRangeWarning';
+import { SatelliteImageryLayerOutOfVisibleRangeWarning } from './SatelliteImageryLayerOutOfVisibleRangeWarning';
 // import { AnimationControls } from '../AnimationAndExportControls/AnimationStatusControls';
 import { AnimationAndExportControls } from '../AnimationAndExportControls/AnimationAndExportControls';
 // import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
@@ -73,7 +73,7 @@ export const Sentinel2LandcoverTimeSelectorContainer = () => {
                 />
             </div>
 
-            <Sentinel2OutOfVisibleRangeWarning />
+            <SatelliteImageryLayerOutOfVisibleRangeWarning satelliteName="Sentinel-2" />
         </div>
     );
 };

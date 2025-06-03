@@ -10,17 +10,24 @@ import { useNLCDLandCoverLayerRasterFunctionName } from '../NLCDLandcoverLayer/u
 import { LandsatLayer } from '../LandsatLayer/LandsatLayer';
 import { SwipeWidget4LandsatLayers } from '../SwipeWidget/SwipeWidget4Landsat';
 import { LANDSAT_NATIVE_SCALE } from '@shared/services/landsat-level-2/config';
+import { selectIsSatelliteImageryLayerOutOfVisibleRange } from '@shared/store/LandcoverExplorer/selectors';
 
 export const NLCDLandcoverMapViewContainer = () => {
     const { t } = useTranslation();
 
     const rasterFunctionName = useNLCDLandCoverLayerRasterFunctionName();
 
+    const isSatelliteImageryLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
+    );
+
     return (
         <LandcoverExplorerMapViewContainer
             attribution={t('map_attribution', { ns: APP_NAME })}
             nameOfSatelliteImageryLayer={'Landsat'}
-            isSatelliteImageryOutOfVisibleRange={false} // This should be derived from state or props
+            isSatelliteImageryOutOfVisibleRange={
+                isSatelliteImageryLayerOutOfVisibleRange
+            }
             nativeScale={LANDSAT_NATIVE_SCALE}
         >
             {/* 

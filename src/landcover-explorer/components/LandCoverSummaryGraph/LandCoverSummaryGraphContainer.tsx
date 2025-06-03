@@ -35,11 +35,11 @@ import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 
 type LandCoverGraphContainerProps = {
-    /**
-     * Flag to determine if the chart should be shown or not.
-     * This is used to control the visibility of the chart based on various conditions.
-     */
-    showChart: boolean;
+    // /**
+    //  * Flag to determine if the chart should be shown or not.
+    //  * This is used to control the visibility of the chart based on various conditions.
+    //  */
+    // showChart: boolean;
     /**
      * Flag to determine if the expand button should be shown or not.
      */
@@ -56,7 +56,7 @@ type LandCoverGraphContainerProps = {
 };
 
 export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
-    showChart,
+    // showChart,
     shouldShowExpandButton,
     width,
     children,
@@ -67,13 +67,13 @@ export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
 
     const mode = useAppSelector(selectMapMode);
 
-    // const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
-    //     selectIsSatelliteImageryLayerOutOfVisibleRange
-    // );
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
+    );
 
-    // const shouldShowSentinel2Layer = useAppSelector(
-    //     selectShouldShowSatelliteImageryLayer
-    // );
+    const showSatelliteImagery = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
+    );
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
@@ -91,8 +91,18 @@ export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
             return false;
         }
 
-        return showChart;
-    }, [animationMode, showChart]);
+        if (showSatelliteImagery) {
+            return !isSatelliteImagertLayerOutOfVisibleRange;
+        }
+
+        return true;
+
+        // return showChart;
+    }, [
+        animationMode,
+        showSatelliteImagery,
+        isSatelliteImagertLayerOutOfVisibleRange,
+    ]);
 
     const getSubtitle = () => {
         if (mode === 'swipe') {

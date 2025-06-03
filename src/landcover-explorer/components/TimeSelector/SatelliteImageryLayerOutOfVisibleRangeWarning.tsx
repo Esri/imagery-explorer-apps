@@ -17,12 +17,18 @@ import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
 } from '@shared/store/LandcoverExplorer/selectors';
-import React from 'react';
+import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 
-export const Sentinel2OutOfVisibleRangeWarning = () => {
+type SatelliteImageryLayerOutOfVisibleRangeWarningProps = {
+    satelliteName: string;
+};
+
+export const SatelliteImageryLayerOutOfVisibleRangeWarning: FC<
+    SatelliteImageryLayerOutOfVisibleRangeWarningProps
+> = ({ satelliteName }) => {
     const mode = useAppSelector(selectMapMode);
 
     const { t } = useTranslation();
@@ -39,8 +45,8 @@ export const Sentinel2OutOfVisibleRangeWarning = () => {
         <div className="mt-6 text-center text-sm opacity-50">
             <p>
                 {mode === 'swipe'
-                    ? t('swipe_mode_zoom_message', { ns: APP_NAME })
-                    : t('animate_mode_zoom_message', { ns: APP_NAME })}
+                    ? t('swipe_mode_zoom_message', { layerName: satelliteName })
+                    : t('animate_mode_zoom_message')}
             </p>
         </div>
     );

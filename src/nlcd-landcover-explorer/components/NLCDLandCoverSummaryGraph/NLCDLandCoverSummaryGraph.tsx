@@ -7,7 +7,10 @@ import {
     NLCD_LANDCOVER_IMAGE_SERVICE_URL,
 } from '@shared/services/nlcd-landcover/config';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectMapMode } from '@shared/store/LandcoverExplorer/selectors';
+import {
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
+    selectMapMode,
+} from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import React, { useMemo } from 'react';
 
@@ -16,13 +19,13 @@ export const NLCDLandCoverSummaryGraph = () => {
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowChart = useMemo(() => {
-        if (animationMode) {
-            return false;
-        }
+    // const shouldShowChart = useMemo(() => {
+    //     if (animationMode) {
+    //         return false;
+    //     }
 
-        return true;
-    }, [animationMode]);
+    //     return true;
+    // }, [animationMode]);
 
     const mapOfLandCoverClassificationPixelValues = useMemo(() => {
         return nlcdLandcoverClassificationDataMap;
@@ -30,7 +33,7 @@ export const NLCDLandCoverSummaryGraph = () => {
 
     return (
         <LandCoverSummaryGraphContainer
-            showChart={shouldShowChart}
+            // showChart={shouldShowChart}
             shouldShowExpandButton={false}
             width={500}
         >

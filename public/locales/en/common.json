@@ -286,5 +286,8 @@
     "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph",
     "imagery_renderers_title": "Visual Renderings",
     "imagery_renderers_subtitle": "Click to Toggle Visibility",
-    "start_animation"  : "Start Animation"
+    "start_animation"  : "Start Animation",
+    "swipe_mode_zoom_message": "Zoom in to compare {{layerName}} Imagery Layers",
+    "animate_mode_zoom_message": "Zoom in to enable time slider"
+
 }
