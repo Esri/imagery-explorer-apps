@@ -16,7 +16,7 @@
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
     selectYearsForSwipeWidgetLayers,

@@ -17,7 +17,7 @@ import React, { FC } from 'react';
 import useLandCoverLayer from '../LandcoverLayer/useLandCoverLayer';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
     selectYearsForSwipeWidgetLayers,
@@ -46,14 +46,14 @@ export const SwipeWidget4Sentinel2: FC<Props> = ({ mapView }) => {
         selectShouldShowSatelliteImageryLayer
     );
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const isSwipeWidgetVisible =
         mode === 'swipe' &&
         shouldShowSentinel2Layer === true &&
-        isSentinel2LayerOutOfVisibleRange === false;
+        isSatelliteImagertLayerOutOfVisibleRange === false;
 
     const leadingLayer = useSentinel2Layer({
         year: year4LeadingLayer,

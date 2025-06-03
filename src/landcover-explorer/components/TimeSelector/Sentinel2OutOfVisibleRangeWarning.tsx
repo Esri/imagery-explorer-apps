@@ -14,7 +14,7 @@
  */
 
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
 } from '@shared/store/LandcoverExplorer/selectors';
 import React from 'react';
@@ -27,11 +27,11 @@ export const Sentinel2OutOfVisibleRangeWarning = () => {
 
     const { t } = useTranslation();
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
-    if (!isSentinel2LayerOutOfVisibleRange) {
+    if (!isSatelliteImagertLayerOutOfVisibleRange) {
         return null;
     }
 

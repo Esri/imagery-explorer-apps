@@ -48,7 +48,7 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
         selectSatelliteImageryLayerRasterFunction
     );
 
-    const shouldShowSentinel2Layer = useAppSelector(
+    const shouldShowSatelliteImageryLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
 
@@ -72,7 +72,7 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
 
             // get images via export image request from land cover layer or sentinel-2 layer
             const requests = years.map((year) => {
-                return shouldShowSentinel2Layer
+                return shouldShowSatelliteImageryLayer
                     ? exportImageFromSentinel2Layer({
                           extent,
                           width,

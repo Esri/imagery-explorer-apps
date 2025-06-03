@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import React, { useEffect, FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     // selectMapMode,
     selectShouldShowSatelliteImageryLayer,
     // selectSwipePosition,
@@ -74,8 +74,8 @@ const MapInfoIndicators: FC<Props> = ({
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const showSwipeWidgetYearIndicator = useAppSelector(
@@ -111,12 +111,12 @@ const MapInfoIndicators: FC<Props> = ({
             >
                 {isUpdating &&
                     shouldShowSentinel2Layer &&
-                    isSentinel2LayerOutOfVisibleRange === false && (
+                    isSatelliteImagertLayerOutOfVisibleRange === false && (
                         <Sentinel2LoadingIndicator />
                     )}
 
                 {shouldShowSentinel2Layer &&
-                    isSentinel2LayerOutOfVisibleRange && (
+                    isSatelliteImagertLayerOutOfVisibleRange && (
                         <div className={MessageClassNames}>
                             {t('zoom_in_to_enable_imagery_layer', {
                                 layerName: nameOfSatelliteImageryLayer,

@@ -20,7 +20,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 // import ChangeCompareGraph from './LandCoverGraph/ChangeCompareGraph/ChangeCompareGraphContainer';
 
 import { LandcoverExplorerLayerSelector } from './LayerSelector';
-import { TimeSelector } from './TimeSelector';
+import { Sentinel2LandcoverTimeSelector } from '../TimeSelector';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 // import Tooltip from './Tooltip/TooltipContainer';
 // import ToggleButton from './ToggleButton/ToggleButtonContainer';
@@ -31,9 +31,9 @@ import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverEx
 import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
 import { LandcoverExplorerModeSelector } from './ModeSelector';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { TimeSliderWidgetContainer } from './TimeSelector/TimeSliderWidget';
+import { TimeSliderWidgetContainer } from '../TimeSelector/TimeSliderWidget';
 // import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
-import { Sentinel2LandcoverTimeSelecterHeader } from './TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
+import { Sentinel2LandcoverTimeSelecterHeader } from '../TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
 import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { ClassificationsList } from '../ClassificationsList';
 import { Sentinel2LandCoverGraph } from './Sentinel2LandCoverGraph/Sentinel2LandCoverGraph';
@@ -80,7 +80,7 @@ const ControlPanel = () => {
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">
-                    <TimeSelector />
+                    <Sentinel2LandcoverTimeSelector />
 
                     {shouldShowSentinel2Layer === false && (
                         <ClassificationsList

@@ -25,7 +25,7 @@ import {
 import { identify } from '../Sentinel2Layer/identify';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectSatelliteImageryLayerAquisitionMonth,
     selectSatelliteImageryLayerRasterFunction,
@@ -65,8 +65,8 @@ const didClickOnLeftSideOfSwipeWidget = (
 const Popup: FC<Props> = ({ mapView }: Props) => {
     const { t } = useTranslation();
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
@@ -177,7 +177,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         // no need to show pop-up for sentinel-2 imagery layer until imagery is visible
         if (
             shouldShowSentinel2Layer &&
-            isSentinel2LayerOutOfVisibleRange === true
+            isSatelliteImagertLayerOutOfVisibleRange === true
         ) {
             return;
         }
@@ -217,7 +217,10 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
                 : year4TrailingLayer;
         }
 
-        if (shouldShowSentinel2Layer && !isSentinel2LayerOutOfVisibleRange) {
+        if (
+            shouldShowSentinel2Layer &&
+            !isSatelliteImagertLayerOutOfVisibleRange
+        ) {
             const identifyTaskRes = await identify({
                 geometry: mapPoint,
                 resolution: mapView.resolution,
@@ -272,7 +275,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         aquisitionYear,
         aquisitionMonth,
         shouldShowSentinel2Layer,
-        isSentinel2LayerOutOfVisibleRange,
+        isSatelliteImagertLayerOutOfVisibleRange,
         swipePosition,
         year4LeadingLayer,
         year4TrailingLayer,

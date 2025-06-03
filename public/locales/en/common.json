@@ -285,5 +285,6 @@
     "zoom_to_see_change_graph": " Zoom in to see Land Cover Change Graph",
     "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph",
     "imagery_renderers_title": "Visual Renderings",
-    "imagery_renderers_subtitle": "Click to Toggle Visibility"
+    "imagery_renderers_subtitle": "Click to Toggle Visibility",
+    "start_animation"  : "Start Animation"
 }

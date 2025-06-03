@@ -1,4 +1,4 @@
-import { TimeSelectorHeader } from '@landcover-explorer/components/ControlPanel/TimeSelector/TimeSelectorHeader';
+import { TimeSelectorHeader } from '@landcover-explorer/components/TimeSelector/TimeSelectorHeader';
 import { APP_NAME } from '@shared/config';
 import React from 'react';
 import { useTranslation } from 'react-i18next';

@@ -5,7 +5,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';

@@ -19,7 +19,7 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
-import HeaderText from '../HeaderText/HeaderText';
+import HeaderText from '../ControlPanel/HeaderText/HeaderText';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 

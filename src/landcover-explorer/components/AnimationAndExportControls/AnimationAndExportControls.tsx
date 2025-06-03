@@ -17,9 +17,14 @@ import {
     AnimationSpeedControl,
     AnimationSpeedSlider,
 } from '@shared/components/AnimationControl/AnimationSpeedControl';
-import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
+import {
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
+    selectMapMode,
+    selectShouldShowSatelliteImageryLayer,
+} from '@shared/store/LandcoverExplorer/selectors';
 import {
     animationSpeedChanged,
+    animationStatusChanged,
     showDownloadAnimationPanelChanged,
     showDownloadPanelToggled,
     showSaveWebMapPanelToggled,
@@ -30,12 +35,19 @@ import {
 } from '@shared/store/UI/selectors';
 import { copyAnimationLink } from '@shared/store/UI/thunks';
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useTranslation } from 'react-i18next';
+import AnimationStatusButton from './AnimationStatusButton';
 
-type SaveOptionsProps = {
+type ExtraOptionsProps = {
+    showDownloadGeoTIFFButton: boolean;
+};
+
+type DefaultOptionsProps = {
+    showDownloadGeoTIFFButton: boolean;
+    startAnimationOnClick: () => void;
     donwloadButtonOnClick: () => void;
     saveWebmapButtonOnClick: () => void;
 };
@@ -71,25 +83,60 @@ export const OptionButton: FC<OptionButtonProps> = ({
     );
 };
 
-export const SaveOptions: FC<SaveOptionsProps> = ({
+export const DefaultOptions: FC<DefaultOptionsProps> = ({
+    showDownloadGeoTIFFButton,
+    startAnimationOnClick,
     donwloadButtonOnClick,
     saveWebmapButtonOnClick,
 }) => {
     const { t } = useTranslation();
 
+    const mode = useAppSelector(selectMapMode);
+
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const shouldShowSentinel2Layer = useAppSelector(
+    const showSatelliteImageryLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
+
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
+    );
+
+    // const showStartAnimationButton = mode === 'step';
+
+    const showStartAnimationButton = useMemo(() => {
+        if (mode === 'swipe') {
+            return false;
+        }
+
+        if (showSatelliteImageryLayer === true) {
+            return isSatelliteImagertLayerOutOfVisibleRange === false;
+        }
+
+        return true;
+    }, [
+        mode,
+        showSatelliteImageryLayer,
+        isSatelliteImagertLayerOutOfVisibleRange,
+    ]);
+
+    const showDownloadButton =
+        showDownloadGeoTIFFButton && showSatelliteImageryLayer === false;
+
+    const showPublishToArcGISButton = showSatelliteImageryLayer === false;
 
     if (animationMode !== null) {
         return null;
     }
 
-    // no need to show save options if the Sentinel-2 Imagery Layer is on
-    // but we still want to add to a place holder component to prevent the TimeSlider from jumping up and down.
-    if (shouldShowSentinel2Layer) {
+    // return a placeholder if no buttons are shown
+    // this is to avoid empty space in the UI when no buttons are available
+    if (
+        !showDownloadButton &&
+        !showStartAnimationButton &&
+        !showPublishToArcGISButton
+    ) {
         return (
             <div className="h-[16px] w-full">
                 {/* <span className='text-xs'>Save options are only enabled for Land Cover layer</span> */}
@@ -106,11 +153,21 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
                 <span className='ml-1'>Download as GeoTIFF</span>
             </div> */}
 
-            <OptionButton
-                label={t('donwload_geotiff')}
-                icon="download-to"
-                onClick={donwloadButtonOnClick}
-            />
+            {showStartAnimationButton && (
+                <OptionButton
+                    label={t('start_animation')}
+                    icon="play"
+                    onClick={startAnimationOnClick}
+                />
+            )}
+
+            {showDownloadButton && (
+                <OptionButton
+                    label={t('donwload_geotiff')}
+                    icon="download-to"
+                    onClick={donwloadButtonOnClick}
+                />
+            )}
 
             {/* <div className='cursor-pointer flex items-center' 
                 onClick={saveWebmapButtonOnClick}
@@ -119,11 +176,13 @@ export const SaveOptions: FC<SaveOptionsProps> = ({
                 <span className='ml-1'>Publish to ArcGIS</span>
             </div> */}
 
-            <OptionButton
-                label={t('publish_to_arcgis')}
-                icon="launch"
-                onClick={saveWebmapButtonOnClick}
-            />
+            {showPublishToArcGISButton && (
+                <OptionButton
+                    label={t('publish_to_arcgis')}
+                    icon="launch"
+                    onClick={saveWebmapButtonOnClick}
+                />
+            )}
         </div>
     );
 };
@@ -163,23 +222,33 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
                 icon="download-to"
                 onClick={donwloadAnimationOnClick}
             />
+
+            <AnimationStatusButton />
         </div>
     );
 };
 
-export const ExtraOptions = () => {
+export const AnimationAndExportControls: FC<ExtraOptionsProps> = ({
+    showDownloadGeoTIFFButton,
+}) => {
     const dispatch = useAppDispatch();
 
     const animationSpeed = useAppSelector(selectAnimationSpeed);
 
     return (
         <div className="w-full my-6 text-xs">
-            <SaveOptions
+            <DefaultOptions
+                showDownloadGeoTIFFButton={showDownloadGeoTIFFButton}
+                // startAnimationOnClick=
                 donwloadButtonOnClick={() => {
                     dispatch(showDownloadPanelToggled(true));
                 }}
                 saveWebmapButtonOnClick={() => {
                     dispatch(showSaveWebMapPanelToggled());
+                }}
+                startAnimationOnClick={() => {
+                    // dispatch(AnimationSpeedControl.startAnimation());
+                    dispatch(animationStatusChanged('loading'));
                 }}
             />
 

@@ -18,7 +18,7 @@ import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 // import { MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM } from '@landcover-explorer/constants/map';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     // selectMapCenterAndZoom,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
@@ -67,8 +67,8 @@ export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
 
     const mode = useAppSelector(selectMapMode);
 
-    // const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-    //     selectIsSentinel2LayerOutOfVisibleRange
+    // const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+    //     selectIsSatelliteImageryLayerOutOfVisibleRange
     // );
 
     // const shouldShowSentinel2Layer = useAppSelector(

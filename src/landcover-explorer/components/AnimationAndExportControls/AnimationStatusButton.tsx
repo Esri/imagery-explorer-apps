@@ -70,7 +70,7 @@ export const AnimationStatusButton = () => {
     const animationMode = useAppSelector(selectAnimationStatus);
 
     return (
-        <div className="flex cursor-pointer">
+        <div className="flex cursor-pointer items-center">
             {!animationMode && (
                 <div
                     onClick={() => {

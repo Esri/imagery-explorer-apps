@@ -1,6 +1,6 @@
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -18,8 +18,8 @@ import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentin
 export const Sentinel2LandCoverGraph = () => {
     const mode = useAppSelector(selectMapMode);
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
@@ -34,14 +34,14 @@ export const Sentinel2LandCoverGraph = () => {
         }
 
         if (shouldShowSentinel2Layer) {
-            return isSentinel2LayerOutOfVisibleRange === false;
+            return isSatelliteImagertLayerOutOfVisibleRange === false;
         }
 
         return true;
     }, [
         animationMode,
         shouldShowSentinel2Layer,
-        isSentinel2LayerOutOfVisibleRange,
+        isSatelliteImagertLayerOutOfVisibleRange,
     ]);
 
     const mapOfLandCoverClassificationPixelValues = useMemo(() => {

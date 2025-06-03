@@ -20,29 +20,30 @@ import { useAppSelector } from '@shared/store/configureStore';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
     // selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 // import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
-import HeaderText from '../HeaderText/HeaderText';
+// import HeaderText from '../ControlPanel/HeaderText/HeaderText';
 // import AnimationButton from '../AnimationControls/AnimationStatusButton';
 // import ModeSelector from './ModeSelector';
 // import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
 import { TimeSliderWidgetContainer } from './TimeSliderWidget';
 import TimeSelector4SwipeMode from './TimeSelector4SwipeMode';
 import { Sentinel2OutOfVisibleRangeWarning } from './Sentinel2OutOfVisibleRangeWarning';
-import { AnimationControls } from '../AnimationControls/AnimationStatusControls';
-import { ExtraOptions } from './ExtraOptions';
-import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
-import { TimeSelectorHeader } from './TimeSelectorHeader';
+// import { AnimationControls } from '../AnimationAndExportControls/AnimationStatusControls';
+import { AnimationAndExportControls } from '../AnimationAndExportControls/AnimationAndExportControls';
+// import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+// import { TimeSelectorHeader } from './TimeSelectorHeader';
 import { Sentinel2LandcoverTimeSelecterHeader } from './Sentinel2LandcoverTimeSelecterHeader';
+import { AcquisitionMonthPickerStepMode } from './AcquisitionMonthPicker/AcquisitionMonthPickerStepMode';
 
-export const TimeSelectorContainer = () => {
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+export const Sentinel2LandcoverTimeSelectorContainer = () => {
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
@@ -50,18 +51,21 @@ export const TimeSelectorContainer = () => {
     );
 
     const shouldShowMonthPicker =
-        shouldShowSentinel2Layer && isSentinel2LayerOutOfVisibleRange === false;
+        shouldShowSentinel2Layer &&
+        isSatelliteImagertLayerOutOfVisibleRange === false;
 
     return (
         <div className="w-landcover-explorer-time-slider-width shrink-0 text-center mx-6">
             <Sentinel2LandcoverTimeSelecterHeader />
 
-            <ExtraOptions />
+            <AnimationAndExportControls showDownloadGeoTIFFButton={true} />
 
             <div className={classNames('relative w-full mt-4')}>
                 <div className="flex">
                     <TimeSliderWidgetContainer />
-                    <AnimationControls />
+                    {shouldShowMonthPicker && (
+                        <AcquisitionMonthPickerStepMode />
+                    )}
                 </div>
 
                 <TimeSelector4SwipeMode

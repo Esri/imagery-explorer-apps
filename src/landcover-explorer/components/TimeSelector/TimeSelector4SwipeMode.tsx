@@ -23,12 +23,12 @@ import {
     year4TrailingLayerUpdated,
 } from '@shared/store/LandcoverExplorer/reducer';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 // import Dropdown from './Dropdown';
-import MonthPicker from '../AcquisitionMonthPicker/MonthPicker';
+import MonthPicker from './AcquisitionMonthPicker/MonthPicker';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
 
 type Props = {
@@ -42,8 +42,8 @@ const TimeSelector4SwipeMode: FC<Props> = ({
 
     const mode = useAppSelector(selectMapMode);
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const years = getAvailableYears();
@@ -66,7 +66,7 @@ const TimeSelector4SwipeMode: FC<Props> = ({
         };
     });
 
-    if (mode !== 'swipe' || isSentinel2LayerOutOfVisibleRange) {
+    if (mode !== 'swipe' || isSatelliteImagertLayerOutOfVisibleRange) {
         return null;
     }
 

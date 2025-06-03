@@ -19,7 +19,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     // selectMapCenterAndZoom,
-    // selectIsSentinel2LayerOutOfVisibleRange,
+    // selectIsSatelliteImageryLayerOutOfVisibleRange,
     // selectShouldShowSatelliteImageryLayer,
     // selectYearsForSwipeWidgetLayers,
     selectMapMode,
@@ -87,8 +87,8 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
 
     const hideControlPanel = useAppSelector(selectHideBottomPanel);
 
-    // const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-    //     selectIsSentinel2LayerOutOfVisibleRange
+    // const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+    //     selectIsSatelliteImageryLayerOutOfVisibleRange
     // );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
