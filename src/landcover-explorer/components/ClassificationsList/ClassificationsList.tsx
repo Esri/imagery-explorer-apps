@@ -39,6 +39,10 @@ type Props = {
      */
     numberOfColumns?: 2 | 3; // Optional prop to specify the number of columns in the grid
     /**
+     * The scale of the component, can be 's' for small or 'm' for medium
+     */
+    scale?: 's' | 'm';
+    /**
      * Fires when user clicks a land cover item in the list
      */
     activeLandCoverOnChange: (data?: LandCoverClassification) => void;
@@ -56,6 +60,7 @@ const ClassificationsList: FC<Props> = ({
     data,
     selectedLandCover,
     numberOfColumns = 3, // Default to 3 columns if not provided
+    scale = 'm', // Default scale is medium
     itemOnHover,
     activeLandCoverOnChange,
     disabled,
@@ -66,10 +71,7 @@ const ClassificationsList: FC<Props> = ({
     const { t } = useTranslation();
 
     return (
-        <div
-            className="text-center mx-4 my-12 md:my-0 shrink-0"
-            ref={containerRef}
-        >
+        <div className="text-center mx-4 md:my-0 shrink-0" ref={containerRef}>
             <HeaderText
                 title={t('classes_selector_title')} // Translate the title
                 subTitle={t('classes_selector_subTitle')} // Translate the subtitle
@@ -77,7 +79,7 @@ const ClassificationsList: FC<Props> = ({
 
             <div
                 className={classNames(
-                    'grid text-sm',
+                    'grid gap-1 text-sm',
                     'overflow-y-auto fancy-scrollbar',
                     'mt-0 md:mt-8', // only add top margin space for the desktop view
                     {
@@ -149,7 +151,11 @@ const ClassificationsList: FC<Props> = ({
                                     }}
                                 ></div>
 
-                                <span className="ml-2 text-xs 2xl:text-sm text-ellipsis">
+                                <span
+                                    className={classNames('ml-2 text-xs', {
+                                        '2xl:text-sm': scale === 'm',
+                                    })}
+                                >
                                     {/* {ClassName} */}
                                     {classNameTranslated}
                                 </span>

@@ -60,9 +60,11 @@ const ControlPanel = () => {
                         <Sentinel2LandcoverTimeSelecterHeader />
                         <TimeSliderWidgetContainer />
                     </div>
-                    <ClassificationsList
-                        classificationData={classificationData}
-                    />
+                    <div className="my-12">
+                        <ClassificationsList
+                            classificationData={classificationData}
+                        />
+                    </div>
                     <Sentinel2LandCoverGraph />
                 </div>
             </BottomPanel>

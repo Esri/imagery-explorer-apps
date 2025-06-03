@@ -124,7 +124,7 @@ export const LandCoverGraphContainer: FC<LandCoverGraphContainerProps> = ({
     return (
         <div
             className={classNames(
-                'text-center mx-6',
+                'text-center md:mx-6',
                 'pb-8 md:pb-0', // in mobile view, we need to add some padding space at the bottom because this component is the last one in the bottom panel
                 {
                     'w-full': width === undefined,

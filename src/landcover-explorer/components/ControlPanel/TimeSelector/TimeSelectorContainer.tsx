@@ -53,7 +53,7 @@ export const TimeSelectorContainer = () => {
         shouldShowSentinel2Layer && isSentinel2LayerOutOfVisibleRange === false;
 
     return (
-        <div className="w-landcover-explorer-time-slider-width text-center mx-6">
+        <div className="w-landcover-explorer-time-slider-width shrink-0 text-center mx-6">
             <Sentinel2LandcoverTimeSelecterHeader />
 
             <ExtraOptions />

@@ -12,6 +12,7 @@ export const NLCDClassificationList = () => {
         <ClassificationsList
             classificationData={classificationData}
             numberOfColumns={2}
+            scale="s"
         />
     );
 };

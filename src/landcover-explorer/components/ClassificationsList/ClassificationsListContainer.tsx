@@ -33,11 +33,16 @@ type Props = {
      * number of columns in the grid, default is 3
      */
     numberOfColumns?: 2 | 3; // Optional prop to specify the number of columns in the grid
+    /**
+     * The scale of the component, can be 's' for small or 'm' for medium
+     */
+    scale?: 's' | 'm'; // The scale of the component, can be 's' for small or 'm' for medium
 };
 
 export const ClassificationsListContainer: FC<Props> = ({
     classificationData,
     numberOfColumns = 3, // Default to 3 columns if not provided
+    scale = 'm', // Default to medium scale if not provided
 }) => {
     const dispatch = useAppDispatch();
 
@@ -65,6 +70,7 @@ export const ClassificationsListContainer: FC<Props> = ({
             itemOnHover={(data) => {
                 dispatch(updateTooltipData(data));
             }}
+            scale={scale}
         />
     );
 };
