@@ -31,7 +31,7 @@ import {
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { getRasterFunctionBySentinel2LandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { Sentinel2LandCoverClassification } from '@typing/landcover';
 
 const useMediaLayerImageElement = (mapView?: IMapView) => {

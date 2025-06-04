@@ -84,9 +84,9 @@ const AnimationPanel: FC<Props> = ({
         mapView.map.add(mediaLayerRef.current);
     };
 
-    useEffect(() => {
-        saveAnimationModeToHashParams(animationMode !== null);
-    }, [animationMode]);
+    // useEffect(() => {
+    //     saveAnimationModeToHashParams(animationMode !== null);
+    // }, [animationMode]);
 
     useEffect(() => {
         if (!mediaLayerRef.current) {

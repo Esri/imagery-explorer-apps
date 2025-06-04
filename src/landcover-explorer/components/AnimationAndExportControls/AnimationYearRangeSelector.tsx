@@ -6,8 +6,11 @@ import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { selectLandcoverAppAnimationYearRange } from '@shared/store/LandcoverExplorer/selectors';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 import { landcoverAnimationYearRangeChanged } from '@shared/store/LandcoverExplorer/reducer';
+import { useTranslation } from 'react-i18next';
 
 export const AnimationYearRangeSelector = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const aminationYearRange = useAppSelector(
@@ -41,6 +44,16 @@ export const AnimationYearRangeSelector = () => {
 
     return (
         <div className="mt-4">
+            <div className="text-right text-xs opacity-50 pr-2">
+                <span>
+                    {t('selected_year_range', {
+                        startYear:
+                            aminationYearRange?.start || getCurrentYear(),
+                        endYear: aminationYearRange?.end || getCurrentYear(),
+                    })}
+                </span>
+            </div>
+
             <TimeSliderWidget
                 mode="time-window"
                 years={availableYears}

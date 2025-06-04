@@ -75,10 +75,11 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
         shouldShowSatellteLayer &&
         isSatelliteImagertLayerOutOfVisibleRange === true;
 
-    const animationMode = useAppSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const [showAnimationControls, setShowAnimationControls] =
-        React.useState(false);
+    const [showAnimationControls, setShowAnimationControls] = React.useState(
+        animationStatus !== null
+    );
 
     const getContent = () => {
         if (isImageryLayerOutOfVisibleRangeWarningMessageOn) {
@@ -120,18 +121,23 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
         );
     };
 
-    useEffect(() => {
-        // Reset the animation controls visibility when the mode changes
-        setShowAnimationControls(false);
-    }, [mode]);
+    // useEffect(() => {
+    //     // Reset the animation controls visibility when the mode changes
+    //     setShowAnimationControls(false);
+    // }, [mode]);
 
     useEffect(() => {
-        // Reset the animation controls visibility when the animation mode becomes null
+        if (animationStatus) {
+            return;
+        }
+
+        // Reset the animation controls visibility when the animation mode becomes null,
+        // or when the mode changes
         // This is to ensure that the animation controls are hidden when user exits animation mode
-        if (!animationMode) {
+        if (!animationStatus || mode !== 'step') {
             setShowAnimationControls(false);
         }
-    }, [animationMode]);
+    }, [animationStatus, mode]);
 
     return (
         <div className="w-landcover-explorer-time-slider-width shrink-0 text-center mx-6">

@@ -17,6 +17,7 @@
 import { LandCoverClassification } from '@typing/landcover';
 import {
     ImageryRasterFunction4LandcoverApp,
+    LandcoverAnimationYearRange,
     MapMode,
 } from '@shared/store/LandcoverExplorer/reducer';
 
@@ -32,7 +33,8 @@ type UrlHashParamKey =
     | 'renderingRule'
     | 'animation'
     | 'region'
-    | 'saveWebMap';
+    | 'saveWebMap'
+    | 'animationData';
 
 const SupportedSentinel2RasterFunctions: ImageryRasterFunction4LandcoverApp[] =
     [
@@ -199,6 +201,53 @@ export const saveAnimationModeToHashParams = (isAnimationModeOn?: boolean) => {
 
 export const getAnimationModeFromHashParams = () => {
     return getHashParamValueByKey('animation') === 'true';
+};
+
+/**
+ * Save animation year range to hash params
+ * @param param yearRange - the year range for animation
+ * @returns  void
+ */
+export const saveAnimationDataToHashParams = ({
+    yearRange,
+}: {
+    yearRange: LandcoverAnimationYearRange;
+}) => {
+    if (!yearRange || !yearRange.start || !yearRange.end) {
+        updateHashParams('animationData', undefined);
+        return;
+    }
+
+    const values = [yearRange.start.toString(), yearRange.end.toString()];
+
+    updateHashParams('animationData', values.join(','));
+};
+
+/**
+ * Get animation data from hash params
+ * @returns null | { startYear: number, endYear: number }
+ */
+export const getAnimationDataFromHashParams = (): {
+    animationYearRange: LandcoverAnimationYearRange | null;
+} => {
+    const val = getHashParamValueByKey('animationData');
+
+    if (!val) {
+        return {
+            animationYearRange: null,
+        };
+    }
+
+    const [startYear, endYear] = val
+        .split(',')
+        .map((d) => (isNaN(parseInt(d)) ? null : parseInt(d)));
+
+    return {
+        animationYearRange: {
+            start: startYear,
+            end: endYear,
+        },
+    };
 };
 
 export const saveRegionToHashParams = (region?: string) => {

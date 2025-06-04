@@ -92,11 +92,11 @@ export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
                     </div>
                 </>
             )}
-            {animationMode === 'loading' && (
+            {/* {animationMode === 'loading' && (
                 <div>
                     <calcite-loader scale="m" active inline></calcite-loader>
                 </div>
-            )}
+            )} */}
             {animationMode === 'playing' && (
                 <div
                     onClick={() => {

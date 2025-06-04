@@ -31,6 +31,11 @@ export type ImageryRasterFunction4LandcoverApp =
 
 export type MapMode = 'swipe' | 'step';
 
+export type LandcoverAnimationYearRange = {
+    start: number;
+    end: number;
+};
+
 // export type MapCenter = {
 //     lon?: number;
 //     lat?: number;
@@ -82,10 +87,7 @@ export type LandcoverExplorerAppState = {
     /**
      * The range of years that will be used for the animation
      */
-    animationYearRange: {
-        start: number;
-        end: number;
-    };
+    animationYearRange: LandcoverAnimationYearRange;
 };
 
 export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
@@ -171,7 +173,7 @@ const slice = createSlice({
         },
         landcoverAnimationYearRangeChanged: (
             state,
-            action: PayloadAction<{ start: number; end: number }>
+            action: PayloadAction<LandcoverAnimationYearRange>
         ) => {
             state.animationYearRange = action.payload;
         },

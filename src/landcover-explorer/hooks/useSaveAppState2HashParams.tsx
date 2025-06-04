@@ -15,10 +15,15 @@
 
 import React, { FC, useEffect } from 'react';
 
-import { selectYearsForSwipeWidgetLayers } from '@shared/store/LandcoverExplorer/selectors';
+import {
+    selectLandcoverAppAnimationYearRange,
+    selectYearsForSwipeWidgetLayers,
+} from '@shared/store/LandcoverExplorer/selectors';
 
 import {
     saveActiveYearToHashParams,
+    saveAnimationDataToHashParams,
+    saveAnimationModeToHashParams,
     saveTimeExtentToHashParams,
 } from '@landcover-explorer/utils/URLHashParams';
 
@@ -28,6 +33,7 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 
 import { useAppSelector } from '@shared/store/configureStore';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 export const useSaveAppState2HashParams = () => {
     const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
@@ -35,6 +41,12 @@ export const useSaveAppState2HashParams = () => {
     );
 
     const mode = useAppSelector(selectMapMode);
+
+    const animationStatus = useAppSelector(selectAnimationStatus);
+
+    const animationYearRange = useAppSelector(
+        selectLandcoverAppAnimationYearRange
+    );
 
     const year = useAppSelector(selectYear);
 
@@ -45,4 +57,12 @@ export const useSaveAppState2HashParams = () => {
     useEffect(() => {
         saveActiveYearToHashParams(mode === 'step' ? year : null);
     }, [year, mode]);
+
+    useEffect(() => {
+        saveAnimationModeToHashParams(animationStatus !== null);
+
+        saveAnimationDataToHashParams({
+            yearRange: animationStatus ? animationYearRange : null,
+        });
+    }, [animationStatus, animationYearRange]);
 };

@@ -41,9 +41,13 @@ import { isMobileDevice } from 'helper-toolkit-ts';
 import { PartialRootState } from '@shared/store/configureStore';
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
-import { getPreloadedStateForLandcoverExplorerApp } from '@landcover-explorer/store/getPreloadedState';
+import {
+    getPreloadedStateForLandcoverExplorerApp,
+    getPreloadedUIState4LandcoverExplorerApp,
+} from '@landcover-explorer/store/getPreloadedState';
 import { LandcoverExplorerAppState } from '@shared/store/LandcoverExplorer/reducer';
 import { getMapCenterFromHashParams } from '@landcover-explorer/utils/URLHashParams';
+import { UIState } from '@shared/store/UI/reducer';
 
 const isMobileView = isMobileDevice();
 
@@ -57,25 +61,30 @@ const getPreloadedStateForNLCDLandcoverExplorerApp =
         };
     };
 
-// const getPreloadedUIState = (): UIState => {
-//     const showDownloadPanel = getDonwloadModeFromHashParams();
-//     const isAnimationModeOn = getAnimationModeFromHashParams();
+const getPreloadedUIStatForNLCDLandcoverExplorerApp = (): UIState => {
+    // const showDownloadPanel = getDonwloadModeFromHashParams();
+    // const isAnimationModeOn = getAnimationModeFromHashParams();
 
-//     const showSaveWebMapPanel = getShowSaveWebMapPanelFromHashParams();
+    // const showSaveWebMapPanel = getShowSaveWebMapPanelFromHashParams();
 
-//     const animationStatus = isAnimationModeOn ? 'loading' : null;
+    // const animationStatus = isAnimationModeOn ? 'loading' : null;
 
-//     return {
-//         ...initialUIState,
-//         showDownloadPanel,
-//         /**
-//          * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
-//          * animation mode can only be enabled in desktop view with wide screen
-//          */
-//         animationStatus: isMobileView ? null : animationStatus,
-//         showSaveWebMapPanel,
-//     };
-// };
+    // return {
+    //     ...initialUIState,
+    //     showDownloadPanel,
+    //     /**
+    //      * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
+    //      * animation mode can only be enabled in desktop view with wide screen
+    //      */
+    //     animationStatus: isMobileView ? null : animationStatus,
+    //     showSaveWebMapPanel,
+    // };
+    const state = getPreloadedUIState4LandcoverExplorerApp();
+
+    return {
+        ...state,
+    };
+};
 
 const getPreloadedMapState = (): MapState => {
     const { zoom, center } = getMapCenterFromHashParams() || {};
@@ -90,7 +99,7 @@ const getPreloadedMapState = (): MapState => {
 export const getPreloadedState = (): PartialRootState => {
     return {
         LandcoverExplorer: getPreloadedStateForNLCDLandcoverExplorerApp(),
-        // UI: getPreloadedUIState(),
+        UI: getPreloadedUIStatForNLCDLandcoverExplorerApp(),
         Map: getPreloadedMapState(),
     };
 };

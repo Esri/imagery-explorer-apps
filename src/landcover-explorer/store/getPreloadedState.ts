@@ -33,6 +33,7 @@ import {
     getAnimationModeFromHashParams,
     getRegionFromHashParams,
     getShowSaveWebMapPanelFromHashParams,
+    getAnimationDataFromHashParams,
 } from '@landcover-explorer/utils/URLHashParams';
 import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
 import { LandCoverClassification } from '@typing/landcover';
@@ -89,6 +90,8 @@ export const getPreloadedStateForLandcoverExplorerApp =
         // Get region info from hash params
         const region = getRegionFromHashParams();
 
+        const { animationYearRange } = getAnimationDataFromHashParams();
+
         return {
             ...initialLandcoverExplorerAppState,
             // Swipe mode can only be enabled in desktop view with wide screen
@@ -120,19 +123,24 @@ export const getPreloadedStateForLandcoverExplorerApp =
              */
             showInfoPanel: region !== '',
             /**
-             * use past 5 years for animation if available, otherwise use all available years
+             * use the animation year range from hash params if available,
+             * otherwise default to the last 5 years in the available years list
              */
             animationYearRange: {
-                end: availableYears[availableYears.length - 1],
                 start:
-                    availableYears.length >= 5
-                        ? availableYears[availableYears.length - 5]
-                        : availableYears[0],
+                    animationYearRange?.start ||
+                    Math.max(
+                        availableYears[0],
+                        availableYears[availableYears.length - 1] - 5
+                    ),
+                end:
+                    animationYearRange?.end ||
+                    availableYears[availableYears.length - 1],
             },
         };
     };
 
-const getPreloadedUIState = (): UIState => {
+export const getPreloadedUIState4LandcoverExplorerApp = (): UIState => {
     const showDownloadPanel = getDonwloadModeFromHashParams();
     const isAnimationModeOn = getAnimationModeFromHashParams();
 
@@ -165,7 +173,7 @@ const getPreloadedMapState = (): MapState => {
 export const getPreloadedState = (): PartialRootState => {
     return {
         LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp(),
-        UI: getPreloadedUIState(),
+        UI: getPreloadedUIState4LandcoverExplorerApp(),
         Map: getPreloadedMapState(),
     };
 };

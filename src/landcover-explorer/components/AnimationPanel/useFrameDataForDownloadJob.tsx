@@ -20,12 +20,15 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 // import { AnimationFrameData4DownloadJob } from '@shared/components/AnimationDownloadPanel/DownloadPanel';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 // import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import MapView from '@arcgis/core/views/MapView';
 import { combineLandcoverImageWithMapScreenshot } from './helpers';
-import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
+import {
+    selectLandcoverAnimationYears,
+    selectShouldShowSatelliteImageryLayer,
+} from '@shared/store/LandcoverExplorer/selectors';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 
 /**
@@ -56,7 +59,9 @@ export const useFrameDataForDownloadJob = ({
 }: Props) => {
     const mapCenter = useAppSelector(selectMapCenter);
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
+
+    const years = useAppSelector(selectLandcoverAnimationYears);
 
     const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSatelliteImageryLayer

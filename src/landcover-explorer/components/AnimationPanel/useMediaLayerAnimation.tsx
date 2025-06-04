@@ -24,7 +24,7 @@ import {
     selectLandcoverAnimationYears,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 
