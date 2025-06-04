@@ -50,6 +50,7 @@ const isMobileView = isMobileDevice();
 const getPreloadedStateForNLCDLandcoverExplorerApp =
     (): LandcoverExplorerAppState => {
         const state = getPreloadedStateForLandcoverExplorerApp();
+        // console.log('getPreloadedStateForNLCDLandcoverExplorerApp: ', state);
 
         return {
             ...state,

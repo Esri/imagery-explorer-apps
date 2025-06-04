@@ -29,6 +29,7 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 import { getSliderTickValues } from './helpers';
+import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 
 type TimeSliderMode = 'time-window' | 'instant';
 
@@ -90,8 +91,8 @@ export const TimeSliderWidgetContainer = () => {
                 mode="instant"
                 years={years}
                 initialTimeExtent={{
-                    start: new Date(year, 0, 1),
-                    end: new Date(year, 0, 1),
+                    start: getUTCDate(year, 0, 1),
+                    end: getUTCDate(year, 0, 1),
                 }}
                 visible={timeStepSliderVisibility}
                 timeExtentOnChange={(startYear) => {
@@ -103,7 +104,7 @@ export const TimeSliderWidgetContainer = () => {
     );
 };
 
-const TimeSliderWidget: FC<Props> = ({
+export const TimeSliderWidget: FC<Props> = ({
     mode = 'time-window',
     years,
     initialTimeExtent,
@@ -121,7 +122,7 @@ const TimeSliderWidget: FC<Props> = ({
         try {
             // get an array of Date objects represent the input years, use Jan 1st as month and day when create the Date obj
             const yearsAsDateObj: Date[] = years.map((year) => {
-                return new Date(year, 0, 1);
+                return getUTCDate(year, 1, 1);
             });
 
             const startYear = years[0];
@@ -131,8 +132,8 @@ const TimeSliderWidget: FC<Props> = ({
                 container: containerRef.current,
                 mode,
                 fullTimeExtent: {
-                    start: new Date(startYear, 0, 1),
-                    end: new Date(endYear, 0, 1),
+                    start: getUTCDate(startYear, 1, 1),
+                    end: getUTCDate(endYear, 1, 1),
                 },
                 timeExtent: initialTimeExtent,
                 stops: { dates: yearsAsDateObj },
@@ -142,7 +143,7 @@ const TimeSliderWidget: FC<Props> = ({
                         values: getSliderTickValues(yearsAsDateObj, 10),
                         labelsVisible: true,
                         labelFormatFunction: (value: any) => {
-                            return new Date(value).getFullYear();
+                            return new Date(value).getUTCFullYear();
                         },
                     } as any,
                 ],
@@ -158,8 +159,8 @@ const TimeSliderWidget: FC<Props> = ({
 
                     debounceDelay.current = setTimeout(() => {
                         timeExtentOnChange(
-                            timeExtent.start.getFullYear(),
-                            timeExtent.end.getFullYear()
+                            timeExtent.start.getUTCFullYear(),
+                            timeExtent.end.getUTCFullYear()
                         );
                     }, 500);
                 }
@@ -195,23 +196,25 @@ const TimeSliderWidget: FC<Props> = ({
         }
 
         const yearFromTimeSlider =
-            sliderRef.current.timeExtent.start.getFullYear();
+            sliderRef.current.timeExtent.start.getUTCFullYear();
 
         if (yearFromTimeSlider === selectedYear) {
             return;
         }
 
         sliderRef.current.timeExtent = {
-            start: new Date(selectedYear, 0, 1),
-            end: new Date(selectedYear, 0, 1),
+            start: getUTCDate(selectedYear, 1, 1),
+            end: getUTCDate(selectedYear, 1, 1),
         } as any;
     }, [selectedYear]);
 
     return (
         <div
-            id="timeSliderDiv"
+            // id="timeSliderDiv"
             ref={containerRef}
-            className={classNames('time-slider-container')}
+            className={classNames(
+                'customized-time-slider time-slider-container'
+            )}
         ></div>
     );
 };

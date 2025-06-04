@@ -120,3 +120,23 @@ export const selectActiveLandCoverType = (state: RootState) =>
 
 export const selectSatelliteImageryLayerRasterFunction = (state: RootState) =>
     state.LandcoverExplorer.satelliteImageryLayerRasterFunction;
+
+export const selectLandcoverAppAnimationYearRange = (state: RootState) =>
+    state.LandcoverExplorer.animationYearRange;
+
+export const selectLandcoverAnimationYears = createSelector(
+    selectLandcoverAppAnimationYearRange,
+    (yearRange) => {
+        const { start, end } = yearRange;
+
+        if (!start || !end || start > end) {
+            return []; // Invalid range
+        }
+
+        const years = [];
+        for (let year = start; year <= end; year++) {
+            years.push(year);
+        }
+        return years;
+    }
+);

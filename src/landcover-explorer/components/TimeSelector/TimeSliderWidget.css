@@ -14,29 +14,29 @@
 }
 
 /* set widget background to transparent*/
-#timeSliderDiv.esri-widget {
+.customized-time-slider.esri-widget {
   background-color: transparent;
   box-shadow: none !important;
 }
 
 /* remove min width of time slider when screen is 1500px wide or smaller to make the layout more responsive */
 @media only screen and (max-width: 1500px) {
-  #timeSliderDiv.esri-widget {
+  .customized-time-slider.esri-widget {
     min-width: auto;
   }
 }
 
-#timeSliderDiv .esri-time-slider__slider  {
+.customized-time-slider .esri-time-slider__slider  {
   background: transparent;
   padding: 0 20px;
 }
 
-#timeSliderDiv .esri-time-slider__slider .esri-slider {
+.customized-time-slider .esri-time-slider__slider .esri-slider {
   background: transparent;
 }
 
 /* use theme color */
-#timeSliderDiv .esri-slider__ticks {
+.customized-time-slider .esri-slider__ticks {
   @apply text-custom-light-blue;
 }
 
@@ -52,7 +52,7 @@
   border: 1px solid #193d49;
 }
 
-#timeSliderDiv .esri-slider__thumb {
+.customized-time-slider .esri-slider__thumb {
   @apply border-2 border-custom-light-blue bg-custom-light-blue;
   filter: drop-shadow(2px 2px 6px black)
 }

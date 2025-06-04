@@ -21,6 +21,7 @@ import {
 } from '@reduxjs/toolkit';
 import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
 import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 // import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { LandCoverClassification } from '@typing/landcover';
 
@@ -78,6 +79,13 @@ export type LandcoverExplorerAppState = {
      * If true, show leading and trailing year in Swipe Widget Reference Info Component
      */
     showSwipeWidgetYearIndicator?: boolean;
+    /**
+     * The range of years that will be used for the animation
+     */
+    animationYearRange: {
+        start: number;
+        end: number;
+    };
 };
 
 export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
@@ -100,6 +108,10 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     satelliteImageryLayerRasterFunction: 'Natural Color for Visualization', // Default raster function for Sentinel-2 layer
     showInfoPanel: false,
     showSwipeWidgetYearIndicator: false,
+    animationYearRange: {
+        start: getCurrentYear(),
+        end: getCurrentYear(),
+    },
 };
 
 const slice = createSlice({
@@ -157,6 +169,12 @@ const slice = createSlice({
         ) => {
             state.showSwipeWidgetYearIndicator = action.payload;
         },
+        landcoverAnimationYearRangeChanged: (
+            state,
+            action: PayloadAction<{ start: number; end: number }>
+        ) => {
+            state.animationYearRange = action.payload;
+        },
     },
 });
 
@@ -173,6 +191,7 @@ export const {
     satelliteImageryLayerRasterFunctionChanged,
     showInfoPanelToggled,
     showSwipeWidgetYearIndicatorToggled,
+    landcoverAnimationYearRangeChanged,
 } = slice.actions;
 
 export default reducer;

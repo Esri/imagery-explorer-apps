@@ -24,6 +24,7 @@ import { exportImage as exportImageFromLandCoverLayer } from '../LandcoverLayer/
 import { exportImage as exportImageFromSentinel2Layer } from '../Sentinel2Layer/exportImage';
 import {
     selectActiveLandCoverType,
+    selectLandcoverAnimationYears,
     selectSatelliteImageryLayerAquisitionMonth,
     selectSatelliteImageryLayerRasterFunction,
     selectShouldShowSatelliteImageryLayer,
@@ -38,7 +39,9 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
 
     const abortControllerRef = useRef<AbortController>();
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
+
+    const years = useAppSelector(selectLandcoverAnimationYears);
 
     const sentinel2AquisitionMonth = useAppSelector(
         selectSatelliteImageryLayerAquisitionMonth

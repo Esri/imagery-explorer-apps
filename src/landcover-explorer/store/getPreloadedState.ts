@@ -119,6 +119,16 @@ export const getPreloadedStateForLandcoverExplorerApp =
              * so it can show the land cover chart using data from land cover stats table
              */
             showInfoPanel: region !== '',
+            /**
+             * use past 5 years for animation if available, otherwise use all available years
+             */
+            animationYearRange: {
+                end: availableYears[availableYears.length - 1],
+                start:
+                    availableYears.length >= 5
+                        ? availableYears[availableYears.length - 5]
+                        : availableYears[0],
+            },
         };
     };
 

@@ -2,6 +2,7 @@ import {
     FIELD_NAMES,
     LANDSAT_LEVEL_2_SERVICE_SORT_VALUE,
 } from '@shared/services/landsat-level-2/config';
+import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 import { addMonths, format } from 'date-fns';
 
 export const getLandsatMosaicRuleByAcquisitionDate = (
@@ -9,7 +10,7 @@ export const getLandsatMosaicRuleByAcquisitionDate = (
     month: number
     // day = 15
 ) => {
-    const startDate = new Date(year, month - 1, 1);
+    const startDate = getUTCDate(year, month, 1);
     const endDate = addMonths(startDate, 1);
 
     return {

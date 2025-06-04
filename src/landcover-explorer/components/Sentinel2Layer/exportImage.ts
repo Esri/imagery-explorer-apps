@@ -25,6 +25,7 @@ import {
     FIELD_NAMES,
 } from '@shared/services/sentinel-2/config';
 import { ImageryRasterFunction4LandcoverApp } from '@shared/store/LandcoverExplorer/reducer';
+import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 
 // const { AcquisitionDate, CloudCover } = FIELD_NAMES;
 
@@ -69,7 +70,7 @@ export const getMosaicRuleByAcquisitionDate = (
     //     where: '(category = 2) OR (CloudCover < 0.1)',
     // };
 
-    const startDate = new Date(year, month - 1, 1);
+    const startDate = getUTCDate(year, month, 1);
     const endDate = addMonths(startDate, 1);
 
     return {
