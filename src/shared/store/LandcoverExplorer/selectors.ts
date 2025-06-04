@@ -14,9 +14,21 @@
  */
 
 import { createSelector } from '@reduxjs/toolkit';
-import { MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER } from '@landcover-explorer/constants/map';
+// import { MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER } from '@landcover-explorer/constants/map';
 import { RootState } from '../configureStore';
 import { APP_NAME } from '@shared/config';
+
+/**
+ * Sentinel 2 layer can only be displayed on the map when the map zoom level is greater or equal to 11
+ */
+const MIN_MAP_ZOOM_4_SENTINEL_2_LAYER = 11;
+
+const MIN_MAP_ZOOM_4_LANDSAT_LAYER = 10;
+
+const MIN_ZOOM_LEVEL_4_SATETTIE_IMAGERY =
+    APP_NAME === 'landcoverexplorer'
+        ? MIN_MAP_ZOOM_4_SENTINEL_2_LAYER
+        : MIN_MAP_ZOOM_4_LANDSAT_LAYER; // Default zoom level for Sentinel-2 layer in other apps
 
 /**
  * Select years that will be used to get the Leading and Trailing layers in Swipe Widget
@@ -75,9 +87,6 @@ export const selectYearsForSwipeWidgetLayers = createSelector(
 //     (state: RootState) => state.LandcoverExplorer.showTerrain,
 //     (showTerrain) => showTerrain
 // );
-
-const MIN_ZOOM_LEVEL_4_SATETTIE_IMAGERY =
-    APP_NAME === 'landcoverexplorer' ? MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER : 11; // Default zoom level for Sentinel-2 layer in other apps
 
 export const selectIsSatelliteImageryLayerOutOfVisibleRange = createSelector(
     (state: RootState) =>
