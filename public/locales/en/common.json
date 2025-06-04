@@ -290,6 +290,6 @@
     "swipe_mode_zoom_message": "Zoom in to compare {{layerName}} Imagery Layers",
     "animate_mode_zoom_message": "Zoom in to enable time slider",
     "load_animation": "Load Animation",
-    "landcover_at": "Land Cover at {{year}}",
-    "imagery_at": "Imagery at {{year}}"
+    "landcover_at": "Land Cover for {{year}}",
+    "imagery_at": "Imagery for {{year}}"
 }
