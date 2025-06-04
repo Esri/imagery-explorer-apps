@@ -2,8 +2,6 @@ import React from 'react';
 import { LandcoverExplorerMapViewContainer } from '.';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
-import { useAppSelector } from '@shared/store/configureStore';
-import { selectIsSatelliteImageryLayerOutOfVisibleRange } from '@shared/store/LandcoverExplorer/selectors';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
@@ -15,19 +13,15 @@ import { SENTINEL2_NATIVE_SCALE } from '@shared/services/sentinel-2/config';
 export const Sentinel2LandcoverMapView = () => {
     const { t } = useTranslation();
 
-    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
-        selectIsSatelliteImageryLayerOutOfVisibleRange
-    );
-
     const rasterFunctionName = useSentinel2LandCoverLayerRasterFunctionName();
 
     return (
         <LandcoverExplorerMapViewContainer
             attribution={t('map_attribution', { ns: APP_NAME })}
             nameOfSatelliteImageryLayer={'Sentinel-2'}
-            isSatelliteImageryOutOfVisibleRange={
-                isSatelliteImagertLayerOutOfVisibleRange
-            } // This should be derived from state or props
+            // isSatelliteImageryOutOfVisibleRange={
+            //     isSatelliteImagertLayerOutOfVisibleRange
+            // } // This should be derived from state or props
             nativeScale={SENTINEL2_NATIVE_SCALE} // Sentinel-2 10m resolution
         >
             <SwipeWidget4Landcover

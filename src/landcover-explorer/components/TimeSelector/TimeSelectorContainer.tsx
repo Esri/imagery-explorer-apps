@@ -60,17 +60,46 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
 }) => {
     const { t } = useTranslation();
 
+    const shouldShowSatellteLayer = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
+    );
+
     const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
         selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
-    const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSatelliteImageryLayer
-    );
+    const isImageryLayerOutOfVisibleRangeWarningMessageOn =
+        shouldShowSatellteLayer &&
+        isSatelliteImagertLayerOutOfVisibleRange === true;
 
-    const shouldShowMonthPicker =
-        shouldShowSentinel2Layer &&
-        isSatelliteImagertLayerOutOfVisibleRange === false;
+    const getContent = () => {
+        if (isImageryLayerOutOfVisibleRangeWarningMessageOn) {
+            return (
+                <SatelliteImageryLayerOutOfVisibleRangeWarning
+                    satelliteName={satelliteName}
+                />
+            );
+        }
+
+        return (
+            <>
+                <AnimationAndExportControls
+                    showDownloadGeoTIFFButton={showDownloadGeoTIFFButton}
+                />
+
+                <div className={classNames('relative w-full mt-4')}>
+                    <div className="flex">
+                        <TimeSliderWidgetContainer />
+                        <AcquisitionMonthPickerStepMode />
+                    </div>
+
+                    <TimeSelector4SwipeMode
+                        shouldShowMonthPicker={shouldShowSatellteLayer}
+                    />
+                </div>
+            </>
+        );
+    };
 
     return (
         <div className="w-landcover-explorer-time-slider-width shrink-0 text-center mx-6">
@@ -81,26 +110,7 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
                 titleForLandCover={title4LandCover}
             />
 
-            <AnimationAndExportControls
-                showDownloadGeoTIFFButton={showDownloadGeoTIFFButton}
-            />
-
-            <div className={classNames('relative w-full mt-4')}>
-                <div className="flex">
-                    <TimeSliderWidgetContainer />
-                    {shouldShowMonthPicker && (
-                        <AcquisitionMonthPickerStepMode />
-                    )}
-                </div>
-
-                <TimeSelector4SwipeMode
-                    shouldShowMonthPicker={shouldShowMonthPicker}
-                />
-            </div>
-
-            <SatelliteImageryLayerOutOfVisibleRangeWarning
-                satelliteName={satelliteName}
-            />
+            {getContent()}
         </div>
     );
 };

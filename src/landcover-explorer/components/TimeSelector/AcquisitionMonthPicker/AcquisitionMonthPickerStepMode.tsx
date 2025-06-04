@@ -2,7 +2,6 @@ import React from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import {
-    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';

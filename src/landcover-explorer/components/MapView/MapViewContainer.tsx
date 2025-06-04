@@ -18,10 +18,7 @@ import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
-    // selectMapCenterAndZoom,
-    // selectIsSatelliteImageryLayerOutOfVisibleRange,
-    // selectShouldShowSatelliteImageryLayer,
-    // selectYearsForSwipeWidgetLayers,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
 } from '@shared/store/LandcoverExplorer/selectors';
 // import SwipeWidget from '../SwipeWidget/SwipeWidget';
@@ -65,7 +62,6 @@ type MapViewContainerProps = {
      * name of the satellite imagery layer that will be displayed as a reference layer. (e.g. "Sentinel-2")
      */
     nameOfSatelliteImageryLayer: string;
-    isSatelliteImageryOutOfVisibleRange: boolean;
     children?: React.ReactNode;
     nativeScale: number;
 };
@@ -73,7 +69,7 @@ type MapViewContainerProps = {
 export const MapViewContainer: FC<MapViewContainerProps> = ({
     attribution,
     nameOfSatelliteImageryLayer,
-    isSatelliteImageryOutOfVisibleRange,
+    // isSatelliteImageryOutOfVisibleRange,
     nativeScale,
     children,
 }) => {
@@ -87,9 +83,9 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
 
     const hideControlPanel = useAppSelector(selectHideBottomPanel);
 
-    // const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
-    //     selectIsSatelliteImageryLayerOutOfVisibleRange
-    // );
+    const isSatelliteImageryOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
+    );
 
     const [isUpdating, setIsUpdating] = useState<boolean>(true);
 

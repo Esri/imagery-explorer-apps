@@ -18,7 +18,6 @@ import {
     AnimationSpeedSlider,
 } from '@shared/components/AnimationControl/AnimationSpeedControl';
 import {
-    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -99,10 +98,6 @@ export const DefaultOptions: FC<DefaultOptionsProps> = ({
         selectShouldShowSatelliteImageryLayer
     );
 
-    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
-        selectIsSatelliteImageryLayerOutOfVisibleRange
-    );
-
     // const showStartAnimationButton = mode === 'step';
 
     const showStartAnimationButton = useMemo(() => {
@@ -110,16 +105,8 @@ export const DefaultOptions: FC<DefaultOptionsProps> = ({
             return false;
         }
 
-        if (showSatelliteImageryLayer === true) {
-            return isSatelliteImagertLayerOutOfVisibleRange === false;
-        }
-
         return true;
-    }, [
-        mode,
-        showSatelliteImageryLayer,
-        isSatelliteImagertLayerOutOfVisibleRange,
-    ]);
+    }, [mode]);
 
     const showDownloadButton =
         showDownloadGeoTIFFButton && showSatelliteImageryLayer === false;

@@ -21,7 +21,6 @@ import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     // selectShouldShowSatelliteImageryLayer,
     selectYear,
@@ -77,14 +76,9 @@ export const TimeSliderWidgetContainer = () => {
 
     const years = getAvailableYears();
 
-    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
-        selectIsSatelliteImageryLayerOutOfVisibleRange
-    );
-
     const year = useAppSelector(selectYear);
 
-    const timeStepSliderVisibility =
-        mode === 'step' && isSatelliteImagertLayerOutOfVisibleRange === false;
+    const timeStepSliderVisibility = mode === 'step';
 
     return (
         <div

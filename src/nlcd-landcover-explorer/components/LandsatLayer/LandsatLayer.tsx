@@ -3,9 +3,9 @@ import React, { FC, useEffect } from 'react';
 import IMapView from '@arcgis/core/views/MapView';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
-    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
@@ -26,12 +26,20 @@ export const LandsatLayer: FC<Props> = ({ mapView }) => {
         selectShouldShowSatelliteImageryLayer
     );
 
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
+    );
+
     const getVisibility = () => {
         if (!showSatelliteImageryLayer) {
             return false;
         }
 
         if (animationMode !== null) {
+            return false;
+        }
+
+        if (isSatelliteImagertLayerOutOfVisibleRange) {
             return false;
         }
 

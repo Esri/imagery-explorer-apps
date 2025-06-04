@@ -23,7 +23,6 @@ import {
     year4TrailingLayerUpdated,
 } from '@shared/store/LandcoverExplorer/reducer';
 import {
-    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -41,10 +40,6 @@ const TimeSelector4SwipeMode: FC<Props> = ({
     const dispatch = useAppDispatch();
 
     const mode = useAppSelector(selectMapMode);
-
-    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
-        selectIsSatelliteImageryLayerOutOfVisibleRange
-    );
 
     const years = getAvailableYears();
 
@@ -66,7 +61,7 @@ const TimeSelector4SwipeMode: FC<Props> = ({
         };
     });
 
-    if (mode !== 'swipe' || isSatelliteImagertLayerOutOfVisibleRange) {
+    if (mode !== 'swipe') {
         return null;
     }
 
