@@ -10,6 +10,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import { AnimationYearRangeSelector } from './AnimationYearRangeSelector';
+import { AnimationStatusIndicator } from './AnimationStatusIndicator';
 
 type AnimationOptionsProps = {
     animationSpeed: number;
@@ -33,9 +34,9 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 }: AnimationOptionsProps) => {
     const { t } = useTranslation();
 
-    const aninationStatus = useAppSelector(selectAnimationStatus);
+    const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const shouldOptionButtonsBeDisabled = !aninationStatus;
+    const shouldOptionButtonsBeDisabled = !animationStatus;
 
     return (
         <>
@@ -75,11 +76,9 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
                 />
             </div>
 
-            {aninationStatus === null && (
-                <div>
-                    <AnimationYearRangeSelector />
-                </div>
-            )}
+            {animationStatus === null && <AnimationYearRangeSelector />}
+
+            <AnimationStatusIndicator animationStatus={animationStatus} />
         </>
     );
 };
