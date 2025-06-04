@@ -12,5 +12,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+export { LandcoverTimeSelectorContainer } from './TimeSelectorContainer';
 export { Sentinel2LandcoverTimeSelectorContainer as Sentinel2LandcoverTimeSelector } from './Sentinel2LandcoverTimeSelectorContainer';

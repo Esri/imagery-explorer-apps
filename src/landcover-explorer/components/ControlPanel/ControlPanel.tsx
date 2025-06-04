@@ -33,16 +33,21 @@ import { LandcoverExplorerModeSelector } from './ModeSelector';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { TimeSliderWidgetContainer } from '../TimeSelector/TimeSliderWidget';
 // import { TimeSelectorHeader } from './TimeSelector/TimeSelectorHeader';
-import { Sentinel2LandcoverTimeSelecterHeader } from '../TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
+// import { Sentinel2LandcoverTimeSelecterHeader } from '../TimeSelector/Sentinel2LandcoverTimeSelecterHeader';
 import { getSentinel2LandCoverClassifications } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { ClassificationsList } from '../ClassificationsList';
 import { Sentinel2LandCoverGraph } from './Sentinel2LandCoverGraph/Sentinel2LandCoverGraph';
 import { Sentinel2LayerRasterFunctionsListContainer } from './Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+import { TimeSelectorHeader } from '../TimeSelector/TimeSelectorHeader';
+import { APP_NAME } from '@shared/config';
+import { useTranslation } from 'react-i18next';
 
 const ControlPanel = () => {
     // const dispatch = useAppDispatch();
 
     // const hideControlPanel = useAppSelector(selectHideBottomPanel);
+
+    const { t } = useTranslation();
 
     const shouldShowSentinel2Layer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
@@ -57,7 +62,14 @@ const ControlPanel = () => {
             <BottomPanel>
                 <div className="mx-auto">
                     <div className="pt-4">
-                        <Sentinel2LandcoverTimeSelecterHeader />
+                        <TimeSelectorHeader
+                            titleForImagery={t('sentinel_layer_title', {
+                                ns: APP_NAME,
+                            })}
+                            titleForLandCover={t('land_cover_layer_title', {
+                                ns: APP_NAME,
+                            })}
+                        />
                         <TimeSliderWidgetContainer />
                     </div>
                     <div className="my-12">
