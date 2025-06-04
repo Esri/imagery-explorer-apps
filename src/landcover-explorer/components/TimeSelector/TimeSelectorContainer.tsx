@@ -32,6 +32,7 @@ import { AcquisitionMonthPickerStepMode } from './AcquisitionMonthPicker/Acquisi
 import { TimeSelectorHeader } from './TimeSelectorHeader';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type TimeSelectorContainerProps = {
     /**
@@ -60,6 +61,8 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
 }) => {
     const { t } = useTranslation();
 
+    const mode = useAppSelector(selectMapMode);
+
     const shouldShowSatellteLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
@@ -71,6 +74,11 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
     const isImageryLayerOutOfVisibleRangeWarningMessageOn =
         shouldShowSatellteLayer &&
         isSatelliteImagertLayerOutOfVisibleRange === true;
+
+    const animationMode = useAppSelector(selectAnimationStatus);
+
+    const [showAnimationControls, setShowAnimationControls] =
+        React.useState(false);
 
     const getContent = () => {
         if (isImageryLayerOutOfVisibleRangeWarningMessageOn) {
@@ -85,6 +93,12 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
             <>
                 <AnimationAndExportControls
                     showDownloadGeoTIFFButton={showDownloadGeoTIFFButton}
+                    showAnimationControls={
+                        mode === 'step' && showAnimationControls
+                    }
+                    toggleAnimationControlsButtonOnClick={(val) => {
+                        setShowAnimationControls(val);
+                    }}
                 />
 
                 <div className={classNames('relative w-full mt-4')}>
@@ -100,6 +114,19 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
             </>
         );
     };
+
+    useEffect(() => {
+        // Reset the animation controls visibility when the mode changes
+        setShowAnimationControls(false);
+    }, [mode]);
+
+    useEffect(() => {
+        // Reset the animation controls visibility when the animation mode becomes null
+        // This is to ensure that the animation controls are hidden when user exits animation mode
+        if (!animationMode) {
+            setShowAnimationControls(false);
+        }
+    }, [animationMode]);
 
     return (
         <div className="w-landcover-explorer-time-slider-width shrink-0 text-center mx-6">

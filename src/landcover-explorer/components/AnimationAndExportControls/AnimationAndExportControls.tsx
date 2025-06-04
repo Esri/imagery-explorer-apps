@@ -14,10 +14,6 @@
  */
 
 import {
-    AnimationSpeedControl,
-    AnimationSpeedSlider,
-} from '@shared/components/AnimationControl/AnimationSpeedControl';
-import {
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -38,10 +34,23 @@ import React, { FC, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useTranslation } from 'react-i18next';
-import AnimationStatusButton from './AnimationStatusButton';
+import { AnimationOptions } from './AnimationOptions';
+import { OptionButton } from './OptionButton';
 
-type ExtraOptionsProps = {
+type AnimationAndExportControlsProps = {
+    /**
+     * If true, the download GeoTIFF button will be shown.
+     */
     showDownloadGeoTIFFButton: boolean;
+    /**
+     * If true, the animation controls will be shown.
+     */
+    showAnimationControls: boolean;
+    /**
+     * Emits when the user clicks on the 'play animation' button.
+     * @returns void
+     */
+    toggleAnimationControlsButtonOnClick: (showShow: boolean) => void;
 };
 
 type DefaultOptionsProps = {
@@ -51,38 +60,7 @@ type DefaultOptionsProps = {
     saveWebmapButtonOnClick: () => void;
 };
 
-type AnimationOptionsProps = {
-    animationSpeed: number;
-    /**
-     * fires when user makes change to Animation Speed
-     * @param newSpeed speed in milliseconds
-     * @returns
-     */
-    speedOnChange: (newSpeed?: number) => void;
-    copyLinkOnClick: () => void;
-    donwloadAnimationOnClick: () => void;
-};
-
-type OptionButtonProps = {
-    label: string;
-    icon: string;
-    onClick: () => void;
-};
-
-export const OptionButton: FC<OptionButtonProps> = ({
-    label,
-    icon,
-    onClick,
-}) => {
-    return (
-        <div className="cursor-pointer flex items-center" onClick={onClick}>
-            <calcite-icon icon={icon} scale="s" />
-            <span className="ml-1 text-xs">{label}</span>
-        </div>
-    );
-};
-
-export const DefaultOptions: FC<DefaultOptionsProps> = ({
+const DefaultOptions: FC<DefaultOptionsProps> = ({
     showDownloadGeoTIFFButton,
     startAnimationOnClick,
     donwloadButtonOnClick,
@@ -92,7 +70,7 @@ export const DefaultOptions: FC<DefaultOptionsProps> = ({
 
     const mode = useAppSelector(selectMapMode);
 
-    const animationMode = useAppSelector(selectAnimationStatus);
+    // const animationMode = useAppSelector(selectAnimationStatus);
 
     const showSatelliteImageryLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
@@ -113,23 +91,23 @@ export const DefaultOptions: FC<DefaultOptionsProps> = ({
 
     const showPublishToArcGISButton = showSatelliteImageryLayer === false;
 
-    if (animationMode !== null) {
-        return null;
-    }
+    // if (animationMode !== null) {
+    //     return null;
+    // }
 
-    // return a placeholder if no buttons are shown
-    // this is to avoid empty space in the UI when no buttons are available
-    if (
-        !showDownloadButton &&
-        !showStartAnimationButton &&
-        !showPublishToArcGISButton
-    ) {
-        return (
-            <div className="h-[16px] w-full">
-                {/* <span className='text-xs'>Save options are only enabled for Land Cover layer</span> */}
-            </div>
-        );
-    }
+    // // return a placeholder if no buttons are shown
+    // // this is to avoid empty space in the UI when no buttons are available
+    // if (
+    //     !showDownloadButton &&
+    //     !showStartAnimationButton &&
+    //     !showPublishToArcGISButton
+    // ) {
+    //     return (
+    //         <div className="h-[16px] w-full">
+    //             {/* <span className='text-xs'>Save options are only enabled for Land Cover layer</span> */}
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className={classNames('flex items-center justify-around')}>
@@ -174,49 +152,12 @@ export const DefaultOptions: FC<DefaultOptionsProps> = ({
     );
 };
 
-export const AnimationOptions: FC<AnimationOptionsProps> = ({
-    animationSpeed,
-    copyLinkOnClick,
-    donwloadAnimationOnClick,
-    speedOnChange,
-}: AnimationOptionsProps) => {
-    const { t } = useTranslation();
-    const animationMode = useAppSelector(selectAnimationStatus);
-
-    if (!animationMode) {
-        return null;
-    }
-
-    return (
-        <div className="flex items-center justify-around">
-            <div className="flex items-center w-24">
-                <AnimationSpeedSlider
-                    speedInMilliseonds={animationSpeed}
-                    speedOnChange={speedOnChange}
-                />
-
-                <span className="ml-3">{t('speed')}</span>
-            </div>
-
-            <OptionButton
-                label={t('copy_link')}
-                icon="link"
-                onClick={copyLinkOnClick}
-            />
-
-            <OptionButton
-                label={t('donwload_mp4')}
-                icon="download-to"
-                onClick={donwloadAnimationOnClick}
-            />
-
-            <AnimationStatusButton />
-        </div>
-    );
-};
-
-export const AnimationAndExportControls: FC<ExtraOptionsProps> = ({
+export const AnimationAndExportControls: FC<
+    AnimationAndExportControlsProps
+> = ({
     showDownloadGeoTIFFButton,
+    showAnimationControls,
+    toggleAnimationControlsButtonOnClick,
 }) => {
     const dispatch = useAppDispatch();
 
@@ -224,33 +165,39 @@ export const AnimationAndExportControls: FC<ExtraOptionsProps> = ({
 
     return (
         <div className="w-full my-6 text-xs">
-            <DefaultOptions
-                showDownloadGeoTIFFButton={showDownloadGeoTIFFButton}
-                // startAnimationOnClick=
-                donwloadButtonOnClick={() => {
-                    dispatch(showDownloadPanelToggled(true));
-                }}
-                saveWebmapButtonOnClick={() => {
-                    dispatch(showSaveWebMapPanelToggled());
-                }}
-                startAnimationOnClick={() => {
-                    // dispatch(AnimationSpeedControl.startAnimation());
-                    dispatch(animationStatusChanged('loading'));
-                }}
-            />
-
-            <AnimationOptions
-                animationSpeed={animationSpeed}
-                donwloadAnimationOnClick={() => {
-                    dispatch(showDownloadAnimationPanelChanged(true));
-                }}
-                copyLinkOnClick={() => {
-                    dispatch(copyAnimationLink());
-                }}
-                speedOnChange={(speed: number) => {
-                    dispatch(animationSpeedChanged(speed));
-                }}
-            />
+            {showAnimationControls ? (
+                <AnimationOptions
+                    animationSpeed={animationSpeed}
+                    donwloadAnimationOnClick={() => {
+                        dispatch(showDownloadAnimationPanelChanged(true));
+                    }}
+                    copyLinkOnClick={() => {
+                        dispatch(copyAnimationLink());
+                    }}
+                    speedOnChange={(speed: number) => {
+                        dispatch(animationSpeedChanged(speed));
+                    }}
+                    closeAnimationControlsButtonOnClick={toggleAnimationControlsButtonOnClick.bind(
+                        null,
+                        false
+                    )}
+                />
+            ) : (
+                <DefaultOptions
+                    showDownloadGeoTIFFButton={showDownloadGeoTIFFButton}
+                    // startAnimationOnClick=
+                    donwloadButtonOnClick={() => {
+                        dispatch(showDownloadPanelToggled(true));
+                    }}
+                    saveWebmapButtonOnClick={() => {
+                        dispatch(showSaveWebMapPanelToggled());
+                    }}
+                    startAnimationOnClick={toggleAnimationControlsButtonOnClick.bind(
+                        null,
+                        true
+                    )}
+                />
+            )}
         </div>
     );
 };

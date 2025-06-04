@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
@@ -64,7 +64,13 @@ const CloseButton = (
     </svg>
 );
 
-export const AnimationStatusButton = () => {
+type AnimationStatusButtonProps = {
+    closeAnimationControlsButtonOnClick: () => void;
+};
+
+export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
+    closeAnimationControlsButtonOnClick,
+}) => {
     const dispatch = useAppDispatch();
 
     const animationMode = useAppSelector(selectAnimationStatus);
@@ -72,13 +78,19 @@ export const AnimationStatusButton = () => {
     return (
         <div className="flex cursor-pointer items-center">
             {!animationMode && (
-                <div
-                    onClick={() => {
-                        dispatch(animationStatusChanged('loading'));
-                    }}
-                >
-                    {PlayButton}
-                </div>
+                <>
+                    <div
+                        onClick={() => {
+                            dispatch(animationStatusChanged('loading'));
+                        }}
+                    >
+                        {PlayButton}
+                    </div>
+
+                    <div onClick={closeAnimationControlsButtonOnClick}>
+                        {CloseButton}
+                    </div>
+                </>
             )}
             {animationMode === 'loading' && (
                 <div>
