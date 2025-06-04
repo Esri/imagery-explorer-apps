@@ -96,20 +96,25 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
                     showAnimationControls={
                         mode === 'step' && showAnimationControls
                     }
-                    toggleAnimationControlsButtonOnClick={(val) => {
-                        setShowAnimationControls(val);
+                    toggleAnimationControlsButtonOnClick={(
+                        shouldShowAnimationControls
+                    ) => {
+                        setShowAnimationControls(shouldShowAnimationControls);
                     }}
                 />
 
                 <div className={classNames('relative w-full mt-4')}>
-                    <div className="flex">
-                        <TimeSliderWidgetContainer />
-                        <AcquisitionMonthPickerStepMode />
-                    </div>
-
-                    <TimeSelector4SwipeMode
-                        shouldShowMonthPicker={shouldShowSatellteLayer}
-                    />
+                    {mode === 'step' && showAnimationControls === false && (
+                        <div className="flex">
+                            <TimeSliderWidgetContainer />
+                            <AcquisitionMonthPickerStepMode />
+                        </div>
+                    )}
+                    {mode === 'swipe' && (
+                        <TimeSelector4SwipeMode
+                            shouldShowMonthPicker={shouldShowSatellteLayer}
+                        />
+                    )}
                 </div>
             </>
         );

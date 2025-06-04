@@ -6,6 +6,9 @@ import {
 } from '@shared/components/AnimationControl/AnimationSpeedControl';
 import AnimationStatusButton from './AnimationStatusButton';
 import { OptionButton } from './OptionButton';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import classNames from 'classnames';
 
 type AnimationOptionsProps = {
     animationSpeed: number;
@@ -29,9 +32,18 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 }: AnimationOptionsProps) => {
     const { t } = useTranslation();
 
+    const aninationStatus = useAppSelector(selectAnimationStatus);
+
+    const shouldOptionButtonsBeDisabled = !aninationStatus;
+
     return (
         <div className="flex items-center justify-around">
-            <div className="flex items-center w-24">
+            <div
+                className={classNames('flex items-center w-24', {
+                    'opacity-50 pointer-events-none':
+                        shouldOptionButtonsBeDisabled,
+                })}
+            >
                 <AnimationSpeedSlider
                     speedInMilliseonds={animationSpeed}
                     speedOnChange={speedOnChange}
@@ -43,12 +55,14 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
             <OptionButton
                 label={t('copy_link')}
                 icon="link"
+                disabled={shouldOptionButtonsBeDisabled}
                 onClick={copyLinkOnClick}
             />
 
             <OptionButton
                 label={t('donwload_mp4')}
                 icon="download-to"
+                disabled={shouldOptionButtonsBeDisabled}
                 onClick={donwloadAnimationOnClick}
             />
 
