@@ -134,7 +134,7 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
         // Reset the animation controls visibility when the animation mode becomes null,
         // or when the mode changes
         // This is to ensure that the animation controls are hidden when user exits animation mode
-        if (!animationStatus || mode !== 'step') {
+        if (mode !== 'step') {
             setShowAnimationControls(false);
         }
     }, [animationStatus, mode]);

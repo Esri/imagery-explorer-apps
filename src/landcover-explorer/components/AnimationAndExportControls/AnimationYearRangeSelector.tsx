@@ -44,7 +44,7 @@ export const AnimationYearRangeSelector = () => {
 
     return (
         <div className="mt-4">
-            <div className="text-right text-xs opacity-50 pr-2">
+            <div className="text-center text-xs opacity-50 pr-2">
                 <span>
                     {t('selected_year_range', {
                         startYear:

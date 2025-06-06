@@ -292,5 +292,5 @@
     "load_animation": "Loading Animation",
     "landcover_at": "Land Cover for {{year}}",
     "imagery_at": "Imagery for {{year}}",
-    "selected_year_range": "Animation Year Range: {{startYear}} - {{endYear}}"
+    "selected_year_range": "{{startYear}} - {{endYear}}"
 }
