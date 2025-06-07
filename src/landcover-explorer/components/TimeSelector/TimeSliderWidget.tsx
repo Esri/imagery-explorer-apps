@@ -54,14 +54,14 @@ type Props = {
     /**
      * Visibility of Time Slider, no need to show this slider when is step mode, or viewing Sentinel-2 Imagery layer at zoom level 10 or less
      */
-    visible?: boolean;
+    visible: boolean;
     /**
      * Fires when the time extent of the Time Slider is changed
      *
      * @param startYear new start year
      * @param endYear ned end year
      */
-    timeExtentOnChange: (startYear: number, endYear: number) => void;
+    timeExtentOnChange?: (startYear: number, endYear: number) => void;
     /**
      * selected year
      */
@@ -152,19 +152,21 @@ export const TimeSliderWidget: FC<Props> = ({
 
             // console.log(sliderRef.current);
 
-            reactiveUtils.watch(
-                () => sliderRef.current.timeExtent,
-                (timeExtent) => {
-                    clearTimeout(debounceDelay.current);
+            if (timeExtentOnChange) {
+                reactiveUtils.watch(
+                    () => sliderRef.current.timeExtent,
+                    (timeExtent) => {
+                        clearTimeout(debounceDelay.current);
 
-                    debounceDelay.current = setTimeout(() => {
-                        timeExtentOnChange(
-                            timeExtent.start.getUTCFullYear(),
-                            timeExtent.end.getUTCFullYear()
-                        );
-                    }, 500);
-                }
-            );
+                        debounceDelay.current = setTimeout(() => {
+                            timeExtentOnChange(
+                                timeExtent.start.getUTCFullYear(),
+                                timeExtent.end.getUTCFullYear()
+                            );
+                        }, 500);
+                    }
+                );
+            }
 
             // sliderRef.current.on('thumb-drag', (evt) => {
             //     clearTimeout(debounceDelay.current);
