@@ -43,11 +43,11 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
 
     const years = useAppSelector(selectLandcoverAnimationYears);
 
-    const sentinel2AquisitionMonth = useAppSelector(
+    const satelliteImageryAquisitionMonth = useAppSelector(
         selectSatelliteImageryLayerAquisitionMonth
     );
 
-    const sentinel2RasterFunction = useAppSelector(
+    const satelliteImageryRasterFunction = useAppSelector(
         selectSatelliteImageryLayerRasterFunction
     );
 
@@ -81,8 +81,8 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
                           width,
                           height,
                           year,
-                          month: sentinel2AquisitionMonth,
-                          rasterFunctionName: sentinel2RasterFunction,
+                          month: satelliteImageryAquisitionMonth,
+                          rasterFunctionName: satelliteImageryRasterFunction,
                           abortController: abortControllerRef.current,
                       })
                     : exportImageFromLandCoverLayer({
