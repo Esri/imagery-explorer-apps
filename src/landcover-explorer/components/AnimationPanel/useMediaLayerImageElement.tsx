@@ -20,8 +20,8 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import IMapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAndRotationGeoreference';
-import { exportLandCoverImage } from '../LandcoverLayer/exportImage';
-import { exportSatelliteImage } from '../Sentinel2Layer/exportImage';
+import { exportLandCoverImage } from './exportLandCoverImage';
+import { exportSatelliteImage } from './exportSatelliteImage';
 import {
     // selectActiveLandCoverType,
     selectLandcoverAnimationYears,

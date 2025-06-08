@@ -27,6 +27,8 @@ import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import { APP_ID } from '@shared/config';
 import { loadNLCDLandcoverServiceInfo } from '@shared/services/nlcd-landcover/loadServiceInfo';
+import { setImageryServiceFieldNames } from '@landcover-explorer/components/AnimationPanel/exportSatelliteImage';
+import { FIELD_NAMES } from '@shared/services/landsat-level-2/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -40,6 +42,14 @@ import { loadNLCDLandcoverServiceInfo } from '@shared/services/nlcd-landcover/lo
 
         // Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer
         await loadNLCDLandcoverServiceInfo();
+
+        // set the field names for the lansat imagery service,
+        // these field names are used for the export satellite image functionality
+        // in the AnimationPanel component
+        setImageryServiceFieldNames({
+            AcquisitionDate: FIELD_NAMES.ACQUISITION_DATE,
+            CloudCover: FIELD_NAMES.CLOUD_COVER,
+        });
 
         const store = getNLCDLandcoverExplorerStore();
 

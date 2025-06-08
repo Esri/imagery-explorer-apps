@@ -61,6 +61,29 @@ type ExportImageParams = {
     abortController: AbortController;
 };
 
+/**
+ * Maps descriptive property names to their corresponding field names used in the imagery service.
+ *
+ * @property AcquisitionDate - The field name representing the acquisition date of the imagery.
+ * @property CloudCover - The field name representing the cloud cover percentage of the imagery.
+ */
+const ImageryServiceFieldNames = {
+    AcquisitionDate: FIELD_NAMES.ACQUISITION_DATE as string,
+    CloudCover: FIELD_NAMES.CLOUD_COVER as string,
+};
+
+/**
+ * Overrides the default field names used in the imagery service for acquisition date and cloud cover.
+ * @param fieldNames - an object containing field names for acquisition date and cloud cover
+ */
+export const setImageryServiceFieldNames = (
+    fieldNames: typeof ImageryServiceFieldNames
+) => {
+    // console.log('setImageryServiceFieldNames', fieldNames);
+    ImageryServiceFieldNames.AcquisitionDate = fieldNames.AcquisitionDate;
+    ImageryServiceFieldNames.CloudCover = fieldNames.CloudCover;
+};
+
 export const getMosaicRuleByAcquisitionDate = (
     year: number,
     month: number
@@ -80,18 +103,27 @@ export const getMosaicRuleByAcquisitionDate = (
     return {
         mosaicMethod: 'esriMosaicAttribute',
         // only get sentinel-2 imagery from the input month
-        where: `${FIELD_NAMES.ACQUISITION_DATE} BETWEEN timestamp '${format(
+        where: `${
+            ImageryServiceFieldNames.AcquisitionDate
+        } BETWEEN timestamp '${format(
             startDate,
             'yyyy-MM-dd'
         )} 06:00:00' AND timestamp '${format(endDate, 'yyyy-MM-dd')} 05:59:59'`,
         // sort by cloud cover to get imagery with least cloud coverage
-        sortField: FIELD_NAMES.CLOUD_COVER,
+        sortField: ImageryServiceFieldNames.CloudCover,
         sortValue: 0,
         ascending: true,
         mosaicOperation: 'MT_FIRST',
     };
 };
 
+/**
+ * This function exports a satellite image from the Sentinel-2 image service or Landsat image service.
+ * It uses the exportImage operation to create a JPEG or PNG image from the specified extent and raster function
+ * that will be used for features like animation.
+ * @param param0 - parameters for exporting satellite image
+ * @returns
+ */
 export const exportSatelliteImage = async ({
     serviceUrl,
     extent,
