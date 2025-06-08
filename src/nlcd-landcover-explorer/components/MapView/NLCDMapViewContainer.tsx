@@ -9,7 +9,10 @@ import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcove
 import { useNLCDLandCoverLayerRasterFunctionName } from '../NLCDLandcoverLayer/useNLCDLandCoverLayerRasterFunctionName';
 import { LandsatLayer } from '../LandsatLayer/LandsatLayer';
 import { SwipeWidget4LandsatLayers } from '../SwipeWidget/SwipeWidget4Landsat';
-import { LANDSAT_NATIVE_SCALE } from '@shared/services/landsat-level-2/config';
+import {
+    LANDSAT_LEVEL_2_SERVICE_URL,
+    LANDSAT_NATIVE_SCALE,
+} from '@shared/services/landsat-level-2/config';
 // import { selectIsSatelliteImageryLayerOutOfVisibleRange } from '@shared/store/LandcoverExplorer/selectors';
 
 export const NLCDLandcoverMapViewContainer = () => {
@@ -26,6 +29,7 @@ export const NLCDLandcoverMapViewContainer = () => {
             landCoverServiceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
             landcoverLayerRasterFunctionName={rasterFunctionName}
             attribution={t('map_attribution', { ns: APP_NAME })}
+            satellteImageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
             nameOfSatelliteImageryLayer={'Landsat'}
             // isSatelliteImageryOutOfVisibleRange={
             //     isSatelliteImageryLayerOutOfVisibleRange

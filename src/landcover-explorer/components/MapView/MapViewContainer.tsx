@@ -67,6 +67,10 @@ type MapViewContainerProps = {
      */
     landcoverLayerRasterFunctionName: string;
     /**
+     * URL for the Satellite Imagery Service
+     */
+    satellteImageryServiceUrl: string;
+    /**
      * name of the satellite imagery layer that will be displayed as a reference layer. (e.g. "Sentinel-2")
      */
     nameOfSatelliteImageryLayer: string;
@@ -78,6 +82,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
     attribution,
     landCoverServiceUrl,
     landcoverLayerRasterFunctionName,
+    satellteImageryServiceUrl,
     nameOfSatelliteImageryLayer,
     // isSatelliteImageryOutOfVisibleRange,
     nativeScale,
@@ -153,6 +158,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
 
                 <AnimationPanel
                     landCoverServiceUrl={landCoverServiceUrl}
+                    satellteImageryServiceUrl={satellteImageryServiceUrl}
                     landcoverLayerRasterFunctionName={
                         landcoverLayerRasterFunctionName
                     }

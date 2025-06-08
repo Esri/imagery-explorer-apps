@@ -46,6 +46,10 @@ type Props = {
      */
     landCoverServiceUrl: string;
     /**
+     * The URL for the Satellite Imagery Service.
+     */
+    satellteImageryServiceUrl: string;
+    /**
      * The raster function name for the land cover layer.
      */
     landcoverLayerRasterFunctionName: string;
@@ -58,6 +62,7 @@ type Props = {
 const AnimationPanel: FC<Props> = ({
     mapView,
     landCoverServiceUrl,
+    satellteImageryServiceUrl,
     landcoverLayerRasterFunctionName,
     animationMetadataSources,
 }: Props) => {
@@ -69,6 +74,7 @@ const AnimationPanel: FC<Props> = ({
 
     const mediaLayerElements = useMediaLayerImageElement({
         landCoverServiceUrl,
+        satellteImageryServiceUrl,
         landcoverLayerRasterFunctionName,
         mapView,
     });

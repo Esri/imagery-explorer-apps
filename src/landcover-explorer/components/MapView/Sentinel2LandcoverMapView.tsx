@@ -8,7 +8,10 @@ import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
 import Popup from '../Popup/Popup';
 import { useSentinel2LandCoverLayerRasterFunctionName } from '../LandcoverLayer/useSentinel2LandCoverLayerRasterFunctionName';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
-import { SENTINEL2_NATIVE_SCALE } from '@shared/services/sentinel-2/config';
+import {
+    SENTINEL2_NATIVE_SCALE,
+    SENTINEL_2_SERVICE_URL,
+} from '@shared/services/sentinel-2/config';
 
 export const Sentinel2LandcoverMapView = () => {
     const { t } = useTranslation();
@@ -21,6 +24,7 @@ export const Sentinel2LandcoverMapView = () => {
             landcoverLayerRasterFunctionName={rasterFunctionName}
             attribution={t('map_attribution', { ns: APP_NAME })}
             nameOfSatelliteImageryLayer={'Sentinel-2'}
+            satellteImageryServiceUrl={SENTINEL_2_SERVICE_URL}
             // isSatelliteImageryOutOfVisibleRange={
             //     isSatelliteImagertLayerOutOfVisibleRange
             // } // This should be derived from state or props

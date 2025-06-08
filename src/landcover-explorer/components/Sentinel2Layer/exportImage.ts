@@ -21,7 +21,7 @@ import IExtent from '@arcgis/core/geometry/Extent';
 //     // SENTINEL_2_IMAGE_SERVICE_URL,
 // } from './config';
 import {
-    SENTINEL_2_SERVICE_URL,
+    // SENTINEL_2_SERVICE_URL,
     FIELD_NAMES,
 } from '@shared/services/sentinel-2/config';
 import { ImageryRasterFunction4LandcoverApp } from '@shared/store/LandcoverExplorer/reducer';
@@ -30,6 +30,10 @@ import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 // const { AcquisitionDate, CloudCover } = FIELD_NAMES;
 
 type ExportImageParams = {
+    /**
+     * Satellite 2 image service URL
+     */
+    serviceUrl: string;
     /**
      * Map Extent
      */
@@ -51,7 +55,7 @@ type ExportImageParams = {
      */
     month: number;
     /**
-     * Sentinel 2 layer raster function name that will be used in the rendering rule
+     * Imagery layer raster function name that will be used in the rendering rule
      */
     rasterFunctionName: ImageryRasterFunction4LandcoverApp;
     abortController: AbortController;
@@ -88,7 +92,8 @@ export const getMosaicRuleByAcquisitionDate = (
     };
 };
 
-export const exportImage = async ({
+export const exportSatelliteImage = async ({
+    serviceUrl,
     extent,
     width,
     height,
@@ -110,7 +115,7 @@ export const exportImage = async ({
         renderingRule: JSON.stringify({ rasterFunction: rasterFunctionName }),
     });
 
-    const requestURL = `${SENTINEL_2_SERVICE_URL}/exportImage?${params.toString()}`;
+    const requestURL = `${serviceUrl}/exportImage?${params.toString()}`;
 
     const res = await fetch(requestURL, { signal: abortController.signal });
 

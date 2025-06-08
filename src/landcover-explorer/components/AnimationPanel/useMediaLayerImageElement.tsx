@@ -21,27 +21,37 @@ import IMapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAndRotationGeoreference';
 import { exportLandCoverImage } from '../LandcoverLayer/exportImage';
-import { exportImage as exportImageFromSentinel2Layer } from '../Sentinel2Layer/exportImage';
+import { exportSatelliteImage } from '../Sentinel2Layer/exportImage';
 import {
-    selectActiveLandCoverType,
+    // selectActiveLandCoverType,
     selectLandcoverAnimationYears,
     selectSatelliteImageryLayerAquisitionMonth,
     selectSatelliteImageryLayerRasterFunction,
     selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { getRasterFunctionBySentinel2LandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { getRasterFunctionBySentinel2LandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { Sentinel2LandCoverClassification } from '@typing/landcover';
+// import { Sentinel2LandCoverClassification } from '@typing/landcover';
 
 type Props = {
+    /**
+     * Land cover service URL
+     * This is used for the land cover layer
+     */
     landCoverServiceUrl: string;
+    /**
+     * Satellite imagery service URL
+     * This is used for the Sentinel-2 imagery layer or landsat imagery layer
+     */
+    satellteImageryServiceUrl: string;
     landcoverLayerRasterFunctionName: string;
     mapView?: IMapView;
 };
 
 const useMediaLayerImageElement = ({
     landCoverServiceUrl,
+    satellteImageryServiceUrl,
     landcoverLayerRasterFunctionName,
     mapView,
 }: Props) => {
@@ -65,7 +75,7 @@ const useMediaLayerImageElement = ({
         selectShouldShowSatelliteImageryLayer
     );
 
-    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
+    // const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
@@ -86,7 +96,8 @@ const useMediaLayerImageElement = ({
             // get images via export image request from land cover layer or sentinel-2 layer
             const requests = years.map((year) => {
                 return shouldShowSatelliteImageryLayer
-                    ? exportImageFromSentinel2Layer({
+                    ? exportSatelliteImage({
+                          serviceUrl: satellteImageryServiceUrl,
                           extent,
                           width,
                           height,
