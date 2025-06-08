@@ -59,6 +59,14 @@ import { useTranslation } from 'react-i18next';
 type MapViewContainerProps = {
     attribution: string;
     /**
+     * URL for the Land Cover Image Service
+     */
+    landCoverServiceUrl: string;
+    /**
+     * name of the raster function that will be used for rendering the land cover layer.
+     */
+    landcoverLayerRasterFunctionName: string;
+    /**
      * name of the satellite imagery layer that will be displayed as a reference layer. (e.g. "Sentinel-2")
      */
     nameOfSatelliteImageryLayer: string;
@@ -68,6 +76,8 @@ type MapViewContainerProps = {
 
 export const MapViewContainer: FC<MapViewContainerProps> = ({
     attribution,
+    landCoverServiceUrl,
+    landcoverLayerRasterFunctionName,
     nameOfSatelliteImageryLayer,
     // isSatelliteImageryOutOfVisibleRange,
     nativeScale,
@@ -142,6 +152,10 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                 <CustomMapArrtribution atrribution={attribution} />
 
                 <AnimationPanel
+                    landCoverServiceUrl={landCoverServiceUrl}
+                    landcoverLayerRasterFunctionName={
+                        landcoverLayerRasterFunctionName
+                    }
                     animationMetadataSources={t('animation_metadata', {
                         ns: APP_NAME,
                     })}

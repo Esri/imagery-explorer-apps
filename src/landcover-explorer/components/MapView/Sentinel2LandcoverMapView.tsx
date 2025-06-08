@@ -17,6 +17,8 @@ export const Sentinel2LandcoverMapView = () => {
 
     return (
         <LandcoverExplorerMapViewContainer
+            landCoverServiceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}
+            landcoverLayerRasterFunctionName={rasterFunctionName}
             attribution={t('map_attribution', { ns: APP_NAME })}
             nameOfSatelliteImageryLayer={'Sentinel-2'}
             // isSatelliteImageryOutOfVisibleRange={

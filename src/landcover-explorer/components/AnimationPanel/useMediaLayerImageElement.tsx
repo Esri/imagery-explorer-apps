@@ -20,7 +20,7 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import IMapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAndRotationGeoreference';
-import { exportImage as exportImageFromLandCoverLayer } from '../LandcoverLayer/exportImage';
+import { exportLandCoverImage } from '../LandcoverLayer/exportImage';
 import { exportImage as exportImageFromSentinel2Layer } from '../Sentinel2Layer/exportImage';
 import {
     selectActiveLandCoverType,
@@ -34,7 +34,17 @@ import { getRasterFunctionBySentinel2LandCoverClassName } from '@shared/services
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { Sentinel2LandCoverClassification } from '@typing/landcover';
 
-const useMediaLayerImageElement = (mapView?: IMapView) => {
+type Props = {
+    landCoverServiceUrl: string;
+    landcoverLayerRasterFunctionName: string;
+    mapView?: IMapView;
+};
+
+const useMediaLayerImageElement = ({
+    landCoverServiceUrl,
+    landcoverLayerRasterFunctionName,
+    mapView,
+}: Props) => {
     const [imageElements, setImageElements] = useState<ImageElement[]>(null);
 
     const abortControllerRef = useRef<AbortController>();
@@ -85,15 +95,16 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
                           rasterFunctionName: satelliteImageryRasterFunction,
                           abortController: abortControllerRef.current,
                       })
-                    : exportImageFromLandCoverLayer({
+                    : exportLandCoverImage({
+                          serviceUrl: landCoverServiceUrl,
                           extent,
                           width,
                           height,
                           year,
-                          rasterFunctionName:
-                              getRasterFunctionBySentinel2LandCoverClassName(
-                                  activeLandCoverType as Sentinel2LandCoverClassification
-                              ),
+                          rasterFunctionName: landcoverLayerRasterFunctionName,
+                          //   getRasterFunctionBySentinel2LandCoverClassName(
+                          //       activeLandCoverType as Sentinel2LandCoverClassification
+                          //   ),
                           abortController: abortControllerRef.current,
                       });
             });

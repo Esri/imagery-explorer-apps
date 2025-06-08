@@ -42,6 +42,14 @@ import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverEx
 type Props = {
     mapView?: IMapView;
     /**
+     * The URL for the Land Cover Image Service.
+     */
+    landCoverServiceUrl: string;
+    /**
+     * The raster function name for the land cover layer.
+     */
+    landcoverLayerRasterFunctionName: string;
+    /**
      * The animation metadata sources.
      */
     animationMetadataSources: string;
@@ -49,6 +57,8 @@ type Props = {
 
 const AnimationPanel: FC<Props> = ({
     mapView,
+    landCoverServiceUrl,
+    landcoverLayerRasterFunctionName,
     animationMetadataSources,
 }: Props) => {
     const dispatch = useAppDispatch();
@@ -57,7 +67,11 @@ const AnimationPanel: FC<Props> = ({
 
     const mediaLayerRef = useRef<MediaLayer>();
 
-    const mediaLayerElements = useMediaLayerImageElement(mapView);
+    const mediaLayerElements = useMediaLayerImageElement({
+        landCoverServiceUrl,
+        landcoverLayerRasterFunctionName,
+        mapView,
+    });
 
     const frameData4DownloadJob: AnimationFrameData[] =
         useFrameDataForDownloadJob({

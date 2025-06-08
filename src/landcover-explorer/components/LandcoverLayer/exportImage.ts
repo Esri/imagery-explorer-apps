@@ -18,9 +18,13 @@ import {
     getTimeExtentByYear,
     // TimeExtentData,
 } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
+// import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 
 type ExportImageParams = {
+    /**
+     * URL for the Land Cover Image Service
+     */
+    serviceUrl: string;
     /**
      * Map Extent
      */
@@ -44,7 +48,8 @@ type ExportImageParams = {
     abortController: AbortController;
 };
 
-export const exportImage = async ({
+export const exportLandCoverImage = async ({
+    serviceUrl,
     extent,
     width,
     height,
@@ -54,10 +59,7 @@ export const exportImage = async ({
 }: ExportImageParams) => {
     const { xmin, xmax, ymin, ymax } = extent;
 
-    const { start } = await getTimeExtentByYear(
-        year,
-        SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL
-    );
+    const { start } = await getTimeExtentByYear(year, serviceUrl);
 
     const params = new URLSearchParams({
         f: 'image',
@@ -75,7 +77,7 @@ export const exportImage = async ({
         time: start.toString(),
     });
 
-    const requestURL = `${SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}/exportImage?${params.toString()}`;
+    const requestURL = `${serviceUrl}/exportImage?${params.toString()}`;
 
     const res = await fetch(requestURL, { signal: abortController.signal });
 

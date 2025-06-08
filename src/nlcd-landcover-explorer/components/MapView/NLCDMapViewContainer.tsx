@@ -23,6 +23,8 @@ export const NLCDLandcoverMapViewContainer = () => {
 
     return (
         <LandcoverExplorerMapViewContainer
+            landCoverServiceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
+            landcoverLayerRasterFunctionName={rasterFunctionName}
             attribution={t('map_attribution', { ns: APP_NAME })}
             nameOfSatelliteImageryLayer={'Landsat'}
             // isSatelliteImageryOutOfVisibleRange={
