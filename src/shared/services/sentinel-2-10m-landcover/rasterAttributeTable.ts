@@ -142,6 +142,6 @@ export const getRasterFunctionBySentinel2LandCoverClassName = (
 ) => {
     return (
         RasterFunctionsByClassificationName[name] ||
-        'Cartographic Renderer - Legend and Attribute Table'
+        SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION
     );
 };
