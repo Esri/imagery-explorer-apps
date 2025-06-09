@@ -36,6 +36,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { useTranslation } from 'react-i18next';
 import { AnimationOptions } from './AnimationOptions';
 import { OptionButton } from './OptionButton';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 type AnimationAndExportControlsProps = {
     /**
@@ -162,6 +163,10 @@ export const AnimationAndExportControls: FC<
     const dispatch = useAppDispatch();
 
     const animationSpeed = useAppSelector(selectAnimationSpeed);
+
+    if (IS_MOBILE_DEVICE) {
+        return null;
+    }
 
     return (
         <div className="w-full my-6 text-xs">

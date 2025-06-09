@@ -30,6 +30,7 @@ import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/tim
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 import { getSliderTickValues } from './helpers';
 import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 type TimeSliderMode = 'time-window' | 'instant';
 
@@ -128,6 +129,8 @@ export const TimeSliderWidget: FC<Props> = ({
             const startYear = years[0];
             const endYear = years[years.length - 1];
 
+            const NUM_TICKS = IS_MOBILE_DEVICE ? 5 : 10; // reduce the number of ticks for mobile devices
+
             sliderRef.current = new TimeSlider({
                 container: containerRef.current,
                 mode,
@@ -140,7 +143,7 @@ export const TimeSliderWidget: FC<Props> = ({
                 tickConfigs: [
                     {
                         mode: 'position',
-                        values: getSliderTickValues(yearsAsDateObj, 10),
+                        values: getSliderTickValues(yearsAsDateObj, NUM_TICKS),
                         labelsVisible: true,
                         labelFormatFunction: (value: any) => {
                             return new Date(value).getUTCFullYear();

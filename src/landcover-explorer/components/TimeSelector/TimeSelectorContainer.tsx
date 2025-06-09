@@ -140,7 +140,7 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
     }, [animationStatus, mode]);
 
     return (
-        <div className="w-landcover-explorer-time-slider-width shrink-0 text-center mx-6">
+        <div className="w-full md:w-landcover-explorer-time-slider-width shrink-0 text-center md:mx-6">
             <TimeSelectorHeader
                 // titleForImagery={t('sentinel_layer_title', { ns: APP_NAME })}
                 // titleForLandCover={t('land_cover_layer_title', { ns: APP_NAME })}

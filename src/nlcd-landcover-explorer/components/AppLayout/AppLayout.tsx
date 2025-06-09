@@ -32,6 +32,7 @@ import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverEx
 import { NLCDClassificationList } from '../ClassificationList/NLCDClassificationList';
 import { NLCDLandCoverSummaryGraph } from '../NLCDLandCoverSummaryGraph/NLCDLandCoverSummaryGraph';
 import { LandsatRenderersList } from '../LandsatRenderersList/LandsatRenderersList';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 export const AppLayout = () => {
     const { t } = useTranslation();
@@ -43,15 +44,26 @@ export const AppLayout = () => {
     useSaveAppState2HashParams();
     useRevalidateToken();
 
-    return (
-        <ErrorBoundary>
-            <AppHeader
-                title={t('esri_nlcd_land_cover_explorer_title', {
-                    ns: APP_NAME,
-                })}
-            />
-            <AboutNLCDLandcoverExplorer />
-            <NLCDLandcoverMapViewContainer />
+    const getContent = () => {
+        if (IS_MOBILE_DEVICE) {
+            return (
+                <BottomPanel>
+                    <div className="mx-auto pb-8 overflow-x-hidden">
+                        <div className="pt-4">
+                            <NLCDTimeSelector />
+                        </div>
+                        <div className="mt-8">
+                            <NLCDClassificationList />
+                        </div>
+                        <div className="relative my-8 overflow-x-auto">
+                            <NLCDLandCoverSummaryGraph />
+                        </div>
+                    </div>
+                </BottomPanel>
+            );
+        }
+
+        return (
             <BottomPanel>
                 <div className="relative w-full h-full p-2 flex text-custom-light-blue justify-between">
                     <div className="flex">
@@ -72,6 +84,19 @@ export const AppLayout = () => {
                     </div>
                 </div>
             </BottomPanel>
+        );
+    };
+
+    return (
+        <ErrorBoundary>
+            <AppHeader
+                title={t('esri_nlcd_land_cover_explorer_title', {
+                    ns: APP_NAME,
+                })}
+            />
+            <AboutNLCDLandcoverExplorer />
+            <NLCDLandcoverMapViewContainer />
+            {getContent()}
         </ErrorBoundary>
     );
 };
