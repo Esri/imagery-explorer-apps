@@ -16,6 +16,7 @@
 import { t } from 'i18next';
 import {
     SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
+    SENTINEL2_LANDCOVER_RASTER_FUNCTIONS,
     SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
 } from './config';
 // import { DEFAULT_RENDERING_RULE } from './config';
@@ -31,16 +32,21 @@ export const RasterFunctionsByClassificationName: Record<
     Sentinel2LandCoverClassification,
     string
 > = {
-    Water: 'Water Areas Only',
-    Trees: 'Trees Only',
-    'Flooded Vegetation': 'Flooded Vegeation Areas Only',
-    Crops: 'Crops Only',
-    'Built Area': 'Built Areas Only',
-    'Bare Ground': 'Bare Ground Areas Only',
-    'Snow/Ice': 'Snow or Ice Only',
-    Clouds: 'Clouds Only',
-    Rangeland: 'Rangelands Areas Only',
-    'No Data': '',
+    Water: SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Water_Areas_for_Visualization_and_Analysis,
+    Trees: SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Trees_for_Visualization_and_Analysis,
+    'Flooded Vegetation':
+        SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Flooded_Vegeation_Areas_for_Visualization_and_Analysis,
+    Crops: SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Crops_for_Visualization_and_Analysis,
+    'Built Area':
+        SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Built_Areas_for_Visualization_and_Analysis,
+    'Bare Ground':
+        SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Bare_Ground_Areas_for_Visualization_and_Analysis,
+    'Snow/Ice':
+        SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Snow_or_Ice_for_Visualization_and_Analysis,
+    Clouds: SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Clouds_for_Visualization_and_Analysis,
+    Rangeland:
+        SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Isolate_Rangelands_Areas_for_Visualization_and_Analysis,
+    'No Data': SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.None,
 };
 
 const LandcoverClassificationShortNames: Record<
