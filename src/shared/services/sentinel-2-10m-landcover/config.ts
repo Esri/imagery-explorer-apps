@@ -32,7 +32,7 @@ export const SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL =
 //     SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL_PROD;
 
 export enum SENTINEL2_LANDCOVER_RASTER_FUNCTIONS {
-    Cartographic_Renderer_for_Visualization = 'Cartographic Renderer for Visualization',
+    Cartographic_Renderer_for_Visualization = 'Cartographic Renderer for Visualization and Analysis',
     None = 'None',
     Isolate_Bare_Ground_Areas_for_Visualization_and_Analysis = 'Isolate Bare Ground Areas for Visualization and Analysis',
     Isolate_Built_Areas_for_Visualization_and_Analysis = 'Isolate Built Areas for Visualization and Analysis',
