@@ -81,6 +81,12 @@ export const exportLandCoverImage = async ({
 
     const res = await fetch(requestURL, { signal: abortController.signal });
 
+    if (!res.ok) {
+        throw new Error(
+            `Failed to export image: ${res.status} ${res.statusText}`
+        );
+    }
+
     const blob = await res.blob();
 
     return blob;

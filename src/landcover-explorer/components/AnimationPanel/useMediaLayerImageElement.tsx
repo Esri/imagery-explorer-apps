@@ -57,6 +57,8 @@ const useMediaLayerImageElement = ({
 }: Props) => {
     const [imageElements, setImageElements] = useState<ImageElement[]>(null);
 
+    const imageUrlsRef = useRef<string[]>([]);
+
     const abortControllerRef = useRef<AbortController>();
 
     // const years = getAvailableYears();
@@ -121,11 +123,15 @@ const useMediaLayerImageElement = ({
             });
 
             const responses = await Promise.all(requests);
+            console.log('responses', responses);
 
             // once responses are received, get array of image elements using the binary data returned from export image requests
             const imageElements = responses.map((blob) => {
+                const url = URL.createObjectURL(blob);
+                imageUrlsRef.current.push(url);
+
                 return new ImageElement({
-                    image: URL.createObjectURL(blob),
+                    image: url,
                     georeference: new ExtentAndRotationGeoreference({
                         extent: {
                             spatialReference: {
@@ -154,12 +160,16 @@ const useMediaLayerImageElement = ({
                 abortControllerRef.current.abort();
             }
 
-            // call revokeObjectURL so these image elements can be freed from the memory
-            if (imageElements) {
-                for (const elem of imageElements) {
-                    URL.revokeObjectURL(elem.image as string);
-                }
+            // // call revokeObjectURL so these image elements can be freed from the memory
+            // if (imageElements) {
+            //     for (const elem of imageElements) {
+            //         URL.revokeObjectURL(elem.image as string);
+            //     }
+            // }
+            for (const url of imageUrlsRef.current) {
+                URL.revokeObjectURL(url);
             }
+            imageUrlsRef.current = [];
 
             setImageElements(null);
         } else if (animationMode === 'loading') {
