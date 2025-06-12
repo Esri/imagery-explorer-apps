@@ -11,9 +11,25 @@ export const NLCD_LANDCOVER_IMAGE_SERVICE_URL =
         : NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD;
 
 export enum NLCD_LANDCOVER_RASTER_FUNCTIONS {
-    'DEVELOPED_HIGH_DENSITY' = 'Developed Renderer',
-    'MIXED_FOREST' = 'Forest Renderer',
-    SATURATED_CARTOGRAPHIC = 'Saturated Cartographic and Analytic Renderer',
+    'DEVELOPED_HIGH_DENSITY' = 'Isolate Developed Areas for Visualization and Analysis',
+    'MIXED_FOREST' = 'Isolate Forested Areas for Visualization and Analysis',
+    SATURATED_CARTOGRAPHIC = 'Saturated Cartographic Renderer for Visualization',
+    'OPEN_WATER' = 'Isolate Open Water Areas for Visualization and Analysis',
+    'PERENNIAL_ICE_SNOW' = 'Isolate Perennial Ice and Snow Areas for Visualization and Analysis',
+    'DEVELOPED_OPEN_SPACE' = 'Isolate Developed Open Space Areas for Visualization and Analysis',
+    'DEVELOPED_LOW_INTENSITY' = 'Isolate Developed Low Intensity Areas for Visualization and Analysis',
+    'DEVELOPED_MEDIUM_INTENSITY' = 'Isolate Developed Medium Intensity Areas for Visualization and Analysis',
+    'DEVELOPED_HIGH_INTENSITY' = 'Isolate Developed High Intensity Areas for Visualization and Analysis',
+    'BARREN_LAND' = 'Isolate Barren Land Areas for Visualization and Analysis',
+    'DECIDUOUS_FOREST' = 'Isolate Deciduous Forest Areas for Visualization and Analysis',
+    'EVERGREEN_FOREST' = 'Isolate Evergreen Forest Areas for Visualization and Analysis',
+    'MIXED_FOREST_AREAS' = 'Isolate Mixed Forest Areas for Visualization and Analysis',
+    'SHRUB_SCRUB' = 'Isolate Shrub or Scrub Areas for Visualization and Analysis',
+    'GRASSLAND_HERBACEOUS' = 'Isolate Grassland or Herbaceous Areas for Visualization and Analysis',
+    'PASTURE_HAY' = 'Isolate Pasture or Hay Areas for Visualization and Analysis',
+    'CULTIVATED_CROPS' = 'Isolate Cultivated Crops Areas for Visualization and Analysis',
+    'WOODY_WETLANDS' = 'Isolate Woody Wetlands Areas for Visualization and Analysis',
+    'EMERGENT_HERBACEOUS_WETLANDS' = 'Isolate Emergent Herbaceous Wetlands Areas for Visualization and Analysis',
 }
 
 export const NLCD_LANDCOVER_IMAGE_SERVICE_DEFAULT_RASTER_FUNCTION_NAME =

@@ -11,29 +11,34 @@ import { getRasterAttributeTable } from '../helpers/getRasterAttributeTable';
 
 const RasterFunctionsByClassificationName: Record<
     NLCDLandCoverClassification,
-    string | null
+    NLCD_LANDCOVER_RASTER_FUNCTIONS
 > = {
-    'Open Water': null,
-    'Perennial Snow/Ice': null,
-    'Developed Open Space': null,
-    'Developed Low Intensity': null,
-    'Developed Medium Intensity': null,
+    'Open Water': NLCD_LANDCOVER_RASTER_FUNCTIONS.OPEN_WATER,
+    'Perennial Snow/Ice': NLCD_LANDCOVER_RASTER_FUNCTIONS.PERENNIAL_ICE_SNOW,
+    'Developed Open Space':
+        NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_OPEN_SPACE,
+    'Developed Low Intensity':
+        NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_LOW_INTENSITY,
+    'Developed Medium Intensity':
+        NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_MEDIUM_INTENSITY,
     'Developed High Intensity':
         NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_HIGH_DENSITY,
-    'Barren Land': null,
-    'Deciduous Forest': null,
-    'Evergreen Forest': null,
+    'Barren Land': NLCD_LANDCOVER_RASTER_FUNCTIONS.BARREN_LAND,
+    'Deciduous Forest': NLCD_LANDCOVER_RASTER_FUNCTIONS.DECIDUOUS_FOREST,
+    'Evergreen Forest': NLCD_LANDCOVER_RASTER_FUNCTIONS.EVERGREEN_FOREST,
     'Mixed Forest': NLCD_LANDCOVER_RASTER_FUNCTIONS.MIXED_FOREST,
-    'Dwarf Scrub': null,
-    'Shrub/Scrub': null,
-    'Grassland/Herbaceous': null,
-    'Sedge/Herbaceous': null,
-    Lichens: null,
-    Moss: null,
-    'Pasture/Hay': null,
-    'Cultivated Crops': null,
-    'Woody Wetlands': null,
-    'Emergent Herbaceous Wetlands': null,
+    'Dwarf Scrub': NLCD_LANDCOVER_RASTER_FUNCTIONS.SHRUB_SCRUB,
+    'Shrub/Scrub': NLCD_LANDCOVER_RASTER_FUNCTIONS.SHRUB_SCRUB,
+    'Grassland/Herbaceous':
+        NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+    'Sedge/Herbaceous': NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+    Lichens: NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+    Moss: NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+    'Pasture/Hay': NLCD_LANDCOVER_RASTER_FUNCTIONS.PASTURE_HAY,
+    'Cultivated Crops': NLCD_LANDCOVER_RASTER_FUNCTIONS.CULTIVATED_CROPS,
+    'Woody Wetlands': NLCD_LANDCOVER_RASTER_FUNCTIONS.WOODY_WETLANDS,
+    'Emergent Herbaceous Wetlands':
+        NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
 };
 
 const NLCDLandCoverClassificationShortNames: Record<
