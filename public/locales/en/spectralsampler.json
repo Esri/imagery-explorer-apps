@@ -19,5 +19,21 @@
     "reset_session": "Reset session",
     "select_date": "Select date from calendar",
     "select_location": "Click map location",
-    "download_sampling_results": "Download sampling results as CSV"
+    "download_sampling_results": "Download sampling results as CSV",
+    "about_app_section_1": "This web application is designed to streamline the process of collecting and organizing training data for land cover classification using multispectral satellite imagery. Whether you're a researcher, technical analyst, or student, the tool provides a simple, intuitive interface for building high-quality reference datasets.",
+    "how_it_works": "How it works",
+    "how_it_works_section_1_title": "1. Select an Imagery Source",
+    "how_it_works_section_1_description": "Begin by choosing a multispectral imagery platform. Options include Landsat and Sentinel-2. Each source includes multiple spectral bands suitable for land cover analysis.",
+    "how_it_works_section_2_title": "2. Create a Collection",
+    "how_it_works_section_2_description": "Define a land cover type for your collection (e.g., Bare Dry Soil, Coniferous Forest, Urban Pavement). This label will group the training samples you gather under a single classification category.",
+    "how_it_works_section_3_title": "3. Browse and Sample from Imagery",
+    "how_it_works_section_3_description": "Explore a curated library of historical satellite scenes. You can view scenes across different times and locations, and select individual points that represent your chosen land cover type. This allows for robust training data that accounts for seasonal variation, sensor differences, and geographic diversity.",
+    "how_it_works_section_4_title": "4. Download Training Data",
+    "how_it_works_section_4_description": "Once you’ve built a set of representative locations, download your collection as two CSV files, one showing the sampled location values, and another with a single average value of the samples. Each row in the table corresponds to a single sample and includes:",
+    "purpose": "Purpose",
+    "purpose_description": "The goal of this tool is to make the creation of land cover training datasets as efficient and transparent as possible. By simplifying the process of sourcing and organizing labeled imagery, we aim to support better classification outcomes across a range of remote sensing and geospatial applications."
+    ,
+    "download_field_latlon": "Latitude and longitude coordinates",
+    "download_field_reflectance": "Reflectance or digital number values for each spectral band",
+    "download_field_scene_id": "The scene ID of the satellite image from which the sample was derived"
 }

@@ -19,7 +19,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
-import { About } from '@shared/components/About';
+import { AboutSpectralSampler } from './components/AboutSpectralSampler/AboutSpectralSampler';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { getSpectralSampingToolStore } from './store';
@@ -51,7 +51,7 @@ import { initI18next } from '@shared/i18n/initI18next';
             <ErrorBoundary>
                 <Map />
                 <Layout />
-                <About />
+                <AboutSpectralSampler />
             </ErrorBoundary>
         </ReduxProvider>
     );
