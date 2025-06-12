@@ -256,6 +256,13 @@ export const AnimationControl: FC<Props> = ({
                         {ContinuePlayButton}
                     </div>
                 )}
+                {status === 'failed-loading' && (
+                    <div className="pr-1">
+                        <span className="text-xs text-opacity-50 line-clamp-none">
+                            {t('animation_load_failed')}
+                        </span>
+                    </div>
+                )}
                 {status && (
                     <div onClick={statusOnChange.bind(null, null)}>
                         {CloseButton}
