@@ -19,9 +19,14 @@ export const loadImageAsHTMLIMageElement = async (
     const image = new Image();
     image.src = imageURL;
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         image.onload = () => {
             resolve(image);
+        };
+
+        image.onerror = () => {
+            console.error(`Failed to load image: ${imageURL}`);
+            reject(`Failed to load image: ${imageURL}`);
         };
     });
 };

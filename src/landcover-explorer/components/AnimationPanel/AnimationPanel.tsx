@@ -38,6 +38,7 @@ import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 import { CloseButton } from '@shared/components/CloseButton';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
+import { once } from '@arcgis/core/core/reactiveUtils';
 
 type Props = {
     mapView?: IMapView;
@@ -109,30 +110,57 @@ const AnimationPanel: FC<Props> = ({
     // }, [animationMode]);
 
     useEffect(() => {
-        if (!mediaLayerRef.current) {
-            return;
-        }
+        (async () => {
+            if (!mediaLayerRef.current) {
+                return;
+            }
 
-        const source = mediaLayerRef.current.source as any;
+            const source = mediaLayerRef.current.source as any;
 
-        // If the animation is not yet started or has been stopped,
-        // clear all elements in the media layer to ensure a clean slate.
-        if (!mediaLayerElements) {
-            source.elements.removeAll();
-            return;
-        }
+            // If the animation is not yet started or has been stopped,
+            // clear all elements in the media layer to ensure a clean slate.
+            if (!mediaLayerElements) {
+                source.elements.removeAll();
+                return;
+            }
 
-        // Check if the frameData4DownloadJob is ready before starting the animation.
-        // This is crucial to ensure that the basemap screenshot is captured and blended into each animation frame properly.
-        // If the animation starts before the frameData4DownloadJob is ready, there's a risk that the basemap
-        // may get obscured by elements in the media layer.
-        if (!frameData4DownloadJob?.length) {
-            return;
-        }
+            // Check if the frameData4DownloadJob is ready before starting the animation.
+            // This is crucial to ensure that the basemap screenshot is captured and blended into each animation frame properly.
+            // If the animation starts before the frameData4DownloadJob is ready, there's a risk that the basemap
+            // may get obscured by elements in the media layer.
+            if (!frameData4DownloadJob?.length) {
+                return;
+            }
 
-        source.elements.addMany(mediaLayerElements);
-        // media layer elements are ready, change animation mode to playing to start the animation
-        dispatch(animationStatusChanged('playing'));
+            source.elements.addMany(mediaLayerElements);
+
+            try {
+                // Wait until all mediaLayerElements are loaded before proceeding
+                await Promise.all(
+                    mediaLayerElements.map((element) =>
+                        once(
+                            () =>
+                                element.loadStatus === 'loaded' ||
+                                element.loadStatus === 'failed'
+                        )
+                    )
+                );
+
+                for (const element of mediaLayerElements) {
+                    if (element.loadStatus === 'failed') {
+                        throw new Error(`Element failed to load: ${element}`);
+                    }
+                    // console.log(`Element loaded: ${element.loadStatus}`);
+                }
+
+                // media layer elements are ready, change animation mode to playing to start the animation
+                dispatch(animationStatusChanged('playing'));
+            } catch (error) {
+                console.error('Error loading media layer elements:', error);
+                // If any element fails to load, we can stop the animation and reset the media layer
+                dispatch(animationStatusChanged('failed-loading'));
+            }
+        })();
     }, [mediaLayerElements, frameData4DownloadJob]);
 
     useEffect(() => {

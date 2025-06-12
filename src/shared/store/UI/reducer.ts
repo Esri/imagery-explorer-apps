@@ -22,7 +22,11 @@ import {
 
 // import { RootState, StoreDispatch, StoreGetState } from '../configureStore';
 
-export type AnimationStatus = 'loading' | 'playing' | 'pausing';
+export type AnimationStatus =
+    | 'loading'
+    | 'playing'
+    | 'pausing'
+    | 'failed-loading';
 
 export type TooltipData = {
     /**

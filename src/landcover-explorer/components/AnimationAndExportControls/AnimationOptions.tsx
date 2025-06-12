@@ -36,7 +36,10 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
 
     const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const shouldOptionButtonsBeDisabled = !animationStatus;
+    const shouldOptionButtonsBeDisabled =
+        !animationStatus ||
+        animationStatus === 'loading' ||
+        animationStatus === 'failed-loading';
 
     return (
         <>
