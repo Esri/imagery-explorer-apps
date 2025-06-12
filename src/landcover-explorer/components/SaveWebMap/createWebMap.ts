@@ -16,30 +16,61 @@
 import { ISpatialReference } from '@esri/arcgis-rest-request';
 import { PORTAL_ROOT } from '@landcover-explorer/constants';
 import {
-    SENTINEL_2_10M_LAND_COVER_ITEM_ID,
+    // SENTINEL_2_10M_LAND_COVER_ITEM_ID,
     WEB_MAP_ID,
 } from '@landcover-explorer/constants/map';
 import { getToken } from '@shared/utils/esri-oauth';
 import { getSignedInUser } from '@shared/utils/esri-oauth';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 // import { MapExtent } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import { LandCoverLayerBlendMode } from '../LandcoverLayer/useLandCoverLayer';
 import * as webMercatorUtils from '@arcgis/core/geometry/support/webMercatorUtils';
 import { Extent } from '@arcgis/core/geometry';
 
 type CreateWebMapOptions = {
+    /**
+     * Title of the Web Map to be created
+     */
     title: string;
+    /**
+     * Tags to be associated with the Web Map
+     */
     tags: string;
+    /**
+     * Optional summary of the Web Map
+     */
     summary?: string;
     /**
      * current map extent
      */
     extent: Extent;
     /**
-     * user selected year
+     * The year selected by the user for the land cover layer.
      */
-    year: number;
+    selectedYear: number;
+    /**
+     * The years available for the land cover layer.
+     */
+    years: number[];
+    /**
+     * The title of the land cover layer to be used as prefix of the title of each layer.
+     */
+    landCoverLayerTitle: string;
+    /**
+     * The item ID of the land cover layer to be used in the web map.
+     */
+    landCoverLayerItemId: string;
+    /**
+     * The URL of the land cover layer to be used in the web map.
+     */
+    landCoverImageryServiceUrl: string;
+    /**
+     * The name of the field that contains the start time of the land cover layer.
+     */
+    landCoverLayerStartTimeField: string;
+    /**
+     * the name of the application that is authoring the web map.
+     */
+    authoringApp: string;
 };
 
 export type CreateWebMapResponse = {
@@ -78,6 +109,37 @@ type WebMapData = {
     };
 };
 
+type GetWebMapContentParameters = {
+    /**
+     * The year selected by the user for the land cover layer.
+     */
+    selectedYear: number;
+    /**
+     * The years available for the land cover layer.
+     */
+    years: number[];
+    /**
+     * The title of the land cover layer to be used as prefix of the title of each layer.
+     */
+    landCoverLayerTitle: string;
+    /**
+     * The item ID of the land cover layer to be used in the web map.
+     */
+    landCoverLayerItemId: string;
+    /**
+     * The URL of the land cover layer to be used in the web map.
+     */
+    landCoverImageryServiceUrl: string;
+    /**
+     * The name of the field that contains the start time of the land cover layer.
+     */
+    landCoverLayerStartTimeField: string;
+    /**
+     * the name of the application that is authoring the web map.
+     */
+    authoringApp: string;
+};
+
 /**
  * Retrieves the data of the Web Map with a Grayscale imagery basemap that is used in the Land Cover Explorer application.
  * The basemap layers will be utilized in the creation of a new web map by the user.
@@ -101,23 +163,34 @@ const getDataOfLandcoverAppWebmap = async (): Promise<WebMapData> => {
  * Get the JSON content for the web map item to be submitted.
  * @returns
  */
-const getWebMapContent = async (selectedYear: number) => {
+const getWebMapContent = async ({
+    selectedYear,
+    years,
+    landCoverLayerTitle,
+    landCoverLayerItemId,
+    landCoverImageryServiceUrl,
+    landCoverLayerStartTimeField,
+    authoringApp,
+}: GetWebMapContentParameters) => {
     const data = await getDataOfLandcoverAppWebmap();
 
     const operationalLayersFromLandcoverAppWebmap =
         data?.operationalLayers || [];
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
 
     const landcoverLayers: LayerInfo[] = years.map((year) => {
         return {
-            itemId: SENTINEL_2_10M_LAND_COVER_ITEM_ID,
+            // itemId: SENTINEL_2_10M_LAND_COVER_ITEM_ID,
+            itemId: landCoverLayerItemId,
             layerType: 'ArcGISImageServiceLayer',
-            title: `Sentinel-2 10m Land Use/Land Cover Time Series ${year}`,
-            url: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+            // title: `Sentinel-2 10m Land Use/Land Cover Time Series ${year}`,
+            title: `${landCoverLayerTitle} ${year}`,
+            // url: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+            url: landCoverImageryServiceUrl,
             visibility: year === selectedYear,
             layerDefinition: {
-                definitionExpression: `StartDate BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 11:59:59'`,
+                definitionExpression: `${landCoverLayerStartTimeField} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 11:59:59'`,
             },
             blendMode: LandCoverLayerBlendMode,
         };
@@ -136,7 +209,8 @@ const getWebMapContent = async (selectedYear: number) => {
         },
         spatialReference: data?.spatialReference,
         version: data?.version,
-        authoringApp: 'EsriLandcoverExplorer',
+        // authoringApp: 'EsriLandcoverExplorer',
+        authoringApp: authoringApp,
         authoringAppVersion: '1.0.0',
     };
 
@@ -166,10 +240,34 @@ export const createWebMap = async ({
     title,
     tags,
     summary,
-    year,
+    selectedYear,
     extent,
+    years,
+    landCoverLayerTitle,
+    landCoverLayerItemId,
+    landCoverImageryServiceUrl,
+    landCoverLayerStartTimeField,
+    authoringApp,
 }: CreateWebMapOptions): Promise<CreateWebMapResponse> => {
-    const textContent = await getWebMapContent(year);
+    // const textContent = await getWebMapContent({
+    //     selectedYear
+    //     years: getAvailableYears(),
+    //     landCoverLayerTitle: 'Sentinel-2 10m Land Use/Land Cover Time Series',
+    //     landCoverLayerItemId: SENTINEL_2_10M_LAND_COVER_ITEM_ID,
+    //     landCoverLayerUrl: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+    //     landCoverLayerStartTimeField: SENTINEL2_LANDCOVER_10M_START_TIME_FIELD,
+    //     authoringApp: 'EsriLandcoverExplorer',
+    // });
+
+    const textContent = await getWebMapContent({
+        selectedYear,
+        years,
+        landCoverLayerTitle,
+        landCoverLayerItemId,
+        landCoverImageryServiceUrl,
+        landCoverLayerStartTimeField,
+        authoringApp,
+    });
 
     const extentInLonLat = getWebMapExtentInLonLat(extent);
 
@@ -189,12 +287,26 @@ export const createWebMap = async ({
     const user = getSignedInUser();
     const requestURL = `${PORTAL_ROOT}/sharing/rest/content/users/${user.username}/addItem`;
 
-    const res = await fetch(requestURL, {
-        method: 'POST',
-        body: formData,
-    });
+    try {
+        const res = await fetch(requestURL, {
+            method: 'POST',
+            body: formData,
+        });
 
-    const data = await res.json();
+        const data = await res.json();
 
-    return data as CreateWebMapResponse;
+        if (data.error) {
+            throw new Error(
+                data.error?.message ||
+                    'An error occurred while creating the web map.'
+            );
+        }
+
+        return data as CreateWebMapResponse;
+    } catch (error) {
+        console.error('Error creating web map:', error);
+        throw new Error(
+            error.message || 'An error occurred while creating the web map.'
+        );
+    }
 };

@@ -52,3 +52,8 @@ export const SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION =
 export const DEFAULT_RENDERING_RULE = {
     rasterFunction: SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
 };
+
+/**
+ * The field in the Sentinel-2 10m Land Cover Image Service that contains the start date of the imagery.
+ */
+export const SENTINEL2_LANDCOVER_10M_START_TIME_FIELD = 'StartDate';

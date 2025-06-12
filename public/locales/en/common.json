@@ -292,5 +292,6 @@
     "load_animation": "Loading Animation",
     "landcover_at": "Land Cover at {{year}}",
     "imagery_at": "Imagery at {{year}}",
-    "selected_year_range": "{{startYear}} - {{endYear}}"
+    "selected_year_range": "{{startYear}} - {{endYear}}",
+    "error_creating_web_map": "Error creating web map"
 }

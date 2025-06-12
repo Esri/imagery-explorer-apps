@@ -104,5 +104,8 @@
     "donwload_as_csv": "Download Historical Data as CSV",
 
     "animation_metadata": "Esri, Impact Observatory",
-    "map_attribution": "Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory"
+    "map_attribution": "Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory",
+    "output_webmap_default_title": "Sentinel-2 Land Cover Exlorer export map",
+    "output_webmap_default_snippet": "Sentinel-2 10m land use/land cover time series of the world.",
+    "output_webmap_default_tags": "Sentinel-2, Land Use, Land Cover, LULC, Living Atlas"
 }

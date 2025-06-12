@@ -15,5 +15,8 @@
     "renderer_color_ir_label": "Color IR",
     "renderer_color_ir_description": "Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.",
     "renderer_ndmi_label": "NDMI",
-    "renderer_ndmi_description": "Normalized Difference Moisture Index with a color map applied. <br/><br/>NDMI is calculated as (NIR - SWIR1) / (NIR + SWIR1). <br/><br/>Areas of higher moisture content range from dark blue to light blue while the driest areas range from tan to white."
+    "renderer_ndmi_description": "Normalized Difference Moisture Index with a color map applied. <br/><br/>NDMI is calculated as (NIR - SWIR1) / (NIR + SWIR1). <br/><br/>Areas of higher moisture content range from dark blue to light blue while the driest areas range from tan to white.",
+    "output_webmap_default_title": "NLCD Land Cover Exlorer export map",
+    "output_webmap_default_snippet": "NLCD land use/land cover time series of the USA.",
+    "output_webmap_default_tags": "Landsat, Land Use, Land Cover, LULC, Living Atlas"
 }

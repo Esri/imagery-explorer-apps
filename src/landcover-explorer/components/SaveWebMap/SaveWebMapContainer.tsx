@@ -36,7 +36,8 @@ export const SaveWebMapContainer = () => {
 
     const [webmapMetadata, setWebMapMetadata] = useState<WebMapMetadata>();
 
-    const { isSavingChanges, response } = useCreateWebmap(webmapMetadata);
+    const { isSavingChanges, response, errorSavingWebMap } =
+        useCreateWebmap(webmapMetadata);
 
     const portalUser = getSignedInUser();
 
@@ -72,6 +73,7 @@ export const SaveWebMapContainer = () => {
     return (
         <SaveWebMap
             isSavingChanges={isSavingChanges}
+            error={errorSavingWebMap}
             hasNoPrivilege2CreateContent={portalUser?.role === 'org_user'}
             response={response}
             saveButtonOnClick={setWebMapMetadata}
