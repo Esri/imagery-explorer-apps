@@ -108,7 +108,7 @@
     "@reduxjs/toolkit": "2.5",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
-    "@vannizhang/images-to-video-converter-client": "^1.1.13",
+    "@vannizhang/images-to-video-converter-client": "^1.1.14",
     "@vannizhang/react-d3-charts": "^1.0.28",
     "classnames": "^2.2.6",
     "date-fns": "^2.30.0",
