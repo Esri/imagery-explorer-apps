@@ -27,6 +27,7 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import '@shared/components/calcite-components';
+import { AGOL_PORTAL_ROOT } from '@shared/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -34,6 +35,7 @@ import '@shared/components/calcite-components';
     try {
         await initEsriOAuth({
             appId: APP_ID,
+            // portalUrl: AGOL_PORTAL_ROOT,
         });
 
         await initI18next(APP_LANGUAGE);

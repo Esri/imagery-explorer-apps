@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectShowSaveWebMapPanel } from '@shared/store/UI/selectors';
 import { SaveWebMap, WebMapMetadata } from './SaveWebMap';
@@ -29,15 +29,38 @@ import { saveShowSaveWebMapPanelToHashParams } from '@landcover-explorer/utils/U
 import { useCreateWebmap } from './useCreateWebmap';
 import { getPortalBaseUrl } from '@shared/utils/esri-oauth';
 
-export const SaveWebMapContainer = () => {
+export type SaveWebMapContainerProps = {
+    years: number[];
+    landCoverLayerTitle: string;
+    landCoverLayerItemId: string;
+    landCoverImageryServiceUrl: string;
+    landCoverLayerStartTimeField: string;
+    authoringApp: string;
+};
+
+export const SaveWebMapContainer: FC<SaveWebMapContainerProps> = ({
+    years,
+    landCoverLayerTitle,
+    landCoverLayerItemId,
+    landCoverImageryServiceUrl,
+    landCoverLayerStartTimeField,
+    authoringApp,
+}) => {
     const dispatch = useAppDispatch();
 
     const showSaveWebMap = useAppSelector(selectShowSaveWebMapPanel);
 
     const [webmapMetadata, setWebMapMetadata] = useState<WebMapMetadata>();
 
-    const { isSavingChanges, response, errorSavingWebMap } =
-        useCreateWebmap(webmapMetadata);
+    const { isSavingChanges, response, errorSavingWebMap } = useCreateWebmap({
+        webmapMetadata,
+        years,
+        landCoverLayerTitle,
+        landCoverLayerItemId,
+        landCoverImageryServiceUrl,
+        landCoverLayerStartTimeField,
+        authoringApp,
+    });
 
     const portalUser = getSignedInUser();
 

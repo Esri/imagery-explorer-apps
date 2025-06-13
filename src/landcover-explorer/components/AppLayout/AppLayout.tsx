@@ -21,7 +21,7 @@ import DownloadPanel from '@landcover-explorer/components/DownloadPanel/Download
 import ErrorBoundary from '@landcover-explorer/components/ErrorBoundary/ErrorBoundary';
 import InfoPanel from '@landcover-explorer/components/InfoPanel/InfoPanel';
 // import MapView from '@landcover-explorer/components/MapView/MapViewContainer';
-import { SaveWebMap } from '@landcover-explorer/components/SaveWebMap';
+import { Sentinel2LandCoverSaveWebMap } from '@landcover-explorer/components/SaveWebMap';
 import { AppHeader } from '@shared/components/AppHeader';
 import { APP_NAME, appConfig } from '@shared/config';
 import { useSaveAppState2HashParams } from '@landcover-explorer/hooks/useSaveAppState2HashParams';
@@ -42,7 +42,7 @@ const AppLayout = () => {
             <DownloadPanel />
             {/* <AppTitle /> */}
             <About />
-            <SaveWebMap />
+            <Sentinel2LandCoverSaveWebMap />
             <AppHeader
                 title={t('esri_land_cover_explorer_title', {
                     ns: APP_NAME,

@@ -16,23 +16,55 @@
 import React, { useEffect, useState } from 'react';
 import { WebMapMetadata } from './SaveWebMap';
 import { CreateWebMapResponse, createWebMap } from './createWebMap';
-import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
+// import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectMapExtent } from '@shared/store/Map/selectors';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import {
-    SENTINEL2_LANDCOVER_10M_START_TIME_FIELD,
-    SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
-} from '@shared/services/sentinel-2-10m-landcover/config';
-import {
-    SENTINEL_2_10M_LAND_COVER_ITEM_ID,
-    WEB_MAP_ID,
-} from '@landcover-explorer/constants/map';
 
-export const useCreateWebmap = (webmapMetadata: WebMapMetadata) => {
+export type CreateWebmapProps = {
+    /**
+     * The metadata for the webmap to be created.
+     * This includes the title, tags, and summary.
+     */
+    webmapMetadata: WebMapMetadata;
+    /**
+     * The years available for the land cover layer.
+     * This is used to set the selected year in the webmap.
+     */
+    years: number[];
+    /**
+     * The title of the land cover layer.
+     */
+    landCoverLayerTitle: string;
+    /**
+     * The item ID of the land cover layer.
+     */
+    landCoverLayerItemId: string;
+    /**
+     * The URL of the land cover imagery service.
+     */
+    landCoverImageryServiceUrl: string;
+    /**
+     * The start time field for the land cover layer.
+     */
+    landCoverLayerStartTimeField: string;
+    /**
+     * The authoring app used to create the webmap.
+     */
+    authoringApp: string;
+};
+
+export const useCreateWebmap = ({
+    webmapMetadata,
+    years,
+    landCoverLayerTitle,
+    landCoverLayerItemId,
+    landCoverImageryServiceUrl,
+    landCoverLayerStartTimeField,
+    authoringApp,
+}: CreateWebmapProps) => {
     const mapExtent = useAppSelector(selectMapExtent);
 
-    const year = useAppSelector(selectYear);
+    // const year = useAppSelector(selectYear);
 
     const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
 
@@ -52,16 +84,18 @@ export const useCreateWebmap = (webmapMetadata: WebMapMetadata) => {
                         tags: webmapMetadata?.tags,
                         summary: webmapMetadata?.summary,
                         extent: mapExtent,
-                        selectedYear: year,
-                        years: getAvailableYears(),
-                        landCoverLayerTitle:
-                            'Sentinel-2 10m Land Use/Land Cover Time Series',
-                        landCoverLayerItemId: SENTINEL_2_10M_LAND_COVER_ITEM_ID,
-                        landCoverImageryServiceUrl:
-                            SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
-                        landCoverLayerStartTimeField:
-                            SENTINEL2_LANDCOVER_10M_START_TIME_FIELD,
-                        authoringApp: 'EsriLandcoverExplorer',
+                        selectedYear: years[years.length - 1], // Default to the last year in the list or the current year
+                        years, ///getAvailableYears(),
+                        landCoverLayerTitle,
+                        // 'Sentinel-2 10m Land Use/Land Cover Time Series',
+                        landCoverLayerItemId,
+                        // : SENTINEL_2_10M_LAND_COVER_ITEM_ID,
+                        landCoverImageryServiceUrl,
+                        // SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
+                        landCoverLayerStartTimeField,
+                        // SENTINEL2_LANDCOVER_10M_START_TIME_FIELD,
+                        authoringApp,
+                        // 'EsriLandcoverExplorer',
                     });
 
                     setResponse(res);
