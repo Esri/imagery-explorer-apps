@@ -14,3 +14,4 @@
  */
 
 export { Sentinel2LandCoverSaveWebMap } from './Sentinel2LandCoverSaveWebMap';
+export { NLCDLandCoverSaveWebMap } from './NLCDLandCoverSaveWebMap';

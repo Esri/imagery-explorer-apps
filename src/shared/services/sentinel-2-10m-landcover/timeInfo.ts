@@ -14,7 +14,7 @@
  */
 
 import { addYears } from 'date-fns';
-import { ta } from 'date-fns/locale';
+// import { ta } from 'date-fns/locale';
 // import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
 
 /**

@@ -33,6 +33,7 @@ import { NLCDClassificationList } from '../ClassificationList/NLCDClassification
 import { NLCDLandCoverSummaryGraph } from '../NLCDLandCoverSummaryGraph/NLCDLandCoverSummaryGraph';
 import { LandsatRenderersList } from '../LandsatRenderersList/LandsatRenderersList';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { NLCDLandCoverSaveWebMap } from '@landcover-explorer/components/SaveWebMap';
 
 export const AppLayout = () => {
     const { t } = useTranslation();
@@ -96,6 +97,7 @@ export const AppLayout = () => {
             />
             <AboutNLCDLandcoverExplorer />
             <NLCDLandcoverMapViewContainer />
+            <NLCDLandCoverSaveWebMap />
             {getContent()}
         </ErrorBoundary>
     );
