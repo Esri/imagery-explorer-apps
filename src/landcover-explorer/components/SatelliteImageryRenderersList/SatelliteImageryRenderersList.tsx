@@ -65,7 +65,10 @@ export const SatelliteImageryRenderersList: FC<Props> = ({
     const { t } = useTranslation();
 
     return (
-        <div className="text-center mx-4 my-4 md:my-0" ref={containerRef}>
+        <div
+            className="text-center mx-4 my-4 md:my-0 shrink-0"
+            ref={containerRef}
+        >
             <HeaderText
                 title={t('imagery_renderers_title')}
                 subTitle={t('imagery_renderers_subtitle')}
