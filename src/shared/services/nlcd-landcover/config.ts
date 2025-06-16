@@ -17,9 +17,8 @@ export const NLCD_LANDCOVER_IMAGE_SERVICE_URL =
         : NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD;
 
 export enum NLCD_LANDCOVER_RASTER_FUNCTIONS {
-    'DEVELOPED_HIGH_DENSITY' = 'Isolate Developed Areas for Visualization and Analysis',
     'MIXED_FOREST' = 'Isolate Forested Areas for Visualization and Analysis',
-    SATURATED_CARTOGRAPHIC = 'Saturated Cartographic Renderer for Visualization',
+    SATURATED_CARTOGRAPHIC = 'Saturated Cartographic Renderer for Visualization and Analysis',
     'OPEN_WATER' = 'Isolate Open Water Areas for Visualization and Analysis',
     'PERENNIAL_ICE_SNOW' = 'Isolate Perennial Ice and Snow Areas for Visualization and Analysis',
     'DEVELOPED_OPEN_SPACE' = 'Isolate Developed Open Space Areas for Visualization and Analysis',

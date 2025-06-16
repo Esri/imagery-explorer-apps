@@ -8,6 +8,7 @@ import {
     NLCD_LANDCOVER_RASTER_FUNCTIONS,
 } from './config';
 import { getRasterAttributeTable } from '../helpers/getRasterAttributeTable';
+import { ar } from 'date-fns/locale';
 
 const RasterFunctionsByClassificationName: Record<
     NLCDLandCoverClassification,
@@ -22,23 +23,23 @@ const RasterFunctionsByClassificationName: Record<
     'Developed Medium Intensity':
         NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_MEDIUM_INTENSITY,
     'Developed High Intensity':
-        NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_HIGH_DENSITY,
+        NLCD_LANDCOVER_RASTER_FUNCTIONS.DEVELOPED_HIGH_INTENSITY,
     'Barren Land': NLCD_LANDCOVER_RASTER_FUNCTIONS.BARREN_LAND,
     'Deciduous Forest': NLCD_LANDCOVER_RASTER_FUNCTIONS.DECIDUOUS_FOREST,
     'Evergreen Forest': NLCD_LANDCOVER_RASTER_FUNCTIONS.EVERGREEN_FOREST,
     'Mixed Forest': NLCD_LANDCOVER_RASTER_FUNCTIONS.MIXED_FOREST,
-    'Dwarf Scrub': NLCD_LANDCOVER_RASTER_FUNCTIONS.SHRUB_SCRUB,
+    // 'Dwarf Scrub': NLCD_LANDCOVER_RASTER_FUNCTIONS.SHRUB_SCRUB,
     'Shrub/Scrub': NLCD_LANDCOVER_RASTER_FUNCTIONS.SHRUB_SCRUB,
     'Grassland/Herbaceous':
         NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
-    'Sedge/Herbaceous': NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
-    Lichens: NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
-    Moss: NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+    // 'Sedge/Herbaceous': NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+    // Lichens: NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+    // Moss: NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
     'Pasture/Hay': NLCD_LANDCOVER_RASTER_FUNCTIONS.PASTURE_HAY,
     'Cultivated Crops': NLCD_LANDCOVER_RASTER_FUNCTIONS.CULTIVATED_CROPS,
     'Woody Wetlands': NLCD_LANDCOVER_RASTER_FUNCTIONS.WOODY_WETLANDS,
     'Emergent Herbaceous Wetlands':
-        NLCD_LANDCOVER_RASTER_FUNCTIONS.GRASSLAND_HERBACEOUS,
+        NLCD_LANDCOVER_RASTER_FUNCTIONS.EMERGENT_HERBACEOUS_WETLANDS,
 };
 
 const NLCDLandCoverClassificationShortNames: Record<
@@ -55,12 +56,12 @@ const NLCDLandCoverClassificationShortNames: Record<
     'Deciduous Forest': 'Decid',
     'Evergreen Forest': 'Evergrn',
     'Mixed Forest': 'Mixed',
-    'Dwarf Scrub': 'Dwarf',
+    // 'Dwarf Scrub': 'Dwarf',
     'Shrub/Scrub': 'Shrub',
     'Grassland/Herbaceous': 'Grass',
-    'Sedge/Herbaceous': 'Sedge',
-    Lichens: 'Lichen',
-    Moss: 'Moss',
+    // 'Sedge/Herbaceous': 'Sedge',
+    // Lichens: 'Lichen',
+    // Moss: 'Moss',
     'Pasture/Hay': 'Pasture',
     'Cultivated Crops': 'Crops',
     'Woody Wetlands': 'Wood Wet',
@@ -93,16 +94,20 @@ export const getNLCDLandCoverRasterAttributeTable = async (): Promise<void> => {
     for (const feature of features) {
         const { attributes } = feature;
 
-        const { Value, Description, ClassName, Red, Green, Blue } = attributes;
+        const { Value, Description, Red, Green, Blue } = attributes;
+
+        const ClassName = attributes.ClassName as NLCDLandCoverClassification;
+
+        if (RasterFunctionsByClassificationName[ClassName] === undefined) {
+            continue;
+        }
 
         nlcdLandcoverClassificationDataMap.set(Value, {
             Value,
             Description,
-            ClassName: ClassName as NLCDLandCoverClassification,
+            ClassName,
             Color: [Red, Green, Blue],
-            shortName: getLandCoverClassificationShortName(
-                ClassName as NLCDLandCoverClassification
-            ),
+            shortName: getLandCoverClassificationShortName(ClassName),
         });
     }
 };
