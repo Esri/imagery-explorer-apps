@@ -209,6 +209,7 @@ const getWebMapContent = async ({
                 definitionExpression,
             },
             blendMode: LandCoverLayerBlendMode,
+            timeAnimation: false,
         };
     });
 
@@ -228,7 +229,6 @@ const getWebMapContent = async ({
         // authoringApp: 'EsriLandcoverExplorer',
         authoringApp: authoringApp,
         authoringAppVersion: '1.0.0',
-        widgets: {}, // set to empty object to avoid having time widget turned on by default
     };
 
     return JSON.stringify(content);
