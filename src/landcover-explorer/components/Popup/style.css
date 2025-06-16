@@ -1,5 +1,5 @@
 .esri-view-width-xlarge .esri-popup__main-container {
-    width: 230px;
+    max-width: 300px;
 }
 
 .download-panel .esri-popup__main-container {

@@ -217,8 +217,8 @@ const Popup: FC<Props> = ({
         const lat = Math.round(mapPoint.latitude * 1000) / 1000;
         const lon = Math.round(mapPoint.longitude * 1000) / 1000;
         const title =
-            `${t('latitude_abbreviation', { ns: APP_NAME })} ${lat}` +
-            `${t('longitude_abbreviation', { ns: APP_NAME })} ${lon}`;
+            `${t('latitude_abbreviation')} ${lat} ` +
+            `${t('longitude_abbreviation')} ${lon}`;
 
         mapView.openPopup({
             title,

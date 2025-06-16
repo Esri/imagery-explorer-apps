@@ -13,6 +13,7 @@ import {
     LANDSAT_LEVEL_2_SERVICE_URL,
     LANDSAT_NATIVE_SCALE,
 } from '@shared/services/landsat-level-2/config';
+import { NLCDLandCoverPopup } from '../NLCDPopup/NLCDPopup';
 // import { selectIsSatelliteImageryLayerOutOfVisibleRange } from '@shared/store/LandcoverExplorer/selectors';
 
 export const NLCDLandcoverMapViewContainer = () => {
@@ -46,6 +47,7 @@ export const NLCDLandcoverMapViewContainer = () => {
                 rasterFunctionName={rasterFunctionName}
             />
             <SwipeWidget4LandsatLayers />
+            <NLCDLandCoverPopup />
         </LandcoverExplorerMapViewContainer>
     );
 };
