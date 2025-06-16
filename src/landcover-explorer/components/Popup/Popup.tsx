@@ -69,7 +69,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
-    const shouldShowSentinel2Layer = useAppSelector(
+    const shouldShowSatelliteImageryLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
 
@@ -176,7 +176,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     ) => {
         // no need to show pop-up for sentinel-2 imagery layer until imagery is visible
         if (
-            shouldShowSentinel2Layer &&
+            shouldShowSatelliteImageryLayer &&
             isSatelliteImagertLayerOutOfVisibleRange === true
         ) {
             return;
@@ -195,7 +195,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         });
 
         const landCoverData =
-            shouldShowSentinel2Layer === false
+            shouldShowSatelliteImageryLayer === false
                 ? await identifyLandcoverClassificationsByLocation(mapPoint)
                 : null;
 
@@ -218,7 +218,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         }
 
         if (
-            shouldShowSentinel2Layer &&
+            shouldShowSatelliteImageryLayer &&
             !isSatelliteImagertLayerOutOfVisibleRange
         ) {
             const identifyTaskRes = await identify({
@@ -274,7 +274,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     }, [
         aquisitionYear,
         aquisitionMonth,
-        shouldShowSentinel2Layer,
+        shouldShowSatelliteImageryLayer,
         isSatelliteImagertLayerOutOfVisibleRange,
         swipePosition,
         year4LeadingLayer,

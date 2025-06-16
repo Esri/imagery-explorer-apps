@@ -5,13 +5,14 @@ import { APP_NAME } from '@shared/config';
 import { SwipeWidget4Landcover, SwipeWidget4Sentinel2 } from '../SwipeWidget';
 import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
-import Popup from '../Popup/Popup';
+// import Popup from '../Popup/Popup';
 import { useSentinel2LandCoverLayerRasterFunctionName } from '../LandcoverLayer/useSentinel2LandCoverLayerRasterFunctionName';
 import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 import {
     SENTINEL2_NATIVE_SCALE,
     SENTINEL_2_SERVICE_URL,
 } from '@shared/services/sentinel-2/config';
+import { Sentinel2LandCoverPopup } from '../Popup/Sentinel2LandCoverPopup';
 
 export const Sentinel2LandcoverMapView = () => {
     const { t } = useTranslation();
@@ -38,7 +39,8 @@ export const Sentinel2LandcoverMapView = () => {
             <SwipeWidget4Sentinel2 />
             <Sentinel2Layer />
             <LandcoverLayer />
-            <Popup />
+            {/* <Popup /> */}
+            <Sentinel2LandCoverPopup />
         </LandcoverExplorerMapViewContainer>
     );
 };

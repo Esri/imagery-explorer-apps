@@ -24,7 +24,6 @@ import {
 // import SwipeWidget from '../SwipeWidget/SwipeWidget';
 // import LandcoverLayer from '../LandcoverLayer/LandcoverLayerContainer';
 import MapViewEventHandlers from './MapViewEventHandler';
-import Popup from '../Popup/Popup';
 
 import {
     selectAnimationStatus,
