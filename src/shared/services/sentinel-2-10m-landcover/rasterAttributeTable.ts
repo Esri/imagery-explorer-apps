@@ -66,7 +66,7 @@ const LandcoverClassificationShortNames: Record<
 };
 
 /**
- * Map stores pixel data from Raster attribute table using Value as the key
+ * Map stores the Land Cover Classification Data using pixel value as the key.
  */
 export const sentinel2LandcoverClassificationDataMap: Map<
     number,

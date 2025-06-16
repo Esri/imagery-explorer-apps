@@ -57,3 +57,8 @@ export const DEFAULT_RENDERING_RULE = {
  * The field in the Sentinel-2 10m Land Cover Image Service that contains the start date of the imagery.
  */
 export const SENTINEL2_LANDCOVER_10M_START_TIME_FIELD = 'StartDate';
+
+/**
+ * The field in the Sentinel-2 10m Land Cover Image Service that contains the Year of the imagery.
+ */
+export const SENTINEL2_LANDCOVER_10M_END_YEAR_FIELD = 'Year';

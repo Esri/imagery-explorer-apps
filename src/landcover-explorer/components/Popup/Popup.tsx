@@ -18,10 +18,9 @@ import React, { FC, useCallback, useEffect, useRef } from 'react';
 import IMapView from '@arcgis/core/views/MapView';
 import IPoint from '@arcgis/core/geometry/Point';
 // import { LandcoverClassificationData } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import {
-    identifyLandcoverClassificationsByLocation,
-    LandcoverClassificationsByYear,
-} from '@shared/services/sentinel-2-10m-landcover/identifyTask';
+// import {
+//     LandcoverClassificationsByYear,
+// } from '@shared/services/sentinel-2-10m-landcover/identifyTask';
 import { identify } from '../Sentinel2Layer/identify';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
@@ -39,8 +38,34 @@ import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { DATE_FORMAT } from '@shared/constants/UI';
+import {
+    identifyLandcoverClassificationsByLocation,
+    LandcoverClassificationDataByYear,
+} from '@shared/services/helpers/getLandcoverClassificationsByLocation';
+import { LandcoverClassificationData } from '@typing/landcover';
 
 type Props = {
+    /**
+     * URL for the Land Cover Image Service.
+     * This is used to perform the identify task.
+     */
+    landCoverServiceUrl: string;
+    /**
+     * The raster function to be used for the mosaic rule of the identify task.
+     */
+    rasterFunction: string;
+    /**
+     * Available years for which the land cover classification data can be retrieved.
+     */
+    years: number[];
+    /**
+     * The field in the Land Cover Image Service that contains the year of the imagery.
+     */
+    yearField: string;
+    /**
+     * Map stores Land Cover Classification Data using pixel value as the key.
+     */
+    classificationDataMap: Map<number, LandcoverClassificationData>;
     mapView?: IMapView;
 };
 
@@ -62,7 +87,14 @@ const didClickOnLeftSideOfSwipeWidget = (
     return mouseX <= wdithOfLeftHalf;
 };
 
-const Popup: FC<Props> = ({ mapView }: Props) => {
+const Popup: FC<Props> = ({
+    landCoverServiceUrl,
+    rasterFunction,
+    years,
+    yearField,
+    classificationDataMap,
+    mapView,
+}: Props) => {
     const { t } = useTranslation();
 
     const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
@@ -73,7 +105,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         selectShouldShowSatelliteImageryLayer
     );
 
-    const rasterFunction = useAppSelector(
+    const satelliteImageryRasterFunction = useAppSelector(
         selectSatelliteImageryLayerRasterFunction
     );
 
@@ -100,7 +132,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     };
 
     const getMainContent = (
-        landCoverData: LandcoverClassificationsByYear[],
+        landCoverData: LandcoverClassificationDataByYear[],
         aquisitionYear: number,
         acquisitionDate?: number
     ) => {
@@ -196,7 +228,14 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
 
         const landCoverData =
             shouldShowSatelliteImageryLayer === false
-                ? await identifyLandcoverClassificationsByLocation(mapPoint)
+                ? await identifyLandcoverClassificationsByLocation({
+                      point: mapPoint,
+                      landCoverServiceUrl,
+                      rasterFunction,
+                      years,
+                      yearField,
+                      classificationDataMap,
+                  })
                 : null;
 
         // acquisition date (in unix timestamp) of sentinel-2 imagery that is displayed on map
@@ -224,7 +263,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
             const identifyTaskRes = await identify({
                 geometry: mapPoint,
                 resolution: mapView.resolution,
-                rasterFunction,
+                rasterFunction: satelliteImageryRasterFunction,
                 year,
                 month: aquisitionMonth,
             });
