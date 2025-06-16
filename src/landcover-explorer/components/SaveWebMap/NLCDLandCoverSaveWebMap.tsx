@@ -18,6 +18,7 @@ export const NLCDLandCoverSaveWebMap = () => {
             landCoverLayerItemId={NLCD_LANDCOVER_ITEM_ID}
             landCoverImageryServiceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
             landCoverLayerStartTimeField={NLCD_LANDCOVER_START_TIME_FIELD}
+            landCoverLayerStartTimeFieldType="number"
             authoringApp="NLCD Land Cover Explorer"
         />
     );

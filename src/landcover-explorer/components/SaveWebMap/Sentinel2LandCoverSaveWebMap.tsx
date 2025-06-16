@@ -24,6 +24,7 @@ export const Sentinel2LandCoverSaveWebMap = () => {
             landCoverLayerStartTimeField={
                 SENTINEL2_LANDCOVER_10M_START_TIME_FIELD
             }
+            landCoverLayerStartTimeFieldType="date"
             authoringApp="Sentinel-2 Land Cover Explorer"
         />
     );

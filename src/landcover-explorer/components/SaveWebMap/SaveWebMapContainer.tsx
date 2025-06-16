@@ -35,6 +35,7 @@ export type SaveWebMapContainerProps = {
     landCoverLayerItemId: string;
     landCoverImageryServiceUrl: string;
     landCoverLayerStartTimeField: string;
+    landCoverLayerStartTimeFieldType: 'number' | 'date';
     authoringApp: string;
 };
 
@@ -44,6 +45,7 @@ export const SaveWebMapContainer: FC<SaveWebMapContainerProps> = ({
     landCoverLayerItemId,
     landCoverImageryServiceUrl,
     landCoverLayerStartTimeField,
+    landCoverLayerStartTimeFieldType,
     authoringApp,
 }) => {
     const dispatch = useAppDispatch();
@@ -59,6 +61,7 @@ export const SaveWebMapContainer: FC<SaveWebMapContainerProps> = ({
         landCoverLayerItemId,
         landCoverImageryServiceUrl,
         landCoverLayerStartTimeField,
+        landCoverLayerStartTimeFieldType,
         authoringApp,
     });
 

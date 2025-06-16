@@ -68,6 +68,10 @@ type CreateWebMapOptions = {
      */
     landCoverLayerStartTimeField: string;
     /**
+     * The type of the field that contains the start time of the land cover layer.
+     */
+    landCoverLayerStartTimeFieldType: 'number' | 'date';
+    /**
      * the name of the application that is authoring the web map.
      */
     authoringApp: string;
@@ -135,6 +139,10 @@ type GetWebMapContentParameters = {
      */
     landCoverLayerStartTimeField: string;
     /**
+     * The type of the field that contains the start time of the land cover layer.
+     */
+    landCoverLayerStartTimeFieldType: 'number' | 'date';
+    /**
      * the name of the application that is authoring the web map.
      */
     authoringApp: string;
@@ -170,6 +178,7 @@ const getWebMapContent = async ({
     landCoverLayerItemId,
     landCoverImageryServiceUrl,
     landCoverLayerStartTimeField,
+    landCoverLayerStartTimeFieldType,
     authoringApp,
 }: GetWebMapContentParameters) => {
     const data = await getDataOfLandcoverAppWebmap();
@@ -180,6 +189,11 @@ const getWebMapContent = async ({
     // const years = getAvailableYears();
 
     const landcoverLayers: LayerInfo[] = years.map((year) => {
+        const definitionExpression =
+            landCoverLayerStartTimeFieldType === 'number'
+                ? `${landCoverLayerStartTimeField} = ${year}`
+                : `${landCoverLayerStartTimeField} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 11:59:59'`;
+
         return {
             // itemId: SENTINEL_2_10M_LAND_COVER_ITEM_ID,
             itemId: landCoverLayerItemId,
@@ -190,7 +204,9 @@ const getWebMapContent = async ({
             url: landCoverImageryServiceUrl,
             visibility: year === selectedYear,
             layerDefinition: {
-                definitionExpression: `${landCoverLayerStartTimeField} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 11:59:59'`,
+                // definitionExpression: `${landCoverLayerStartTimeField} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 11:59:59'`,
+                // definitionExpression: `${landCoverLayerStartTimeField} = ${year}`,
+                definitionExpression,
             },
             blendMode: LandCoverLayerBlendMode,
         };
@@ -212,6 +228,7 @@ const getWebMapContent = async ({
         // authoringApp: 'EsriLandcoverExplorer',
         authoringApp: authoringApp,
         authoringAppVersion: '1.0.0',
+        widgets: {}, // set to empty object to avoid having time widget turned on by default
     };
 
     return JSON.stringify(content);
@@ -247,6 +264,7 @@ export const createWebMap = async ({
     landCoverLayerItemId,
     landCoverImageryServiceUrl,
     landCoverLayerStartTimeField,
+    landCoverLayerStartTimeFieldType,
     authoringApp,
 }: CreateWebMapOptions): Promise<CreateWebMapResponse> => {
     // const textContent = await getWebMapContent({
@@ -266,6 +284,7 @@ export const createWebMap = async ({
         landCoverLayerItemId,
         landCoverImageryServiceUrl,
         landCoverLayerStartTimeField,
+        landCoverLayerStartTimeFieldType,
         authoringApp,
     });
 

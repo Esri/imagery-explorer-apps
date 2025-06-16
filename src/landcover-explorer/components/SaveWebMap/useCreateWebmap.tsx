@@ -48,6 +48,10 @@ export type CreateWebmapProps = {
      */
     landCoverLayerStartTimeField: string;
     /**
+     * The type of the start time field for the land cover layer.
+     */
+    landCoverLayerStartTimeFieldType: 'number' | 'date';
+    /**
      * The authoring app used to create the webmap.
      */
     authoringApp: string;
@@ -60,6 +64,7 @@ export const useCreateWebmap = ({
     landCoverLayerItemId,
     landCoverImageryServiceUrl,
     landCoverLayerStartTimeField,
+    landCoverLayerStartTimeFieldType,
     authoringApp,
 }: CreateWebmapProps) => {
     const mapExtent = useAppSelector(selectMapExtent);
@@ -93,6 +98,7 @@ export const useCreateWebmap = ({
                         landCoverImageryServiceUrl,
                         // SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
                         landCoverLayerStartTimeField,
+                        landCoverLayerStartTimeFieldType,
                         // SENTINEL2_LANDCOVER_10M_START_TIME_FIELD,
                         authoringApp,
                         // 'EsriLandcoverExplorer',
