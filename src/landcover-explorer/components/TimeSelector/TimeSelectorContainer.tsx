@@ -33,6 +33,7 @@ import { TimeSelectorHeader } from './TimeSelectorHeader';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 type TimeSelectorContainerProps = {
     /**
@@ -140,7 +141,13 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
     }, [animationStatus, mode]);
 
     return (
-        <div className="w-full md:w-landcover-explorer-time-slider-width shrink-0 text-center md:mx-6">
+        <div
+            className={classNames('shrink-0 text-center mx-2 md:mx-6', {
+                'w-landcover-explorer-time-slider-width':
+                    IS_MOBILE_DEVICE === false,
+                'w-full': IS_MOBILE_DEVICE === true,
+            })}
+        >
             <TimeSelectorHeader
                 // titleForImagery={t('sentinel_layer_title', { ns: APP_NAME })}
                 // titleForLandCover={t('land_cover_layer_title', { ns: APP_NAME })}

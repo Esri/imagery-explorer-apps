@@ -20,7 +20,6 @@ export const getSliderTickValues = (dates: Date[], maxTicks: number) => {
 
     // Sort the dates to ensure they're in chronological order
     const sortedDates = [...dates].sort((a, b) => a.getTime() - b.getTime());
-
     // const maxTicks = 10;
     const total = sortedDates.length;
 
@@ -36,7 +35,10 @@ export const getSliderTickValues = (dates: Date[], maxTicks: number) => {
     // Calculate the total width (in indices) that the ticks will span
     const totalTicksWidth = (ticksToShow - 1) * interval;
     // Calculate the starting index to center the ticks within the available dates
-    const startIndex = Math.floor((total - 1 - totalTicksWidth) / 2);
+    const startIndex = Math.max(
+        Math.floor((total - 1 - totalTicksWidth) / 2),
+        0
+    );
 
     for (let i = 0; i < ticksToShow; i++) {
         const idx = startIndex + i * interval;
