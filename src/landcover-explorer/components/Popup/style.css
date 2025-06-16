@@ -1,4 +1,4 @@
-.esri-view-width-xlarge .esri-popup__main-container {
+/* .esri-view-width-xlarge .esri-popup__main-container {
     max-width: 300px;
 }
 
@@ -17,12 +17,7 @@
     display: none;
 }
 
-/* .esri-popup__header-container.esri-popup__header-container--button{
-    pointer-events: none;
-} */
-
 .esri-popup__main-container {
-    /* background: rgba(0,35,47, .85); */
     @apply bg-custom-background-85;
 }
 
@@ -33,4 +28,4 @@
 .active-year-indicator {
     height: 6px;
     width: 6px;
-}
+} */

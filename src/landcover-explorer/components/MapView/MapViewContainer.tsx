@@ -131,7 +131,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
     return (
         <div
             className={classNames(
-                'absolute top-app-header-size md:top-0 left-0 w-full',
+                'absolute top-app-header-size md:top-0 left-0 w-full wide-popup',
                 {
                     'bottom-bottom-panel-height': hideControlPanel === false,
                     'bottom-0': hideControlPanel,

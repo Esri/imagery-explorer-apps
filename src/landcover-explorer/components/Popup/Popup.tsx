@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import './style.css';
+// import './style.css';
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import IMapView from '@arcgis/core/views/MapView';
 import IPoint from '@arcgis/core/geometry/Point';
@@ -170,7 +170,7 @@ const Popup: FC<Props> = ({
 
                       return `
                         <div class='flex my-2 items-center'>
-                            <div class='active-year-indicator rounded-full mr-2 bg-custom-light-blue-80 ${
+                            <div class='rounded-full mr-2 bg-custom-light-blue-80 w-[6px] h-[6px] ${
                                 year !== aquisitionYear ? 'opacity-0' : ''
                             }'></div>
                             <span>${year}</span>
