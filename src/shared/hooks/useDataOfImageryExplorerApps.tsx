@@ -50,6 +50,12 @@ export const useDataOfImageryExplorerApps = () => {
                 url: '/sentinel2explorer',
                 tooltip: t('launch_sentinel2_explorer'),
             },
+            {
+                appName: 'nlcdlandcoverexplorer',
+                title: t('nlcd_landcover_explorer'),
+                url: '/nlcdlandcoverexplorer',
+                tooltip: t('launch_nlcd_landcover_explorer'),
+            },
         ];
 
         return data;

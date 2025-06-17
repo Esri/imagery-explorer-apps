@@ -7,6 +7,8 @@
     "launch_sentinel_2_explorer": "Launch the Sentinel-2 Explorer in a new tab",
     "landcover_explorer": "Sentinel-2 Land Cover Explorer",
     "launch_landcover_explorer": "Launch the Sentinel-2 Land Cover Explorer in a new tab",
+    "nlcd_landcover_explorer": "NLCD Land Cover Explorer",
+    "launch_nlcd_landcover_explorer": "Launch the NLCD Land Cover Explorer in a new tab",
     "find_a_scene": "Find a scene",
     "add_a_scene": "Add A Scene",
     "play_animation": "Play animation",
