@@ -21,7 +21,7 @@ import IPoint from '@arcgis/core/geometry/Point';
 // import {
 //     LandcoverClassificationsByYear,
 // } from '@shared/services/sentinel-2-10m-landcover/identifyTask';
-import { identify } from '../SatelliteImageryLayer/identify';
+import { getAcquisitionDateOfSatelliteImage } from '../SatelliteImageryLayer/identify';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,
@@ -43,6 +43,7 @@ import {
     LandcoverClassificationDataByYear,
 } from '@shared/services/helpers/getLandcoverClassificationsByLocation';
 import { LandcoverClassificationData } from '@typing/landcover';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type Props = {
     /**
@@ -50,6 +51,14 @@ type Props = {
      * This is used to perform the identify task.
      */
     landCoverServiceUrl: string;
+    /**
+     * The URL for the satellite imagery service.
+     */
+    satelliteImageryServiceUrl: string;
+    /**
+     * The name of the satellite imagery service.
+     */
+    satelliteImageryServiceName: string;
     /**
      * The raster function to be used for the mosaic rule of the identify task.
      */
@@ -89,6 +98,8 @@ const didClickOnLeftSideOfSwipeWidget = (
 
 const Popup: FC<Props> = ({
     landCoverServiceUrl,
+    satelliteImageryServiceUrl,
+    satelliteImageryServiceName,
     rasterFunction,
     years,
     yearField,
@@ -123,6 +134,8 @@ const Popup: FC<Props> = ({
 
     const aquisitionYear = useAppSelector(selectYear);
 
+    const animationStatus = useAppSelector(selectAnimationStatus);
+
     const mapViewOnClickHandlerRef = useRef<MapViewOnClickHandler>();
 
     const getLoadingIndicator = () => {
@@ -145,9 +158,10 @@ const Popup: FC<Props> = ({
         const htmlString4AcquisitionDate = acquisitionDateFormatted
             ? `
                 <div class='mx-2 mt-4 pb-2 text-center'>
-                    <span>${t('sentinel2_acquisition_date', {
-                        ns: APP_NAME,
+                    <span>${t('satellite_imagery_acquisition_date', {
+                        // ns: APP_NAME,
                         date: acquisitionDateFormatted, // Pass the formatted date dynamically for translation
+                        satelliteName: satelliteImageryServiceName,
                     })}</span>
                 </div>
             `
@@ -260,22 +274,31 @@ const Popup: FC<Props> = ({
             shouldShowSatelliteImageryLayer &&
             !isSatelliteImagertLayerOutOfVisibleRange
         ) {
-            const identifyTaskRes = await identify({
+            // const identifyTaskRes = await identify({
+            //     geometry: mapPoint,
+            //     resolution: mapView.resolution,
+            //     rasterFunction: satelliteImageryRasterFunction,
+            //     year,
+            //     month: aquisitionMonth,
+            // });
+
+            // if (
+            //     identifyTaskRes.catalogItems &&
+            //     identifyTaskRes.catalogItems.features
+            // ) {
+            //     acquisitionDate =
+            //         identifyTaskRes?.catalogItems?.features[0]?.attributes
+            //             .acquisitiondate;
+            // }
+
+            acquisitionDate = await getAcquisitionDateOfSatelliteImage({
+                serviceUrl: satelliteImageryServiceUrl,
                 geometry: mapPoint,
                 resolution: mapView.resolution,
                 rasterFunction: satelliteImageryRasterFunction,
                 year,
                 month: aquisitionMonth,
             });
-
-            if (
-                identifyTaskRes.catalogItems &&
-                identifyTaskRes.catalogItems.features
-            ) {
-                acquisitionDate =
-                    identifyTaskRes?.catalogItems?.features[0]?.attributes
-                        .acquisitiondate;
-            }
         }
 
         mapView.popup.open({
@@ -319,6 +342,7 @@ const Popup: FC<Props> = ({
         year4LeadingLayer,
         year4TrailingLayer,
         mode,
+        animationStatus,
     ]);
 
     return null;

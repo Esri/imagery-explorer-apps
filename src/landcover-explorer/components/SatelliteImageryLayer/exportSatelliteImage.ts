@@ -67,7 +67,7 @@ type ExportImageParams = {
  * @property AcquisitionDate - The field name representing the acquisition date of the imagery.
  * @property CloudCover - The field name representing the cloud cover percentage of the imagery.
  */
-const ImageryServiceFieldNames = {
+export const ImageryServiceFieldNames = {
     AcquisitionDate: FIELD_NAMES.ACQUISITION_DATE as string,
     CloudCover: FIELD_NAMES.CLOUD_COVER as string,
 };

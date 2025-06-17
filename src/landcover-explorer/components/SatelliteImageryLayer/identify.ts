@@ -16,8 +16,11 @@
 // import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 
 import IPoint from '@arcgis/core/geometry/Point';
-import { getMosaicRuleByAcquisitionDate } from './exportSatelliteImage';
-import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
+import {
+    getMosaicRuleByAcquisitionDate,
+    ImageryServiceFieldNames,
+} from './exportSatelliteImage';
+// import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { ImageryRasterFunction4LandcoverApp } from '@shared/store/LandcoverExplorer/reducer';
 // import {
 //     SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES,
@@ -25,6 +28,7 @@ import { ImageryRasterFunction4LandcoverApp } from '@shared/store/LandcoverExplo
 // } from './config';
 
 type IdentifyParams = {
+    serviceUrl: string;
     geometry: IPoint;
     resolution: number;
     rasterFunction: ImageryRasterFunction4LandcoverApp;
@@ -32,19 +36,20 @@ type IdentifyParams = {
     month: number;
 };
 
-type Sentinel2Feature = {
+type CatalogItemsFeatures = {
     attributes: {
-        acquisitiondate: number;
+        [key: string]: any;
     };
 };
 
 type IdentifyTaskResponse = {
     catalogItems: {
-        features: Sentinel2Feature[];
+        features: CatalogItemsFeatures[];
     };
 };
 
-export const identify = async ({
+const identify = async ({
+    serviceUrl,
     geometry,
     resolution,
     rasterFunction,
@@ -74,16 +79,61 @@ export const identify = async ({
         processAsMultidimensional: 'false',
     });
 
-    const requestURL = `${SENTINEL_2_SERVICE_URL}/identify?${params.toString()}`;
+    const requestURL = `${serviceUrl}/identify?${params.toString()}`;
+
+    const res = await fetch(requestURL);
+
+    const data = (await res.json()) as IdentifyTaskResponse;
+
+    return data;
+};
+
+export const getAcquisitionDateOfSatelliteImage = async ({
+    serviceUrl,
+    geometry,
+    resolution,
+    rasterFunction,
+    year,
+    month,
+}: IdentifyParams): Promise<number> => {
+    /**
+     * The acquisition date of the satellite image in the specified month and year.
+     * The date is represented as UNIX timestamp (milliseconds since epoch).
+     */
+    let acquisitionDate: number = null;
 
     try {
-        const res = await fetch(requestURL);
+        const identifyTaskRes = await identify({
+            serviceUrl,
+            geometry,
+            resolution,
+            rasterFunction,
+            year,
+            month,
+        });
 
-        const data = (await res.json()) as IdentifyTaskResponse;
+        const acquisitionDateFieldName =
+            ImageryServiceFieldNames.AcquisitionDate;
 
-        return data;
-    } catch (err) {
-        console.log(err);
+        if (
+            identifyTaskRes.catalogItems &&
+            identifyTaskRes.catalogItems.features &&
+            identifyTaskRes.catalogItems.features.length > 0
+        ) {
+            const feature = identifyTaskRes.catalogItems.features[0];
+
+            const attributes = feature.attributes;
+
+            acquisitionDate =
+                attributes[acquisitionDateFieldName] &&
+                typeof attributes[acquisitionDateFieldName] === 'number'
+                    ? attributes[acquisitionDateFieldName]
+                    : null;
+        }
+
+        return acquisitionDate;
+    } catch (error) {
+        console.log(error);
         return null;
     }
 };

@@ -9,6 +9,7 @@ import {
     SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
 } from '@shared/services/sentinel-2-10m-landcover/config';
 import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 
 type Props = {
     mapView?: MapView;
@@ -26,6 +27,8 @@ export const Sentinel2LandCoverPopup: FC<Props> = ({ mapView }) => {
     return (
         <Popup
             landCoverServiceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}
+            satelliteImageryServiceUrl={SENTINEL_2_SERVICE_URL}
+            satelliteImageryServiceName="Sentinel-2 L2A"
             rasterFunction={SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION}
             years={years}
             yearField={SENTINEL2_LANDCOVER_10M_END_YEAR_FIELD}

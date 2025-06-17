@@ -59,7 +59,6 @@
 
     "change_compare_graph_tooltip_template": "{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area.",
 
-    "sentinel2_acquisition_date": "Sentinel-2 L2A image acquired on {{date}}",
     "zoom_to_native_resolution": "Zoom to Land cover layer's native resolution",
 
     "download_panel_header": "Sentinel-2 10m Land Use/Land Cover Download",

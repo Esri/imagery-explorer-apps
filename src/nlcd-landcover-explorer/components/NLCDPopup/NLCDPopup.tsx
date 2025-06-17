@@ -8,6 +8,7 @@ import {
     NLCD_LANDCOVER_YEAR_FIELD,
 } from '@shared/services/nlcd-landcover/config';
 import { nlcdLandcoverClassificationDataMap } from '@shared/services/nlcd-landcover/classifications';
+import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 type Props = {
     mapView?: MapView;
 };
@@ -24,6 +25,8 @@ export const NLCDLandCoverPopup: FC<Props> = ({ mapView }) => {
     return (
         <Popup
             landCoverServiceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
+            satelliteImageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            satelliteImageryServiceName="Landsat Level-2"
             rasterFunction={
                 NLCD_LANDCOVER_IMAGE_SERVICE_DEFAULT_RASTER_FUNCTION_NAME
             }
