@@ -16,7 +16,7 @@
 // import { Sentinel2RasterFunction } from '../ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 
 import IPoint from '@arcgis/core/geometry/Point';
-import { getMosaicRuleByAcquisitionDate } from '../AnimationPanel/exportSatelliteImage';
+import { getMosaicRuleByAcquisitionDate } from './exportSatelliteImage';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { ImageryRasterFunction4LandcoverApp } from '@shared/store/LandcoverExplorer/reducer';
 // import {

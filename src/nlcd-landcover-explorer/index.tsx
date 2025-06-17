@@ -27,7 +27,7 @@ import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import { APP_ID } from '@shared/config';
 import { loadNLCDLandcoverServiceInfo } from '@shared/services/nlcd-landcover/loadServiceInfo';
-import { setImageryServiceFieldNames } from '@landcover-explorer/components/AnimationPanel/exportSatelliteImage';
+import { setImageryServiceFieldNames } from '@landcover-explorer/components/SatelliteImageryLayer/exportSatelliteImage';
 import { FIELD_NAMES } from '@shared/services/landsat-level-2/config';
 
 (async () => {

@@ -21,7 +21,7 @@ import IPoint from '@arcgis/core/geometry/Point';
 // import {
 //     LandcoverClassificationsByYear,
 // } from '@shared/services/sentinel-2-10m-landcover/identifyTask';
-import { identify } from '../Sentinel2Layer/identify';
+import { identify } from '../SatelliteImageryLayer/identify';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,

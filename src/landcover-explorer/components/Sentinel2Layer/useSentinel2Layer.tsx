@@ -25,7 +25,7 @@ import {
     selectSatelliteImageryLayerAquisitionMonth,
     selectSatelliteImageryLayerRasterFunction,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { getMosaicRuleByAcquisitionDate } from '../AnimationPanel/exportSatelliteImage';
+import { getMosaicRuleByAcquisitionDate } from '../SatelliteImageryLayer/exportSatelliteImage';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 
 type UseLandCoverLayerParams = {
