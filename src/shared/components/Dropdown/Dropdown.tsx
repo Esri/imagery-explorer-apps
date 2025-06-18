@@ -87,6 +87,7 @@ export const Dropdown: FC<Props> = ({
                         <div
                             className="p-1 border-custom-light-blue-5 border-b cursor-pointer"
                             key={value}
+                            data-testid={`dropdown-option-${value}`}
                             onClick={() => {
                                 onChange(value);
                                 setShouldShowOptions(false);
@@ -132,6 +133,7 @@ export const Dropdown: FC<Props> = ({
                 className={classNames(
                     'block bottom-panel-content-min-width:hidden fixed z-50'
                 )}
+                data-testid="dropdown-menu-at-fixed-position"
                 style={{
                     // The bottom position (relative to the viewport) of the dropdown menu should be
                     // the space between the top of the container and the bottom of the viewport.

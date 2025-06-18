@@ -236,7 +236,10 @@ const MonthGrid: FC<MonthGridProps> = ({
     };
 
     return (
-        <div className="text-center mx-1">
+        <div
+            className="text-center mx-1"
+            data-testid={`month-grid-${year}-${month}`}
+        >
             <h4 className="text-sm text-custom-light-blue-80 mb-1">
                 {abbrLabel}
             </h4>

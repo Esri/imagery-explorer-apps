@@ -1,11 +1,17 @@
 import type { PlaywrightTestConfig, } from "@playwright/test";
 import { devices } from "@playwright/test";
-import { config } from "dotenv";
+/**
+ * Read environment variables from file.
+ * https://github.com/motdotla/dotenv
+ */
+import { config } from 'dotenv';
 config({
-    path: '../.env'
-})
+    path: '.env',
+});
 
-export const DEV_SERVER_URL = process.env.WEBPACK_DEV_SERVER_HOSTNAME || 'https://localhost:8080'
+export const DEV_SERVER_URL = process.env.WEBPACK_DEV_SERVER_HOSTNAME
+    ? `https://${process.env.WEBPACK_DEV_SERVER_HOSTNAME}:8080`
+    : 'http://localhost:8080'; // Default to localhost if not set
 
 export const baseConfig:PlaywrightTestConfig = {
     testDir: './',
@@ -34,18 +40,21 @@ export const baseConfig:PlaywrightTestConfig = {
     projects: [
       {
         name: 'chromium',
-        use: { ...devices['Desktop Chrome'] },
+        use: { 
+          ...devices['Desktop Chrome'],
+          viewport: { width: 1980, height: 1080 },
+        },
       },
   
-      {
-        name: 'firefox',
-        use: { ...devices['Desktop Firefox'] },
-      },
+      // {
+      //   name: 'firefox',
+      //   use: { ...devices['Desktop Firefox'] },
+      // },
   
-      {
-        name: 'webkit',
-        use: { ...devices['Desktop Safari'] },
-      },
+      // {
+      //   name: 'webkit',
+      //   use: { ...devices['Desktop Safari'] },
+      // },
   
       /* Test against mobile viewports. */
       // {

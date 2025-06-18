@@ -117,6 +117,7 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
             className={classNames('select-none', {
                 'is-disabled': shouldBeDisabled,
             })}
+            data-testid="calendar-container"
         >
             <div className="text-center mb-2">
                 <span className="uppercase text-sm">
@@ -126,7 +127,10 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
 
             <div className="flex mb-2 items-center justify-between">
                 <div className="flex items-center flex-grow">
-                    <div className="relative w-[130px]">
+                    <div
+                        className="relative w-[130px]"
+                        data-testid="year-selection-dropdown"
+                    >
                         <Dropdown
                             data={yearOptions}
                             onChange={(year) => {
