@@ -39,3 +39,22 @@ npx playwright test e2e/sentinel2/tests/FindASceneMode.test.ts --config e2e/play
 11. Verify the scene information table displays the correct acquisition date ("Jan 03, 2024").
 12. Check that the acquisition date label is visible and has the correct attribute (`data-aququisition-date="2024-01-03"`).
 13. Click the reset button and confirm the acquisition date label and scene information table are hidden.
+
+## Test "Swipe Mode"
+
+### Run the Test
+To run the "Swipe Mode" test, use the following command:
+```bash
+npx playwright test e2e/sentinel2/tests/SwipeMode.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
+```
+
+### Test Steps
+1. Navigate to the "Swipe Mode" URL (e.g., `http://localhost:8080/#mapCenter=-117.07809%2C34.03876%2C13.516&mode=swipe`).
+2. Verify the left and right swipe layer selectors are visible.
+3. Select the date for the left swipe layer (e.g., "2024-01-08").
+4. Confirm the left swipe layer displays the correct acquisition date (`data-acquisition-date="2024-01-08"`).
+5. Select the date for the right swipe layer (e.g., "2024-12-18").
+6. Confirm the right swipe layer displays the correct acquisition date (`data-acquisition-date="2024-12-18"`).
+7. Verify the swap button is visible.
+8. Click the swap button.
+9. Ensure the left swipe layer now displays "2024-12-18" and the right swipe layer displays "2024-01-08".
