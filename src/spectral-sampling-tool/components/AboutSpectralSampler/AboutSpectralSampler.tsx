@@ -27,11 +27,14 @@ export const AboutSpectralSampler = () => {
                         {t('about_the_app')}
                     </h3>
 
-                    <p className="mb-4">
-                        {t('about_app_section_1', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
+                    <p
+                        className="mb-4"
+                        dangerouslySetInnerHTML={{
+                            __html: t('about_app_section_1', {
+                                ns: APP_NAME,
+                            }),
+                        }}
+                    ></p>
                 </div>
 
                 <div className="mb-8 font-light">
@@ -101,65 +104,41 @@ export const AboutSpectralSampler = () => {
                                 ns: APP_NAME,
                             })}
                         </p>
-
-                        <ol className="list-disc list-inside ml-4  text-sm">
-                            <li>
-                                {t('download_field_latlon', { ns: APP_NAME })}
-                            </li>
-                            <li>
-                                {t('download_field_reflectance', {
-                                    ns: APP_NAME,
-                                })}
-                            </li>
-                            <li>
-                                {t('download_field_scene_id', { ns: APP_NAME })}
-                            </li>
-                        </ol>
                     </div>
                 </div>
-                {/* 
-            <div className="mb-4 font-light">
-                <h3 className="text-2xl text-custom-light-blue mb-4">
-                    {t('attribution_terms_of_use')}
-                </h3>
 
-                <div className="mb-4">
-                    <p className="mb-1 font-bold">
-                        {t('terms_of_use_service_header', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
+                <div className="mb-4 font-light">
+                    <h3 className="text-2xl text-custom-light-blue mb-4">
+                        {t('attribution_terms_of_use')}
+                    </h3>
 
-                    <div className="ml-8 mb-2">
+                    <div className="mb-4">
                         <p>
                             <b className="font-bold">
-                                {t('terms_of_use_service_section_1_header', {
+                                {t('terms_of_use_service_landsat_header', {
                                     ns: APP_NAME,
                                 })}
                             </b>
                         </p>
                         <p
                             dangerouslySetInnerHTML={{
-                                __html: t(
-                                    'terms_of_use_service_section_1_desc',
-                                    {
-                                        ns: APP_NAME,
-                                    }
-                                ),
+                                __html: t('terms_of_use_service_landsat_desc', {
+                                    ns: APP_NAME,
+                                }),
                             }}
                         ></p>
                     </div>
 
-                    <div className="ml-8">
+                    <div className="mb-4">
                         <p className="font-bold">
-                            {t('terms_of_use_service_section_2_header', {
+                            {t('terms_of_use_service_sentinel2_header', {
                                 ns: APP_NAME,
                             })}
                         </p>
                         <p
                             dangerouslySetInnerHTML={{
                                 __html: t(
-                                    'terms_of_use_service_section_2_desc',
+                                    'terms_of_use_service_sentinel2_desc',
                                     {
                                         ns: APP_NAME,
                                     }
@@ -167,42 +146,39 @@ export const AboutSpectralSampler = () => {
                             }}
                         ></p>
                     </div>
-                </div>
 
-                <div className="mb-4">
-                    <p className="font-bold mb-1">
-                        {t('terms_of_use_app_header', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
-                    <p
-                        dangerouslySetInnerHTML={{
-                            __html: t('terms_of_use_app_section_1', {
+                    <div className="mb-4">
+                        <p className="font-bold">
+                            {t('terms_of_use_service_esri_header', {
                                 ns: APP_NAME,
-                            }),
-                        }}
-                    ></p>
-                    <p>
-                        {t('terms_of_use_app_section_2', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
-                </div>
-            </div> */}
+                            })}
+                        </p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: t('terms_of_use_service_esri_desc', {
+                                    ns: APP_NAME,
+                                }),
+                            }}
+                        ></p>
+                    </div>
 
-                <div className="mb-8 font-light">
-                    <h3 className="text-2xl text-custom-light-blue mb-4">
-                        {t('purpose', {
-                            ns: APP_NAME,
-                        })}
-                    </h3>
-
-                    <p className="mb-4">
-                        {t('purpose_description', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
+                    <div className="mb-4">
+                        <p className="font-bold mb-1">
+                            {t('terms_of_use_app_header', {
+                                ns: APP_NAME,
+                            })}
+                        </p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: t('terms_of_use_app_desc', {
+                                    ns: APP_NAME,
+                                }),
+                            }}
+                        ></p>
+                    </div>
                 </div>
+
+                <p>{t('accuracy_disclaimer', { ns: APP_NAME })}</p>
             </div>
         </About>
     );
