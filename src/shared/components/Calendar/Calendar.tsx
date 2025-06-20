@@ -147,7 +147,7 @@ const MonthGrid: FC<MonthGridProps> = ({
              * data atrributes that will be used for testing, monitoring purposes
              */
             const dataProps: { [key: string]: string } = {
-                'data-testid': formatedDateStr,
+                'data-testid': 'calendar-cell-' + formatedDateStr,
             };
 
             if (hasAvailableData) {
