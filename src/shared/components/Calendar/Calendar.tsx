@@ -203,6 +203,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                 >
                     {hasAvailableData && (
                         <div
+                            data-testid={`calendar-cell-tooltip-${formatedDateStr}`}
                             className={`
                                 absolute bottom-[-30px] left-5 w-[90px] py-[2px] text-xs z-50
                                 bg-custom-background border border-custom-light-blue-50  

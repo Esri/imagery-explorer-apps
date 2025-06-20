@@ -110,6 +110,7 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
             </div>
 
             <div
+                data-scene-info-field={name}
                 className="relative group"
                 style={{
                     lineHeight: 1.15,

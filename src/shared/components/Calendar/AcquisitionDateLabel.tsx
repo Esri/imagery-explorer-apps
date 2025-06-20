@@ -56,7 +56,11 @@ export const AcquisitionDateLabel: FC<Props> = ({
                 <span className="">{formattedAcquisitionDate}</span>
             </div>
 
-            <div className="cursor-pointer" onClick={closeBtnOnClick}>
+            <div
+                className="cursor-pointer"
+                data-testid="reset-selected-date-btn"
+                onClick={closeBtnOnClick}
+            >
                 <calcite-icon icon="x-circle" scale="s" />
             </div>
         </div>
