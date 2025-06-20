@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { DEV_SERVER_URL } from '../base.config';
-import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from './mock-data/mockSentinel2NetworkRequests';
+import { DEV_SERVER_URL } from '../../base.config';
+import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '../mock-data/mockSentinel2NetworkRequests';
 
 test.describe('Sentinel-2 Explorer - Find a Scnene', () => {
 
-    const FIND_A_SCENE_MODE_URL = `${DEV_SERVER_URL}/#mode=find+a+scene`;
+    const FIND_A_SCENE_MODE_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516&mode=find+a+scene`;
 
     test('Calendar Component Functionalities', async ({ page }) => {
         // Mock network requests and sign in to ArcGIS Online
