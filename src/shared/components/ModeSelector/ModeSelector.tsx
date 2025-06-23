@@ -97,6 +97,7 @@ export const ModeSelector: FC<Props> = ({
                     <div
                         key={mode}
                         className={classNames(ButtonWrapperClassnames)}
+                        data-testid={`mode-selector-${mode}`}
                     >
                         <Button
                             fullHeight={true}
@@ -121,7 +122,11 @@ export const ModeSelector: FC<Props> = ({
             {isExploreButtonSelected && (
                 <ContainerOfSecondaryControls>
                     {exploreModes.map((mode) => (
-                        <div key={mode} className={classNames('relative mb-1')}>
+                        <div
+                            key={mode}
+                            className={classNames('relative mb-1')}
+                            data-testid={`mode-selector-${mode}`}
+                        >
                             <Button
                                 // fullHeight={true}
                                 appearance={

@@ -26,6 +26,7 @@ import { Sentinel2Scene } from '@typing/imagery-service';
 import { getSentinel2SceneByObjectId } from '@shared/services/sentinel-2/getSentinel2Scenes';
 import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
 import { useTranslation } from 'react-i18next';
+import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 
 export const SceneInfoContainer = () => {
     const { t } = useTranslation();
@@ -79,6 +80,7 @@ export const SceneInfoContainer = () => {
                 // name: 'Acquired',
                 name: t('acquired'),
                 value: formatInUTCTimeZone(acquisitionDate, DATE_FORMAT),
+                testValue: getFormatedDateString({ date: acquisitionDate }),
             },
             {
                 // name: 'Cloud Cover',

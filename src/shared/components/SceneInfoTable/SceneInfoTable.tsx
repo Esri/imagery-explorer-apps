@@ -33,6 +33,11 @@ export type SceneInfoTableData = {
      */
     value: string;
     /**
+     * test value of the field
+     * this value will be used to test the value of the field in e2e tests
+     */
+    testValue?: string; // for testing purposes, this value will be used to test the value of the field
+    /**
      * if true, user can click to copy this value
      */
     clickToCopy?: boolean;
@@ -42,7 +47,12 @@ type Props = {
     data: SceneInfoTableData[];
 };
 
-const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
+const SceneInfoRow: FC<SceneInfoTableData> = ({
+    name,
+    value,
+    testValue,
+    clickToCopy,
+}) => {
     const [hasCopied2Clipboard, setHasCopied2Clipboard] =
         useState<boolean>(false);
 
@@ -111,6 +121,7 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({ name, value, clickToCopy }) => {
 
             <div
                 data-scene-info-field={name}
+                data-scene-info-value={testValue || value}
                 className="relative group"
                 style={{
                     lineHeight: 1.15,
