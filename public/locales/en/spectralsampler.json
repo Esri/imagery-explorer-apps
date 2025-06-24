@@ -20,6 +20,7 @@
     "select_date": "Select date from calendar",
     "select_location": "Click map location",
     "download_sampling_results": "Download sampling results as CSV",
+    "mobile_not_supported": "Spectral Sampler is not supported on mobile devices. Please use a desktop browser.",
     "about_app_section_1": "The Spectral Sampler is a utility app made available in conjunction with the suite of Imagery Explorer apps from <a class=\"underline\" href=\"https://livingatlas.arcgis.com/en/browse/?q=tags:lawimageryexplorer#q=tags%3Alawimageryexplorer&d=2\" target=\"_blank\" rel=\"noopener\">ArcGIS Living Atlas</a>. This app can be used to collect and export spectral signatures of user-defined land cover classes using either <a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5\" target=\"_blank\" rel=\"noopener\" >Landsat Level-2</a> or <a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00\" target=\"_blank\" rel=\"noopener\" >Sentinel-2 Level-2A</a> multispectral imagery. The spectral sampler was used to train the classes found in the Spectral Profile analysis tool in the <a class=\"underline\" href=\"https://livingatlas.arcgis.com/landsatexplorer/\" target=\"_blank\" rel=\"noopener\" >Landsat Explorer</a> and the <a class=\"underline\" href=\"http://livingatlas.arcgis.com/sentinel2explorer/\" target=\"_blank\" rel=\"noopener\" >Sentinel-2 Explorer</a> apps.",
     "how_it_works": "How it works",
     "how_it_works_section_1_title": "1. Select an Imagery Source",
