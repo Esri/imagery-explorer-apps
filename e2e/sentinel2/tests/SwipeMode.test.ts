@@ -5,7 +5,7 @@ import { selectDayFromCalendar } from '../helpers';
 
 test.describe('Sentinel-2 Explorer - Swipe', () => {
 
-    const SWIPE_MODE_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516&mode=swipe`;
+    const SWIPE_MODE_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516`;
 
     test('Swipe Mode functionalities', async ({ page }) => {
         // Mock Sentinel-2 network requests and sign in to ArcGIS Online
@@ -13,13 +13,18 @@ test.describe('Sentinel-2 Explorer - Swipe', () => {
 
         await page.goto(SWIPE_MODE_URL);
 
+        // verify the swipe mode button is visible and clickable
+        const swipeModeButton = page.getByTestId('mode-selector-swipe');
+        await expect(swipeModeButton).toBeVisible();
+        await swipeModeButton.click();
+
         // Ensure swipe layer selectors are visible
         const swipeLayerSelectorLeft = page.getByTestId('swipe-layer-selector-left');
         const swipeLayerSelectorRight = page.getByTestId('swipe-layer-selector-right');
         await expect(swipeLayerSelectorLeft).toBeVisible();
         await expect(swipeLayerSelectorRight).toBeVisible();
 
-        const DATE_LEFT = '2024-01-08';
+        const DATE_LEFT = '2023-08-01';
         const DATE_RIGHT = '2024-12-18';
 
         // Select a date for the left swipe layer

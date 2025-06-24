@@ -1,4 +1,5 @@
-import { Page } from "@playwright/test";
+import { Page, expect } from "@playwright/test";
+import { formatInTimeZone } from 'date-fns-tz';
 
 /**
  * Select a day from the year 2024 in the Sentinel-2 Explorer.
@@ -29,3 +30,18 @@ export const selectDayFromCalendar = async (page:Page, day:string) => {
     // await expect(calendarCell).toBeVisible();
     await calendarCell.click();
 }
+
+export const formattedDateString2Unixtimestamp = (formattedDateStr: string): number => {
+    // Split the formatted date string into year, month, and day components
+    const [YYYY, MM, DD] = formattedDateStr.split('-').map((d) => +d);
+
+    // Create a Unix timestamp in UTC time zone using the provided date components
+    // Months in JavaScript's Date object are 0-indexed, so subtract 1 from the month component (MM)
+    return Date.UTC(YYYY, MM - 1, DD);
+}
+
+export const formatInUTCTimeZone = (
+    timestamp: number
+): string => {
+    return formatInTimeZone(timestamp, 'Etc/UTC', `MMM dd, yyyy`);
+};
