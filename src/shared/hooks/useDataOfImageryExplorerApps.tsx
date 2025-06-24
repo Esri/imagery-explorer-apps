@@ -33,16 +33,16 @@ export const useDataOfImageryExplorerApps = () => {
     const dataOfImageryExplorerApps = React.useMemo(() => {
         const data: ImageryExplorerAppInfo[] = [
             {
-                appName: 'landcoverexplorer',
-                title: t('landcover_explorer'),
-                url: '/landcoverexplorer',
-                tooltip: t('launch_landcover_explorer'),
-            },
-            {
                 appName: 'landsatexplorer',
                 title: t('landsat_explorer'),
                 url: '/landsatexplorer',
                 tooltip: t('launch_landsat_explorer'),
+            },
+            {
+                appName: 'sentinel2explorer',
+                title: t('sentinel_2_explorer'),
+                url: '/sentinel2explorer',
+                tooltip: t('launch_sentinel_2_explorer'),
             },
             {
                 appName: 'sentinel1explorer',
@@ -51,10 +51,10 @@ export const useDataOfImageryExplorerApps = () => {
                 tooltip: t('launch_sentinel_1_explorer'),
             },
             {
-                appName: 'sentinel2explorer',
-                title: t('sentinel_2_explorer'),
-                url: '/sentinel2explorer',
-                tooltip: t('launch_sentinel_2_explorer'),
+                appName: 'landcoverexplorer',
+                title: t('landcover_explorer'),
+                url: '/landcoverexplorer',
+                tooltip: t('launch_landcover_explorer'),
             },
             {
                 appName: 'nlcdlandcoverexplorer',
