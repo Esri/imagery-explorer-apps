@@ -1,6 +1,17 @@
-import { AppName } from '@shared/config';
+import { APP_NAME, AppName } from '@shared/config';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+
+/**
+ * Type representing the information for an Imagery Explorer App.
+ * This type includes the app name, title, URL, and an optional tooltip.
+ */
+export type ImageryExplorerAppInfo = {
+    appName: AppName;
+    title: string;
+    url: string;
+    tooltip?: string; // Optional tooltip for the app
+};
 
 /**
  * Custom hook that provides data for Imagery Explorer Apps.
@@ -20,12 +31,7 @@ export const useDataOfImageryExplorerApps = () => {
     const { t } = useTranslation();
 
     const dataOfImageryExplorerApps = React.useMemo(() => {
-        const data: {
-            appName: AppName;
-            title: string;
-            url: string;
-            tooltip?: string; // Optional tooltip for the app
-        }[] = [
+        const data: ImageryExplorerAppInfo[] = [
             {
                 appName: 'landcoverexplorer',
                 title: t('landcover_explorer'),
@@ -42,13 +48,13 @@ export const useDataOfImageryExplorerApps = () => {
                 appName: 'sentinel1explorer',
                 title: t('sentinel_1_explorer'),
                 url: '/sentinel1explorer',
-                tooltip: t('launch_sentinel1_explorer'),
+                tooltip: t('launch_sentinel_1_explorer'),
             },
             {
                 appName: 'sentinel2explorer',
                 title: t('sentinel_2_explorer'),
                 url: '/sentinel2explorer',
-                tooltip: t('launch_sentinel2_explorer'),
+                tooltip: t('launch_sentinel_2_explorer'),
             },
             {
                 appName: 'nlcdlandcoverexplorer',
@@ -59,6 +65,25 @@ export const useDataOfImageryExplorerApps = () => {
         ];
 
         return data;
+    }, []);
+
+    return dataOfImageryExplorerApps;
+};
+
+export const useDataOfImageryUtilityApps = () => {
+    const { t } = useTranslation();
+
+    const dataOfImageryExplorerApps = React.useMemo(() => {
+        const data: ImageryExplorerAppInfo[] = [
+            {
+                appName: 'spectralsampler',
+                title: t('spectral_sampler'),
+                url: '/spectralsampler',
+                tooltip: t('launch_spectral_sampler'),
+            },
+        ];
+
+        return data; // Exclude the current app
     }, []);
 
     return dataOfImageryExplorerApps;

@@ -27,7 +27,11 @@ import { encodeMapCenter } from '@shared/utils/url-hash-params/map';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import { UrlHashParamKey } from '@shared/utils/url-hash-params';
 import { useTranslation } from 'react-i18next';
-import { useDataOfImageryExplorerApps } from '@shared/hooks/useDataOfImageryExplorerApps';
+import {
+    useDataOfImageryExplorerApps,
+    useDataOfImageryUtilityApps,
+} from '@shared/hooks/useDataOfImageryExplorerApps';
+import { AppLauchList } from './AppLauchList';
 
 type Props = {
     /**
@@ -66,7 +70,9 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
         window.open(targetURL, '_blank');
     };
 
-    const IMAGERY_EXPLORER_APPS = useDataOfImageryExplorerApps();
+    const imageryExplorerApps = useDataOfImageryExplorerApps();
+
+    const imageryUtilityApps = useDataOfImageryUtilityApps();
 
     useOnClickOutside(
         containerRef,
@@ -149,21 +155,23 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                         'absolute left-0 md:left-app-header-size top-app-header-size theme-background w-full md:w-[300px] border-t border-custom-light-blue-50'
                     )}
                 >
-                    <div className="px-2 py-2 text-xs text-custom-light-blue-50">
+                    <AppLauchList
+                        header={t('image_explorer_apps')}
+                        apps={imageryExplorerApps.filter(
+                            (d) => d.appName !== APP_NAME
+                        )}
+                        onClick={launchImageryExplorerApp}
+                    />
+                    {/* <div className="px-2 py-2 text-xs text-custom-light-blue-50">
                         <span>{t('image_explorer_apps')}</span>
                     </div>
 
                     {IMAGERY_EXPLORER_APPS
-                        // should not show current app in the list
                         .filter((d) => d.appName !== APP_NAME)
                         .map((d) => {
                             return (
                                 <span
                                     key={d.title}
-                                    // href={d.url}
-                                    // target="_blank"
-                                    // title={`Launch the ${d.title} in a new tab`}
-                                    // rel="noreferrer"
                                     title={d.tooltip}
                                     onClick={launchImageryExplorerApp.bind(
                                         null,
@@ -182,7 +190,15 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                                     </div>
                                 </span>
                             );
-                        })}
+                        })} */}
+
+                    <AppLauchList
+                        header={t('image_utility_apps')}
+                        apps={imageryUtilityApps.filter(
+                            (d) => d.appName !== APP_NAME
+                        )}
+                        onClick={launchImageryExplorerApp}
+                    />
                 </div>
             )}
         </div>
