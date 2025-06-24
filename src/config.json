@@ -35,7 +35,7 @@
         "spectralsampler": {
             "title": "Spectral Sampler",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
-            "description": "This web application is designed to streamline the process of collecting and organizing training data for land cover classification using multispectral satellite imagery. Whether you're a researcher, technical analyst, or student, the tool provides a simple, intuitive interface for building high-quality reference datasets.",
+            "description": "A streamlined web app for collecting and organizing training data for land cover classification with multispectral satellite imagery. Ideal for researchers, analysts, and students building high-quality reference datasets.",
             "pathname": "/spectralsampler",
             "entrypoint": "/src/spectral-sampling-tool/index.tsx",
             "appId": ""
