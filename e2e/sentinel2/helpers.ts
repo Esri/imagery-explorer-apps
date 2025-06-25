@@ -45,3 +45,16 @@ export const formatInUTCTimeZone = (
 ): string => {
     return formatInTimeZone(timestamp, 'Etc/UTC', `MMM dd, yyyy`);
 };
+
+/**
+ * Checks if the current page's URL hash contains a given substring.
+ * @param page - The Playwright Page object.
+ * @param substring - The substring to look for in the hash.
+ * @returns A promise that resolves to true if the substring is found, false otherwise.
+ */
+export const urlHashContains = async(page: Page, substring: string): Promise<boolean> =>{
+    return await page.evaluate((part) => {
+        const hash = window.location.hash.toLowerCase();
+        return hash.includes(part.toLowerCase());
+    }, substring);
+}

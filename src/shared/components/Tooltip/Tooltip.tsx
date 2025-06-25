@@ -64,6 +64,7 @@ export const Tooltip: FC<Props> = ({ content, width = 130, children }) => {
 
     return (
         <div
+            data-testid="tooltip-container"
             className="relative cursor-pointer"
             ref={containerRef}
             onMouseEnter={() => {

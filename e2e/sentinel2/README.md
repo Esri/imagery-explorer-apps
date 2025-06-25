@@ -17,6 +17,28 @@ To run a specific test file, use the following command:
 npx playwright test e2e/sentinel2/tests/{file-name} --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
+## Test "Dynamic" Mode
+
+### Run the Test
+To run the "Dynamic Mode" test, use the following command:
+```bash 
+npx playwright test e2e/sentinel2/tests/DynamicMode.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
+```
+
+### Test Steps
+1. Verify the "Interesting Places" container is visible.
+2. Confirm that the "Fucino" and "Mississippi" interesting place cards are displayed.
+3. Click the "Fucino" card and ensure it is selected while "Mississippi" is not.
+4. Click the "Mississippi" card and ensure it is selected while "Fucino" is not.
+5. Hover over the "Fucino" card and verify a tooltip appears.
+6. Verify the "Renderer Selector" container is visible.
+7. Confirm that the "Natural Color" and "Color IR" renderer cards are displayed.
+8. Click the "Natural Color" renderer card and ensure it is selected while "Color IR" is not.
+9. Verify the URL hash contains `Natural+Color+for+Visualization`.
+10. Click the "Color IR" renderer card and ensure it is selected while "Natural Color" is not.
+11. Verify the URL hash contains `Color+Infrared+for+Visualization`.
+12. Hover over the "Natural Color" renderer card and verify a tooltip appears.
+
 ## Test "Find a Scene" Mode
 
 ### Run the Test
@@ -74,4 +96,4 @@ npx playwright test e2e/sentinel2/tests/MapPopup.test.ts --config e2e/playwright
 4. Verifies the popup is visible and its title contains the formatted date.
 5. Checks that the popup content contains the expected spectral indices (NDMI, NDVI, MNDWI).
 6. Ensures the popup location info is present and clickable.
-7. Verifies that the coordinates are copied to the clipboard in the expected format.
+7. Verifies that the coordinates are copied to the clipboard in the expected format after clicking the location info.

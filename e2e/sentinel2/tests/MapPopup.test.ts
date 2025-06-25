@@ -25,8 +25,8 @@ test.describe('Sentinel-2 Explorer - Map Popup', () => {
             '2023-08-01',
         );
 
-        // Uncomment to pause the test for manual inspection
-        await page.pause();
+        // // Uncomment to pause the test for manual inspection
+        // await page.pause();
 
         // Reset mocked network requests after the test
         await resetMockSentinel2NetworkRequest(page);
