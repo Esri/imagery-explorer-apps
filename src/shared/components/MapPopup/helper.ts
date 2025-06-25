@@ -64,7 +64,9 @@ export const getPopUpContentWithLocationInfo = (
             class='popup-location-info-container text-custom-light-blue text-xs cursor-pointer' 
             title="${t('click_to_copy_coordinates')}"
         >
-            <div class='popup-location-info-content'>
+            <div class='popup-location-info-content'
+                data-testid='popup-location-info-content'
+            >
                 ${coordinatesHTML}
             </div>
         </div>

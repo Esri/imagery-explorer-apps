@@ -58,3 +58,20 @@ npx playwright test e2e/sentinel2/tests/SwipeMode.test.ts --config e2e/playwrigh
 7. Verify the swap button is visible.
 8. Click the swap button.
 9. Ensure the left swipe layer now displays "2024-12-18" and the right swipe layer displays "2024-01-08".
+
+## Test "Map Popup"
+
+### Run the Test
+To run the test, use the following command:
+```bash
+npx playwright test e2e/sentinel2/tests/MapPopup.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
+```
+
+### Test Steps
+1. Locates the map view container and ensures it is visible.
+2. Selects the specified day from the calendar.
+3. Clicks on the map to trigger the popup.
+4. Verifies the popup is visible and its title contains the formatted date.
+5. Checks that the popup content contains the expected spectral indices (NDMI, NDVI, MNDWI).
+6. Ensures the popup location info is present and clickable.
+7. Verifies that the coordinates are copied to the clipboard in the expected format.

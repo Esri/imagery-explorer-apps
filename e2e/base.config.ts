@@ -34,6 +34,8 @@ export const baseConfig:PlaywrightTestConfig = {
       trace: 'on-first-retry',
   
       ignoreHTTPSErrors: true,
+
+      permissions: ['clipboard-read', 'clipboard-write'], // Allow clipboard access
     },
   
     /* Configure projects for major browsers */
@@ -43,6 +45,7 @@ export const baseConfig:PlaywrightTestConfig = {
         use: { 
           ...devices['Desktop Chrome'],
           viewport: { width: 1980, height: 1080 },
+          permissions: ['clipboard-read', 'clipboard-write'], // Allow clipboard access
         },
       },
   
