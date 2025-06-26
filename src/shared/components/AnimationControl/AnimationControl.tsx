@@ -174,6 +174,7 @@ export const AnimationControl: FC<Props> = ({
             <div className="flex items-center flex-grow mr-1">
                 {status === null && (
                     <div
+                        data-testid="add-animation-frame-button"
                         className={classNames(
                             'w-[105px] cursor-pointer text-center flex items-center bg-custom-light-blue-5',
                             {

@@ -97,3 +97,14 @@ npx playwright test e2e/sentinel2/tests/MapPopup.test.ts --config e2e/playwright
 5. Checks that the popup content contains the expected spectral indices (NDMI, NDVI, MNDWI).
 6. Ensures the popup location info is present and clickable.
 7. Verifies that the coordinates are copied to the clipboard in the expected format after clicking the location info.
+
+## Test "Animate" Mode
+
+### Run the Test
+To run the "Animate" test, use the following command:
+```bash 
+npx playwright test e2e/sentinel2/tests/AnimateMode.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
+```
+
+### Test Steps
+
