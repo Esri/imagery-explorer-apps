@@ -302,5 +302,7 @@
     "animation_load_failed": "Animation failed to load, please exit and try again",
     "latitude_abbreviation": "Lat",
     "longitude_abbreviation": "Lon",
-    "satellite_imagery_acquisition_date": "{{satelliteName}} image acquired on {{date}}"
+    "satellite_imagery_acquisition_date": "{{satelliteName}} image acquired on {{date}}",
+    "pause_animation": "Pause Animation",
+    "resume_animation": "Resume Animation"
 }

@@ -170,7 +170,11 @@ export const AnimationControl: FC<Props> = ({
     const isAnimtaionOn = status === 'playing' || status === 'pausing';
 
     return (
-        <div className={classNames('flex items-center mt-1')}>
+        <div
+            className={classNames('flex items-center mt-1')}
+            data-testid="animation-controls"
+            data-animation-status={status}
+        >
             <div className="flex items-center flex-grow mr-1">
                 {status === null && (
                     <div
@@ -218,12 +222,13 @@ export const AnimationControl: FC<Props> = ({
                         className=" bg-custom-light-blue-5 px-1"
                         onClick={statusOnChange.bind(null, 'loading')}
                         title={t('play_animation')}
+                        data-testid="play-animation-button"
                     >
                         {StartPlayButton}
                     </div>
                 )}
                 {status === 'loading' && (
-                    <div>
+                    <div data-testid="animation-loading-indicator">
                         <calcite-loader
                             scale="m"
                             active
@@ -248,12 +253,20 @@ export const AnimationControl: FC<Props> = ({
                     </div>
                 )}
                 {status === 'playing' && (
-                    <div onClick={statusOnChange.bind(null, 'pausing')}>
+                    <div
+                        onClick={statusOnChange.bind(null, 'pausing')}
+                        data-testid="pause-animation-button"
+                        title={t('pause_animation')}
+                    >
                         {PauseButton}
                     </div>
                 )}
                 {status === 'pausing' && (
-                    <div onClick={statusOnChange.bind(null, 'playing')}>
+                    <div
+                        onClick={statusOnChange.bind(null, 'playing')}
+                        data-testid="resume-animation-button"
+                        title={t('resume_animation')}
+                    >
                         {ContinuePlayButton}
                     </div>
                 )}
@@ -265,7 +278,10 @@ export const AnimationControl: FC<Props> = ({
                     </div>
                 )}
                 {status && (
-                    <div onClick={statusOnChange.bind(null, null)}>
+                    <div
+                        onClick={statusOnChange.bind(null, null)}
+                        data-testid="stop-animation-button"
+                    >
                         {CloseButton}
                     </div>
                 )}

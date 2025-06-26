@@ -108,3 +108,16 @@ npx playwright test e2e/sentinel2/tests/AnimateMode.test.ts --config e2e/playwri
 
 ### Test Steps
 
+1. Navigate to the main app URL.
+2. Click the "Animate" mode button and ensure the animation panel is visible.
+3. Add animation frames using the "Add Animation Frame" button and calendar.
+4. Verify that the animation frames are displayed in chronological order (e.g. 2023-08-01, 2024-01-03, 2024-12-18).
+5. For each frame, confirm the correct acquisition date and renderer label are shown, and that the frame can be selected.
+6. Test the animation controls:
+    - Click the play button and verify the loading indicator and "loading" status.
+    - Wait for the animation to start and confirm the "playing" status.
+    - Click the pause button and check for the "pausing" status.
+    - Click the resume button and ensure the status returns to "playing".
+    - Click the stop button and verify the animation status is cleared.
+7. Remove all animation frames one by one using the remove button on each card.
+8. Confirm that the animation frames list is empty after removal.

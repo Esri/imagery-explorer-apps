@@ -2,20 +2,19 @@ import { test, expect, Page } from '@playwright/test';
 import { DEV_SERVER_URL } from '../../base.config';
 import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '../mock-data/mockSentinel2NetworkRequests';
 import { formatInUTCTimeZone, formattedDateString2Unixtimestamp, selectDayFromCalendar, urlHashContains } from '../helpers';
-import { add } from 'date-fns';
 
 test.describe('Sentinel-2 Explorer - Animate Mode', () => {
 
     const ANIMATE_MODE_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516`;
 
-    test('should be able to add/romove animation scenes', async ({ page }) => {
+    test('should allow adding and removing animation scenes in Animate Mode', async ({ page }) => {
 
         // Set up network mocks and sign in
         await mockSentinel2NetworkRequests(page);
 
         await page.goto(ANIMATE_MODE_URL);
 
-        // Verify the Animate button is visible and clickable
+        // Open Animate mode
         const animateButton = page.getByTestId('mode-selector-animate');
         await expect(animateButton).toBeVisible();
         await animateButton.click();
@@ -25,31 +24,27 @@ test.describe('Sentinel-2 Explorer - Animate Mode', () => {
         const day3 = '2024-12-18';
 
         // Add animation frames for the specified dates in reverse order.
-        // Later, verify that the application displays them in the intended chronological order.
+        // The app should display them in chronological order.
         await addNewAnimationFrame(page, day3);
         await addNewAnimationFrame(page, day2);
         await addNewAnimationFrame(page, day1);
 
-        // Verify that animation frames are added correctly
+        // Verify that animation frames are added and ordered correctly
         await testAnimationFrameCard(page, 0, day1, 'NDVI');
         await testAnimationFrameCard(page, 1, day2, 'NDMI');
         await testAnimationFrameCard(page, 2, day3, 'Urban');
 
-        // await page.pause();
+        // Test animation controls UI and transitions
+        await testAnimationControls(page);
 
-        // Verify animation frames can be removed.
-        // Important: remove them in reverse order.
-        // If you remove the first one first, the indices of the remaining frames will shift,
-        // which causes the test to fail.
+        // Remove animation frames in reverse order to avoid index shifting
         await removeAnimationFrame(page, 2);
         await removeAnimationFrame(page, 1);
         await removeAnimationFrame(page, 0);
 
-        // Verify that the animation frames are removed
+        // Confirm all animation frames are removed
         const animationFramesList = page.getByTestId('animation-frames-list');
         await expect(animationFramesList).toBeEmpty();
-
-        // await page.pause();
 
         // Clean up network mocks
         await resetMockSentinel2NetworkRequest(page);
@@ -142,4 +137,59 @@ const removeAnimationFrame = async (page: Page, index: number) => {
 
     // Verify the card is no longer visible
     await expect(card).not.toBeVisible();
+}
+
+/**
+ * Tests the animation controls UI for correct visibility, interactivity, and status transitions.
+ *
+ * This function performs the following checks on the animation controls:
+ * - Ensures the animation controls container is visible.
+ * - Verifies the play button is visible and can be clicked to start the animation.
+ * - Checks that a loading indicator appears and the animation status is set to 'loading'.
+ * - Waits for the animation status to transition to 'playing' after loading.
+ * - Ensures the pause button is visible, can be clicked, and sets the status to 'pausing'.
+ * - Ensures the resume button is visible, can be clicked, and sets the status back to 'playing'.
+ * - Ensures the stop button is visible, can be clicked, and stops the animation (removes the status attribute).
+ *
+ * @param page - The Playwright Page object representing the browser page under test.
+ */
+const testAnimationControls = async (page: Page) => {
+    // Ensure the animation controls container is visible
+    const animationControls = page.getByTestId('animation-controls');
+    expect(animationControls).toBeVisible();
+
+    // Play: Verify the play button is visible, clickable, and starts loading
+    const playButton = animationControls.getByTestId('play-animation-button');
+    await expect(playButton).toBeVisible();
+    await playButton.click();
+
+    // Loading: Confirm the loading indicator appears and status is 'loading'
+    const loadingIndicator = animationControls.getByTestId('animation-loading-indicator');
+    await expect(loadingIndicator).toBeVisible();
+    expect(animationControls).toHaveAttribute('data-animation-status', 'loading');
+
+    // Playing: Wait for status to become 'playing' after loading
+    await expect(animationControls).toHaveAttribute(
+        'data-animation-status',
+        'playing',
+        { timeout: 60000 }
+    );
+
+    // Pause: Verify the pause button is visible, clickable, and sets status to 'pausing'
+    const pauseButton = animationControls.getByTestId('pause-animation-button');
+    await expect(pauseButton).toBeVisible();
+    await pauseButton.click();
+    expect(animationControls).toHaveAttribute('data-animation-status', 'pausing');
+
+    // Resume: Check the resume button is visible, clickable, and returns status to 'playing'
+    const resumeButton = animationControls.getByTestId('resume-animation-button');
+    await expect(resumeButton).toBeVisible();
+    await resumeButton.click();
+    expect(animationControls).toHaveAttribute('data-animation-status', 'playing');
+
+    // Stop: Ensure the stop button is visible, clickable, and removes the animation status
+    const stopButton = animationControls.getByTestId('stop-animation-button');
+    await expect(stopButton).toBeVisible();
+    await stopButton.click();
+    expect(animationControls).not.toHaveAttribute('data-animation-status');
 }
