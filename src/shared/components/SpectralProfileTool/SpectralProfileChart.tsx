@@ -68,6 +68,7 @@ export const SpectralProfileChart: FC<Props> = ({
         <div
             className="relative w-full h-full"
             style={SpectralProfileChartStyle}
+            data-testid="spectral-profile-chart"
         >
             <MultipleLinesChart
                 data={chartData}

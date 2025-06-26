@@ -58,3 +58,39 @@ export const urlHashContains = async(page: Page, substring: string): Promise<boo
         return hash.includes(part.toLowerCase());
     }, substring);
 }
+
+/**
+ * Simulates a user click on the map at the specified (x, y) coordinates.
+ * 
+ * This function waits for the map view to be visible and ensures that the
+ * `Sentinel2L2A/ImageServer/exportImage` network request has completed before
+ * performing the click. The click is executed relative to the top-left corner
+ * of the map view element.
+ *
+ * @param page - The Playwright Page object representing the browser page.
+ * @param x - The x-coordinate (in pixels) relative to the map view where the click should occur.
+ * @param y - The y-coordinate (in pixels) relative to the map view where the click should occur.
+ * @returns A Promise that resolves when the click action has been performed.
+ */
+export const clickOnMap = async (page: Page, x: number, y: number, waitForSentinel2ExportImageResponse=false) => {
+    const mapView = page.locator('.esri-view-root');
+    await expect(mapView).toBeVisible();
+
+    if(waitForSentinel2ExportImageResponse){
+        // Wait for the exportImage network request to complete
+        const exportImagePromise = page.waitForResponse(request =>
+            request.url().includes('Sentinel2L2A/ImageServer/exportImage') && request.status() === 200, {
+                timeout: 20000 // Wait up to 20 seconds for the response
+            }
+        );
+        await exportImagePromise;
+    }
+
+    // Click on the map at the specified coordinates
+    await mapView.click({
+        position: {
+            x: x,
+            y: y
+        }
+    });
+}

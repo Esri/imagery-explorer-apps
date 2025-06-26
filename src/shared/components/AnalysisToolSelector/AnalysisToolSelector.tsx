@@ -33,7 +33,11 @@ export const AnalysisToolSelector: FC<Props> = ({
     return (
         <>
             {data.map(({ tool, title, subtitle }) => (
-                <div key={tool} className={classNames('relative mb-1')}>
+                <div
+                    key={tool}
+                    className={classNames('relative mb-1')}
+                    data-testid={`analyze-tool-selector-${tool}`}
+                >
                     <Button
                         // fullHeight={true}
                         appearance={

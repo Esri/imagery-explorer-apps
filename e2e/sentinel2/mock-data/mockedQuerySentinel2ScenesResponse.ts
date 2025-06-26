@@ -531,20 +531,20 @@ export const mockedQuerySentinel2ScenesResponse2023 = {
         // Sep
         {
             "attributes": {
-                "objectid": 26427693,
-                "acquisitiondate": 1693506561000,
-                "cloudcover": 11.812986370000001,
-                "name": "S2A_MSIL2A_20230831T182921_N0509_R027_T11SMT_20230901T043607",
+                "objectid": 24184183,
+                "acquisitiondate": 1693938559000,
+                "cloudcover": 43.930027009999996,
+                "name": "S2B_MSIL2A_20230905T182919_N0509_R027_T11SMT_20230906T012910",
                 "month": 9,
-                "platform": "Sentinel-2A",
+                "platform": "Sentinel-2B",
                 "instrument": "MSI",
                 "snowicepercentage": 0,
                 "productname": "S2MSI2A",
                 "relativeorbit": 27,
-                "meansolarzenith": 29.43247032,
-                "meansolarazimuth": 145.62338256999999,
+                "meansolarzenith": 30.874979020000001,
+                "meansolarazimuth": 148.00628662,
                 "category": 1,
-                "nodatapixelpercentage": 0
+                "nodatapixelpercentage": 3.0000000000000001e-06
             },
             "geometry": {
                 "rings": [

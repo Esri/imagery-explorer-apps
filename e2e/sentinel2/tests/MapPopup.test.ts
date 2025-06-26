@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 import { DEV_SERVER_URL } from '../../base.config';
 import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '../mock-data/mockSentinel2NetworkRequests';
-import { selectDayFromCalendar, formatInUTCTimeZone, formattedDateString2Unixtimestamp } from '../helpers';
+import { selectDayFromCalendar, formatInUTCTimeZone, formattedDateString2Unixtimestamp, clickOnMap } from '../helpers';
 
 test.describe('Sentinel-2 Explorer - Map Popup', () => {
 
@@ -49,28 +49,32 @@ test.describe('Sentinel-2 Explorer - Map Popup', () => {
  * @param date - The date string (in 'YYYY-MM-DD' format) to select and test the popup for.
  */
 export const testMapPopup = async (page: Page, date: string) => {
-    // Locate the map view container
-    const mapView = page.locator('.esri-view-root');
-    await expect(mapView).toBeVisible()
 
     // Select the specified day from the calendar
     await selectDayFromCalendar(page, date);
-    
-    // Wait for the exportImage network request to complete
-    const exportImagePromise = page.waitForResponse(request =>
-        request.url().includes('Sentinel2L2A/ImageServer/exportImage') && request.status() === 200, {
-            timeout: 20000 // Wait up to 20 seconds for the response
-        }
-    );
-    await exportImagePromise;
 
-    // Click on the map to trigger the popup
-    await mapView.click({
-        position: {
-            x: 500,
-            y: 500
-        }
-    });
+    // // Locate the map view container
+    // const mapView = page.locator('.esri-view-root');
+    // await expect(mapView).toBeVisible()
+
+    // // Wait for the exportImage network request to complete
+    // const exportImagePromise = page.waitForResponse(request =>
+    //     request.url().includes('Sentinel2L2A/ImageServer/exportImage') && request.status() === 200, {
+    //         timeout: 20000 // Wait up to 20 seconds for the response
+    //     }
+    // );
+    // await exportImagePromise;
+
+    // // Click on the map to trigger the popup
+    // await mapView.click({
+    //     position: {
+    //         x: 500,
+    //         y: 500
+    //     }
+    // });
+
+    // Click on the map at the specified coordinates (500, 500)
+    await clickOnMap(page, 500, 500, true);
 
     // Wait for the identify network request, which populates the popup content
     const identifyPromise = page.waitForResponse(request =>

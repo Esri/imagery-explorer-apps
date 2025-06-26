@@ -121,3 +121,18 @@ npx playwright test e2e/sentinel2/tests/AnimateMode.test.ts --config e2e/playwri
     - Click the stop button and verify the animation status is cleared.
 7. Remove all animation frames one by one using the remove button on each card.
 8. Confirm that the animation frames list is empty after removal.
+
+## Test "Spectral Profile" Tool
+
+### Run the Test
+To run the "Spectral Profile Tool" test, use the following command:
+```bash 
+npx playwright test e2e/sentinel2/tests/SpectralProfileTool.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
+```
+
+### Test Steps
+1. Activate "Analyze Mode" and open the "Spectral Profile Tool".
+2. Select a date from the calendar.
+3. Simulate a map click to trigger the spectral profile.
+4. Verify the spectral profile chart and legend are visible.
+5. Confirm the correct feature of interest is displayed in the legend.
