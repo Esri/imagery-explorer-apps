@@ -79,6 +79,7 @@ export const Button: FC<Props> = ({
                     'opacity-50 pointer-events-none': disabled,
                 }
             )}
+            data-element="button"
             onClick={onClickHandler}
         >
             <div className="w-full">{children}</div>

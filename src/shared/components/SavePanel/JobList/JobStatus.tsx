@@ -57,7 +57,11 @@ export const JobStatus: FC<JobStatusProps> = ({
     ) {
         return (
             <div>
-                <div className="mb-1">
+                <div
+                    className="mb-1"
+                    data-testid="job-cost-info"
+                    data-actual-cost={job?.actualCost || undefined}
+                >
                     {t('required_credits')}: {job.actualCost}
                 </div>
 
@@ -81,6 +85,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                         scale="s"
                         width="half"
                         // icon-start="check"
+                        data-testid="accept-credits-button"
                         onClick={() => {
                             // dispatch(updatePublishAndDownloadJob({ ...job, status: PublishAndDownloadJobStatus.ToBeSubmitted }));
                             acceptCreditsButtonOnClick(job);
@@ -123,6 +128,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                 icon-start={'launch'}
                 href={getItemUrl(job.outputItemId)}
                 target="_blank"
+                data-testid="open-job-output-button"
             >
                 {t('open')}
             </calcite-button>

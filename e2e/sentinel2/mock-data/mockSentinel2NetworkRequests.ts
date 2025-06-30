@@ -54,11 +54,29 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
         }
     );
+
+    await page.route(
+        '*/**/sharing/rest/content/users/*/addItem',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    success: true,
+                    id: 'mocked-item-id',
+                    folder: '',
+                }),
+            });
+        }
+    );
 };
 
 export const resetMockSentinel2NetworkRequest = async (page: Page) => {
     await page.unroute('https://mtags.arcgis.com/tags-min.js');
     await page.unroute(
         '*/**/Sentinel2L2A/ImageServer/query?**'
+    );
+    await page.unroute(
+        '*/**/sharing/rest/content/users/*/addItem'
     );
 };

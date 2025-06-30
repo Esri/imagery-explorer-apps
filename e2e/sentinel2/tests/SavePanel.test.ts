@@ -4,6 +4,20 @@ import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '
 import { selectDayFromCalendar, urlHashContains } from '../helpers';
 import { signInWithArcGISOnline } from '../../shared/signInWithArcGISOnline';
 
+/**
+ * Enum representing different save options available in the application.
+ */
+export enum PublishAndDownloadJobType {
+    PublishScene = 'Publish Scene',
+    PublishIndexMask = 'Publish Index Mask',
+    PublishChangeDetection = 'Publish Change Detection',
+    // DownloadIndexMask = 'Download Index Mask',
+    SaveWebMappingApp = 'Save Web Mapping App',
+    SaveWebMap = 'Save Web Map',
+    SaveWebMapWithMultipleScenes = 'Save Web Map with Multiple Scenes',
+    SaveWebMapWithMultipleScenesInSingleLayer = 'Save Web Map with Multiple Scenes in Single Layer',
+}
+
 const openSavePanelAndSignIn = async (page: Page) => {
     // Verify the Open Save Panel button is visible and clickable
     const openSavePanelButton = page.getByTestId('open-save-panel-button');
@@ -26,6 +40,52 @@ const openSavePanelAndSignIn = async (page: Page) => {
     await expect(savePanel).toBeVisible();
 }
 
+/**
+ * Tests the "Save as ArcGIS Online Item" workflow in the application UI.
+ *
+ * This function performs the following steps:
+ * 1. Verifies that the save option for the specified job type is visible.
+ * 2. Ensures the launch button for the save job is visible, enabled, and can be clicked.
+ * 3. Confirms that the save job dialog appears after clicking the launch button.
+ * 4. Checks that the "OK" button in the dialog is visible and can be clicked to proceed.
+ * 5. Verifies that a new job appears in the job list with a status of "esriJobSucceeded".
+ * 6. Ensures the "Open Job" button is visible and its `href` attribute points to the ArcGIS Online item details page.
+ *
+ * @param page - The Playwright Page object representing the browser page.
+ * @param saveJobType - The type of publish and download job to test.
+ */
+const testSaveAsArcGISOnlineItem = async (page: Page, saveJobType:PublishAndDownloadJobType) => {
+
+    // Verify Save Web Mapping App option is available
+    const saveJobOption = page.getByTestId('save-option-' + saveJobType);
+    await expect(saveJobOption).toBeVisible();
+
+    // Verify the launch button is visible and clickable
+    const saveJobLaunchButton = saveJobOption.locator('[data-element="button"]');
+    await expect(saveJobLaunchButton).toBeVisible();
+    await expect(saveJobLaunchButton).toBeEnabled();
+    await saveJobLaunchButton.click();
+
+    // Verify Save Job Dialog opens when Save Web Mapping App Launch Button is clicked
+    const saveJobDialog = page.getByTestId('save-job-dialog');
+    await expect(saveJobDialog).toBeVisible();
+
+    // Make sure the OK button is visible and clickable
+    const saveButton = saveJobDialog.getByText('OK');
+    await expect(saveButton).toBeVisible();
+    await saveButton.click();
+
+    // Verify the Job is added to the Job List
+    const jobListItem = page.getByTestId('job-list-item-0');
+    await expect(jobListItem).toBeVisible();
+    await expect(jobListItem).toHaveAttribute('data-job-status', 'esriJobSucceeded');
+
+    // verify the Open Job button is visible and has href attribute pointing to the ArcGIS Online item details page of the newly created Web Mapping Application
+    const openJobButton = jobListItem.getByTestId('open-job-output-button');
+    await expect(openJobButton).toBeVisible();
+    await expect(openJobButton).toHaveAttribute('href', /https:\/\/(?:[\w.-]+\.)*arcgis\.com\/home\/item.html\?id=*/i);
+}
+
 test.describe('Sentinel-2 Explorer - Save Panel', () => {
 
     const APP_URL = DEV_SERVER_URL + '/#mapCenter=-117.07809%2C34.03876%2C13.516';
@@ -46,7 +106,15 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         // Open the Save Panel and sign in to ArcGIS Online
         await openSavePanelAndSignIn(page);
 
-        // Pause to allow for manual inspection
-        await page.pause();
+        // Verfiy the Save Options are visible and populated correctly
+        const saveOptions = page.getByTestId('save-options-list');
+        await expect(saveOptions).toBeVisible();
+        await expect(saveOptions).toHaveAttribute('data-number-of-options', '1');
+
+        // Verify the workflow for saving the current state as a Web Mapping Application
+        await testSaveAsArcGISOnlineItem(page, PublishAndDownloadJobType.SaveWebMappingApp);
+
+        // // Pause to allow for manual inspection
+        // await page.pause();
     });
 })
