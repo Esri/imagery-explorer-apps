@@ -86,6 +86,24 @@ const testSaveAsArcGISOnlineItem = async (page: Page, saveJobType:PublishAndDown
     await expect(openJobButton).toHaveAttribute('href', /https:\/\/(?:[\w.-]+\.)*arcgis\.com\/home\/item.html\?id=*/i);
 }
 
+/**
+ * Asserts that the save options list is visible and contains the expected number of options.
+ *
+ * @param page - The Playwright Page object representing the browser page.
+ * @param count - The expected number of save options in the list.
+ * @throws Will throw an assertion error if the save options list is not visible or does not have the expected number of options.
+ */
+const testSaveOptionsList = async (page: Page, options:PublishAndDownloadJobType[]) => {
+    const saveOptions = page.getByTestId('save-options-list');
+    await expect(saveOptions).toBeVisible();
+    await expect(saveOptions).toHaveAttribute('data-number-of-options', options.length.toString());
+
+    for (const option of options) {
+        const saveOption = page.getByTestId('save-option-' + option);
+        await expect(saveOption).toBeVisible();
+    }
+}
+
 test.describe('Sentinel-2 Explorer - Save Panel', () => {
 
     const APP_URL = DEV_SERVER_URL + '/#mapCenter=-117.07809%2C34.03876%2C13.516';
@@ -107,9 +125,9 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         await openSavePanelAndSignIn(page);
 
         // Verfiy the Save Options are visible and populated correctly
-        const saveOptions = page.getByTestId('save-options-list');
-        await expect(saveOptions).toBeVisible();
-        await expect(saveOptions).toHaveAttribute('data-number-of-options', '1');
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp
+        ]);
 
         // Verify the workflow for saving the current state as a Web Mapping Application
         await testSaveAsArcGISOnlineItem(page, PublishAndDownloadJobType.SaveWebMappingApp);
@@ -117,4 +135,28 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         // // Pause to allow for manual inspection
         // await page.pause();
     });
+
+    // test('save panel with Sentinel-2 scene selected', async ({ page }) => {
+    //     await page.goto(APP_URL + '&mode=find+a+scene');
+
+    //     // Select a scene from the calendar
+    //     await selectDayFromCalendar(page, '2023-08-01');
+
+    //     // Open the Save Panel and sign in to ArcGIS Online
+    //     await openSavePanelAndSignIn(page);
+
+    //     // // Verfiy the Save Options are visible and populated correctly
+    //     // await testSaveOptionsList(page, [
+    //     //     PublishAndDownloadJobType.SaveWebMappingApp,
+    //     //     PublishAndDownloadJobType.SaveWebMap,
+    //     //     PublishAndDownloadJobType.PublishScene
+    //     // ]);
+
+    //     // // Verify the workflow for saving the selected scene as an ArcGIS Online Web Map
+    //     // await testSaveAsArcGISOnlineItem(page, PublishAndDownloadJobType.SaveWebMap);
+
+    //     // Pause to allow for manual inspection
+    //     await page.pause();
+
+    // });
 })
