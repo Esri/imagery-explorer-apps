@@ -136,3 +136,11 @@ npx playwright test e2e/sentinel2/tests/SpectralProfileTool.test.ts --config e2e
 3. Simulate a map click to trigger the spectral profile.
 4. Verify the spectral profile chart and legend are visible.
 5. Confirm the correct feature of interest is displayed in the legend.
+
+## Test "Save Panel"
+
+### Run the Test
+To run the "Save Panel" test, use the following command:
+```bash
+npx playwright test e2e/sentinel2/tests/SavePanel.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
+```
