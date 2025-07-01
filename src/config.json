@@ -54,7 +54,7 @@
             "description": "",
             "pathname": "/nlcdlandcoverexplorer",
             "entrypoint": "/src/nlcd-landcover-explorer/index.tsx",
-            "appId": "S2LCX"
+            "appId": "nlcx"
         }
     }
 }

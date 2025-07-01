@@ -122,4 +122,5 @@ export const ARCGIS_REST_API_ROOT = AGOL_PORTAL_ROOT + '/sharing/rest';
  *
  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
  */
-export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';
+// export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';
+export const APP_ID = appConfig?.appId || '';

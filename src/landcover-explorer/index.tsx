@@ -22,12 +22,12 @@ import { getLandcoverExplorerStore } from './store';
 import AppLayout from './components/AppLayout/AppLayout';
 import { loadServiceInfo } from '@shared/services/sentinel-2-10m-landcover/loadServiceInfo';
 import { initEsriOAuth } from '../shared/utils/esri-oauth';
-import { APP_ID } from './constants';
+// import { APP_ID } from './constants';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import '@shared/components/calcite-components';
-import { AGOL_PORTAL_ROOT } from '@shared/config';
+import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
