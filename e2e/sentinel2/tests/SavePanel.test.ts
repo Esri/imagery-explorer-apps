@@ -53,8 +53,15 @@ const openSavePanelAndSignIn = async (page: Page) => {
  *
  * @param page - The Playwright Page object representing the browser page.
  * @param saveJobType - The type of publish and download job to test.
+ * @param expectedJobListIndex - The expected index of the job in the job list after saving.
  */
-const testSaveAsArcGISOnlineItem = async (page: Page, saveJobType:PublishAndDownloadJobType) => {
+const testSaveAsArcGISOnlineItem = async (page: Page, {
+    saveJobType,
+    expectedJobListIndex = 0
+}: {
+    saveJobType: PublishAndDownloadJobType;
+    expectedJobListIndex?: number;
+}) => {
 
     // Verify Save Web Mapping App option is available
     const saveJobOption = page.getByTestId('save-option-' + saveJobType);
@@ -76,7 +83,7 @@ const testSaveAsArcGISOnlineItem = async (page: Page, saveJobType:PublishAndDown
     await saveButton.click();
 
     // Verify the Job is added to the Job List
-    const jobListItem = page.getByTestId('job-list-item-0');
+    const jobListItem = page.getByTestId('job-list-item-' + expectedJobListIndex);
     await expect(jobListItem).toBeVisible();
     await expect(jobListItem).toHaveAttribute('data-job-status', 'esriJobSucceeded');
 
@@ -130,13 +137,16 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         ]);
 
         // Verify the workflow for saving the current state as a Web Mapping Application
-        await testSaveAsArcGISOnlineItem(page, PublishAndDownloadJobType.SaveWebMappingApp);
+        await testSaveAsArcGISOnlineItem(page, { 
+            saveJobType: PublishAndDownloadJobType.SaveWebMappingApp,
+            expectedJobListIndex: 0
+        });
 
         // // Pause to allow for manual inspection
         // await page.pause();
     });
 
-    test('save panel with Sentinel-2 scene selected', async ({ page }) => {
+    test('save panel with a single Sentinel-2 scene selected', async ({ page }) => {
         await page.goto(APP_URL + '&mode=find+a+scene');
 
         // Select a scene from the calendar
@@ -153,10 +163,56 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         ]);
 
         // Verify the workflow for saving the selected scene as an ArcGIS Online Web Map
-        await testSaveAsArcGISOnlineItem(page, PublishAndDownloadJobType.SaveWebMap);
+        await testSaveAsArcGISOnlineItem(page, { 
+            saveJobType: PublishAndDownloadJobType.SaveWebMap,
+            expectedJobListIndex: 0
+        });
+
+        // // Pause to allow for manual inspection
+        // await page.pause();
+
+    });
+
+    test('save panel with multiple Sentinel-2 scenes selected', async ({ page }) => {
+        // Navigate to the app with swipe mode on and two scenes selected 
+        await page.goto(APP_URL + '&mode=swipe&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195&secondaryScene=2024-01-03%7CNDVI+Colorized+for+Visualization%7C146597');
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
+        ]);
+
+        // Verify the workflow for saving the web map with multiple scenes as an ArcGIS Online Web Map
+        await testSaveAsArcGISOnlineItem(page, {
+            saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
+            expectedJobListIndex: 0
+        });
+
+        // Vefiy the workflow for saving the web map with multiple scenes in a single layer as an ArcGIS Online Web Map
+        await testSaveAsArcGISOnlineItem(page, {
+            saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
+            expectedJobListIndex: 1
+        });
 
         // Pause to allow for manual inspection
         await page.pause();
 
-    });
+        // Verify the functionality of the Clear All button to remove all jobs from the job list
+        const clearAllJobsButton = page.getByTestId('clear-all-jobs-button');
+        await expect(clearAllJobsButton).toBeVisible();
+        await clearAllJobsButton.click();
+
+        // Verify the Job List is empty
+        const jobListIsEmpty = page.getByTestId('no-pending-jobs');
+        await expect(jobListIsEmpty).toBeVisible();
+
+        // Pause to allow for manual inspection
+        await page.pause();
+
+    })
 })

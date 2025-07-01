@@ -64,7 +64,10 @@ export const JobList: FC<JobListProps> = ({
 
     if (!data.length) {
         return (
-            <div className="text-center w-full opacity-50">
+            <div
+                className="text-center w-full opacity-50"
+                data-testid="no-pending-jobs"
+            >
                 {t('no_pending_jobs')}
             </div>
         );
