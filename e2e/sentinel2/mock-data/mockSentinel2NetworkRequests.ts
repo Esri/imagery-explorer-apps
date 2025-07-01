@@ -3,6 +3,7 @@ import {
     mockedQuerySentinel2ScenesResponse2024,
     mockedQuerySentinel2ScenesResponse2023
 } from './mockedQuerySentinel2ScenesResponse';
+import { mockedUserProfileResponseWithLicenseInfo } from './mockedUserProfileResponse';
 
 
 /**
@@ -124,6 +125,173 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
             });
         }
     );
+
+    // Mock the response for the raster analysis cost estimation
+    await page.route(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/submitJob',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "jobId": "mocked-job-id",
+                    "jobStatus":"esriJobNew"
+                }),
+            });
+        }
+    )
+
+    // Mock the response for checking the job status for raster analysis cost estimation
+    await page.route(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*?**',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "jobId": "mocked-job-id",
+                    "jobStatus":"esriJobSucceeded",
+                    "messages": [],
+                    "results": {
+                        "outCost": {
+                            "paramUrl": "results/outCost",
+                        }
+                    }
+                }),
+            });
+        }   
+    );
+
+    // Mock the response for getting the result of raster analysis cost estimation
+    await page.route(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*/results/outCost?**',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "paramName":"outCost",
+                    "dataType":"GPString",
+                    "value":{
+                        "credits": 6.66,
+                    }
+                }),
+            });
+        }   
+    );
+
+    // Mock the response for service name availability check
+    await page.route(
+        '*/**/sharing/rest/portals/*/isServiceNameAvailable?**',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    available: true,
+                }),
+            });
+        }
+    );
+
+    // mock the response for check user profile and licenses
+    await page.route(
+        '*/**/sharing/rest/community/users/*?f=json&returnUserLicensedItems=true**',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify(mockedUserProfileResponseWithLicenseInfo),
+            });
+        }
+    );
+
+    // Mock the response for creating a hosted imagery service
+    // This happens after the check for service name availability and user license check
+    await page.route(
+        '*/**/sharing/rest/content/users/*/createService',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "encodedServiceURL": "https://service.arcgis.com/mockedOrg/arcgis/rest/services/mocked_Sentinel_2_Scene_service_name/ImageServer",
+                    "itemId": "mocked-item-id",
+                    "name": "mocked_Sentinel_2_Scene_service_name",
+                    "serviceItemId": "mocked-item-id",
+                    "serviceurl": "https://service.arcgis.com/mockedOrg/arcgis/rest/services/mocked_Sentinel_2_Scene_service_name/ImageServer",
+                    "size": -1,
+                    "success": true,
+                    "type": "Image Service",
+                    "typeKeywords": [
+                        "Dynamic Imagery Layer"
+                    ],
+                    "isView": false
+                }),
+            });
+        }
+    )
+
+    // Mocked response of update ArcGIS Online item info,
+    // this happens after the hosted imagery service is created
+    await page.route(
+        '*/**/sharing/rest/content/users/*/items/*/update',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "success": true,
+                    "id": "mocked-item-id",
+                }),
+            });
+        }
+    )
+
+    // Mock the response for the raster generation job submission
+    await page.route(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/submitJob',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "jobId": "mocked-generate-raster-job-id",
+                    "jobStatus":"esriJobNew"
+                }),
+            });
+        }
+    )   
+
+    // Mock the response for checking the job status for raster generation
+    await page.route(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**',
+        async (route) => {
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "jobId": "mocked-generate-raster-job-id",
+                    "jobStatus":"esriJobSucceeded",
+                    "messages": [],
+                    "inputs":{
+                        "outputType":{
+                            "paramUrl":"inputs/outputType"
+                        },
+                        "rasterFunction":{
+                            "paramUrl":"inputs/rasterFunction"
+                        },
+                        "OutputName":{
+                            "paramUrl":"inputs/OutputName"
+                        }
+                    },
+                    "results":{
+                        "outputRaster":{"paramUrl":"results/outputRaster"}
+                    }
+                }),
+            });
+        }   
+    );
 };
 
 export const resetMockSentinel2NetworkRequest = async (page: Page) => {
@@ -133,5 +301,32 @@ export const resetMockSentinel2NetworkRequest = async (page: Page) => {
     );
     await page.unroute(
         '*/**/sharing/rest/content/users/*/addItem'
+    );
+    await page.unroute(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/submitJob'
+    );
+    await page.unroute(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*?**'
+    );
+    await page.unroute(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*/results/outCost?**'
+    );
+    await page.unroute(
+        '*/**/sharing/rest/portals/*/isServiceNameAvailable?**'
+    );
+    await page.unroute(
+        '*/**/sharing/rest/community/users/*?f=json&returnUserLicensedItems=true**'
+    );
+    await page.unroute(
+        '*/**/sharing/rest/content/users/*/createService'
+    );
+    await page.unroute(
+        '*/**/sharing/rest/content/users/*/items/*/update'
+    );
+    await page.unroute(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/submitJob'
+    );
+    await page.unroute(
+        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**'
     );
 };

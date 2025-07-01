@@ -40,29 +40,7 @@ const openSavePanelAndSignIn = async (page: Page) => {
     await expect(savePanel).toBeVisible();
 }
 
-/**
- * Tests the "Save as ArcGIS Online Item" workflow in the application UI.
- *
- * This function performs the following steps:
- * 1. Verifies that the save option for the specified job type is visible.
- * 2. Ensures the launch button for the save job is visible, enabled, and can be clicked.
- * 3. Confirms that the save job dialog appears after clicking the launch button.
- * 4. Checks that the "OK" button in the dialog is visible and can be clicked to proceed.
- * 5. Verifies that a new job appears in the job list with a status of "esriJobSucceeded".
- * 6. Ensures the "Open Job" button is visible and its `href` attribute points to the ArcGIS Online item details page.
- *
- * @param page - The Playwright Page object representing the browser page.
- * @param saveJobType - The type of publish and download job to test.
- * @param expectedJobListIndex - The expected index of the job in the job list after saving.
- */
-const testSaveAsArcGISOnlineItem = async (page: Page, {
-    saveJobType,
-    expectedJobListIndex = 0
-}: {
-    saveJobType: PublishAndDownloadJobType;
-    expectedJobListIndex?: number;
-}) => {
-
+const triggerSaveJob = async (page: Page, saveJobType: PublishAndDownloadJobType) => {
     // Verify Save Web Mapping App option is available
     const saveJobOption = page.getByTestId('save-option-' + saveJobType);
     await expect(saveJobOption).toBeVisible();
@@ -81,13 +59,103 @@ const testSaveAsArcGISOnlineItem = async (page: Page, {
     const saveButton = saveJobDialog.getByText('OK');
     await expect(saveButton).toBeVisible();
     await saveButton.click();
+}
+
+/**
+ * Tests the "Save as ArcGIS Online Item" workflow in the application UI.
+ *
+ * This function performs the following steps:
+ * 1. Verifies that the save option for the specified job type is visible.
+ * 2. Ensures the launch button for the save job is visible, enabled, and can be clicked.
+ * 3. Confirms that the save job dialog appears after clicking the launch button.
+ * 4. Checks that the "OK" button in the dialog is visible and can be clicked to proceed.
+ * 5. Verifies that a new job appears in the job list with a status of "esriJobSucceeded".
+ * 6. Ensures the "Open Job" button is visible and its `href` attribute points to the ArcGIS Online item details page.
+ *
+ * @param page - The Playwright Page object representing the browser page.
+ * @param saveJobType - The type of publish and download job to test.
+ * @param expectedJobListIndex - The expected index of the job in the job list after saving.
+ */
+const testSaveAsArcGISOnlineItem = async (page: Page, {
+    saveJobType,
+}: {
+    saveJobType: PublishAndDownloadJobType;
+}) => {
+
+    // Trigger the save job workflow
+    await triggerSaveJob(page, saveJobType);
 
     // Verify the Job is added to the Job List
-    const jobListItem = page.getByTestId('job-list-item-' + expectedJobListIndex);
+    const jobListItemIndex = 0; // the newly added job should be at index 0
+    const jobListItem = page.getByTestId('job-list-item-' + jobListItemIndex);
     await expect(jobListItem).toBeVisible();
     await expect(jobListItem).toHaveAttribute('data-job-status', 'esriJobSucceeded');
 
     // verify the Open Job button is visible and has href attribute pointing to the ArcGIS Online item details page of the newly created Web Mapping Application
+    const openJobButton = jobListItem.getByTestId('open-job-output-button');
+    await expect(openJobButton).toBeVisible();
+    await expect(openJobButton).toHaveAttribute('href', /https:\/\/(?:[\w.-]+\.)*arcgis\.com\/home\/item.html\?id=*/i);
+}
+
+/**
+ * Tests the workflow for publishing a hosted imagery service as a save job in the application.
+ *
+ * This function performs the following steps:
+ * 1. Triggers the save job workflow for the specified job type.
+ * 2. Verifies that the new job appears at the top of the job list.
+ * 3. Waits for the network request estimating the job cost to complete.
+ * 4. Checks that the estimated credit cost is displayed and is a valid number.
+ * 5. Ensures the "Accept Credits" button is visible and clicks it.
+ * 6. Waits for the network request checking the generate raster job status to complete.
+ * 7. Verifies that the job status is "esriJobSucceeded".
+ * 8. Checks that the "Open Job" button is visible and its href points to the ArcGIS Online item details page.
+ *
+ * @param page - The Playwright Page object representing the browser page.
+ * @param options - Options for the test.
+ * @param options.saveJobType - The type of publish and download job to trigger.
+ */
+const testPublishAsHostedImageryService = async (page: Page, {
+    saveJobType,
+}: {
+    saveJobType: PublishAndDownloadJobType;
+}) => {
+    // Trigger the save job workflow
+    await triggerSaveJob(page, saveJobType);
+
+    // Verify the new job appears at the top of the job list
+    const jobListItemIndex = 0; // the most recent job should be at index 0
+    const jobListItem = page.getByTestId('job-list-item-' + jobListItemIndex);
+    await expect(jobListItem).toBeVisible();
+
+    // Wait for the network request estimating the job cost to complete
+    await page.waitForResponse(response =>
+        response.url().includes('arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs')
+        && response.status() === 200
+    );
+
+    // Check that the estimated credit cost is displayed and is a valid number
+    const jobCost = jobListItem.getByTestId('job-cost-info');
+    await expect(jobCost).toBeVisible({ timeout: 60000 });
+    await expect(jobCost).toHaveAttribute('data-actual-cost', /\d+(\.\d+)?/); // should be a number
+
+    // Ensure the "Accept Credits" button is visible and can be clicked
+    const acceptCreditsButton = jobListItem.getByTestId('accept-credits-button');
+    await expect(acceptCreditsButton).toBeVisible();
+    await acceptCreditsButton.click();
+
+    // Wait for the network request checking the generate raster job status to complete
+    await page.waitForResponse(response =>
+        response.url().includes('arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs')
+        && response.status() === 200
+    );
+
+    // Verify that the job status is "esriJobSucceeded"
+    await expect(jobListItem).toHaveAttribute(
+        'data-job-status', 
+        'esriJobSucceeded'
+    );
+
+    // Check that the "Open Job" button is visible and its href points to the ArcGIS Online item details page
     const openJobButton = jobListItem.getByTestId('open-job-output-button');
     await expect(openJobButton).toBeVisible();
     await expect(openJobButton).toHaveAttribute('href', /https:\/\/(?:[\w.-]+\.)*arcgis\.com\/home\/item.html\?id=*/i);
@@ -139,14 +207,20 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         // Verify the workflow for saving the current state as a Web Mapping Application
         await testSaveAsArcGISOnlineItem(page, { 
             saveJobType: PublishAndDownloadJobType.SaveWebMappingApp,
-            expectedJobListIndex: 0
         });
 
         // // Pause to allow for manual inspection
         // await page.pause();
     });
 
-    test('save panel with a single Sentinel-2 scene selected', async ({ page }) => {
+    test('save panel with a single Sentinel-2 scene selected', async ({ 
+        page,
+    }) => {
+        // the publish imagery service job can take a while as it's async operation
+        // that involves multiple network requests
+        // therefore, we increase the timeout for this test
+        test.setTimeout(2 * 60 * 1000); // 2 minutes
+
         await page.goto(APP_URL + '&mode=find+a+scene');
 
         // Select a scene from the calendar
@@ -165,11 +239,15 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         // Verify the workflow for saving the selected scene as an ArcGIS Online Web Map
         await testSaveAsArcGISOnlineItem(page, { 
             saveJobType: PublishAndDownloadJobType.SaveWebMap,
-            expectedJobListIndex: 0
         });
 
-        // // Pause to allow for manual inspection
-        // await page.pause();
+        // Verify the workflow for publishing the selected scene as an ArcGIS Online Hosted Imagery Service
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishScene,
+        });
+
+        // Pause to allow for manual inspection
+        await page.pause();
 
     });
 
@@ -190,17 +268,15 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         // Verify the workflow for saving the web map with multiple scenes as an ArcGIS Online Web Map
         await testSaveAsArcGISOnlineItem(page, {
             saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
-            expectedJobListIndex: 0
         });
 
         // Vefiy the workflow for saving the web map with multiple scenes in a single layer as an ArcGIS Online Web Map
         await testSaveAsArcGISOnlineItem(page, {
             saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
-            expectedJobListIndex: 1
         });
 
-        // Pause to allow for manual inspection
-        await page.pause();
+        // // Pause to allow for manual inspection
+        // await page.pause();
 
         // Verify the functionality of the Clear All button to remove all jobs from the job list
         const clearAllJobsButton = page.getByTestId('clear-all-jobs-button');
@@ -211,8 +287,8 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         const jobListIsEmpty = page.getByTestId('no-pending-jobs');
         await expect(jobListIsEmpty).toBeVisible();
 
-        // Pause to allow for manual inspection
-        await page.pause();
+        // // Pause to allow for manual inspection
+        // await page.pause();
 
     })
 })
