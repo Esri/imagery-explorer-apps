@@ -3,6 +3,18 @@ import {
     mockedQuerySentinel2ScenesResponse2024,
     mockedQuerySentinel2ScenesResponse2023
 } from './mockedQuerySentinel2ScenesResponse';
+
+
+/**
+ * A map of features by their objectid for quick lookup.
+ */
+const mockedFeatureByObjectIdMap: Map<number, any> = new Map(
+    [
+        ...mockedQuerySentinel2ScenesResponse2023.features,
+        ...mockedQuerySentinel2ScenesResponse2024.features
+    ].map((feature) => [feature.attributes.objectid, feature])
+);
+
 /**
  * Mock the network requests for the Sentinel-2 Explorer app.
  * Using the mocked data to ensure the test is isolated and does not depend on live API responses.
@@ -22,6 +34,14 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
             const whereClause = decodeURIComponent(
                 url.searchParams.get('where') || ''
+            );
+
+            const objectIds = decodeURIComponent(
+                url.searchParams.get('objectIds') || ''
+            );
+
+            const returnExtentOnly = decodeURIComponent(
+                url.searchParams.get('returnExtentOnly') || ''
             );
 
             if( whereClause && whereClause.includes('2024')) {
@@ -45,12 +65,47 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
                 return;
             }
 
-            // Mock response for other years or cases
-            await route.fulfill({
-                status: 200,
-                contentType: 'application/json',
-                body: JSON.stringify({ features: [] }), // Empty response for 2023
-            });
+            if(returnExtentOnly === 'true'){
+                await route.fulfill({
+                    status: 200,
+                    contentType: 'application/json',
+                    body: JSON.stringify({
+                        extent: {
+                            xmin: -117.235,
+                            ymin: 34.025,
+                            xmax: -117.135,
+                            ymax: 34.085,
+                            spatialReference: { wkid: 4326 }
+                        }
+                    }),
+                });
+                return;
+            }
+
+            if( objectIds && mockedFeatureByObjectIdMap.has(+objectIds)) {
+                const feature = mockedFeatureByObjectIdMap.get(+objectIds);
+                await route.fulfill({
+                    status: 200,
+                    contentType: 'application/json',
+                    body: JSON.stringify({
+                        features: [{
+                            ...feature,
+                        }]
+                    }),
+                });
+
+                return;
+            }
+
+            // let it pass through if no conditions matched
+            await route.continue();
+
+            // // Mock response for other years or cases
+            // await route.fulfill({
+            //     status: 200,
+            //     contentType: 'application/json',
+            //     body: JSON.stringify({ features: [] }), // Empty response for 2023
+            // });
 
         }
     );

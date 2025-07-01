@@ -136,27 +136,27 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         // await page.pause();
     });
 
-    // test('save panel with Sentinel-2 scene selected', async ({ page }) => {
-    //     await page.goto(APP_URL + '&mode=find+a+scene');
+    test('save panel with Sentinel-2 scene selected', async ({ page }) => {
+        await page.goto(APP_URL + '&mode=find+a+scene');
 
-    //     // Select a scene from the calendar
-    //     await selectDayFromCalendar(page, '2023-08-01');
+        // Select a scene from the calendar
+        await selectDayFromCalendar(page, '2023-08-01');
 
-    //     // Open the Save Panel and sign in to ArcGIS Online
-    //     await openSavePanelAndSignIn(page);
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
 
-    //     // // Verfiy the Save Options are visible and populated correctly
-    //     // await testSaveOptionsList(page, [
-    //     //     PublishAndDownloadJobType.SaveWebMappingApp,
-    //     //     PublishAndDownloadJobType.SaveWebMap,
-    //     //     PublishAndDownloadJobType.PublishScene
-    //     // ]);
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMap,
+            PublishAndDownloadJobType.PublishScene
+        ]);
 
-    //     // // Verify the workflow for saving the selected scene as an ArcGIS Online Web Map
-    //     // await testSaveAsArcGISOnlineItem(page, PublishAndDownloadJobType.SaveWebMap);
+        // Verify the workflow for saving the selected scene as an ArcGIS Online Web Map
+        await testSaveAsArcGISOnlineItem(page, PublishAndDownloadJobType.SaveWebMap);
 
-    //     // Pause to allow for manual inspection
-    //     await page.pause();
+        // Pause to allow for manual inspection
+        await page.pause();
 
-    // });
+    });
 })
