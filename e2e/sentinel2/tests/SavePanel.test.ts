@@ -18,6 +18,20 @@ export enum PublishAndDownloadJobType {
     SaveWebMapWithMultipleScenesInSingleLayer = 'Save Web Map with Multiple Scenes in Single Layer',
 }
 
+/**
+ * Opens the Save Panel in the application, initiates the sign-in process,
+ * and verifies the panel remains visible after signing in.
+ *
+ * This function performs the following steps:
+ * 1. Ensures the "Open Save Panel" button is visible and clicks it.
+ * 2. Verifies the Save Panel is displayed.
+ * 3. Ensures the "Sign-in" button is visible and clicks it.
+ * 4. Executes the ArcGIS Online sign-in process.
+ * 5. Confirms the Save Panel remains visible after signing in.
+ *
+ * @param page - The Playwright {@link Page} object representing the browser page.
+ * @returns A promise that resolves when all actions and verifications are complete.
+ */
 const openSavePanelAndSignIn = async (page: Page) => {
     // Verify the Open Save Panel button is visible and clickable
     const openSavePanelButton = page.getByTestId('open-save-panel-button');
@@ -40,6 +54,18 @@ const openSavePanelAndSignIn = async (page: Page) => {
     await expect(savePanel).toBeVisible();
 }
 
+/**
+ * Triggers the save job workflow for a specified job type in the application.
+ *
+ * This function performs the following steps:
+ * 1. Verifies that the save option for the specified job type is visible.
+ * 2. Ensures the launch button for the save job is visible, enabled, and can be clicked.
+ * 3. Confirms that the save job dialog appears after clicking the launch button.
+ * 4. Checks that the "OK" button in the dialog is visible and can be clicked to proceed.
+ *
+ * @param page - The Playwright Page object representing the browser page.
+ * @param saveJobType - The type of publish and download job to trigger.
+ */
 const triggerSaveJob = async (page: Page, saveJobType: PublishAndDownloadJobType) => {
     // Verify Save Web Mapping App option is available
     const saveJobOption = page.getByTestId('save-option-' + saveJobType);
@@ -137,6 +163,9 @@ const testPublishAsHostedImageryService = async (page: Page, {
     const jobCost = jobListItem.getByTestId('job-cost-info');
     await expect(jobCost).toBeVisible({ timeout: 60000 });
     await expect(jobCost).toHaveAttribute('data-actual-cost', /\d+(\.\d+)?/); // should be a number
+
+    // Wait a bit to give some time to visually verify the estimated cost
+    await page.waitForTimeout(2000); 
 
     // Ensure the "Accept Credits" button is visible and can be clicked
     const acceptCreditsButton = jobListItem.getByTestId('accept-credits-button');
@@ -246,8 +275,8 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
             saveJobType: PublishAndDownloadJobType.PublishScene,
         });
 
-        // Pause to allow for manual inspection
-        await page.pause();
+        // // Pause to allow for manual inspection
+        // await page.pause();
 
     });
 
@@ -290,5 +319,54 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         // // Pause to allow for manual inspection
         // await page.pause();
 
+    })
+
+    test('save panel in index mask tool', async ({ page }) => {
+        // the publish imagery service job can take a while as it's async operation
+        // that involves multiple network requests
+        // therefore, we increase the timeout for this test
+        test.setTimeout(2 * 60 * 1000); // 2 minutes
+
+        // Navigate to the app with index mask tool and a scene selected
+        await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CAgriculture+for+Visualization%7C20498195&tool=mask');
+        
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMap,
+            PublishAndDownloadJobType.PublishScene,
+            PublishAndDownloadJobType.PublishIndexMask
+        ]);
+
+        // Verify the workflow for publishing the index mask output as an ArcGIS Online Hosted Imagery Service
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishIndexMask,
+        });
+    });
+
+    test('save panel in change detection tool', async ({ page }) => {
+        test.setTimeout(2 * 60 * 1000); // 2 minutes
+
+        // Navigate to the app with change detection tool and two scenes selected
+        await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CShort-wave+Infrared+for+Visualization%7C20498195&secondaryScene=2024-01-03%7CNatural+Color+for+Visualization%7C146597&tool=change&change=vegetation%7Ctrue%7C-2%2C2');
+        
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
+            PublishAndDownloadJobType.PublishChangeDetection
+        ]);
+
+        // Verify the workflow for publishing the change detection output as an ArcGIS Online Hosted Imagery Service
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishChangeDetection,
+        });
     })
 })
