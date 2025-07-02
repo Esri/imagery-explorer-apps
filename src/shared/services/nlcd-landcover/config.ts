@@ -9,7 +9,8 @@ export const NLCD_LANDCOVER_ITEM_ID = '3ccf118ed80748909eb85c6d262b426f';
 const NLCD_LANDCOVER_IMAGE_SERVICE_URL_DEV =
     'https://di-nlcddev.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer';
 
-const NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD = '';
+const NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD =
+    'https://di-nlcd.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer';
 
 export const NLCD_LANDCOVER_IMAGE_SERVICE_URL =
     TIER === 'development'
