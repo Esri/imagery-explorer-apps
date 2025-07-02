@@ -143,6 +143,7 @@ const testSaveAsArcGISOnlineItem = async (page: Page, {
 const testPublishAsHostedImageryService = async (page: Page, {
     saveJobType,
     shouldRejectCredits = false, // default to false, can be set to true for testing rejecting credits
+    shouldThrowErrorForGenerateRasterJob = false, // default to false, can be set to true for testing error handling
 }: {
     /**
      * The type of publish and download job to trigger.
@@ -153,6 +154,11 @@ const testPublishAsHostedImageryService = async (page: Page, {
      * If true, the test will simulate rejecting credits after the job is created.
      */
     shouldRejectCredits?: boolean; 
+    /**
+     * Whether to test error handling by simulating an error for the GenerateRaster job.
+     * If true, the test will simulate an error and verify that the job is not created.
+     */
+    shouldThrowErrorForGenerateRasterJob?: boolean; // default to false, can be set to true for testing error handling
 }) => {
     // Trigger the save job workflow
     await triggerSaveJob(page, saveJobType);
@@ -195,6 +201,44 @@ const testPublishAsHostedImageryService = async (page: Page, {
     const acceptCreditsButton = jobListItem.getByTestId('accept-credits-button');
     await expect(acceptCreditsButton).toBeVisible();
     await acceptCreditsButton.click();
+
+    // If we are testing error handling, simulate an error response for the GenerateRaster job
+    // This will allow us to verify that the job status is set to "esriJobFailed"
+    if(shouldThrowErrorForGenerateRasterJob) {
+
+        // unroute the existing GenerateRaster job status check to simulate an error
+        await page.unroute('*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**');
+        
+        // Route the GenerateRaster job status check to simulate an error response
+        await page.route('*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**', async (route) => {
+            // Simulate an error response for the GenerateRaster job
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify({
+                    "jobId": "mocked-generate-raster-job-id",
+                    "jobStatus":"esriJobFailed",
+                })
+            });
+        })
+
+        // Wait for the network request checking the generate raster job status to complete
+        await page.waitForResponse(response =>
+            response.url().includes('arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs')
+            && response.status() === 200
+        );
+    
+        // Verify that the job status is "esriJobFailed"
+        await expect(jobListItem).toHaveAttribute(
+            'data-job-status', 
+            'esriJobFailed'
+        );
+
+        // // pause to allow for manual inspection of the error
+        // await page.pause();
+
+        return;
+    }
 
     // Wait for the network request checking the generate raster job status to complete
     await page.waitForResponse(response =>
@@ -399,6 +443,20 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         await testPublishAsHostedImageryService(page, {
             saveJobType: PublishAndDownloadJobType.PublishScene,
             shouldRejectCredits: true, // set to true to test rejecting credits
+        });
+    });
+
+    test('Pulish scene with an error', async ({ page }) => {
+        // Navigate to the app with a scene selected
+        await page.goto(APP_URL + '&mode=find+a+scene&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195');
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verify the workflow for rejecting credits for a job in the job list
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishScene,
+            shouldThrowErrorForGenerateRasterJob: true, // set to true to test error handling
         });
     });
 })
