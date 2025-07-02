@@ -142,8 +142,17 @@ const testSaveAsArcGISOnlineItem = async (page: Page, {
  */
 const testPublishAsHostedImageryService = async (page: Page, {
     saveJobType,
+    shouldRejectCredits = false, // default to false, can be set to true for testing rejecting credits
 }: {
+    /**
+     * The type of publish and download job to trigger.
+     */
     saveJobType: PublishAndDownloadJobType;
+    /**
+     * Whether to test the rejection of credits for the job.
+     * If true, the test will simulate rejecting credits after the job is created.
+     */
+    shouldRejectCredits?: boolean; 
 }) => {
     // Trigger the save job workflow
     await triggerSaveJob(page, saveJobType);
@@ -166,6 +175,21 @@ const testPublishAsHostedImageryService = async (page: Page, {
 
     // Wait a bit to give some time to visually verify the estimated cost
     await page.waitForTimeout(2000); 
+
+    // If we are testing the rejection of credits, click the "Reject Credits" button
+    // Otherwise, proceed to accept the credits
+    if(shouldRejectCredits){
+
+        // If we are testing the rejection of credits, click the "Reject Credits" button
+        const rejectCreditsButton = jobListItem.getByTestId('reject-credits-button');
+        await expect(rejectCreditsButton).toBeVisible();
+        await rejectCreditsButton.click();
+
+        // Verify that the job is removed from the job list
+        await expect(jobListItem).not.toBeVisible();
+
+        return;
+    } 
 
     // Ensure the "Accept Credits" button is visible and can be clicked
     const acceptCreditsButton = jobListItem.getByTestId('accept-credits-button');
@@ -210,6 +234,12 @@ const testSaveOptionsList = async (page: Page, options:PublishAndDownloadJobType
 
 test.describe('Sentinel-2 Explorer - Save Panel', () => {
 
+    // Increase the timeout for the tests in this suite
+    // the publish imagery service job can take a while as it's async operation
+    // that involves multiple network requests
+    // therefore, we increase the timeout for this test
+    test.setTimeout(2 * 60 * 1000); // 2 minutes
+
     const APP_URL = DEV_SERVER_URL + '/#mapCenter=-117.07809%2C34.03876%2C13.516';
 
     test.beforeEach(async ({ page }) => {
@@ -245,11 +275,6 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
     test('save panel with a single Sentinel-2 scene selected', async ({ 
         page,
     }) => {
-        // the publish imagery service job can take a while as it's async operation
-        // that involves multiple network requests
-        // therefore, we increase the timeout for this test
-        test.setTimeout(2 * 60 * 1000); // 2 minutes
-
         await page.goto(APP_URL + '&mode=find+a+scene');
 
         // Select a scene from the calendar
@@ -322,11 +347,6 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
     })
 
     test('save panel in index mask tool', async ({ page }) => {
-        // the publish imagery service job can take a while as it's async operation
-        // that involves multiple network requests
-        // therefore, we increase the timeout for this test
-        test.setTimeout(2 * 60 * 1000); // 2 minutes
-
         // Navigate to the app with index mask tool and a scene selected
         await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CAgriculture+for+Visualization%7C20498195&tool=mask');
         
@@ -348,8 +368,6 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
     });
 
     test('save panel in change detection tool', async ({ page }) => {
-        test.setTimeout(2 * 60 * 1000); // 2 minutes
-
         // Navigate to the app with change detection tool and two scenes selected
         await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CShort-wave+Infrared+for+Visualization%7C20498195&secondaryScene=2024-01-03%7CNatural+Color+for+Visualization%7C146597&tool=change&change=vegetation%7Ctrue%7C-2%2C2');
         
@@ -368,5 +386,19 @@ test.describe('Sentinel-2 Explorer - Save Panel', () => {
         await testPublishAsHostedImageryService(page, {
             saveJobType: PublishAndDownloadJobType.PublishChangeDetection,
         });
-    })
+    });
+
+    test('reject credits for a job in the job list', async ({ page }) => {
+        // Navigate to the app with a scene selected
+        await page.goto(APP_URL + '&mode=find+a+scene&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195');
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verify the workflow for rejecting credits for a job in the job list
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishScene,
+            shouldRejectCredits: true, // set to true to test rejecting credits
+        });
+    });
 })

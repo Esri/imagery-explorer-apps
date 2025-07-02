@@ -72,6 +72,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                     <div className="mr-2">
                         <span
                             className="underline cursor-pointer uppercase"
+                            data-testid="reject-credits-button"
                             onClick={() => {
                                 // dispatch(updatePublishAndDownloadJob({ ...job, status: PublishAndDownloadJobStatus.ToBeSubmitted }));
                                 cancelButtonOnClick(job);
