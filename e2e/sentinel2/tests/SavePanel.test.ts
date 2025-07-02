@@ -18,6 +18,192 @@ export enum PublishAndDownloadJobType {
     SaveWebMapWithMultipleScenesInSingleLayer = 'Save Web Map with Multiple Scenes in Single Layer',
 }
 
+test.describe('Sentinel-2 Explorer - Save Panel', () => {
+
+    // Increase the timeout for the tests in this suite
+    // the publish imagery service job can take a while as it's async operation
+    // that involves multiple network requests
+    // therefore, we increase the timeout for this test
+    test.setTimeout(2 * 60 * 1000); // 2 minutes
+
+    const APP_URL = DEV_SERVER_URL + '/#mapCenter=-117.07809%2C34.03876%2C13.516';
+
+    test.beforeEach(async ({ page }) => {
+        // Mock network requests and sign in to ArcGIS Online
+        await mockSentinel2NetworkRequests(page);
+    });
+
+    test.afterEach(async ({ page }) => {
+        // Reset mock network requests before each test
+        await resetMockSentinel2NetworkRequest(page);
+    });
+
+    test('save panel when no scene is selected', async ({ page }) => {
+        await page.goto(APP_URL);
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp
+        ]);
+
+        // Verify the workflow for saving the current state as a Web Mapping Application
+        await testSaveAsArcGISOnlineItem(page, { 
+            saveJobType: PublishAndDownloadJobType.SaveWebMappingApp,
+        });
+
+        // // Pause to allow for manual inspection
+        // await page.pause();
+    });
+
+    test('save panel with a single Sentinel-2 scene selected', async ({ 
+        page,
+    }) => {
+        await page.goto(APP_URL + '&mode=find+a+scene');
+
+        // Select a scene from the calendar
+        await selectDayFromCalendar(page, '2023-08-01');
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMap,
+            PublishAndDownloadJobType.PublishScene
+        ]);
+
+        // Verify the workflow for saving the selected scene as an ArcGIS Online Web Map
+        await testSaveAsArcGISOnlineItem(page, { 
+            saveJobType: PublishAndDownloadJobType.SaveWebMap,
+        });
+
+        // Verify the workflow for publishing the selected scene as an ArcGIS Online Hosted Imagery Service
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishScene,
+        });
+
+        // // Pause to allow for manual inspection
+        // await page.pause();
+
+    });
+
+    test('save panel with multiple Sentinel-2 scenes selected', async ({ page }) => {
+        // Navigate to the app with swipe mode on and two scenes selected 
+        await page.goto(APP_URL + '&mode=swipe&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195&secondaryScene=2024-01-03%7CNDVI+Colorized+for+Visualization%7C146597');
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
+        ]);
+
+        // Verify the workflow for saving the web map with multiple scenes as an ArcGIS Online Web Map
+        await testSaveAsArcGISOnlineItem(page, {
+            saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
+        });
+
+        // Vefiy the workflow for saving the web map with multiple scenes in a single layer as an ArcGIS Online Web Map
+        await testSaveAsArcGISOnlineItem(page, {
+            saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
+        });
+
+        // // Pause to allow for manual inspection
+        // await page.pause();
+
+        // Verify the functionality of the Clear All button to remove all jobs from the job list
+        const clearAllJobsButton = page.getByTestId('clear-all-jobs-button');
+        await expect(clearAllJobsButton).toBeVisible();
+        await clearAllJobsButton.click();
+
+        // Verify the Job List is empty
+        const jobListIsEmpty = page.getByTestId('no-pending-jobs');
+        await expect(jobListIsEmpty).toBeVisible();
+
+        // // Pause to allow for manual inspection
+        // await page.pause();
+
+    })
+
+    test('save panel in index mask tool', async ({ page }) => {
+        // Navigate to the app with index mask tool and a scene selected
+        await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CAgriculture+for+Visualization%7C20498195&tool=mask');
+        
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMap,
+            PublishAndDownloadJobType.PublishScene,
+            PublishAndDownloadJobType.PublishIndexMask
+        ]);
+
+        // Verify the workflow for publishing the index mask output as an ArcGIS Online Hosted Imagery Service
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishIndexMask,
+        });
+    });
+
+    test('save panel in change detection tool', async ({ page }) => {
+        // Navigate to the app with change detection tool and two scenes selected
+        await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CShort-wave+Infrared+for+Visualization%7C20498195&secondaryScene=2024-01-03%7CNatural+Color+for+Visualization%7C146597&tool=change&change=vegetation%7Ctrue%7C-2%2C2');
+        
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verfiy the Save Options are visible and populated correctly
+        await testSaveOptionsList(page, [
+            PublishAndDownloadJobType.SaveWebMappingApp,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
+            PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
+            PublishAndDownloadJobType.PublishChangeDetection
+        ]);
+
+        // Verify the workflow for publishing the change detection output as an ArcGIS Online Hosted Imagery Service
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishChangeDetection,
+        });
+    });
+
+    test('reject credits for a job in the job list', async ({ page }) => {
+        // Navigate to the app with a scene selected
+        await page.goto(APP_URL + '&mode=find+a+scene&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195');
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verify the workflow for rejecting credits for a job in the job list
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishScene,
+            shouldRejectCredits: true, // set to true to test rejecting credits
+        });
+    });
+
+    test('Pulish scene with an error', async ({ page }) => {
+        // Navigate to the app with a scene selected
+        await page.goto(APP_URL + '&mode=find+a+scene&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195');
+
+        // Open the Save Panel and sign in to ArcGIS Online
+        await openSavePanelAndSignIn(page);
+
+        // Verify the workflow for rejecting credits for a job in the job list
+        await testPublishAsHostedImageryService(page, {
+            saveJobType: PublishAndDownloadJobType.PublishScene,
+            shouldThrowErrorForGenerateRasterJob: true, // set to true to test error handling
+        });
+    });
+})
+
+
 /**
  * Opens the Save Panel in the application, initiates the sign-in process,
  * and verifies the panel remains visible after signing in.
@@ -275,188 +461,3 @@ const testSaveOptionsList = async (page: Page, options:PublishAndDownloadJobType
         await expect(saveOption).toBeVisible();
     }
 }
-
-test.describe('Sentinel-2 Explorer - Save Panel', () => {
-
-    // Increase the timeout for the tests in this suite
-    // the publish imagery service job can take a while as it's async operation
-    // that involves multiple network requests
-    // therefore, we increase the timeout for this test
-    test.setTimeout(2 * 60 * 1000); // 2 minutes
-
-    const APP_URL = DEV_SERVER_URL + '/#mapCenter=-117.07809%2C34.03876%2C13.516';
-
-    test.beforeEach(async ({ page }) => {
-        // Mock network requests and sign in to ArcGIS Online
-        await mockSentinel2NetworkRequests(page);
-    });
-
-    test.afterEach(async ({ page }) => {
-        // Reset mock network requests before each test
-        await resetMockSentinel2NetworkRequest(page);
-    });
-
-    test('save panel when no scene is selected', async ({ page }) => {
-        await page.goto(APP_URL);
-
-        // Open the Save Panel and sign in to ArcGIS Online
-        await openSavePanelAndSignIn(page);
-
-        // Verfiy the Save Options are visible and populated correctly
-        await testSaveOptionsList(page, [
-            PublishAndDownloadJobType.SaveWebMappingApp
-        ]);
-
-        // Verify the workflow for saving the current state as a Web Mapping Application
-        await testSaveAsArcGISOnlineItem(page, { 
-            saveJobType: PublishAndDownloadJobType.SaveWebMappingApp,
-        });
-
-        // // Pause to allow for manual inspection
-        // await page.pause();
-    });
-
-    test('save panel with a single Sentinel-2 scene selected', async ({ 
-        page,
-    }) => {
-        await page.goto(APP_URL + '&mode=find+a+scene');
-
-        // Select a scene from the calendar
-        await selectDayFromCalendar(page, '2023-08-01');
-
-        // Open the Save Panel and sign in to ArcGIS Online
-        await openSavePanelAndSignIn(page);
-
-        // Verfiy the Save Options are visible and populated correctly
-        await testSaveOptionsList(page, [
-            PublishAndDownloadJobType.SaveWebMappingApp,
-            PublishAndDownloadJobType.SaveWebMap,
-            PublishAndDownloadJobType.PublishScene
-        ]);
-
-        // Verify the workflow for saving the selected scene as an ArcGIS Online Web Map
-        await testSaveAsArcGISOnlineItem(page, { 
-            saveJobType: PublishAndDownloadJobType.SaveWebMap,
-        });
-
-        // Verify the workflow for publishing the selected scene as an ArcGIS Online Hosted Imagery Service
-        await testPublishAsHostedImageryService(page, {
-            saveJobType: PublishAndDownloadJobType.PublishScene,
-        });
-
-        // // Pause to allow for manual inspection
-        // await page.pause();
-
-    });
-
-    test('save panel with multiple Sentinel-2 scenes selected', async ({ page }) => {
-        // Navigate to the app with swipe mode on and two scenes selected 
-        await page.goto(APP_URL + '&mode=swipe&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195&secondaryScene=2024-01-03%7CNDVI+Colorized+for+Visualization%7C146597');
-
-        // Open the Save Panel and sign in to ArcGIS Online
-        await openSavePanelAndSignIn(page);
-
-        // Verfiy the Save Options are visible and populated correctly
-        await testSaveOptionsList(page, [
-            PublishAndDownloadJobType.SaveWebMappingApp,
-            PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
-            PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
-        ]);
-
-        // Verify the workflow for saving the web map with multiple scenes as an ArcGIS Online Web Map
-        await testSaveAsArcGISOnlineItem(page, {
-            saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
-        });
-
-        // Vefiy the workflow for saving the web map with multiple scenes in a single layer as an ArcGIS Online Web Map
-        await testSaveAsArcGISOnlineItem(page, {
-            saveJobType: PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
-        });
-
-        // // Pause to allow for manual inspection
-        // await page.pause();
-
-        // Verify the functionality of the Clear All button to remove all jobs from the job list
-        const clearAllJobsButton = page.getByTestId('clear-all-jobs-button');
-        await expect(clearAllJobsButton).toBeVisible();
-        await clearAllJobsButton.click();
-
-        // Verify the Job List is empty
-        const jobListIsEmpty = page.getByTestId('no-pending-jobs');
-        await expect(jobListIsEmpty).toBeVisible();
-
-        // // Pause to allow for manual inspection
-        // await page.pause();
-
-    })
-
-    test('save panel in index mask tool', async ({ page }) => {
-        // Navigate to the app with index mask tool and a scene selected
-        await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CAgriculture+for+Visualization%7C20498195&tool=mask');
-        
-        // Open the Save Panel and sign in to ArcGIS Online
-        await openSavePanelAndSignIn(page);
-
-        // Verfiy the Save Options are visible and populated correctly
-        await testSaveOptionsList(page, [
-            PublishAndDownloadJobType.SaveWebMappingApp,
-            PublishAndDownloadJobType.SaveWebMap,
-            PublishAndDownloadJobType.PublishScene,
-            PublishAndDownloadJobType.PublishIndexMask
-        ]);
-
-        // Verify the workflow for publishing the index mask output as an ArcGIS Online Hosted Imagery Service
-        await testPublishAsHostedImageryService(page, {
-            saveJobType: PublishAndDownloadJobType.PublishIndexMask,
-        });
-    });
-
-    test('save panel in change detection tool', async ({ page }) => {
-        // Navigate to the app with change detection tool and two scenes selected
-        await page.goto(APP_URL + '&mode=analysis&mainScene=2023-08-01%7CShort-wave+Infrared+for+Visualization%7C20498195&secondaryScene=2024-01-03%7CNatural+Color+for+Visualization%7C146597&tool=change&change=vegetation%7Ctrue%7C-2%2C2');
-        
-        // Open the Save Panel and sign in to ArcGIS Online
-        await openSavePanelAndSignIn(page);
-
-        // Verfiy the Save Options are visible and populated correctly
-        await testSaveOptionsList(page, [
-            PublishAndDownloadJobType.SaveWebMappingApp,
-            PublishAndDownloadJobType.SaveWebMapWithMultipleScenes,
-            PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer,
-            PublishAndDownloadJobType.PublishChangeDetection
-        ]);
-
-        // Verify the workflow for publishing the change detection output as an ArcGIS Online Hosted Imagery Service
-        await testPublishAsHostedImageryService(page, {
-            saveJobType: PublishAndDownloadJobType.PublishChangeDetection,
-        });
-    });
-
-    test('reject credits for a job in the job list', async ({ page }) => {
-        // Navigate to the app with a scene selected
-        await page.goto(APP_URL + '&mode=find+a+scene&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195');
-
-        // Open the Save Panel and sign in to ArcGIS Online
-        await openSavePanelAndSignIn(page);
-
-        // Verify the workflow for rejecting credits for a job in the job list
-        await testPublishAsHostedImageryService(page, {
-            saveJobType: PublishAndDownloadJobType.PublishScene,
-            shouldRejectCredits: true, // set to true to test rejecting credits
-        });
-    });
-
-    test('Pulish scene with an error', async ({ page }) => {
-        // Navigate to the app with a scene selected
-        await page.goto(APP_URL + '&mode=find+a+scene&mainScene=2023-08-01%7CNDVI+Colorized+for+Visualization%7C20498195');
-
-        // Open the Save Panel and sign in to ArcGIS Online
-        await openSavePanelAndSignIn(page);
-
-        // Verify the workflow for rejecting credits for a job in the job list
-        await testPublishAsHostedImageryService(page, {
-            saveJobType: PublishAndDownloadJobType.PublishScene,
-            shouldThrowErrorForGenerateRasterJob: true, // set to true to test error handling
-        });
-    });
-})

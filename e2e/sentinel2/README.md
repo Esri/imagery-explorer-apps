@@ -144,3 +144,48 @@ To run the "Save Panel" test, use the following command:
 ```bash
 npx playwright test e2e/sentinel2/tests/SavePanel.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
+
+### Test Steps
+1. Open the application and ensure you are signed in to ArcGIS Online via the Save Panel.
+2. **When no scene is selected:**
+    - Open the Save Panel.
+    - Confirm only the "Save as Web Mapping Application" option is available.
+    - Launch the save workflow and complete the dialog.
+    - Verify a new job appears in the job list with a successful status.
+    - Check that the "Open Job" button links to the ArcGIS Online item details page.
+3. **With a single Sentinel-2 scene selected:**
+    - Select a scene from the calendar.
+    - Open the Save Panel and sign in.
+    - Confirm the options: "Save as Web Mapping Application", "Save as Web Map", and "Publish Scene" are available.
+    - Save as a Web Map and verify the job appears and links correctly.
+    - Publish the scene as a hosted imagery service:
+      - Review the estimated credit cost.
+      - Accept the credits to proceed.
+      - Confirm the job completes successfully and links to the ArcGIS Online item.
+4. **With multiple scenes selected (e.g., in Swipe Mode):**
+    - Ensure two scenes are selected.
+    - Open the Save Panel and sign in.
+    - Confirm the options: "Save as Web Mapping Application", "Save Web Map with Multiple Scenes", and "Save Web Map with Multiple Scenes in Single Layer" are available.
+    - Save as a Web Map with multiple scenes and verify the job.
+    - Save as a Web Map with multiple scenes in a single layer and verify the job.
+    - Use the "Clear All" button to remove all jobs from the job list and confirm the list is empty.
+5. **In Index Mask Tool mode:**
+    - Select a scene and activate the Index Mask Tool.
+    - Open the Save Panel and sign in.
+    - Confirm the options: "Save as Web Mapping Application", "Save as Web Map", "Publish Scene", and "Publish Index Mask" are available.
+    - Publish the index mask output as a hosted imagery service and verify the job completes successfully.
+6. **In Change Detection Tool mode:**
+    - Select two scenes and activate the Change Detection Tool.
+    - Open the Save Panel and sign in.
+    - Confirm the options: "Save as Web Mapping Application", "Save Web Map with Multiple Scenes", "Save Web Map with Multiple Scenes in Single Layer", and "Publish Change Detection" are available.
+    - Publish the change detection output as a hosted imagery service and verify the job completes successfully.
+7. **Rejecting credits for a job:**
+    - Select a scene and open the Save Panel.
+    - Publish the scene as a hosted imagery service.
+    - When prompted with the estimated credit cost, choose to reject credits.
+    - Confirm the job is removed from the job list.
+8. **Error handling during publishing:**
+    - Select a scene and open the Save Panel.
+    - Attempt to publish the scene as a hosted imagery service.
+    - Simulate an error during the publishing process.
+    - Confirm the job status is marked as failed in the job list.
