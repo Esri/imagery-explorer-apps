@@ -166,27 +166,44 @@ export const AnimationLayer: FC<Props> = ({
                 return;
             }
 
-            source.elements.addMany(mediaLayerElements);
+            // source.elements.addMany(mediaLayerElements);
             // // media layer elements are ready, change animation mode to playing to start the animation
             // dispatch(animationStatusChanged('playing'));
 
             try {
-                // Wait until all mediaLayerElements are loaded before proceeding
-                await Promise.all(
-                    mediaLayerElements.map((element) =>
-                        once(
-                            () =>
-                                element.loadStatus === 'loaded' ||
-                                element.loadStatus === 'failed'
-                        )
-                    )
-                );
+                // // Wait until all mediaLayerElements are loaded before proceeding
+                // await Promise.all(
+                //     mediaLayerElements.map((element) =>
+                //         once(
+                //             () =>
+                //                 element.loadStatus === 'loaded' ||
+                //                 element.loadStatus === 'failed'
+                //         )
+                //     )
+                // );
+
+                // for (const element of mediaLayerElements) {
+                //     if (element.loadStatus === 'failed') {
+                //         throw new Error(`Element failed to load: ${element}`);
+                //     }
+                //     // console.log(`Element loaded: ${element.loadStatus}`);
+                // }
 
                 for (const element of mediaLayerElements) {
+                    source.elements.add(element);
+
+                    // Wait for each element to load before proceeding
+                    await once(
+                        () =>
+                            element.loadStatus === 'loaded' ||
+                            element.loadStatus === 'failed'
+                    );
+
                     if (element.loadStatus === 'failed') {
                         throw new Error(`Element failed to load: ${element}`);
                     }
-                    // console.log(`Element loaded: ${element.loadStatus}`);
+
+                    console.log(`Element loaded: ${element.loadStatus}`);
                 }
 
                 // media layer elements are ready, change animation mode to playing to start the animation
