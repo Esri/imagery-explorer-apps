@@ -46,6 +46,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
             );
 
             if( whereClause && whereClause.includes('2024')) {
+                console.log('Mocked Sentinel-2 scenes query for 2024 intercepted');
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',
@@ -56,6 +57,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
             }
 
             if (whereClause && whereClause.includes('2023')) {
+                console.log('Mocked Sentinel-2 scenes query for 2023 intercepted');
                 // Mock response for 2023 if needed
                 await route.fulfill({
                     status: 200,
@@ -67,6 +69,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
             }
 
             if(returnExtentOnly === 'true'){
+                console.log('Mocked Sentinel-2 scenes query for extent only intercepted');
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',
@@ -84,6 +87,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
             }
 
             if( objectIds && mockedFeatureByObjectIdMap.has(+objectIds)) {
+                console.log(`Mocked Sentinel-2 scenes query for objectid ${objectIds} intercepted`);
                 const feature = mockedFeatureByObjectIdMap.get(+objectIds);
                 await route.fulfill({
                     status: 200,
@@ -98,6 +102,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
                 return;
             }
 
+            console.log('Mocked Sentinel-2 scenes query intercepted, but no conditions matched, passing through');
             // let it pass through if no conditions matched
             await route.continue();
 
@@ -114,6 +119,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/sharing/rest/content/users/*/addItem',
         async (route) => {
+            console.log('Mocked addItem request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -130,6 +136,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/submitJob',
         async (route) => {
+            console.log('Mocked EstimateRasterAnalysisCost submitJob request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -145,6 +152,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*?**',
         async (route) => {
+            console.log('Mocked EstimateRasterAnalysisCost job status request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -166,6 +174,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*/results/outCost?**',
         async (route) => {
+            console.log('Mocked outCost request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -184,6 +193,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/sharing/rest/portals/*/isServiceNameAvailable?**',
         async (route) => {
+            console.log('Mocked service name availability request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -198,6 +208,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/sharing/rest/community/users/*?f=json&returnUserLicensedItems=true**',
         async (route) => {
+            console.log('Mocked user profile request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -211,6 +222,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/sharing/rest/content/users/*/createService',
         async (route) => {
+            console.log('Mocked createService request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -237,6 +249,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/sharing/rest/content/users/*/items/*/update',
         async (route) => {
+            console.log('Mocked update item request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -252,6 +265,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/submitJob',
         async (route) => {
+            console.log('Mocked GenerateRaster submitJob request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -267,6 +281,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     await page.route(
         '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**',
         async (route) => {
+            console.log('Mocked GenerateRaster job status request intercepted');
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
