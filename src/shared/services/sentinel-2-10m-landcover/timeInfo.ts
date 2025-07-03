@@ -141,8 +141,10 @@ export const getTimeExtentByYear = async (
 
     const fullYearFromStartTime = new Date(
         startTimeInUnixTimestamp
-    ).getFullYear();
-    const fullYearFromEndTime = new Date(endTimeInUnixTimestamp).getFullYear();
+    ).getUTCFullYear();
+    const fullYearFromEndTime = new Date(
+        endTimeInUnixTimestamp
+    ).getUTCFullYear();
 
     // target year is smaller than layer's start time, use layer's start time instead
     if (targetYear <= fullYearFromStartTime) {
