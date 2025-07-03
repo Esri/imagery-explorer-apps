@@ -1,7 +1,7 @@
 {
     "esri_nlcd_land_cover_explorer_title": "Esri | NLCD Land Cover Explorer",
-    "animation_metadata": "__ANIMATION METADATA",
-    "map_attribution": "__MAP_ATTRIBUTION",
+    "animation_metadata": "Esri, USGS",
+    "map_attribution": "Esri, USGS",
     "landsat_layer_title": "Landsat Imagery",
     "land_cover_layer_title": "NLCD Land Cover",
     "renderer_natural_color_label": "Natural Color",
