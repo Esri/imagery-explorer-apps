@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 
 export const encodeQueryLocation = (point: Point): string => {
     if (!point) {

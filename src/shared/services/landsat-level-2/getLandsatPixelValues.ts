@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from './config';
 import {
     getPixelValues,

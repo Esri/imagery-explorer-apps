@@ -103,9 +103,9 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
-    "@arcgis/core": "4.32",
+    "@arcgis/core": "^4.33.7",
     "@esri/arcgis-rest-feature-service": "^4.0.4",
-    "@esri/calcite-components-react": "^3.1.0",
+    "@esri/calcite-components-react": "^3.2.1",
     "@reduxjs/toolkit": "2.5",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",

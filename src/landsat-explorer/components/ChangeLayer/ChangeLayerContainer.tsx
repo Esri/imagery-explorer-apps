@@ -43,7 +43,6 @@ import { useCalculateTotalAreaByPixelsCount } from '@shared/hooks/useCalculateTo
 import { useAppDispatch } from '@shared/store/configureStore';
 import { countOfVisiblePixelsChanged } from '@shared/store/Map/reducer';
 import { getChangeCompareLayerRasterFunction } from '@shared/components/ChangeCompareLayer/helpers';
-import { Polygon } from '@arcgis/core/geometry';
 import { useChangeCompareLayerVisibility } from '@shared/components/ChangeCompareLayer';
 
 type Props = {

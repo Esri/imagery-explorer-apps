@@ -19,7 +19,7 @@ import MapView from '@arcgis/core/views/MapView';
 import Graphic from '@arcgis/core/Graphic';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
-import { Point, Polygon } from '@arcgis/core/geometry';
+import Polygon from '@arcgis/core/geometry/Polygon';
 
 type Props = {
     visible: boolean;

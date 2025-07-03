@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { splitObjectIdsToSeparateGroups } from './splitObjectIdsToSeparateGroups';
 import { IdentifyTaskResponse, identify } from './identify';
 import { canBeConvertedToNumber } from '@shared/utils/snippets/canBeConvertedToNumber';

@@ -61,7 +61,7 @@ import {
     FetchTemporalProfileDataFunc,
     IntersectWithImagerySceneFunc,
 } from '@shared/store/TrendTool/thunks';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selectors';
 import { intersectWithSentinel1Scene } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { getSentinel1TemporalProfileData } from '@shared/services/sentinel-1/getTemporalProfileData';

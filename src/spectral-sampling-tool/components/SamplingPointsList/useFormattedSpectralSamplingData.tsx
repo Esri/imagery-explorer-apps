@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import {
     selectIdOfSelectedItemInListOfQueryParams,

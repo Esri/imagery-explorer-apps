@@ -22,7 +22,7 @@ import {
     Sentinel1Scene,
 } from '@typing/imagery-service';
 import { DateRange } from '@typing/shared';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { getFeatureByObjectId } from '../helpers/getFeatureById';
 import { getExtentByObjectId } from '../helpers/getExtentById';
 import { intersectWithImageryScene } from '../helpers/intersectWithImageryScene';

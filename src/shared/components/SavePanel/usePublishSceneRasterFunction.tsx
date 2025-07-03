@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Geometry } from '@arcgis/core/geometry';
+import Geometry from '@arcgis/core/geometry/Geometry';
 import { createClipRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import React, { useEffect, useMemo } from 'react';

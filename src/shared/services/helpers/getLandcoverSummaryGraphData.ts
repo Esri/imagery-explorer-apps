@@ -1,4 +1,4 @@
-import { Extent } from '@arcgis/core/geometry';
+import Extent from '@arcgis/core/geometry/Extent';
 import { LandcoverClassificationData } from '@typing/landcover';
 import { computeHistograms } from './computeHistograms';
 

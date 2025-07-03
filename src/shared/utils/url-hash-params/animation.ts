@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Extent } from '@arcgis/core/geometry';
+import Extent from '@arcgis/core/geometry/Extent';
 import { getHashParamValueByKey, updateHashParams } from '.';
 import { getNormalizedExtent } from '../snippets/getNormalizedExtent';
 

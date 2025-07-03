@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Geometry } from '@arcgis/core/geometry';
+import Geometry from '@arcgis/core/geometry/Geometry';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { formattedDateString2Unixtimestamp } from '@shared/utils/date-time/formatDateString';

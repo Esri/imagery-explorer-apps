@@ -18,7 +18,7 @@ import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selector
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectMaskLayerPixelValueRange } from '@shared/store/MaskTool/selectors';
-import { Extent, Geometry } from '@arcgis/core/geometry';
+import Geometry from '@arcgis/core/geometry/Geometry';
 
 type Props = {
     originalServiceUrl: string;

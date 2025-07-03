@@ -24,7 +24,7 @@ import { getSignedInUser } from '@shared/utils/esri-oauth';
 // import { MapExtent } from '@landcover-explorer/store/LandcoverExplorer/reducer';
 import { LandCoverLayerBlendMode } from '../LandcoverLayer/useLandCoverLayer';
 import * as webMercatorUtils from '@arcgis/core/geometry/support/webMercatorUtils';
-import { Extent } from '@arcgis/core/geometry';
+import Extent from '@arcgis/core/geometry/Extent';
 
 type CreateWebMapOptions = {
     /**

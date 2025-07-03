@@ -18,7 +18,7 @@ import IMapView from '@arcgis/core/views/MapView';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import IPoint from '@arcgis/core/geometry/Point';
 // import { MapCenter } from '@shared/store/LandcoverExplorer/reducer';
-import { Extent } from '@arcgis/core/geometry';
+import Extent from '@arcgis/core/geometry/Extent';
 
 type Props = {
     mapView?: IMapView;

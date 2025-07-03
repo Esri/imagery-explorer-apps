@@ -12,7 +12,7 @@ import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import { getFeatureByObjectId } from '@shared/services/helpers/getFeatureById';
 import Graphic from '@arcgis/core/Graphic';
-import { Polygon } from '@arcgis/core/geometry';
+import Polygon from '@arcgis/core/geometry/Polygon';
 
 type Props = {
     serviceUrl: string;

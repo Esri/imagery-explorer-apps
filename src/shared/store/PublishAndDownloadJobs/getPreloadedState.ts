@@ -54,7 +54,7 @@ export const getPreloadedState4PublishAndDownloadJobs =
                 },
             };
         } catch (error) {
-            console.error('Error fetching jobs from IndexedDB', error);
+            // console.error('Error fetching jobs from IndexedDB', error);
             return {
                 ...initialPublishAndDownloadJobsState,
             };

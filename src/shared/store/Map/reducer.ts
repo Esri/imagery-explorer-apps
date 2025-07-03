@@ -21,7 +21,7 @@ import {
 } from '@reduxjs/toolkit';
 import { MAP_CENTER, MAP_ZOOM } from '../../constants/map';
 import Point from '@arcgis/core/geometry/Point';
-import { Extent } from '@arcgis/core/geometry';
+import Extent from '@arcgis/core/geometry/Extent';
 
 export type AutoSwipeStatus = 'playing' | 'pausing';
 

@@ -1,4 +1,4 @@
-import { Extent } from '@arcgis/core/geometry';
+import Extent from '@arcgis/core/geometry/Extent';
 import { webMercatorToGeographic } from '@arcgis/core/geometry/support/webMercatorUtils';
 
 export type ComputeHistogramsParams = {

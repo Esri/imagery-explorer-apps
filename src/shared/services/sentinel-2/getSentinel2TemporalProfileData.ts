@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { Sentinel2Scene, TemporalProfileData } from '@typing/imagery-service';
 import { getSentinel2Scenes } from './getSentinel2Scenes';
 import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
