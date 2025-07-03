@@ -30,6 +30,7 @@ import {
     selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
+import { getNormalizedExtent } from '@shared/utils/snippets/getNormalizedExtent';
 // import { getRasterFunctionBySentinel2LandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { Sentinel2LandCoverClassification } from '@typing/landcover';
@@ -91,7 +92,9 @@ const useMediaLayerImageElement = ({
         abortControllerRef.current = new AbortController();
 
         try {
-            const { extent, width, height } = mapView;
+            const { width, height } = mapView;
+
+            const extent = getNormalizedExtent(mapView.extent);
 
             const { xmin, ymin, xmax, ymax } = extent;
 
