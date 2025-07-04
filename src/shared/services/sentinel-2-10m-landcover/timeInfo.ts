@@ -119,10 +119,11 @@ export const populateAvailableYears = (timeExtent: number[]) => {
 };
 
 /**
- * Get Time Extent data for Landcover Imagery Service that matches the input target year
+ * Get the time extent for a specific year from the Sentinel2_10m_LandCover layer
  *
- * @param year
- * @returns
+ * @param targetYear The year to get the time extent for
+ * @param imageryServiceURL The URL of the Sentinel2_10m_LandCover Image Service
+ * @returns TimeExtentData containing start and end times in Unix timestamp
  */
 export const getTimeExtentByYear = async (
     targetYear: number,
@@ -135,10 +136,11 @@ export const getTimeExtentByYear = async (
     if (!timeInfo) {
         await loadTimeInfo(imageryServiceURL);
     }
-
+    // Destructure the start and end times (in Unix timestamp) from the timeInfo object
     const [startTimeInUnixTimestamp, endTimeInUnixTimestamp] =
         timeInfo.timeExtent;
 
+    // Get the full year from the start and end times
     const fullYearFromStartTime = new Date(
         startTimeInUnixTimestamp
     ).getUTCFullYear();
@@ -146,7 +148,7 @@ export const getTimeExtentByYear = async (
         endTimeInUnixTimestamp
     ).getUTCFullYear();
 
-    // target year is smaller than layer's start time, use layer's start time instead
+    // If the target year is before or equal to the layer's start year, use the start time
     if (targetYear <= fullYearFromStartTime) {
         return {
             start: startTimeInUnixTimestamp,
@@ -154,7 +156,7 @@ export const getTimeExtentByYear = async (
         };
     }
 
-    // target year is bigger than layer's end time, use layer's end time instead
+    // If the target year is after or equal to the layer's end year, use the end time
     if (targetYear >= fullYearFromEndTime) {
         return {
             start: endTimeInUnixTimestamp,
@@ -162,8 +164,10 @@ export const getTimeExtentByYear = async (
         };
     }
 
+    // Calculate the difference in years between the target year and the start year
     const diffInYear = targetYear - fullYearFromStartTime;
 
+    // Add the difference in years to the start time to get the Unix timestamp for the target year
     const targetYearInUnixTimestamp = addYears(
         startTimeInUnixTimestamp,
         diffInYear
