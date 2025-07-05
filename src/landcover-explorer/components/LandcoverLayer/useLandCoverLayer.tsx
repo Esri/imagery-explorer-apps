@@ -14,11 +14,13 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    getTimeExtentByYear,
-    // TimeExtentData,
-} from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import {
+//     // getTimeExtentByYear,
+//     // TimeExtentData,
+// } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectTimeExtentByYear } from '@shared/store/LandcoverExplorer/selectors';
 // import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 // import {
 //     getRasterFunctionByLandCoverClassName,
@@ -65,12 +67,14 @@ const useLandCoverLayer = ({
 
     const [landCoverLayer, setLandCoverLayer] = useState<ImageryLayer>();
 
+    const timeExtentByYear = useAppSelector(selectTimeExtentByYear);
+
     /**
      * get land cover layer using time extent for the input year
      */
     const getLandCoverLayer = async () => {
         try {
-            const timeExtent = await getTimeExtentByYear(year, serviceUrl);
+            const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
 
             layerRef.current = new ImageryLayer({
                 // URL to the imagery service
@@ -93,7 +97,7 @@ const useLandCoverLayer = ({
 
     const updateTimeExtent = async () => {
         try {
-            const timeExtent = await getTimeExtentByYear(year, serviceUrl);
+            const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
             layerRef.current.timeExtent = timeExtent as any;
         } catch (error) {
             console.error('Error updating time extent:', error);

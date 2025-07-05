@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+// import { time } from 'console';
 import { addYears } from 'date-fns';
 // import { ta } from 'date-fns/locale';
 // import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from './config';
@@ -22,8 +23,8 @@ import { addYears } from 'date-fns';
  */
 export type LandCoverLayerTimeInfo = {
     timeExtent: number[];
-    defaultTimeInterval: number;
-    defaultTimeIntervalUnits: string;
+    // defaultTimeInterval: number;
+    // defaultTimeIntervalUnits: string;
 };
 
 /**
@@ -48,11 +49,11 @@ export type TimeExtentData = {
     end: number;
 };
 
-/**
- * Time Info for LandCover Layer
- * This will be populated when the `loadTimeInfo` function is called.
- */
-let timeInfo: LandCoverLayerTimeInfo;
+// /**
+//  * Time Info for LandCover Layer
+//  * This will be populated when the `loadTimeInfo` function is called.
+//  */
+// let timeInfo: LandCoverLayerTimeInfo;
 
 // /**
 //  * List of years that there are data available from the Landcover Imagery Service
@@ -81,7 +82,13 @@ export const loadTimeInfo = async (
 
     const data = await res.json();
 
-    timeInfo = data?.timeInfo;
+    if (data?.error) {
+        throw new Error(
+            `Error fetching time info from the service: ${imageryServiceURL}. Error: ${data.error.message}`
+        );
+    }
+
+    const timeInfo = data?.timeInfo;
 
     if (!timeInfo) {
         throw new Error(
@@ -119,23 +126,49 @@ export const populateAvailableYears = (timeExtent: number[]) => {
 };
 
 /**
+ * Get the time extent for each year from the Land cover layer
+ *
+ * @param timeInfo The time info object from the Land cover Image Service
+ * @returns An object where the key is the year and the value is the TimeExtentData for that year
+ */
+export const getTimeExtentByYearFromTimeInfo = (
+    timeInfo: LandCoverLayerTimeInfo
+): {
+    [year: number]: TimeExtentData;
+} => {
+    const output: {
+        [key: number]: TimeExtentData;
+    } = {};
+
+    const years = populateAvailableYears(timeInfo.timeExtent);
+
+    years.forEach((year) => {
+        const startTime = getTimeExtentByYear(year, timeInfo);
+        output[year] = startTime;
+    });
+
+    return output;
+};
+
+/**
  * Get the time extent for a specific year from the Sentinel2_10m_LandCover layer
  *
  * @param targetYear The year to get the time extent for
- * @param imageryServiceURL The URL of the Sentinel2_10m_LandCover Image Service
+ * @param timeInfo The time info object from the Land cover Image Service
  * @returns TimeExtentData containing start and end times in Unix timestamp
  */
-export const getTimeExtentByYear = async (
+export const getTimeExtentByYear = (
     targetYear: number,
-    imageryServiceURL: string
-): Promise<TimeExtentData> => {
+    timeInfo: LandCoverLayerTimeInfo
+    // imageryServiceURL: string
+): TimeExtentData => {
     if (!targetYear) {
         throw new Error('Target year is required to get time extent data.');
     }
 
-    if (!timeInfo) {
-        await loadTimeInfo(imageryServiceURL);
-    }
+    // if (!timeInfo) {
+    //     await loadTimeInfo(imageryServiceURL);
+    // }
     // Destructure the start and end times (in Unix timestamp) from the timeInfo object
     const [startTimeInUnixTimestamp, endTimeInUnixTimestamp] =
         timeInfo.timeExtent;

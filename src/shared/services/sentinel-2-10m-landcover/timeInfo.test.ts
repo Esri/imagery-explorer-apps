@@ -9,25 +9,22 @@ describe('getTimeExtentByYear', () => {
         ],
     };
 
-    beforeAll(() => {
-        global.fetch = jest.fn().mockImplementation(async () => ({
-            json: async () => ({
-                timeInfo: mockTimeInfo,
-            }),
-        }));
-    });
+    // beforeAll(() => {
+    //     global.fetch = jest.fn().mockImplementation(async () => ({
+    //         json: async () => ({
+    //             timeInfo: mockTimeInfo,
+    //         }),
+    //     }));
+    // });
 
-    afterAll(() => {
-        jest.resetAllMocks();
-    });
+    // afterAll(() => {
+    //     jest.resetAllMocks();
+    // });
 
-    const imageryServiceURL = 'https://mocked-url.com';
+    // const imageryServiceURL = 'https://mocked-url.com';
 
     it('should return the start year in service time info if input year is before the start year', async () => {
-        const { start, end } = await getTimeExtentByYear(
-            2016,
-            imageryServiceURL
-        );
+        const { start, end } = getTimeExtentByYear(2016, mockTimeInfo);
         expect(start).toBe(mockTimeInfo.timeExtent[0]);
         expect(end).toBe(mockTimeInfo.timeExtent[0]);
         expect(new Date(start).getUTCFullYear()).toBe(2017);
@@ -35,10 +32,7 @@ describe('getTimeExtentByYear', () => {
     });
 
     it('should return the end year in service time info if input year is after the end year', async () => {
-        const { start, end } = await getTimeExtentByYear(
-            2025,
-            imageryServiceURL
-        );
+        const { start, end } = getTimeExtentByYear(2025, mockTimeInfo);
         expect(start).toBe(mockTimeInfo.timeExtent[1]);
         expect(end).toBe(mockTimeInfo.timeExtent[1]);
         expect(new Date(start).getUTCFullYear()).toBe(2024);
@@ -52,10 +46,7 @@ describe('getTimeExtentByYear', () => {
     it.each(yearsToTest)(
         'returns correct unix timestamp for year %i',
         async (year) => {
-            const { start, end } = await getTimeExtentByYear(
-                year,
-                imageryServiceURL
-            );
+            const { start, end } = getTimeExtentByYear(year, mockTimeInfo);
 
             // Both start and end should be in the input year
             const startYear = new Date(start).getUTCFullYear();

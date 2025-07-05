@@ -28,6 +28,7 @@ import {
     selectSatelliteImageryLayerAquisitionMonth,
     selectSatelliteImageryLayerRasterFunction,
     selectShouldShowSatelliteImageryLayer,
+    selectTimeExtentByYear,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { getNormalizedExtent } from '@shared/utils/snippets/getNormalizedExtent';
@@ -57,6 +58,8 @@ const useMediaLayerImageElement = ({
     mapView,
 }: Props) => {
     const [imageElements, setImageElements] = useState<ImageElement[]>(null);
+
+    const timeExtentByYear = useAppSelector(selectTimeExtentByYear);
 
     const imageUrlsRef = useRef<string[]>([]);
 
@@ -121,6 +124,7 @@ const useMediaLayerImageElement = ({
                           //   getRasterFunctionBySentinel2LandCoverClassName(
                           //       activeLandCoverType as Sentinel2LandCoverClassification
                           //   ),
+                          timeExtentData: timeExtentByYear[year],
                           abortController: abortControllerRef.current,
                       });
             });

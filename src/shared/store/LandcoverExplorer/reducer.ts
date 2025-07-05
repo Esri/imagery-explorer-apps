@@ -20,6 +20,7 @@ import {
     // createAsyncThunk
 } from '@reduxjs/toolkit';
 import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import { TimeExtentData } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 // import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
@@ -98,6 +99,13 @@ export type LandcoverExplorerAppState = {
          * The available years for the Land Cover layer based on the time extent
          */
         availableYears: number[];
+        /**
+         * The time extent for each year, used to retrieve the land cover layer for a specific year.
+         * The key is the year, and the value is the TimeExtentData containing start and end times in Unix timestamp.
+         */
+        timeExtentByYear: {
+            [year: number]: TimeExtentData;
+        };
     };
 };
 
@@ -127,6 +135,7 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     },
     timeInfo: {
         availableYears: [],
+        timeExtentByYear: {},
     },
 };
 

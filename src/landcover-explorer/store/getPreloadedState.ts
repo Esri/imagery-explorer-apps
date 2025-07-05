@@ -38,6 +38,7 @@ import {
 import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
 import { LandCoverClassification } from '@typing/landcover';
 import {
+    getTimeExtentByYearFromTimeInfo,
     LandCoverLayerTimeInfo,
     populateAvailableYears,
 } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
@@ -60,6 +61,10 @@ export const getPreloadedStateForLandcoverExplorerApp = (
 ): LandcoverExplorerAppState => {
     // Get the list of available years for land cover data
     const availableYears = populateAvailableYears(timeInfo.timeExtent); //getAvailableYears();
+
+    // Get time extent for each year from the time info
+    // This will be used to retrieve the land cover layer for a specific year
+    const timeExtentByYear = getTimeExtentByYearFromTimeInfo(timeInfo);
 
     // Parse time extent (start/end year) from URL hash params
     const timeExtent = getTimeExtentFromHashParams();
@@ -141,6 +146,7 @@ export const getPreloadedStateForLandcoverExplorerApp = (
         },
         timeInfo: {
             availableYears,
+            timeExtentByYear,
         },
     };
 };

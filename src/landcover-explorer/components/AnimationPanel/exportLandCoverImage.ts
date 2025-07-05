@@ -14,10 +14,11 @@
  */
 
 import IExtent from '@arcgis/core/geometry/Extent';
-import {
-    getTimeExtentByYear,
-    // TimeExtentData,
-} from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { TimeExtentData } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import {
+//     getTimeExtentByYear,
+//     // TimeExtentData,
+// } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 
 type ExportImageParams = {
@@ -45,6 +46,10 @@ type ExportImageParams = {
      * Land cover layer raster function name that will be used in the rendering rule
      */
     rasterFunctionName: string;
+    /**
+     * Time extent data for the year
+     */
+    timeExtentData: TimeExtentData;
     abortController: AbortController;
 };
 
@@ -55,11 +60,14 @@ export const exportLandCoverImage = async ({
     height,
     year,
     rasterFunctionName,
+    timeExtentData,
     abortController,
 }: ExportImageParams) => {
     const { xmin, xmax, ymin, ymax } = extent;
 
-    const { start } = await getTimeExtentByYear(year, serviceUrl);
+    // const { start } = await getTimeExtentByYear(year, serviceUrl);
+
+    const { start } = timeExtentData;
 
     const params = new URLSearchParams({
         f: 'image',
