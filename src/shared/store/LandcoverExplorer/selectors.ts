@@ -140,3 +140,6 @@ export const selectLandcoverAnimationYears = createSelector(
         return years;
     }
 );
+
+export const selectAvaiableYearsForLandCoverLayer = (state: RootState) =>
+    state.LandcoverExplorer.timeInfo.availableYears;

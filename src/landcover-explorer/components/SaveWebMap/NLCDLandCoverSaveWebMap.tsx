@@ -6,10 +6,14 @@ import {
     NLCD_LANDCOVER_ITEM_ID,
     NLCD_LANDCOVER_START_TIME_FIELD,
 } from '@shared/services/nlcd-landcover/config';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectAvaiableYearsForLandCoverLayer } from '@shared/store/LandcoverExplorer/selectors';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 
 export const NLCDLandCoverSaveWebMap = () => {
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
+
+    const years = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     return (
         <SaveWebMapContainer

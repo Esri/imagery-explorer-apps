@@ -21,7 +21,7 @@ import {
     getDistinctLandCoverClassificationPixelValues,
     getSentinel2LandCoverClassificationByPixelValue,
 } from './rasterAttributeTable';
-import { getAvailableYears } from './timeInfo';
+// import { getAvailableYears } from './timeInfo';
 import { LandcoverClassificationData } from '@typing/landcover';
 import {
     computeHistograms,
@@ -63,9 +63,10 @@ export type HistoricalLandCoverData = {
 
 export const getHistoricalLandCoverDataByMapExtent = async (
     extent: Extent,
-    resolution: number
+    resolution: number,
+    availableYears: number[]
 ): Promise<HistoricalLandCoverData[]> => {
-    const availableYears = getAvailableYears();
+    // const availableYears = getAvailableYears();
 
     const distinctLandCoverClassificationPixelValues =
         getDistinctLandCoverClassificationPixelValues();

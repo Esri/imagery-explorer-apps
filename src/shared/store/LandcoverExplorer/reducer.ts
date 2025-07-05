@@ -88,6 +88,17 @@ export type LandcoverExplorerAppState = {
      * The range of years that will be used for the animation
      */
     animationYearRange: LandcoverAnimationYearRange;
+    /**
+     * Time information for the Land Cover layer.
+     * Contains the available years for the Land Cover layer, determined when the Redux store is initialized.
+     * This value should remain constant and is used to populate the Time Slider and Swipe Widget.
+     */
+    timeInfo: {
+        /**
+         * The available years for the Land Cover layer based on the time extent
+         */
+        availableYears: number[];
+    };
 };
 
 export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
@@ -113,6 +124,9 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     animationYearRange: {
         start: getCurrentYear(),
         end: getCurrentYear(),
+    },
+    timeInfo: {
+        availableYears: [],
     },
 };
 

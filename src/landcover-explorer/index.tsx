@@ -20,7 +20,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { getLandcoverExplorerStore } from './store';
 import AppLayout from './components/AppLayout/AppLayout';
-import { loadServiceInfo } from '@shared/services/sentinel-2-10m-landcover/loadServiceInfo';
+// import { loadServiceInfo } from '@shared/services/sentinel-2-10m-landcover/loadServiceInfo';
 import { initEsriOAuth } from '../shared/utils/esri-oauth';
 // import { APP_ID } from './constants';
 import { ErrorPage } from '@shared/components/ErrorPage';
@@ -28,6 +28,9 @@ import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import '@shared/components/calcite-components';
 import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
+import { loadSentinel2LandcoverRasterAttributeTable } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+import { loadTimeInfo } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -41,9 +44,12 @@ import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
         await initI18next(APP_LANGUAGE);
 
         // Load service information (Raster Attributes, Time Extent and etc) of Sentinel-2-10m-Landcover layer
-        await loadServiceInfo();
+        await loadSentinel2LandcoverRasterAttributeTable();
+        const timeInfo = await loadTimeInfo(
+            SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL
+        );
 
-        const store = getLandcoverExplorerStore();
+        const store = getLandcoverExplorerStore(timeInfo);
 
         root.render(
             <ReduxProvider store={store}>

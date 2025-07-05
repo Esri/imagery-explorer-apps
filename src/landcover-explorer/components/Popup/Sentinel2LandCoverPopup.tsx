@@ -1,7 +1,7 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useMemo } from 'react';
 import Popup from './Popup';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import {
     // DEFAULT_RENDERING_RULE,
     SENTINEL2_LANDCOVER_10M_END_YEAR_FIELD,
@@ -10,15 +10,19 @@ import {
 } from '@shared/services/sentinel-2-10m-landcover/config';
 import { sentinel2LandcoverClassificationDataMap } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectAvaiableYearsForLandCoverLayer } from '@shared/store/LandcoverExplorer/selectors';
 
 type Props = {
     mapView?: MapView;
 };
 
 export const Sentinel2LandCoverPopup: FC<Props> = ({ mapView }) => {
-    const years = useMemo(() => {
-        return getAvailableYears();
-    }, []);
+    // const years = useMemo(() => {
+    //     return getAvailableYears();
+    // }, []);
+
+    const years = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     if (!mapView) {
         return null;

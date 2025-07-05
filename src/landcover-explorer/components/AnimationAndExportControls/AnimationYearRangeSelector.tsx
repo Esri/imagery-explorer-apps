@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react';
 import { TimeSliderWidget } from '../TimeSelector/TimeSliderWidget';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
-import { selectLandcoverAppAnimationYearRange } from '@shared/store/LandcoverExplorer/selectors';
+import {
+    selectAvaiableYearsForLandCoverLayer,
+    selectLandcoverAppAnimationYearRange,
+} from '@shared/store/LandcoverExplorer/selectors';
 import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
 import { landcoverAnimationYearRangeChanged } from '@shared/store/LandcoverExplorer/reducer';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +20,11 @@ export const AnimationYearRangeSelector = () => {
         selectLandcoverAppAnimationYearRange
     );
 
-    const availableYears = useMemo(() => {
-        return getAvailableYears();
-    }, [aminationYearRange]);
+    // const availableYears = useMemo(() => {
+    //     return getAvailableYears();
+    // }, [aminationYearRange]);
+
+    const availableYears = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     const initialTimeExtent = useMemo(() => {
         const currentYear = getCurrentYear();

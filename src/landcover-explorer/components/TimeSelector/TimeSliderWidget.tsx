@@ -21,12 +21,13 @@ import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
+    selectAvaiableYearsForLandCoverLayer,
     selectMapMode,
     // selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 import { getSliderTickValues } from './helpers';
 import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
@@ -76,7 +77,8 @@ export const TimeSliderWidgetContainer = () => {
 
     const mode = useAppSelector(selectMapMode);
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
+    const years = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     const year = useAppSelector(selectYear);
 

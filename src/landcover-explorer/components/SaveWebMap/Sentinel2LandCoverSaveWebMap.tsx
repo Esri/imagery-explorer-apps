@@ -1,6 +1,6 @@
 import React from 'react';
 import { SaveWebMapContainer } from './SaveWebMapContainer';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import {
     SENTINEL2_LANDCOVER_10M_START_TIME_FIELD,
     SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
@@ -9,9 +9,13 @@ import {
     SENTINEL_2_10M_LAND_COVER_ITEM_ID,
     // WEB_MAP_ID,
 } from '@landcover-explorer/constants/map';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectAvaiableYearsForLandCoverLayer } from '@shared/store/LandcoverExplorer/selectors';
 
 export const Sentinel2LandCoverSaveWebMap = () => {
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
+
+    const years = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     return (
         <SaveWebMapContainer

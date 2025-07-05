@@ -1,6 +1,7 @@
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
+    selectAvaiableYearsForLandCoverLayer,
     selectShouldShowSatelliteImageryLayer,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -22,9 +23,11 @@ export const AnimationStatusIndicator: FC<AnimationStatusIndicatorProps> = ({
 
     const selectedYear = useAppSelector(selectYear);
 
-    const availableYears = useMemo(() => {
-        return getAvailableYears();
-    }, []);
+    // const availableYears = useMemo(() => {
+    //     return getAvailableYears();
+    // }, []);
+
+    const availableYears = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     const shouldShowSatelliteImageryLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer

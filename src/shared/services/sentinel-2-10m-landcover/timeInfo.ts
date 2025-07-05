@@ -20,7 +20,7 @@ import { addYears } from 'date-fns';
 /**
  * Time Info for LandCover Layer
  */
-type TimeInfo = {
+export type LandCoverLayerTimeInfo = {
     timeExtent: number[];
     defaultTimeInterval: number;
     defaultTimeIntervalUnits: string;
@@ -52,17 +52,17 @@ export type TimeExtentData = {
  * Time Info for LandCover Layer
  * This will be populated when the `loadTimeInfo` function is called.
  */
-let timeInfo: TimeInfo;
+let timeInfo: LandCoverLayerTimeInfo;
 
-/**
- * List of years that there are data available from the Landcover Imagery Service
- *
- * @example
- * ```
- * [2017, 2018, 2019, 2020, 2021]
- * ```
- */
-let availableYears: number[] = [];
+// /**
+//  * List of years that there are data available from the Landcover Imagery Service
+//  *
+//  * @example
+//  * ```
+//  * [2017, 2018, 2019, 2020, 2021]
+//  * ```
+//  */
+// let availableYears: number[] = [];
 
 /**
  * Load Time Info from LandCover Imagery Service's JSON
@@ -73,7 +73,7 @@ let availableYears: number[] = [];
  */
 export const loadTimeInfo = async (
     imageryServiceURL: string
-): Promise<TimeInfo> => {
+): Promise<LandCoverLayerTimeInfo> => {
     // const requestURL = SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL + '?f=json';
     const requestURL = imageryServiceURL + '?f=json';
 
@@ -89,7 +89,7 @@ export const loadTimeInfo = async (
         );
     }
 
-    availableYears = populateAvailableYears(timeInfo.timeExtent);
+    // availableYears = populateAvailableYears(timeInfo.timeExtent);
 
     return timeInfo;
 };
@@ -179,10 +179,10 @@ export const getTimeExtentByYear = async (
     };
 };
 
-/**
- * Get list of years that there are data available from Sentinel2_10m_LandCover layer
- * @returns array of years (e.g. `[2017, 2018, 2019, 2020, 2021]`)
- */
-export const getAvailableYears = () => {
-    return [...availableYears];
-};
+// /**
+//  * Get list of years that there are data available from Sentinel2_10m_LandCover layer
+//  * @returns array of years (e.g. `[2017, 2018, 2019, 2020, 2021]`)
+//  */
+// export const getAvailableYears = () => {
+//     return [...availableYears];
+// };

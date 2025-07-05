@@ -26,9 +26,12 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import { APP_ID } from '@shared/config';
-import { loadNLCDLandcoverServiceInfo } from '@shared/services/nlcd-landcover/loadServiceInfo';
+// import { loadNLCDLandcoverServiceInfo } from '@shared/services/nlcd-landcover/loadServiceInfo';
 import { setImageryServiceFieldNames } from '@landcover-explorer/components/SatelliteImageryLayer/exportSatelliteImage';
 import { FIELD_NAMES } from '@shared/services/landsat-level-2/config';
+import { getNLCDLandCoverRasterAttributeTable } from '@shared/services/nlcd-landcover/classifications';
+import { loadTimeInfo } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -40,8 +43,10 @@ import { FIELD_NAMES } from '@shared/services/landsat-level-2/config';
 
         await initI18next(APP_LANGUAGE);
 
-        // Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer
-        await loadNLCDLandcoverServiceInfo();
+        // // Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer
+        // await loadNLCDLandcoverServiceInfo();
+        await getNLCDLandCoverRasterAttributeTable();
+        const timeInfo = await loadTimeInfo(NLCD_LANDCOVER_IMAGE_SERVICE_URL);
 
         // set the field names for the lansat imagery service,
         // these field names are used for the export satellite image functionality
@@ -51,7 +56,7 @@ import { FIELD_NAMES } from '@shared/services/landsat-level-2/config';
             CloudCover: FIELD_NAMES.CLOUD_COVER,
         });
 
-        const store = getNLCDLandcoverExplorerStore();
+        const store = getNLCDLandcoverExplorerStore(timeInfo);
 
         root.render(
             <ReduxProvider store={store}>

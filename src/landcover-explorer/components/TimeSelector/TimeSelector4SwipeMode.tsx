@@ -17,12 +17,13 @@ import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import {
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,
 } from '@shared/store/LandcoverExplorer/reducer';
 import {
+    selectAvaiableYearsForLandCoverLayer,
     selectMapMode,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
@@ -41,7 +42,8 @@ const TimeSelector4SwipeMode: FC<Props> = ({
 
     const mode = useAppSelector(selectMapMode);
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
+    const years = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
         selectYearsForSwipeWidgetLayers

@@ -15,8 +15,9 @@
 
 import configureAppStore from '@shared/store/configureStore';
 import { getPreloadedState } from './getPreloadedState';
+import { LandCoverLayerTimeInfo } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 
-export const getLandcoverExplorerStore = () => {
-    const preloadedState = getPreloadedState();
+export const getLandcoverExplorerStore = (timeInfo: LandCoverLayerTimeInfo) => {
+    const preloadedState = getPreloadedState(timeInfo);
     return configureAppStore(preloadedState);
 };

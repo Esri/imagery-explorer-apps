@@ -24,7 +24,10 @@ import {
     getHistoricalLandCoverDataByMapExtent,
     HistoricalLandCoverData,
 } from '@shared/services/sentinel-2-10m-landcover/getHistoricalLandCoverDataByMapExtent';
-import { selectShowInfoPanel } from '@shared/store/LandcoverExplorer/selectors';
+import {
+    selectAvaiableYearsForLandCoverLayer,
+    selectShowInfoPanel,
+} from '@shared/store/LandcoverExplorer/selectors';
 // import { QuickD3ChartData, QuickD3ChartDataItem } from '../QuickD3Chart/types';
 import CountrySelector from './Header/CountrySelector';
 import SubRegionSelector from './Header/SubRegionSelector';
@@ -75,6 +78,8 @@ const InfoPanel = () => {
         useState<HistoricalLandCoverData[]>();
 
     const [chartData, setChartData] = useState<GroupedBarChartGroupData[]>();
+
+    const availableYears = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     // const [uniqueLandCoverClasses, setUniqueLandCoverClasses] = useState<
     //     string[]
@@ -150,7 +155,8 @@ const InfoPanel = () => {
                     historicalLandCoverData =
                         await getHistoricalLandCoverDataByMapExtent(
                             extent,
-                            resolution
+                            resolution,
+                            availableYears
                         );
                 }
 

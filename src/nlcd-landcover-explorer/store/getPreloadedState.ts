@@ -48,18 +48,20 @@ import {
 import { LandcoverExplorerAppState } from '@shared/store/LandcoverExplorer/reducer';
 import { getMapCenterFromHashParams } from '@landcover-explorer/utils/URLHashParams';
 import { UIState } from '@shared/store/UI/reducer';
+import { LandCoverLayerTimeInfo } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 
 const isMobileView = isMobileDevice();
 
-const getPreloadedStateForNLCDLandcoverExplorerApp =
-    (): LandcoverExplorerAppState => {
-        const state = getPreloadedStateForLandcoverExplorerApp();
-        // console.log('getPreloadedStateForNLCDLandcoverExplorerApp: ', state);
+const getPreloadedStateForNLCDLandcoverExplorerApp = (
+    timeInfo: LandCoverLayerTimeInfo
+): LandcoverExplorerAppState => {
+    const state = getPreloadedStateForLandcoverExplorerApp(timeInfo);
+    // console.log('getPreloadedStateForNLCDLandcoverExplorerApp: ', state);
 
-        return {
-            ...state,
-        };
+    return {
+        ...state,
     };
+};
 
 const getPreloadedUIStatForNLCDLandcoverExplorerApp = (): UIState => {
     // const showDownloadPanel = getDonwloadModeFromHashParams();
@@ -96,9 +98,12 @@ const getPreloadedMapState = (): MapState => {
     };
 };
 
-export const getPreloadedState = (): PartialRootState => {
+export const getPreloadedState = (
+    timeInfo: LandCoverLayerTimeInfo
+): PartialRootState => {
     return {
-        LandcoverExplorer: getPreloadedStateForNLCDLandcoverExplorerApp(),
+        LandcoverExplorer:
+            getPreloadedStateForNLCDLandcoverExplorerApp(timeInfo),
         UI: getPreloadedUIStatForNLCDLandcoverExplorerApp(),
         Map: getPreloadedMapState(),
     };
