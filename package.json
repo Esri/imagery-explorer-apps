@@ -24,7 +24,9 @@
     "e2e:landsat": "npx playwright test --config e2e/playwright.landsat.config.ts",
     "e2e:sentinel1": "npx playwright test --config e2e/playwright.sentinel1.config.ts",
     "e2e:sentinel2": "npx playwright test --config e2e/playwright.sentinel2.config.ts --workers=1",
-    "e2e:sentinel2:headed": "npx playwright test --config e2e/playwright.sentinel2.config.ts --headed --workers=1"
+    "e2e:sentinel2:headed": "npx playwright test --config e2e/playwright.sentinel2.config.ts --headed --workers=1",
+    "e2e:landcover": "npx playwright test --config e2e/playwright.landcover.config.ts --workers=1",
+    "e2e:landcover:headed": "npx playwright test --config e2e/playwright.landcover.config.ts --headed --workers=1"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,json}": [
