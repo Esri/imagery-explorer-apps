@@ -226,12 +226,12 @@ THIS IS THE SUMMARY FOR THE NLCD LAND COVER EXPLORER APP
 ### Usage
 To run and test the app on your local machine:
 ```sh
-npm run start:nlcdlandcover
+npm run start:nlcd-landcover
 ```
 
 To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/nlcdlandcoverexplorer` directory.
 ```sh
-npm run build:nlcdlandcover
+npm run build:nlcd-landcover
 ```
 
 ### Resources
