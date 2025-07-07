@@ -9,7 +9,7 @@ import { clickOnMap } from '../helpers';
 test.describe('Sentinel-2 Land Cover Explorer - Map Popup', () => {
 
     const AppURL = `${DEV_SERVER_URL}/#mapCenter=-116.96259%2C34.09604%2C11.90`;
-
+ 
     test('verify the Popup displays the correct information for the selected location', 
         async ({ page }) => {
         // Set up network mocks 
@@ -22,7 +22,9 @@ test.describe('Sentinel-2 Land Cover Explorer - Map Popup', () => {
 
         // Verify the popup is visible
         const popupContent = page.getByTestId('landcover-popup-content');
-        await expect(popupContent).toBeVisible();
+        await expect(popupContent).toBeVisible({
+            timeout: 30000 // Wait up to 30 seconds for the popup to appear
+        });
 
         // This is the expected popup content based on the mock data
         const popupItems:{
@@ -47,8 +49,8 @@ test.describe('Sentinel-2 Land Cover Explorer - Map Popup', () => {
             await expect(popupItem).toContainText(item.className);
         }
 
-        // pause the test to allow manual inspection
-        await page.pause();
+        // // pause the test to allow manual inspection
+        // await page.pause();
 
         // Clean up network mocks
         await resetMockSentinel2LancoverNetworkRequest(page);

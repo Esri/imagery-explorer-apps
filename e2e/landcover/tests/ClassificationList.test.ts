@@ -48,8 +48,8 @@ test.describe('Sentinel-2 Land Cover Explorer - Classification List', () => {
         await treeClassificationItem.click();
         await expect(treeClassificationItem).toHaveAttribute('data-selected', 'false');
 
-        // pause the test to allow manual inspection
-        await page.pause();
+        // // pause the test to allow manual inspection
+        // await page.pause();
 
         // Clean up network mocks
         await resetMockSentinel2LancoverNetworkRequest(page);
