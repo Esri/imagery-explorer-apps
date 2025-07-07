@@ -596,3 +596,20 @@ export const mockedSentinel2LandcoverComputeHistogramResponse = {
         }
     ]
 }
+
+export const mockedSentinel2IdentifyResponse = {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "2",
+    "location": {
+        "x": -13017317.071678244,
+        "y": 4039491.0779388938,
+        "spatialReference": {
+            "wkid": 102100,
+            "latestWkid": 3857
+        }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+}

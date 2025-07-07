@@ -183,7 +183,9 @@ const Popup: FC<Props> = ({
                       });
 
                       return `
-                        <div class='flex my-2 items-center'>
+                        <div class='flex my-2 items-center'
+                            data-testid="popup-item-${year}-${data.ClassName}"
+                        >
                             <div class='rounded-full mr-2 bg-custom-light-blue-80 w-[6px] h-[6px] ${
                                 year !== aquisitionYear ? 'opacity-0' : ''
                             }'></div>
@@ -207,7 +209,9 @@ const Popup: FC<Props> = ({
             : '';
 
         popupDiv.innerHTML = `
-            <div class='text-custom-light-blue'>
+            <div class='text-custom-light-blue'
+                data-testid="landcover-popup-content"
+            >
                 ${htmlString4AcquisitionDate}
                 ${htmlString4LandCoverList}
             </div>
