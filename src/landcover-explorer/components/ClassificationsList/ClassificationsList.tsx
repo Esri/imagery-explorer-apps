@@ -93,6 +93,7 @@ const ClassificationsList: FC<Props> = ({
                         'md:mt-3': scale === 's', // Add top margin for small scale
                     }
                 )}
+                data-testid="land-cover-classifications-list"
             >
                 {data
                     .filter((d) => d.ClassName !== 'No Data')
@@ -124,6 +125,7 @@ const ClassificationsList: FC<Props> = ({
                             <div
                                 key={Value}
                                 data-testid={`land-cover-classification-${ClassName}`}
+                                data-selected={isSelected}
                                 className={classNames(
                                     'flex items-center cursor-pointer',
                                     {
