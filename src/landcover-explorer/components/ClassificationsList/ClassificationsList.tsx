@@ -123,6 +123,7 @@ const ClassificationsList: FC<Props> = ({
                         return (
                             <div
                                 key={Value}
+                                data-testid={`land-cover-classification-${ClassName}`}
                                 className={classNames(
                                     'flex items-center cursor-pointer',
                                     {
