@@ -103,9 +103,15 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
     useEffect(() => {
         isPlayingRef.current = animationMode === 'playing';
 
+        // if animationMode is null (stopped), reset indexOfNextFrame to 0
+        if (!animationMode) {
+            indexOfNextFrame.current = 0;
+            return;
+        }
+
         if (mediaLayerElements && animationMode === 'playing') {
             // update indexOfNextFrame using the index of the active year from the years list
-            indexOfNextFrame.current = 0; //years.indexOf(year);
+            // indexOfNextFrame.current = 0; //years.indexOf(year);
             requestAnimationFrame(showNextFrame);
         }
     }, [animationMode, mediaLayerElements]);
