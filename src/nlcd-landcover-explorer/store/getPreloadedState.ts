@@ -33,7 +33,7 @@
 //     getRegionFromHashParams,
 //     getShowSaveWebMapPanelFromHashParams,
 // } from '@landcover-explorer/utils/URLHashParams';
-import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
+import { INTERESTING_PLACES, DEFAULT_MAP_ZOOM } from '../constants/map';
 // import { LandCoverClassification } from '@typing/landcover';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
@@ -91,10 +91,12 @@ const getPreloadedUIStatForNLCDLandcoverExplorerApp = (): UIState => {
 const getPreloadedMapState = (): MapState => {
     const { zoom, center } = getMapCenterFromHashParams() || {};
 
+    const interestingPlace = getRandomElement(INTERESTING_PLACES);
+
     return {
         ...initialMapState,
-        zoom: zoom || DEFAULT_MAP_ZOOM,
-        center: center || getRandomElement(DEFAULT_MAP_CENTERS),
+        zoom: zoom || interestingPlace[2] || DEFAULT_MAP_ZOOM,
+        center: center || [interestingPlace[0], interestingPlace[1]],
     };
 };
 
