@@ -25,6 +25,7 @@ import { getSignedInUser } from '@shared/utils/esri-oauth';
 import { LandCoverLayerBlendMode } from '../LandcoverLayer/useLandCoverLayer';
 import * as webMercatorUtils from '@arcgis/core/geometry/support/webMercatorUtils';
 import Extent from '@arcgis/core/geometry/Extent';
+import { init } from 'i18next';
 
 type CreateWebMapOptions = {
     /**
@@ -146,6 +147,10 @@ type GetWebMapContentParameters = {
      * the name of the application that is authoring the web map.
      */
     authoringApp: string;
+    /**
+     * The extent of the web map in longitude and latitude.
+     */
+    extent: Extent;
 };
 
 /**
@@ -169,7 +174,9 @@ const getDataOfLandcoverAppWebmap = async (): Promise<WebMapData> => {
 
 /**
  * Get the JSON content for the web map item to be submitted.
- * @returns
+ * @returns {Promise<string>} A promise that resolves to the JSON content of the web map.
+ *
+ * @see https://developers.arcgis.com/web-map-specification/
  */
 const getWebMapContent = async ({
     selectedYear,
@@ -180,6 +187,7 @@ const getWebMapContent = async ({
     landCoverLayerStartTimeField,
     landCoverLayerStartTimeFieldType,
     authoringApp,
+    extent,
 }: GetWebMapContentParameters) => {
     const data = await getDataOfLandcoverAppWebmap();
 
@@ -229,6 +237,26 @@ const getWebMapContent = async ({
         // authoringApp: 'EsriLandcoverExplorer',
         authoringApp: authoringApp,
         authoringAppVersion: '1.0.0',
+        /**
+         * Defines the initial state for web map.
+         */
+        initialState: {
+            /**
+             * Represents the location displayed on the map
+             */
+            viewpoint: {
+                targetGeometry: {
+                    type: 'extent',
+                    xmin: extent.xmin,
+                    ymin: extent.ymin,
+                    xmax: extent.xmax,
+                    ymax: extent.ymax,
+                    spatialReference: {
+                        wkid: 3857,
+                    },
+                },
+            },
+        },
     };
 
     return JSON.stringify(content);
@@ -286,6 +314,7 @@ export const createWebMap = async ({
         landCoverLayerStartTimeField,
         landCoverLayerStartTimeFieldType,
         authoringApp,
+        extent,
     });
 
     const extentInLonLat = getWebMapExtentInLonLat(extent);

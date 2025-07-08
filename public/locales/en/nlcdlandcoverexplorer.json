@@ -18,7 +18,7 @@
     "renderer_ndmi_description": "Normalized Difference Moisture Index with a color map applied. <br/><br/>NDMI is calculated as (NIR - SWIR1) / (NIR + SWIR1). <br/><br/>Areas of higher moisture content range from dark blue to light blue while the driest areas range from tan to white.",
     "output_webmap_default_title": "NLCD Land Cover Exlorer export map",
     "output_webmap_default_snippet": "NLCD land use/land cover time series of the USA.",
-    "output_webmap_default_tags": "Landsat, Land Use, Land Cover, LULC, Living Atlas",
+    "output_webmap_default_tags": "NLCD, Land Use, Land Cover, LULC, Living Atlas, USGS, Esri",
     "Open Water": "Open Water",
     "Open Water_description": "Areas of open water, generally with less than 25% cover of vegetation or soil.",
     "Perennial Snow/Ice": "Perennial Snow/Ice",
