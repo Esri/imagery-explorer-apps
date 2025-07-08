@@ -29,7 +29,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // Mock the response for the Sentinel-2 scenes query
     await page.route(
-        '*/**/Sentinel2L2A/ImageServer/query?**',
+        '**/Sentinel2L2A/ImageServer/query?**',
         async (route) => {
             const url = new URL(route.request().url());
 
@@ -117,7 +117,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     );
 
     await page.route(
-        '*/**/sharing/rest/content/users/*/addItem',
+        '**/sharing/rest/content/users/*/addItem',
         async (route) => {
             console.log('Mocked addItem request intercepted');
             await route.fulfill({
@@ -134,7 +134,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // Mock the response for the raster analysis cost estimation
     await page.route(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/submitJob',
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/submitJob',
         async (route) => {
             console.log('Mocked EstimateRasterAnalysisCost submitJob request intercepted');
             await route.fulfill({
@@ -150,7 +150,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // Mock the response for checking the job status for raster analysis cost estimation
     await page.route(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*?**',
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*?**',
         async (route) => {
             console.log('Mocked EstimateRasterAnalysisCost job status request intercepted');
             await route.fulfill({
@@ -172,7 +172,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // Mock the response for getting the result of raster analysis cost estimation
     await page.route(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*/results/outCost?**',
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*/results/outCost?**',
         async (route) => {
             console.log('Mocked outCost request intercepted');
             await route.fulfill({
@@ -191,7 +191,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // Mock the response for service name availability check
     await page.route(
-        '*/**/sharing/rest/portals/*/isServiceNameAvailable?**',
+        '**/sharing/rest/portals/*/isServiceNameAvailable?**',
         async (route) => {
             console.log('Mocked service name availability request intercepted');
             await route.fulfill({
@@ -206,7 +206,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // mock the response for check user profile and licenses
     await page.route(
-        '*/**/sharing/rest/community/users/*?f=json&returnUserLicensedItems=true**',
+        '**/sharing/rest/community/users/*?f=json&returnUserLicensedItems=true**',
         async (route) => {
             console.log('Mocked user profile request intercepted');
             await route.fulfill({
@@ -220,7 +220,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     // Mock the response for creating a hosted imagery service
     // This happens after the check for service name availability and user license check
     await page.route(
-        '*/**/sharing/rest/content/users/*/createService',
+        '**/sharing/rest/content/users/*/createService',
         async (route) => {
             console.log('Mocked createService request intercepted');
             await route.fulfill({
@@ -247,7 +247,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
     // Mocked response of update ArcGIS Online item info,
     // this happens after the hosted imagery service is created
     await page.route(
-        '*/**/sharing/rest/content/users/*/items/*/update',
+        '**/sharing/rest/content/users/*/items/*/update',
         async (route) => {
             console.log('Mocked update item request intercepted');
             await route.fulfill({
@@ -263,7 +263,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // Mock the response for the raster generation job submission
     await page.route(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/submitJob',
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/submitJob',
         async (route) => {
             console.log('Mocked GenerateRaster submitJob request intercepted');
             await route.fulfill({
@@ -279,7 +279,7 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 
     // Mock the response for checking the job status for raster generation
     await page.route(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**',
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**',
         async (route) => {
             console.log('Mocked GenerateRaster job status request intercepted');
             await route.fulfill({
@@ -312,36 +312,36 @@ export const mockSentinel2NetworkRequests = async (page: Page) => {
 export const resetMockSentinel2NetworkRequest = async (page: Page) => {
     await page.unroute('https://mtags.arcgis.com/tags-min.js');
     await page.unroute(
-        '*/**/Sentinel2L2A/ImageServer/query?**'
+        '**/Sentinel2L2A/ImageServer/query?**'
     );
     await page.unroute(
-        '*/**/sharing/rest/content/users/*/addItem'
+        '**/sharing/rest/content/users/*/addItem'
     );
     await page.unroute(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/submitJob'
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/submitJob'
     );
     await page.unroute(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*?**'
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*?**'
     );
     await page.unroute(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*/results/outCost?**'
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/EstimateRasterAnalysisCost/jobs/*/results/outCost?**'
     );
     await page.unroute(
-        '*/**/sharing/rest/portals/*/isServiceNameAvailable?**'
+        '**/sharing/rest/portals/*/isServiceNameAvailable?**'
     );
     await page.unroute(
-        '*/**/sharing/rest/community/users/*?f=json&returnUserLicensedItems=true**'
+        '**/sharing/rest/community/users/*?f=json&returnUserLicensedItems=true**'
     );
     await page.unroute(
-        '*/**/sharing/rest/content/users/*/createService'
+        '**/sharing/rest/content/users/*/createService'
     );
     await page.unroute(
-        '*/**/sharing/rest/content/users/*/items/*/update'
+        '**/sharing/rest/content/users/*/items/*/update'
     );
     await page.unroute(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/submitJob'
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/submitJob'
     );
     await page.unroute(
-        '*/**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**'
+        '**/arcgis/rest/services/RasterAnalysisTools/GPServer/GenerateRaster/jobs/*?**'
     );
 };

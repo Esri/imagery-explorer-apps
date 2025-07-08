@@ -305,7 +305,7 @@ const Popup: FC<Props> = ({
             });
         }
 
-        mapView.popup.open({
+        mapView.openPopup({
             // Set the popup's title to the coordinates of the location
             title,
             location: mapPoint, // Set the location of the popup to the clicked location

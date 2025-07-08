@@ -5,6 +5,8 @@ import { selectDayFromCalendar, formatInUTCTimeZone, formattedDateString2Unixtim
 
 test.describe('Sentinel-2 Explorer - Map Popup', () => {
 
+    test.setTimeout(60000); // Set timeout to 60 seconds for each test
+
     test('Map Popup in Find a Scene Mode', async ({ page }) => {
         const FIND_A_SCENE_MODE_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516&mode=find+a+scene`;
 

@@ -19,7 +19,7 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
 
     // Mock the raster attribute table response for Sentinel2_10m_LandCover
     await page.route(
-        '*/**/Sentinel2_10m_LandCover/ImageServer/rasterAttributeTable?**',
+        '**/Sentinel2_10m_LandCover/ImageServer/rasterAttributeTable?**',
         async (route) => {
             console.log(
                 'Mocking Sentinel2_10m_LandCover rasterAttributeTable response'
@@ -34,7 +34,7 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
 
     // Mock the time info response for Sentinel2_10m_LandCover
     await page.route(
-        '*/**/Sentinel2_10m_LandCover/ImageServer?f=json',
+        '**/Sentinel2_10m_LandCover/ImageServer?f=json',
         async (route) => {
             console.log('Mocking Sentinel2_10m_LandCover Service JSON response');
             await route.fulfill({
@@ -47,7 +47,7 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
 
     // mock the computeHistogram endpoint
     await page.route(
-        '*/**/Sentinel2_10m_LandCover/ImageServer/computeHistograms?**',
+        '**/Sentinel2_10m_LandCover/ImageServer/computeHistograms?**',
         async (route) => {
             console.log('Mocking computeHistograms response');
             await route.fulfill({
@@ -59,7 +59,7 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
     );
 
     await page.route(
-        '*/**/Sentinel2_10m_LandCover/ImageServer/identify?**',
+        '**/Sentinel2_10m_LandCover/ImageServer/identify?**',
         async (route) => {
             // console.log('Mocking identify response');
 
@@ -111,11 +111,11 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
 export const resetMockSentinel2LancoverNetworkRequest = async (page: Page) => {
     await page.unroute('https://mtags.arcgis.com/tags-min.js');
     await page.unroute(
-        '*/**/Sentinel2_10m_LandCover/ImageServer/rasterAttributeTable?*'
+        '**/Sentinel2_10m_LandCover/ImageServer/rasterAttributeTable?*'
     );
-    await page.unroute('*/**/Sentinel2_10m_LandCover/ImageServer/?f=json');
+    await page.unroute('**/Sentinel2_10m_LandCover/ImageServer/?f=json');
     await page.unroute(
-        '*/**/Sentinel2_10m_LandCover/ImageServer/computeHistogram?*'
+        '**/Sentinel2_10m_LandCover/ImageServer/computeHistograms?*'
     );
-    await page.unroute('*/**/Sentinel2_10m_LandCover/ImageServer/identify?*');
+    await page.unroute('**/Sentinel2_10m_LandCover/ImageServer/identify?*');
 };
