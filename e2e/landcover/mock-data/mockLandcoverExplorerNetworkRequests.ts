@@ -117,4 +117,5 @@ export const resetMockSentinel2LancoverNetworkRequest = async (page: Page) => {
     await page.unroute(
         '*/**/Sentinel2_10m_LandCover/ImageServer/computeHistogram?*'
     );
+    await page.unroute('*/**/Sentinel2_10m_LandCover/ImageServer/identify?*');
 };
