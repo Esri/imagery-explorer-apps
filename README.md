@@ -208,7 +208,7 @@ npm run build:landcover
 
 ## NLCD Land Cover Explorer
 
-THIS IS THE SUMMARY FOR THE NLCD LAND COVER EXPLORER APP
+The app provides dynamic visual and statistical change by comparing annual slices of the NLCD Land Cover data as you explore the map.
 
 [View it live](https://livingatlas.arcgis.com/nlcdlandcoverexplorer/)
 

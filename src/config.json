@@ -51,7 +51,7 @@
         "nlcdlandcoverexplorer": {
             "title": "Esri | NLCD Land Cover Explorer",
             "webmapId": "f8770e0adc5c41038026494b871ceb99",
-            "description": "",
+            "description": "This app lets you explore and compare annual NLCD Land Cover data, highlighting dynamic changes through visual and statistical insights.",
             "pathname": "/nlcdlandcoverexplorer",
             "entrypoint": "/src/nlcd-landcover-explorer/index.tsx",
             "appId": "nlcx"

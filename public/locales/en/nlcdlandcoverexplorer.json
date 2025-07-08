@@ -51,5 +51,27 @@
     "Woody Wetlands_description": "Areas where forest or shrubland vegetation accounts for greater than 20% of vegetative cover and the soil or substrate is periodically saturated with or covered with water.",
     "Emergent Herbaceous Wetlands": "Emergent Herbaceous Wetlands",
     "Emergent Herbaceous Wetlands_description": "Areas where perennial herbaceous vegetation accounts for greater than 80% of vegetative cover and the soil or substrate is periodically saturated with or covered with water.",
-    "change_compare_graph_tooltip_template": "{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area."
+    "change_compare_graph_tooltip_template": "{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area.",
+
+    "about_panel_header": "ESRI | NLCD Land Cover Explorer",
+    "about_data_title": "About the data",
+    "about_data_paragraph_1": "Land use land cover (LULC) maps are an increasingly important tool for decision-makers in many industry sectors and developing nations around the world. The information provided by these maps helps inform policy and land management decisions by better understanding and quantifying the impacts of earth processes and human activity.",
+    "about_data_paragraph_2": "The <a class=\"underline\" href=\"https://www.usgs.gov/centers/eros/science/annual-nlcd-science-product-user-guide\" target=\"_blank\" rel=\"noreferrer\">Annual NLCD product</a> is available courtesy of the USGS and is made available thought <a class=\"underline\" href=\"https://livingatlas.arcgis.com/en/home/\" target=\"_blank\" rel=\"noreferrer\">ArcGIS Living Atlas of the World</a> The data is the result of a confluence of methodologies from past land cover projects together with modern innovations in geospatial deep learning technologies to create the next generation of land cover and land change information.",
+
+    "about_app_title": "About the app",
+    "about_app_paragraph_1": "One of the foremost capabilities of this app is dynamic change analysis. The app provides dynamic visual and statistical change by comparing annual slices of the NLCD Land Cover data as you explore the map.",
+    "about_app_paragraph_2": "Overview of capabilities:",
+    "about_app_capability_1": "Visual change analysis with either 'Animate Mode' or 'Swipe Mode'",
+    "about_app_capability_2": "Dynamic statistical change analysis by year, map extent, and class",
+    "about_app_capability_3": "Filter by selected land cover class",
+    "about_app_capability_4": "Imagery mode for visual investigation and validation of land cover",
+    "about_app_capability_5": "Select imagery renderings (e.g. SWIR to visualize forest burn scars)",
+
+    "attribution_title": "Attribution and Terms of Use",
+    "nlcd_attribution_title": "<span class=\"font-bold\">Annual NLCD Land Cover Data</span> – USGS",
+    "nlcd_attribution_license": "U.S. Geological Survey (USGS), 2024, Annual NLCD Collection 1 Science Products: U.S. Geological Survey data release. <a class=\"underline\" href=\"https://www.sciencebase.gov/catalog/item/655ceb8ad34ee4b6e05cc51a\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>.",
+
+    "app_attribution_title": "<span class=\"font-bold\">NLCD Land Cover Explorer App</span> - Esri",
+    "app_attribution_license": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
+    "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data."
 }
