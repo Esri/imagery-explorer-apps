@@ -32,7 +32,8 @@ type Props = {
         extent: Extent,
         resolution: number,
         center: number[],
-        zoom: number
+        zoom: number,
+        scale: number
     ) => void;
     /**
      * Fires when user click on map view
@@ -64,7 +65,8 @@ const MapViewEventHandlers: FC<Props> = ({
             //     lat: +mapView.center.latitude.toFixed(3),
             // },
             [mapView.center.longitude, mapView.center.latitude],
-            mapView.zoom
+            mapView.zoom,
+            mapView.scale
         );
     };
 

@@ -46,6 +46,7 @@ import {
     centerChanged,
     extentUpdated,
     resolutionUpdated,
+    scaleUpdated,
     // swipeWidgetHanlderPositionChanged,
     zoomChanged,
 } from '@shared/store/Map/reducer';
@@ -140,11 +141,18 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
         >
             <MapView webmapId={WEB_MAP_ID} center={center} zoom={zoom}>
                 <MapViewEventHandlers
-                    extentOnChange={(extent, resolution, center, zoom) => {
+                    extentOnChange={(
+                        extent,
+                        resolution,
+                        center,
+                        zoom,
+                        scale
+                    ) => {
                         dispatch(resolutionUpdated(resolution));
                         dispatch(extentUpdated(extent));
                         dispatch(centerChanged(center));
                         dispatch(zoomChanged(zoom));
+                        dispatch(scaleUpdated(scale));
                     }}
                     mapViewUpdatingOnChange={(val: boolean) => {
                         setIsUpdating(val);
