@@ -13,7 +13,6 @@
     "launch_spectral_sampler": "Launch the Spectral Sampler in a new tab",
     "find_a_scene": "Find a scene",
     "add_a_scene": "Add A Scene",
-    "play_animation": "Play animation",
     "copy_animation_link": "Copy animation link",
     "download_animation": "Download animation",
     "add_scenes_to_list": "Add scenes to this list to create a chronological animation.",
@@ -303,6 +302,9 @@
     "latitude_abbreviation": "Lat",
     "longitude_abbreviation": "Lon",
     "satellite_imagery_acquisition_date": "{{satelliteName}} image acquired on {{date}}",
+    "play_animation": "Play animation",
     "pause_animation": "Pause Animation",
-    "resume_animation": "Resume Animation"
+    "resume_animation": "Resume Animation",
+    "stop_animation": "Stop Animation",
+    "exit_animation": "Exit Animation"
 }

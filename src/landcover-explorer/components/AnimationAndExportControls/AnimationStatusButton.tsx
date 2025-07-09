@@ -18,6 +18,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { useTranslation } from 'react-i18next';
 
 const PlayButton = (
     <svg
@@ -49,7 +50,7 @@ const PauseButton = (
     </svg>
 );
 
-const CloseButton = (
+const StopButton = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -64,6 +65,21 @@ const CloseButton = (
     </svg>
 );
 
+const ExitButton = (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        height="24"
+        width="24"
+    >
+        <path
+            d="M17.45 8.257L13.207 12.5l4.243 4.243-.707.707-4.243-4.243-4.243 4.243-.707-.707 4.243-4.243L7.55 8.257l.707-.707 4.243 4.243 4.243-4.243zM22.8 12.5A10.3 10.3 0 1 1 12.5 2.2a10.297 10.297 0 0 1 10.3 10.3zm-1 0a9.3 9.3 0 1 0-9.3 9.3 9.31 9.31 0 0 0 9.3-9.3z"
+            fill="currentColor"
+        />
+        <path fill="none" d="M0 0h24v24H0z" />
+    </svg>
+);
+
 type AnimationStatusButtonProps = {
     closeAnimationControlsButtonOnClick: () => void;
 };
@@ -71,6 +87,8 @@ type AnimationStatusButtonProps = {
 export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
     closeAnimationControlsButtonOnClick,
 }) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const animationMode = useAppSelector(selectAnimationStatus);
@@ -83,12 +101,16 @@ export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
                         onClick={() => {
                             dispatch(animationStatusChanged('loading'));
                         }}
+                        title={t('play_animation')}
                     >
                         {PlayButton}
                     </div>
 
-                    <div onClick={closeAnimationControlsButtonOnClick}>
-                        {CloseButton}
+                    <div
+                        onClick={closeAnimationControlsButtonOnClick}
+                        title={t('exit_animation')}
+                    >
+                        {ExitButton}
                     </div>
                 </>
             )}
@@ -102,6 +124,7 @@ export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
                     onClick={() => {
                         dispatch(animationStatusChanged('pausing'));
                     }}
+                    title={t('pause_animation')}
                 >
                     {PauseButton}
                 </div>
@@ -111,6 +134,7 @@ export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
                     onClick={() => {
                         dispatch(animationStatusChanged('playing'));
                     }}
+                    title={t('resume_animation')}
                 >
                     {PlayButton}
                 </div>
@@ -120,8 +144,9 @@ export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
                     onClick={() => {
                         dispatch(animationStatusChanged(null));
                     }}
+                    title={t('stop_animation')}
                 >
-                    {CloseButton}
+                    {StopButton}
                 </div>
             )}
         </div>
