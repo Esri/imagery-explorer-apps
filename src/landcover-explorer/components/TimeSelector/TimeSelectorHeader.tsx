@@ -16,6 +16,7 @@
 import {
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
+    selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -40,6 +41,8 @@ export const TimeSelectorHeader: FC<Props> = ({
         selectShouldShowSatelliteImageryLayer
     );
 
+    const year = useAppSelector(selectYear);
+
     return (
         <HeaderText
             // title={`${
@@ -51,7 +54,7 @@ export const TimeSelectorHeader: FC<Props> = ({
             subTitle={
                 mode === 'swipe'
                     ? t('swipe_mode_subtitle')
-                    : t('animate_mode_subtitle')
+                    : t('at_year', { year })
             }
         />
     );

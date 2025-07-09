@@ -280,7 +280,7 @@
     "animate_mode_subtitle": "Choose a Year to View",
     "classes_selector_title": "Classes",
     "classes_selector_subTitle": "Click to Choose",
-    "at_year": "at {{year}}",
+    "at_year": "{{year}}",
     "from_to_year": "from {{fromYear}} to {{toYear}}",
     
     "Land_Cover_Change": "Land Cover Change",
