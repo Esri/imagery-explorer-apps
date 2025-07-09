@@ -235,7 +235,7 @@ npm run build:nlcd-landcover
 ```
 
 ### Resources
-- [USA NLCD Land Cover](https://www.arcgis.com/home/item.html?id=3ccf118ed80748909eb85c6d262b426f)
+- [USA Annual NLCD Land Cover](https://www.arcgis.com/home/item.html?id=32e2ccc6416746a9a72b4d216813f84f)
 
 
 ## Issues
