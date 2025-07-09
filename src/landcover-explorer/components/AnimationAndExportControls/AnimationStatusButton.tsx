@@ -42,8 +42,8 @@ const PauseButton = (
         width="24"
     >
         <path
+            d="M12.5 2.2a10.3 10.3 0 1 0 10.3 10.3A10.299 10.299 0 0 0 12.5 2.2zm0 19.6a9.3 9.3 0 1 1 9.3-9.3 9.31 9.31 0 0 1-9.3 9.3zM9 7h2v11H9zm5 0h2v11h-2z"
             fill="currentColor"
-            d="M4 22h6V2H4zM5 3h4v18H5zm9 19h6V2h-6zm1-19h4v18h-4z"
         />
         <path fill="none" d="M0 0h24v24H0z" />
     </svg>
@@ -57,8 +57,8 @@ const CloseButton = (
         width="24"
     >
         <path
+            d="M12.5 2.2C6.81 2.2 2.2 6.81 2.2 12.5c0 5.692 4.61 10.3 10.3 10.3s10.3-4.608 10.3-10.3c0-5.69-4.61-10.3-10.3-10.3zm0 19.6c-5.128 0-9.3-4.172-9.3-9.3s4.172-9.3 9.3-9.3 9.3 4.172 9.3 9.3-4.172 9.3-9.3 9.3zM8 8h9v9H8V8z"
             fill="currentColor"
-            d="M17.45 8.257L13.207 12.5l4.243 4.243-.707.707-4.243-4.243-4.243 4.243-.707-.707 4.243-4.243L7.55 8.257l.707-.707 4.243 4.243 4.243-4.243zM22.8 12.5A10.3 10.3 0 1 1 12.5 2.2a10.297 10.297 0 0 1 10.3 10.3zm-1 0a9.3 9.3 0 1 0-9.3 9.3 9.31 9.31 0 0 0 9.3-9.3z"
         />
         <path fill="none" d="M0 0h24v24H0z" />
     </svg>
@@ -115,7 +115,7 @@ export const AnimationStatusButton: FC<AnimationStatusButtonProps> = ({
                     {PlayButton}
                 </div>
             )}
-            {animationMode && (
+            {(animationMode === 'playing' || animationMode === 'pausing') && (
                 <div
                     onClick={() => {
                         dispatch(animationStatusChanged(null));

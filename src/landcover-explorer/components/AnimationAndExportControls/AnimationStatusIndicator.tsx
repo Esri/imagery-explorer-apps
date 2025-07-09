@@ -51,17 +51,19 @@ export const AnimationStatusIndicator: FC<AnimationStatusIndicatorProps> = ({
             return <p>{t('animation_load_failed')}</p>;
         }
 
-        return (
-            <p>
-                {shouldShowSatelliteImageryLayer
-                    ? t('imagery_at', {
-                          year: selectedYear,
-                      })
-                    : t('landcover_at', {
-                          year: selectedYear,
-                      })}
-            </p>
-        );
+        return null;
+
+        // return (
+        //     <p>
+        //         {shouldShowSatelliteImageryLayer
+        //             ? t('imagery_at', {
+        //                   year: selectedYear,
+        //               })
+        //             : t('landcover_at', {
+        //                   year: selectedYear,
+        //               })}
+        //     </p>
+        // );
     };
 
     if (!animationStatus) {
