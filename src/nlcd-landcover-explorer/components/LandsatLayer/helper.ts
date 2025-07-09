@@ -21,7 +21,7 @@ export const getLandsatMosaicRuleByAcquisitionDate = (
             endDate,
             'yyyy-MM-dd'
         )} 05:59:59')`,
-        // `(${FIELD_NAMES.DATASET_ID} NOT IN ('Landsat7')`
+        `(${FIELD_NAMES.DATASET_ID} NOT IN ('Landsat7'))`,
     ];
 
     return {
