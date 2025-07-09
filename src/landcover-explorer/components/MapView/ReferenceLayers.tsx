@@ -18,6 +18,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import IMapView from '@arcgis/core/views/MapView';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
+    selectShowBasemap,
     selectShowMapLabel,
     selectShowTerrain,
 } from '@shared/store/Map/selectors';
@@ -26,7 +27,10 @@ import {
     HUMAN_GEO_LIGHT_WATER_LAYER_TITLE,
     HUMAN_GEO_DARK_DRY_LAYER_TITLE,
     TERRAIN_LAYER_TITLE,
+    WORLD_IMAGERY_BASEMAP_LAYER_TITLE,
+    CUSTOM_OCEAN_BASEMAP_LAYER_TITLE,
 } from '@landcover-explorer/constants/map';
+import Layer from '@arcgis/core/layers/Layer';
 
 type Props = {
     mapView?: IMapView;
@@ -35,9 +39,11 @@ type Props = {
 const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     const mapLabelLayersRef = useRef<__esri.Collection<__esri.Layer>>();
     const terrainLayerRef = useRef<__esri.Layer>();
+    const basemapLayersRef = useRef<__esri.Collection<__esri.Layer>>();
 
     const showMapLabel = useAppSelector(selectShowMapLabel);
     const showTerrain = useAppSelector(selectShowTerrain);
+    const showBasemap = useAppSelector(selectShowBasemap);
 
     const init = () => {
         mapLabelLayersRef.current = mapView.map.allLayers.filter((layer) => {
@@ -51,6 +57,25 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
         terrainLayerRef.current = mapView.map.allLayers.find(
             (layer) => layer.title === TERRAIN_LAYER_TITLE
         );
+
+        basemapLayersRef.current = mapView.map.allLayers.filter(
+            (layer: Layer) => {
+                return (
+                    layer.title === WORLD_IMAGERY_BASEMAP_LAYER_TITLE ||
+                    layer.title === CUSTOM_OCEAN_BASEMAP_LAYER_TITLE
+                );
+            }
+        );
+    };
+
+    const updateBaseLayersVisibility = () => {
+        if (!basemapLayersRef.current) {
+            return;
+        }
+
+        for (const layer of basemapLayersRef.current) {
+            layer.visible = showBasemap;
+        }
     };
 
     useEffect(() => {
@@ -72,6 +97,10 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
             terrainLayerRef.current.visible = showTerrain;
         }
     }, [showTerrain]);
+
+    useEffect(() => {
+        updateBaseLayersVisibility();
+    }, [showBasemap]);
 
     return null;
 };

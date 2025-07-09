@@ -32,7 +32,7 @@ import {
 import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 // import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
-import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
+// import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
 import ReferenceLayers from './ReferenceLayers';
 import { saveMapCenterToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
@@ -55,6 +55,7 @@ import MapView from '@shared/components/MapView/MapView';
 import { MapActionButtonGroup4LandcoverExplorer } from './MapActionButtonGroup4LandcoverExplorer';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
+import { ReferenceLayersToggleControl } from '@shared/components/ReferenceLayersToggleControl';
 
 type MapViewContainerProps = {
     attribution: string;
@@ -188,7 +189,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                 {children}
             </MapView>
 
-            <ReferenceLayersToggleControl />
+            <ReferenceLayersToggleControl shoudHide={animationMode !== null} />
 
             <MapInfoIndicators
                 isUpdating={isUpdating}
