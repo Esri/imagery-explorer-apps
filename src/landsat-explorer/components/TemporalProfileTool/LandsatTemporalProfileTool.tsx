@@ -66,7 +66,7 @@ import {
     FetchTemporalProfileDataFunc,
     IntersectWithImagerySceneFunc,
 } from '@shared/store/TrendTool/thunks';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';

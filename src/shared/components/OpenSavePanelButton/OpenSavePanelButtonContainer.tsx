@@ -51,7 +51,7 @@ export const OpenSavePanelButtonContainer: FC<Props> = () => {
     const { t } = useTranslation();
 
     return (
-        <div className=" hidden md:block">
+        <div className=" hidden md:block" data-testid="open-save-panel-button">
             <OpenSavePanelButton
                 disabled={false}
                 hidden={isAnimationPlaying}

@@ -13,9 +13,13 @@
  * limitations under the License.
  */
 
-import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
-import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { MapMode } from '@shared/store/LandcoverExplorer/reducer';
+// import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+import { LandCoverClassification } from '@typing/landcover';
+import {
+    ImageryRasterFunction4LandcoverApp,
+    LandcoverAnimationYearRange,
+    MapMode,
+} from '@shared/store/LandcoverExplorer/reducer';
 
 type UrlHashParamKey =
     | 'mapCenter'
@@ -29,16 +33,18 @@ type UrlHashParamKey =
     | 'renderingRule'
     | 'animation'
     | 'region'
-    | 'saveWebMap';
+    | 'saveWebMap'
+    | 'animationData';
 
-const SupportedSentinel2RasterFunctions: Sentinel2RasterFunction[] = [
-    'Natural Color for Visualization',
-    'Agriculture for Visualization',
-    'Color Infrared for Visualization',
-    'Short-wave Infrared for Visualization',
-    'NDVI Colorized for Visualization',
-    'NDMI Colorized for Visualization',
-];
+const SupportedSentinel2RasterFunctions: ImageryRasterFunction4LandcoverApp[] =
+    [
+        'Natural Color for Visualization',
+        'Agriculture for Visualization',
+        'Color Infrared for Visualization',
+        'Short-wave Infrared for Visualization',
+        'NDVI Colorized for Visualization',
+        'NDMI Colorized for Visualization',
+    ];
 
 let hashParams: URLSearchParams = null; //new URLSearchParams(window.location.hash.slice(1));
 
@@ -46,6 +52,10 @@ let hashParams: URLSearchParams = null; //new URLSearchParams(window.location.ha
  * update Hash Params in the URL using data from hashParams
  */
 export const updateHashParams = (key: UrlHashParamKey, value: string) => {
+    if (hashParams === null) {
+        hashParams = new URLSearchParams(window.location.hash.slice(1));
+    }
+
     if (value === undefined || value === null) {
         hashParams.delete(key);
     } else {
@@ -69,7 +79,7 @@ export const getHashParamValueByKey = (key: UrlHashParamKey): string => {
 
 export const saveMapCenterToHashParams = (center: number[], zoom: number) => {
     const [lon, lat] = center;
-    const value = `${lon.toFixed(5)},${lat.toFixed(5)},${zoom}`;
+    const value = `${lon.toFixed(5)},${lat.toFixed(5)},${zoom.toFixed(2)}`;
     updateHashParams('mapCenter', value);
 };
 
@@ -162,7 +172,7 @@ export const getActiveMonthFromHashParams = () => {
 };
 
 export const saveSentinel2RasterFunctionToHashParams = (
-    rasterFunctionName: Sentinel2RasterFunction
+    rasterFunctionName: ImageryRasterFunction4LandcoverApp
 ) => {
     const idx = SupportedSentinel2RasterFunctions.indexOf(rasterFunctionName);
 
@@ -191,6 +201,53 @@ export const saveAnimationModeToHashParams = (isAnimationModeOn?: boolean) => {
 
 export const getAnimationModeFromHashParams = () => {
     return getHashParamValueByKey('animation') === 'true';
+};
+
+/**
+ * Save animation year range to hash params
+ * @param param yearRange - the year range for animation
+ * @returns  void
+ */
+export const saveAnimationDataToHashParams = ({
+    yearRange,
+}: {
+    yearRange: LandcoverAnimationYearRange;
+}) => {
+    if (!yearRange || !yearRange.start || !yearRange.end) {
+        updateHashParams('animationData', undefined);
+        return;
+    }
+
+    const values = [yearRange.start.toString(), yearRange.end.toString()];
+
+    updateHashParams('animationData', values.join(','));
+};
+
+/**
+ * Get animation data from hash params
+ * @returns null | { startYear: number, endYear: number }
+ */
+export const getAnimationDataFromHashParams = (): {
+    animationYearRange: LandcoverAnimationYearRange | null;
+} => {
+    const val = getHashParamValueByKey('animationData');
+
+    if (!val) {
+        return {
+            animationYearRange: null,
+        };
+    }
+
+    const [startYear, endYear] = val
+        .split(',')
+        .map((d) => (isNaN(parseInt(d)) ? null : parseInt(d)));
+
+    return {
+        animationYearRange: {
+            start: startYear,
+            end: endYear,
+        },
+    };
 };
 
 export const saveRegionToHashParams = (region?: string) => {

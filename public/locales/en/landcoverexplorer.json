@@ -2,12 +2,6 @@
     "esri_land_cover_explorer_title": "Esri | Sentinel-2 Land Cover Explorer",
     "sentinel_layer_title": "Sentinel-2 Imagery",
     "land_cover_layer_title": "10m Land Cover",
-    "swipe_mode_subtitle": "Choose Two Years to Compare",
-    "animate_mode_subtitle": "Choose a Year to View",
-    "swipe_mode_zoom_message": "Zoom in to compare Sentinel-2 Imagery Layers",
-    "animate_mode_zoom_message": "Zoom in to enable time slider",
-    "sentinel2_renderers_title": "Visual Renderings",
-    "sentinel2_renderers_subtitle": "Click to Toggle Visibility",
 
     "renderer_natural_color_label": "Natural Color",
     "renderer_natural_color_description": "Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",
@@ -56,23 +50,15 @@
     "No_Data": "No Data",
     "No_Data_description": "no data",
 
-    "classes_selector_title": "Land Use/Land Cover Classes",
-    "classes_selector_subTitle": "Click to Toggle Visibility",
-
     "Land_Cover_Change": "Land Cover Change",
     "Land_Cover_Totals": "Land Cover Totals",
     "Expanded_Summary_Chart": "Expanded Summary Chart",
     "animation_graph_disabled_message": "Graph is disabled when animation is on",
     "zoom_to_see_change_graph": " Zoom in to see Land Cover Change Graph",
     "zoom_to_see_totals_graph": "Zoom in to see Land Cover Totals Graph",
-    "at_year": "at {{year}}",
-    "from_to_year": "from {{fromYear}} to {{toYear}}",
 
     "change_compare_graph_tooltip_template": "{{pctEarlierYear}}% in {{fromYear}} and {{pctLaterYear}}% in {{toYear}}, a change of {{plusOrMinusSign}}{{pctChange}}% of the total area.",
 
-    "sentinel2_acquisition_date": "Sentinel-2 L2A image acquired on {{date}}",
-    "latitude_abbreviation": "Lat",
-    "longitude_abbreviation": "Lon",
     "zoom_to_native_resolution": "Zoom to Land cover layer's native resolution",
 
     "download_panel_header": "Sentinel-2 10m Land Use/Land Cover Download",
@@ -114,5 +100,9 @@
     "download_historical_data": "Download Historical Data",
     "donwload_as_csv": "Download Historical Data as CSV",
 
-    "animation_metadata": "Esri, Impact Observatory"
+    "animation_metadata": "Esri, Impact Observatory",
+    "map_attribution": "Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory",
+    "output_webmap_default_title": "Sentinel-2 Land Cover Exlorer export map",
+    "output_webmap_default_snippet": "Sentinel-2 10m land use/land cover time series of the world.",
+    "output_webmap_default_tags": "Sentinel-2, Land Use, Land Cover, LULC, Living Atlas"
 }

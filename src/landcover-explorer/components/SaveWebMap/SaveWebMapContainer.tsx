@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectShowSaveWebMapPanel } from '@shared/store/UI/selectors';
 import { SaveWebMap, WebMapMetadata } from './SaveWebMap';
@@ -29,14 +29,41 @@ import { saveShowSaveWebMapPanelToHashParams } from '@landcover-explorer/utils/U
 import { useCreateWebmap } from './useCreateWebmap';
 import { getPortalBaseUrl } from '@shared/utils/esri-oauth';
 
-export const SaveWebMapContainer = () => {
+export type SaveWebMapContainerProps = {
+    years: number[];
+    landCoverLayerTitle: string;
+    landCoverLayerItemId: string;
+    landCoverImageryServiceUrl: string;
+    landCoverLayerStartTimeField: string;
+    landCoverLayerStartTimeFieldType: 'number' | 'date';
+    authoringApp: string;
+};
+
+export const SaveWebMapContainer: FC<SaveWebMapContainerProps> = ({
+    years,
+    landCoverLayerTitle,
+    landCoverLayerItemId,
+    landCoverImageryServiceUrl,
+    landCoverLayerStartTimeField,
+    landCoverLayerStartTimeFieldType,
+    authoringApp,
+}) => {
     const dispatch = useAppDispatch();
 
     const showSaveWebMap = useAppSelector(selectShowSaveWebMapPanel);
 
     const [webmapMetadata, setWebMapMetadata] = useState<WebMapMetadata>();
 
-    const { isSavingChanges, response } = useCreateWebmap(webmapMetadata);
+    const { isSavingChanges, response, errorSavingWebMap } = useCreateWebmap({
+        webmapMetadata,
+        years,
+        landCoverLayerTitle,
+        landCoverLayerItemId,
+        landCoverImageryServiceUrl,
+        landCoverLayerStartTimeField,
+        landCoverLayerStartTimeFieldType,
+        authoringApp,
+    });
 
     const portalUser = getSignedInUser();
 
@@ -72,6 +99,7 @@ export const SaveWebMapContainer = () => {
     return (
         <SaveWebMap
             isSavingChanges={isSavingChanges}
+            error={errorSavingWebMap}
             hasNoPrivilege2CreateContent={portalUser?.role === 'org_user'}
             response={response}
             saveButtonOnClick={setWebMapMetadata}

@@ -35,6 +35,6 @@ describe('test Calendar component', () => {
         );
 
         // should handle leap year
-        expect(getByTestId(/2024-02-29/i)).toBeTruthy();
+        expect(getByTestId(/calendar-cell-2024-02-29/i)).toBeTruthy();
     });
 });

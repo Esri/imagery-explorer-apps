@@ -55,6 +55,10 @@ export const HUMAN_GEO_DARK_DRY_LAYER_TITLE = 'Human Geography Dark Detail Dry';
 
 export const TERRAIN_LAYER_TITLE = 'World Hillshade';
 
+export const WORLD_IMAGERY_BASEMAP_LAYER_TITLE = 'World Imagery';
+
+export const CUSTOM_OCEAN_BASEMAP_LAYER_TITLE = 'LandCoverAppOceans';
+
 export const DEFAULT_MAP_CENTERS = [
     /**
      * Redlands, CA
@@ -153,8 +157,3 @@ export const DEFAULT_MAP_CENTERS = [
 export const DEFAULT_MAP_ZOOM = 11;
 
 export const MIN_MAP_ZOOM_FOR_COMPUTE_HISTOGRAM = 10;
-
-/**
- * Sentinel 2 layer can only be displayed on the map when the map zoom level is greater or equal to 11
- */
-export const MIN_MAP_ZOOM_FOR_SENTINEL_2_LAYER = 11;

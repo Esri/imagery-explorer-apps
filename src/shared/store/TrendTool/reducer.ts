@@ -28,7 +28,7 @@ import {
     SpectralIndex,
     RadarIndex,
 } from '@typing/imagery-service';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 
 /**
  * The trend tool has two options

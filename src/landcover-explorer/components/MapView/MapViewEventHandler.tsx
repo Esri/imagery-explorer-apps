@@ -18,7 +18,7 @@ import IMapView from '@arcgis/core/views/MapView';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import IPoint from '@arcgis/core/geometry/Point';
 // import { MapCenter } from '@shared/store/LandcoverExplorer/reducer';
-import { Extent } from '@arcgis/core/geometry';
+import Extent from '@arcgis/core/geometry/Extent';
 
 type Props = {
     mapView?: IMapView;
@@ -32,7 +32,8 @@ type Props = {
         extent: Extent,
         resolution: number,
         center: number[],
-        zoom: number
+        zoom: number,
+        scale: number
     ) => void;
     /**
      * Fires when user click on map view
@@ -64,7 +65,8 @@ const MapViewEventHandlers: FC<Props> = ({
             //     lat: +mapView.center.latitude.toFixed(3),
             // },
             [mapView.center.longitude, mapView.center.latitude],
-            mapView.zoom
+            mapView.zoom,
+            mapView.scale
         );
     };
 

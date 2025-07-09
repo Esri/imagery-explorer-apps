@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { HistoricalLandCoverData } from '@shared/services/sentinel-2-10m-landcover/computeHistograms';
+import { HistoricalLandCoverData } from '@shared/services/sentinel-2-10m-landcover/getHistoricalLandCoverDataByMapExtent';
 
 export const saveHistoricalLandCoverDataAsCSV = (
     data: HistoricalLandCoverData[]

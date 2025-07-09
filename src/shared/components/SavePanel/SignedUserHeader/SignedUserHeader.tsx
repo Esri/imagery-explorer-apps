@@ -112,6 +112,7 @@ export const SignedUserHeader: FC<Props> = ({
                     className="underline cursor-pointer z-10"
                     onClick={onSignIn}
                     title={t('sign_in_to_your_account')}
+                    data-testid="sign-in-button"
                 >
                     {t('sign_in')}
                 </span>

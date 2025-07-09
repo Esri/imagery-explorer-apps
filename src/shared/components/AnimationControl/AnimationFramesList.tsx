@@ -106,11 +106,11 @@ export const AnimationFramesList: FC<Props> = ({
                         'pr-1': data && data.length > 5,
                     }
                 )}
+                data-testid="animation-frames-list"
             >
-                {data.map((d) => {
+                {data.map((d, index) => {
                     const {
                         frameId,
-                        // acquisitionDate,
                         acquisitionDateLabel,
                         rasterFunctionName,
                         selected,
@@ -119,6 +119,8 @@ export const AnimationFramesList: FC<Props> = ({
                     return (
                         <div
                             key={frameId}
+                            data-testid={`animation-frame-card-${index}`}
+                            data-selected={selected}
                             className={classNames(
                                 /**
                                  * add `group` class name to this element, so the close button can be displayed when hover over this element
@@ -144,6 +146,7 @@ export const AnimationFramesList: FC<Props> = ({
                             </div>
 
                             <div
+                                data-testid={`remove-animation-frame-button-${index}`}
                                 // only show close icon when hover over the frame card, which is controlled by the `group-hover:block` class name
                                 className="absolute top-0 right-0 hidden group-hover:block"
                                 onClick={removeButtonOnClick.bind(

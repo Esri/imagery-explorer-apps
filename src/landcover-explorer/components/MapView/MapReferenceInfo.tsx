@@ -17,15 +17,17 @@ import classNames from 'classnames';
 import React, { useEffect, FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     // selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
     // selectSwipePosition,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -36,6 +38,11 @@ type Props = {
      * Indicate if swipe widget is currently visible
      */
     isSwipeWidgetVisible: boolean;
+    /**
+     * Name of the satellite imagery layer, used for zoom in message
+     * e.g. "Sentinel-2" or "Landsat"
+     */
+    nameOfSatelliteImageryLayer: string;
 };
 
 const MessageClassNames =
@@ -59,21 +66,24 @@ const Sentinel2LoadingIndicator = () => {
 const MapInfoIndicators: FC<Props> = ({
     isUpdating,
     isSwipeWidgetVisible,
+    nameOfSatelliteImageryLayer,
 }: Props) => {
+    const { t } = useTranslation();
+
     const position = useAppSelector(selectSwipeWidgetHandlerPosition);
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const showSwipeWidgetYearIndicator = useAppSelector(
         selectShowSwipeWidgetYearIndicator
     );
 
-    const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+    const shouldShowSatellteLayer = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
     );
 
     const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
@@ -100,15 +110,17 @@ const MapInfoIndicators: FC<Props> = ({
                 }}
             >
                 {isUpdating &&
-                    shouldShowSentinel2Layer &&
-                    isSentinel2LayerOutOfVisibleRange === false && (
+                    shouldShowSatellteLayer &&
+                    isSatelliteImagertLayerOutOfVisibleRange === false && (
                         <Sentinel2LoadingIndicator />
                     )}
 
-                {shouldShowSentinel2Layer &&
-                    isSentinel2LayerOutOfVisibleRange && (
+                {shouldShowSatellteLayer &&
+                    isSatelliteImagertLayerOutOfVisibleRange && (
                         <div className={MessageClassNames}>
-                            Zoom in to enable Sentinel-2 Imagery
+                            {t('zoom_in_to_enable_imagery_layer', {
+                                layerName: nameOfSatelliteImageryLayer,
+                            })}
                         </div>
                     )}
 
@@ -148,7 +160,7 @@ const MapInfoIndicators: FC<Props> = ({
                     </div>
                 )}
 
-                {isUpdating && shouldShowSentinel2Layer && (
+                {isUpdating && shouldShowSatellteLayer && (
                     <Sentinel2LoadingIndicator />
                 )}
             </div>

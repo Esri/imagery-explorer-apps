@@ -30,7 +30,7 @@ import {
     FetchTemporalProfileDataFunc,
     IntersectWithImagerySceneFunc,
 } from '@shared/store/TrendTool/thunks';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { selectError4TemporalProfileTool } from '@shared/store/TrendTool/selectors';
 import { selectSentinel1OrbitDirection } from '@shared/store/Sentinel1/selectors';
 import { Sentinel2TemporalProfileChart } from './Sentinel2TemporalProfileChart';

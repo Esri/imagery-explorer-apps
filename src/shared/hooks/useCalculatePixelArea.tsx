@@ -52,14 +52,21 @@ export const useCalculatePixelArea = ({
                 return;
             }
 
-            const [lon, lat] = await getCentroidByObjectId(
-                serviceURL,
-                objectId
-            );
+            try {
+                const [lon, lat] = await getCentroidByObjectId(
+                    serviceURL,
+                    objectId
+                );
 
-            const area = calculatePixelArea(pixelWidth, lat);
+                const area = calculatePixelArea(pixelWidth, lat);
 
-            setPixelAreaInSqMeter(area);
+                setPixelAreaInSqMeter(area);
+            } catch (error) {
+                console.error(
+                    `Error calculating pixel area for objectId ${objectId}:`,
+                    error
+                );
+            }
         })();
     }, [objectId, pixelWidth, pixelHeigh]);
 

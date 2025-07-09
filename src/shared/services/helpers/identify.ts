@@ -13,7 +13,8 @@
  * limitations under the License.
  */
 
-import { Geometry, Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
+import Geometry from '@arcgis/core/geometry/Geometry';
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { getLockRasterMosaicRule } from './getMosaicRules';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';

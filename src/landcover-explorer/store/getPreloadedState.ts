@@ -14,6 +14,7 @@
  */
 
 import {
+    ImageryRasterFunction4LandcoverApp,
     initialLandcoverExplorerAppState,
     LandcoverExplorerAppState,
     MapMode,
@@ -32,11 +33,16 @@ import {
     getAnimationModeFromHashParams,
     getRegionFromHashParams,
     getShowSaveWebMapPanelFromHashParams,
+    getAnimationDataFromHashParams,
 } from '@landcover-explorer/utils/URLHashParams';
 import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
-import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+import { LandCoverClassification } from '@typing/landcover';
+import {
+    getTimeExtentByYearFromTimeInfo,
+    LandCoverLayerTimeInfo,
+    populateAvailableYears,
+} from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
 import { isMobileDevice } from 'helper-toolkit-ts';
 import { PartialRootState } from '@shared/store/configureStore';
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
@@ -44,60 +50,108 @@ import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
 const isMobileView = isMobileDevice();
 
-const getPreloadedStateForLandcoverExplorerApp =
-    (): LandcoverExplorerAppState => {
-        const availableYears = getAvailableYears();
+/**
+ * Returns the preloaded state for the Landcover Explorer app, using values from URL hash parameters if available.
+ * Falls back to defaults for any missing parameters.
+ * Handles mobile/desktop-specific logic for map mode and satellite imagery layer visibility.
+ * Also determines if the Info Panel should be shown based on the presence of a region in the hash params.
+ */
+export const getPreloadedStateForLandcoverExplorerApp = (
+    timeInfo: LandCoverLayerTimeInfo
+): LandcoverExplorerAppState => {
+    // Get the list of available years for land cover data
+    const availableYears = populateAvailableYears(timeInfo.timeExtent); //getAvailableYears();
 
-        const timeExtent = getTimeExtentFromHashParams();
-        const activelandCoverType = getActiveLandCoverTypeFromHashParams();
-        const shouldShowSentinel2Layer = getShowImageryLayerFromHashParams();
+    // Get time extent for each year from the time info
+    // This will be used to retrieve the land cover layer for a specific year
+    const timeExtentByYear = getTimeExtentByYearFromTimeInfo(timeInfo);
 
-        const mode = (getMapModeFromHashParams() as MapMode) || 'step';
+    // Parse time extent (start/end year) from URL hash params
+    const timeExtent = getTimeExtentFromHashParams();
 
-        const year = getActiveYearFromHashParams();
-        const sentinel2AquisitionMonth = getActiveMonthFromHashParams();
+    // Get active land cover type from URL hash params
+    const activelandCoverType = getActiveLandCoverTypeFromHashParams();
 
-        const sentinel2RasterFunction =
-            (getSentinel2RasterFunctionFromHashParams() as Sentinel2RasterFunction) ||
-            'Natural Color for Visualization';
+    // Determine if the satellite imagery layer should be shown (from hash params)
+    const shouldShowSatelliteImageryLayer = getShowImageryLayerFromHashParams();
 
-        const startYear = timeExtent?.startYear || availableYears[0];
-        const endYear =
-            timeExtent?.endYear || availableYears[availableYears.length - 1];
+    // Get map mode (step/swipe), default to 'step'
+    const mode = (getMapModeFromHashParams() as MapMode) || 'step';
 
-        const region = getRegionFromHashParams();
+    // Get the active year from hash params
+    const year = getActiveYearFromHashParams();
 
-        return {
-            ...initialLandcoverExplorerAppState,
-            // swipe mode can only be enabled in desktop view with wide screen
-            mode: isMobileView ? 'step' : mode,
-            // use year from hash params or the most recent year by default
-            year: year ? +year : availableYears[availableYears.length - 1],
-            sentinel2AquisitionMonth: sentinel2AquisitionMonth
-                ? +sentinel2AquisitionMonth
+    // Get the selected month for satellite imagery acquisition
+    const satelliteImageryLayerAquisitionMonth = getActiveMonthFromHashParams();
+
+    // Get the selected raster function for Sentinel-2 imagery
+    const satelliteImageryLayerRasterFunction =
+        (getSentinel2RasterFunctionFromHashParams() as ImageryRasterFunction4LandcoverApp) ||
+        'Natural Color for Visualization';
+
+    // Determine start and end years for swipe widget
+    const startYear = timeExtent?.startYear || availableYears[0];
+    const endYear =
+        timeExtent?.endYear || availableYears[availableYears.length - 1];
+
+    // Get region info from hash params
+    const region = getRegionFromHashParams();
+
+    const { animationYearRange } = getAnimationDataFromHashParams();
+
+    return {
+        ...initialLandcoverExplorerAppState,
+        // Swipe mode can only be enabled in desktop view with wide screen
+        mode: isMobileView ? 'step' : mode,
+        // Use year from hash params or the most recent year by default
+        year: year ? +year : availableYears[availableYears.length - 1],
+        // Use month from hash params or default to September (9)
+        satelliteImageryLayerAquisitionMonth:
+            satelliteImageryLayerAquisitionMonth
+                ? +satelliteImageryLayerAquisitionMonth
                 : 9,
-            // zoom: mapCenterInfo?.zoom || DEFAULT_MAP_ZOOM,
-            // center: mapCenterInfo?.center || getMapCenterFromDefaultLocations(),
-            activeLandCoverType: activelandCoverType as LandCoverClassification,
-            // sentinel-2 layer can only be displayed in desktop view with wide screen
-            shouldShowSentinel2Layer: isMobileView
-                ? false
-                : shouldShowSentinel2Layer,
-            swipeWidget: {
-                year4LeadingLayer: startYear,
-                year4TrailingLayer: endYear,
-                // position: 50,
-            },
-            sentinel2RasterFunction,
-            /**
-             * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
-             * so it can show the land cover chart using data from land cover stats table
-             */
-            showInfoPanel: region !== '',
-        };
+        // Set active land cover type from hash params
+        activeLandCoverType: activelandCoverType as LandCoverClassification,
+        // Sentinel-2 layer can only be displayed in desktop view with wide screen
+        shouldShowSatelliteImageryLayer: isMobileView
+            ? false
+            : shouldShowSatelliteImageryLayer,
+        // Configure swipe widget years
+        swipeWidget: {
+            year4LeadingLayer: startYear,
+            year4TrailingLayer: endYear,
+            // position: 50,
+        },
+        // Set raster function for satellite imagery layer
+        satelliteImageryLayerRasterFunction,
+        /**
+         * Info Panel should be opened if Administrative region (country name and sub region) is found from Hash Params,
+         * so it can show the land cover chart using data from land cover stats table
+         */
+        showInfoPanel: region !== '',
+        /**
+         * use the animation year range from hash params if available,
+         * otherwise default to the last 5 years in the available years list
+         */
+        animationYearRange: {
+            start:
+                animationYearRange?.start ||
+                Math.max(
+                    availableYears[0],
+                    availableYears[availableYears.length - 1] - 5
+                ),
+            end:
+                animationYearRange?.end ||
+                availableYears[availableYears.length - 1],
+        },
+        timeInfo: {
+            availableYears,
+            timeExtentByYear,
+        },
     };
+};
 
-const getPreloadedUIState = (): UIState => {
+export const getPreloadedUIState4LandcoverExplorerApp = (): UIState => {
     const showDownloadPanel = getDonwloadModeFromHashParams();
     const isAnimationModeOn = getAnimationModeFromHashParams();
 
@@ -127,10 +181,12 @@ const getPreloadedMapState = (): MapState => {
     };
 };
 
-export const getPreloadedState = (): PartialRootState => {
+export const getPreloadedState = (
+    timeInfo: LandCoverLayerTimeInfo
+): PartialRootState => {
     return {
-        LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp(),
-        UI: getPreloadedUIState(),
+        LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp(timeInfo),
+        UI: getPreloadedUIState4LandcoverExplorerApp(),
         Map: getPreloadedMapState(),
     };
 };

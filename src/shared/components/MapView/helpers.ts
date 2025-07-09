@@ -14,7 +14,7 @@
  */
 
 import Graphic from '@arcgis/core/Graphic';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import IconImage from '@shared/statics/img/map-anchor.png';
 import { SizeOfMapAnchorImage } from '@shared/constants/UI';
 

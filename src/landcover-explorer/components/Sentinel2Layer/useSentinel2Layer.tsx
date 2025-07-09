@@ -22,10 +22,10 @@ import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 // } from './config';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectSentinel2AquisitionMonth,
-    selectSentinel2RasterFunction,
+    selectSatelliteImageryLayerAquisitionMonth,
+    selectSatelliteImageryLayerRasterFunction,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { getMosaicRuleByAcquisitionDate } from './exportImage';
+import { getMosaicRuleByAcquisitionDate } from '../SatelliteImageryLayer/exportSatelliteImage';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 
 type UseLandCoverLayerParams = {
@@ -36,7 +36,7 @@ type UseLandCoverLayerParams = {
 
 // const { AcquisitionDate, CloudCover } = SENTINEL_2_IMAGE_SERVICE_FIELD_NAMES;
 
-export const createMosaicRuleByYear = (year: number, month: number) => {
+const createMosaicRuleByYear = (year: number, month: number) => {
     // const monthStr = month < 10 ? '0' + month : month.toString();
 
     const { where, sortField, sortValue, ascending } =
@@ -60,10 +60,12 @@ const useSentinel2Layer = ({
     const [sentinel2Layer, setSentinel2Layer] = useState<ImageryLayer>();
 
     const selectedRasterFunction = useAppSelector(
-        selectSentinel2RasterFunction
+        selectSatelliteImageryLayerRasterFunction
     );
 
-    const aquisitionMonth = useAppSelector(selectSentinel2AquisitionMonth);
+    const aquisitionMonth = useAppSelector(
+        selectSatelliteImageryLayerAquisitionMonth
+    );
 
     /**
      * get sentinel 2 layer using mosaic created using the input year

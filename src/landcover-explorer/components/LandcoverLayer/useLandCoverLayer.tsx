@@ -14,23 +14,39 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-    getTimeExtentByYear,
-    // TimeExtentData,
-} from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import {
+//     // getTimeExtentByYear,
+//     // TimeExtentData,
+// } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
-import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
-import {
-    getRasterFunctionByLandCoverClassName,
-    LandCoverClassification,
-} from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
+import { selectTimeExtentByYear } from '@shared/store/LandcoverExplorer/selectors';
+// import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
+// import {
+//     getRasterFunctionByLandCoverClassName,
+//     LandCoverClassification,
+// } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { useAppSelector } from '@shared/store/configureStore';
+// import { selectActiveLandCoverType } from '@shared/store/LandcoverExplorer/selectors';
 // import IMapView from '@arcgis/core/views/MapView';
 
 type UseLandCoverLayerParams = {
+    /**
+     * URL to the Land Cover image service
+     */
+    serviceUrl: string;
+    /**
+     * Year for which the land cover layer is requested
+     */
     year: number;
+    /**
+     * Whether the layer should be visible
+     */
     visible?: boolean;
+    /**
+     *
+     */
+    rasterFunctionName: string;
     // mapView?: IMapView;
 };
 
@@ -40,40 +56,52 @@ export const LandCoverLayerEffect =
 export const LandCoverLayerBlendMode = 'multiply';
 
 const useLandCoverLayer = ({
+    serviceUrl,
     year,
+    rasterFunctionName,
     visible = true,
 }: UseLandCoverLayerParams) => {
-    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
+    // const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
     const layerRef = useRef<ImageryLayer>();
 
     const [landCoverLayer, setLandCoverLayer] = useState<ImageryLayer>();
 
+    const timeExtentByYear = useAppSelector(selectTimeExtentByYear);
+
     /**
      * get land cover layer using time extent for the input year
      */
     const getLandCoverLayer = async () => {
-        const timeExtent = await getTimeExtentByYear(year);
+        try {
+            const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
 
-        layerRef.current = new ImageryLayer({
-            // URL to the imagery service
-            url: SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL,
-            timeExtent,
-            rasterFunction: {
-                functionName:
-                    getRasterFunctionByLandCoverClassName(activeLandCoverType),
-            },
-            effect: LandCoverLayerEffect,
-            blendMode: LandCoverLayerBlendMode,
-            visible,
-        });
+            layerRef.current = new ImageryLayer({
+                // URL to the imagery service
+                url: serviceUrl,
+                timeExtent,
+                rasterFunction: {
+                    functionName: rasterFunctionName,
+                    // getRasterFunctionByLandCoverClassName(activeLandCoverType),
+                },
+                effect: LandCoverLayerEffect,
+                blendMode: LandCoverLayerBlendMode,
+                visible,
+            });
 
-        setLandCoverLayer(layerRef.current);
+            setLandCoverLayer(layerRef.current);
+        } catch (error) {
+            console.error('Error creating land cover layer:', error);
+        }
     };
 
     const updateTimeExtent = async () => {
-        const timeExtent = await getTimeExtentByYear(year);
-        layerRef.current.timeExtent = timeExtent as any;
+        try {
+            const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
+            layerRef.current.timeExtent = timeExtent as any;
+        } catch (error) {
+            console.error('Error updating time extent:', error);
+        }
     };
 
     useEffect(() => {
@@ -90,10 +118,10 @@ const useLandCoverLayer = ({
         }
 
         layerRef.current.rasterFunction = {
-            functionName:
-                getRasterFunctionByLandCoverClassName(activeLandCoverType),
+            functionName: rasterFunctionName,
+            // getRasterFunctionByLandCoverClassName(activeLandCoverType),
         } as any;
-    }, [activeLandCoverType]);
+    }, [rasterFunctionName]);
 
     useEffect(() => {
         if (!layerRef.current) {

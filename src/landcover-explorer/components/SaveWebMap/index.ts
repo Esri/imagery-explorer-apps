@@ -13,4 +13,5 @@
  * limitations under the License.
  */
 
-export { SaveWebMapContainer as SaveWebMap } from './SaveWebMapContainer';
+export { Sentinel2LandCoverSaveWebMap } from './Sentinel2LandCoverSaveWebMap';
+export { NLCDLandCoverSaveWebMap } from './NLCDLandCoverSaveWebMap';

@@ -179,11 +179,29 @@ module.exports =  (env, options)=> {
             // copy static files from public folder to build directory
             new CopyPlugin({
                 patterns: [
-                    { 
-                        from: "public/**/*", 
-                        globOptions: {
-                            ignore: ["**/index.html", "**/__tests__/**"],
-                        },
+                    // { 
+                    //     from: "public/**/*", 
+                    //     globOptions: {
+                    //         ignore: [
+                    //             "**/index.html",
+                    //             "**/__tests__/**",
+                    //             "**/thumbnails/**"
+                    //         ],
+                    //     },
+                    // },
+                    {   // copy thumbnail image that is used in the index.html meta tags
+                        from: `public/thumbnails/${app}.jpg`,
+                        to: `public/thumbnails/${app}.jpg`
+                    },
+                    {   
+                        // copy locales files are used for i18n
+                        // only need common.json and app specific json file
+                        from: 'public/locales',
+                        to: 'public/locales',
+                        filter: (resourcePath) => {
+                            const fileName = path.basename(resourcePath);
+                            return fileName === 'common.json' || fileName === app + '.json';
+                        }
                     }
                 ],
             }),
@@ -221,7 +239,7 @@ module.exports =  (env, options)=> {
                 }
             }),
             // !devMode ? new CleanWebpackPlugin() : false,
-            !devMode ? new BundleAnalyzerPlugin() : false
+            // !devMode ? new BundleAnalyzerPlugin() : false
         ].filter(Boolean),
         optimization: {
             // splitChunks: {

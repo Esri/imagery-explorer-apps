@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-export const APP_ID = 'S2LCX';
+// export const APP_ID = 'S2LCX';
 
 export const PORTAL_ROOT = 'https://www.arcgis.com';
 

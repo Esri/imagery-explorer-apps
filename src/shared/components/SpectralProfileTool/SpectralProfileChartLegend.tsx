@@ -81,7 +81,11 @@ export const SpectralProfileChartLegend: FC<Props> = ({
     }
 
     return (
-        <div className="w-full mt-3">
+        <div
+            className="w-full mt-3"
+            data-testid="spectral-profile-chart-legend"
+            data-selected-feature-of-interest={featureOfInterestName}
+        >
             <LegendItem
                 label={t('spectral_profile_of_selected_location')}
                 fill="var(--custom-light-blue-90)"

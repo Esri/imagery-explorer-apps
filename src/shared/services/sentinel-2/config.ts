@@ -198,3 +198,5 @@ export const SENTINEL2_BAND_NAMES: string[] = [
     'SWIR 1',
     'SWIR 2',
 ];
+
+export const SENTINEL2_NATIVE_SCALE = 37795;

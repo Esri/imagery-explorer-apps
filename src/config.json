@@ -35,7 +35,7 @@
         "spectralsampler": {
             "title": "Spectral Sampler",
             "webmapId": "81609bbe235942919ad27c77e42c600e",
-            "description": "",
+            "description": "A streamlined web app for collecting and organizing training data for land cover classification with multispectral satellite imagery. Ideal for researchers, analysts, and students building high-quality reference datasets.",
             "pathname": "/spectralsampler",
             "entrypoint": "/src/spectral-sampling-tool/index.tsx",
             "appId": ""
@@ -47,6 +47,14 @@
             "pathname": "/landsat-surface-temp",
             "entrypoint": "/src/landsat-surface-temp/index.tsx",
             "appId": ""
+        },
+        "nlcdlandcoverexplorer": {
+            "title": "Esri | NLCD Land Cover Explorer",
+            "webmapId": "f8770e0adc5c41038026494b871ceb99",
+            "description": "This app lets you explore and compare annual NLCD Land Cover data, highlighting dynamic changes through visual and statistical insights.",
+            "pathname": "/nlcdlandcoverexplorer",
+            "entrypoint": "/src/nlcd-landcover-explorer/index.tsx",
+            "appId": "nlcx"
         }
     }
 }

@@ -31,6 +31,34 @@ export const SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL =
 // export const SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL =
 //     SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL_PROD;
 
+export enum SENTINEL2_LANDCOVER_RASTER_FUNCTIONS {
+    Cartographic_Renderer_for_Visualization = 'Cartographic Renderer for Visualization and Analysis',
+    None = 'None',
+    Isolate_Bare_Ground_Areas_for_Visualization_and_Analysis = 'Isolate Bare Ground Areas for Visualization and Analysis',
+    Isolate_Built_Areas_for_Visualization_and_Analysis = 'Isolate Built Areas for Visualization and Analysis',
+    Isolate_Clouds_for_Visualization_and_Analysis = 'Isolate Clouds for Visualization and Analysis',
+    Isolate_Converted_Lands_for_Visualization_and_Analysis = 'Isolate Converted Lands for Visualization and Analysis',
+    Isolate_Crops_for_Visualization_and_Analysis = 'Isolate Crops for Visualization and Analysis',
+    Isolate_Flooded_Vegeation_Areas_for_Visualization_and_Analysis = 'Isolate Flooded Vegeation Areas for Visualization and Analysis',
+    Isolate_Rangelands_Areas_for_Visualization_and_Analysis = 'Isolate Rangelands Areas for Visualization and Analysis',
+    Isolate_Snow_or_Ice_for_Visualization_and_Analysis = 'Isolate Snow or Ice for Visualization and Analysis',
+    Isolate_Trees_for_Visualization_and_Analysis = 'Isolate Trees for Visualization and Analysis',
+    Isolate_Water_Areas_for_Visualization_and_Analysis = 'Isolate Water Areas for Visualization and Analysis',
+}
+
+export const SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION =
+    SENTINEL2_LANDCOVER_RASTER_FUNCTIONS.Cartographic_Renderer_for_Visualization;
+
 export const DEFAULT_RENDERING_RULE = {
-    rasterFunction: 'Cartographic Renderer - Legend and Attribute Table',
+    rasterFunction: SENTINEL2_LANDCOVER_DEFAULT_RASTER_FUNCTION,
 };
+
+/**
+ * The field in the Sentinel-2 10m Land Cover Image Service that contains the start date of the imagery.
+ */
+export const SENTINEL2_LANDCOVER_10M_START_TIME_FIELD = 'StartDate';
+
+/**
+ * The field in the Sentinel-2 10m Land Cover Image Service that contains the Year of the imagery.
+ */
+export const SENTINEL2_LANDCOVER_10M_END_YEAR_FIELD = 'Year';

@@ -14,10 +14,12 @@
  */
 
 import React, { FC } from 'react';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { LULC_TIMESERIES_STORE } from '@landcover-explorer/constants';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectAvaiableYearsForLandCoverLayer } from '@shared/store/LandcoverExplorer/selectors';
 
 type Props = {
     // closeButtonOnClick: () => void;
@@ -26,7 +28,8 @@ type Props = {
 const Header: FC<Props> = () => {
     const { t } = useTranslation();
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
+    const years = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     const getBulkDownloadLinks = () => {
         const links = years.map((year, index) => {

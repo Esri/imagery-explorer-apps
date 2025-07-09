@@ -32,6 +32,7 @@ import { useTranslation } from 'react-i18next';
 import { ta } from 'date-fns/locale';
 import { SplashScreen } from '../SplashScreen';
 import { useSaveCurrentSession } from '@spectral-sampling-tool/hooks/useSaveCurrentSession';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 
 const Layout = () => {
     const { t } = useTranslation();
@@ -45,12 +46,20 @@ const Layout = () => {
      */
     useSaveCurrentSession();
 
-    return (
-        <>
-            <AppHeader title={t('spectral_sampling_tool', { ns: APP_NAME })} />
+    const getContent = () => {
+        if (IS_MOBILE_DEVICE) {
+            return (
+                <BottomPanel>
+                    <div className="flex justify-center items-center h-full text-center">
+                        <p className="opacity-50">
+                            {t('mobile_not_supported', { ns: APP_NAME })}
+                        </p>
+                    </div>
+                </BottomPanel>
+            );
+        }
 
-            {!targetService && <SplashScreen />}
-
+        return (
             <BottomPanel>
                 <div className="w-44 shrink-0">
                     <SamplingPointsList />
@@ -77,6 +86,16 @@ const Layout = () => {
                     </>
                 </div>
             </BottomPanel>
+        );
+    };
+
+    return (
+        <>
+            <AppHeader title={t('spectral_sampling_tool', { ns: APP_NAME })} />
+
+            {!targetService && <SplashScreen />}
+
+            {getContent()}
         </>
     );
 };

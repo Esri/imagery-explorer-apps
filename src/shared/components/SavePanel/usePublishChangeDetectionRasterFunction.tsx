@@ -16,7 +16,7 @@
 import { createChangeDetectionRasterFunction } from '@shared/services/raster-analysis/rasterFunctions';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
-import { Extent, Geometry } from '@arcgis/core/geometry';
+import Geometry from '@arcgis/core/geometry/Geometry';
 import {
     selectFullPixelValuesRangeInChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,

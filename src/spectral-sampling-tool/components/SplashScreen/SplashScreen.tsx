@@ -32,7 +32,7 @@ export const SplashScreen: FC<Pros> = ({
 }) => {
     const { t } = useTranslation();
     return (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-custom-background-90 text-custom-light-blue z-50 backdrop-blur-sm md:flex justify-center">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-custom-background-90 text-custom-light-blue z-50 backdrop-blur-sm md:flex justify-center overflow-y-auto fancy-scrollbar">
             <div className="mt-8 md:mt-32 mx-8">
                 {isLoading && <calcite-loader label={t('loading') + '...'} />}
                 {error && (
@@ -43,7 +43,7 @@ export const SplashScreen: FC<Pros> = ({
 
                 <SplashScreenHeader />
 
-                <div className="relative md:flex items-stretch ">
+                <div className="relative md:flex items-stretch">
                     <div className="w-full md:w-[250px] shrink-0 grow-0">
                         <CreateNewSession
                             createNewSessionButtonOnClick={
@@ -54,7 +54,7 @@ export const SplashScreen: FC<Pros> = ({
 
                     <VerticalDivider />
 
-                    <div className="w-full md:w-[250px] shrink-0 grow-0 ">
+                    <div className="w-full md:w-[250px] shrink-0 grow-0 md:my-0 my-8">
                         <ContinuePreviousSession
                             onClickHandler={
                                 countinuePreviousSessionButtonOnClick

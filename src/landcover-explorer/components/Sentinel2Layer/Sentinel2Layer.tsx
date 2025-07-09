@@ -20,8 +20,8 @@ import useSentinel2Layer from './useSentinel2Layer';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapMode,
-    selectShouldShowSentinel2Layer,
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectShouldShowSatelliteImageryLayer,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
@@ -38,11 +38,11 @@ const Sentinel2Layer: FC<Props> = ({ mapView }: Props) => {
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
     const getVisibility = () => {
@@ -54,7 +54,7 @@ const Sentinel2Layer: FC<Props> = ({ mapView }: Props) => {
             return false;
         }
 
-        return mode === 'step' || isSentinel2LayerOutOfVisibleRange;
+        return mode === 'step' || isSatelliteImagertLayerOutOfVisibleRange;
     };
 
     const layer = useSentinel2Layer({

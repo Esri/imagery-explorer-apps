@@ -48,7 +48,7 @@ import { SpectralIndex, TemporalProfileData } from '@typing/imagery-service';
 import { selectLandsatMissionsToBeExcluded } from '@shared/store/Landsat/selectors';
 import { TrendChart } from '@landsat-explorer/components/TemporalProfileTool';
 import { useUpdateTemporalProfileToolData } from '@shared/components/TemproalProfileTool/useUpdateTemporalProfileToolData';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import { getDataForTrendTool } from '@shared/services/landsat-level-2/getTemporalProfileData';
 import { intersectWithLandsatScene } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { useSyncSelectedYearAndMonth4TemporalProfileTool } from '@shared/components/TemproalProfileTool/useSyncSelectedYearAndMonth';

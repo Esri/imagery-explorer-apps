@@ -20,7 +20,7 @@ type Props = {
     /**
      * label text to be displayed at bottom of the card
      */
-    label?: string;
+    label: string;
     /**
      * url of the background thumbnail image
      */
@@ -69,6 +69,8 @@ export const GirdCard: FC<Props> = ({
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+            data-testid={`grid-card-${label}`} // this is used for testing purposes
+            data-selected={selected ? 'true' : 'false'} // this is used for testing purposes
         >
             <div
                 className={classNames('absolute top-0 left-0 w-full h-full', {

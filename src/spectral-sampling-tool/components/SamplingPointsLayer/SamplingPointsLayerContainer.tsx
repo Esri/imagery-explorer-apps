@@ -22,7 +22,7 @@ import {
     selectSelectedSpectralSamplingPointData,
     selectSpectralSamplingPointsData,
 } from '@shared/store/SpectralSamplingTool/selectors';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 
 type Props = {
     mapView?: MapView;

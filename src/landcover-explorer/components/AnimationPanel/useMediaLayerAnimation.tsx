@@ -20,8 +20,11 @@ import {
     selectAnimationStatus,
 } from '@shared/store/UI/selectors';
 import IImageElement from '@arcgis/core/layers/support/ImageElement';
-import { selectYear } from '@shared/store/LandcoverExplorer/selectors';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import {
+    selectLandcoverAnimationYears,
+    selectYear,
+} from '@shared/store/LandcoverExplorer/selectors';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 
@@ -36,9 +39,11 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
 
-    const year = useAppSelector(selectYear);
+    const years = useAppSelector(selectLandcoverAnimationYears);
+
+    // const year = useAppSelector(selectYear);
 
     const isPlayingRef = useRef<boolean>(false);
 
@@ -98,9 +103,15 @@ const useMediaLayerAnimation = (mediaLayerElements: IImageElement[]) => {
     useEffect(() => {
         isPlayingRef.current = animationMode === 'playing';
 
+        // if animationMode is null (stopped), reset indexOfNextFrame to 0
+        if (!animationMode) {
+            indexOfNextFrame.current = 0;
+            return;
+        }
+
         if (mediaLayerElements && animationMode === 'playing') {
             // update indexOfNextFrame using the index of the active year from the years list
-            indexOfNextFrame.current = years.indexOf(year);
+            // indexOfNextFrame.current = 0; //years.indexOf(year);
             requestAnimationFrame(showNextFrame);
         }
     }, [animationMode, mediaLayerElements]);

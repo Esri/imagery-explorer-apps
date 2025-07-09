@@ -50,7 +50,11 @@ export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                 'disabled-when-animation-mode-is-on': disabled,
             })}
         >
-            <div className={classNames('relative mb-1')}>
+            <div
+                className={classNames('relative mb-1')}
+                data-testid="mode-selector-animate-button"
+                data-selected={activeMode === 'step'}
+            >
                 <Button
                     // fullHeight={true}
                     appearance={isStepBtnActive ? 'solid' : 'transparent'}
@@ -64,7 +68,11 @@ export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                 </Button>
             </div>
 
-            <div className={classNames('relative mb-1')}>
+            <div
+                className={classNames('relative mb-1')}
+                data-testid="mode-selector-swipe-button"
+                data-selected={activeMode === 'swipe'}
+            >
                 <Button
                     // fullHeight={true}
                     appearance={isSwipeBtnActive ? 'solid' : 'transparent'}

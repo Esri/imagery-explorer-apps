@@ -14,7 +14,7 @@
  */
 
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
-import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
+// import { MAP_CENTER, MAP_ZOOM } from '@shared/constants/map';
 
 import { getMapCenterFromHashParams } from '@shared/utils/url-hash-params';
 
@@ -36,8 +36,8 @@ const getPreloadedMapState = (hashParams: URLSearchParams): MapState => {
 
     return {
         ...initialMapState,
-        center: mapLocation?.center || MAP_CENTER,
-        zoom: mapLocation?.zoom || MAP_ZOOM,
+        center: mapLocation?.center || [5, 30], // Default center coordinates
+        zoom: mapLocation?.zoom || 3, // Default zoom level
     };
 };
 

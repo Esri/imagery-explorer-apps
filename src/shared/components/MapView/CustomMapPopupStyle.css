@@ -13,6 +13,10 @@
     width: 220px;
 }
 
+.wide-popup .esri-view-width-xlarge .esri-popup__main-container {
+    width: 300px;
+}
+
 .esri-popup__inline-actions-container,
 .esri-popup__footer.esri-popup__footer--has-actions,
 .esri-popup__button.esri-popup__button--dock,

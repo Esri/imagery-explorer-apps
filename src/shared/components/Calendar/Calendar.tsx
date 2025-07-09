@@ -147,7 +147,7 @@ const MonthGrid: FC<MonthGridProps> = ({
              * data atrributes that will be used for testing, monitoring purposes
              */
             const dataProps: { [key: string]: string } = {
-                'data-testid': formatedDateStr,
+                'data-testid': 'calendar-cell-' + formatedDateStr,
             };
 
             if (hasAvailableData) {
@@ -203,6 +203,7 @@ const MonthGrid: FC<MonthGridProps> = ({
                 >
                     {hasAvailableData && (
                         <div
+                            data-testid={`calendar-cell-tooltip-${formatedDateStr}`}
                             className={`
                                 absolute bottom-[-30px] left-5 w-[90px] py-[2px] text-xs z-50
                                 bg-custom-background border border-custom-light-blue-50  
@@ -236,7 +237,10 @@ const MonthGrid: FC<MonthGridProps> = ({
     };
 
     return (
-        <div className="text-center mx-1">
+        <div
+            className="text-center mx-1"
+            data-testid={`month-grid-${year}-${month}`}
+        >
             <h4 className="text-sm text-custom-light-blue-80 mb-1">
                 {abbrLabel}
             </h4>

@@ -16,23 +16,23 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
-import { shouldShowSentinel2LayerToggled } from '@shared/store/LandcoverExplorer/reducer';
-import { selectShouldShowSentinel2Layer } from '@shared/store/LandcoverExplorer/selectors';
-import {
-    showDownloadPanelToggled,
-    showSaveWebMapPanelToggled,
-} from '@shared/store/UI/reducer';
+import { shouldShowSatelliteImageryLayerToggled } from '@shared/store/LandcoverExplorer/reducer';
+import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
+// import {
+//     showDownloadPanelToggled,
+//     showSaveWebMapPanelToggled,
+// } from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { saveshowImageryLayerToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import LayerSelector from './LayerSelector';
 
-const LayerSelectorContainer = () => {
+export const LayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     useEffect(() => {
@@ -44,10 +44,10 @@ const LayerSelectorContainer = () => {
             shouldShowSentinel2Layer={shouldShowSentinel2Layer}
             disabled={animationMode !== null}
             imageryButtonOnClick={() => {
-                dispatch(shouldShowSentinel2LayerToggled(true));
+                dispatch(shouldShowSatelliteImageryLayerToggled(true));
             }}
             landcoverButtonOnClick={() => {
-                dispatch(shouldShowSentinel2LayerToggled(false));
+                dispatch(shouldShowSatelliteImageryLayerToggled(false));
             }}
             // downloadLandcoverButtonOnClick={() => {
             //     dispatch(showDownloadPanelToggled(true));

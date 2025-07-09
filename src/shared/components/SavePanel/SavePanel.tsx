@@ -147,7 +147,10 @@ export const SavePanel: FC<SavePanelProps> = ({
     }
 
     return (
-        <div className="absolute top-0 left-0 bottom-0 right-0 bg-custom-background-95 z-20 text-custom-light-blue overflow-y-auto fancy-scrollbar">
+        <div
+            className="absolute top-0 left-0 bottom-0 right-0 bg-custom-background-95 z-20 text-custom-light-blue overflow-y-auto fancy-scrollbar"
+            data-testid="save-panel"
+        >
             <CloseButton
                 onClick={() => {
                     dispatch(showSavePanelToggled());
@@ -177,7 +180,10 @@ export const SavePanel: FC<SavePanelProps> = ({
                 />
 
                 <div className="relative w-full mt-12 mx-auto">
-                    <div>
+                    <div
+                        data-testid="save-options-list"
+                        data-number-of-options={publishOptions.length}
+                    >
                         <SaveOptionsListHeader title={t('publish')} />
 
                         {publishOptions.map((d) => {
@@ -192,18 +198,23 @@ export const SavePanel: FC<SavePanelProps> = ({
                             //     ] || 0;
 
                             return (
-                                <SaveOptionButton
+                                <div
                                     key={saveJobType}
-                                    title={t(inputName)}
-                                    subtitle={t(outputName)}
-                                    desciprtion={t(description)}
-                                    // estimatedCost={estimatedCost}
-                                    disabled={disabled || !signedIn}
-                                    message={message}
-                                    onClick={() => {
-                                        setActiveSaveJobDialog(saveJobType);
-                                    }}
-                                />
+                                    data-testid={`save-option-${saveJobType}`}
+                                >
+                                    <SaveOptionButton
+                                        key={saveJobType}
+                                        title={t(inputName)}
+                                        subtitle={t(outputName)}
+                                        desciprtion={t(description)}
+                                        // estimatedCost={estimatedCost}
+                                        disabled={disabled || !signedIn}
+                                        message={message}
+                                        onClick={() => {
+                                            setActiveSaveJobDialog(saveJobType);
+                                        }}
+                                    />
+                                </div>
                             );
                         })}
                     </div>

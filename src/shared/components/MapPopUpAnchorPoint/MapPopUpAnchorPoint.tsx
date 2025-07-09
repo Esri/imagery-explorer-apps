@@ -14,7 +14,7 @@
  */
 
 import Graphic from '@arcgis/core/Graphic';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import MapView from '@arcgis/core/views/MapView';

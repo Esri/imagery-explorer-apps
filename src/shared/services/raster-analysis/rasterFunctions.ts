@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Geometry } from '@arcgis/core/geometry';
+import Geometry from '@arcgis/core/geometry/Geometry';
 
 type CreateMaskIndexRasterFunctionParams = {
     serviceUrl: string;

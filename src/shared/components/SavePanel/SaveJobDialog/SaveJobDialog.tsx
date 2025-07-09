@@ -131,7 +131,10 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
     // }, [title]);
 
     return (
-        <div className="fixed top-0 left-0 w-full h-full bg-custom-background-90 backdrop-blur-sm z-10 flex justify-center">
+        <div
+            className="fixed top-0 left-0 w-full h-full bg-custom-background-90 backdrop-blur-sm z-10 flex justify-center"
+            data-testid="save-job-dialog"
+        >
             <div className="mx-4 md:max-w-3xl w-full mt-48 ">
                 <div className="mb-4 ">
                     <h3 className="text-xl">

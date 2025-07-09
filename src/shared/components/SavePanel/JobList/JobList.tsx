@@ -64,7 +64,10 @@ export const JobList: FC<JobListProps> = ({
 
     if (!data.length) {
         return (
-            <div className="text-center w-full opacity-50">
+            <div
+                className="text-center w-full opacity-50"
+                data-testid="no-pending-jobs"
+            >
                 {t('no_pending_jobs')}
             </div>
         );
@@ -72,10 +75,13 @@ export const JobList: FC<JobListProps> = ({
 
     return (
         <div>
-            {sortedByCreationTime.map((job) => {
+            {sortedByCreationTime.map((job, index) => {
                 return (
                     <div
                         key={job.id}
+                        data-testid={`job-list-item-${index}`}
+                        data-job-status={job.status}
+                        data-job-type={job.type}
                         className="w-full grid gap-1 items-center text-custom-light-blue text-sm my-4"
                         style={{ gridTemplateColumns: '50px 1fr 150px 60px' }}
                     >

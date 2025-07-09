@@ -18,7 +18,7 @@ import useLandCoverLayer from '../LandcoverLayer/useLandCoverLayer';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectMapMode,
-    selectShouldShowSentinel2Layer,
+    selectShouldShowSatelliteImageryLayer,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
 import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
@@ -26,12 +26,26 @@ import MapView from '@arcgis/core/views/MapView';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
+// import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
+// import { useSentinel2LandCoverLayerRasterFunctionName } from '../LandcoverLayer/useSentinel2LandCoverLayerRasterFunctionName';
 
 type Props = {
+    /**
+     * The URL of the Land Cover service.
+     */
+    serviceUrl: string;
+    /**
+     * The raster function name to be used for the Land Cover layer.
+     */
+    rasterFunctionName: string;
     mapView?: MapView;
 };
 
-export const SwipeWidget4Landcover: FC<Props> = ({ mapView }) => {
+export const SwipeWidget4Landcover: FC<Props> = ({
+    serviceUrl,
+    rasterFunctionName,
+    mapView,
+}) => {
     const dispatch = useAppDispatch();
 
     const mode = useAppSelector(selectMapMode);
@@ -41,18 +55,24 @@ export const SwipeWidget4Landcover: FC<Props> = ({ mapView }) => {
     );
 
     const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+        selectShouldShowSatelliteImageryLayer
     );
 
     const isSwipeWidgetVisible =
         mode === 'swipe' && shouldShowSentinel2Layer === false;
 
+    // const rasterFunctionName = useSentinel2LandCoverLayerRasterFunctionName();
+
     const leadingLayer = useLandCoverLayer({
+        serviceUrl,
+        rasterFunctionName,
         year: year4LeadingLayer,
         visible: isSwipeWidgetVisible && shouldShowSentinel2Layer === false,
     });
 
     const trailingLayer = useLandCoverLayer({
+        serviceUrl,
+        rasterFunctionName,
         year: year4TrailingLayer,
         visible: isSwipeWidgetVisible && shouldShowSentinel2Layer === false,
     });

@@ -20,38 +20,68 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import IMapView from '@arcgis/core/views/MapView';
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 import ExtentAndRotationGeoreference from '@arcgis/core/layers/support/ExtentAndRotationGeoreference';
-import { exportImage as exportImageFromLandCoverLayer } from '../LandcoverLayer/exportImage';
-import { exportImage as exportImageFromSentinel2Layer } from '../Sentinel2Layer/exportImage';
+import { exportLandCoverImage } from './exportLandCoverImage';
+import { exportSatelliteImage } from '../SatelliteImageryLayer/exportSatelliteImage';
 import {
-    selectActiveLandCoverType,
-    selectSentinel2AquisitionMonth,
-    selectSentinel2RasterFunction,
-    selectShouldShowSentinel2Layer,
+    // selectActiveLandCoverType,
+    selectLandcoverAnimationYears,
+    selectSatelliteImageryLayerAquisitionMonth,
+    selectSatelliteImageryLayerRasterFunction,
+    selectShouldShowSatelliteImageryLayer,
+    selectTimeExtentByYear,
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { getNormalizedExtent } from '@shared/utils/snippets/getNormalizedExtent';
+// import { getRasterFunctionBySentinel2LandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { Sentinel2LandCoverClassification } from '@typing/landcover';
 
-const useMediaLayerImageElement = (mapView?: IMapView) => {
+type Props = {
+    /**
+     * Land cover service URL
+     * This is used for the land cover layer
+     */
+    landCoverServiceUrl: string;
+    /**
+     * Satellite imagery service URL
+     * This is used for the Sentinel-2 imagery layer or landsat imagery layer
+     */
+    satellteImageryServiceUrl: string;
+    landcoverLayerRasterFunctionName: string;
+    mapView?: IMapView;
+};
+
+const useMediaLayerImageElement = ({
+    landCoverServiceUrl,
+    satellteImageryServiceUrl,
+    landcoverLayerRasterFunctionName,
+    mapView,
+}: Props) => {
     const [imageElements, setImageElements] = useState<ImageElement[]>(null);
+
+    const timeExtentByYear = useAppSelector(selectTimeExtentByYear);
+
+    const imageUrlsRef = useRef<string[]>([]);
 
     const abortControllerRef = useRef<AbortController>();
 
-    const years = getAvailableYears();
+    // const years = getAvailableYears();
 
-    const sentinel2AquisitionMonth = useAppSelector(
-        selectSentinel2AquisitionMonth
+    const years = useAppSelector(selectLandcoverAnimationYears);
+
+    const satelliteImageryAquisitionMonth = useAppSelector(
+        selectSatelliteImageryLayerAquisitionMonth
     );
 
-    const sentinel2RasterFunction = useAppSelector(
-        selectSentinel2RasterFunction
+    const satelliteImageryRasterFunction = useAppSelector(
+        selectSatelliteImageryLayerRasterFunction
     );
 
-    const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+    const shouldShowSatelliteImageryLayer = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
     );
 
-    const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
+    // const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
@@ -65,41 +95,50 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
         abortControllerRef.current = new AbortController();
 
         try {
-            const { extent, width, height } = mapView;
+            const { width, height } = mapView;
+
+            const extent = getNormalizedExtent(mapView.extent);
 
             const { xmin, ymin, xmax, ymax } = extent;
 
             // get images via export image request from land cover layer or sentinel-2 layer
             const requests = years.map((year) => {
-                return shouldShowSentinel2Layer
-                    ? exportImageFromSentinel2Layer({
+                return shouldShowSatelliteImageryLayer
+                    ? exportSatelliteImage({
+                          serviceUrl: satellteImageryServiceUrl,
                           extent,
                           width,
                           height,
                           year,
-                          month: sentinel2AquisitionMonth,
-                          rasterFunctionName: sentinel2RasterFunction,
+                          month: satelliteImageryAquisitionMonth,
+                          rasterFunctionName: satelliteImageryRasterFunction,
                           abortController: abortControllerRef.current,
                       })
-                    : exportImageFromLandCoverLayer({
+                    : exportLandCoverImage({
+                          serviceUrl: landCoverServiceUrl,
                           extent,
                           width,
                           height,
                           year,
-                          rasterFunctionName:
-                              getRasterFunctionByLandCoverClassName(
-                                  activeLandCoverType
-                              ),
+                          rasterFunctionName: landcoverLayerRasterFunctionName,
+                          //   getRasterFunctionBySentinel2LandCoverClassName(
+                          //       activeLandCoverType as Sentinel2LandCoverClassification
+                          //   ),
+                          timeExtentData: timeExtentByYear[year],
                           abortController: abortControllerRef.current,
                       });
             });
 
             const responses = await Promise.all(requests);
+            console.log('responses', responses);
 
             // once responses are received, get array of image elements using the binary data returned from export image requests
             const imageElements = responses.map((blob) => {
+                const url = URL.createObjectURL(blob);
+                imageUrlsRef.current.push(url);
+
                 return new ImageElement({
-                    image: URL.createObjectURL(blob),
+                    image: url,
                     georeference: new ExtentAndRotationGeoreference({
                         extent: {
                             spatialReference: {
@@ -128,12 +167,16 @@ const useMediaLayerImageElement = (mapView?: IMapView) => {
                 abortControllerRef.current.abort();
             }
 
-            // call revokeObjectURL so these image elements can be freed from the memory
-            if (imageElements) {
-                for (const elem of imageElements) {
-                    URL.revokeObjectURL(elem.image as string);
-                }
+            // // call revokeObjectURL so these image elements can be freed from the memory
+            // if (imageElements) {
+            //     for (const elem of imageElements) {
+            //         URL.revokeObjectURL(elem.image as string);
+            //     }
+            // }
+            for (const url of imageUrlsRef.current) {
+                URL.revokeObjectURL(url);
             }
+            imageUrlsRef.current = [];
 
             setImageElements(null);
         } else if (animationMode === 'loading') {

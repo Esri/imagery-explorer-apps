@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import { CreateWebMapResponse } from './createWebMap';
 import { CloseButton } from '@shared/components/CloseButton';
 import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export type WebMapMetadata = {
     /**
@@ -46,6 +47,10 @@ type Props = {
      * if true, it is in process of saving the webmap
      */
     isSavingChanges?: boolean;
+    /**
+     * error message when saving the webmap
+     */
+    error: string;
     saveButtonOnClick: (data: WebMapMetadata) => void;
     closeButtonOnClick: () => void;
     /**
@@ -109,6 +114,7 @@ export const SaveWebMap: FC<Props> = ({
     response,
     hasNoPrivilege2CreateContent,
     isSavingChanges = false,
+    error,
     saveButtonOnClick,
     closeButtonOnClick,
     signInButtonOnClick,
@@ -117,13 +123,16 @@ export const SaveWebMap: FC<Props> = ({
     const { t } = useTranslation();
 
     const [title, setTitle] = useState<string>(
-        'Sentinel-2 Land Cover Exlorer export map'
+        // 'Sentinel-2 Land Cover Exlorer export map'
+        t('output_webmap_default_title', { ns: APP_NAME })
     );
     const [tags, setTags] = useState<string>(
-        'Sentinel-2, Land Use, Land Cover, LULC, Living Atlas'
+        // 'Sentinel-2, Land Use, Land Cover, LULC, Living Atlas'
+        t('output_webmap_default_tags', { ns: APP_NAME })
     );
     const [summary, setSummary] = useState<string>(
-        'Sentinel-2 10m land use/land cover time series of the world.'
+        // 'Sentinel-2 10m land use/land cover time series of the world.'
+        t('output_webmap_default_snippet', { ns: APP_NAME })
     );
 
     const getContent = () => {
@@ -141,6 +150,16 @@ export const SaveWebMap: FC<Props> = ({
                             sign in
                         </span>{' '}
                         using a different account.
+                    </p>
+                </div>
+            );
+        }
+
+        if (error) {
+            return (
+                <div className="max-w-md mx-auto text-custom-light-blue-90">
+                    <p className="text-red-500">
+                        {t('error_creating_web_map')}: {error}
                     </p>
                 </div>
             );

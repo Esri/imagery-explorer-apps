@@ -14,12 +14,13 @@
  */
 
 import Graphic from '@arcgis/core/Graphic';
-import { Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import React, { FC, useEffect, useRef } from 'react';
 import MapView from '@arcgis/core/views/MapView';
 import { getThemedMapPointGraphic } from '@shared/components/MapView/helpers';
+import { MAP_ZOOM } from '@shared/constants/map';
 
 type Props = {
     /**
@@ -59,6 +60,7 @@ export const SamplingPoints: FC<Props> = ({
 
             mapView.goTo({
                 center: [selectedPoint.longitude, selectedPoint.latitude],
+                zoom: Math.max(mapView.zoom, MAP_ZOOM), // Ensure a minimum zoom level
             });
         }
     };

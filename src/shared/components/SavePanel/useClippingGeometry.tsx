@@ -18,8 +18,11 @@ import { getToken } from '@shared/utils/esri-oauth';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 
-import { Extent, Geometry } from '@arcgis/core/geometry';
+import Geometry from '@arcgis/core/geometry/Geometry';
 import { getFeatureByObjectId } from '@shared/services/helpers/getFeatureById';
+import Point from '@arcgis/core/geometry/Point';
+import Polygon from '@arcgis/core/geometry/Polygon';
+import Polyline from '@arcgis/core/geometry/Polyline';
 
 export const useClippingGeometry = (serviceUrl: string) => {
     const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
@@ -54,7 +57,10 @@ export const useClippingGeometry = (serviceUrl: string) => {
                     }
                 );
 
-                const clippingGeometry = feature?.geometry as Geometry;
+                const clippingGeometry = feature?.geometry as
+                    | Point
+                    | Polygon
+                    | Polyline;
 
                 setClippingGeometry(clippingGeometry);
             } catch (error) {

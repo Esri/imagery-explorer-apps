@@ -17,7 +17,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { DWONLOAD_MODE_WEB_MAP_ID } from '@landcover-explorer/constants/map';
-import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+// import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { selectMapCenterAndZoom } from '@shared/store/LandcoverExplorer/selectors';
 import { showDownloadPanelToggled } from '@shared/store/UI/reducer';
 import { selectShowDownloadPanel } from '@shared/store/UI/selectors';
@@ -30,6 +30,7 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import MapView from '@shared/components/MapView/MapView';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
+import { selectAvaiableYearsForLandCoverLayer } from '@shared/store/LandcoverExplorer/selectors';
 
 const DownloadPanel = () => {
     const { t } = useTranslation();
@@ -40,7 +41,8 @@ const DownloadPanel = () => {
 
     const center = useAppSelector(selectMapCenter);
 
-    const availableYears = getAvailableYears();
+    // const availableYears = getAvailableYears();
+    const availableYears = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
     useEffect(() => {
         saveDonwloadModeToHashParams(showDownloadPanel);

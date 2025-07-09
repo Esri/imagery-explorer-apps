@@ -55,7 +55,11 @@ export const SwipeLayerSelector: FC<Props> = ({
                 : queryParams4SceneOnRight;
 
         return (
-            <>
+            <div
+                data-testid={`swipe-layer-selector-${side}`}
+                data-selected={selectedSide === side}
+                data-acquisition-date={queryParams?.acquisitionDate || ''}
+            >
                 <div>
                     <span>{t(side)}</span>
                 </div>
@@ -77,7 +81,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                         <span>{t('no_scene_selected')}</span>
                     )}
                 </div>
-            </>
+            </div>
         );
     };
 
@@ -128,6 +132,7 @@ export const SwipeLayerSelector: FC<Props> = ({
             </div>
 
             <div
+                data-testid="swipe-mode-side-swap-button"
                 className="flex justify-center cursor-pointer w-full my-1"
                 title="swap left and right side"
                 onClick={swapButtonOnClick}

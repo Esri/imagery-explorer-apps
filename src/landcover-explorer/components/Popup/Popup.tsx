@@ -13,23 +13,22 @@
  * limitations under the License.
  */
 
-import './style.css';
+// import './style.css';
 import React, { FC, useCallback, useEffect, useRef } from 'react';
 import IMapView from '@arcgis/core/views/MapView';
 import IPoint from '@arcgis/core/geometry/Point';
 // import { LandcoverClassificationData } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import {
-    identifyLandcoverClassificationsByLocation,
-    LandcoverClassificationsByYear,
-} from '@shared/services/sentinel-2-10m-landcover/identifyTask';
-import { identify } from '../Sentinel2Layer/identify';
+// import {
+//     LandcoverClassificationsByYear,
+// } from '@shared/services/sentinel-2-10m-landcover/identifyTask';
+import { getAcquisitionDateOfSatelliteImage } from '../SatelliteImageryLayer/identify';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
-    selectIsSentinel2LayerOutOfVisibleRange,
+    selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
-    selectSentinel2AquisitionMonth,
-    selectSentinel2RasterFunction,
-    selectShouldShowSentinel2Layer,
+    selectSatelliteImageryLayerAquisitionMonth,
+    selectSatelliteImageryLayerRasterFunction,
+    selectShouldShowSatelliteImageryLayer,
     // selectSwipePosition,
     selectYear,
     selectYearsForSwipeWidgetLayers,
@@ -39,8 +38,43 @@ import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { DATE_FORMAT } from '@shared/constants/UI';
+import {
+    identifyLandcoverClassificationsByLocation,
+    LandcoverClassificationDataByYear,
+} from '@shared/services/helpers/getLandcoverClassificationsByLocation';
+import { LandcoverClassificationData } from '@typing/landcover';
+import { selectAnimationStatus } from '@shared/store/UI/selectors';
 
 type Props = {
+    /**
+     * URL for the Land Cover Image Service.
+     * This is used to perform the identify task.
+     */
+    landCoverServiceUrl: string;
+    /**
+     * The URL for the satellite imagery service.
+     */
+    satelliteImageryServiceUrl: string;
+    /**
+     * The name of the satellite imagery service.
+     */
+    satelliteImageryServiceName: string;
+    /**
+     * The raster function to be used for the mosaic rule of the identify task.
+     */
+    rasterFunction: string;
+    /**
+     * Available years for which the land cover classification data can be retrieved.
+     */
+    years: number[];
+    /**
+     * The field in the Land Cover Image Service that contains the year of the imagery.
+     */
+    yearField: string;
+    /**
+     * Map stores Land Cover Classification Data using pixel value as the key.
+     */
+    classificationDataMap: Map<number, LandcoverClassificationData>;
     mapView?: IMapView;
 };
 
@@ -62,20 +96,33 @@ const didClickOnLeftSideOfSwipeWidget = (
     return mouseX <= wdithOfLeftHalf;
 };
 
-const Popup: FC<Props> = ({ mapView }: Props) => {
+const Popup: FC<Props> = ({
+    landCoverServiceUrl,
+    satelliteImageryServiceUrl,
+    satelliteImageryServiceName,
+    rasterFunction,
+    years,
+    yearField,
+    classificationDataMap,
+    mapView,
+}: Props) => {
     const { t } = useTranslation();
 
-    const isSentinel2LayerOutOfVisibleRange = useAppSelector(
-        selectIsSentinel2LayerOutOfVisibleRange
+    const isSatelliteImagertLayerOutOfVisibleRange = useAppSelector(
+        selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
-    const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSentinel2Layer
+    const shouldShowSatelliteImageryLayer = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
     );
 
-    const rasterFunction = useAppSelector(selectSentinel2RasterFunction);
+    const satelliteImageryRasterFunction = useAppSelector(
+        selectSatelliteImageryLayerRasterFunction
+    );
 
-    const aquisitionMonth = useAppSelector(selectSentinel2AquisitionMonth);
+    const aquisitionMonth = useAppSelector(
+        selectSatelliteImageryLayerAquisitionMonth
+    );
 
     const swipePosition = useAppSelector(selectSwipeWidgetHandlerPosition);
 
@@ -87,6 +134,8 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
 
     const aquisitionYear = useAppSelector(selectYear);
 
+    const animationStatus = useAppSelector(selectAnimationStatus);
+
     const mapViewOnClickHandlerRef = useRef<MapViewOnClickHandler>();
 
     const getLoadingIndicator = () => {
@@ -96,7 +145,7 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     };
 
     const getMainContent = (
-        landCoverData: LandcoverClassificationsByYear[],
+        landCoverData: LandcoverClassificationDataByYear[],
         aquisitionYear: number,
         acquisitionDate?: number
     ) => {
@@ -109,9 +158,10 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         const htmlString4AcquisitionDate = acquisitionDateFormatted
             ? `
                 <div class='mx-2 mt-4 pb-2 text-center'>
-                    <span>${t('sentinel2_acquisition_date', {
-                        ns: APP_NAME,
+                    <span>${t('satellite_imagery_acquisition_date', {
+                        // ns: APP_NAME,
                         date: acquisitionDateFormatted, // Pass the formatted date dynamically for translation
+                        satelliteName: satelliteImageryServiceName,
                     })}</span>
                 </div>
             `
@@ -133,8 +183,10 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
                       });
 
                       return `
-                        <div class='flex my-2 items-center'>
-                            <div class='active-year-indicator rounded-full mr-2 bg-custom-light-blue-80 ${
+                        <div class='flex my-2 items-center'
+                            data-testid="popup-item-${year}-${data.ClassName}"
+                        >
+                            <div class='rounded-full mr-2 bg-custom-light-blue-80 w-[6px] h-[6px] ${
                                 year !== aquisitionYear ? 'opacity-0' : ''
                             }'></div>
                             <span>${year}</span>
@@ -157,7 +209,9 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
             : '';
 
         popupDiv.innerHTML = `
-            <div class='text-custom-light-blue'>
+            <div class='text-custom-light-blue'
+                data-testid="landcover-popup-content"
+            >
                 ${htmlString4AcquisitionDate}
                 ${htmlString4LandCoverList}
             </div>
@@ -172,8 +226,8 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     ) => {
         // no need to show pop-up for sentinel-2 imagery layer until imagery is visible
         if (
-            shouldShowSentinel2Layer &&
-            isSentinel2LayerOutOfVisibleRange === true
+            shouldShowSatelliteImageryLayer &&
+            isSatelliteImagertLayerOutOfVisibleRange === true
         ) {
             return;
         }
@@ -181,8 +235,8 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         const lat = Math.round(mapPoint.latitude * 1000) / 1000;
         const lon = Math.round(mapPoint.longitude * 1000) / 1000;
         const title =
-            `${t('latitude_abbreviation', { ns: APP_NAME })} ${lat}` +
-            `${t('longitude_abbreviation', { ns: APP_NAME })} ${lon}`;
+            `${t('latitude_abbreviation')} ${lat} ` +
+            `${t('longitude_abbreviation')} ${lon}`;
 
         mapView.openPopup({
             title,
@@ -191,8 +245,15 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
         });
 
         const landCoverData =
-            shouldShowSentinel2Layer === false
-                ? await identifyLandcoverClassificationsByLocation(mapPoint)
+            shouldShowSatelliteImageryLayer === false
+                ? await identifyLandcoverClassificationsByLocation({
+                      point: mapPoint,
+                      landCoverServiceUrl,
+                      rasterFunction,
+                      years,
+                      yearField,
+                      classificationDataMap,
+                  })
                 : null;
 
         // acquisition date (in unix timestamp) of sentinel-2 imagery that is displayed on map
@@ -213,26 +274,38 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
                 : year4TrailingLayer;
         }
 
-        if (shouldShowSentinel2Layer && !isSentinel2LayerOutOfVisibleRange) {
-            const identifyTaskRes = await identify({
+        if (
+            shouldShowSatelliteImageryLayer &&
+            !isSatelliteImagertLayerOutOfVisibleRange
+        ) {
+            // const identifyTaskRes = await identify({
+            //     geometry: mapPoint,
+            //     resolution: mapView.resolution,
+            //     rasterFunction: satelliteImageryRasterFunction,
+            //     year,
+            //     month: aquisitionMonth,
+            // });
+
+            // if (
+            //     identifyTaskRes.catalogItems &&
+            //     identifyTaskRes.catalogItems.features
+            // ) {
+            //     acquisitionDate =
+            //         identifyTaskRes?.catalogItems?.features[0]?.attributes
+            //             .acquisitiondate;
+            // }
+
+            acquisitionDate = await getAcquisitionDateOfSatelliteImage({
+                serviceUrl: satelliteImageryServiceUrl,
                 geometry: mapPoint,
                 resolution: mapView.resolution,
-                rasterFunction,
+                rasterFunction: satelliteImageryRasterFunction,
                 year,
                 month: aquisitionMonth,
             });
-
-            if (
-                identifyTaskRes.catalogItems &&
-                identifyTaskRes.catalogItems.features
-            ) {
-                acquisitionDate =
-                    identifyTaskRes?.catalogItems?.features[0]?.attributes
-                        .acquisitiondate;
-            }
         }
 
-        mapView.popup.open({
+        mapView.openPopup({
             // Set the popup's title to the coordinates of the location
             title,
             location: mapPoint, // Set the location of the popup to the clicked location
@@ -267,12 +340,13 @@ const Popup: FC<Props> = ({ mapView }: Props) => {
     }, [
         aquisitionYear,
         aquisitionMonth,
-        shouldShowSentinel2Layer,
-        isSentinel2LayerOutOfVisibleRange,
+        shouldShowSatelliteImageryLayer,
+        isSatelliteImagertLayerOutOfVisibleRange,
         swipePosition,
         year4LeadingLayer,
         year4TrailingLayer,
         mode,
+        animationStatus,
     ]);
 
     return null;

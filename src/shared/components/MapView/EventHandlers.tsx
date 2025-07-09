@@ -14,7 +14,8 @@
  */
 
 import { watch } from '@arcgis/core/core/reactiveUtils';
-import { Extent, Point } from '@arcgis/core/geometry';
+import Point from '@arcgis/core/geometry/Point';
+import Extent from '@arcgis/core/geometry/Extent';
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect } from 'react';
 

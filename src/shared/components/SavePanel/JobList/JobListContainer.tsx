@@ -57,6 +57,7 @@ export const JobListContainer: FC<Props> = ({ publishJobSubmitHandler }) => {
                 <div
                     className="text-sm opacity-50 cursor-pointer underline"
                     title="Remove all pending jobs"
+                    data-testid="clear-all-jobs-button"
                     onClick={() => {
                         dispatch(clearAllPublishAndDownloadJobs());
                     }}

@@ -19,11 +19,23 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
-import { LandCoverClassification } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
-import { Extent } from '@arcgis/core/geometry';
+import { LandsatRasterFunctionName } from '@shared/services/landsat-level-2/config';
+import { TimeExtentData } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
+import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
+import { getCurrentYear } from '@shared/utils/date-time/getCurrentDateTime';
+// import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
+import { LandCoverClassification } from '@typing/landcover';
+
+export type ImageryRasterFunction4LandcoverApp =
+    | Sentinel2FunctionName
+    | LandsatRasterFunctionName;
 
 export type MapMode = 'swipe' | 'step';
+
+export type LandcoverAnimationYearRange = {
+    start: number;
+    end: number;
+};
 
 // export type MapCenter = {
 //     lon?: number;
@@ -41,30 +53,16 @@ export type LandcoverExplorerAppState = {
      */
     year: number;
     /**
-     * If true, show Sentinel 2 Layer instead of Land Cover Layer
+     * If true, show satellite imagery layer (sentinel-2/landsat) instead of Land Cover Layer
      */
-    shouldShowSentinel2Layer: boolean;
+    shouldShowSatelliteImageryLayer: boolean;
     /**
-     * The month that will be used to fetch sentinel-2 imagery layer
+     * The month that will be used to fetch satellite imagery layer (sentinel-2/landsat) imagery layer
      */
-    sentinel2AquisitionMonth: number;
-    // /**
-    //  * Represents the level of detail (LOD) at the center of the view.
-    //  */
-    // zoom?: number;
-    // /**
-    //  * Represents the view's center point
-    //  */
-    // center?: MapCenter;
-    // /**
-    //  * Represents the size of one pixel in map units.
-    //  * The value of resolution can be found by dividing the extent width by the view's width.
-    //  */
-    // resolution?: number;
-    // /**
-    //  * The extent represents the visible portion of a map within the view as an instance of Extent.
-    //  */
-    // extent?: Extent;
+    satelliteImageryLayerAquisitionMonth: number;
+    /**
+     * The year for which the leading and trailing layers will be displayed in Swipe Widget
+     */
     swipeWidget: {
         year4LeadingLayer: number;
         year4TrailingLayer: number;
@@ -75,18 +73,10 @@ export type LandcoverExplorerAppState = {
      * get the raster functions to filter the Land Cover layer
      */
     activeLandCoverType: LandCoverClassification;
-    // /**
-    //  * If true, Map Reference Labels layer will be on
-    //  */
-    // showMapLabel?: boolean;
-    // /**
-    //  * If true, Terrain Layer will be on
-    //  */
-    // showTerrain?: boolean;
     /**
-     * Sentinel 2 Raster function that will be used to render the layer
+     * Raster function name for satellite imagery layer (sentinel-2/landsat)
      */
-    sentinel2RasterFunction: Sentinel2RasterFunction;
+    satelliteImageryLayerRasterFunction: ImageryRasterFunction4LandcoverApp;
     /**
      * If true, open info panel that shows detailed land cover info
      */
@@ -95,13 +85,35 @@ export type LandcoverExplorerAppState = {
      * If true, show leading and trailing year in Swipe Widget Reference Info Component
      */
     showSwipeWidgetYearIndicator?: boolean;
+    /**
+     * The range of years that will be used for the animation
+     */
+    animationYearRange: LandcoverAnimationYearRange;
+    /**
+     * Time information for the Land Cover layer.
+     * Contains the available years for the Land Cover layer, determined when the Redux store is initialized.
+     * This value should remain constant and is used to populate the Time Slider and Swipe Widget.
+     */
+    timeInfo: {
+        /**
+         * The available years for the Land Cover layer based on the time extent
+         */
+        availableYears: number[];
+        /**
+         * The time extent for each year, used to retrieve the land cover layer for a specific year.
+         * The key is the year, and the value is the TimeExtentData containing start and end times in Unix timestamp.
+         */
+        timeExtentByYear: {
+            [year: number]: TimeExtentData;
+        };
+    };
 };
 
 export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     mode: 'swipe',
     year: null,
-    shouldShowSentinel2Layer: false,
-    sentinel2AquisitionMonth: 9,
+    shouldShowSatelliteImageryLayer: false,
+    satelliteImageryLayerAquisitionMonth: 9,
     // zoom: 11,
     // center: null,
     // resolution: null,
@@ -114,9 +126,17 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
     activeLandCoverType: null,
     // showMapLabel: true,
     // showTerrain: true,
-    sentinel2RasterFunction: 'Natural Color for Visualization', // Default raster function for Sentinel-2 layer
+    satelliteImageryLayerRasterFunction: 'Natural Color for Visualization', // Default raster function for Sentinel-2 layer
     showInfoPanel: false,
     showSwipeWidgetYearIndicator: false,
+    animationYearRange: {
+        start: getCurrentYear(),
+        end: getCurrentYear(),
+    },
+    timeInfo: {
+        availableYears: [],
+        timeExtentByYear: {},
+    },
 };
 
 const slice = createSlice({
@@ -141,11 +161,11 @@ const slice = createSlice({
         // extentUpdated: (state, action: PayloadAction<Extent>) => {
         //     state.extent = action.payload;
         // },
-        shouldShowSentinel2LayerToggled: (
+        shouldShowSatelliteImageryLayerToggled: (
             state,
             action: PayloadAction<boolean>
         ) => {
-            state.shouldShowSentinel2Layer = action.payload;
+            state.shouldShowSatelliteImageryLayer = action.payload;
         },
         activeLandCoverTypeChanged: (
             state,
@@ -153,32 +173,17 @@ const slice = createSlice({
         ) => {
             state.activeLandCoverType = action.payload;
         },
-        // swipePositionChanged: (state, action: PayloadAction<number>) => {
-        //     state.swipeWidget.position = action.payload;
-        // },
-        // showMapLabelToggled: (state) => {
-        //     state.showMapLabel = !state.showMapLabel;
-        // },
-        // showTerrainToggled: (state) => {
-        //     state.showTerrain = !state.showTerrain;
-        // },
-        // mapCenterUpdated: (state, action: PayloadAction<MapCenter>) => {
-        //     state.center = action.payload;
-        // },
-        // zoomUpdated: (state, action: PayloadAction<number>) => {
-        //     state.zoom = action.payload;
-        // },
-        sentinel2RasterFunctionChanged: (
+        satelliteImageryLayerRasterFunctionChanged: (
             state,
-            action: PayloadAction<Sentinel2RasterFunction>
+            action: PayloadAction<ImageryRasterFunction4LandcoverApp>
         ) => {
-            state.sentinel2RasterFunction = action.payload;
+            state.satelliteImageryLayerRasterFunction = action.payload;
         },
-        sentinel2AquisitionMonthChanged: (
+        satelliteImageryLayerAquisitionMonthChanged: (
             state,
             action: PayloadAction<number>
         ) => {
-            state.sentinel2AquisitionMonth = action.payload;
+            state.satelliteImageryLayerAquisitionMonth = action.payload;
         },
         showInfoPanelToggled: (state, action: PayloadAction<boolean>) => {
             state.showInfoPanel = action.payload;
@@ -188,6 +193,12 @@ const slice = createSlice({
             action: PayloadAction<boolean>
         ) => {
             state.showSwipeWidgetYearIndicator = action.payload;
+        },
+        landcoverAnimationYearRangeChanged: (
+            state,
+            action: PayloadAction<LandcoverAnimationYearRange>
+        ) => {
+            state.animationYearRange = action.payload;
         },
     },
 });
@@ -199,19 +210,13 @@ export const {
     yearUpdated,
     year4LeadingLayerUpdated,
     year4TrailingLayerUpdated,
-    // resolutionUpdated,
-    // extentUpdated,
-    shouldShowSentinel2LayerToggled,
+    shouldShowSatelliteImageryLayerToggled,
     activeLandCoverTypeChanged,
-    // swipePositionChanged,
-    // showMapLabelToggled,
-    // showTerrainToggled,
-    // mapCenterUpdated,
-    // zoomUpdated,
-    sentinel2RasterFunctionChanged,
-    sentinel2AquisitionMonthChanged,
+    satelliteImageryLayerAquisitionMonthChanged,
+    satelliteImageryLayerRasterFunctionChanged,
     showInfoPanelToggled,
     showSwipeWidgetYearIndicatorToggled,
+    landcoverAnimationYearRangeChanged,
 } = slice.actions;
 
 export default reducer;

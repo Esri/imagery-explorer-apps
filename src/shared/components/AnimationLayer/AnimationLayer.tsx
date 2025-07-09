@@ -38,6 +38,7 @@ import { sortQueryParams4ScenesByAcquisitionDate } from '@shared/components/Anim
 import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
+import { once } from '@arcgis/core/core/reactiveUtils';
 
 type Props = {
     /**
@@ -147,24 +148,72 @@ export const AnimationLayer: FC<Props> = ({
     };
 
     useEffect(() => {
-        if (!mediaLayerRef.current) {
-            initMediaLayer();
-            return;
-        }
+        (async () => {
+            if (!mediaLayerRef.current) {
+                initMediaLayer();
+                return;
+            }
 
-        // why doing this? It seems there is some bug in @types/arcgis-js-api@4.27 and the `elements`
-        // property is no longer defined for `layer.source`, but according to the JSAPI doc (https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LocalMediaElementSource.html#elements),
-        // it is still there, therefore we just use this temporary solution so TypeScript won't throw error
-        const source = mediaLayerRef.current.source as any;
+            // why doing this? It seems there is some bug in @types/arcgis-js-api@4.27 and the `elements`
+            // property is no longer defined for `layer.source`, but according to the JSAPI doc (https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-support-LocalMediaElementSource.html#elements),
+            // it is still there, therefore we just use this temporary solution so TypeScript won't throw error
+            const source = mediaLayerRef.current.source as any;
 
-        // clear existing elements bofore adding new list of elements to media layer
-        source.elements.removeAll();
+            // clear existing elements bofore adding new list of elements to media layer
+            source.elements.removeAll();
 
-        if (mediaLayerElements) {
-            source.elements.addMany(mediaLayerElements);
-            // media layer elements are ready, change animation mode to playing to start the animation
-            dispatch(animationStatusChanged('playing'));
-        }
+            if (!mediaLayerElements || mediaLayerElements.length === 0) {
+                return;
+            }
+
+            // source.elements.addMany(mediaLayerElements);
+            // // media layer elements are ready, change animation mode to playing to start the animation
+            // dispatch(animationStatusChanged('playing'));
+
+            try {
+                // // Wait until all mediaLayerElements are loaded before proceeding
+                // await Promise.all(
+                //     mediaLayerElements.map((element) =>
+                //         once(
+                //             () =>
+                //                 element.loadStatus === 'loaded' ||
+                //                 element.loadStatus === 'failed'
+                //         )
+                //     )
+                // );
+
+                // for (const element of mediaLayerElements) {
+                //     if (element.loadStatus === 'failed') {
+                //         throw new Error(`Element failed to load: ${element}`);
+                //     }
+                //     // console.log(`Element loaded: ${element.loadStatus}`);
+                // }
+
+                for (const element of mediaLayerElements) {
+                    source.elements.add(element);
+
+                    // Wait for each element to load before proceeding
+                    await once(
+                        () =>
+                            element.loadStatus === 'loaded' ||
+                            element.loadStatus === 'failed'
+                    );
+
+                    if (element.loadStatus === 'failed') {
+                        throw new Error(`Element failed to load: ${element}`);
+                    }
+
+                    console.log(`Element loaded: ${element.loadStatus}`);
+                }
+
+                // media layer elements are ready, change animation mode to playing to start the animation
+                dispatch(animationStatusChanged('playing'));
+            } catch (error) {
+                console.error('Error loading media layer elements:', error);
+                // If any element fails to load, we can stop the animation and reset the media layer
+                dispatch(animationStatusChanged('failed-loading'));
+            }
+        })();
     }, [mediaLayerElements, mapView]);
 
     // If the map view's height changes during an animation,

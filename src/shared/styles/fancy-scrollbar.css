@@ -14,3 +14,14 @@
 .fancy-scrollbar::-webkit-scrollbar-thumb:hover {
     background: var(--custom-light-blue-50);
 }
+
+/* 
+ * The @-moz-document rule is a Firefox-specific extension that allows targeting styles to Firefox browsers only.
+ * Here, it applies custom scrollbar styles to all pages in Firefox.
+ */
+@-moz-document url-prefix() {
+    .fancy-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: var(--custom-light-blue-25) var(--custom-light-blue-10);
+    }
+}
