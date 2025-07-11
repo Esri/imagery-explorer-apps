@@ -7,7 +7,7 @@
     "renderer_natural_color_label": "Natural Color",
     "renderer_natural_color_description": "Natural Color bands red, green, blue (4, 3, 2) displayed with dynamic range adjustment applied.",
     "renderer_swir_label": "SWIR",
-    "renderer_swir_description": "Bands shortwave IR-2, shortwave IR-1, red (7, 6, 4) with dynamic range adjustment applied.",
+    "renderer_swir_description": "Bands shortwave IR-2, shortwave IR-1, red (7, 5, 4) with dynamic range adjustment applied.",
     "renderer_agriculture_label": "Agriculture",
     "renderer_agriculture_description": "Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.",
     "renderer_ndvi_label": "NDVI",
