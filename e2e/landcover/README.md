@@ -63,3 +63,25 @@ npx playwright test e2e/landcover/tests/LandCoverLayer.test.ts --config e2e/play
 2. Ensure the Land Cover layer is visible.
 3. Use the Time Slider to change the year.
 4. Confirm the Land Cover layer updates correctly.
+
+
+## Test Download Panel
+
+The "Download Panel" test verifies that users can access and interact with the download functionality for GeoTIFF files. It checks the visibility and operation of the download panel, confirms the presence and correctness of bulk download links for multiple years, ensures the LULC Footprints layer is displayed, and validates that popups provide accurate download links for selected locations.
+
+### Running the Download Panel Test
+To run the "Download Panel" test:
+```bash
+npx playwright test e2e/landcover/tests/DownloadPanel.test.ts --config e2e/playwright.landcover.config.ts --headed --workers=1
+```
+
+### Test Steps
+1. Open the app and navigate to the map view.
+2. Confirm the "Download GeoTIFF" button is visible and enabled.
+3. Click the "Download GeoTIFF" button.
+4. Verify the download panel appears.
+5. Check that bulk download links for years 2017 to 2024 are present, each with the correct label and link.
+6. Ensure the LULC Footprints layer is visible on the map.
+7. Click on the map at a sample location within the download panel.
+8. Confirm a popup appears showing download links for each year.
+9. Verify each popup link is labeled with the correct year and points to the expected file.

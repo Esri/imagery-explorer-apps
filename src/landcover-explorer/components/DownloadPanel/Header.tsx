@@ -44,6 +44,7 @@ const Header: FC<Props> = () => {
                         href={url}
                         target="_blank"
                         rel="noreferrer"
+                        data-testid={`bulk-download-link-${year}`}
                     >
                         {year}
                     </a>
