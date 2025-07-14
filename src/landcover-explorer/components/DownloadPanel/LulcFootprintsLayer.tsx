@@ -101,7 +101,7 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
         const size = (attributes.FileSize / 1000).toFixed(0);
         const imageName = attributes.ImageName;
 
-        const links = availableYears
+        const links = [...availableYears]
             .sort((a, b) => b - a)
             .map((year) => {
                 const url = getImageURL(year, imageName);
