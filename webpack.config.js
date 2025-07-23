@@ -165,35 +165,6 @@ module.exports =  (env, options)=> {
                  * name of the imagery explorer app to start/build
                  */
                 WEBPACK_DEFINED_APP_NAME: JSON.stringify(app),
-                // /**
-                //  * URL for Landsat service proxy in development environment
-                //  */
-                // LANDSAT_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_DEV),
-                // /**
-                //  * URL for Landsat service proxy in production environment
-                //  */
-                // LANDSAT_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_PROD),
-                // /**
-                //  * URL for Sentinel-2 service proxy in development environment
-                //  */
-                // SENTINEL2_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_DEV),
-                // /**
-                //  * URL for Sentinel-2 service proxy in production environment
-                //  */
-                // SENTINEL2_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_PROD),
-                /**
-                 * URL for Sentinel-1 service proxy in development environment
-                 */
-                SENTINEL1_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_DEV),
-                /**
-                 * URL for Sentinel-1 service proxy in production environment
-                 */
-                SENTINEL1_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_PROD),
-                // /**
-                //  * Specify the service tier to use in the application
-                //  */
-                // SERVICE_TIER: JSON.stringify(process.env.SERVICE_TIER),
-
                 /**
                  * APP ID for Landsat Explorer app
                  */
@@ -218,6 +189,18 @@ module.exports =  (env, options)=> {
                  * URL for sentinel-2 proxy service
                  */
                 ENV_SENTINEL2_PROXY_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_PROXY_SERVICE_URL),
+                /**
+                 * APP ID for Sentinel-1 Explorer app
+                 */
+                ENV_SENTINEL1_EXPLORER_APP_ID: JSON.stringify(envConfig.SENTINEL1_EXPLORER_APP_ID),
+                /**
+                 * URL for Sentinel-1 original service
+                 */
+                ENV_SENTINEL1_ORIGINAL_SERVICE_URL: JSON.stringify(envConfig.SENTINEL1_ORIGINAL_SERVICE_URL),
+                /**
+                 * URL for sentinel-1 proxy service
+                 */
+                ENV_SENTINEL1_PROXY_SERVICE_URL: JSON.stringify(envConfig.SENTINEL1_PROXY_SERVICE_URL),
                 /**
                  * ArcGIS Online portal root URL
                  */

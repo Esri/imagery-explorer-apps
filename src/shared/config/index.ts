@@ -135,3 +135,10 @@ export const LANDSAT_EXPLORER_APP_ID = ENV_LANDSAT_EXPLORER_APP_ID || '';
  * This is defined in the environment variable `ENV_SENTINEL2_EXPLORER_APP_ID` by Webpack DefinePlugin.
  */
 export const SENTINEL2_EXPLORER_APP_ID = ENV_SENTINEL2_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the Sentinel-1 Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving selected scenes.
+ * This is defined in the environment variable `ENV_SENTINEL1_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const SENTINEL1_EXPLORER_APP_ID = ENV_SENTINEL1_EXPLORER_APP_ID || '';

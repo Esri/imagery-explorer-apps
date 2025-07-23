@@ -59,13 +59,6 @@ const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD =
 // const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
 //     LANDSAT_SERVICE_PROXY_URL_DEV || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV;
 
-/**
- * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
- * @see https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer
- */
-export const LANDSAT_LEVEL_2_SERVICE_URL =
-    ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL ||
-    LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
 // export const LANDSAT_LEVEL_2_SERVICE_URL =
 //     TIER === 'development'
 //         ? LANDSAT_LEVEL_2_SERVICE_URL_DEV
@@ -83,6 +76,14 @@ export const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL =
 //     TIER === 'development'
 //         ? LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV
 //         : LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
+
+/**
+ * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
+ * @see https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer
+ */
+export const LANDSAT_LEVEL_2_SERVICE_URL =
+    ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL ||
+    LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL;
 
 /**
  * Field Names Look-up table for LandsatC2L2 (ImageServer)

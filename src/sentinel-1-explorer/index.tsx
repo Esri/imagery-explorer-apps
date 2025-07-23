@@ -29,7 +29,7 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 // import { SENTINEL1_RASTER_FUNCTION_INFOS } from '@shared/services/sentinel-1/config';
 import { Sentinel1DocPanel } from './components/DocPanel';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
-import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
+import { AGOL_PORTAL_ROOT, SENTINEL1_EXPLORER_APP_ID } from '@shared/config';
 import { initI18next } from '@shared/i18n/initI18next';
 // import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedSentinel1RasterFunctionInfo';
 import { APP_LANGUAGE } from '@shared/constants/UI';
@@ -40,7 +40,7 @@ import '@shared/components/calcite-components';
 
     try {
         await initEsriOAuth({
-            appId: APP_ID,
+            appId: SENTINEL1_EXPLORER_APP_ID,
             portalUrl: AGOL_PORTAL_ROOT,
         });
 

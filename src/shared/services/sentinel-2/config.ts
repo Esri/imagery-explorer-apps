@@ -65,7 +65,7 @@ export const SENTINEL_2_ORIGINAL_SERVICE_URL =
  * @see https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer
  */
 export const SENTINEL_2_SERVICE_URL =
-    ENV_SENTINEL2_PROXY_SERVICE_URL || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+    ENV_SENTINEL2_PROXY_SERVICE_URL || SENTINEL_2_ORIGINAL_SERVICE_URL;
 // TIER === 'development'
 //     ? SENTINEL_2_SERVICE_URL_DEV
 //     : SENTINEL_2_SERVICE_URL_PROD;

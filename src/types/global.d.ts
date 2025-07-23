@@ -38,15 +38,15 @@ declare const WEBPACK_DEFINED_APP_NAME: string;
 //  */
 // declare const SENTINEL2_SERVICE_PROXY_URL_PROD: string;
 
-/**
- * URL for Sentinel-1 service proxy in development environment
- */
-declare const SENTINEL1_SERVICE_PROXY_URL_DEV: string;
+// /**
+//  * URL for Sentinel-1 service proxy in development environment
+//  */
+// declare const SENTINEL1_SERVICE_PROXY_URL_DEV: string;
 
-/**
- * URL for Sentinel-1 service proxy in production environment
- */
-declare const SENTINEL1_SERVICE_PROXY_URL_PROD: string;
+// /**
+//  * URL for Sentinel-1 service proxy in production environment
+//  */
+// declare const SENTINEL1_SERVICE_PROXY_URL_PROD: string;
 
 // /**
 //  * Specifies the service tier of the application
@@ -85,6 +85,22 @@ declare const ENV_SENTINEL2_PROXY_SERVICE_URL: string;
  * Optional: defaults to https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer if not specified.
  */
 declare const ENV_SENTINEL2_ORIGINAL_SERVICE_URL: string;
+
+/**
+ * Application ID for the Sentinel-1 Explorer app.
+ */
+declare const ENV_SENTINEL1_EXPLORER_APP_ID: string;
+
+/**
+ * The proxy service URL for Sentinel-1 imagery service.
+ */
+declare const ENV_SENTINEL1_PROXY_SERVICE_URL: string;
+
+/**
+ * The original service URL for Sentinel-1 imagery service.
+ * Optional: defaults to https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel1GRD/ImageServer if not specified.
+ */
+declare const ENV_SENTINEL1_ORIGINAL_SERVICE_URL: string;
 
 /**
  * The Portal root URL for ArcGIS Online or ArcGIS Enterprise.
