@@ -165,22 +165,22 @@ module.exports =  (env, options)=> {
                  * name of the imagery explorer app to start/build
                  */
                 WEBPACK_DEFINED_APP_NAME: JSON.stringify(app),
-                /**
-                 * URL for Landsat service proxy in development environment
-                 */
-                LANDSAT_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_DEV),
-                /**
-                 * URL for Landsat service proxy in production environment
-                 */
-                LANDSAT_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_PROD),
-                /**
-                 * URL for Sentinel-2 service proxy in development environment
-                 */
-                SENTINEL2_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_DEV),
-                /**
-                 * URL for Sentinel-2 service proxy in production environment
-                 */
-                SENTINEL2_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_PROD),
+                // /**
+                //  * URL for Landsat service proxy in development environment
+                //  */
+                // LANDSAT_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_DEV),
+                // /**
+                //  * URL for Landsat service proxy in production environment
+                //  */
+                // LANDSAT_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_PROD),
+                // /**
+                //  * URL for Sentinel-2 service proxy in development environment
+                //  */
+                // SENTINEL2_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_DEV),
+                // /**
+                //  * URL for Sentinel-2 service proxy in production environment
+                //  */
+                // SENTINEL2_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_PROD),
                 /**
                  * URL for Sentinel-1 service proxy in development environment
                  */
@@ -206,6 +206,18 @@ module.exports =  (env, options)=> {
                  * URL for Landsat Level 2 proxy service
                  */
                 ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL: JSON.stringify(envConfig.LANDSAT_LEVEL_2_PROXY_SERVICE_URL),
+                /**
+                 * APP ID for Sentinel-2 Explorer app
+                 */
+                ENV_SENTINEL2_EXPLORER_APP_ID: JSON.stringify(envConfig.SENTINEL2_EXPLORER_APP_ID),
+                /**
+                 * URL for Sentinel-2 original service
+                 */
+                ENV_SENTINEL2_ORIGINAL_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_ORIGINAL_SERVICE_URL),
+                /**
+                 * URL for sentinel-2 proxy service
+                 */
+                ENV_SENTINEL2_PROXY_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_PROXY_SERVICE_URL),
                 /**
                  * ArcGIS Online portal root URL
                  */

@@ -42,13 +42,17 @@ module.exports = {
         "WEBPACK_DEFINED_APP_NAME": "landsat",
         // LANDSAT_SERVICE_PROXY_URL_DEV: "http://localhost:3000/landsat-dev",
         // LANDSAT_SERVICE_PROXY_URL_PROD: "https://api.example.com/landsat-prod",
-        SENTINEL2_SERVICE_PROXY_URL_DEV: "http://localhost:3000/sentinel2-dev",
-        SENTINEL2_SERVICE_PROXY_URL_PROD: "https://api.example.com/sentinel2-prod",
-        SENTINEL1_SERVICE_PROXY_URL_DEV: "http://localhost:3000/sentinel1-dev",
-        SENTINEL1_SERVICE_PROXY_URL_PROD: "https://api.example.com/sentinel1-prod",
+        // SENTINEL2_SERVICE_PROXY_URL_DEV: "http://localhost:3000/sentinel2-dev",
+        // SENTINEL2_SERVICE_PROXY_URL_PROD: "https://api.example.com/sentinel2-prod",
+        // SENTINEL1_SERVICE_PROXY_URL_DEV: "http://localhost:3000/sentinel1-dev",
+        // SENTINEL1_SERVICE_PROXY_URL_PROD: "https://api.example.com/sentinel1-prod",
         // SERVICE_TIER: "development",
         // CUSTOM_ARCGIS_PORTAL_ROOT: "https://www.arcgis.com",
         ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL: "http://landsat-proxy.example.com",
-        ENV_LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL: "https://landsat-original.example.com"
+        ENV_LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL: "https://landsat-original.example.com",
+        ENV_SENTINEL2_PROXY_SERVICE_URL: "http://sentinel2-proxy.example.com",
+        ENV_SENTINEL2_ORIGINAL_SERVICE_URL: "https://sentinel2-original.example.com",
+        ENV_SENTINEL1_PROXY_SERVICE_URL: "http://sentinel1-proxy.example.com",
+        ENV_SENTINEL1_ORIGINAL_SERVICE_URL: "https://sentinel1-original.example.com"
     }
 };

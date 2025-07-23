@@ -18,25 +18,25 @@
  */
 declare const WEBPACK_DEFINED_APP_NAME: string;
 
-/**
- * URL for Landsat service proxy in development environment
- */
-declare const LANDSAT_SERVICE_PROXY_URL_DEV: string;
+// /**
+//  * URL for Landsat service proxy in development environment
+//  */
+// declare const LANDSAT_SERVICE_PROXY_URL_DEV: string;
 
-/**
- * URL for Landsat service proxy in production environment
- */
-declare const LANDSAT_SERVICE_PROXY_URL_PROD: string;
+// /**
+//  * URL for Landsat service proxy in production environment
+//  */
+// declare const LANDSAT_SERVICE_PROXY_URL_PROD: string;
 
-/**
- * URL for Sentinel-2 service proxy in development environment
- */
-declare const SENTINEL2_SERVICE_PROXY_URL_DEV: string;
+// /**
+//  * URL for Sentinel-2 service proxy in development environment
+//  */
+// declare const SENTINEL2_SERVICE_PROXY_URL_DEV: string;
 
-/**
- * URL for Sentinel-2 service proxy in production environment
- */
-declare const SENTINEL2_SERVICE_PROXY_URL_PROD: string;
+// /**
+//  * URL for Sentinel-2 service proxy in production environment
+//  */
+// declare const SENTINEL2_SERVICE_PROXY_URL_PROD: string;
 
 /**
  * URL for Sentinel-1 service proxy in development environment
@@ -69,6 +69,22 @@ declare const ENV_LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL: string;
  * The proxy service URL for Landsat Level 2 imagery service.
  */
 declare const ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL: string;
+
+/**
+ * Application ID for the Sentinel-2 Explorer app.
+ */
+declare const ENV_SENTINEL2_EXPLORER_APP_ID: string;
+
+/**
+ * The proxy service URL for Sentinel-2 imagery service.
+ */
+declare const ENV_SENTINEL2_PROXY_SERVICE_URL: string;
+
+/**
+ * The original service URL for Sentinel-2 imagery service.
+ * Optional: defaults to https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer if not specified.
+ */
+declare const ENV_SENTINEL2_ORIGINAL_SERVICE_URL: string;
 
 /**
  * The Portal root URL for ArcGIS Online or ArcGIS Enterprise.

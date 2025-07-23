@@ -38,35 +38,37 @@ import { TIER } from '@shared/config';
 const SENTINEL_2_ORIGINAL_SERVICE_URL_PROD =
     'https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
 
-const SENTINEL_2_ORIGINAL_SERVICE_URL_DEV =
-    'https://sentineldev.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
+// const SENTINEL_2_ORIGINAL_SERVICE_URL_DEV =
+//     'https://sentineldev.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
 
 export const SENTINEL_2_ORIGINAL_SERVICE_URL =
-    TIER === 'development'
-        ? SENTINEL_2_ORIGINAL_SERVICE_URL_DEV
-        : SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+    ENV_SENTINEL2_ORIGINAL_SERVICE_URL || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+// TIER === 'development'
+//     ? SENTINEL_2_ORIGINAL_SERVICE_URL_DEV
+//     : SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
 
-/**
- * Service URL to be used in PROD enviroment
- */
-const SENTINEL_2_SERVICE_URL_PROD =
-    SENTINEL2_SERVICE_PROXY_URL_PROD || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+// /**
+//  * Service URL to be used in PROD enviroment
+//  */
+// const SENTINEL_2_SERVICE_URL_PROD =
+//     SENTINEL2_SERVICE_PROXY_URL_PROD || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
 
-/**
- * Service URL to be used in DEV enviroment
- *
- */
-const SENTINEL_2_SERVICE_URL_DEV =
-    SENTINEL2_SERVICE_PROXY_URL_DEV || SENTINEL_2_ORIGINAL_SERVICE_URL_DEV;
+// /**
+//  * Service URL to be used in DEV enviroment
+//  *
+//  */
+// const SENTINEL_2_SERVICE_URL_DEV =
+//     SENTINEL2_SERVICE_PROXY_URL_DEV || SENTINEL_2_ORIGINAL_SERVICE_URL_DEV;
 
 /**
  * A proxy imagery service which has embedded credential that points to the sentinel-2 imagery service
  * @see https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer
  */
 export const SENTINEL_2_SERVICE_URL =
-    TIER === 'development'
-        ? SENTINEL_2_SERVICE_URL_DEV
-        : SENTINEL_2_SERVICE_URL_PROD;
+    ENV_SENTINEL2_PROXY_SERVICE_URL || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+// TIER === 'development'
+//     ? SENTINEL_2_SERVICE_URL_DEV
+//     : SENTINEL_2_SERVICE_URL_PROD;
 
 /**
  * Field Names Look-up table for Sentinel2L2A (ImageServer)
