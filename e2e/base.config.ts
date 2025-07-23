@@ -6,7 +6,7 @@ import { devices } from "@playwright/test";
  */
 import { config } from 'dotenv';
 config({
-    path: '.env',
+    path: '.env.development', // Specify the path to your .env file
 });
 
 export const DEV_SERVER_URL = process.env.WEBPACK_DEV_SERVER_HOSTNAME

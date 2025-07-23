@@ -17,6 +17,6 @@ export default defineConfig({
     /* Run your local dev server before starting the tests */
     webServer: {
         ...baseConfig.webServer,
-        command: 'npm run start:sentinel2',
+        command: 'npm run start:sentinel2:dev',
     },
 });
