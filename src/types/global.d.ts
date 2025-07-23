@@ -48,7 +48,7 @@ declare const SENTINEL1_SERVICE_PROXY_URL_DEV: string;
  */
 declare const SENTINEL1_SERVICE_PROXY_URL_PROD: string;
 
-/**
- * Specifies the service tier of the application
- */
-declare const SERVICE_TIER: string;
+// /**
+//  * Specifies the service tier of the application
+//  */
+// declare const SERVICE_TIER: string;

@@ -56,15 +56,15 @@ export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
  */
 export const appConfig: AppConfig = config.apps[APP_NAME];
 
-/**
- * Tier of the app based on the SERVICE_TIER environment variable
- */
-const TIER_BASED_ON_ENV = SERVICE_TIER
-    ? SERVICE_TIER === 'production'
-        ? 'production'
-        : 'development'
-    : undefined;
-// console.log('TIER_BASED_ON_ENV:', TIER_BASED_ON_ENV);
+// /**
+//  * Tier of the app based on the SERVICE_TIER environment variable
+//  */
+// const TIER_BASED_ON_ENV = SERVICE_TIER
+//     ? SERVICE_TIER === 'production'
+//         ? 'production'
+//         : 'development'
+//     : undefined;
+// // console.log('TIER_BASED_ON_ENV:', TIER_BASED_ON_ENV);
 
 /**
  * Tier of the app based on the host name
@@ -78,12 +78,8 @@ const TIER_BASED_ON_HOST =
 /**
  * Tier of the app (production or development)
  */
-export const TIER = TIER_BASED_ON_ENV || TIER_BASED_ON_HOST;
-console.log(
-    `The application is using ${TIER} services based on ${
-        TIER_BASED_ON_ENV ? 'environment variable' : 'host name'
-    }.`
-);
+export const TIER = TIER_BASED_ON_HOST;
+console.log(`The application is using ${TIER} services based on host name`);
 
 /**
  * Root URL of the ArcGIS Online portal based on the tier

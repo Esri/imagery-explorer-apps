@@ -46,10 +46,6 @@ LANDSAT_SERVICE_PROXY_URL_DEV = https://dev.landsat.service.proxy.url
 
 # Service proxy URL for Landsat-Level-2 in production environment
 LANDSAT_SERVICE_PROXY_URL_PROD = https://prod.landsat.service.proxy.url
-
-# Specifies the service tier for the application, either development or production
-# This is used to determine which service proxy URL to use
-SERVICE_TIER = development
 ```
 
 To run and test the app on your local machine:
@@ -97,10 +93,6 @@ SENTINEL2_SERVICE_PROXY_URL_DEV = https://dev.sentinel2.service.proxy.url
 
 # Service proxy URL for Sentinel-2 in production environment
 SENTINEL2_SERVICE_PROXY_URL_PROD = https://prod.sentinel2.service.proxy.url
-
-# Specifies the service tier for the application, either development or production
-# This is used to determine which service proxy URL to use
-SERVICE_TIER = development
 ```
 
 To run and test the app on your local machine:
@@ -148,10 +140,6 @@ SENTINEL1_SERVICE_PROXY_URL_DEV = https://dev.sentinel1.service.proxy.url
 
 # Service proxy URL for Sentinel-1 in production environment
 SENTINEL1_SERVICE_PROXY_URL_PROD = https://prod.sentinel1.service.proxy.url
-
-# Specifies the service tier for the application, either development or production
-# This is used to determine which service proxy URL to use
-SERVICE_TIER = development
 ```
 
 To run and test the app on your local machine:

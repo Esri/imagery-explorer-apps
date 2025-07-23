@@ -165,10 +165,10 @@ module.exports =  (env, options)=> {
                  * URL for Sentinel-1 service proxy in production environment
                  */
                 SENTINEL1_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_PROD),
-                /**
-                 * Specify the service tier to use in the application
-                 */
-                SERVICE_TIER: JSON.stringify(process.env.SERVICE_TIER),
+                // /**
+                //  * Specify the service tier to use in the application
+                //  */
+                // SERVICE_TIER: JSON.stringify(process.env.SERVICE_TIER),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
