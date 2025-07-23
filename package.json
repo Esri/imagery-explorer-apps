@@ -24,17 +24,20 @@
     "build:sentinel1:prod": "webpack --mode production --env app=sentinel1explorer  --env envFileName=.env.production",
     "e2e:sentinel1": "npx playwright test --config e2e/playwright.sentinel1.config.ts  --env envFileName=.env.development",
 
+    "start:spectral-sampler:dev": "webpack serve --mode development --open --env app=spectralsampler --env envFileName=.env.development",
+    "start:spectral-sampler:prod": "webpack serve --mode development --open --env app=spectralsampler --env envFileName=.env.production",
+    "build:spectral-sampler:dev": "webpack --mode production --env app=spectralsampler --env envFileName=.env.development",
+    "build:spectral-sampler:prod": "webpack --mode production --env app=spectralsampler --env envFileName=.env.production",
+
     "start:landcover": "webpack serve --mode development --open --env app=landcoverexplorer",
-    "start:spectral-sampler": "webpack serve --mode development --open --env app=spectralsampler",
-    "start:surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
-    "start:nlcd-landcover": "webpack serve --mode development --open --env app=nlcdlandcoverexplorer",
     "build:landcover": "webpack --mode production --env app=landcoverexplorer",
-    "build:spectral-sampler": "webpack --mode production --env app=spectralsampler",
-    "build:surface-temp": "webpack --mode production --env app=landsat-surface-temp",
+    "start:nlcd-landcover": "webpack serve --mode development --open --env app=nlcdlandcoverexplorer",
     "build:nlcd-landcover": "webpack --mode production --env app=nlcdlandcoverexplorer",
-    "prepare": "husky install",
     "e2e:landcover": "npx playwright test --config e2e/playwright.landcover.config.ts --workers=1",
-    "e2e:landcover:headed": "npx playwright test --config e2e/playwright.landcover.config.ts --headed --workers=1"
+    "e2e:landcover:headed": "npx playwright test --config e2e/playwright.landcover.config.ts --headed --workers=1",
+    "start:surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
+    "build:surface-temp": "webpack --mode production --env app=landsat-surface-temp",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,json}": [
