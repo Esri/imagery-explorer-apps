@@ -27,16 +27,16 @@ import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 //         'https://utility.arcgis.com/usrsvcs/servers/125204cf060644659af558f4f6719b0f/rest/services/LandsatC2L2/ImageServer',
 // };
 
-/**
- * Landsat 8 and 9 multispectral and multitemporal atmospherically corrected imagery with on-the-fly renderings and indices for visualization and analysis.
- * @see https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5
- */
-export const LANDSAT_LEVEL_2_ITEM_ID = `bd6b545b95654d91a0b7faf7b5e010f5`;
+// /**
+//  * Landsat 8 and 9 multispectral and multitemporal atmospherically corrected imagery with on-the-fly renderings and indices for visualization and analysis.
+//  * @see https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5
+//  */
+// const LANDSAT_LEVEL_2_ITEM_ID = `bd6b545b95654d91a0b7faf7b5e010f5`;
 
-/**
- * URL of the Landsat-Level-2 Item on ArcGIS Online
- */
-export const LANDSAT_LEVEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${LANDSAT_LEVEL_2_ITEM_ID}`;
+// /**
+//  * URL of the Landsat-Level-2 Item on ArcGIS Online
+//  */
+// const LANDSAT_LEVEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${LANDSAT_LEVEL_2_ITEM_ID}`;
 
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
@@ -50,13 +50,13 @@ const LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV =
 /**
  * Service URL to be used in PROD enviroment
  */
-export const LANDSAT_LEVEL_2_SERVICE_URL_PROD =
+const LANDSAT_LEVEL_2_SERVICE_URL_PROD =
     LANDSAT_SERVICE_PROXY_URL_PROD || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_PROD;
 
 /**
  * Service URL to be used in DEV enviroment
  */
-export const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
+const LANDSAT_LEVEL_2_SERVICE_URL_DEV =
     LANDSAT_SERVICE_PROXY_URL_DEV || LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL_DEV;
 
 /**
