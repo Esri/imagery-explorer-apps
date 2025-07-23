@@ -84,16 +84,17 @@ console.log(`The application is using ${TIER} services based on host name`);
 /**
  * Root URL of the ArcGIS Online portal based on the tier
  */
-const AGOL_PORTAL_ROOT_BASED_ON_TIER =
-    TIER === 'production'
-        ? `https://www.arcgis.com`
-        : `https://devext.arcgis.com`;
-console.log(`The application is using ${AGOL_PORTAL_ROOT_BASED_ON_TIER}.`);
+// const AGOL_PORTAL_ROOT_BASED_ON_TIER =
+//     TIER === 'production'
+//         ? `https://www.arcgis.com`
+//         : `https://devext.arcgis.com`;
+// console.log(`The application is using ${AGOL_PORTAL_ROOT_BASED_ON_TIER}.`);
 
 /**
  * Root URL of the ArcGIS Portal
  */
-export const AGOL_PORTAL_ROOT = AGOL_PORTAL_ROOT_BASED_ON_TIER;
+export const AGOL_PORTAL_ROOT =
+    ENV_ARCGIS_PORTAL_ROOT_URL || 'https://www.arcgis.com';
 
 /**
  * Root URL of the ArcGIS REST API
@@ -120,3 +121,9 @@ export const ARCGIS_REST_API_ROOT = AGOL_PORTAL_ROOT + '/sharing/rest';
  */
 // export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';
 export const APP_ID = appConfig?.appId || '';
+
+/**
+ * Application ID for the Landsat Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving selected scenes.
+ */
+export const LANDSAT_EXPLORER_APP_ID = ENV_LANDSAT_EXPLORER_APP_ID || '';

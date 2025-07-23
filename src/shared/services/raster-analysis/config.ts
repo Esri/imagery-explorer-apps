@@ -13,12 +13,14 @@
  * limitations under the License.
  */
 
-import { TIER } from '@shared/config';
+// import { TIER } from '@shared/config';
 
 export const RASTER_ANALYSIS_SERVER_ROOT_URL =
-    TIER === 'development'
-        ? 'https://rasteranalysisdev.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer'
-        : 'https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer';
+    ENV_RASTER_ANALYSIS_ROOT_URL ||
+    'https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer';
+// TIER === 'development'
+//     ? 'https://rasteranalysisdev.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer'
+//     : 'https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer';
 
 /**
  * The names of the raster analysis tasks.

@@ -1,5 +1,4 @@
-require('dotenv').config({ path: './.env' }); 
-
+const dotenv = require('dotenv');
 const path = require('path');
 const package = require('./package.json');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -10,6 +9,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const fs = require('fs');
 
 const config = require('./src/config.json');
 
@@ -21,9 +21,31 @@ module.exports =  (env, options)=> {
         ? true 
         : false;
 
-    // name of the explorer app to start/build:
+    // Determine the namre of the environment file to use
+    const envFileName = env?.envFileName || '.env';
+
+    // Get the path to the environment file
+    const envPath = path.resolve(__dirname, envFileName);
+    console.log(`Using environment configuration from: ${envPath}`);
+
+    // check if the environment file exists
+    if (!fs.existsSync(envPath)) {
+        throw new Error(`Environment file ${envPath} does not exist. Please create it based on .env.template\n`);
+    }
+
+    // Load the environment variables
+    const envConfig = dotenv.config({ path: envPath }).parsed || {};
+    console.log(`Loaded environment variables from ${envPath}\n`);
+
+    // throw an error if the environment variables is an empty object
+    if (Object.keys(envConfig).length === 0) {
+        throw new Error(`No environment variables found in the environment file ${envPath}. Please check the file content.`);
+    }
+
+    // Determine the app to start/build from the environment variables
     const app = env['app']
 
+    // If the app is not specified, throw an error
     if(!app){
         throw new Error(
             'A valid `app` name is not found in environment variables, '+
@@ -31,6 +53,8 @@ module.exports =  (env, options)=> {
         )
     }
 
+    // Determine the app configuration from the config.json file
+    // If the app configuration is not found, throw an error
     const appConfig = config.apps[app]
 
     if(!appConfig){
@@ -169,6 +193,27 @@ module.exports =  (env, options)=> {
                 //  * Specify the service tier to use in the application
                 //  */
                 // SERVICE_TIER: JSON.stringify(process.env.SERVICE_TIER),
+
+                /**
+                 * APP ID for Landsat Explorer app
+                 */
+                ENV_LANDSAT_EXPLORER_APP_ID: JSON.stringify(envConfig.LANDSAT_EXPLORER_APP_ID),
+                /**
+                 * URL for Landsat Level 2 original service
+                 */
+                ENV_LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL: JSON.stringify(envConfig.LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL),
+                /**
+                 * URL for Landsat Level 2 proxy service
+                 */
+                ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL: JSON.stringify(envConfig.LANDSAT_LEVEL_2_PROXY_SERVICE_URL),
+                /**
+                 * ArcGIS Online portal root URL
+                 */
+                ENV_ARCGIS_PORTAL_ROOT_URL: JSON.stringify(envConfig.ARCGIS_PORTAL_ROOT_URL),
+                /**
+                 * Raster Analysis service root URL
+                 */
+                ENV_RASTER_ANALYSIS_ROOT_URL: JSON.stringify(envConfig.RASTER_ANALYSIS_ROOT_URL),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
