@@ -8,25 +8,42 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { DefinePlugin } = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const fs = require('fs');
 
 const config = require('./src/config.json');
 
 module.exports =  (env, options)=> {
 
-    process.env.NODE_ENV = options.mode;
+    // check the mode of the build
+    const mode = options.mode;
+    const devMode = mode === 'development';
 
-    const devMode = process.env.NODE_ENV === 'development' 
-        ? true 
-        : false;
+    /**
+     * Load the environment variables from the specified environment file.
+     * The environment file name should be specified using `--env envFileName=.env.development` or `--env envFileName=.env.production`.
+     * If the environment file name is not specified, an error will be thrown.
+     */
+    const envFileName = env?.envFileName || '';
+    if (!envFileName) {
+        throw new Error(
+            'Environment file name is not specified, '+
+            'please specify it using `--env envFileName=.env.development` or `--env envFileName=.env.production`.\n'
+        );
+    }
 
-    // Determine the namre of the environment file to use
-    const envFileName = env?.envFileName || '.env';
+    /**
+     * Determine the type of the environment file based on its extension.
+     * The environment file should have the `.env.development` or `.env.production` extension.
+     * 
+     * For example, if the environment file is `.env.development`, the environment type will be `development`.
+     * 
+     * If the environment file is `.env.production`, the environment type will be `production`.
+     */
+    const environmentType = envFileName.split('.').pop();
 
     // Get the path to the environment file
     const envPath = path.resolve(__dirname, envFileName);
-    console.log(`Using environment configuration from: ${envPath}`);
 
     // check if the environment file exists
     if (!fs.existsSync(envPath)) {
@@ -42,7 +59,14 @@ module.exports =  (env, options)=> {
         throw new Error(`No environment variables found in the environment file ${envPath}. Please check the file content.`);
     }
 
-    // Determine the app to start/build from the environment variables
+    /**
+     * Determine the app to start/build from the environment variables.
+     * The app name should be specified using `--env app=landsatexplorer`, `--env app=sentinel2explorer`, etc.
+     * If the app name is not specified, an error will be thrown.
+     * 
+     * The app name should match the key in the `config.json` file located in `./src/config.json`.
+     * For example, if the app name is `landsatexplorer`, the config.json file should have a key `landsatexplorer` with the app configuration.
+     */
     const app = env['app']
 
     // If the app is not specified, throw an error
@@ -53,8 +77,16 @@ module.exports =  (env, options)=> {
         )
     }
 
-    // Determine the app configuration from the config.json file
-    // If the app configuration is not found, throw an error
+    /**
+     * Get the app configuration from the `config.json` file.
+     * The app configuration should be an object with the following properties:
+     * 
+     * - `title`: the title of the app, e.g. `Landsat Explorer`
+     * - `description`: the description of the app, e.g. `Explore and begin to unlock the wealth of information provided by Landsat...`
+     * - `webmapId`: the ID of the web map to use in the app, e.g. `81609bbe235942919ad27c77e42c600e`
+     * - `pathname`: the pathname of the app, e.g. `/landsatexplorer`
+     * - `entrypoint`: the entry point of the app, e.g. `./src/landsat-explorer/index.tsx`
+     */
     const appConfig = config.apps[app]
 
     if(!appConfig){
@@ -71,16 +103,22 @@ module.exports =  (env, options)=> {
         pathname,
     } = appConfig;
 
+    // Validate that the entrypoint is defined.
+    // The entrypoint must be a relative path (e.g. `./src/landsat-explorer/index.tsx`)
+    // and should be specified in the `config.json` file under the corresponding app key.
     if(!entrypoint){
         throw new Error(
             `entrypoint for "${app}" is not found, `+
             'please update `./src/config.json` to make sure it includes entrypoint of the app to start'
         )
     }
-    console.log(`${env['WEBPACK_BUILD'] ? 'building' : 'starting'} ${app}\n`);
+    console.log(`${env['WEBPACK_BUILD'] ? 'Building' : 'Starting'} "${app}" in "${environmentType}" environment.\n`);
 
+    /**
+     * Webpack configuration object.
+     */
     return {
-        mode: options.mode,
+        mode,
         devServer: {
             server: 'https',
             host: process.env.WEBPACK_DEV_SERVER_HOSTNAME || 'localhost',
@@ -89,7 +127,7 @@ module.exports =  (env, options)=> {
         },
         entry: entrypoint,
         output: {
-            path: path.resolve(__dirname, `./dist/${app}`),
+            path: path.resolve(__dirname, `./dist/${environmentType}/${app}`),
             filename: '[name].[contenthash].js',
             chunkFilename: '[name].[contenthash].js',
             clean: true,
@@ -129,24 +167,10 @@ module.exports =  (env, options)=> {
                         }
                     ],
                 },
-                // { 
-                //     test: /\.(woff|woff2|ttf|eot)$/,  
-                //     loader: "file-loader",
-                //     options: {
-                //         name: '[name].[contenthash].[ext]',
-                //     }
-                // },
                 {
                     test: /\.(woff|woff2|ttf|eot)$/,
                     type: 'asset/resource',
                 },
-                // { 
-                //     test: /\.(png|jpg|gif|svg)$/,  
-                //     loader: "file-loader",
-                //     options: {
-                //         name: '[name].[contenthash].[ext]',
-                //     }
-                // },
                 {
                     test: /\.(png|jpg|gif|svg)$/,
                     type: 'asset/resource',
@@ -219,16 +243,6 @@ module.exports =  (env, options)=> {
             // copy static files from public folder to build directory
             new CopyPlugin({
                 patterns: [
-                    // { 
-                    //     from: "public/**/*", 
-                    //     globOptions: {
-                    //         ignore: [
-                    //             "**/index.html",
-                    //             "**/__tests__/**",
-                    //             "**/thumbnails/**"
-                    //         ],
-                    //     },
-                    // },
                     {   // copy thumbnail image that is used in the index.html meta tags
                         from: `public/thumbnails/${app}.jpg`,
                         to: `public/thumbnails/${app}.jpg`
@@ -278,22 +292,8 @@ module.exports =  (env, options)=> {
                     useShortDoctype                : true
                 }
             }),
-            // !devMode ? new CleanWebpackPlugin() : false,
-            // !devMode ? new BundleAnalyzerPlugin() : false
         ].filter(Boolean),
         optimization: {
-            // splitChunks: {
-            //     cacheGroups: {
-            //         // vendor chunk
-            //         vendor: {
-            //             // sync + async chunks
-            //             chunks: 'all',
-            //             name: 'vendor',
-            //             // import file path containing node_modules
-            //             test: /node_modules/
-            //         }
-            //     }
-            // },
             minimizer: [
                 new TerserPlugin({
                     extractComments: true,
