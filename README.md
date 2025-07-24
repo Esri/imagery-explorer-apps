@@ -65,6 +65,13 @@ LANDSAT_LEVEL_2_PROXY_SERVICE_URL = https://my-landsat-level-2-proxy.com/ImageSe
 
 # Optional: Original service URL for Landsat Level 2 imagery service (default: https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer)
 LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL = https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer
+
+# Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
+ARCGIS_PORTAL_ROOT_URL = https://my-arcgis-portal.com
+
+# Optional: Raster Analysis GPServer root URL (default: https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer)
+RASTER_ANALYSIS_SERVICE_ROOT_URL = https://my-raster-analysis-service.com/arcgis/rest/services/RasterAnalysisTools/GPServer
+
 ```
 
 ### Usage
