@@ -117,7 +117,7 @@ Through an intuitive user experience, this app leverages a variety of ArcGIS cap
 
 #### 1. Create a service proxy for Sentinel-2 imagery service
 
-To run the Sentinel-2 Explorer app, you must set up a service proxy for the Sentinel-2 imagery service. This proxy should point to the Sentinel-2 ImageServer URL: ` https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer`.
+To run the Sentinel-2 Explorer app, you must set up a service proxy for the Sentinel-2 imagery service. This proxy should point to the Sentinel-2 ImageServer URL: `https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer`.
 
 This service is [available in the Living Atlas](https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00) and is subscriber-only content, meaning it requires sign-in with an ArcGIS account to access. To allow the app to access this service without prompting users for authentication, you need to create a proxy service. Follow the instructions in the [ArcGIS Online documentation](https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2) to set it up.
 
@@ -190,18 +190,48 @@ Through an intuitive user experience, this app leverages a variety of ArcGIS cap
 - Visual change by time, and comparison of different renderings, with Swipe and Animation modes.
 - Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
 
-### Usage
-Before running the application, update the `SENTINEL1_SERVICE_PROXY_URL_DEV` and `SENTINEL1_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Sentinel-1 RTC](https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer).
+### Pre-requisites
+
+#### 1. Create a service proxy for Sentinel-1 imagery service
+
+To run the Sentinel-1 Explorer app, you must set up a service proxy for the Sentinel-1 imagery service. This proxy should point to the Sentinel-1 ImageServer URL: `https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer`.
+
+This service is [available in the Living Atlas](https://www.arcgis.com/home/item.html?id=ca91605a3261409aa984f01f7d065fbc) and is subscriber-only content, meaning it requires sign-in with an ArcGIS account to access. To allow the app to access this service without prompting users for authentication, you need to create a proxy service. Follow the instructions in the [ArcGIS Online documentation](https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2) to set it up.
+
+The proxy service URL will be used in the `.env` file as `SENTINEL1_PROXY_SERVICE_URL`.
+
+#### 2. Create an ArcGIS Application ID
+To use the Sentinel-1 Explorer app, you need to create an ArcGIS Application ID. This ID is used for user authentication, which is required for features such as saving selected scenes. You can create an application ID by following the instructions in the [ArcGIS Developer documentation](https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow).
+
+This application ID will be used in the `.env` file as `SENTINEL1_EXPLORER_APP_ID`.
+
+#### 3. Create `.env` file
+Before running the application, create a `.env` file in the project root using the following template:
 
 ```sh
-# Service proxy URL for Sentinel-1 in development environment
-SENTINEL1_SERVICE_PROXY_URL_DEV = https://dev.sentinel1.service.proxy.url
+# Required: Application ID for Sentinel-1 Explorer
+# Used to authenticate users, which is required for features such as saving selected scenes.
+# see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
+SENTINEL1_EXPLORER_APP_ID = YOUR_SENTINEL1_EXPLORER_APP_ID
 
-# Service proxy URL for Sentinel-1 in production environment
-SENTINEL1_SERVICE_PROXY_URL_PROD = https://prod.sentinel1.service.proxy.url
+# Required: Proxy service URL for Sentinel-1 imagery
+# see https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2
+SENTINEL1_PROXY_SERVICE_URL = YOUR_SENTINEL1_PROXY_SERVICE_URL
+
+# Optional: Original service URL for Sentinel-1 imagery (default: https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer)
+SENTINEL1_ORIGINAL_SERVICE_URL = https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer
+
+# Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
+ARCGIS_PORTAL_ROOT_URL = https://www.arcgis.com
+
+# Optional: Raster Analysis GPServer root URL (default: https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer)
+RASTER_ANALYSIS_SERVICE_ROOT_URL = https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer
+
 ```
 
-To run and test the app on your local machine:
+### Usage
+
+To run and test the app on your local machine using the `.env` file you created above:
 ```sh
 npm run start:sentinel1
 ```
@@ -213,7 +243,7 @@ npm run build:sentinel1
 
 ### Resources
 - [Sentinel-1 Explorer: Observing Earth in a different light](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/sentinel-1-explorer-observing-earth-in-a-different-light/)
-- [ Sentinel-1 RTC imagery from Living Atlas](https://www.arcgis.com/home/item.html?id=ca91605a3261409aa984f01f7d065fbc)
+- [Sentinel-1 RTC imagery from Living Atlas](https://www.arcgis.com/home/item.html?id=ca91605a3261409aa984f01f7d065fbc)
 
 ### Sentinel-1 RTC Imagery Service Licensing
 - Sentinel-1 RTC Source Imagery – The source imagery is hosted on Microsoft Planetary Computer under an open [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/).
