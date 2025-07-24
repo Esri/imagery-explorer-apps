@@ -76,17 +76,10 @@ export const appConfig: AppConfig = config.apps[APP_NAME];
 //         : 'development';
 
 // /**
-//  * Tier of the app based on the environment type
-//  * This is determined by the `ENV_TYPE` variable defined in Webpack configuration.
-//  */
-// const TIER_BASED_ON_ENV_TYPE =
-//     ENV_TYPE && ENV_TYPE === 'production' ? 'production' : 'development';
-
-// /**
 //  * Tier of the app (`production` or `development`) based on the environment type.
 //  * This can be used to determine the service URLs and other configurations.
 //  */
-// export const TIER = TIER_BASED_ON_ENV_TYPE;
+// export const TIER = TIER_BASED_ON_HOST;
 // console.log(`The application is using ${TIER} services based on host name`);
 
 /**

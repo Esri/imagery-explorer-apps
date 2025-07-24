@@ -22,25 +22,9 @@ module.exports =  (env, options)=> {
     /**
      * Load the environment variables from the specified environment file.
      * The environment file name should be specified using `--env envFileName=.env.development` or `--env envFileName=.env.production`.
-     * If the environment file name is not specified, an error will be thrown.
+     * If the environment file name is not specified, the default value will be `.env`.
      */
-    const envFileName = env?.envFileName || '';
-    if (!envFileName) {
-        throw new Error(
-            'Environment file name is not specified, '+
-            'please specify it using `--env envFileName=.env.development` or `--env envFileName=.env.production`.\n'
-        );
-    }
-
-    /**
-     * Determine the type of the environment file based on its extension.
-     * The environment file should have the `.env.development` or `.env.production` extension.
-     * 
-     * For example, if the environment file is `.env.development`, the environment type will be `development`.
-     * 
-     * If the environment file is `.env.production`, the environment type will be `production`.
-     */
-    const environmentType = envFileName.split('.').pop();
+    const envFileName = env?.envFileName || '.env';
 
     // Get the path to the environment file
     const envPath = path.resolve(__dirname, envFileName);
@@ -112,7 +96,7 @@ module.exports =  (env, options)=> {
             'please update `./src/config.json` to make sure it includes entrypoint of the app to start'
         )
     }
-    console.log(`${env['WEBPACK_BUILD'] ? 'Building' : 'Starting'} "${app}" in "${environmentType}" environment.\n`);
+    console.log(`${env['WEBPACK_BUILD'] ? 'Building' : 'Starting'} "${app}".\n`);
 
     /**
      * Webpack configuration object.
@@ -127,7 +111,7 @@ module.exports =  (env, options)=> {
         },
         entry: entrypoint,
         output: {
-            path: path.resolve(__dirname, `./dist/${environmentType}/${app}`),
+            path: path.resolve(__dirname, `./dist/${app}`),
             filename: '[name].[contenthash].js',
             chunkFilename: '[name].[contenthash].js',
             clean: true,
@@ -253,11 +237,6 @@ module.exports =  (env, options)=> {
                  * URL for the NLCD Land Cover service.
                  */
                 ENV_NLCD_LANDCOVER_SERVICE_URL: JSON.stringify(envConfig.NLCD_LANDCOVER_SERVICE_URL),
-                /**
-                 * The type of environment this code is running in.
-                 * Can be 'development' or 'production'.
-                 */
-                ENV_TYPE: JSON.stringify(environmentType),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output

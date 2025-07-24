@@ -108,14 +108,3 @@ declare const ENV_NLCD_LANDCOVER_EXPLORER_APP_ID: string;
  * Optional: defaults to https://ic.imagery1.arcgis.com/arcgis/rest/services/NLCD_LandCover/ImageServer if not specified.
  */
 declare const ENV_NLCD_LANDCOVER_SERVICE_URL: string;
-
-/**
- * The type of environment this code is running in.
- * Can be 'development' or 'production'.
- */
-declare const ENV_TYPE:
-    | 'development'
-    | 'staging'
-    | 'production'
-    | 'test'
-    | 'local';
