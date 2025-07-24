@@ -34,19 +34,19 @@ export const WEB_MAP_ID = appConfig.webmapId;
  */
 export const DWONLOAD_MODE_WEB_MAP_ID = '20e55f26c4704ade8b9716117315f99b';
 
-/**
- * ArcGIS Online Item of the Sentinel 2 layer
- */
-export const SENTINEL_2_ITEM_URL =
-    'https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00';
+// /**
+//  * ArcGIS Online Item of the Sentinel 2 layer
+//  */
+// export const SENTINEL_2_ITEM_URL =
+//     'https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00';
 
 export const SENTINEL_2_10M_LAND_COVER_ITEM_ID = `cfcb7609de5f478eb7666240902d4d3d`;
 /**
  * ArcGIS Online Item of the Sentinel 2 10m Land Cover layer
  */
-export const SENTINEL_2_10M_LAND_COVER_ITEM_URL =
-    'https://www.arcgis.com/home/item.html?id=' +
-    SENTINEL_2_10M_LAND_COVER_ITEM_ID;
+// export const SENTINEL_2_10M_LAND_COVER_ITEM_URL =
+//     'https://www.arcgis.com/home/item.html?id=' +
+//     SENTINEL_2_10M_LAND_COVER_ITEM_ID;
 
 export const HUMAN_GEO_DARK_LABEL_LAYER_TITLE = 'Human Geography Dark Label';
 export const HUMAN_GEO_LIGHT_WATER_LAYER_TITLE =

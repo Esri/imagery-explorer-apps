@@ -13,8 +13,6 @@
  * limitations under the License.
  */
 
-// export const APP_ID = 'S2LCX';
-
-export const PORTAL_ROOT = 'https://www.arcgis.com';
+// export const PORTAL_ROOT = 'https://www.arcgis.com';
 
 export const LULC_TIMESERIES_STORE = `https://lulctimeseries.blob.core.windows.net/lulctimeseriesv003`; //`https://lulctimeseries.blob.core.windows.net/lulctimeseriespublic`;

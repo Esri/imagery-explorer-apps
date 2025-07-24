@@ -14,7 +14,7 @@
  */
 
 import { ISpatialReference } from '@esri/arcgis-rest-request';
-import { PORTAL_ROOT } from '@landcover-explorer/constants';
+// import { PORTAL_ROOT } from '@landcover-explorer/constants';
 import {
     // SENTINEL_2_10M_LAND_COVER_ITEM_ID,
     WEB_MAP_ID,
@@ -26,6 +26,7 @@ import { LandCoverLayerBlendMode } from '../LandcoverLayer/useLandCoverLayer';
 import * as webMercatorUtils from '@arcgis/core/geometry/support/webMercatorUtils';
 import Extent from '@arcgis/core/geometry/Extent';
 import { init } from 'i18next';
+import { AGOL_PORTAL_ROOT } from '@shared/config';
 
 type CreateWebMapOptions = {
     /**
@@ -159,7 +160,7 @@ type GetWebMapContentParameters = {
  * @returns {Promise<WebMapData>} A promise that resolves to the web map data.
  */
 const getDataOfLandcoverAppWebmap = async (): Promise<WebMapData> => {
-    const requestURL = `${PORTAL_ROOT}/sharing/rest/content/items/${WEB_MAP_ID}/data?f=json`;
+    const requestURL = `https://www.arcgis.com/sharing/rest/content/items/${WEB_MAP_ID}/data?f=json`;
 
     const res = await fetch(requestURL);
 
@@ -203,8 +204,12 @@ const getWebMapContent = async ({
                 : `${landCoverLayerStartTimeField} BETWEEN timestamp '${year}-01-01 00:00:00' AND timestamp '${year}-12-31 11:59:59'`;
 
         return {
-            // itemId: SENTINEL_2_10M_LAND_COVER_ITEM_ID,
-            itemId: landCoverLayerItemId,
+            // only include itemId if the portal root is ArcGIS Online
+            // this is to avoid issues with the itemId not being available in the custom portal
+            itemId:
+                AGOL_PORTAL_ROOT === 'https://www.arcgis.com'
+                    ? landCoverLayerItemId
+                    : '',
             layerType: 'ArcGISImageServiceLayer',
             // title: `Sentinel-2 10m Land Use/Land Cover Time Series ${year}`,
             title: `${landCoverLayerTitle} ${year}`,
@@ -226,10 +231,22 @@ const getWebMapContent = async ({
         ...landcoverLayers,
     ];
 
+    const baseMapLayers = data?.baseMap?.baseMapLayers
+        ? data.baseMap.baseMapLayers.map((layer: LayerInfo) => ({
+              ...layer,
+              // only include itemId if the portal root is ArcGIS Online
+              // this is to avoid issues with the itemId not being available in the custom portal
+              itemId:
+                  AGOL_PORTAL_ROOT === 'https://www.arcgis.com'
+                      ? layer.itemId
+                      : '',
+          }))
+        : [];
+
     const content = {
         operationalLayers: operationalLayers,
         baseMap: {
-            baseMapLayers: data?.baseMap?.baseMapLayers || [],
+            baseMapLayers: baseMapLayers,
             title: data?.baseMap?.title,
         },
         spatialReference: data?.spatialReference,
@@ -332,10 +349,15 @@ export const createWebMap = async ({
     formData.append('f', 'json');
     formData.append('token', getToken());
 
-    const user = getSignedInUser();
-    const requestURL = `${PORTAL_ROOT}/sharing/rest/content/users/${user.username}/addItem`;
-
     try {
+        const user = getSignedInUser();
+
+        if (!user || !user.username) {
+            throw new Error('User is not signed in');
+        }
+
+        const requestURL = `${AGOL_PORTAL_ROOT}/sharing/rest/content/users/${user.username}/addItem`;
+
         const res = await fetch(requestURL, {
             method: 'POST',
             body: formData,
