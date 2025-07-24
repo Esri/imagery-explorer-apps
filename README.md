@@ -37,23 +37,44 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 - Visual change by time, and comparison of different renderings, with Swipe and Animation modes.
 - Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.
 
-### Usage
-Before running the application, update the `LANDSAT_SERVICE_PROXY_URL_DEV` and `LANDSAT_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Landsat Level-2](https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer). 
+### Pre-requisites
+
+#### 1. Create a service proxy for Landsat Level-2 imagery
+
+To run the Landsat Explorer app, you must set up a service proxy for the Landsat Level-2 imagery service. This proxy should point to the Landsat Level-2 ImageServer URL: `https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer`.
+
+This service is [available in the Living Atlas](https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5) and is subscriber-only content, meaning it requires sign-in with an ArcGIS account to access. To allow the app to access this service without prompting users for authentication, you need to create a proxy service. Follow the instructions in the [ArcGIS Online documentation](https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2) to set it up.
+
+The proxy service URL will be used in the `.env` file as `LANDSAT_LEVEL_2_PROXY_SERVICE_URL`.
+
+#### 2. Create an ArcGIS Application ID
+To use the Landsat Explorer app, you need to create an ArcGIS Application ID. This ID is used for user authentication, which is required for features such as saving selected scenes. You can create an application ID by following the instructions in the [ArcGIS Developer documentation](https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow).
+
+This application ID will be used in the `.env` file as `LANDSAT_EXPLORER_APP_ID`.
+
+#### 3. Create `.env` file
+Before running the application, create a `.env` file in the project root using the following template:
 
 ```sh
-# Service proxy URL for Landsat-Level-2 in development environment
-LANDSAT_SERVICE_PROXY_URL_DEV = https://dev.landsat.service.proxy.url
+# Required: Application ID for Landsat Explorer
+# Used to authenticate users, which is required for features such as saving selected scenes.
+LANDSAT_EXPLORER_APP_ID = LANDSAT_EXPLORER_APP_ID
 
-# Service proxy URL for Landsat-Level-2 in production environment
-LANDSAT_SERVICE_PROXY_URL_PROD = https://prod.landsat.service.proxy.url
+# Required: Proxy service URL for Landsat Level 2 imagery service
+LANDSAT_LEVEL_2_PROXY_SERVICE_URL = https://my-landsat-level-2-proxy.com/ImageServer
+
+# Optional: Original service URL for Landsat Level 2 imagery service (default: https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer)
+LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL = https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer
 ```
 
-To run and test the app on your local machine:
+### Usage
+
+To run and test the app on your local machine using the `.env` file you created above:
 ```sh
 npm run start:landsat
 ```
 
-To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/landsatexplorer` directory.
+To build the app for deployment using the `.env` file:
 ```sh
 npm run build:landsat
 ```
