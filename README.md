@@ -226,7 +226,6 @@ ARCGIS_PORTAL_ROOT_URL = https://www.arcgis.com
 
 # Optional: Raster Analysis GPServer root URL (default: https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer)
 RASTER_ANALYSIS_SERVICE_ROOT_URL = https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer
-
 ```
 
 ### Usage
@@ -268,8 +267,46 @@ The Sentinel-2 Land Cover Explorer app provides dynamic visual and statistical c
 - Select and dynamically change imagery renderings
 - Data download for offline use
 
+### Pre-requisites
+
+#### 1. Create a service proxy for Sentinel-2 imagery service
+
+To run the Sentinel-2 Land Cover Explorer app, you must set up a service proxy for the Sentinel-2 imagery service. The app includes an imagery mode that allows users to visualize the underlying Sentinel-2 Level-2A source imagery for validating the land cover classification. This proxy should point to the Sentinel-2 ImageServer URL: `https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer`.
+
+This service is [available in the Living Atlas](https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00) and is subscriber-only content, meaning it requires sign-in with an ArcGIS account to access. To allow the app to access this service without prompting users for authentication, you need to create a proxy service. Follow the instructions in the [ArcGIS Online documentation](https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2) to set it up.
+
+The proxy service URL will be used in the `.env` file as `SENTINEL2_PROXY_SERVICE_URL`.
+
+#### 2. Create an ArcGIS Application ID
+To use the Sentinel-2 Land Cover Explorer app, you need to create an ArcGIS Application ID. This ID is used for user authentication, which is required for features such as saving web map. You can create an application ID by following the instructions in the [ArcGIS Developer documentation](https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow).
+
+This application ID will be used in the `.env` file as `LANDCOVER_EXPLORER_APP_ID`.
+
+#### 3. Create `.env` file
+Before running the application, create a `.env` file in the project root using the following template:
+
+```sh
+# Required: Application ID for Land Cover Explorer
+# Used to authenticate users, which is required for features such as saving selected scenes.
+# see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
+LANDCOVER_EXPLORER_APP_ID = YOUR_LANDCOVER_EXPLORER_APP_ID
+
+# Required: Proxy service URL for Sentinel-2 imagery
+# see https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2
+SENTINEL2_PROXY_SERVICE_URL = YOUR_SENTINEL2_PROXY_SERVICE_URL
+
+# Optional: Sentinel-2 Land Cover imagery service URL (default: https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer)
+SENTINEL2_LANDCOVER_SERVICE_URL = https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer
+
+# Optional: Sentinel-2 Land Cover statistics feature service URL (default: https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/WFOA_S2LULC_HistoStats_Prod/FeatureServer/0)
+SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL = https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/WFOA_S2LULC_HistoStats_Prod/FeatureServer/0
+
+# Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
+ARCGIS_PORTAL_ROOT_URL = https://www.arcgis.com
+```
+
 ### Usage
-To run and test the app on your local machine:
+To run and test the app on your local machine using the `.env` file you created above:
 ```sh
 npm run start:landcover
 ```
@@ -300,8 +337,43 @@ The app provides dynamic visual and statistical change by comparing annual slice
 - Select and dynamically change imagery renderings
 - Data download for offline use
 
+### Pre-requisites
+
+#### 1. Create a service proxy for Landsat Level-2 imagery service
+
+To run the NLCD Land Cover Explorer app, you must set up a service proxy for the Landsat Level-2 imagery service. The app includes an imagery mode that allows users to visualize the underlying Landsat Level-2 source imagery for validating the land cover classification. This proxy should point to the Landsat Level-2 ImageServer URL: `https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer`.
+
+This service is [available in the Living Atlas](https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5) and is subscriber-only content, meaning it requires sign-in with an ArcGIS account to access. To allow the app to access this service without prompting users for authentication, you need to create a proxy service. Follow the instructions in the [ArcGIS Online documentation](https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2) to set it up.
+
+The proxy service URL will be used in the `.env` file as `LANDSAT_LEVEL_2_PROXY_SERVICE_URL`.
+
+#### 2. Create an ArcGIS Application ID
+To use the NLCD Land Cover Explorer app, you need to create an ArcGIS Application ID. This ID is used for user authentication, which is required for features such as saving web map. You can create an application ID by following the instructions in the [ArcGIS Developer documentation](https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow).
+
+This application ID will be used in the `.env` file as `NLCD_LANDCOVER_EXPLORER_APP_ID`.
+
+#### 3. Create `.env` file
+Before running the application, create a `.env` file in the project root using the following template:
+
+```sh
+# Required: Application ID for NLCD Land Cover Explorer
+# Used to authenticate users, which is required for features such as saving selected scenes.
+# see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
+NLCD_LANDCOVER_EXPLORER_APP_ID = YOUR_NLCD_LANDCOVER_EXPLORER_APP_ID
+
+# Required: Proxy service URL for Landsat Level 2 imagery
+# see https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2
+LANDSAT_LEVEL_2_PROXY_SERVICE_URL = YOUR_LANDSAT_LEVEL_2_PROXY_SERVICE_URL
+
+# Optional: NLCD imagery service URL (default: https://di-nlcd.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer)
+NLCD_LANDCOVER_SERVICE_URL = https://di-nlcd.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer
+
+# Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
+ARCGIS_PORTAL_ROOT_URL = https://www.arcgis.com
+```
+
 ### Usage
-To run and test the app on your local machine:
+To run and test the app on your local machine using the `.env` file you created above:
 ```sh
 npm run start:nlcd-landcover
 ```
@@ -313,6 +385,7 @@ npm run build:nlcd-landcover
 
 ### Resources
 - [USA Annual NLCD Land Cover](https://www.arcgis.com/home/item.html?id=32e2ccc6416746a9a72b4d216813f84f)
+- [NLCD Land Cover Explorer - quickstart guide](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/nlcd-land-cover-explorer-quickstart-guide)
 
 
 ## Issues
