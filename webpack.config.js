@@ -226,6 +226,18 @@ module.exports =  (env, options)=> {
                  */
                 ENV_SENTINEL1_PROXY_SERVICE_URL: JSON.stringify(envConfig.SENTINEL1_PROXY_SERVICE_URL),
                 /**
+                 * APP ID Land Cover Explorer app
+                 */
+                ENV_LANDCOVER_EXPLORER_APP_ID: JSON.stringify(envConfig.LANDCOVER_EXPLORER_APP_ID),
+                /**
+                 * URL for Sentinel-2 Land Cover service
+                 */
+                ENV_SENTINEL2_LANDCOVER_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_LANDCOVER_SERVICE_URL),
+                /**
+                 * URL for Sentinel-2 Land Cover statistics service
+                 */
+                ENV_SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL),
+                /**
                  * ArcGIS Online portal root URL
                  */
                 ENV_ARCGIS_PORTAL_ROOT_URL: JSON.stringify(envConfig.ARCGIS_PORTAL_ROOT_URL),
@@ -233,6 +245,11 @@ module.exports =  (env, options)=> {
                  * Raster Analysis service root URL
                  */
                 ENV_RASTER_ANALYSIS_ROOT_URL: JSON.stringify(envConfig.RASTER_ANALYSIS_ROOT_URL),
+                /**
+                 * The type of environment this code is running in.
+                 * Can be 'development' or 'production'.
+                 */
+                ENV_TYPE: JSON.stringify(environmentType),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output

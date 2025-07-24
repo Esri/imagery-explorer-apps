@@ -29,12 +29,16 @@
     "build:spectral-sampler:dev": "webpack --mode production --env app=spectralsampler --env envFileName=.env.development",
     "build:spectral-sampler:prod": "webpack --mode production --env app=spectralsampler --env envFileName=.env.production",
 
-    "start:landcover": "webpack serve --mode development --open --env app=landcoverexplorer",
-    "build:landcover": "webpack --mode production --env app=landcoverexplorer",
-    "start:nlcd-landcover": "webpack serve --mode development --open --env app=nlcdlandcoverexplorer",
-    "build:nlcd-landcover": "webpack --mode production --env app=nlcdlandcoverexplorer",
+    "start:landcover:dev": "webpack serve --mode development --open --env app=landcoverexplorer --env envFileName=.env.development",
+    "start:landcover:prod": "webpack serve --mode development --open --env app=landcoverexplorer --env envFileName=.env.production",
+    "build:landcover:dev": "webpack --mode production --env app=landcoverexplorer --env envFileName=.env.development",
+    "build:landcover:prod": "webpack --mode production --env app=landcoverexplorer --env envFileName=.env.production",
     "e2e:landcover": "npx playwright test --config e2e/playwright.landcover.config.ts --workers=1",
     "e2e:landcover:headed": "npx playwright test --config e2e/playwright.landcover.config.ts --headed --workers=1",
+
+    "start:nlcd-landcover": "webpack serve --mode development --open --env app=nlcdlandcoverexplorer",
+    "build:nlcd-landcover": "webpack --mode production --env app=nlcdlandcoverexplorer",
+
     "start:surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
     "build:surface-temp": "webpack --mode production --env app=landsat-surface-temp",
     "prepare": "husky install"

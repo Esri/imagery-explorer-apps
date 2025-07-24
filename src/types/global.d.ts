@@ -18,41 +18,6 @@
  */
 declare const WEBPACK_DEFINED_APP_NAME: string;
 
-// /**
-//  * URL for Landsat service proxy in development environment
-//  */
-// declare const LANDSAT_SERVICE_PROXY_URL_DEV: string;
-
-// /**
-//  * URL for Landsat service proxy in production environment
-//  */
-// declare const LANDSAT_SERVICE_PROXY_URL_PROD: string;
-
-// /**
-//  * URL for Sentinel-2 service proxy in development environment
-//  */
-// declare const SENTINEL2_SERVICE_PROXY_URL_DEV: string;
-
-// /**
-//  * URL for Sentinel-2 service proxy in production environment
-//  */
-// declare const SENTINEL2_SERVICE_PROXY_URL_PROD: string;
-
-// /**
-//  * URL for Sentinel-1 service proxy in development environment
-//  */
-// declare const SENTINEL1_SERVICE_PROXY_URL_DEV: string;
-
-// /**
-//  * URL for Sentinel-1 service proxy in production environment
-//  */
-// declare const SENTINEL1_SERVICE_PROXY_URL_PROD: string;
-
-// /**
-//  * Specifies the service tier of the application
-//  */
-// declare const SERVICE_TIER: string;
-
 /**
  * Application ID for the Landsat Explorer app.
  * Required for authentication and features such as saving selected scenes.
@@ -109,7 +74,36 @@ declare const ENV_SENTINEL1_ORIGINAL_SERVICE_URL: string;
 declare const ENV_ARCGIS_PORTAL_ROOT_URL: string;
 
 /**
- * Raster Analysis GP server root URL for development environment.
+ * Raster Analysis GP server root URL.
  * Optional: defaults to https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer.
  */
 declare const ENV_RASTER_ANALYSIS_ROOT_URL: string;
+
+/**
+ * Application ID for the Land Cover Explorer app.
+ * Required for authentication and features such as saving web maps.
+ */
+declare const ENV_LANDCOVER_EXPLORER_APP_ID: string;
+
+/**
+ * The service URL for Sentinel-2 Land Cover imagery service.
+ * Optional: defaults to https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer if not specified.
+ */
+declare const ENV_SENTINEL2_LANDCOVER_SERVICE_URL: string;
+
+/**
+ * The service URL for Sentinel-2 Land Cover statistics service.
+ * Optional: defaults to https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover_Statistics/ImageServer if not specified.
+ */
+declare const ENV_SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL: string;
+
+/**
+ * The type of environment this code is running in.
+ * Can be 'development' or 'production'.
+ */
+declare const ENV_TYPE:
+    | 'development'
+    | 'staging'
+    | 'production'
+    | 'test'
+    | 'local';

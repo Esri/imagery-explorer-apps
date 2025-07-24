@@ -14,7 +14,7 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER } from '@shared/config';
+// import { TIER } from '@shared/config';
 
 // const serviceConfig = getServiceConfig('sentinel-1');
 // console.log('sentinel-1 service config', serviceConfig);

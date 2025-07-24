@@ -66,19 +66,27 @@ export const appConfig: AppConfig = config.apps[APP_NAME];
 //     : undefined;
 // // console.log('TIER_BASED_ON_ENV:', TIER_BASED_ON_ENV);
 
-/**
- * Tier of the app based on the host name
- */
-const TIER_BASED_ON_HOST =
-    window.location.host === 'livingatlas.arcgis.com' ||
-    window.location.host === 'livingatlasstg.arcgis.com'
-        ? 'production'
-        : 'development';
+// /**
+//  * Tier of the app based on the host name
+//  */
+// const TIER_BASED_ON_HOST =
+//     window.location.host === 'livingatlas.arcgis.com' ||
+//     window.location.host === 'livingatlasstg.arcgis.com'
+//         ? 'production'
+//         : 'development';
 
 /**
- * Tier of the app (production or development)
+ * Tier of the app based on the environment type
+ * This is determined by the `ENV_TYPE` variable defined in Webpack configuration.
  */
-export const TIER = TIER_BASED_ON_HOST;
+const TIER_BASED_ON_ENV_TYPE =
+    ENV_TYPE && ENV_TYPE === 'production' ? 'production' : 'development';
+
+/**
+ * Tier of the app (`production` or `development`) based on the environment type.
+ * This can be used to determine the service URLs and other configurations.
+ */
+export const TIER = TIER_BASED_ON_ENV_TYPE;
 console.log(`The application is using ${TIER} services based on host name`);
 
 /**
@@ -142,3 +150,10 @@ export const SENTINEL2_EXPLORER_APP_ID = ENV_SENTINEL2_EXPLORER_APP_ID || '';
  * This is defined in the environment variable `ENV_SENTINEL1_EXPLORER_APP_ID` by Webpack DefinePlugin.
  */
 export const SENTINEL1_EXPLORER_APP_ID = ENV_SENTINEL1_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the Land Cover Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving web maps.
+ * This is defined in the environment variable `ENV_LANDCOVER_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const LANDCOVER_EXPLORER_APP_ID = ENV_LANDCOVER_EXPLORER_APP_ID || '';
