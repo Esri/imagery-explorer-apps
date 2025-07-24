@@ -45,6 +45,14 @@ let userPortal: Portal;
 let credential: Credential = null;
 
 /**
+ * Check if the app is hosted on Living Atlas
+ * If so, it should use ArcGIS Online as the portal URL
+ */
+const hostedOnLivingAtlas =
+    window.location.host === 'livingatlas.arcgis.com' ||
+    window.location.host === 'livingatlasstg.arcgis.com';
+
+/**
  *
  * @param param0
  * @returns
@@ -53,6 +61,16 @@ export const initEsriOAuth = async ({
     appId,
     portalUrl = 'https://www.arcgis.com',
 }: Props): Promise<void> => {
+    if (!appId) {
+        throw new Error('appId is required to initialize Esri OAuth');
+    }
+
+    if (hostedOnLivingAtlas && portalUrl !== 'https://www.arcgis.com') {
+        throw new Error(
+            `This application is hosted on ${window.location.host} and must use ArcGIS Online (https://www.arcgis.com) as the portal URL. The current portal URL is "${portalUrl}". Please update it to "https://www.arcgis.com".`
+        );
+    }
+
     try {
         // const platformSelfResponse = await platformSelf(appId, portalUrl);
 
