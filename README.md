@@ -39,7 +39,7 @@ The Landsat Explorer app offers an intuitive user experience, it leverages a var
 
 ### Pre-requisites
 
-#### 1. Create a service proxy for Landsat Level-2 imagery
+#### 1. Create a service proxy for Landsat Level-2 imagery service
 
 To run the Landsat Explorer app, you must set up a service proxy for the Landsat Level-2 imagery service. This proxy should point to the Landsat Level-2 ImageServer URL: `https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer`.
 
@@ -112,18 +112,49 @@ Through an intuitive user experience, this app leverages a variety of ArcGIS cap
 - Visual change by time, and comparison of different renderings, with Swipe and Animation modes.
 - Analysis such as threshold masking and temporal profiles for vegetation, water, and more.
 
-### Usage
-Before running the application, update the `SENTINEL2_SERVICE_PROXY_URL_DEV` and `SENTINEL2_SERVICE_PROXY_URL_PROD` in the `.env` file to use the URL of your service proxy for [Sentinel-2 Level-2A](https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer).
+
+### Pre-requisites
+
+#### 1. Create a service proxy for Sentinel-2 imagery service
+
+To run the Sentinel-2 Explorer app, you must set up a service proxy for the Sentinel-2 imagery service. This proxy should point to the Sentinel-2 ImageServer URL: ` https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer`.
+
+This service is [available in the Living Atlas](https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00) and is subscriber-only content, meaning it requires sign-in with an ArcGIS account to access. To allow the app to access this service without prompting users for authentication, you need to create a proxy service. Follow the instructions in the [ArcGIS Online documentation](https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2) to set it up.
+
+The proxy service URL will be used in the `.env` file as `SENTINEL2_PROXY_SERVICE_URL`.
+
+#### 2. Create an ArcGIS Application ID
+To use the Sentinel-2 Explorer app, you need to create an ArcGIS Application ID. This ID is used for user authentication, which is required for features such as saving selected scenes. You can create an application ID by following the instructions in the [ArcGIS Developer documentation](https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow).
+
+This application ID will be used in the `.env` file as `SENTINEL2_EXPLORER_APP_ID`.
+
+#### 3. Create `.env` file
+Before running the application, create a `.env` file in the project root using the following template:
 
 ```sh
-# Service proxy URL for Sentinel-2 in development environment
-SENTINEL2_SERVICE_PROXY_URL_DEV = https://dev.sentinel2.service.proxy.url
+# Required: Application ID for Sentinel-2 Explorer
+# Used to authenticate users, which is required for features such as saving selected scenes.
+# see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
+SENTINEL2_EXPLORER_APP_ID = YOUR_SENTINEL2_EXPLORER_APP_ID
 
-# Service proxy URL for Sentinel-2 in production environment
-SENTINEL2_SERVICE_PROXY_URL_PROD = https://prod.sentinel2.service.proxy.url
+# Required: Proxy service URL for Sentinel-2 imagery
+# see https://doc.arcgis.com/en/arcgis-online/reference/arcgis-server-services.htm#ESRI_SECTION1_FEB0DF92DA064B6A970DFB59A18AA4C2
+SENTINEL2_PROXY_SERVICE_URL = YOUR_SENTINEL2_PROXY_SERVICE_URL
+
+# Optional: Original service URL for Sentinel-2 imagery (default: https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer)
+SENTINEL2_ORIGINAL_SERVICE_URL = https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer
+
+# Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
+ARCGIS_PORTAL_ROOT_URL = https://www.arcgis.com
+
+# Optional: Raster Analysis GPServer root URL (default: https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer)
+RASTER_ANALYSIS_SERVICE_ROOT_URL = https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer
+
 ```
 
-To run and test the app on your local machine:
+### Usage
+
+To run and test the app on your local machine using the `.env` file you created above:
 ```sh
 npm run start:sentinel2
 ```
