@@ -58,19 +58,19 @@ Before running the application, create a `.env` file in the project root using t
 ```sh
 # Required: Application ID for Landsat Explorer
 # Used to authenticate users, which is required for features such as saving selected scenes.
-LANDSAT_EXPLORER_APP_ID = LANDSAT_EXPLORER_APP_ID
+LANDSAT_EXPLORER_APP_ID = YOUR_LANDSAT_EXPLORER_APP_ID
 
 # Required: Proxy service URL for Landsat Level 2 imagery service
-LANDSAT_LEVEL_2_PROXY_SERVICE_URL = https://my-landsat-level-2-proxy.com/ImageServer
+LANDSAT_LEVEL_2_PROXY_SERVICE_URL = YOUR_LANDSAT_SERVICE_PROXY_URL
 
 # Optional: Original service URL for Landsat Level 2 imagery service (default: https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer)
 LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL = https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer
 
 # Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
-ARCGIS_PORTAL_ROOT_URL = https://my-arcgis-portal.com
+ARCGIS_PORTAL_ROOT_URL = https://www.arcgis.com
 
 # Optional: Raster Analysis GPServer root URL (default: https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer)
-RASTER_ANALYSIS_SERVICE_ROOT_URL = https://my-raster-analysis-service.com/arcgis/rest/services/RasterAnalysisTools/GPServer
+RASTER_ANALYSIS_SERVICE_ROOT_URL = https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer
 
 ```
 
