@@ -28,11 +28,11 @@ type AppConfig = {
      * Item id of the web map to be used in the app
      */
     webmapId: string;
-    /**
-     * App id to be used to create the OAuthInfo object
-     * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
-     */
-    appId: string;
+    // /**
+    //  * App id to be used to create the OAuthInfo object
+    //  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+    //  */
+    // appId: string;
 };
 
 /**
@@ -75,19 +75,19 @@ export const appConfig: AppConfig = config.apps[APP_NAME];
 //         ? 'production'
 //         : 'development';
 
-/**
- * Tier of the app based on the environment type
- * This is determined by the `ENV_TYPE` variable defined in Webpack configuration.
- */
-const TIER_BASED_ON_ENV_TYPE =
-    ENV_TYPE && ENV_TYPE === 'production' ? 'production' : 'development';
+// /**
+//  * Tier of the app based on the environment type
+//  * This is determined by the `ENV_TYPE` variable defined in Webpack configuration.
+//  */
+// const TIER_BASED_ON_ENV_TYPE =
+//     ENV_TYPE && ENV_TYPE === 'production' ? 'production' : 'development';
 
-/**
- * Tier of the app (`production` or `development`) based on the environment type.
- * This can be used to determine the service URLs and other configurations.
- */
-export const TIER = TIER_BASED_ON_ENV_TYPE;
-console.log(`The application is using ${TIER} services based on host name`);
+// /**
+//  * Tier of the app (`production` or `development`) based on the environment type.
+//  * This can be used to determine the service URLs and other configurations.
+//  */
+// export const TIER = TIER_BASED_ON_ENV_TYPE;
+// console.log(`The application is using ${TIER} services based on host name`);
 
 /**
  * Root URL of the ArcGIS Online portal based on the tier
@@ -122,13 +122,13 @@ export const ARCGIS_REST_API_ROOT = AGOL_PORTAL_ROOT + '/sharing/rest';
 //     return config.services[serviceName];
 // };
 
-/**
- * App ID to be used to create the OAuthInfo object.
- *
- * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
- */
-// export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';
-export const APP_ID = appConfig?.appId || '';
+// /**
+//  * App ID to be used to create the OAuthInfo object.
+//  *
+//  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+//  */
+// // export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';
+// export const APP_ID = appConfig?.appId || '';
 
 /**
  * Application ID for the Landsat Explorer app.
@@ -157,3 +157,11 @@ export const SENTINEL1_EXPLORER_APP_ID = ENV_SENTINEL1_EXPLORER_APP_ID || '';
  * This is defined in the environment variable `ENV_LANDCOVER_EXPLORER_APP_ID` by Webpack DefinePlugin.
  */
 export const LANDCOVER_EXPLORER_APP_ID = ENV_LANDCOVER_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the NLCD Land Cover Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving web maps.
+ * This is defined in the environment variable `ENV_NLCD_LANDCOVER_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const NLCD_LANDCOVER_EXPLORER_APP_ID =
+    ENV_NLCD_LANDCOVER_EXPLORER_APP_ID || '';

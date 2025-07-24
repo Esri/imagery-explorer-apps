@@ -98,6 +98,18 @@ declare const ENV_SENTINEL2_LANDCOVER_SERVICE_URL: string;
 declare const ENV_SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL: string;
 
 /**
+ * Application ID for the NLCD Land Cover Explorer app.
+ * Required for authentication and features such as saving web maps.
+ */
+declare const ENV_NLCD_LANDCOVER_EXPLORER_APP_ID: string;
+
+/**
+ * The service URL for NLCD Land Cover imagery service.
+ * Optional: defaults to https://ic.imagery1.arcgis.com/arcgis/rest/services/NLCD_LandCover/ImageServer if not specified.
+ */
+declare const ENV_NLCD_LANDCOVER_SERVICE_URL: string;
+
+/**
  * The type of environment this code is running in.
  * Can be 'development' or 'production'.
  */

@@ -246,6 +246,14 @@ module.exports =  (env, options)=> {
                  */
                 ENV_RASTER_ANALYSIS_ROOT_URL: JSON.stringify(envConfig.RASTER_ANALYSIS_ROOT_URL),
                 /**
+                 * Application ID for the NLCD Land Cover Explorer app.
+                 */
+                ENV_NLCD_LANDCOVER_EXPLORER_APP_ID: JSON.stringify(envConfig.NLCD_LANDCOVER_EXPLORER_APP_ID),
+                /**
+                 * URL for the NLCD Land Cover service.
+                 */
+                ENV_NLCD_LANDCOVER_SERVICE_URL: JSON.stringify(envConfig.NLCD_LANDCOVER_SERVICE_URL),
+                /**
                  * The type of environment this code is running in.
                  * Can be 'development' or 'production'.
                  */
