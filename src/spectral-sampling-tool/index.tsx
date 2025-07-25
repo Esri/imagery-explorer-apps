@@ -30,17 +30,22 @@ import '@shared/components/calcite-components';
 //     getTimeExtentByTargetService,
 //     getRasterFunctionInfoByTargetService,
 // } from './utils/getTargetService';
-import { initEsriOAuth } from '@shared/utils/esri-oauth';
-import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
+// import { initEsriOAuth } from '@shared/utils/esri-oauth';
+// import { AGOL_PORTAL_ROOT, appConfig } from '@shared/config';
 import { initI18next } from '@shared/i18n/initI18next';
+import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 
 (async () => {
-    await initEsriOAuth({
-        appId: appConfig.appId,
-        portalUrl: AGOL_PORTAL_ROOT,
-    });
+    // await initEsriOAuth({
+    //     appId: appConfig.appId,
+    //     portalUrl: AGOL_PORTAL_ROOT,
+    // });
 
-    await initI18next();
+    // await initI18next();
+
+    await initializeApp({
+        appId: '',
+    });
 
     const root = createRoot(document.getElementById('root'));
 

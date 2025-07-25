@@ -1,5 +1,4 @@
-require('dotenv').config({ path: './.env' }); 
-
+const dotenv = require('dotenv');
 const path = require('path');
 const package = require('./package.json');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -9,21 +8,52 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { DefinePlugin } = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const fs = require('fs');
 
 const config = require('./src/config.json');
 
 module.exports =  (env, options)=> {
 
-    process.env.NODE_ENV = options.mode;
+    // check the mode of the build
+    const mode = options.mode;
+    const devMode = mode === 'development';
 
-    const devMode = process.env.NODE_ENV === 'development' 
-        ? true 
-        : false;
+    /**
+     * Load the environment variables from the specified environment file.
+     * The environment file name should be specified using `--env envFileName=.env.development` or `--env envFileName=.env.production`.
+     * If the environment file name is not specified, the default value will be `.env`.
+     */
+    const envFileName = env?.envFileName || '.env';
 
-    // name of the explorer app to start/build:
+    // Get the path to the environment file
+    const envPath = path.resolve(__dirname, envFileName);
+
+    // check if the environment file exists
+    if (!fs.existsSync(envPath)) {
+        throw new Error(`Environment file ${envPath} does not exist. Please create it based on .env.template\n`);
+    }
+
+    // Load the environment variables
+    const envConfig = dotenv.config({ path: envPath }).parsed || {};
+    console.log(`Loaded environment variables from ${envPath}\n`);
+
+    // throw an error if the environment variables is an empty object
+    if (Object.keys(envConfig).length === 0) {
+        throw new Error(`No environment variables found in the environment file ${envPath}. Please check the file content.`);
+    }
+
+    /**
+     * Determine the app to start/build from the environment variables.
+     * The app name should be specified using `--env app=landsatexplorer`, `--env app=sentinel2explorer`, etc.
+     * If the app name is not specified, an error will be thrown.
+     * 
+     * The app name should match the key in the `config.json` file located in `./src/config.json`.
+     * For example, if the app name is `landsatexplorer`, the config.json file should have a key `landsatexplorer` with the app configuration.
+     */
     const app = env['app']
 
+    // If the app is not specified, throw an error
     if(!app){
         throw new Error(
             'A valid `app` name is not found in environment variables, '+
@@ -31,6 +61,16 @@ module.exports =  (env, options)=> {
         )
     }
 
+    /**
+     * Get the app configuration from the `config.json` file.
+     * The app configuration should be an object with the following properties:
+     * 
+     * - `title`: the title of the app, e.g. `Landsat Explorer`
+     * - `description`: the description of the app, e.g. `Explore and begin to unlock the wealth of information provided by Landsat...`
+     * - `webmapId`: the ID of the web map to use in the app, e.g. `81609bbe235942919ad27c77e42c600e`
+     * - `pathname`: the pathname of the app, e.g. `/landsatexplorer`
+     * - `entrypoint`: the entry point of the app, e.g. `./src/landsat-explorer/index.tsx`
+     */
     const appConfig = config.apps[app]
 
     if(!appConfig){
@@ -47,16 +87,22 @@ module.exports =  (env, options)=> {
         pathname,
     } = appConfig;
 
+    // Validate that the entrypoint is defined.
+    // The entrypoint must be a relative path (e.g. `./src/landsat-explorer/index.tsx`)
+    // and should be specified in the `config.json` file under the corresponding app key.
     if(!entrypoint){
         throw new Error(
             `entrypoint for "${app}" is not found, `+
             'please update `./src/config.json` to make sure it includes entrypoint of the app to start'
         )
     }
-    console.log(`${env['WEBPACK_BUILD'] ? 'building' : 'starting'} ${app}\n`);
+    console.log(`${env['WEBPACK_BUILD'] ? 'Building' : 'Starting'} "${app}".\n`);
 
+    /**
+     * Webpack configuration object.
+     */
     return {
-        mode: options.mode,
+        mode,
         devServer: {
             server: 'https',
             host: process.env.WEBPACK_DEV_SERVER_HOSTNAME || 'localhost',
@@ -105,24 +151,10 @@ module.exports =  (env, options)=> {
                         }
                     ],
                 },
-                // { 
-                //     test: /\.(woff|woff2|ttf|eot)$/,  
-                //     loader: "file-loader",
-                //     options: {
-                //         name: '[name].[contenthash].[ext]',
-                //     }
-                // },
                 {
                     test: /\.(woff|woff2|ttf|eot)$/,
                     type: 'asset/resource',
                 },
-                // { 
-                //     test: /\.(png|jpg|gif|svg)$/,  
-                //     loader: "file-loader",
-                //     options: {
-                //         name: '[name].[contenthash].[ext]',
-                //     }
-                // },
                 {
                     test: /\.(png|jpg|gif|svg)$/,
                     type: 'asset/resource',
@@ -142,33 +174,69 @@ module.exports =  (env, options)=> {
                  */
                 WEBPACK_DEFINED_APP_NAME: JSON.stringify(app),
                 /**
-                 * URL for Landsat service proxy in development environment
+                 * APP ID for Landsat Explorer app
                  */
-                LANDSAT_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_DEV),
+                ENV_LANDSAT_EXPLORER_APP_ID: JSON.stringify(envConfig.LANDSAT_EXPLORER_APP_ID),
                 /**
-                 * URL for Landsat service proxy in production environment
+                 * URL for Landsat Level 2 original service
                  */
-                LANDSAT_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.LANDSAT_SERVICE_PROXY_URL_PROD),
+                ENV_LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL: JSON.stringify(envConfig.LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL),
                 /**
-                 * URL for Sentinel-2 service proxy in development environment
+                 * URL for Landsat Level 2 proxy service
                  */
-                SENTINEL2_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_DEV),
+                ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL: JSON.stringify(envConfig.LANDSAT_LEVEL_2_PROXY_SERVICE_URL),
                 /**
-                 * URL for Sentinel-2 service proxy in production environment
+                 * APP ID for Sentinel-2 Explorer app
                  */
-                SENTINEL2_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL2_SERVICE_PROXY_URL_PROD),
+                ENV_SENTINEL2_EXPLORER_APP_ID: JSON.stringify(envConfig.SENTINEL2_EXPLORER_APP_ID),
                 /**
-                 * URL for Sentinel-1 service proxy in development environment
+                 * URL for Sentinel-2 original service
                  */
-                SENTINEL1_SERVICE_PROXY_URL_DEV: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_DEV),
+                ENV_SENTINEL2_ORIGINAL_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_ORIGINAL_SERVICE_URL),
                 /**
-                 * URL for Sentinel-1 service proxy in production environment
+                 * URL for sentinel-2 proxy service
                  */
-                SENTINEL1_SERVICE_PROXY_URL_PROD: JSON.stringify(process.env.SENTINEL1_SERVICE_PROXY_URL_PROD),
+                ENV_SENTINEL2_PROXY_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_PROXY_SERVICE_URL),
                 /**
-                 * Specify the service tier to use in the application
+                 * APP ID for Sentinel-1 Explorer app
                  */
-                SERVICE_TIER: JSON.stringify(process.env.SERVICE_TIER),
+                ENV_SENTINEL1_EXPLORER_APP_ID: JSON.stringify(envConfig.SENTINEL1_EXPLORER_APP_ID),
+                /**
+                 * URL for Sentinel-1 original service
+                 */
+                ENV_SENTINEL1_ORIGINAL_SERVICE_URL: JSON.stringify(envConfig.SENTINEL1_ORIGINAL_SERVICE_URL),
+                /**
+                 * URL for sentinel-1 proxy service
+                 */
+                ENV_SENTINEL1_PROXY_SERVICE_URL: JSON.stringify(envConfig.SENTINEL1_PROXY_SERVICE_URL),
+                /**
+                 * APP ID Land Cover Explorer app
+                 */
+                ENV_LANDCOVER_EXPLORER_APP_ID: JSON.stringify(envConfig.LANDCOVER_EXPLORER_APP_ID),
+                /**
+                 * URL for Sentinel-2 Land Cover service
+                 */
+                ENV_SENTINEL2_LANDCOVER_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_LANDCOVER_SERVICE_URL),
+                /**
+                 * URL for Sentinel-2 Land Cover statistics service
+                 */
+                ENV_SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL: JSON.stringify(envConfig.SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL),
+                /**
+                 * ArcGIS Online portal root URL
+                 */
+                ENV_ARCGIS_PORTAL_ROOT_URL: JSON.stringify(envConfig.ARCGIS_PORTAL_ROOT_URL),
+                /**
+                 * Raster Analysis service root URL
+                 */
+                ENV_RASTER_ANALYSIS_ROOT_URL: JSON.stringify(envConfig.RASTER_ANALYSIS_ROOT_URL),
+                /**
+                 * Application ID for the NLCD Land Cover Explorer app.
+                 */
+                ENV_NLCD_LANDCOVER_EXPLORER_APP_ID: JSON.stringify(envConfig.NLCD_LANDCOVER_EXPLORER_APP_ID),
+                /**
+                 * URL for the NLCD Land Cover service.
+                 */
+                ENV_NLCD_LANDCOVER_SERVICE_URL: JSON.stringify(envConfig.NLCD_LANDCOVER_SERVICE_URL),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
@@ -179,16 +247,6 @@ module.exports =  (env, options)=> {
             // copy static files from public folder to build directory
             new CopyPlugin({
                 patterns: [
-                    // { 
-                    //     from: "public/**/*", 
-                    //     globOptions: {
-                    //         ignore: [
-                    //             "**/index.html",
-                    //             "**/__tests__/**",
-                    //             "**/thumbnails/**"
-                    //         ],
-                    //     },
-                    // },
                     {   // copy thumbnail image that is used in the index.html meta tags
                         from: `public/thumbnails/${app}.jpg`,
                         to: `public/thumbnails/${app}.jpg`
@@ -238,22 +296,8 @@ module.exports =  (env, options)=> {
                     useShortDoctype                : true
                 }
             }),
-            // !devMode ? new CleanWebpackPlugin() : false,
-            // !devMode ? new BundleAnalyzerPlugin() : false
         ].filter(Boolean),
         optimization: {
-            // splitChunks: {
-            //     cacheGroups: {
-            //         // vendor chunk
-            //         vendor: {
-            //             // sync + async chunks
-            //             chunks: 'all',
-            //             name: 'vendor',
-            //             // import file path containing node_modules
-            //             test: /node_modules/
-            //         }
-            //     }
-            // },
             minimizer: [
                 new TerserPlugin({
                     extractComments: true,

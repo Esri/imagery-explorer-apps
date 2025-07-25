@@ -19,36 +19,92 @@
 declare const WEBPACK_DEFINED_APP_NAME: string;
 
 /**
- * URL for Landsat service proxy in development environment
+ * Application ID for the Landsat Explorer app.
+ * Required for authentication and features such as saving selected scenes.
  */
-declare const LANDSAT_SERVICE_PROXY_URL_DEV: string;
+declare const ENV_LANDSAT_EXPLORER_APP_ID: string;
 
 /**
- * URL for Landsat service proxy in production environment
+ * The original service URL for Landsat Level 2 imagery service.
+ * Optional: defaults to https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer if not specified.
  */
-declare const LANDSAT_SERVICE_PROXY_URL_PROD: string;
+declare const ENV_LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL: string;
 
 /**
- * URL for Sentinel-2 service proxy in development environment
+ * The proxy service URL for Landsat Level 2 imagery service.
  */
-declare const SENTINEL2_SERVICE_PROXY_URL_DEV: string;
+declare const ENV_LANDSAT_LEVEL_2_PROXY_SERVICE_URL: string;
 
 /**
- * URL for Sentinel-2 service proxy in production environment
+ * Application ID for the Sentinel-2 Explorer app.
  */
-declare const SENTINEL2_SERVICE_PROXY_URL_PROD: string;
+declare const ENV_SENTINEL2_EXPLORER_APP_ID: string;
 
 /**
- * URL for Sentinel-1 service proxy in development environment
+ * The proxy service URL for Sentinel-2 imagery service.
  */
-declare const SENTINEL1_SERVICE_PROXY_URL_DEV: string;
+declare const ENV_SENTINEL2_PROXY_SERVICE_URL: string;
 
 /**
- * URL for Sentinel-1 service proxy in production environment
+ * The original service URL for Sentinel-2 imagery service.
+ * Optional: defaults to https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer if not specified.
  */
-declare const SENTINEL1_SERVICE_PROXY_URL_PROD: string;
+declare const ENV_SENTINEL2_ORIGINAL_SERVICE_URL: string;
 
 /**
- * Specifies the service tier of the application
+ * Application ID for the Sentinel-1 Explorer app.
  */
-declare const SERVICE_TIER: string;
+declare const ENV_SENTINEL1_EXPLORER_APP_ID: string;
+
+/**
+ * The proxy service URL for Sentinel-1 imagery service.
+ */
+declare const ENV_SENTINEL1_PROXY_SERVICE_URL: string;
+
+/**
+ * The original service URL for Sentinel-1 imagery service.
+ * Optional: defaults to https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel1GRD/ImageServer if not specified.
+ */
+declare const ENV_SENTINEL1_ORIGINAL_SERVICE_URL: string;
+
+/**
+ * The Portal root URL for ArcGIS Online or ArcGIS Enterprise.
+ * Optional: defaults to https://www.arcgis.com if not specified.
+ */
+declare const ENV_ARCGIS_PORTAL_ROOT_URL: string;
+
+/**
+ * Raster Analysis GP server root URL.
+ * Optional: defaults to https://rasteranalysis.arcgis.com/arcgis/rest/services/RasterAnalysisTools/GPServer.
+ */
+declare const ENV_RASTER_ANALYSIS_ROOT_URL: string;
+
+/**
+ * Application ID for the Land Cover Explorer app.
+ * Required for authentication and features such as saving web maps.
+ */
+declare const ENV_LANDCOVER_EXPLORER_APP_ID: string;
+
+/**
+ * The service URL for Sentinel-2 Land Cover imagery service.
+ * Optional: defaults to https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover/ImageServer if not specified.
+ */
+declare const ENV_SENTINEL2_LANDCOVER_SERVICE_URL: string;
+
+/**
+ * The service URL for Sentinel-2 Land Cover statistics service.
+ * Optional: defaults to https://ic.imagery1.arcgis.com/arcgis/rest/services/Sentinel2_10m_LandCover_Statistics/ImageServer if not specified.
+ */
+declare const ENV_SENTINEL2_LANDCOVER_STATISTICS_SERVICE_URL: string;
+
+/**
+ * Application ID for the NLCD Land Cover Explorer app.
+ * Required for authentication and features such as saving web maps.
+ */
+declare const ENV_NLCD_LANDCOVER_EXPLORER_APP_ID: string;
+
+/**
+ * The service URL for NLCD Land Cover imagery service.
+ * Optional: defaults to https://ic.imagery1.arcgis.com/arcgis/rest/services/NLCD_LandCover/ImageServer if not specified.
+ */
+declare const ENV_NLCD_LANDCOVER_SERVICE_URL: string;

@@ -25,23 +25,32 @@ import { initEsriOAuth } from '../shared/utils/esri-oauth';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
-import { APP_ID } from '@shared/config';
+import {
+    NLCD_LANDCOVER_EXPLORER_APP_ID,
+    AGOL_PORTAL_ROOT,
+} from '@shared/config';
 // import { loadNLCDLandcoverServiceInfo } from '@shared/services/nlcd-landcover/loadServiceInfo';
 import { setImageryServiceFieldNames } from '@landcover-explorer/components/SatelliteImageryLayer/exportSatelliteImage';
 import { FIELD_NAMES } from '@shared/services/landsat-level-2/config';
 import { getNLCDLandCoverRasterAttributeTable } from '@shared/services/nlcd-landcover/classifications';
 import { loadTimeInfo } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
+import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
     try {
-        await initEsriOAuth({
-            appId: APP_ID,
-        });
+        // await initI18next(APP_LANGUAGE);
 
-        await initI18next(APP_LANGUAGE);
+        // await initEsriOAuth({
+        //     appId: NLCD_LANDCOVER_EXPLORER_APP_ID,
+        //     portalUrl: AGOL_PORTAL_ROOT,
+        // });
+
+        await initializeApp({
+            appId: NLCD_LANDCOVER_EXPLORER_APP_ID,
+        });
 
         // // Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer
         // await loadNLCDLandcoverServiceInfo();

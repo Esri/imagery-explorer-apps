@@ -14,7 +14,7 @@
  */
 
 import { APP_NAME, appConfig } from '@shared/config';
-import { SENTINEL_2_ITEM_URL } from '@shared/services/sentinel-2/config';
+// import { SENTINEL_2_ITEM_URL } from '@shared/services/sentinel-2/config';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 

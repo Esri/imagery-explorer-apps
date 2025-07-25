@@ -14,7 +14,7 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER } from '@shared/config';
+// import { TIER } from '@shared/config';
 
 // const serviceConfig = getServiceConfig('sentinel-1');
 // console.log('sentinel-1 service config', serviceConfig);
@@ -26,17 +26,17 @@ import { TIER } from '@shared/config';
 //         'https://utility.arcgis.com/usrsvcs/servers/c5f3f9cddbcb45e6b2434dd8eeef8083/rest/services/Sentinel1RTC/ImageServer',
 // };
 
-/**
- * Sentinel-1 RTC 10-meter C-band synthetic aperture radar (SAR) imagery in single and dual V-polarization with on-the-fly functions for visualization and unit conversions for analysis.
- * This imagery layer is updated daily with the latest available imagery from the Microsoft Planetary Computer data catalog.
- * @see https://www.arcgis.com/home/item.html?id=ca91605a3261409aa984f01f7d065fbc
- */
-export const SENTINEL_1_ITEM_ID = `ca91605a3261409aa984f01f7d065fbc`;
+// /**
+//  * Sentinel-1 RTC 10-meter C-band synthetic aperture radar (SAR) imagery in single and dual V-polarization with on-the-fly functions for visualization and unit conversions for analysis.
+//  * This imagery layer is updated daily with the latest available imagery from the Microsoft Planetary Computer data catalog.
+//  * @see https://www.arcgis.com/home/item.html?id=ca91605a3261409aa984f01f7d065fbc
+//  */
+// export const SENTINEL_1_ITEM_ID = `ca91605a3261409aa984f01f7d065fbc`;
 
-/**
- * URL of the Sentinel-1 Item on ArcGIS Online
- */
-export const SENTINEL_1_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${SENTINEL_1_ITEM_ID}`;
+// /**
+//  * URL of the Sentinel-1 Item on ArcGIS Online
+//  */
+// export const SENTINEL_1_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${SENTINEL_1_ITEM_ID}`;
 
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
@@ -44,39 +44,42 @@ export const SENTINEL_1_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${S
 const SENTINEL_1_ORIGINAL_SERVICE_URL_PROD =
     'https://sentinel1.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer';
 
-const SENTINEL_1_ORIGINAL_SERVICE_URL_DEV =
-    'https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer';
+// const SENTINEL_1_ORIGINAL_SERVICE_URL_DEV =
+//     'https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer';
 
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
  */
 export const SENTINEL_1_ORIGINAL_SERVICE_URL =
-    TIER === 'development'
-        ? SENTINEL_1_ORIGINAL_SERVICE_URL_DEV
-        : SENTINEL_1_ORIGINAL_SERVICE_URL_PROD;
+    ENV_SENTINEL1_ORIGINAL_SERVICE_URL || SENTINEL_1_ORIGINAL_SERVICE_URL_PROD;
+// TIER === 'development'
+//     ? SENTINEL_1_ORIGINAL_SERVICE_URL_DEV
+//     : SENTINEL_1_ORIGINAL_SERVICE_URL_PROD;
 
-/**
- * Service URL to be used in PROD enviroment
- */
-export const SENTINEL_1_SERVICE_URL_PROD =
-    SENTINEL1_SERVICE_PROXY_URL_PROD || SENTINEL_1_ORIGINAL_SERVICE_URL;
+// /**
+//  * Service URL to be used in PROD enviroment
+//  */
+// const SENTINEL_1_SERVICE_URL_PROD =
+//     SENTINEL1_SERVICE_PROXY_URL_PROD || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
-/**
- * Service URL to be used in DEV enviroment
- *
- * @see https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer/
- */
-export const SENTINEL_1_SERVICE_URL_DEV =
-    SENTINEL1_SERVICE_PROXY_URL_DEV || SENTINEL_1_ORIGINAL_SERVICE_URL;
+// /**
+//  * Service URL to be used in DEV enviroment
+//  *
+//  * @see https://sentinel1dev.imagery1.arcgis.com/arcgis/rest/services/Sentinel1RTC/ImageServer/
+//  */
+// const SENTINEL_1_SERVICE_URL_DEV =
+//     SENTINEL1_SERVICE_PROXY_URL_DEV || SENTINEL_1_ORIGINAL_SERVICE_URL;
 
 /**
  * A proxy imagery service which has embedded credential that points to the actual Landsat Level-2 imagery service
  * @see https://landsat.imagery1.arcgis.com/arcgis/rest/services/LandsatC2L2/ImageServer
  */
 export const SENTINEL_1_SERVICE_URL =
-    TIER === 'development'
-        ? SENTINEL_1_SERVICE_URL_DEV
-        : SENTINEL_1_SERVICE_URL_PROD;
+    ENV_SENTINEL1_PROXY_SERVICE_URL || SENTINEL_1_ORIGINAL_SERVICE_URL;
+// TIER === 'production'
+// TIER === 'development'
+//     ? SENTINEL_1_SERVICE_URL_DEV
+//     : SENTINEL_1_SERVICE_URL_PROD;
 
 /**
  * Field Names Look-up table for Sentinel1RTC (ImageServer)

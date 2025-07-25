@@ -27,24 +27,29 @@ import { getSentinel2ExplorerStore } from './store';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import { initEsriOAuth } from '@shared/utils/esri-oauth';
-import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
+import { AGOL_PORTAL_ROOT, SENTINEL2_EXPLORER_APP_ID } from '@shared/config';
 import { AboutSentinel2Explorer } from './components/About';
 import { initI18next } from '@shared/i18n/initI18next';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import '@shared/components/calcite-components';
+import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 // import { getTranslatedSentinel2RasterFunctionInfo } from './utils/getTranslatedSentinel2RasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
     try {
-        await initEsriOAuth({
-            appId: APP_ID,
-            portalUrl: AGOL_PORTAL_ROOT,
-        });
-        // console.log('initEsriOAuth done');
+        // await initI18next(APP_LANGUAGE);
 
-        await initI18next(APP_LANGUAGE);
+        // await initEsriOAuth({
+        //     appId: SENTINEL2_EXPLORER_APP_ID,
+        //     portalUrl: AGOL_PORTAL_ROOT,
+        // });
+        // // console.log('initEsriOAuth done');
+
+        await initializeApp({
+            appId: SENTINEL2_EXPLORER_APP_ID,
+        });
 
         const store = await getSentinel2ExplorerStore();
 

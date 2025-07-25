@@ -1,4 +1,4 @@
-import { TIER } from '@shared/config';
+// import { TIER } from '@shared/config';
 
 /**
  * The item ID of the NLCD Land Cover layer.
@@ -6,16 +6,17 @@ import { TIER } from '@shared/config';
  */
 export const NLCD_LANDCOVER_ITEM_ID = '3ccf118ed80748909eb85c6d262b426f';
 
-const NLCD_LANDCOVER_IMAGE_SERVICE_URL_DEV =
-    'https://di-nlcddev.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer';
+// const NLCD_LANDCOVER_IMAGE_SERVICE_URL_DEV =
+//     'https://di-nlcddev.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer';
 
 const NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD =
     'https://di-nlcd.img.arcgis.com/arcgis/rest/services/USA_NLCD_Annual_LandCover/ImageServer';
 
 export const NLCD_LANDCOVER_IMAGE_SERVICE_URL =
-    TIER === 'development'
-        ? NLCD_LANDCOVER_IMAGE_SERVICE_URL_DEV
-        : NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD;
+    ENV_NLCD_LANDCOVER_SERVICE_URL || NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD;
+// TIER === 'development'
+//     ? NLCD_LANDCOVER_IMAGE_SERVICE_URL_DEV
+//     : NLCD_LANDCOVER_IMAGE_SERVICE_URL_PROD;
 
 export enum NLCD_LANDCOVER_RASTER_FUNCTIONS {
     'MIXED_FOREST' = 'Isolate Forested Areas for Visualization and Analysis',

@@ -14,23 +14,23 @@
  */
 
 // import { TIER } from '@shared/constants';
-import { TIER } from '@shared/config';
+// import { TIER } from '@shared/config';
 
 // const serviceConfig = getServiceConfig('sentinel-2');
 // console.log('sentinel-2 service config', serviceConfig);
 
-/**
- *
- * Sentinel-2 multispectral and multitemporal atmospherically corrected imagery with on-the-fly visual renderings and indices for visualization and analysis.
- * This imagery layer is sourced from the Microsoft Planetary Computer and is updated daily with new imagery. This layer is in beta release.
- * @see https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00
- */
-export const SENTINEL_2_ITEM_ID = `255af1ceee844d6da8ef8440c8f90d00`;
+// /**
+//  *
+//  * Sentinel-2 multispectral and multitemporal atmospherically corrected imagery with on-the-fly visual renderings and indices for visualization and analysis.
+//  * This imagery layer is sourced from the Microsoft Planetary Computer and is updated daily with new imagery. This layer is in beta release.
+//  * @see https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00
+//  */
+// export const SENTINEL_2_ITEM_ID = `255af1ceee844d6da8ef8440c8f90d00`;
 
-/**
- * URL of the Sentinel-2 Item on ArcGIS Online
- */
-export const SENTINEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${SENTINEL_2_ITEM_ID}`;
+// /**
+//  * URL of the Sentinel-2 Item on ArcGIS Online
+//  */
+// export const SENTINEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${SENTINEL_2_ITEM_ID}`;
 
 /**
  * This is the original service URL, which will prompt user to sign in by default as it requires subscription
@@ -38,35 +38,37 @@ export const SENTINEL_2_ITEM_URL = `https://www.arcgis.com/home/item.html?id=${S
 const SENTINEL_2_ORIGINAL_SERVICE_URL_PROD =
     'https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
 
-const SENTINEL_2_ORIGINAL_SERVICE_URL_DEV =
-    'https://sentineldev.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
+// const SENTINEL_2_ORIGINAL_SERVICE_URL_DEV =
+//     'https://sentineldev.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer';
 
 export const SENTINEL_2_ORIGINAL_SERVICE_URL =
-    TIER === 'development'
-        ? SENTINEL_2_ORIGINAL_SERVICE_URL_DEV
-        : SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+    ENV_SENTINEL2_ORIGINAL_SERVICE_URL || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+// TIER === 'development'
+//     ? SENTINEL_2_ORIGINAL_SERVICE_URL_DEV
+//     : SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
 
-/**
- * Service URL to be used in PROD enviroment
- */
-export const SENTINEL_2_SERVICE_URL_PROD =
-    SENTINEL2_SERVICE_PROXY_URL_PROD || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
+// /**
+//  * Service URL to be used in PROD enviroment
+//  */
+// const SENTINEL_2_SERVICE_URL_PROD =
+//     SENTINEL2_SERVICE_PROXY_URL_PROD || SENTINEL_2_ORIGINAL_SERVICE_URL_PROD;
 
-/**
- * Service URL to be used in DEV enviroment
- *
- */
-export const SENTINEL_2_SERVICE_URL_DEV =
-    SENTINEL2_SERVICE_PROXY_URL_DEV || SENTINEL_2_ORIGINAL_SERVICE_URL_DEV;
+// /**
+//  * Service URL to be used in DEV enviroment
+//  *
+//  */
+// const SENTINEL_2_SERVICE_URL_DEV =
+//     SENTINEL2_SERVICE_PROXY_URL_DEV || SENTINEL_2_ORIGINAL_SERVICE_URL_DEV;
 
 /**
  * A proxy imagery service which has embedded credential that points to the sentinel-2 imagery service
  * @see https://sentinel.imagery1.arcgis.com/arcgis/rest/services/Sentinel2L2A/ImageServer
  */
 export const SENTINEL_2_SERVICE_URL =
-    TIER === 'development'
-        ? SENTINEL_2_SERVICE_URL_DEV
-        : SENTINEL_2_SERVICE_URL_PROD;
+    ENV_SENTINEL2_PROXY_SERVICE_URL || SENTINEL_2_ORIGINAL_SERVICE_URL;
+// TIER === 'development'
+//     ? SENTINEL_2_SERVICE_URL_DEV
+//     : SENTINEL_2_SERVICE_URL_PROD;
 
 /**
  * Field Names Look-up table for Sentinel2L2A (ImageServer)

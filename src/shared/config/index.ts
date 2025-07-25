@@ -28,11 +28,11 @@ type AppConfig = {
      * Item id of the web map to be used in the app
      */
     webmapId: string;
-    /**
-     * App id to be used to create the OAuthInfo object
-     * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
-     */
-    appId: string;
+    // /**
+    //  * App id to be used to create the OAuthInfo object
+    //  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+    //  */
+    // appId: string;
 };
 
 /**
@@ -56,48 +56,46 @@ export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
  */
 export const appConfig: AppConfig = config.apps[APP_NAME];
 
-/**
- * Tier of the app based on the SERVICE_TIER environment variable
- */
-const TIER_BASED_ON_ENV = SERVICE_TIER
-    ? SERVICE_TIER === 'production'
-        ? 'production'
-        : 'development'
-    : undefined;
-// console.log('TIER_BASED_ON_ENV:', TIER_BASED_ON_ENV);
+// /**
+//  * Tier of the app based on the SERVICE_TIER environment variable
+//  */
+// const TIER_BASED_ON_ENV = SERVICE_TIER
+//     ? SERVICE_TIER === 'production'
+//         ? 'production'
+//         : 'development'
+//     : undefined;
+// // console.log('TIER_BASED_ON_ENV:', TIER_BASED_ON_ENV);
 
-/**
- * Tier of the app based on the host name
- */
-const TIER_BASED_ON_HOST =
-    window.location.host === 'livingatlas.arcgis.com' ||
-    window.location.host === 'livingatlasstg.arcgis.com'
-        ? 'production'
-        : 'development';
+// /**
+//  * Tier of the app based on the host name
+//  */
+// const TIER_BASED_ON_HOST =
+//     window.location.host === 'livingatlas.arcgis.com' ||
+//     window.location.host === 'livingatlasstg.arcgis.com'
+//         ? 'production'
+//         : 'development';
 
-/**
- * Tier of the app (production or development)
- */
-export const TIER = TIER_BASED_ON_ENV || TIER_BASED_ON_HOST;
-console.log(
-    `The application is using ${TIER} services based on ${
-        TIER_BASED_ON_ENV ? 'environment variable' : 'host name'
-    }.`
-);
+// /**
+//  * Tier of the app (`production` or `development`) based on the environment type.
+//  * This can be used to determine the service URLs and other configurations.
+//  */
+// export const TIER = TIER_BASED_ON_HOST;
+// console.log(`The application is using ${TIER} services based on host name`);
 
 /**
  * Root URL of the ArcGIS Online portal based on the tier
  */
-const AGOL_PORTAL_ROOT_BASED_ON_TIER =
-    TIER === 'production'
-        ? `https://www.arcgis.com`
-        : `https://devext.arcgis.com`;
-console.log(`The application is using ${AGOL_PORTAL_ROOT_BASED_ON_TIER}.`);
+// const AGOL_PORTAL_ROOT_BASED_ON_TIER =
+//     TIER === 'production'
+//         ? `https://www.arcgis.com`
+//         : `https://devext.arcgis.com`;
+// console.log(`The application is using ${AGOL_PORTAL_ROOT_BASED_ON_TIER}.`);
 
 /**
  * Root URL of the ArcGIS Portal
  */
-export const AGOL_PORTAL_ROOT = AGOL_PORTAL_ROOT_BASED_ON_TIER;
+export const AGOL_PORTAL_ROOT =
+    ENV_ARCGIS_PORTAL_ROOT_URL || 'https://www.arcgis.com';
 
 /**
  * Root URL of the ArcGIS REST API
@@ -117,10 +115,46 @@ export const ARCGIS_REST_API_ROOT = AGOL_PORTAL_ROOT + '/sharing/rest';
 //     return config.services[serviceName];
 // };
 
+// /**
+//  * App ID to be used to create the OAuthInfo object.
+//  *
+//  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+//  */
+// // export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';
+// export const APP_ID = appConfig?.appId || '';
+
 /**
- * App ID to be used to create the OAuthInfo object.
- *
- * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
+ * Application ID for the Landsat Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving selected scenes.
+ * This is defined in the environment variable `ENV_LANDSAT_EXPLORER_APP_ID` by Webpack DefinePlugin.
  */
-// export const APP_ID = TIER === 'production' ? appConfig.appId : 'LAWWebsite';
-export const APP_ID = appConfig?.appId || '';
+export const LANDSAT_EXPLORER_APP_ID = ENV_LANDSAT_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the Sentinel-2 Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving selected scenes.
+ * This is defined in the environment variable `ENV_SENTINEL2_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const SENTINEL2_EXPLORER_APP_ID = ENV_SENTINEL2_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the Sentinel-1 Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving selected scenes.
+ * This is defined in the environment variable `ENV_SENTINEL1_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const SENTINEL1_EXPLORER_APP_ID = ENV_SENTINEL1_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the Land Cover Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving web maps.
+ * This is defined in the environment variable `ENV_LANDCOVER_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const LANDCOVER_EXPLORER_APP_ID = ENV_LANDCOVER_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the NLCD Land Cover Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving web maps.
+ * This is defined in the environment variable `ENV_NLCD_LANDCOVER_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const NLCD_LANDCOVER_EXPLORER_APP_ID =
+    ENV_NLCD_LANDCOVER_EXPLORER_APP_ID || '';

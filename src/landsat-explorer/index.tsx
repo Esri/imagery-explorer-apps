@@ -27,24 +27,29 @@ import { ErrorPage } from '@shared/components/ErrorPage';
 // import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
 // import AppContextProvider from '@shared/contexts/AppContextProvider';
 // import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
-import { AGOL_PORTAL_ROOT, APP_ID } from '@shared/config';
-import { initEsriOAuth } from '@shared/utils/esri-oauth';
-import { initI18next } from '@shared/i18n/initI18next';
-import { APP_LANGUAGE } from '@shared/constants/UI';
+import { AGOL_PORTAL_ROOT, LANDSAT_EXPLORER_APP_ID } from '@shared/config';
+// import { initEsriOAuth } from '@shared/utils/esri-oauth';
+// import { initI18next } from '@shared/i18n/initI18next';
+// import { APP_LANGUAGE } from '@shared/constants/UI';
 import '@shared/components/calcite-components';
+import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 // import { getTranslatedLandsatRasterFunctionInfo } from './utils/getTranslatedLandsatRasterFunctionInfo';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
-    await initEsriOAuth({
-        appId: APP_ID,
-        portalUrl: AGOL_PORTAL_ROOT,
-    });
-
-    await initI18next(APP_LANGUAGE);
-
     try {
+        // await initI18next(APP_LANGUAGE);
+
+        // await initEsriOAuth({
+        //     appId: LANDSAT_EXPLORER_APP_ID,
+        //     portalUrl: AGOL_PORTAL_ROOT,
+        // });
+
+        await initializeApp({
+            appId: LANDSAT_EXPLORER_APP_ID,
+        });
+
         const store = await getLandsatExplorerStore();
 
         root.render(
