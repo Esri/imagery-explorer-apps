@@ -35,16 +35,21 @@ import { FIELD_NAMES } from '@shared/services/landsat-level-2/config';
 import { getNLCDLandCoverRasterAttributeTable } from '@shared/services/nlcd-landcover/classifications';
 import { loadTimeInfo } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
+import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
     try {
-        await initI18next(APP_LANGUAGE);
+        // await initI18next(APP_LANGUAGE);
 
-        await initEsriOAuth({
+        // await initEsriOAuth({
+        //     appId: NLCD_LANDCOVER_EXPLORER_APP_ID,
+        //     portalUrl: AGOL_PORTAL_ROOT,
+        // });
+
+        await initializeApp({
             appId: NLCD_LANDCOVER_EXPLORER_APP_ID,
-            portalUrl: AGOL_PORTAL_ROOT,
         });
 
         // // Load service information (Raster Attributes, Time Extent and etc) of NLCD Landcover layer

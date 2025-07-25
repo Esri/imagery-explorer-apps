@@ -34,17 +34,22 @@ import { initI18next } from '@shared/i18n/initI18next';
 // import { getTranslatedSentinel1RasterFunctionInfo } from './utils/getTranslatedSentinel1RasterFunctionInfo';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import '@shared/components/calcite-components';
+import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
 
     try {
-        await initEsriOAuth({
-            appId: SENTINEL1_EXPLORER_APP_ID,
-            portalUrl: AGOL_PORTAL_ROOT,
-        });
+        // await initEsriOAuth({
+        //     appId: SENTINEL1_EXPLORER_APP_ID,
+        //     portalUrl: AGOL_PORTAL_ROOT,
+        // });
 
-        await initI18next(APP_LANGUAGE);
+        // await initI18next(APP_LANGUAGE);
+
+        await initializeApp({
+            appId: SENTINEL1_EXPLORER_APP_ID,
+        });
 
         const store = await getSentinel1ExplorerStore();
 
