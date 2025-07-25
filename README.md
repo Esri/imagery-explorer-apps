@@ -287,7 +287,7 @@ Before running the application, create a `.env` file in the project root using t
 
 ```sh
 # Required: Application ID for Land Cover Explorer
-# Used to authenticate users, which is required for features such as saving selected scenes.
+# Used to authenticate users, which is required for features such as saving web map.
 # see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
 LANDCOVER_EXPLORER_APP_ID = YOUR_LANDCOVER_EXPLORER_APP_ID
 
@@ -357,7 +357,7 @@ Before running the application, create a `.env` file in the project root using t
 
 ```sh
 # Required: Application ID for NLCD Land Cover Explorer
-# Used to authenticate users, which is required for features such as saving selected scenes.
+# Used to authenticate users, which is required for features such as saving web map.
 # see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
 NLCD_LANDCOVER_EXPLORER_APP_ID = YOUR_NLCD_LANDCOVER_EXPLORER_APP_ID
 
