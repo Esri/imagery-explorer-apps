@@ -55,8 +55,8 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,json}": [
-      "prettier --write 'src/**/*.{ts,tsx,json,css,scss}'",
-      "eslint src --ext .ts,.tsx --fix",
+      "prettier --write",
+      "eslint src --fix",
       "jest --bail --findRelatedTests --passWithNoTests"
     ]
   },
