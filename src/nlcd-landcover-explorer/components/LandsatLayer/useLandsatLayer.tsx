@@ -34,7 +34,7 @@ export const useLandsatLayer = ({
     visible,
 }: // mapView,
 Params) => {
-    const layerRef = useRef<ImageryLayer>();
+    const layerRef = useRef<ImageryLayer>(null);
 
     const [landsatLayer, setLandsatLayer] = useState<ImageryLayer>();
 

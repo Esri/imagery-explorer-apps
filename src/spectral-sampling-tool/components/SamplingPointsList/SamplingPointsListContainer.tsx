@@ -129,23 +129,6 @@ export const SamplingPointsListContainer = () => {
 
     return (
         <div className="w-full h-full relative">
-            {/* <div className="flex items-center">
-                <h5 className="text-sm text-ellipsis flex-grow">
-                    {classificationName}:
-                </h5>
-
-                <div
-                    className="cursor-pointer ml-1"
-                    onClick={setShouldShowResetDialog.bind(null, true)}
-                >
-                    <calcite-icon
-                        className="cursor-pointer"
-                        scale="s"
-                        icon="reset"
-                    />
-                </div>
-            </div> */}
-
             <SamplingPointsList
                 data={samplingListData}
                 onSelect={(uniqueId) => {

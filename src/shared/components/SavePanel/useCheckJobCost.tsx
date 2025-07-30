@@ -34,7 +34,7 @@ export const useCheckJobCost = (
 ) => {
     const dispatch = useAppDispatch();
 
-    const intervalIdRef = useRef<NodeJS.Timeout>();
+    const intervalIdRef = useRef<NodeJS.Timeout>(null);
 
     const jobsPendingCheckingCost = useAppSelector(
         selectRasterAnalysisJobsPendingCheckingCost

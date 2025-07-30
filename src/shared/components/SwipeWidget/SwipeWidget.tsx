@@ -54,7 +54,7 @@ const SwipeWidget: FC<Props> = ({
     positionOnChange,
     referenceInfoOnToggle,
 }: Props) => {
-    const swipeWidgetRef = useRef<Swipe>();
+    const swipeWidgetRef = useRef<Swipe>(null);
 
     useAutoSwipe(swipeWidgetRef.current);
 

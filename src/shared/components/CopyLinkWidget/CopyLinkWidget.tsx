@@ -21,6 +21,7 @@ import {
     COPIED_LINK_MESSAGE_TIME_TO_STAY_OPEN_IN_MILLISECONDS,
 } from '@shared/constants/UI';
 import { useTranslation } from 'react-i18next';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 export const CopyLinkWidget = () => {
     const { t } = useTranslation();
@@ -33,7 +34,7 @@ export const CopyLinkWidget = () => {
 
         setNotificationMessage(
             <>
-                <calcite-icon
+                <CalciteIcon
                     scale="s"
                     icon="check"
                     style={

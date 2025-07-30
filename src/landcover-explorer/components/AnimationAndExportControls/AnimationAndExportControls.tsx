@@ -112,13 +112,6 @@ const DefaultOptions: FC<DefaultOptionsProps> = ({
 
     return (
         <div className={classNames('flex items-center justify-around')}>
-            {/* <div className='cursor-pointer flex items-center'
-                onClick={donwloadButtonOnClick}
-            >
-                <calcite-icon icon="download-to" scale="s" />
-                <span className='ml-1'>Download as GeoTIFF</span>
-            </div> */}
-
             {showStartAnimationButton && (
                 <OptionButton
                     label={t('start_animation')}
@@ -134,13 +127,6 @@ const DefaultOptions: FC<DefaultOptionsProps> = ({
                     onClick={donwloadButtonOnClick}
                 />
             )}
-
-            {/* <div className='cursor-pointer flex items-center' 
-                onClick={saveWebmapButtonOnClick}
-            >
-                <calcite-icon icon="launch" scale="s" />
-                <span className='ml-1'>Publish to ArcGIS</span>
-            </div> */}
 
             {showPublishToArcGISButton && (
                 <OptionButton

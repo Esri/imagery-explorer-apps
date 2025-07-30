@@ -38,6 +38,7 @@ import { initiateImageryScenes4TemporalCompositeTool } from '@shared/store/Tempo
 import { Tooltip } from '@shared/components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 export const TemporalCompositeTool = () => {
     const { t } = useTranslation();
@@ -90,7 +91,7 @@ export const TemporalCompositeTool = () => {
                     content={t('composite_header_tooltip', { ns: APP_NAME })}
                     width={400}
                 >
-                    <calcite-icon scale="s" icon="information" />
+                    <CalciteIcon scale="s" icon="information" />
                 </Tooltip>
 
                 <span className="uppercase text-sm ml-1">

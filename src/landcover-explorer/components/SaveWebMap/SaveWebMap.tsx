@@ -20,6 +20,7 @@ import { CreateWebMapResponse } from './createWebMap';
 import { CloseButton } from '@shared/components/CloseButton';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { CalciteInputText } from '@esri/calcite-components-react';
 
 export type WebMapMetadata = {
     /**
@@ -83,20 +84,20 @@ const TextInput: FC<TextInputProps> = ({
     // shouldUseTextArea=false,
     onChange,
 }: TextInputProps) => {
-    const calciteInputRef = useRef<any>();
+    // const calciteInputRef = useRef<any>(null);
 
-    useEffect(() => {
-        // const eventName = shouldUseTextArea
-        //     ? 'calciteTextAreaInput'
-        //     : 'calciteInputTextInput'
+    // useEffect(() => {
+    //     // const eventName = shouldUseTextArea
+    //     //     ? 'calciteTextAreaInput'
+    //     //     : 'calciteInputTextInput'
 
-        calciteInputRef.current.addEventListener(
-            'calciteInputTextInput',
-            (evt: any) => {
-                onChange(evt.target?.value);
-            }
-        );
-    }, []);
+    //     calciteInputRef.current.addEventListener(
+    //         'calciteInputTextInput',
+    //         (evt: any) => {
+    //             onChange(evt.target?.value);
+    //         }
+    //     );
+    // }, []);
 
     return (
         <div className="mb-4">
@@ -105,7 +106,12 @@ const TextInput: FC<TextInputProps> = ({
                 {isRequired ? '*' : ''}
             </h4>
 
-            <calcite-input-text value={value} ref={calciteInputRef} />
+            <CalciteInputText
+                value={value}
+                onCalciteInputTextInput={(evt: any) => {
+                    onChange(evt.target?.value);
+                }}
+            />
         </div>
     );
 };

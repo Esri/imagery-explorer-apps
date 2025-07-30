@@ -42,7 +42,7 @@ export const useAutoSwipe = (swipeWidget: Swipe) => {
     /**
      * Reference to track the current status of auto-swipe (kept in sync with the Redux store)
      */
-    const statusRef = useRef<AutoSwipeStatus>();
+    const statusRef = useRef<AutoSwipeStatus>(null);
 
     /**
      * Boolean ref to track if the swipe is moving towards the left (false indicates right)

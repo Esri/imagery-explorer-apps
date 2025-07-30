@@ -17,7 +17,10 @@ import React, { useEffect, useRef, useState, FC } from 'react';
 import './ColorPicker.css';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import classNames from 'classnames';
-import { CalciteColorPicker } from '@esri/calcite-components-react';
+import {
+    CalciteColorPicker,
+    CalciteIcon,
+} from '@esri/calcite-components-react';
 
 type Props = {
     color: number[];
@@ -25,7 +28,7 @@ type Props = {
 };
 
 export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // const calciteColorPickerRef = useRef<any>();
 
@@ -56,13 +59,6 @@ export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
                     hidden: showColorPicker === false,
                 })}
             >
-                {/* <calcite-color-picker
-                    ref={calciteColorPickerRef}
-                    format="rgb"
-                    saved-disabled
-                    channels-disabled
-                    scale="s"
-                /> */}
                 <CalciteColorPicker
                     // ref={calciteColorPickerRef}
                     format="rgb"
@@ -100,7 +96,7 @@ export const ColorPicker: FC<Props> = ({ color, onChange }: Props) => {
                 ></div>
 
                 <div className="flex items-center ml-1 ">
-                    <calcite-icon icon="caret-down" scale="s" />
+                    <CalciteIcon icon="caret-down" scale="s" />
                 </div>
             </div>
         </div>

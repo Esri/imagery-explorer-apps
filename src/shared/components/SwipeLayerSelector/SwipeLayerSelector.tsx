@@ -21,6 +21,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectImageryServiceRasterFunctionLabelMap } from '@shared/store/ImageryService/selectors';
+import { CalciteIcon } from '@esri/calcite-components-react';
 // import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
 type Side4SwipeMode = 'left' | 'right';
@@ -137,7 +138,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                 title="swap left and right side"
                 onClick={swapButtonOnClick}
             >
-                <calcite-icon icon="arrow-up-down" scale="s" />
+                <CalciteIcon icon="arrow-up-down" scale="s" />
             </div>
 
             <div

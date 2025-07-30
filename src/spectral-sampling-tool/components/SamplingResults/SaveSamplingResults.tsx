@@ -23,6 +23,7 @@ import { useAveragedBandValues } from './useAveragedSamplingResults';
 import { SpectralSamplingToolSupportedService } from '@shared/store/SpectralSamplingTool/reducer';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     bandNames: string[];
@@ -45,7 +46,7 @@ export const SaveSamplingResults: FC<Props> = ({
 
     return (
         <div className="text-right pr-4 flex items-center justify-end">
-            <calcite-icon icon="download-to" scale="s" />
+            <CalciteIcon icon="download-to" scale="s" />
             <span
                 className="cursor-pointer underline text-sm"
                 onClick={() => {

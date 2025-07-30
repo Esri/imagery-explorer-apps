@@ -23,6 +23,7 @@ import { JobStatus } from './JobStatus';
 import { JobInfo } from './JobInfo';
 import { JobIcon } from './JobIcon';
 import { useTranslation } from 'react-i18next';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 type JobListProps = {
     /**
@@ -102,7 +103,7 @@ export const JobList: FC<JobListProps> = ({
                             className="flex justify-center items-center cursor-pointer"
                             onClick={() => deleteButtonOnClick(job.id)}
                         >
-                            <calcite-icon icon="x" scale="s" />
+                            <CalciteIcon icon="x" scale="s" />
                         </div>
                     </div>
                 );

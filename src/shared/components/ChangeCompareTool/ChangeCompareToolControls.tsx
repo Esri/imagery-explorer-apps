@@ -111,7 +111,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
             return null;
         }
 
-        let content: JSX.Element = null;
+        let content: React.JSX.Element = null;
 
         if (legendLabelText.length === 2) {
             content = (

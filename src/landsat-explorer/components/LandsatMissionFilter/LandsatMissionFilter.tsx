@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { CalciteIcon } from '@esri/calcite-components-react';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { LANDSAT_MISSIONS } from '@shared/services/landsat-level-2/config';
 import React, { FC, useRef, useState } from 'react';
@@ -76,19 +77,19 @@ const FilterButton: FC<LandsatMissionFilterButtonProps> = ({
             <span className="mr-1 uppercase">{title}</span>
 
             {expanded ? (
-                <calcite-icon
+                <CalciteIcon
                     icon="chevron-up"
                     scale="s"
                     aria-hidden="true"
                     calcite-hydrated=""
-                ></calcite-icon>
+                ></CalciteIcon>
             ) : (
-                <calcite-icon
+                <CalciteIcon
                     icon="chevron-down"
                     scale="s"
                     aria-hidden="true"
                     calcite-hydrated=""
-                ></calcite-icon>
+                ></CalciteIcon>
             )}
         </div>
     );
@@ -136,7 +137,7 @@ export const LandsatMissionFilter: FC<Props> = ({
 }: Props) => {
     const { t } = useTranslation();
 
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const [expanded, setExpanded] = useState<boolean>(false);
 

@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { CalciteIcon } from '@esri/calcite-components-react';
 import { usePrevious } from '@shared/hooks/usePrevious';
 import classNames from 'classnames';
 import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
@@ -73,7 +74,7 @@ export const AnimationFramesList: FC<Props> = ({
     // addButtonOnClick,
     removeButtonOnClick,
 }) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     /**
      * track the number of frame from the previous state of the animation frames data
@@ -154,7 +155,7 @@ export const AnimationFramesList: FC<Props> = ({
                                     frameId
                                 )}
                             >
-                                <calcite-icon
+                                <CalciteIcon
                                     icon="x"
                                     scale="s"
                                     style={{

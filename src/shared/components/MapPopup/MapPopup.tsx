@@ -75,7 +75,7 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
 
     const swipePosition = useAppSelector(selectSwipeWidgetHandlerPosition);
 
-    const openPopupRef = useRef<MapViewOnClickHandler>();
+    const openPopupRef = useRef<MapViewOnClickHandler>(null);
 
     const closePopUp = (message: string) => {
         // console.log('calling closePopUp', message);

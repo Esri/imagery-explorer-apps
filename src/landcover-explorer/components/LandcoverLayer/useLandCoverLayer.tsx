@@ -63,7 +63,7 @@ const useLandCoverLayer = ({
 }: UseLandCoverLayerParams) => {
     // const activeLandCoverType = useAppSelector(selectActiveLandCoverType);
 
-    const layerRef = useRef<ImageryLayer>();
+    const layerRef = useRef<ImageryLayer>(null);
 
     const [landCoverLayer, setLandCoverLayer] = useState<ImageryLayer>();
 

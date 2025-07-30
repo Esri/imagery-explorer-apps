@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { CalciteIcon } from '@esri/calcite-components-react';
 import React, { FC } from 'react';
 
 type Props = {
@@ -40,7 +41,7 @@ export const Notification: FC<Props> = ({ closeButtonOnClick, message }) => {
                     className="cursor-pointer pointer-events-auto ml-2"
                     onClick={closeButtonOnClick}
                 >
-                    <calcite-icon icon="x" scale="m" />
+                    <CalciteIcon icon="x" scale="m" />
                 </div>
             </div>
         </div>

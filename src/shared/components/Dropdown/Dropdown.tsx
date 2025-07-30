@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import useWindowSize from '@shared/hooks/useWindowSize';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 export type DropdownData = {
     /**
@@ -53,7 +54,7 @@ export const Dropdown: FC<Props> = ({
 }: Props) => {
     const [shouldShowOptions, setShouldShowOptions] = useState(false);
 
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const windowSize = useWindowSize();
 
@@ -173,7 +174,7 @@ export const Dropdown: FC<Props> = ({
                         {getLabel()}
                     </span>
 
-                    <calcite-icon icon="chevron-down" scale="s" />
+                    <CalciteIcon icon="chevron-down" scale="s" />
                 </div>
 
                 {tooltip && (

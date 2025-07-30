@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]()
+
+### Shared
+#### Fixed
+- Corrected usage of the `useRef` hook in multiple components to ensure proper default values.
+
+#### Updated
+- Upgraded `react` and `react-dom` to version 19.
+- Adopted components from `@esri/calcite-components-react` for enhanced type safety and consistency.
+
 ---
 
 ## 2025-07-09

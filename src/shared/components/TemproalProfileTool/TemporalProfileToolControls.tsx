@@ -24,6 +24,7 @@ import {
     getMonthAbbreviation,
 } from '@shared/utils/date-time/monthHelpers';
 import { useTranslation } from 'react-i18next';
+import { CalciteIcon } from '@esri/calcite-components-react';
 // import { useAcquisitionYearsAsDropdownMenuOptions } from '@shared/hooks/useAcquisitionYearsAsDropdownMenuOptions';
 
 type Props = {
@@ -118,7 +119,7 @@ export const TemporalProfileToolControls = ({
                         onClick={closeButtonOnClick}
                     >
                         <Tooltip content={t('clear_map_selection')}>
-                            <calcite-icon icon="x-circle" scale="s" />
+                            <CalciteIcon icon="x-circle" scale="s" />
                         </Tooltip>
                     </div>
                 )}

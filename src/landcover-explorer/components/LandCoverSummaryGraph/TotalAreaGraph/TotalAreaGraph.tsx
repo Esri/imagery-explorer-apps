@@ -17,6 +17,7 @@ import React, { FC, useRef } from 'react';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 import { BarChartBasic } from '@vannizhang/react-d3-charts';
 import { BarChartDataItem } from '@vannizhang/react-d3-charts/dist/BarChart/types';
+import { CalciteLoader } from '@esri/calcite-components-react';
 // import BarChart from '@landcover-explorer/QuickD3Chart/BarChart/BarChart';
 // import { MARGIN } from '@landcover-explorer/QuickD3Chart/constants';
 
@@ -34,7 +35,7 @@ const TotalAreaGraph: FC<Props> = ({
     scale = 'm',
     itemOnHover,
 }: Props) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useGetTooltipPositionOnHover(containerRef);
 
@@ -44,7 +45,7 @@ const TotalAreaGraph: FC<Props> = ({
         if (!data) {
             return (
                 <div className="w-full flex justify-center items-center">
-                    <calcite-loader active scale="s"></calcite-loader>
+                    <CalciteLoader scale="s"></CalciteLoader>
                 </div>
             );
         }

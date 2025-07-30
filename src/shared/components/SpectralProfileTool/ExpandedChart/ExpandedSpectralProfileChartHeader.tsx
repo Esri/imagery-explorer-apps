@@ -28,15 +28,6 @@ export const ExpandedSpectralProfileChartHeader = () => {
                     {t('spectral_profile_selected_location')}
                 </h4>
             </div>
-
-            {/* <ScreenshotSaver />
-
-            <calcite-icon
-                class="cursor-pointer"
-                title="Save profiles as a table"
-                icon="table"
-                scale="s"
-            /> */}
         </div>
     );
 };

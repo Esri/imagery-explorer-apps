@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { CalciteLoader } from '@esri/calcite-components-react';
 import classNames from 'classnames';
 import React, { CSSProperties, FC } from 'react';
 
@@ -53,7 +54,7 @@ export const MapLoadingIndicator: FC<Props> = ({
                     } as CSSProperties
                 }
             >
-                <calcite-loader />
+                <CalciteLoader />
             </div>
 
             {swipeWidgetHandlerPosition && (
@@ -70,7 +71,7 @@ export const MapLoadingIndicator: FC<Props> = ({
                         } as CSSProperties
                     }
                 >
-                    <calcite-loader />
+                    <CalciteLoader />
                 </div>
             )}
         </>

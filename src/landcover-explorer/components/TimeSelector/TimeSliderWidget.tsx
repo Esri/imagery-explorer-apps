@@ -115,11 +115,11 @@ export const TimeSliderWidget: FC<Props> = ({
     timeExtentOnChange,
     selectedYear,
 }: Props) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const sliderRef = useRef<TimeSlider>();
+    const sliderRef = useRef<TimeSlider>(null);
 
-    const debounceDelay = useRef<NodeJS.Timeout>();
+    const debounceDelay = useRef<NodeJS.Timeout>(null);
 
     const init = async () => {
         try {

@@ -173,7 +173,7 @@ export const TemporalCompositeLayer: FC<Props> = ({
     selectedColorband,
     visible,
 }) => {
-    const layerRef = useRef<ImageryLayer>();
+    const layerRef = useRef<ImageryLayer>(null);
 
     const init = () => {
         const rasterFunction = selectedColorband

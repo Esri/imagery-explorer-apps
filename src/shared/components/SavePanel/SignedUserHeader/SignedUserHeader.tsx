@@ -45,19 +45,6 @@ export const SignedUserHeader: FC<Props> = ({
 
     return (
         <div className="signed-in-user-header-container fixed top-3 left-3 flex items-center">
-            {/* <div className=' w-9 h-9 rounded'
-            style={{
-                backgroundImage: `url(${signedInUser?.thumbnailUrl})`,
-                backgroundSize: 'cover',
-            }}
-        ></div> */}
-
-            {/* <calcite-avatar
-                full-name={signedInUser.fullName}
-                // scale="l"
-                thumbnail={signedInUser.thumbnailUrl}
-            /> */}
-
             {signedInUser ? (
                 <>
                     <div
@@ -98,12 +85,6 @@ export const SignedUserHeader: FC<Props> = ({
                                     {t('switch_account')}
                                 </span>
                             </div>
-                            {/* <calcite-icon
-                        icon="sign-out"
-                        scale="s"
-                        class="ml-1"
-                        title="switch account"
-                    ></calcite-icon> */}
                         </div>
                     </div>
                 </>

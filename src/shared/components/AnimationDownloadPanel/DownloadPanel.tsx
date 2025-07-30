@@ -92,7 +92,7 @@ export const AnimationDownloadPanel: FC<Props> = ({
     const [downloadJobStatus, setDownloadJobStatus] =
         useState<DownloadJobStatus>(null);
 
-    const abortController = useRef<AbortController>();
+    const abortController = useRef<AbortController>(null);
 
     const downloadAnimation = async (outputVideoDimension: Dimension) => {
         // // load media layer elements as an array of HTML Image Elements

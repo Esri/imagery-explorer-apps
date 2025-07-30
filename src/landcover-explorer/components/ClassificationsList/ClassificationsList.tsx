@@ -65,7 +65,7 @@ const ClassificationsList: FC<Props> = ({
     activeLandCoverOnChange,
     disabled,
 }: Props) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
     useGetTooltipPositionOnHover(containerRef);
 
     const { t } = useTranslation();

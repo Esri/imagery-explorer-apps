@@ -18,6 +18,7 @@ import React, { FC } from 'react';
 import { MapActionButton } from '../MapActionButton/MapActionButton';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectPendingRasterAnalysisJobs } from '@shared/store/PublishAndDownloadJobs/selectors';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -81,13 +82,15 @@ export const OpenSavePanelButton: FC<Props> = ({
                     className=" absolute bottom-[-12px] right-[-12px] p-1 rounded-full bg-calcite-green-70 border border-white"
                     title={`${pendingJobs.length} pending job(s)`}
                 >
-                    <calcite-loader
+                    <CalciteLoader
                         inline
                         scale="s"
-                        style={{
-                            'padding-right': 0,
-                            'margin-right': 0,
-                        }}
+                        style={
+                            {
+                                'padding-right': 0,
+                                'margin-right': 0,
+                            } as React.CSSProperties
+                        }
                     />
                 </div>
             )}

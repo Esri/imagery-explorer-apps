@@ -107,7 +107,7 @@ export const ChangeCompareGraphContainer: FC<Props> = ({
     const [landCoverChangeData, setLandCoverChangeData] =
         useState<LandCoverChangeInAcres[]>();
 
-    const landCoverChangeDataRef = useRef<LandCoverChangeInAcres[]>();
+    const landCoverChangeDataRef = useRef<LandCoverChangeInAcres[]>(null);
 
     const fetchData = async (): Promise<void> => {
         if (

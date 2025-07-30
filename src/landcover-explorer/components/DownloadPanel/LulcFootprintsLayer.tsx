@@ -44,11 +44,11 @@ const getImageURL = (year: number, imageName: string) => {
 };
 
 const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
-    const layerRef = useRef<IFeatureLayer>();
+    const layerRef = useRef<IFeatureLayer>(null);
 
-    const layerViewRef = useRef<__esri.FeatureLayerView>();
+    const layerViewRef = useRef<__esri.FeatureLayerView>(null);
 
-    const highlight = useRef<__esri.Handle>();
+    const highlight = useRef<__esri.Handle>(null);
 
     const init = async () => {
         layerRef.current = mapView.map.allLayers.find(

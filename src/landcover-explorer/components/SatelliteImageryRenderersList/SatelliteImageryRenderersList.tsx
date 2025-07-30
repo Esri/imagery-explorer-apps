@@ -59,7 +59,7 @@ export const SatelliteImageryRenderersList: FC<Props> = ({
     onSelect,
     itemOnHover,
 }: Props) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
     useGetTooltipPositionOnHover(containerRef);
 
     const { t } = useTranslation();

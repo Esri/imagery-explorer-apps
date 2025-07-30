@@ -47,7 +47,7 @@ export const InterestingPlaces: FC<Props> = ({
     onChange,
     onHover,
 }) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
     useGetTooltipPositionOnHover(containerRef);
 
     const { t } = useTranslation();

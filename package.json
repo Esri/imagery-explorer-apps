@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests",
-
     "start:landsat": "webpack serve --mode development --open --env app=landsatexplorer --env envFileName=.env",
     "start:landsat:dev": "webpack serve --mode development --open --env app=landsatexplorer --env envFileName=.env.development",
     "start:landsat:prod": "webpack serve --mode development --open --env app=landsatexplorer --env envFileName=.env.production",
@@ -13,7 +12,6 @@
     "build:landsat:dev": "webpack --mode production --env app=landsatexplorer --env envFileName=.env.development",
     "build:landsat:prod": "webpack --mode production --env app=landsatexplorer envFileName=.env.production",
     "e2e:landsat": "npx playwright test --config e2e/playwright.landsat.config.ts",
-
     "start:sentinel2": "webpack serve --mode development --open --env app=sentinel2explorer --env envFileName=.env",
     "start:sentinel2:dev": "webpack serve --mode development --open --env app=sentinel2explorer --env envFileName=.env.development",
     "start:sentinel2:prod": "webpack serve --mode development --open --env app=sentinel2explorer --env envFileName=.env.production",
@@ -22,7 +20,6 @@
     "build:sentinel2:prod": "webpack --mode production --env app=sentinel2explorer --env envFileName=.env.production",
     "e2e:sentinel2": "npx playwright test --config e2e/playwright.sentinel2.config.ts --workers=1",
     "e2e:sentinel2:headed": "npx playwright test --config e2e/playwright.sentinel2.config.ts --headed --workers=1",
-
     "start:sentinel1": "webpack serve --mode development --open --env app=sentinel1explorer --env envFileName=.env",
     "start:sentinel1:dev": "webpack serve --mode development --open --env app=sentinel1explorer  --env envFileName=.env.development",
     "start:sentinel1:prod": "webpack serve --mode development --open --env app=sentinel1explorer  --env envFileName=.env.production",
@@ -30,7 +27,6 @@
     "build:sentinel1:dev": "webpack --mode production --env app=sentinel1explorer  --env envFileName=.env.development",
     "build:sentinel1:prod": "webpack --mode production --env app=sentinel1explorer  --env envFileName=.env.production",
     "e2e:sentinel1": "npx playwright test --config e2e/playwright.sentinel1.config.ts",
-
     "start:landcover": "webpack serve --mode development --open --env app=landcoverexplorer --env envFileName=.env",
     "start:landcover:dev": "webpack serve --mode development --open --env app=landcoverexplorer --env envFileName=.env.development",
     "start:landcover:prod": "webpack serve --mode development --open --env app=landcoverexplorer --env envFileName=.env.production",
@@ -39,21 +35,18 @@
     "build:landcover:prod": "webpack --mode production --env app=landcoverexplorer --env envFileName=.env.production",
     "e2e:landcover": "npx playwright test --config e2e/playwright.landcover.config.ts --workers=1",
     "e2e:landcover:headed": "npx playwright test --config e2e/playwright.landcover.config.ts --headed --workers=1",
-
     "start:nlcd-landcover": "webpack serve --mode development --open --env app=nlcdlandcoverexplorer --env envFileName=.env",
     "start:nlcd-landcover:dev": "webpack serve --mode development --open --env app=nlcdlandcoverexplorer --env envFileName=.env.development",
     "start:nlcd-landcover:prod": "webpack serve --mode development --open --env app=nlcdlandcoverexplorer --env envFileName=.env.production",
     "build:nlcd-landcover": "webpack --mode production --env app=nlcdlandcoverexplorer --env envFileName=.env",
     "build:nlcd-landcover:dev": "webpack --mode production --env app=nlcdlandcoverexplorer --env envFileName=.env.development",
     "build:nlcd-landcover:prod": "webpack --mode production --env app=nlcdlandcoverexplorer --env envFileName=.env.production",
-    
     "start:spectral-sampler:dev": "webpack serve --mode development --open --env app=spectralsampler --env envFileName=.env.development",
     "start:spectral-sampler:prod": "webpack serve --mode development --open --env app=spectralsampler --env envFileName=.env.production",
     "start:spectral-sampler": "webpack serve --mode development --open --env app=spectralsampler --env envFileName=.env",
     "build:spectral-sampler:dev": "webpack --mode production --env app=spectralsampler --env envFileName=.env.development",
     "build:spectral-sampler:prod": "webpack --mode production --env app=spectralsampler --env envFileName=.env.production",
     "build:spectral-sampler": "webpack --mode production --env app=spectralsampler --env envFileName=.env",
-
     "start:surface-temp": "webpack serve --mode development --open --env app=landsat-surface-temp",
     "build:surface-temp": "webpack --mode production --env app=landsat-surface-temp",
     "prepare": "husky install"
@@ -93,10 +86,12 @@
     "@babel/preset-typescript": "^7.24.7",
     "@babel/runtime": "^7.25.0",
     "@playwright/test": "^1.53.1",
-    "@testing-library/react": "^14.3.1",
+    "@testing-library/react": "^16.3.0",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.14.9",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
     "@types/react-redux": "^7.1.34",
     "@types/react-responsive": "^8.0.2",
     "@types/shortid": "^0.0.29",
@@ -140,10 +135,8 @@
     "@esri/arcgis-rest-feature-service": "^4.0.4",
     "@esri/calcite-components-react": "^3.2.1",
     "@reduxjs/toolkit": "2.5",
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.5",
     "@vannizhang/images-to-video-converter-client": "^1.1.14",
-    "@vannizhang/react-d3-charts": "^1.0.28",
+    "@vannizhang/react-d3-charts": "file:vannizhang-react-d3-charts-1.0.36.tgz",
     "classnames": "^2.2.6",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
@@ -152,8 +145,8 @@
     "i18next-http-backend": "^3.0.2",
     "jszip": "^3.10.1",
     "nanoid": "^5.0.9",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
     "react-i18next": "^15.4.1",
     "react-redux": "9.2",
     "redux": "^5.0.1"
