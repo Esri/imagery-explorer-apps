@@ -46,10 +46,13 @@ export const getPreloadedState4PublishAndDownloadJobs =
 
             return {
                 jobs: {
-                    byId: jobs.reduce((acc, job) => {
-                        acc[job.id] = job;
-                        return acc;
-                    }, {} as PublishAndDownloadJobsState['jobs']['byId']),
+                    byId: jobs.reduce(
+                        (acc, job) => {
+                            acc[job.id] = job;
+                            return acc;
+                        },
+                        {} as PublishAndDownloadJobsState['jobs']['byId']
+                    ),
                     allIds: jobs.map((job) => job.id),
                 },
             };

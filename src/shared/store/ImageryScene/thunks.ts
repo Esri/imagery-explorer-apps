@@ -100,9 +100,8 @@ export const updateRasterFunctionName =
     (rasterFunctionName: string) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+            const queryParams =
+                selectQueryParams4SceneInSelectedMode(getState());
 
             // it is possible that there won't be any scene in Animation mode
             // before user adds a frame. Therefore we should just abort
@@ -125,9 +124,8 @@ export const updateObjectIdOfSelectedScene =
     (objectIdOfSelectedScene: number) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+            const queryParams =
+                selectQueryParams4SceneInSelectedMode(getState());
 
             if (!queryParams) {
                 return;
@@ -165,9 +163,8 @@ export const updateAcquisitionDate =
     (acquisitionDate: string, shouldSyncAcquisitionDateRange?: boolean) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+            const queryParams =
+                selectQueryParams4SceneInSelectedMode(getState());
 
             if (!queryParams) {
                 return;
@@ -198,9 +195,8 @@ export const updateAcquisitionDateRange =
     (acquisitionDateRange: DateRange) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams = selectQueryParams4SceneInSelectedMode(
-                getState()
-            );
+            const queryParams =
+                selectQueryParams4SceneInSelectedMode(getState());
 
             if (!queryParams) {
                 return;
@@ -285,9 +281,8 @@ export const removeItemFromQueryParamsList =
             (d) => d.uniqueId !== idOfItem2Removed
         );
 
-        const idOfSelectedItem = selectIdOfSelectedItemInListOfQueryParams(
-            getState()
-        );
+        const idOfSelectedItem =
+            selectIdOfSelectedItemInListOfQueryParams(getState());
 
         let updatedIdOfSelectedItem = idOfSelectedItem;
 
@@ -308,13 +303,11 @@ export const removeItemFromQueryParamsList =
 export const swapMainAndSecondaryScenes =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         try {
-            const queryParams4MainScene = selectQueryParams4MainScene(
-                getState()
-            );
+            const queryParams4MainScene =
+                selectQueryParams4MainScene(getState());
 
-            const queryParams4SecondaryScene = selectQueryParams4SecondaryScene(
-                getState()
-            );
+            const queryParams4SecondaryScene =
+                selectQueryParams4SecondaryScene(getState());
 
             dispatch(
                 queryParams4MainSceneChanged({

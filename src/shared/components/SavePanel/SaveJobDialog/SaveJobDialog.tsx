@@ -94,9 +94,8 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                     return;
                 }
 
-                const isAvailable = await checkIsServiceNameAvailable(
-                    foramttedTitle
-                );
+                const isAvailable =
+                    await checkIsServiceNameAvailable(foramttedTitle);
                 // check if the title is unique
                 setIsTitleAvailable(isAvailable);
             } catch (e) {
