@@ -135,7 +135,7 @@
     "@esri/calcite-components-react": "^3.2.1",
     "@reduxjs/toolkit": "2.5",
     "@vannizhang/images-to-video-converter-client": "^1.1.14",
-    "@vannizhang/react-d3-charts": "file:vannizhang-react-d3-charts-1.0.36.tgz",
+    "@vannizhang/react-d3-charts": "^1.0.37",
     "classnames": "^2.2.6",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
