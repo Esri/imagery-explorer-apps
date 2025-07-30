@@ -85,7 +85,7 @@ export const TemporalProfileChartContainer: FC<Props> = ({
         return (
             <div className="h-full w-full flex items-center justify-center text-center">
                 {isLoading && <CalciteLoader inline />}
-                <p className="text-sm opacity-50">{message}</p>
+                <p className="text-sm opacity-50 ml-1">{message}</p>
             </div>
         );
     }

@@ -55,7 +55,7 @@ export const DownloadJobStatusInfo: FC<Props> = ({
             {status === 'pending' && (
                 <div className="flex items-center">
                     <CalciteLoader inline />
-                    <span className="mr-1">{t('creating_mp4')}</span>
+                    <span className="mx-1">{t('creating_mp4')}</span>
                     <span
                         className="underline cursor-pointer opacity-70 hover:opacity-100"
                         onClick={cancelButtonOnClick}

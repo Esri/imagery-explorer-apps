@@ -56,7 +56,9 @@ export const SpectralProfileToolMessage = () => {
     return (
         <div className="w-full mt-10 flex justify-center text-center">
             {isLoading && <CalciteLoader inline />}
-            <p className="text-sm opacity-50">{spectralProfileToolMessage}</p>
+            <p className="text-sm opacity-50 ml-1">
+                {spectralProfileToolMessage}
+            </p>
         </div>
     );
 };

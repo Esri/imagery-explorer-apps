@@ -57,7 +57,7 @@ export const TotalVisibleAreaInfo: FC<Props> = ({ label }: Props) => {
             {isMapUpdating ? (
                 <div className="flex justify-end">
                     <CalciteLoader inline />
-                    <span>{t('loading')}...</span>
+                    <span className="ml-1">{t('loading')}...</span>
                 </div>
             ) : (
                 <p>
