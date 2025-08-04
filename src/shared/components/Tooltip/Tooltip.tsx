@@ -29,7 +29,7 @@ type TooltipPosition = {
 };
 
 export const Tooltip: FC<Props> = ({ content, width = 130, children }) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const [visible, setIsVisible] = useState<boolean>(false);
 

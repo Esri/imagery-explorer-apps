@@ -32,6 +32,7 @@ import {
     useDataOfImageryUtilityApps,
 } from '@shared/hooks/useDataOfImageryExplorerApps';
 import { AppLauchList } from './AppLauchList';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -58,7 +59,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
     const [showImageryExplorerAppsList, setShowImageryExplorerAppsList] =
         useState<boolean>(false);
 
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const mapCenter = useAppSelector(selectMapCenter);
 
@@ -129,9 +130,9 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                         )}
                     >
                         {showImageryExplorerAppsList ? (
-                            <calcite-icon icon="chevron-up" />
+                            <CalciteIcon icon="chevron-up" />
                         ) : (
-                            <calcite-icon icon="chevron-down" />
+                            <CalciteIcon icon="chevron-down" />
                         )}
                     </div>
                 </div>
@@ -145,7 +146,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                     }}
                     title={docButtonTooltip || ''}
                 >
-                    <calcite-icon icon="open-book" />
+                    <CalciteIcon icon="open-book" />
                 </div>
             )}
 
@@ -179,7 +180,7 @@ const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
                                     )}
                                 >
                                     <div className="w-full px-2 py-1 text-xs cursor-pointer flex items-center">
-                                        <calcite-icon
+                                        <CalciteIcon
                                             icon="launch"
                                             scale="s"
                                             style={{ opacity: '.5' }}

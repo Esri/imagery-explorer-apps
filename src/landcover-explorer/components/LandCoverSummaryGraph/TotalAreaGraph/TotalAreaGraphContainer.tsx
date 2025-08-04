@@ -84,7 +84,7 @@ export const TotalAreaGraphContainer: FC<Props> = ({
     const [landCoverTotalsData, setLandCoverTotalsData] =
         useState<LandCoverArea[]>();
 
-    const landCoverTotalsDataRef = useRef<LandCoverArea[]>();
+    const landCoverTotalsDataRef = useRef<LandCoverArea[]>(null);
 
     const fetchData = async (): Promise<void> => {
         if (!resolution || !extent || !year) {

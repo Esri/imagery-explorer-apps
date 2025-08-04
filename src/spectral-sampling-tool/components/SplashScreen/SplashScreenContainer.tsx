@@ -34,9 +34,8 @@ export const SplashScreenContainer = () => {
             setError(null);
 
             // Get the time extent and raster function info of the selected target service
-            const timeExtent = await getTimeExtentByTargetService(
-                targetService
-            );
+            const timeExtent =
+                await getTimeExtentByTargetService(targetService);
             // console.log('timeExtent', timeExtent);
 
             const rasterFunctionInfo =

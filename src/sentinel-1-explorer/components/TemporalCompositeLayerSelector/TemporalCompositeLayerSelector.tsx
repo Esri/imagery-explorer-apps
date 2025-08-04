@@ -28,6 +28,7 @@ import CompositeIndicatorRGB from './images/Composite_RGB.png';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -175,7 +176,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 title={t('swap_red_green', { ns: APP_NAME })}
                 onClick={swapButtonOnClick.bind(null, 0, 1)}
             >
-                <calcite-icon icon="arrow-up-down" scale="s" />
+                <CalciteIcon icon="arrow-up-down" scale="s" />
             </div>
 
             <div className={classNames('relative mb-1')}>
@@ -217,7 +218,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 title={t('swap_green_blue', { ns: APP_NAME })}
                 onClick={swapButtonOnClick.bind(null, 1, 2)}
             >
-                <calcite-icon icon="arrow-up-down" scale="s" />
+                <CalciteIcon icon="arrow-up-down" scale="s" />
             </div>
 
             <div className={classNames('relative mb-1')}>

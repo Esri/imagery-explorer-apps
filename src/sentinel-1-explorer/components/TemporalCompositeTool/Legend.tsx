@@ -74,8 +74,8 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
     acquisitionDateOfImageryScene4BlueBand,
 }) => {
     const { t } = useTranslation();
-    const canvasRef = useRef<HTMLCanvasElement>();
-    const contextRef = useRef<CanvasRenderingContext2D>();
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const contextRef = useRef<CanvasRenderingContext2D>(null);
 
     const isDisabled = useMemo(() => {
         // legend should only be enabled when composite layer is on

@@ -1,13 +1,13 @@
 @import './CustomMapPopupStyle.css';
 
-.esri-input, 
-.esri-widget--button, 
+.esri-input,
+.esri-widget--button,
 .esri-menu {
     background: var(--custom-background);
     color: var(--custom-light-blue);
 }
 
-.esri-widget--button{
+.esri-widget--button {
     --calcite-ui-foreground-3: var(--custom-background);
     --calcite-ui-text-1: var(--custom-light-blue);
     --calcite-color-text-3: var(--custom-light-blue);
@@ -21,13 +21,13 @@
     @apply mr-10;
 }
 
-.esri-search__input::placeholder{
+.esri-search__input::placeholder {
     color: var(--custom-light-blue-75);
 }
 
 /**
 * Make sure the search suggestions are on above other nav buttons below the search bar
-*/  
+*/
 #root .esri-menu.esri-search__suggestions-menu {
     z-index: 50;
 }

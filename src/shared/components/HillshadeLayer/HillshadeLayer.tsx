@@ -32,7 +32,7 @@ type Props = {
 export const HillshadeLayer: FC<Props> = ({ mapView }) => {
     const visible = useAppSelector(selectShowTerrain);
 
-    const terrainLayerRef = useRef<TileLayer>();
+    const terrainLayerRef = useRef<TileLayer>(null);
 
     const init = async () => {
         terrainLayerRef.current = new TileLayer({

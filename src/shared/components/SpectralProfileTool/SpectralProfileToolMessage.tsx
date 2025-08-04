@@ -20,6 +20,7 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useTranslation } from 'react-i18next';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 export const SpectralProfileToolMessage = () => {
     const { t } = useTranslation();
@@ -54,8 +55,10 @@ export const SpectralProfileToolMessage = () => {
 
     return (
         <div className="w-full mt-10 flex justify-center text-center">
-            {isLoading && <calcite-loader inline />}
-            <p className="text-sm opacity-50">{spectralProfileToolMessage}</p>
+            {isLoading && <CalciteLoader inline />}
+            <p className="text-sm opacity-50 ml-1">
+                {spectralProfileToolMessage}
+            </p>
         </div>
     );
 };

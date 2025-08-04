@@ -3,12 +3,12 @@
     font-size: 12px;
     line-height: 16px;
     padding: 0 5px;
-    background-color: rgba(36,36,36,.8);
+    background-color: rgba(36, 36, 36, 0.8);
     /* display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center; */
-    color: rgba(255,255,255,.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .esri-attribution {
@@ -19,6 +19,6 @@
     opacity: 1;
 }
 
-.esri-attribution__powered-by { 
+.esri-attribution__powered-by {
     margin-right: 50px;
 }

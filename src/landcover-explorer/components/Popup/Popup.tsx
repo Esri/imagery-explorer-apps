@@ -136,7 +136,7 @@ const Popup: FC<Props> = ({
 
     const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const mapViewOnClickHandlerRef = useRef<MapViewOnClickHandler>();
+    const mapViewOnClickHandlerRef = useRef<MapViewOnClickHandler>(null);
 
     const getLoadingIndicator = () => {
         const popupDiv = document.createElement('div');

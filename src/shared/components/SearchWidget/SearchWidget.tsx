@@ -41,7 +41,7 @@ const SearchWidget: React.FC<Props> = ({
     hide,
     searchCompletedHandler,
 }: Props) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const init = async () => {
         const searchWidget = new ArcGISSearchWidget({

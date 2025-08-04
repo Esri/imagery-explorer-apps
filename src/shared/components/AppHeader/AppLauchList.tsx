@@ -1,3 +1,4 @@
+import { CalciteIcon } from '@esri/calcite-components-react';
 import { ImageryExplorerAppInfo } from '@shared/hooks/useDataOfImageryExplorerApps';
 import React, { FC } from 'react';
 
@@ -47,7 +48,7 @@ export const AppLauchList: FC<Props> = ({ header, apps, onClick }) => {
                         onClick={onClick.bind(null, d.url)}
                     >
                         <div className="w-full px-2 py-1 text-xs cursor-pointer flex items-center">
-                            <calcite-icon
+                            <CalciteIcon
                                 icon="launch"
                                 scale="s"
                                 style={{ opacity: '.5' }}

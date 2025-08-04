@@ -53,8 +53,8 @@ const MapViewEventHandlers: FC<Props> = ({
     mapViewOnClick,
     mapViewUpdatingOnChange,
 }: Props) => {
-    const stringifiedMapExtentRef = useRef<string>();
-    const resolutionRef = useRef<number>();
+    const stringifiedMapExtentRef = useRef<string>(null);
+    const resolutionRef = useRef<number>(null);
 
     const mapExtentOnChangeHandler = () => {
         extentOnChange(

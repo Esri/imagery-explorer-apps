@@ -4,11 +4,11 @@
 }
 
 .fancy-scrollbar::-webkit-scrollbar-track {
-    background: var(--custom-light-blue-10); 
+    background: var(--custom-light-blue-10);
 }
 
 .fancy-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--custom-light-blue-25); 
+    background: var(--custom-light-blue-25);
 }
 
 .fancy-scrollbar::-webkit-scrollbar-thumb:hover {

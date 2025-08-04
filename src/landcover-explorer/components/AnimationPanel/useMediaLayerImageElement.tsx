@@ -63,7 +63,7 @@ const useMediaLayerImageElement = ({
 
     const imageUrlsRef = useRef<string[]>([]);
 
-    const abortControllerRef = useRef<AbortController>();
+    const abortControllerRef = useRef<AbortController>(null);
 
     // const years = getAvailableYears();
 

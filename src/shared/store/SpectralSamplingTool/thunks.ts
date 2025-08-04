@@ -44,9 +44,8 @@ let abortController: AbortController = null;
 export const addSpectralSamplingPoint =
     (uniqueId: string) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const existingSamplingPoints = selectSpectralSamplingPointsData(
-            getState()
-        );
+        const existingSamplingPoints =
+            selectSpectralSamplingPointsData(getState());
 
         const data: SpectralSamplingData = {
             uniqueId,
@@ -68,9 +67,8 @@ export const addSpectralSamplingPoint =
 export const removeSpectralSamplingPoint =
     (idOfItem2Remove: string) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const existingSamplingPoints = selectSpectralSamplingPointsData(
-            getState()
-        );
+        const existingSamplingPoints =
+            selectSpectralSamplingPointsData(getState());
 
         // remove the sampling point by id
         const updatedSamplingPoints = existingSamplingPoints.filter(

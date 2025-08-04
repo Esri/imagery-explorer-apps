@@ -99,9 +99,9 @@ export const PixelRangeSlider: FC<Props> = ({
     showSliderTooltip,
     valuesOnChange,
 }) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const sliderRef = useRef<SliderWidget>();
+    const sliderRef = useRef<SliderWidget>(null);
 
     const getTickConfigs = (min: number, max: number) => {
         return [

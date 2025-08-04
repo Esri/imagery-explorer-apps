@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { CalciteIcon } from '@esri/calcite-components-react';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import React, { FC, useMemo } from 'react';
 
@@ -61,7 +62,7 @@ export const AcquisitionDateLabel: FC<Props> = ({
                 data-testid="reset-selected-date-btn"
                 onClick={closeBtnOnClick}
             >
-                <calcite-icon icon="x-circle" scale="s" />
+                <CalciteIcon icon="x-circle" scale="s" />
             </div>
         </div>
     );

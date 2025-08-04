@@ -64,7 +64,7 @@ export const WaterLandMaskLayer: FC<Props> = ({
     visibleCategory,
     groupLayer,
 }) => {
-    const layerRef = useRef<ImageryTileLayer>();
+    const layerRef = useRef<ImageryTileLayer>(null);
 
     const init = () => {
         layerRef.current = new ImageryTileLayer({

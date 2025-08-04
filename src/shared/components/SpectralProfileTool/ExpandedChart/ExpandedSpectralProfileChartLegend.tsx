@@ -18,6 +18,7 @@ import { LandCoverType, ListOfLandCoverTypes } from '../config';
 import { getFillColorByLandCoverType } from '../helpers';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 type LegendData = {
     label: string;
@@ -59,7 +60,7 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                     className="flex items-center mb-2"
                     title="toggle select all"
                 >
-                    <calcite-icon
+                    <CalciteIcon
                         icon={
                             excludedLandCoverTypes.size === 0
                                 ? 'square-inset-medium'
@@ -68,7 +69,7 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                         class="cursor-pointer"
                         scale="s"
                         onClick={toggleSelectAll}
-                    ></calcite-icon>
+                    ></CalciteIcon>
                     <span className="text-sm ml-3">
                         {t('spectral_profiles')}
                     </span>
@@ -81,12 +82,12 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                             onMouseOver={() => landCoverTypeOnHover(data.value)}
                             onMouseOut={() => landCoverTypeOnHover(null)}
                         >
-                            <calcite-icon
+                            <CalciteIcon
                                 icon={data.selected ? 'check-square' : 'square'}
                                 class="text-sm cursor-pointer"
                                 scale="s"
                                 onClick={() => landCoverTypeOnClick(data.value)}
-                            ></calcite-icon>
+                            ></CalciteIcon>
 
                             <svg
                                 width="16"

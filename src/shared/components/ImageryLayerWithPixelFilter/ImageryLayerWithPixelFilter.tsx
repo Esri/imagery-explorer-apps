@@ -105,24 +105,24 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
     getPixelColor,
     countOfPixelsOnChange,
 }) => {
-    const layerRef = useRef<ImageryLayer>();
+    const layerRef = useRef<ImageryLayer>(null);
 
     /**
      * user selected pixel value range for band 1
      */
-    const selectedRangeRef = useRef<number[]>();
+    const selectedRangeRef = useRef<number[]>(null);
 
     /**
      * user selected pixel value range for band 2
      */
-    const selectedRange4Band2Ref = useRef<number[]>();
+    const selectedRange4Band2Ref = useRef<number[]>(null);
 
     /**
      * full pixel value range
      */
-    const fullPixelValueRangeRef = useRef<number[]>();
+    const fullPixelValueRangeRef = useRef<number[]>(null);
 
-    const pixelColorRef = useRef<number[]>();
+    const pixelColorRef = useRef<number[]>(null);
 
     /**
      * initialize landsat layer using mosaic created using the input year

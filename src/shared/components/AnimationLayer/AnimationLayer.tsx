@@ -39,6 +39,7 @@ import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { once } from '@arcgis/core/core/reactiveUtils';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -64,7 +65,7 @@ export const AnimationLayer: FC<Props> = ({
 }: Props) => {
     const dispatch = useAppDispatch();
 
-    const mediaLayerRef = useRef<MediaLayer>();
+    const mediaLayerRef = useRef<MediaLayer>(null);
 
     const animationStatus = useAppSelector(selectAnimationStatus);
 
@@ -261,7 +262,7 @@ export const AnimationLayer: FC<Props> = ({
             )}
         >
             {animationStatus === 'loading' && (
-                <calcite-loader active scale="l"></calcite-loader>
+                <CalciteLoader scale="l"></CalciteLoader>
             )}
 
             <CloseButton

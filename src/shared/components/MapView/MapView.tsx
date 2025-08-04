@@ -52,11 +52,11 @@ const MapView: React.FC<Props> = ({
     shouldDisableMapNavigate,
     children,
 }: Props) => {
-    const mapDivRef = useRef<HTMLDivElement>();
+    const mapDivRef = useRef<HTMLDivElement>(null);
 
     const [mapView, setMapView] = useState<ArcGISMapView>(null);
 
-    const mapViewRef = useRef<ArcGISMapView>();
+    const mapViewRef = useRef<ArcGISMapView>(null);
 
     const initMapView = async () => {
         mapViewRef.current = new ArcGISMapView({

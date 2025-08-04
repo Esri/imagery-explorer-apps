@@ -37,7 +37,7 @@ export const LockedRelativeOrbitFootprintLayer: FC<Props> = ({
     groupLayer,
     footPrintFeature,
 }) => {
-    const footprintLayer = useRef<GraphicsLayer>();
+    const footprintLayer = useRef<GraphicsLayer>(null);
 
     const init = () => {
         footprintLayer.current = new GraphicsLayer({

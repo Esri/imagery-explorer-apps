@@ -42,7 +42,7 @@ const useMediaLayerImageElement = ({
 }: Props) => {
     const [imageElements, setImageElements] = useState<ImageElement[]>(null);
 
-    const abortControllerRef = useRef<AbortController>();
+    const abortControllerRef = useRef<AbortController>(null);
 
     // const animationStatus = useAppSelector(selectAnimationStatus);
 

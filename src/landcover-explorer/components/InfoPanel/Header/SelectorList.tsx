@@ -97,7 +97,7 @@ const SelectorList: FC<Props> = ({
     searchable = false,
     onChange,
 }: Props) => {
-    const containterRef = useRef<HTMLDivElement>();
+    const containterRef = useRef<HTMLDivElement>(null);
 
     const [showList, setShowList] = useState<boolean>(false);
 

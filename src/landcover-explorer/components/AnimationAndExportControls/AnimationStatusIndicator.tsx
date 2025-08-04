@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { TimeSliderWidget } from '../TimeSelector/TimeSliderWidget';
 import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 import { get } from 'http';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 type AnimationStatusIndicatorProps = {
     animationStatus: AnimationStatus;
@@ -37,11 +38,11 @@ export const AnimationStatusIndicator: FC<AnimationStatusIndicatorProps> = ({
         if (animationStatus === 'loading') {
             return (
                 <div className="flex ">
-                    <calcite-loader
+                    <CalciteLoader
                         scale="m"
                         inline
                         label={t('load_animation')}
-                    ></calcite-loader>
+                    ></CalciteLoader>
                     <span className="ml-2">{t('load_animation')}</span>
                 </div>
             );
@@ -73,26 +74,6 @@ export const AnimationStatusIndicator: FC<AnimationStatusIndicatorProps> = ({
     return (
         <div className="w-full mt-4 opacity-50">
             <div className="flex items-center justify-center text-center text-xs">
-                {/* {animationStatus === 'loading' ? (
-                    <div className="flex ">
-                        <calcite-loader
-                            scale="m"
-                            inline
-                            label={t('load_animation')}
-                        ></calcite-loader>
-                        <span className="ml-2">{t('load_animation')}</span>
-                    </div>
-                ) : (
-                    <p>
-                        {shouldShowSatelliteImageryLayer
-                            ? t('imagery_at', {
-                                  year: selectedYear,
-                              })
-                            : t('landcover_at', {
-                                  year: selectedYear,
-                              })}
-                    </p>
-                )} */}
                 {getHeader()}
             </div>
             <div className="w-full mt-2 pointer-events-none ">

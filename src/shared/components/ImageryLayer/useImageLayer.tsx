@@ -74,7 +74,7 @@ export const useImageryLayerByObjectId = ({
     objectId,
     defaultMosaicRule,
 }: Props) => {
-    const layerRef = useRef<ImageryLayer>();
+    const layerRef = useRef<ImageryLayer>(null);
 
     const [layer, setLayer] = useState<ImageryLayer>();
 

@@ -38,10 +38,10 @@ type Props = {
 };
 
 const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
-    const mapLabelLayersRef = useRef<__esri.Collection<Layer>>();
+    const mapLabelLayersRef = useRef<__esri.Collection<Layer>>(null);
     // const terrainLayerRef = useRef<__esri.Layer>();
 
-    const basemapLayersRef = useRef<__esri.Collection<__esri.Layer>>();
+    const basemapLayersRef = useRef<__esri.Collection<__esri.Layer>>(null);
 
     const showMapLabel = useAppSelector(selectShowMapLabel);
     // const showTerrain = useAppSelector(selectShowTerrain);

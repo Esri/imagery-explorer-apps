@@ -58,9 +58,8 @@ export const queryAvailableScenes =
 
             const center = selectMapCenter(getState());
 
-            const missionsToBeExcluded = selectLandsatMissionsToBeExcluded(
-                getState()
-            );
+            const missionsToBeExcluded =
+                selectLandsatMissionsToBeExcluded(getState());
 
             // get scenes that were acquired within the acquisition year
             const landsatScenes = await getLandsatScenes({

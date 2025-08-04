@@ -21,12 +21,6 @@ import Point from '@arcgis/core/geometry/Point';
 import { getPopUpContentWithLocationInfo } from '@shared/components/MapPopup/helper';
 import { t } from 'i18next';
 
-// export const getLoadingIndicator = () => {
-//     const popupDiv = document.createElement('div');
-//     popupDiv.innerHTML = `<calcite-loader scale="s"></calcite-loader>`;
-//     return popupDiv;
-// };
-
 export const getMainContent = (values: number[], mapPoint: Point) => {
     // const lat = Math.round(mapPoint.latitude * 1000) / 1000;
     // const lon = Math.round(mapPoint.longitude * 1000) / 1000;

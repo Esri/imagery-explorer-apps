@@ -29,7 +29,7 @@ export const useCheckJobStatus = () => {
 
     const pendingJobs = useAppSelector(selectPendingRasterAnalysisJobs);
 
-    const intervalIdRef = useRef<NodeJS.Timeout>();
+    const intervalIdRef = useRef<NodeJS.Timeout>(null);
 
     const checkJobStatus = async (job: PublishAndDownloadJob) => {
         const jobWithUpdatedStatus = {

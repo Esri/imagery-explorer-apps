@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { CalciteIcon } from '@esri/calcite-components-react';
 import { Button } from '@shared/components/Button';
 import classNames from 'classnames';
 import React, { FC, useState } from 'react';
@@ -53,7 +54,7 @@ export const SamplingSessionNameEditor: FC<Props> = ({
                         className=" bg-custom-background absolute right-0 top-0 h-full flex items-center cursor-pointer"
                         onClick={setClassificationName.bind(null, '')}
                     >
-                        <calcite-icon icon="x" scale="s" />
+                        <CalciteIcon icon="x" scale="s" />
                     </div>
                 )}
             </div>

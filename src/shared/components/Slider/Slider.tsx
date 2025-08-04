@@ -56,9 +56,9 @@ export const Slider: FC<Props> = ({
     tooltipTextFormatter,
     onChange,
 }) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const sliderRef = useRef<SliderWidget>();
+    const sliderRef = useRef<SliderWidget>(null);
 
     const init = async () => {
         steps = steps || [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];

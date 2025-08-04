@@ -64,7 +64,7 @@ export const Sentinel1MaskLayer: FC<Props> = ({ mapView, groupLayer }) => {
 
     const mode = useAppSelector(selectAppMode);
 
-    const groupLayer4MaskAndWaterLandLayersRef = useRef<GroupLayer>();
+    const groupLayer4MaskAndWaterLandLayersRef = useRef<GroupLayer>(null);
 
     const selectedIndex = useAppSelector(
         selectSelectedIndex4MaskTool

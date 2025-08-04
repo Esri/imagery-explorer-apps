@@ -19,6 +19,7 @@ import { numberWithCommas } from 'helper-toolkit-ts';
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useTranslation } from 'react-i18next';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -55,8 +56,8 @@ export const TotalVisibleAreaInfo: FC<Props> = ({ label }: Props) => {
         <div className="relative text-xs">
             {isMapUpdating ? (
                 <div className="flex justify-end">
-                    <calcite-loader inline />
-                    <span>{t('loading')}...</span>
+                    <CalciteLoader inline />
+                    <span className="ml-1">{t('loading')}...</span>
                 </div>
             ) : (
                 <p>

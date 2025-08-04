@@ -34,6 +34,7 @@ import { centerChanged } from '@shared/store/Map/reducer';
 import { selectQueryParams4MainScene } from '@shared/store/ImageryScene/selectors';
 import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { useTranslation } from 'react-i18next';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -83,8 +84,8 @@ export const TemporalProfileChartContainer: FC<Props> = ({
     if (message) {
         return (
             <div className="h-full w-full flex items-center justify-center text-center">
-                {isLoading && <calcite-loader inline />}
-                <p className="text-sm opacity-50">{message}</p>
+                {isLoading && <CalciteLoader inline />}
+                <p className="text-sm opacity-50 ml-1">{message}</p>
             </div>
         );
     }

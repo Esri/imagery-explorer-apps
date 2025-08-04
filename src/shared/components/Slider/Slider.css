@@ -4,9 +4,9 @@
 
 .esri-slider-custom-style.esri-widget .esri-slider__label {
     color: var(--custom-light-blue-90);
-    background: rgba(0,0,0,.7);
+    background: rgba(0, 0, 0, 0.7);
     min-width: 40px;
-    font-size: .8rem;
+    font-size: 0.8rem;
 }
 
 .esri-slider-custom-style.esri-widget .esri-slider__thumb {
@@ -17,7 +17,7 @@
 .esri-slider-custom-style .esri-slider__segment-1 {
     background-color: var(--custom-light-blue);
 }
-  
+
 .esri-slider-custom-style .esri-slider__segment-0,
 .esri-slider-custom-style .esri-slider__segment-1,
 .esri-slider-custom-style .esri-slider__segment-2 {
@@ -25,11 +25,12 @@
     border: 1px solid #193d49;
 }
 
-.esri-slider-custom-style.show-segment-between-handlers .esri-slider__segment-1{
+.esri-slider-custom-style.show-segment-between-handlers
+    .esri-slider__segment-1 {
     border: 1px solid var(--custom-light-blue-50);
 }
 
-.esri-slider-custom-style .esri-slider__tick-label{
+.esri-slider-custom-style .esri-slider__tick-label {
     @apply text-xs text-custom-light-blue-80 mt-3;
 }
 

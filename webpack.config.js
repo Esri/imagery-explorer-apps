@@ -96,7 +96,7 @@ module.exports =  (env, options)=> {
             'please update `./src/config.json` to make sure it includes entrypoint of the app to start'
         )
     }
-    console.log(`${env['WEBPACK_BUILD'] ? 'Building' : 'Starting'} "${app}".\n`);
+    console.log(`${env['WEBPACK_BUILD'] ? 'Building' : 'Starting'} "${app}"\n`);
 
     /**
      * Webpack configuration object.

@@ -39,6 +39,7 @@ import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client
 import { CloseButton } from '@shared/components/CloseButton';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { once } from '@arcgis/core/core/reactiveUtils';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     mapView?: IMapView;
@@ -71,7 +72,7 @@ const AnimationPanel: FC<Props> = ({
 
     const animationMode = useAppSelector(selectAnimationStatus);
 
-    const mediaLayerRef = useRef<MediaLayer>();
+    const mediaLayerRef = useRef<MediaLayer>(null);
 
     const mediaLayerElements = useMediaLayerImageElement({
         landCoverServiceUrl,
@@ -201,7 +202,7 @@ const AnimationPanel: FC<Props> = ({
             )}
         >
             {animationMode === 'loading' && (
-                <calcite-loader active scale="l"></calcite-loader>
+                <CalciteLoader scale="l"></CalciteLoader>
             )}
 
             <CloseButton

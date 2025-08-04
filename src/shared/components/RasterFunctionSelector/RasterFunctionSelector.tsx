@@ -21,6 +21,7 @@ import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnH
 import { Tooltip } from '../Tooltip';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { useTranslation } from 'react-i18next';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -64,7 +65,7 @@ export const RasterFunctionSelector: FC<Props> = ({
     onChange,
     itemOnHover,
 }) => {
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
     useGetTooltipPositionOnHover(containerRef);
 
     const { t } = useTranslation();
@@ -88,7 +89,7 @@ export const RasterFunctionSelector: FC<Props> = ({
                     content={headerTooltip}
                     width={widthOfTooltipContainer || 240}
                 >
-                    <calcite-icon scale="s" icon="information" />
+                    <CalciteIcon scale="s" icon="information" />
                 </Tooltip>
 
                 <span className="uppercase ml-2 text-sm">{t('renderer')}</span>

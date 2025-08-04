@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 import { useTranslation } from 'react-i18next';
 import './SearchWidget.css';
+import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     mapView?: MapView;
@@ -31,7 +32,7 @@ type Props = {
 export const SearchWidgetContainer: FC<Props> = ({ mapView }) => {
     const { t } = useTranslation();
 
-    const containerRef = React.useRef<HTMLDivElement>();
+    const containerRef = React.useRef<HTMLDivElement>(null);
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
@@ -53,7 +54,7 @@ export const SearchWidgetContainer: FC<Props> = ({ mapView }) => {
                     setIsSearchWidgetOpen(!isSearchWidgetOpen);
                 }}
             >
-                <calcite-icon icon="search" scale="s"></calcite-icon>
+                <CalciteIcon icon="search" scale="s"></CalciteIcon>
             </MapActionButton>
 
             <div

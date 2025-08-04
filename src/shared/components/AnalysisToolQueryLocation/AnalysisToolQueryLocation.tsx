@@ -34,7 +34,7 @@ export const AnalysisToolQueryLocation: FC<Props> = ({
     mapView,
     groupLayer,
 }) => {
-    const graphicLayerRef = useRef<GraphicsLayer>();
+    const graphicLayerRef = useRef<GraphicsLayer>(null);
 
     const init = async () => {
         try {

@@ -55,7 +55,7 @@ const useSentinel2Layer = ({
     year,
     visible = true,
 }: UseLandCoverLayerParams) => {
-    const layerRef = useRef<ImageryLayer>();
+    const layerRef = useRef<ImageryLayer>(null);
 
     const [sentinel2Layer, setSentinel2Layer] = useState<ImageryLayer>();
 

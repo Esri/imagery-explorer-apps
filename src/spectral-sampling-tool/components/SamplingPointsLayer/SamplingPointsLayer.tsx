@@ -43,7 +43,7 @@ export const SamplingPoints: FC<Props> = ({
     groupLayer,
     mapView,
 }) => {
-    const graphicLayerRef = useRef<GraphicsLayer>();
+    const graphicLayerRef = useRef<GraphicsLayer>(null);
 
     const init = () => {
         graphicLayerRef.current = new GraphicsLayer();
