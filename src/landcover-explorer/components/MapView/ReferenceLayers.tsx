@@ -23,14 +23,10 @@ import {
     selectShowTerrain,
 } from '@shared/store/Map/selectors';
 import {
-    HUMAN_GEO_DARK_LABEL_LAYER_TITLE,
-    HUMAN_GEO_LIGHT_WATER_LAYER_TITLE,
-    HUMAN_GEO_DARK_DRY_LAYER_TITLE,
-    TERRAIN_LAYER_TITLE,
-    WORLD_IMAGERY_BASEMAP_LAYER_TITLE,
-    CUSTOM_OCEAN_BASEMAP_LAYER_TITLE,
-} from '@landcover-explorer/constants/map';
-import Layer from '@arcgis/core/layers/Layer';
+    getBasemapLayers,
+    getMapLabelLayers,
+    getTerrainLayer,
+} from '@shared/components/MapView/ReferenceLayers';
 
 type Props = {
     mapView?: IMapView;
@@ -46,26 +42,29 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     const showBasemap = useAppSelector(selectShowBasemap);
 
     const init = () => {
-        mapLabelLayersRef.current = mapView.map.allLayers.filter((layer) => {
-            return (
-                layer.title === HUMAN_GEO_DARK_LABEL_LAYER_TITLE ||
-                layer.title === HUMAN_GEO_LIGHT_WATER_LAYER_TITLE ||
-                layer.title === HUMAN_GEO_DARK_DRY_LAYER_TITLE
-            );
-        });
+        mapLabelLayersRef.current = getMapLabelLayers(mapView);
+        // mapView.map.allLayers.filter((layer) => {
+        //     return (
+        //         layer.title === HUMAN_GEO_DARK_LABEL_LAYER_TITLE ||
+        //         layer.title === HUMAN_GEO_LIGHT_WATER_LAYER_TITLE ||
+        //         layer.title === HUMAN_GEO_DARK_DRY_LAYER_TITLE
+        //     );
+        // });
 
-        terrainLayerRef.current = mapView.map.allLayers.find(
-            (layer) => layer.title === TERRAIN_LAYER_TITLE
-        );
+        terrainLayerRef.current = getTerrainLayer(mapView);
+        // mapView.map.allLayers.find(
+        //     (layer) => layer.title === TERRAIN_LAYER_TITLE
+        // );
 
-        basemapLayersRef.current = mapView.map.allLayers.filter(
-            (layer: Layer) => {
-                return (
-                    layer.title === WORLD_IMAGERY_BASEMAP_LAYER_TITLE ||
-                    layer.title === CUSTOM_OCEAN_BASEMAP_LAYER_TITLE
-                );
-            }
-        );
+        basemapLayersRef.current = getBasemapLayers(mapView);
+        // mapView.map.allLayers.filter(
+        //     (layer: Layer) => {
+        //         return (
+        //             layer.title === WORLD_IMAGERY_BASEMAP_LAYER_TITLE ||
+        //             layer.title === CUSTOM_OCEAN_BASEMAP_LAYER_TITLE
+        //         );
+        //     }
+        // );
     };
 
     const updateBaseLayersVisibility = () => {

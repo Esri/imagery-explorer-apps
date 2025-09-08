@@ -47,3 +47,62 @@ export const combineLandcoverImageWithMapScreenshot = async (
 
     return loadImageAsHTMLIMageElement(combinedCanvas.toDataURL());
 };
+
+/**
+ * Combines a media layer image with basemap and map label screenshots into a single image.
+ *
+ * This function loads the media layer image from a given URL, draws the basemap screenshot data onto a canvas,
+ * blends the media layer image using a specified blend mode, and overlays the map label screenshot data.
+ * The result is returned as an HTMLImageElement.
+ *
+ * @param mediaLayerElementURL - The URL of the media layer image to be loaded and combined.
+ * @param basemapScreenshotData - The ImageData representing the basemap screenshot to be drawn first.
+ * @param mapLabelScreenshotData - The ImageData representing the map label screenshot to be drawn last.
+ * @returns A promise that resolves to an HTMLImageElement containing the combined image.
+ */
+export const combineLandcoverImageWithMapScreenshots = async (
+    mediaLayerElementURL: string,
+    basemapScreenshotData: ImageData,
+    mapLabelScreenshotData: ImageData
+): Promise<HTMLImageElement> => {
+    // Load the media layer image as an HTML Image Element
+    const img = await loadImageAsHTMLIMageElement(mediaLayerElementURL);
+
+    // Create a new canvas to combine the imageData and the HTMLImageElement
+    const combinedCanvas = document.createElement('canvas');
+    const combinedCtx = combinedCanvas.getContext('2d');
+
+    // Set the dimensions of the new canvas to accommodate both the image and the imageData
+    combinedCanvas.width = Math.max(combinedCanvas.width, img.width);
+    combinedCanvas.height = Math.max(combinedCanvas.height, img.height);
+
+    // convert ImageData to Bitmap and draw it on the combined canvas
+    const basemapScreenshotBitmap = await createImageBitmap(
+        basemapScreenshotData
+    );
+
+    // Draw the imageData onto the new canvas
+    combinedCtx.drawImage(basemapScreenshotBitmap, 0, 0);
+
+    // Set the globalCompositeOperation to the desired blend mode
+    combinedCtx.globalCompositeOperation = LandCoverLayerBlendMode;
+
+    // make it brighter
+    combinedCtx.filter = 'brightness(1.1)';
+
+    // Draw the HTMLImageElement onto the new canvas
+    combinedCtx.drawImage(img, 0, 0);
+
+    // reset the globalCompositeOperation to default value 'source-over' before drawing map label screenshot
+    combinedCtx.globalCompositeOperation = 'source-over';
+
+    // convert ImageData to Bitmap and draw it on top of the combined canvas
+    // this is to ensure the map labels are always on top of the landcover layer
+    const mapLabelScreenshotBitmap = await createImageBitmap(
+        mapLabelScreenshotData
+    );
+
+    combinedCtx.drawImage(mapLabelScreenshotBitmap, 0, 0);
+
+    return loadImageAsHTMLIMageElement(combinedCanvas.toDataURL());
+};
