@@ -61,13 +61,20 @@ type Props = {
     mapView?: MapView;
 };
 
-const getScreenshotOfBasemapLayers = async (
-    mapView: MapView,
-    webmapId: string
-): Promise<{
+type GetScreenshotOfBasemapLayersParams = {
+    mapView: MapView;
+    webmapId: string;
+};
+
+type GetScreenshotOfBasemapLayersOutput = {
     basemapScreenshot: __esri.Screenshot | null;
     referenceLayersScreenshot: __esri.Screenshot | null;
-}> => {
+};
+
+const getScreenshotOfBasemapLayers = async ({
+    mapView,
+    webmapId,
+}: GetScreenshotOfBasemapLayersParams): Promise<GetScreenshotOfBasemapLayersOutput> => {
     if (!mapView) {
         return {
             basemapScreenshot: null,
@@ -237,10 +244,10 @@ export const useFrameDataForDownloadJobViaMapScreenshot = ({
                 // );
 
                 const { basemapScreenshot, referenceLayersScreenshot } =
-                    await getScreenshotOfBasemapLayers(
-                        mapView,
-                        appConfig.webmapId
-                    );
+                    await getScreenshotOfBasemapLayers({
+                        mapView: mapView,
+                        webmapId: appConfig.webmapId,
+                    });
 
                 // load media layer elements as an array of HTML Image Elements
                 const images = await Promise.all(

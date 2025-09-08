@@ -41,6 +41,8 @@ import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverEx
 import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
 import { useFrameDataForDownloadJobViaMapScreenshot } from './useFrameDataForDownloadJobViaMapScreenshot';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     mapView?: IMapView;
@@ -69,6 +71,8 @@ const AnimationPanel: FC<Props> = ({
     landcoverLayerRasterFunctionName,
     animationMetadataSources,
 }: Props) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const animationMode = useAppSelector(selectAnimationStatus);
@@ -98,7 +102,7 @@ const AnimationPanel: FC<Props> = ({
 
     const animationSpeed = useAppSelector(selectAnimationSpeed);
 
-    const shouldShowSentinel2Layer = useAppSelector(
+    const shouldShowSatelliteImageryLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
 
@@ -227,7 +231,13 @@ const AnimationPanel: FC<Props> = ({
                     height: mapView.height,
                 }}
                 authoringAppName={
-                    shouldShowSentinel2Layer ? 'sentinel2' : 'landcover'
+                    shouldShowSatelliteImageryLayer
+                        ? t('animation_output_prefix_satellite_layer_on', {
+                              ns: APP_NAME,
+                          })
+                        : t('animation_output_prefix_landcover_layer_on', {
+                              ns: APP_NAME,
+                          })
                 }
             />
         </div>

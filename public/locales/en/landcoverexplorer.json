@@ -104,5 +104,7 @@
     "map_attribution": "Sentinel-2 10m Land Use/Land Cover data by Esri and Impact Observatory",
     "output_webmap_default_title": "Sentinel-2 Land Cover Exlorer export map",
     "output_webmap_default_snippet": "Sentinel-2 10m land use/land cover time series of the world.",
-    "output_webmap_default_tags": "Sentinel-2, Land Use, Land Cover, LULC, Living Atlas"
+    "output_webmap_default_tags": "Sentinel-2, Land Use, Land Cover, LULC, Living Atlas",
+    "animation_output_prefix_satellite_layer_on": "sentinel2",
+    "animation_output_prefix_landcover_layer_on": "sentinel2-landcover"
 }
