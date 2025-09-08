@@ -40,7 +40,6 @@ import { CloseButton } from '@shared/components/CloseButton';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
-import { useFrameDataForDownloadJobViaMapScreenshot } from './useFrameDataForDownloadJobViaMapScreenshot';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 
@@ -86,15 +85,8 @@ const AnimationPanel: FC<Props> = ({
         mapView,
     });
 
-    // const frameData4DownloadJob: AnimationFrameData[] =
-    //     useFrameDataForDownloadJob({
-    //         mediaLayerElements,
-    //         mapView,
-    //         animationMetadataSources,
-    //     });
-
     const frameData4DownloadJob: AnimationFrameData[] =
-        useFrameDataForDownloadJobViaMapScreenshot({
+        useFrameDataForDownloadJob({
             mediaLayerElements,
             mapView,
             animationMetadataSources,
