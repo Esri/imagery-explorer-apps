@@ -16,6 +16,7 @@
 import React, { FC, useRef } from 'react';
 import { VIDEO_SIZE_OPTIONS } from './config';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 type DimensionInfoProps = {
     width: number;
@@ -109,6 +110,8 @@ export const DownloadOptionsList: FC<Props> = ({
     onMouseLeave,
     onClick,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             className={classNames(
@@ -122,7 +125,7 @@ export const DownloadOptionsList: FC<Props> = ({
                     return (
                         <div className="text-center mb-3" key={title}>
                             <h4 className="uppercase text-sm text-custom-light-blue-50 pointer-events-none">
-                                {title}
+                                {t(title, { ns: 'common' })}
                             </h4>
                             <div className="pl-6">
                                 {dimensions.map((size) => {

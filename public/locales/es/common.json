@@ -306,5 +306,8 @@
     "pause_animation": "Pausar animación",
     "resume_animation": "Reanudar animación",
     "stop_animation": "Parar animación",
-    "exit_animation": "Salir de la animación"
+    "exit_animation": "Salir de la animación",
+    "vertical": "Vertical",
+    "horizontal": "Horizontal",
+    "square": "Cuadrado"
 }
