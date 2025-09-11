@@ -309,5 +309,6 @@
     "exit_animation": "Salir de la animación",
     "vertical": "Vertical",
     "horizontal": "Horizontal",
-    "square": "Cuadrado"
+    "square": "Cuadrado",
+    "translation_provider_info": "Las traducciones localizadas para esta aplicación son proporcionadas por Esri España."
 }

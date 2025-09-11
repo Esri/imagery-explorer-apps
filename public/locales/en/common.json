@@ -309,5 +309,6 @@
     "exit_animation": "Exit Animation",
     "vertical": "Vertical",
     "horizontal": "Horizontal",
-    "square": "Square"
+    "square": "Square",
+    "translation_provider_info": "Localized translations for this app are provided by {{provider}}."
 }
