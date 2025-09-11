@@ -141,9 +141,13 @@ export const AnimationFramesList: FC<Props> = ({
                                 className="w-full text-xs mr-1 text-center leading-[.9rem]"
                                 onClick={frameOnSelect.bind(null, frameId)}
                             >
-                                <span>{acquisitionDateLabel}</span>
-                                <br />
-                                <span>{rasterFunctionName}</span>
+                                <div>
+                                    <span>{acquisitionDateLabel}</span>
+                                </div>
+
+                                <div className="max-w-[124px] overflow-hidden text-ellipsis whitespace-nowrap">
+                                    <span>{rasterFunctionName}</span>
+                                </div>
                             </div>
 
                             <div
