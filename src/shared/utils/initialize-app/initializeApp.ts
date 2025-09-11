@@ -50,6 +50,12 @@ export const initializeApp = async ({
     // This will set up the language and translations for the application.
     await initI18next(APP_LANGUAGE);
 
+    // Set the HTML document's language attribute to the current app language
+    // This helps with the ArcGIS API to display the content in the correct language
+    if (APP_LANGUAGE !== 'en') {
+        document.documentElement.lang = APP_LANGUAGE;
+    }
+
     // Initialize Esri OAuth for authentication
     // This will set up the OAuth flow for the application using the provided appId and portal
     if (appId) {

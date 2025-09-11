@@ -97,7 +97,7 @@ export const TemporalProfileToolControls = ({
                     {t('time')}:
                 </span>
 
-                <div className="mx-1 w-1/3">
+                <div className="mx-1 min-w-[80px]">
                     <Dropdown
                         data={trendOptionsDropdownMenuData}
                         onChange={(val) => {

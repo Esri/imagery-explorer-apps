@@ -306,5 +306,9 @@
     "pause_animation": "Pause Animation",
     "resume_animation": "Resume Animation",
     "stop_animation": "Stop Animation",
-    "exit_animation": "Exit Animation"
+    "exit_animation": "Exit Animation",
+    "vertical": "Vertical",
+    "horizontal": "Horizontal",
+    "square": "Square",
+    "translation_provider_info": "Localized translations for this app are provided by {{provider}}."
 }

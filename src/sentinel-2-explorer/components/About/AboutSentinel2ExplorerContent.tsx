@@ -14,6 +14,7 @@
  */
 
 import { APP_NAME, appConfig } from '@shared/config';
+import { APP_LANGUAGE } from '@shared/constants/UI';
 // import { SENTINEL_2_ITEM_URL } from '@shared/services/sentinel-2/config';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -181,8 +182,12 @@ export const AboutSentinel2ExplorerContent = () => {
                 </div>
             </div>
 
-            <div className="mb-4 font-light">
-                <p>{t('interetsing_places_data_source')}</p>
+            <div className="mb-4 mt-10 font-light italic opacity-80">
+                <p className="mb-2">{t('interetsing_places_data_source')}</p>
+
+                {APP_LANGUAGE !== 'en' && (
+                    <p>{t('translation_provider_info')}</p>
+                )}
             </div>
         </div>
     );
