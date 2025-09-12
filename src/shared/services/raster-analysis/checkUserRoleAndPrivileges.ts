@@ -16,16 +16,60 @@
 import PortalUser from '@arcgis/core/portal/PortalUser';
 
 /**
- * Check if the user has the privileges to publish content
+ * Check if user can create and publish content on ArcGIS Online
+ * If the user is an admin or publisher, they can publish content
+ * If the user has the createItem privilege, they can publish content
+ * If the user is a public account (orgId is null), they can publish content
+ *
  * @param user  The ArcGIS Online potal user object
  * @returns {boolean} indicating if the user can publish content
+ *
+ * @see https://community.esri.com/t5/arcgis-online-public-account-community/arcgis-online-public-accounts-getting-started/ba-p/1305110
  */
-export const canPublishContent = (user: PortalUser): boolean => {
+export const canCreateItem = (user: PortalUser): boolean => {
     if (!user) {
         return false;
     }
 
-    return user.role === 'org_admin' || user.role === 'org_publisher';
+    const { role, privileges, orgId } = user || {};
+
+    // return user.role === 'org_admin' || user.role === 'org_publisher';
+
+    const output =
+        role === 'org_admin' ||
+        role === 'org_publisher' ||
+        (privileges && privileges.some((p) => p.endsWith('createItem'))) ||
+        orgId === null ||
+        orgId === undefined; // for public account, orgId is null
+
+    return output;
+};
+
+/**
+ * Check if user can publish hosted imagery services on ArcGIS Online.
+ * It requires the 'publishDynamicImagery' privilege.
+ *
+ * @param user The ArcGIS Online potal user object
+ * @returns {boolean} indicating if the user can publish hosted imagery services
+ *
+ * @see https://developers.arcgis.com/rest/users-groups-and-items/privileges/#content
+ */
+export const canPublishHostedImageryService = (user: PortalUser): boolean => {
+    if (!user) {
+        return false;
+    }
+
+    if (canCreateItem(user) === false) {
+        return false;
+    }
+
+    const { privileges } = user || {};
+
+    if (!privileges || privileges.length === 0) {
+        return false;
+    }
+
+    return privileges.some((p) => p.endsWith('publishDynamicImagery'));
 };
 
 /**

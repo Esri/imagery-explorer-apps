@@ -16,7 +16,10 @@
 import { ICreateServiceResult } from '@esri/arcgis-rest-feature-service';
 import { ARCGIS_REST_API_ROOT } from '@shared/config';
 import { getUserPortal } from '@shared/utils/esri-oauth';
-import { canPublishContent } from './checkUserRoleAndPrivileges';
+import {
+    canCreateItem,
+    canPublishHostedImageryService,
+} from './checkUserRoleAndPrivileges';
 
 /**
  * Formats the provided service name by replacing any character that is not
@@ -71,8 +74,14 @@ export const createHostedImageryService = async (
         throw new Error('User is not authenticated');
     }
 
-    if (canPublishContent(user) === false) {
+    if (canCreateItem(user) === false) {
         throw new Error('User does not have the privileges to publish content');
+    }
+
+    if (!canPublishHostedImageryService(user)) {
+        throw new Error(
+            'User does not have the privileges to publish hosted imagery services'
+        );
     }
 
     const serviceNameCleaned = formatHostedImageryServiceName(serviceName); //serviceName.replace(/[^a-zA-Z0-9_]/g, '_');
