@@ -46,33 +46,6 @@ export const canCreateItem = (user: PortalUser): boolean => {
 };
 
 /**
- * Check if user can publish hosted imagery services on ArcGIS Online.
- * It requires the 'publishDynamicImagery' privilege.
- *
- * @param user The ArcGIS Online potal user object
- * @returns {boolean} indicating if the user can publish hosted imagery services
- *
- * @see https://developers.arcgis.com/rest/users-groups-and-items/privileges/#content
- */
-export const canPublishHostedImageryService = (user: PortalUser): boolean => {
-    if (!user) {
-        return false;
-    }
-
-    if (canCreateItem(user) === false) {
-        return false;
-    }
-
-    const { privileges } = user || {};
-
-    if (!privileges || privileges.length === 0) {
-        return false;
-    }
-
-    return privileges.some((p) => p.endsWith('publishDynamicImagery'));
-};
-
-/**
  * Check if the user has the privileges to use raster analysis
  * The user must have the GIS Professional Advanced user type and more than 2 credits
  * @param user the ArcGIS Online potal user object
