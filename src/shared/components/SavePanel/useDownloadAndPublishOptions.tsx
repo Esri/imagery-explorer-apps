@@ -22,9 +22,10 @@ import {
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { APP_NAME } from '@shared/config';
+import { useHasSaveOrPublishPrivileges } from './useHasSaveOrPublishPrivileges';
 
 export type PublishAndDownloadJobOptionData = {
     /**
@@ -58,6 +59,9 @@ export const useDownloadAndPublishOptions = () => {
     );
 
     const listOfQueryParams = useAppSelector(selectListOfQueryParams);
+
+    const { canPublishHostedImagery, canSaveWebMap, canSaveWebMappingApp } =
+        useHasSaveOrPublishPrivileges();
 
     const shouldAddSaveSingleSceneOption = useMemo(() => {
         const mainSceneSelected =
@@ -185,11 +189,57 @@ export const useDownloadAndPublishOptions = () => {
         shouldAddPublishChangeDetectionOption,
     ]);
 
-    // const donwloadOptions: PublishAndDownloadJobType[] = useMemo(() => {
-    //     const output: PublishAndDownloadJobType[] = [];
+    // add disabled and message properties based on user's privileges
+    const publishOptionsWithDisabledProp = useMemo(() => {
+        return publishOptions.map((option) => {
+            let disabled = false;
+            const message: string = null;
 
-    //     return output;
-    // }, [queryParams4MainScene?.objectIdOfSelectedScene, mode, analyzeTool]);
+            if (
+                option.saveJobType === PublishAndDownloadJobType.PublishScene ||
+                option.saveJobType ===
+                    PublishAndDownloadJobType.PublishIndexMask ||
+                option.saveJobType ===
+                    PublishAndDownloadJobType.PublishChangeDetection
+            ) {
+                if (!canPublishHostedImagery) {
+                    disabled = true;
+                    // message =
+                    // t('cannot_publish_hosted_imagery');
+                }
+            } else if (
+                option.saveJobType === PublishAndDownloadJobType.SaveWebMap ||
+                option.saveJobType ===
+                    PublishAndDownloadJobType.SaveWebMapWithMultipleScenes ||
+                option.saveJobType ===
+                    PublishAndDownloadJobType.SaveWebMapWithMultipleScenesInSingleLayer
+            ) {
+                if (!canSaveWebMap) {
+                    disabled = true;
+                    // message = t('cannot_save_webmap');
+                }
+            } else if (
+                option.saveJobType ===
+                PublishAndDownloadJobType.SaveWebMappingApp
+            ) {
+                if (!canSaveWebMappingApp) {
+                    disabled = true;
+                    // message = t('cannot_save_webapp');
+                }
+            }
 
-    return publishOptions;
+            return {
+                ...option,
+                disabled,
+                message,
+            };
+        });
+    }, [
+        publishOptions,
+        canPublishHostedImagery,
+        canSaveWebMap,
+        canSaveWebMappingApp,
+    ]);
+
+    return publishOptionsWithDisabledProp;
 };

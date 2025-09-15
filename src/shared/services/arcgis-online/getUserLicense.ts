@@ -15,7 +15,7 @@
 
 import { getPortalBaseUrl, getToken } from '@shared/utils/esri-oauth';
 
-type UserLicenseData = {
+export type UserLicenseData = {
     userLicenseTypeId: string;
     availableCredits: number;
 };
