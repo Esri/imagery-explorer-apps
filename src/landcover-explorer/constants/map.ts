@@ -48,16 +48,16 @@ export const SENTINEL_2_10M_LAND_COVER_ITEM_ID = `cfcb7609de5f478eb7666240902d4d
 //     'https://www.arcgis.com/home/item.html?id=' +
 //     SENTINEL_2_10M_LAND_COVER_ITEM_ID;
 
-export const HUMAN_GEO_DARK_LABEL_LAYER_TITLE = 'Human Geography Dark Label';
-export const HUMAN_GEO_LIGHT_WATER_LAYER_TITLE =
-    'Human Geography Dark Detail Light Water';
-export const HUMAN_GEO_DARK_DRY_LAYER_TITLE = 'Human Geography Dark Detail Dry';
+// export const HUMAN_GEO_DARK_LABEL_LAYER_TITLE = 'Human Geography Dark Label';
+// export const HUMAN_GEO_LIGHT_WATER_LAYER_TITLE =
+//     'Human Geography Dark Detail Light Water';
+// export const HUMAN_GEO_DARK_DRY_LAYER_TITLE = 'Human Geography Dark Detail Dry';
 
-export const TERRAIN_LAYER_TITLE = 'World Hillshade';
+// export const TERRAIN_LAYER_TITLE = 'World Hillshade';
 
-export const WORLD_IMAGERY_BASEMAP_LAYER_TITLE = 'World Imagery';
+// export const WORLD_IMAGERY_BASEMAP_LAYER_TITLE = 'World Imagery';
 
-export const CUSTOM_OCEAN_BASEMAP_LAYER_TITLE = 'LandCoverAppOceans';
+// export const CUSTOM_OCEAN_BASEMAP_LAYER_TITLE = 'LandCoverAppOceans';
 
 export const DEFAULT_MAP_CENTERS = [
     /**

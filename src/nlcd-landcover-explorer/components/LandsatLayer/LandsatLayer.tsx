@@ -10,12 +10,19 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { useLandsatLayer } from './useLandsatLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
+    /**
+     * The GroupLayer to which the Landsat layer will be added
+     * This is to ensure the Landsat layer is added under the hillshade layer
+     * with the blend mode applied
+     */
+    groupLayer?: GroupLayer;
     mapView?: IMapView;
 };
 
-export const LandsatLayer: FC<Props> = ({ mapView }) => {
+export const LandsatLayer: FC<Props> = ({ groupLayer, mapView }) => {
     const year = useAppSelector(selectYear);
 
     const mode = useAppSelector(selectMapMode);
@@ -52,10 +59,10 @@ export const LandsatLayer: FC<Props> = ({ mapView }) => {
     });
 
     useEffect(() => {
-        if (mapView && layer) {
-            mapView.map.add(layer);
+        if (groupLayer && layer) {
+            groupLayer.add(layer);
         }
-    }, [mapView, layer]);
+    }, [groupLayer, layer]);
 
     return null;
 };
