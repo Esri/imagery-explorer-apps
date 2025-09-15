@@ -59,6 +59,7 @@ import { MapCenterIndicator } from './MapCenterIndicator';
 import { appConfig } from '@shared/config';
 import { ZoomWidget } from './ZoomWidget';
 import { autoSwipeStatusChanged } from '@shared/store/Map/reducer';
+import { WEB_MAP_ID } from '@shared/constants/map';
 
 type Props = {
     /**
@@ -145,7 +146,7 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
             )}
         >
             <MapView
-                webmapId={appConfig.webmapId}
+                webmapId={WEB_MAP_ID}
                 center={center}
                 zoom={zoom}
                 shouldDisableMapNavigate={isAnimationPlaying}

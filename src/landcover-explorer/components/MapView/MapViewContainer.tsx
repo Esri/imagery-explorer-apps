@@ -16,7 +16,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
-import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
+// import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
@@ -56,6 +56,7 @@ import { MapActionButtonGroup4LandcoverExplorer } from './MapActionButtonGroup4L
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 import { ReferenceLayersToggleControl } from '@shared/components/ReferenceLayersToggleControl';
+import { WEB_MAP_ID } from '@shared/constants/map';
 
 type MapViewContainerProps = {
     attribution: string;

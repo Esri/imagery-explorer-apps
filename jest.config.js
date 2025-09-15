@@ -53,6 +53,7 @@ module.exports = {
         ENV_SENTINEL2_PROXY_SERVICE_URL: "http://sentinel2-proxy.example.com",
         ENV_SENTINEL2_ORIGINAL_SERVICE_URL: "https://sentinel2-original.example.com",
         ENV_SENTINEL1_PROXY_SERVICE_URL: "http://sentinel1-proxy.example.com",
-        ENV_SENTINEL1_ORIGINAL_SERVICE_URL: "https://sentinel1-original.example.com"
+        ENV_SENTINEL1_ORIGINAL_SERVICE_URL: "https://sentinel1-original.example.com",
+        ENV_ARCGIS_PORTAL_ROOT_URL: "https://www.arcgis.com"
     }
 };

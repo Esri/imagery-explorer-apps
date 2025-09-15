@@ -13,6 +13,13 @@
  * limitations under the License.
  */
 
+import { appConfig } from '@shared/config';
+
+/**
+ * Item ID of the ArcGIS Online web map used in the application.
+ */
+export const WEB_MAP_ID = appConfig.webmapId;
+
 /**
  * Default Map Center
  */

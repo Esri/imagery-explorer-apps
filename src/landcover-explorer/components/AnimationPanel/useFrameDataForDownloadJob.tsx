@@ -34,13 +34,13 @@ import {
     combineLandcoverImageWithMapScreenshots,
     getScreenshotOfBasemapLayers,
 } from './helpers';
-import { appConfig } from '@shared/config';
 import {
     selectLandcoverAnimationYears,
-    selectShouldShowSatelliteImageryLayer,
+    // selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
+// import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
+import { WEB_MAP_ID } from '@shared/constants/map';
 
 /**
  * Represents the properties required by the custom hook `useFrameDataForDownloadJob`.
@@ -102,7 +102,7 @@ export const useFrameDataForDownloadJob = ({
                 const { basemapScreenshot, referenceLayersScreenshot } =
                     await getScreenshotOfBasemapLayers({
                         mapView: mapView,
-                        webmapId: appConfig.webmapId,
+                        webmapId: WEB_MAP_ID,
                         includeBasemapInScreenshot,
                         includeTerrainInScreenshot,
                         includeMapLabelsInScreenshot,
