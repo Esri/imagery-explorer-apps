@@ -37,7 +37,7 @@ export const GroupLayerWrapper: FC<Props> = ({
 
     const initGroupLayer = async () => {
         const groupLayer = new GroupLayer({
-            blendMode: blendMode || undefined,
+            blendMode: blendMode || 'normal',
         });
 
         mapView.map.add(groupLayer, index);
@@ -58,7 +58,8 @@ export const GroupLayerWrapper: FC<Props> = ({
             return;
         }
 
-        groupLayer.blendMode = blendMode || undefined;
+        groupLayer.blendMode = blendMode || 'normal';
+        // console.log('Group Layer Blend Mode set to:', blendMode);
     }, [blendMode, groupLayer]);
 
     return (
