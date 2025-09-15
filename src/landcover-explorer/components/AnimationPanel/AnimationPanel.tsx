@@ -104,7 +104,7 @@ const AnimationPanel: FC<Props> = ({
         mediaLayerRef.current = new MediaLayer({
             visible: true,
             effect: LandCoverLayerEffect,
-            blendMode: LandCoverLayerBlendMode,
+            // blendMode: LandCoverLayerBlendMode,
         });
 
         mapView.map.add(mediaLayerRef.current);

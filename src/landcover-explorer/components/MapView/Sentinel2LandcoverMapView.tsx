@@ -55,13 +55,13 @@ export const Sentinel2LandcoverMapView = () => {
             >
                 <Sentinel2Layer />
                 <LandcoverLayer />
+                <SwipeWidget4Landcover
+                    serviceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}
+                    rasterFunctionName={rasterFunctionName}
+                    // mapView={undefined} // Assuming mapView is not needed here
+                />
+                <SwipeWidget4Sentinel2 />
             </GroupLayer>
-            <SwipeWidget4Landcover
-                serviceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}
-                rasterFunctionName={rasterFunctionName}
-                // mapView={undefined} // Assuming mapView is not needed here
-            />
-            <SwipeWidget4Sentinel2 />
 
             <HillshadeLayer />
             {/* <Popup /> */}

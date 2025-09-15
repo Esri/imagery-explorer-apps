@@ -134,7 +134,7 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     };
 
     const init = () => {
-        mapLabelLayersRef.current = getBasemapLayers(mapView);
+        mapLabelLayersRef.current = getMapLabelLayers(mapView);
         // mapView.map.allLayers.filter((layer) => {
         //     return (
         //         layer.title === HUMAN_GEO_DARK_LABEL_LAYER_TITLE ||
@@ -143,7 +143,7 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
         //     );
         // });
 
-        basemapLayersRef.current = getMapLabelLayers(mapView);
+        basemapLayersRef.current = getBasemapLayers(mapView);
         // mapView.map.allLayers.filter(
         //     (layer: Layer) => {
         //         return (

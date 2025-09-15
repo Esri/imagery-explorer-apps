@@ -21,6 +21,7 @@ import MapView from '@arcgis/core/views/MapView';
 import { watch } from '@arcgis/core/core/reactiveUtils';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 import { useAutoSwipe } from './useAutoSwipe';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
     /**
@@ -29,6 +30,11 @@ type Props = {
     visible: boolean;
     leadingLayer: ImageryLayer;
     trailingLayer: ImageryLayer;
+    /**
+     * If provided, the swipe widget layers will be added to this group layer
+     * instead of directly to the map in the map view.
+     */
+    groupLayer?: GroupLayer;
     /**
      * Map view that contains Swipe Widget
      */
@@ -48,6 +54,7 @@ type Props = {
  */
 const SwipeWidget: FC<Props> = ({
     mapView,
+    groupLayer,
     visible,
     leadingLayer,
     trailingLayer,
@@ -59,9 +66,15 @@ const SwipeWidget: FC<Props> = ({
     useAutoSwipe(swipeWidgetRef.current);
 
     const init = async () => {
-        // this swipe widget layers should be added at index of one so that the
-        // hillsahde/terrain layer can be added on top of it with blend mode applied
-        mapView.map.addMany([leadingLayer, trailingLayer], 1);
+        // if the group layer is provided, add the swipe widget layers to it
+        // otherwise add the layers to the map in the map view
+        if (groupLayer) {
+            groupLayer.addMany([leadingLayer, trailingLayer]);
+        } else {
+            // this swipe widget layers should be added at index of one so that the
+            // hillsahde/terrain layer can be added on top of it with blend mode applied
+            mapView.map.addMany([leadingLayer, trailingLayer], 1);
+        }
 
         swipeWidgetRef.current = new Swipe({
             view: mapView,
@@ -127,6 +140,7 @@ const SwipeWidget: FC<Props> = ({
         mapView,
         leadingLayer,
         trailingLayer,
+        groupLayer,
         // leadingLandCoverLayer,
         // leadingSentinel2Layer,
         // trailingLandcoverLayer,

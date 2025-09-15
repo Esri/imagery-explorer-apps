@@ -33,7 +33,7 @@ import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 // import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 // import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
-import ReferenceLayers from './ReferenceLayers';
+// import ReferenceLayers from './ReferenceLayers';
 import { saveMapCenterToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 // import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
@@ -57,6 +57,7 @@ import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 import { ReferenceLayersToggleControl } from '@shared/components/ReferenceLayersToggleControl';
 import { WEB_MAP_ID } from '@shared/constants/map';
+import ReferenceLayers from '@shared/components/MapView/ReferenceLayers';
 
 type MapViewContainerProps = {
     attribution: string;

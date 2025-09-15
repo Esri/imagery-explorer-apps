@@ -55,12 +55,15 @@ export const NLCDLandcoverMapViewContainer = () => {
             >
                 <NLCDLandcoverLayer />
                 <LandsatLayer />
+
+                <SwipeWidget4LandsatLayers />
+
+                <SwipeWidget4Landcover
+                    serviceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
+                    rasterFunctionName={rasterFunctionName}
+                />
             </GroupLayer>
-            <SwipeWidget4Landcover
-                serviceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
-                rasterFunctionName={rasterFunctionName}
-            />
-            <SwipeWidget4LandsatLayers />
+
             <HillshadeLayer />
             <NLCDLandCoverPopup />
         </LandcoverExplorerMapViewContainer>
