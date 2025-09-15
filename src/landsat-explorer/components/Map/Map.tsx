@@ -63,18 +63,19 @@ const Map = () => {
                 <ChangeLayer />
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
+                <AnimationLayer
+                    imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+                    authoringAppName="landsat"
+                    animationMetadataSources={t('animation_metadata', {
+                        ns: APP_NAME,
+                    })}
+                />
             </GroupLayer>
             {/* <SwipeWidget /> */}
             <SwipeWidget4ImageryLayers
                 serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
             />
-            <AnimationLayer
-                imageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
-                authoringAppName="landsat"
-                animationMetadataSources={t('animation_metadata', {
-                    ns: APP_NAME,
-                })}
-            />
+
             <HillshadeLayer />
 
             <MapActionButtonGroup

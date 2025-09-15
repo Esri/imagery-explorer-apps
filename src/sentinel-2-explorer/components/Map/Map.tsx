@@ -60,15 +60,16 @@ const Map = () => {
                 <Sentinel2ChangeLayer />
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
+                <AnimationLayer
+                    imageryServiceUrl={SENTINEL_2_SERVICE_URL}
+                    authoringAppName="sentinel2"
+                    animationMetadataSources={t('animation_metadata', {
+                        ns: APP_NAME,
+                    })}
+                />
             </GroupLayer>
             <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_2_SERVICE_URL} />
-            <AnimationLayer
-                imageryServiceUrl={SENTINEL_2_SERVICE_URL}
-                authoringAppName="sentinel2"
-                animationMetadataSources={t('animation_metadata', {
-                    ns: APP_NAME,
-                })}
-            />
+
             <HillshadeLayer />
 
             <MapActionButtonGroup

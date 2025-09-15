@@ -66,15 +66,16 @@ export const Map = () => {
                 <TemporalCompositeLayer />
                 <AnalysisToolQueryLocation />
                 <MapPopUpAnchorPoint />
+                <AnimationLayer
+                    imageryServiceUrl={SENTINEL_1_SERVICE_URL}
+                    authoringAppName="sentinel1"
+                    animationMetadataSources={t('animation_metadata', {
+                        ns: APP_NAME,
+                    })}
+                />
             </GroupLayer>
             <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_1_SERVICE_URL} />
-            <AnimationLayer
-                imageryServiceUrl={SENTINEL_1_SERVICE_URL}
-                authoringAppName="sentinel1"
-                animationMetadataSources={t('animation_metadata', {
-                    ns: APP_NAME,
-                })}
-            />
+
             <HillshadeLayer />
 
             <MapActionButtonGroup

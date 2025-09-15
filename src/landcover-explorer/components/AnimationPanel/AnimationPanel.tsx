@@ -115,8 +115,7 @@ const AnimationPanel: FC<Props> = ({
         });
 
         groupLayer.add(mediaLayerRef.current);
-
-        console.log(groupLayer);
+        // console.log(groupLayer);
     };
 
     // useEffect(() => {
