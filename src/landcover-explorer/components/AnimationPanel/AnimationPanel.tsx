@@ -42,9 +42,15 @@ import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
     mapView?: IMapView;
+    /**
+     * If provided, the media layer will be added to this group layer
+     * instead of directly to the map in the map view.
+     */
+    groupLayer?: GroupLayer;
     /**
      * The URL for the Land Cover Image Service.
      */
@@ -65,6 +71,7 @@ type Props = {
 
 const AnimationPanel: FC<Props> = ({
     mapView,
+    groupLayer,
     landCoverServiceUrl,
     satellteImageryServiceUrl,
     landcoverLayerRasterFunctionName,
@@ -107,7 +114,9 @@ const AnimationPanel: FC<Props> = ({
             // blendMode: LandCoverLayerBlendMode,
         });
 
-        mapView.map.add(mediaLayerRef.current);
+        groupLayer.add(mediaLayerRef.current);
+
+        console.log(groupLayer);
     };
 
     // useEffect(() => {
@@ -186,14 +195,14 @@ const AnimationPanel: FC<Props> = ({
     }, [mediaLayerElements, frameData4DownloadJob]);
 
     useEffect(() => {
-        if (!mapView) {
+        if (!groupLayer) {
             return;
         }
 
         if (!mediaLayerRef.current) {
             initMediaLayer();
         }
-    }, [mapView]);
+    }, [groupLayer]);
 
     if (!animationMode) {
         return null;

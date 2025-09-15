@@ -18,6 +18,7 @@ import { GroupLayer } from '@shared/components/GroupLayer';
 import { LandCoverLayerBlendMode } from '../LandcoverLayer/useLandCoverLayer';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
+import AnimationPanel from '../AnimationPanel/AnimationPanel';
 
 export const Sentinel2LandcoverMapView = () => {
     const { t } = useTranslation();
@@ -30,11 +31,11 @@ export const Sentinel2LandcoverMapView = () => {
 
     return (
         <LandcoverExplorerMapViewContainer
-            landCoverServiceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}
-            landcoverLayerRasterFunctionName={rasterFunctionName}
+            // landCoverServiceUrl={SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL}
+            // landcoverLayerRasterFunctionName={rasterFunctionName}
             attribution={t('map_attribution', { ns: APP_NAME })}
             nameOfSatelliteImageryLayer={'Sentinel-2'}
-            satellteImageryServiceUrl={SENTINEL_2_SERVICE_URL}
+            // satellteImageryServiceUrl={SENTINEL_2_SERVICE_URL}
             // isSatelliteImageryOutOfVisibleRange={
             //     isSatelliteImagertLayerOutOfVisibleRange
             // } // This should be derived from state or props
@@ -61,6 +62,17 @@ export const Sentinel2LandcoverMapView = () => {
                     // mapView={undefined} // Assuming mapView is not needed here
                 />
                 <SwipeWidget4Sentinel2 />
+
+                <AnimationPanel
+                    landCoverServiceUrl={
+                        SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL
+                    }
+                    satellteImageryServiceUrl={SENTINEL_2_SERVICE_URL}
+                    landcoverLayerRasterFunctionName={rasterFunctionName}
+                    animationMetadataSources={t('animation_metadata', {
+                        ns: APP_NAME,
+                    })}
+                />
             </GroupLayer>
 
             <HillshadeLayer />

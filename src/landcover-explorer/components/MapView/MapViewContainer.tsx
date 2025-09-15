@@ -38,7 +38,7 @@ import { saveMapCenterToHashParams } from '@landcover-explorer/utils/URLHashPara
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 // import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 // import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
-import AnimationPanel from '../AnimationPanel/AnimationPanel';
+// import AnimationPanel from '../AnimationPanel/AnimationPanel';
 import MapInfoIndicators from './MapReferenceInfo';
 // import MapView from './MapView';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
@@ -64,15 +64,15 @@ type MapViewContainerProps = {
     /**
      * URL for the Land Cover Image Service
      */
-    landCoverServiceUrl: string;
+    // landCoverServiceUrl: string;
     /**
      * name of the raster function that will be used for rendering the land cover layer.
      */
-    landcoverLayerRasterFunctionName: string;
+    // landcoverLayerRasterFunctionName: string;
     /**
      * URL for the Satellite Imagery Service
      */
-    satellteImageryServiceUrl: string;
+    // satellteImageryServiceUrl: string;
     /**
      * name of the satellite imagery layer that will be displayed as a reference layer. (e.g. "Sentinel-2")
      */
@@ -83,9 +83,9 @@ type MapViewContainerProps = {
 
 export const MapViewContainer: FC<MapViewContainerProps> = ({
     attribution,
-    landCoverServiceUrl,
-    landcoverLayerRasterFunctionName,
-    satellteImageryServiceUrl,
+    // landCoverServiceUrl,
+    // landcoverLayerRasterFunctionName,
+    // satellteImageryServiceUrl,
     nameOfSatelliteImageryLayer,
     // isSatelliteImageryOutOfVisibleRange,
     nativeScale,
@@ -172,7 +172,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
 
                 <CustomMapArrtribution atrribution={attribution} />
 
-                <AnimationPanel
+                {/* <AnimationPanel
                     landCoverServiceUrl={landCoverServiceUrl}
                     satellteImageryServiceUrl={satellteImageryServiceUrl}
                     landcoverLayerRasterFunctionName={
@@ -181,7 +181,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                     animationMetadataSources={t('animation_metadata', {
                         ns: APP_NAME,
                     })}
-                />
+                /> */}
 
                 <MapActionButtonGroup4LandcoverExplorer
                     nativeScale={nativeScale}

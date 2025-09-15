@@ -18,6 +18,7 @@ import { HillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer
 import { GroupLayer } from '@shared/components/GroupLayer';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { LandCoverLayerBlendMode } from '@landcover-explorer/components/LandcoverLayer/useLandCoverLayer';
+import AnimationPanel from '@landcover-explorer/components/AnimationPanel/AnimationPanel';
 // import { selectIsSatelliteImageryLayerOutOfVisibleRange } from '@shared/store/LandcoverExplorer/selectors';
 
 export const NLCDLandcoverMapViewContainer = () => {
@@ -31,10 +32,10 @@ export const NLCDLandcoverMapViewContainer = () => {
 
     return (
         <LandcoverExplorerMapViewContainer
-            landCoverServiceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
-            landcoverLayerRasterFunctionName={rasterFunctionName}
+            // landCoverServiceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
+            // landcoverLayerRasterFunctionName={rasterFunctionName}
             attribution={t('map_attribution', { ns: APP_NAME })}
-            satellteImageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            // satellteImageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
             nameOfSatelliteImageryLayer={'Landsat'}
             // isSatelliteImageryOutOfVisibleRange={
             //     isSatelliteImageryLayerOutOfVisibleRange
@@ -61,6 +62,15 @@ export const NLCDLandcoverMapViewContainer = () => {
                 <SwipeWidget4Landcover
                     serviceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
                     rasterFunctionName={rasterFunctionName}
+                />
+
+                <AnimationPanel
+                    landCoverServiceUrl={NLCD_LANDCOVER_IMAGE_SERVICE_URL}
+                    satellteImageryServiceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+                    landcoverLayerRasterFunctionName={rasterFunctionName}
+                    animationMetadataSources={t('animation_metadata', {
+                        ns: APP_NAME,
+                    })}
                 />
             </GroupLayer>
 
