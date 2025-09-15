@@ -18,7 +18,7 @@ import {
     getSignedInUser,
     getToken,
 } from '@shared/utils/esri-oauth';
-import { canCreateItem } from '../raster-analysis/checkUserRoleAndPrivileges';
+import { checkCanCreateItem } from './account';
 
 export type AddItemResponse = {
     success: boolean;
@@ -70,7 +70,7 @@ export const addItem = async (
         throw new Error('Cannot add item in anonymous mode, sign in first');
     }
 
-    if (canCreateItem(signedInUser) === false) {
+    if (checkCanCreateItem() === false) {
         throw new Error('User does not have permission to publish content');
     }
 
