@@ -13,12 +13,20 @@
  * limitations under the License.
  */
 
-import { appConfig } from '@shared/config';
+// import { appConfig } from '@shared/config';
+
+/**
+ * Default Web Map ID for the Imagery Explorer apps.
+ *
+ * @see https://www.arcgis.com/home/item.html?id=81609bbe235942919ad27c77e42c600e
+ */
+const DEFAULT_WEB_MAP_ID = 'f8770e0adc5c41038026494b871ceb99';
 
 /**
  * Item ID of the ArcGIS Online web map used in the application.
+ * Try to use the value defined in the .env file first, otherwise fallback to the default value.
  */
-export const WEB_MAP_ID = appConfig.webmapId;
+export const WEB_MAP_ID = ENV_WEB_MAP_ID || DEFAULT_WEB_MAP_ID;
 
 /**
  * Default Map Center

@@ -110,13 +110,7 @@ declare const ENV_NLCD_LANDCOVER_EXPLORER_APP_ID: string;
 declare const ENV_NLCD_LANDCOVER_SERVICE_URL: string;
 
 /**
- * Web Map ID for the Land Cover Explorer app defined in the .env file.
- * Optional: defaults to 81609bbe235942919ad27c77e42c600e if not specified.
- */
-declare const ENV_LANDCOVER_EXPLORER_WEB_MAP_ID: string;
-
-/**
  * Web Map ID for the Imagery Explorer apps defined in the .env file.
  * Optional: defaults to f8770e0adc5c41038026494b871ceb99 if not specified.
  */
-declare const ENV_IMAGERY_EXPLORER_WEB_MAP_ID: string;
+declare const ENV_WEB_MAP_ID: string;

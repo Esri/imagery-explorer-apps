@@ -114,12 +114,6 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
     const zoom = useAppSelector(selectMapZoom);
 
     /**
-     * Web map ID for the Land Cover Explorer app.
-     * Try to use the value defined in the .env file first, otherwise fallback to the default value from the app config.
-     */
-    const webmapId = ENV_LANDCOVER_EXPLORER_WEB_MAP_ID || WEB_MAP_ID;
-
-    /**
      * Display the Swipe Widget only in swipe mode.
      * For the Sentinel-2 layer, the Swipe Widget is available only when the layer is within visible zoom levels (zoom 11 or higher).
      */
@@ -148,7 +142,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                 }
             )}
         >
-            <MapView webmapId={webmapId} center={center} zoom={zoom}>
+            <MapView webmapId={WEB_MAP_ID} center={center} zoom={zoom}>
                 <MapViewEventHandlers
                     extentOnChange={(
                         extent,
