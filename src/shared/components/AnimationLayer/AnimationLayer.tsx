@@ -41,6 +41,7 @@ import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import { fr } from 'date-fns/locale';
 
 type Props = {
     /**
@@ -109,6 +110,7 @@ export const AnimationLayer: FC<Props> = ({
         mediaLayerElements,
         sortedQueryParams4ScenesInAnimationMode,
         animationMetadataSources,
+        mapView,
     });
 
     /**
@@ -178,6 +180,11 @@ export const AnimationLayer: FC<Props> = ({
                 return;
             }
 
+            // should not start animation if frame data for download job is not ready
+            if (!frameData4DownloadJob || frameData4DownloadJob.length === 0) {
+                return;
+            }
+
             // source.elements.addMany(mediaLayerElements);
             // // media layer elements are ready, change animation mode to playing to start the animation
             // dispatch(animationStatusChanged('playing'));
@@ -226,7 +233,7 @@ export const AnimationLayer: FC<Props> = ({
                 dispatch(animationStatusChanged('failed-loading'));
             }
         })();
-    }, [mediaLayerElements]);
+    }, [mediaLayerElements, frameData4DownloadJob]);
 
     // If the map view's height changes during an animation,
     // set the animation status to 'loading' so the useMediaLayerImageElement hook

@@ -72,7 +72,7 @@ export const combineAnimationFrameImageWithMapScreenshots = async ({
     basemapScreenshotData,
     mapLabelScreenshotData,
     hillshadeScreenshotData,
-    shouldBlendMediaLayerElementWithBasemap,
+    shouldBlendAnimationFrameWithBasemap,
 }: {
     animationFrameImageUrl: string;
     basemapScreenshotData: ImageData | null;
@@ -83,7 +83,7 @@ export const combineAnimationFrameImageWithMapScreenshots = async ({
      * This should only be done when the media layer element is a landcover layer. We should not blend the satellite imagery layer with the basemap
      * as it will make the satellite imagery mixed up with the basemap.
      */
-    shouldBlendMediaLayerElementWithBasemap: boolean;
+    shouldBlendAnimationFrameWithBasemap: boolean;
 }): Promise<HTMLImageElement> => {
     // Load the animation frame image to be combined with map screenshots as an HTML Image Element
     const animationFrameImage = await loadImageAsHTMLIMageElement(
@@ -120,7 +120,7 @@ export const combineAnimationFrameImageWithMapScreenshots = async ({
     // Draw the media layer image onto the canvas on top of the basemap screenshot
     if (animationFrameImage) {
         // console.log('blendModeTomediaLayerElement', blendModeTomediaLayerElement);
-        if (shouldBlendMediaLayerElementWithBasemap) {
+        if (shouldBlendAnimationFrameWithBasemap) {
             combinedCtx.globalCompositeOperation = 'multiply';
         }
 

@@ -16,11 +16,22 @@
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 // import { appConfig } from '@shared/config';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
-import { selectMapCenter } from '@shared/store/Map/selectors';
+import {
+    selectMapCenter,
+    selectShowBasemap,
+    selectShowMapLabel,
+    selectShowTerrain,
+} from '@shared/store/Map/selectors';
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
+import {
+    combineAnimationFrameImageWithMapScreenshots,
+    getScreenshotOfBasemapLayers,
+} from './helpers';
+import MapView from '@arcgis/core/views/MapView';
+import { WEB_MAP_ID } from '@shared/constants/map';
 // import { AnimationFrameData4DownloadJob } from '../AnimationDownloadPanel/DownloadPanel';
 
 /**
@@ -40,6 +51,10 @@ type Props = {
      * The animation metadata sources.
      */
     animationMetadataSources: string;
+    /**
+     * The MapView instance.
+     */
+    mapView: MapView;
 };
 
 /**
@@ -52,32 +67,20 @@ export const useFrameDataForDownloadJob = ({
     sortedQueryParams4ScenesInAnimationMode,
     mediaLayerElements,
     animationMetadataSources,
+    mapView,
 }: Props) => {
     const mapCenter = useAppSelector(selectMapCenter);
 
     const [frameData, setFrameData] = useState<AnimationFrameData[]>([]);
 
-    // const frameData: AnimationFrameData4DownloadJob[] = useMemo(() => {
-    //     if (
-    //         !sortedQueryParams4ScenesInAnimationMode?.length ||
-    //         !mediaLayerElements?.length
-    //     ) {
-    //         return [];
-    //     }
+    // determine whether to include basemap layers in the screenshot
+    const includeBasemapInScreenshot = useAppSelector(selectShowBasemap);
 
-    //     return mediaLayerElements.map((mediaLayerElement, index) => {
-    //         const queryParams = sortedQueryParams4ScenesInAnimationMode[index];
+    // determine whether to include terrain layer in the screenshot
+    const includeTerrainInScreenshot = useAppSelector(selectShowTerrain);
 
-    //         return {
-    //             mediaLayerElement,
-    //             info: `${
-    //                 queryParams.acquisitionDate
-    //             }  |  x ${mapCenter[0].toFixed(3)} y ${mapCenter[1].toFixed(
-    //                 3
-    //             )}  |  ${appConfig.animationMetadataSources}`,
-    //         } as AnimationFrameData4DownloadJob;
-    //     });
-    // }, [sortedQueryParams4ScenesInAnimationMode, mediaLayerElements]);
+    // determine whether to include map label layers in the screenshot
+    const includeMapLabelsInScreenshot = useAppSelector(selectShowMapLabel);
 
     useEffect(() => {
         (async () => {
@@ -89,11 +92,38 @@ export const useFrameDataForDownloadJob = ({
                 return;
             }
 
+            const {
+                basemapScreenshot,
+                referenceLayersScreenshot,
+                hillshadeScreenshot,
+            } = await getScreenshotOfBasemapLayers({
+                mapView: mapView,
+                webmapId: WEB_MAP_ID,
+                includeBasemapInScreenshot,
+                includeTerrainInScreenshot,
+                includeMapLabelsInScreenshot,
+            });
+
             // load media layer elements as an array of HTML Image Elements
             const images = await Promise.all(
-                mediaLayerElements.map((d) =>
-                    loadImageAsHTMLIMageElement(d.image as string)
-                )
+                mediaLayerElements.map((d) => {
+                    return combineAnimationFrameImageWithMapScreenshots(
+                        {
+                            animationFrameImageUrl: d.image as string,
+                            basemapScreenshotData:
+                                basemapScreenshot?.data || null,
+                            mapLabelScreenshotData:
+                                referenceLayersScreenshot?.data || null,
+                            hillshadeScreenshotData:
+                                hillshadeScreenshot?.data || null,
+                            shouldBlendAnimationFrameWithBasemap: false,
+                        }
+                        // d.image as string,
+                        // basemapScreenshot?.data || null,
+                        // referenceLayersScreenshot?.data || null,
+                        // hillshadeScreenshot?.data || null
+                    ); // if showing Landcover layer, the image need to be blended with the screenshot of basemap layers
+                })
             );
 
             const data: AnimationFrameData[] = images.map((image, index) => {

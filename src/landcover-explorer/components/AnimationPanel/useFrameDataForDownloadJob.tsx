@@ -33,7 +33,7 @@ import {
     // combineLandcoverImageWithMapScreenshot,
     combineAnimationFrameImageWithMapScreenshots,
     getScreenshotOfBasemapLayers,
-} from './helpers';
+} from '@shared/components/AnimationLayer/helpers';
 import {
     selectLandcoverAnimationYears,
     selectShouldShowSatelliteImageryLayer,
@@ -128,7 +128,7 @@ export const useFrameDataForDownloadJob = ({
                                     referenceLayersScreenshot?.data || null,
                                 hillshadeScreenshotData:
                                     hillshadeScreenshot?.data || null,
-                                shouldBlendMediaLayerElementWithBasemap:
+                                shouldBlendAnimationFrameWithBasemap:
                                     showSatelliteImageryLayer === false,
                             }
                             // d.image as string,
