@@ -14,9 +14,7 @@
  */
 
 import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
-import { LandCoverLayerBlendMode } from '../LandcoverLayer/useLandCoverLayer';
 import { convertCanvas2HtmlImageElement } from '@shared/utils/snippets/convertCanvas2HtmlImageElement';
-import Map from '@arcgis/core/Map';
 import WebMap from '@arcgis/core/WebMap';
 import MediaLayer from '@arcgis/core/layers/MediaLayer';
 import { whenOnce, once, when } from '@arcgis/core/core/reactiveUtils';
@@ -27,6 +25,7 @@ import {
     getTerrainLayer,
 } from '@shared/components/MapView/ReferenceLayers';
 import MapView from '@arcgis/core/views/MapView';
+import { getHillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
 
 type GetScreenshotOfBasemapLayersParams = {
     mapView: MapView;
@@ -47,61 +46,49 @@ type GetScreenshotOfBasemapLayersParams = {
 
 type GetScreenshotOfBasemapLayersOutput = {
     basemapScreenshot: __esri.Screenshot | null;
+    hillshadeScreenshot: __esri.Screenshot | null;
     referenceLayersScreenshot: __esri.Screenshot | null;
 };
 
-// /**
-//  * Combines the exported image of the Landcover Layer with the screenshot of the Basemap layers
-//  * and returns an HTML Image Element representing the combined image.
-//  * @param mediaLayerElementURL URL of the Image Element used in the media layer.
-//  * @param screenshotImageData Image Data of the map view screenshot.
-//  * @returns Promise<HTMLImageElement> A promise that resolves to the combined HTML Image Element.
-//  */
-// export const combineLandcoverImageWithMapScreenshot = async (
-//     mediaLayerElementURL: string,
-//     screenshotImageData: ImageData
-// ): Promise<HTMLImageElement> => {
-//     // Load the media layer image as an HTML Image Element
-//     const img = await loadImageAsHTMLIMageElement(mediaLayerElementURL);
-
-//     // Create a new canvas to combine the imageData and the HTMLImageElement
-//     const combinedCanvas = document.createElement('canvas');
-//     const combinedCtx = combinedCanvas.getContext('2d');
-
-//     // Set the dimensions of the new canvas to accommodate both the image and the imageData
-//     combinedCanvas.width = Math.max(combinedCanvas.width, img.width);
-//     combinedCanvas.height = Math.max(combinedCanvas.height, img.height);
-
-//     // Draw the imageData onto the new canvas
-//     combinedCtx.putImageData(screenshotImageData, 0, 0);
-
-//     combinedCtx.globalCompositeOperation = LandCoverLayerBlendMode;
-//     // Draw the HTMLImageElement onto the new canvas
-//     combinedCtx.drawImage(img, 0, 0);
-
-//     return loadImageAsHTMLIMageElement(combinedCanvas.toDataURL());
-// };
-
 /**
- * Combines a media layer image with basemap and map label screenshots into a single image.
+ * Combines a media layer image (such as a landcover or satellite layer) with optional map screenshots
+ * (basemap, map labels, and hillshade) into a single HTMLImageElement using canvas compositing.
  *
- * This function loads the media layer image from a given URL, draws the basemap screenshot data onto a canvas,
- * blends the media layer image using a specified blend mode, and overlays the map label screenshot data.
- * The result is returned as an HTMLImageElement.
+ * The function supports blending the media layer with the basemap using a multiply blend mode,
+ * which is useful for landcover layers but should be avoided for satellite imagery to prevent unwanted mixing.
+ * Hillshade and map label screenshots can also be composited on top using appropriate blend modes.
  *
- * @param mediaLayerElementURL - The URL of the media layer image to be loaded and combined.
- * @param basemapScreenshotData - The ImageData representing the basemap screenshot to be drawn first.
- * @param mapLabelScreenshotData - The ImageData representing the map label screenshot to be drawn last.
- * @returns A promise that resolves to an HTMLImageElement containing the combined image.
+ * @param params - An object containing the following properties:
+ * @param params.animationFrameImageUrl - The URL of the media layer image to load and combine.
+ * @param params.basemapScreenshotData - Optional ImageData for the basemap screenshot to be drawn first.
+ * @param params.mapLabelScreenshotData - Optional ImageData for map labels to be drawn last.
+ * @param params.hillshadeScreenshotData - Optional ImageData for hillshade to be blended with the result.
+ * @param params.shouldBlendMediaLayerElementWithBasemap - If true, blends the media layer with the basemap using 'multiply'.
+ *
+ * @returns A Promise that resolves to an HTMLImageElement containing the combined image.
  */
-export const combineLandcoverImageWithMapScreenshots = async (
-    mediaLayerElementURL: string,
-    basemapScreenshotData: ImageData | null,
-    mapLabelScreenshotData: ImageData | null
-): Promise<HTMLImageElement> => {
-    // Load the media layer image as an HTML Image Element
-    const mediaLayerImage =
-        await loadImageAsHTMLIMageElement(mediaLayerElementURL);
+export const combineAnimationFrameImageWithMapScreenshots = async ({
+    animationFrameImageUrl,
+    basemapScreenshotData,
+    mapLabelScreenshotData,
+    hillshadeScreenshotData,
+    shouldBlendMediaLayerElementWithBasemap,
+}: {
+    animationFrameImageUrl: string;
+    basemapScreenshotData: ImageData | null;
+    mapLabelScreenshotData: ImageData | null;
+    hillshadeScreenshotData: ImageData | null;
+    /**
+     * If true, blend the media layer element with the basemap screenshot using a multiply blend mode.
+     * This should only be done when the media layer element is a landcover layer. We should not blend the satellite imagery layer with the basemap
+     * as it will make the satellite imagery mixed up with the basemap.
+     */
+    shouldBlendMediaLayerElementWithBasemap: boolean;
+}): Promise<HTMLImageElement> => {
+    // Load the animation frame image to be combined with map screenshots as an HTML Image Element
+    const animationFrameImage = await loadImageAsHTMLIMageElement(
+        animationFrameImageUrl
+    );
 
     // Create a new canvas to combine the imageData and the HTMLImageElement
     const combinedCanvas = document.createElement('canvas');
@@ -110,11 +97,11 @@ export const combineLandcoverImageWithMapScreenshots = async (
     // Set the dimensions of the new canvas to accommodate both the image and the imageData
     combinedCanvas.width = Math.max(
         combinedCanvas.width,
-        mediaLayerImage.width
+        animationFrameImage.width
     );
     combinedCanvas.height = Math.max(
         combinedCanvas.height,
-        mediaLayerImage.height
+        animationFrameImage.height
     );
 
     // make it brighter
@@ -131,11 +118,25 @@ export const combineLandcoverImageWithMapScreenshots = async (
     }
 
     // Draw the media layer image onto the canvas on top of the basemap screenshot
-    if (mediaLayerImage) {
-        // Set the globalCompositeOperation to the desired blend mode
-        combinedCtx.globalCompositeOperation = LandCoverLayerBlendMode;
+    if (animationFrameImage) {
+        // console.log('blendModeTomediaLayerElement', blendModeTomediaLayerElement);
+        if (shouldBlendMediaLayerElementWithBasemap) {
+            combinedCtx.globalCompositeOperation = 'multiply';
+        }
 
-        combinedCtx.drawImage(mediaLayerImage, 0, 0);
+        combinedCtx.drawImage(animationFrameImage, 0, 0);
+    }
+
+    if (hillshadeScreenshotData) {
+        // convert ImageData to Bitmap and draw it on the combined canvas
+        const hillshadeScreenshotBitmap = await createImageBitmap(
+            hillshadeScreenshotData
+        );
+
+        // Set the globalCompositeOperation to the desired blend mode
+        combinedCtx.globalCompositeOperation = 'multiply';
+
+        combinedCtx.drawImage(hillshadeScreenshotBitmap, 0, 0);
     }
 
     // Draw the map label screenshot data onto the new canvas last
@@ -156,6 +157,27 @@ export const combineLandcoverImageWithMapScreenshots = async (
     return outputImage;
 };
 
+/**
+ * Captures screenshots of different basemap layers (basemap, map labels, terrain/hillshade) from an offscreen ArcGIS MapView.
+ *
+ * This function creates an offscreen map view that mirrors the current map view's state, toggles the visibility of basemap, label, and terrain layers
+ * according to the provided options, and captures screenshots for each requested layer type.
+ * The offscreen map view is destroyed and removed from the DOM after screenshots are taken.
+ *
+ * @param params - The parameters for capturing screenshots.
+ * @param params.mapView - The current MapView instance to mirror.
+ * @param params.webmapId - The ID of the WebMap to load in the offscreen view.
+ * @param params.includeBasemapInScreenshot - Whether to include a screenshot of the basemap layers.
+ * @param params.includeTerrainInScreenshot - Whether to include a screenshot of the terrain (hillshade) layer.
+ * @param params.includeMapLabelsInScreenshot - Whether to include a screenshot of the map label layers.
+ * @returns A promise that resolves to an object containing the screenshots for the basemap, reference (label) layers, and hillshade (terrain) layers.
+ *
+ * @remarks
+ * - The function manipulates layer visibility to isolate each requested layer type for screenshotting.
+ * - Screenshots are taken only for the layers specified in the input options.
+ * - The function ensures the offscreen map is fully rendered before capturing each screenshot.
+ * - The offscreen map view and its container are cleaned up after use.
+ */
 export const getScreenshotOfBasemapLayers = async ({
     mapView,
     webmapId,
@@ -167,11 +189,13 @@ export const getScreenshotOfBasemapLayers = async ({
         return {
             basemapScreenshot: null,
             referenceLayersScreenshot: null,
+            hillshadeScreenshot: null,
         };
     }
 
     let basemapScreenshot: __esri.Screenshot | null = null;
     let referenceLayersScreenshot: __esri.Screenshot | null = null;
+    let hillshadeScreenshot: __esri.Screenshot | null = null;
 
     const containerDivId = 'offscreen-map-container';
 
@@ -209,45 +233,35 @@ export const getScreenshotOfBasemapLayers = async ({
         },
     });
 
+    // add hillshade layer to the offscreen map view to capture terrain effect in the screenshot
+    const hillshadeLayer = getHillshadeLayer(true);
+    offscreenMapView.map.add(hillshadeLayer);
+
     // wait for the offscreen map view to be ready
     await offscreenMapView.when();
 
     // get basemap layers from the offscreen map view
     const basemapLayers = getBasemapLayers(offscreenMapView);
 
+    // get map label layers from the offscreen map view
     const mapLabelLayer = getMapLabelLayers(offscreenMapView);
-
-    const terrainLayer = getTerrainLayer(offscreenMapView);
-
-    // for(const layer of mapLabelLayer){
-    //     layer.visible = false;
-    // }
-
-    // await once(() => offscreenMapView.updating === false);
-
-    // trun off all map label layers
-    for (const layer of mapLabelLayer) {
-        layer.visible = false;
-    }
-
-    // turn off basemap layers if the user choose not to include basemap in the screenshot
-    if (includeBasemapInScreenshot === false) {
-        for (const layer of basemapLayers) {
-            layer.visible = false;
-        }
-    }
-
-    // turn on terrain layer if the user choose to include terrain in the screenshot
-    if (includeTerrainInScreenshot === false) {
-        // turn off terrain layer
-        if (terrainLayer) {
-            terrainLayer.visible = false;
-        }
-    }
 
     // take a screenshot of the offscreen map view without map label layers
     // only if the user choose to include basemap or terrain in the screenshot
-    if (includeBasemapInScreenshot || includeTerrainInScreenshot) {
+    if (includeBasemapInScreenshot) {
+        // trun off all map label layers
+        for (const layer of mapLabelLayer) {
+            layer.visible = false;
+        }
+
+        // turn off terrain layer
+        hillshadeLayer.visible = false;
+
+        // turn on all basemap layers
+        for (const layer of basemapLayers) {
+            layer.visible = true;
+        }
+
         await once(() => offscreenMapView.updating === false);
 
         await delay(100); // wait a bit more to ensure the map is fully rendered
@@ -258,25 +272,23 @@ export const getScreenshotOfBasemapLayers = async ({
             // quality: 80
             // quality: .8
         });
-        console.log(
-            'screenshot captured from offscreen map',
-            basemapScreenshot
-        );
+        // console.log(
+        //     'screenshot captured from offscreen map',
+        //     basemapScreenshot
+        // );
     }
 
     // take a screenshot of the offscreen map view with only map label layers visible
     if (includeMapLabelsInScreenshot) {
-        // turn on map label layers and turn off basemap layers and terrain layer
-        for (const layer of mapLabelLayer) {
-            layer.visible = true;
-        }
-
         for (const layer of basemapLayers) {
             layer.visible = false;
         }
 
-        if (terrainLayer) {
-            terrainLayer.visible = false;
+        hillshadeLayer.visible = false;
+
+        // turn on map label layers and turn off basemap layers and terrain layer
+        for (const layer of mapLabelLayer) {
+            layer.visible = true;
         }
 
         await once(() => offscreenMapView.updating === false);
@@ -291,10 +303,38 @@ export const getScreenshotOfBasemapLayers = async ({
             // quality: .8
         });
 
-        console.log(
-            'screenshot with reference layers captured from offscreen map',
-            referenceLayersScreenshot
-        );
+        // console.log(
+        //     'screenshot with reference layers captured from offscreen map',
+        //     referenceLayersScreenshot
+        // );
+    }
+
+    if (includeTerrainInScreenshot) {
+        // turn on map label layers and turn off basemap layers and terrain layer
+        for (const layer of mapLabelLayer) {
+            layer.visible = false;
+        }
+
+        for (const layer of basemapLayers) {
+            layer.visible = false;
+        }
+
+        hillshadeLayer.visible = true;
+
+        await once(() => offscreenMapView.updating === false);
+
+        await delay(100); // wait a bit more to ensure the map is fully rendered
+
+        // take a screenshot of the offscreen map view with only reference layers visible
+        hillshadeScreenshot = await offscreenMapView.takeScreenshot({
+            format: 'png',
+            ignoreBackground: true,
+            // quality: 80
+            // quality: .8
+        });
+
+        // const blob = await imageDataToBlob(hillshadeScreenshot.data);
+        // downloadBlob(blob, 'hillshade-screenshot.png');
     }
 
     // clean up the offscreen map view and its container
@@ -305,5 +345,6 @@ export const getScreenshotOfBasemapLayers = async ({
     return {
         basemapScreenshot,
         referenceLayersScreenshot,
+        hillshadeScreenshot,
     };
 };

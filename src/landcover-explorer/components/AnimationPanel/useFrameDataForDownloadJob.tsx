@@ -31,11 +31,12 @@ import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client
 import MapView from '@arcgis/core/views/MapView';
 import {
     // combineLandcoverImageWithMapScreenshot,
-    combineLandcoverImageWithMapScreenshots,
+    combineAnimationFrameImageWithMapScreenshots,
     getScreenshotOfBasemapLayers,
 } from './helpers';
 import {
     selectLandcoverAnimationYears,
+    selectShouldShowSatelliteImageryLayer,
     // selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
 // import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
@@ -91,6 +92,10 @@ export const useFrameDataForDownloadJob = ({
     // determine whether to include map label layers in the screenshot
     const includeMapLabelsInScreenshot = useAppSelector(selectShowMapLabel);
 
+    const showSatelliteImageryLayer = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
+    );
+
     useEffect(() => {
         (async () => {
             if (!mediaLayerElements?.length) {
@@ -99,22 +104,37 @@ export const useFrameDataForDownloadJob = ({
             }
 
             try {
-                const { basemapScreenshot, referenceLayersScreenshot } =
-                    await getScreenshotOfBasemapLayers({
-                        mapView: mapView,
-                        webmapId: WEB_MAP_ID,
-                        includeBasemapInScreenshot,
-                        includeTerrainInScreenshot,
-                        includeMapLabelsInScreenshot,
-                    });
+                const {
+                    basemapScreenshot,
+                    referenceLayersScreenshot,
+                    hillshadeScreenshot,
+                } = await getScreenshotOfBasemapLayers({
+                    mapView: mapView,
+                    webmapId: WEB_MAP_ID,
+                    includeBasemapInScreenshot,
+                    includeTerrainInScreenshot,
+                    includeMapLabelsInScreenshot,
+                });
 
                 // load media layer elements as an array of HTML Image Elements
                 const images = await Promise.all(
                     mediaLayerElements.map((d) => {
-                        return combineLandcoverImageWithMapScreenshots(
-                            d.image as string,
-                            basemapScreenshot?.data || null,
-                            referenceLayersScreenshot?.data || null
+                        return combineAnimationFrameImageWithMapScreenshots(
+                            {
+                                animationFrameImageUrl: d.image as string,
+                                basemapScreenshotData:
+                                    basemapScreenshot?.data || null,
+                                mapLabelScreenshotData:
+                                    referenceLayersScreenshot?.data || null,
+                                hillshadeScreenshotData:
+                                    hillshadeScreenshot?.data || null,
+                                shouldBlendMediaLayerElementWithBasemap:
+                                    showSatelliteImageryLayer === false,
+                            }
+                            // d.image as string,
+                            // basemapScreenshot?.data || null,
+                            // referenceLayersScreenshot?.data || null,
+                            // hillshadeScreenshot?.data || null
                         ); // if showing Landcover layer, the image need to be blended with the screenshot of basemap layers
                     })
                 );
