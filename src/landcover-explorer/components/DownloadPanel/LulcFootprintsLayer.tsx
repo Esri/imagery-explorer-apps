@@ -52,7 +52,7 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
 
     const init = async () => {
         layerRef.current = mapView.map.allLayers.find(
-            (layer) => layer.title === 'LULC Footprints'
+            (layer) => layer.title === 'S2LULCFootprints'
         ) as IFeatureLayer;
 
         layerViewRef.current = await mapView.whenLayerView(layerRef.current);
@@ -98,7 +98,7 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
 
         const { attributes } = feature;
 
-        const size = (attributes.FileSize / 1000).toFixed(0);
+        // const size = (attributes.FileSize / 1000).toFixed(0);
         const imageName = attributes.ImageName;
 
         const links = [...availableYears]
@@ -121,13 +121,25 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
             })
             .join('');
 
+        // popupDiv.innerHTML = `
+        //     <div class="text-custom-light-blue"
+        //         data-testid="lulc-footprint-popup-content"
+        //     >
+        //         <div class="my-2">
+        //             <p>Estimated Size: ${size} MB</p>
+        //         </div>
+        //         <div class='flex'>
+        //             <div class='mt-2 ml-1'>
+        //                 ${links}
+        //             </div>
+        //         </div>
+        //     </div>
+        // `;
+
         popupDiv.innerHTML = `
             <div class="text-custom-light-blue"
                 data-testid="lulc-footprint-popup-content"
             >
-                <div class="my-2">
-                    <p>Estimated Size: ${size} MB</p>
-                </div>
                 <div class='flex'>
                     <div class='mt-2 ml-1'>
                         ${links}
