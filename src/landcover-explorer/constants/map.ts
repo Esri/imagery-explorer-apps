@@ -30,9 +30,10 @@ import { appConfig } from '@shared/config';
 export const WEB_MAP_ID = appConfig.webmapId;
 
 /**
- * Web Map (also owned by John Nelson) that will be used in the Download Panel
+ * Web map id used when in download mode
+ * @see https://www.arcgis.com/home/item.html?id=47b723ae4c874045933f7a7ef52793a3
  */
-export const DWONLOAD_MODE_WEB_MAP_ID = '20e55f26c4704ade8b9716117315f99b';
+export const DWONLOAD_MODE_WEB_MAP_ID = '47b723ae4c874045933f7a7ef52793a3';
 
 // /**
 //  * ArcGIS Online Item of the Sentinel 2 layer
