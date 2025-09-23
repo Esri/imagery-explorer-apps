@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { appConfig } from '@shared/config';
+// import { appConfig } from '@shared/config';
 
 // export const WEB_MAP_ID_PROD = 'f8770e0adc5c41038026494b871ceb99'; // 'f8770e0adc5c41038026494b871ceb99';
 
@@ -22,12 +22,12 @@ import { appConfig } from '@shared/config';
 // export const WEB_MAP_ID =
 //     TIER === 'development' ? WEB_MAP_ID_DEV : WEB_MAP_ID_PROD;
 
-/**
- * Item Id of web map with Grayscale imagery basemap created by John Nelson
- *
- * @see https://www.arcgis.com/home/item.html?id=f8770e0adc5c41038026494b871ceb99
- */
-export const WEB_MAP_ID = appConfig.webmapId;
+// /**
+//  * Item Id of web map with Grayscale imagery basemap created by John Nelson
+//  *
+//  * @see https://www.arcgis.com/home/item.html?id=f8770e0adc5c41038026494b871ceb99
+//  */
+// export const WEB_MAP_ID = appConfig.webmapId;
 
 /**
  * Web map id used when in download mode
@@ -49,16 +49,16 @@ export const SENTINEL_2_10M_LAND_COVER_ITEM_ID = `cfcb7609de5f478eb7666240902d4d
 //     'https://www.arcgis.com/home/item.html?id=' +
 //     SENTINEL_2_10M_LAND_COVER_ITEM_ID;
 
-export const HUMAN_GEO_DARK_LABEL_LAYER_TITLE = 'Human Geography Dark Label';
-export const HUMAN_GEO_LIGHT_WATER_LAYER_TITLE =
-    'Human Geography Dark Detail Light Water';
-export const HUMAN_GEO_DARK_DRY_LAYER_TITLE = 'Human Geography Dark Detail Dry';
+// export const HUMAN_GEO_DARK_LABEL_LAYER_TITLE = 'Human Geography Dark Label';
+// export const HUMAN_GEO_LIGHT_WATER_LAYER_TITLE =
+//     'Human Geography Dark Detail Light Water';
+// export const HUMAN_GEO_DARK_DRY_LAYER_TITLE = 'Human Geography Dark Detail Dry';
 
-export const TERRAIN_LAYER_TITLE = 'World Hillshade';
+// export const TERRAIN_LAYER_TITLE = 'World Hillshade';
 
-export const WORLD_IMAGERY_BASEMAP_LAYER_TITLE = 'World Imagery';
+// export const WORLD_IMAGERY_BASEMAP_LAYER_TITLE = 'World Imagery';
 
-export const CUSTOM_OCEAN_BASEMAP_LAYER_TITLE = 'LandCoverAppOceans';
+// export const CUSTOM_OCEAN_BASEMAP_LAYER_TITLE = 'LandCoverAppOceans';
 
 export const DEFAULT_MAP_CENTERS = [
     /**

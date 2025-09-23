@@ -19,7 +19,6 @@ import {
     PayloadAction,
     // createAsyncThunk
 } from '@reduxjs/toolkit';
-import { MAP_CENTER, MAP_ZOOM } from '../../constants/map';
 import Point from '@arcgis/core/geometry/Point';
 import Extent from '@arcgis/core/geometry/Extent';
 
@@ -108,8 +107,8 @@ export const AUTO_SWIPE_SPEED_DEFAULTVALUE = AUTO_SWIPE_SPEEDS[2];
 
 export const initialMapState: MapState = {
     // webmapId: WEB_MAP_ID, // Topographic
-    center: MAP_CENTER,
-    zoom: MAP_ZOOM,
+    center: [-117.18, 34.055],
+    zoom: 12,
     resolution: null,
     scale: null,
     extent: null,

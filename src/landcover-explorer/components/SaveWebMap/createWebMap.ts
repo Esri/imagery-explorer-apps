@@ -15,10 +15,10 @@
 
 import { ISpatialReference } from '@esri/arcgis-rest-request';
 // import { PORTAL_ROOT } from '@landcover-explorer/constants';
-import {
-    // SENTINEL_2_10M_LAND_COVER_ITEM_ID,
-    WEB_MAP_ID,
-} from '@landcover-explorer/constants/map';
+// import {
+//     // SENTINEL_2_10M_LAND_COVER_ITEM_ID,
+//     WEB_MAP_ID,
+// } from '@landcover-explorer/constants/map';
 import { getToken } from '@shared/utils/esri-oauth';
 import { getSignedInUser } from '@shared/utils/esri-oauth';
 // import { MapExtent } from '@landcover-explorer/store/LandcoverExplorer/reducer';
@@ -27,6 +27,7 @@ import * as webMercatorUtils from '@arcgis/core/geometry/support/webMercatorUtil
 import Extent from '@arcgis/core/geometry/Extent';
 import { init } from 'i18next';
 import { AGOL_PORTAL_ROOT } from '@shared/config';
+import { WEB_MAP_ID } from '@shared/constants/map';
 
 type CreateWebMapOptions = {
     /**

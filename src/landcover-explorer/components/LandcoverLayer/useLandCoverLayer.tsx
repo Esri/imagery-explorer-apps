@@ -85,7 +85,7 @@ const useLandCoverLayer = ({
                     // getRasterFunctionByLandCoverClassName(activeLandCoverType),
                 },
                 effect: LandCoverLayerEffect,
-                blendMode: LandCoverLayerBlendMode,
+                // blendMode: LandCoverLayerBlendMode,
                 visible,
             });
 

@@ -20,19 +20,6 @@ type AppConfig = {
      * Title of the explorer app (e.g., 'Esri | Landsat Explorer')
      */
     title: string;
-    // /**
-    //  * Name of the satellite (e.g., 'Landsat')
-    //  */
-    // satellite: string;
-    /**
-     * Item id of the web map to be used in the app
-     */
-    webmapId: string;
-    // /**
-    //  * App id to be used to create the OAuthInfo object
-    //  * @see https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-OAuthInfo.html#appId
-    //  */
-    // appId: string;
 };
 
 /**

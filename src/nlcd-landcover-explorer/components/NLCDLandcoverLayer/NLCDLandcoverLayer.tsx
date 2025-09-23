@@ -28,12 +28,22 @@ import useLandCoverLayer from '@landcover-explorer/components/LandcoverLayer/use
 import { NLCD_LANDCOVER_IMAGE_SERVICE_URL } from '@shared/services/nlcd-landcover/config';
 import { useLandcoverLayerVisibility } from '@landcover-explorer/components/LandcoverLayer/useLandcoverLayerVisibility';
 import { useNLCDLandCoverLayerRasterFunctionName } from './useNLCDLandCoverLayerRasterFunctionName';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
+    /**
+     * The GroupLayer to which the NLCD-Land cover layer will be added
+     * This is to ensure the NLCD-Land cover layer is added under the hillshade layer
+     * with the blend mode applied
+     */
+    groupLayer?: GroupLayer;
     mapView?: IMapView;
 };
 
-export const NLCDLandcoverLayer: FC<Props> = ({ mapView }: Props) => {
+export const NLCDLandcoverLayer: FC<Props> = ({
+    mapView,
+    groupLayer,
+}: Props) => {
     const year = useAppSelector(selectYear);
 
     const visible = useLandcoverLayerVisibility();
@@ -48,10 +58,10 @@ export const NLCDLandcoverLayer: FC<Props> = ({ mapView }: Props) => {
     });
 
     useEffect(() => {
-        if (mapView && layer) {
-            mapView.map.add(layer);
+        if (groupLayer && layer) {
+            groupLayer.add(layer);
         }
-    }, [mapView, layer]);
+    }, [groupLayer, layer]);
 
     return null;
 };

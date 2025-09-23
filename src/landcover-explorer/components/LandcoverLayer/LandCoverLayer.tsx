@@ -29,12 +29,19 @@ import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sen
 // import { getRasterFunctionByLandCoverClassName } from '@shared/services/sentinel-2-10m-landcover/rasterAttributeTable';
 import { useSentinel2LandCoverLayerRasterFunctionName } from './useSentinel2LandCoverLayerRasterFunctionName';
 import { useLandcoverLayerVisibility } from './useLandcoverLayerVisibility';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
+    /**
+     * The GroupLayer to which the landcover layer will be added
+     * This is to ensure the landcover layer is added under the hillshade layer
+     * with the blend mode applied
+     */
+    groupLayer?: GroupLayer;
     mapView?: IMapView;
 };
 
-const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
+const LandcoverLayer: FC<Props> = ({ groupLayer, mapView }: Props) => {
     const year = useAppSelector(selectYear);
 
     const visible = useLandcoverLayerVisibility();
@@ -50,7 +57,7 @@ const LandcoverLayer: FC<Props> = ({ mapView }: Props) => {
 
     useEffect(() => {
         if (mapView && layer) {
-            mapView.map.add(layer);
+            groupLayer.add(layer);
         }
     }, [mapView, layer]);
 

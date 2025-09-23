@@ -237,6 +237,11 @@ module.exports =  (env, options)=> {
                  * URL for the NLCD Land Cover service.
                  */
                 ENV_NLCD_LANDCOVER_SERVICE_URL: JSON.stringify(envConfig.NLCD_LANDCOVER_SERVICE_URL),
+                /**
+                 * Web map ID for the Imagery Explorer app.
+                 * Optional: defaults to `f8770e0adc5c41038026494b871ceb99` if not specified.
+                 */
+                ENV_WEB_MAP_ID: JSON.stringify(envConfig.IMAGERY_EXPLORER_WEB_MAP_ID),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output

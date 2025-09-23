@@ -30,17 +30,24 @@ import {
     QueryParams4ImageryScene,
     queryParams4SecondarySceneChanged,
 } from '@shared/store/ImageryScene/reducer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
     /**
      * URL of the imagery service layer to be used in the Swipe Widget
      */
     serviceUrl: string;
+    /**
+     * If provided, the swipe widget layers will be added to this group layer
+     * instead of directly to the map in the map view.
+     */
+    groupLayer?: GroupLayer;
     mapView?: MapView;
 };
 
 export const SwipeWidget4ImageryLayers: FC<Props> = ({
     serviceUrl,
+    groupLayer,
     mapView,
 }: Props) => {
     const dispatch = useAppDispatch();
@@ -77,6 +84,7 @@ export const SwipeWidget4ImageryLayers: FC<Props> = ({
             leadingLayer={leadingLayer}
             trailingLayer={trailingLayer}
             mapView={mapView}
+            groupLayer={groupLayer}
             positionOnChange={(pos) => {
                 // console.log(pos)
                 dispatch(swipeWidgetHanlderPositionChanged(Math.trunc(pos)));

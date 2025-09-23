@@ -26,6 +26,7 @@ import MapView from '@arcgis/core/views/MapView';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 // import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';
 // import { useSentinel2LandCoverLayerRasterFunctionName } from '../LandcoverLayer/useSentinel2LandCoverLayerRasterFunctionName';
 
@@ -39,12 +40,18 @@ type Props = {
      */
     rasterFunctionName: string;
     mapView?: MapView;
+    /**
+     * If provided, the swipe widget layers will be added to this group layer
+     * instead of directly to the map in the map view.
+     */
+    groupLayer?: GroupLayer;
 };
 
 export const SwipeWidget4Landcover: FC<Props> = ({
     serviceUrl,
     rasterFunctionName,
     mapView,
+    groupLayer,
 }) => {
     const dispatch = useAppDispatch();
 
@@ -83,6 +90,7 @@ export const SwipeWidget4Landcover: FC<Props> = ({
             leadingLayer={leadingLayer}
             trailingLayer={trailingLayer}
             mapView={mapView}
+            groupLayer={groupLayer}
             positionOnChange={(position) => {
                 dispatch(swipeWidgetHanlderPositionChanged(position));
             }}

@@ -28,12 +28,18 @@ import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import useSentinel2Layer from '../Sentinel2Layer/useSentinel2Layer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
     mapView?: MapView;
+    /**
+     * If provided, the swipe widget layers will be added to this group layer
+     * instead of directly to the map in the map view.
+     */
+    groupLayer?: GroupLayer;
 };
 
-export const SwipeWidget4Sentinel2: FC<Props> = ({ mapView }) => {
+export const SwipeWidget4Sentinel2: FC<Props> = ({ mapView, groupLayer }) => {
     const dispatch = useAppDispatch();
 
     const mode = useAppSelector(selectMapMode);
@@ -71,6 +77,7 @@ export const SwipeWidget4Sentinel2: FC<Props> = ({ mapView }) => {
             leadingLayer={leadingLayer}
             trailingLayer={trailingLayer}
             mapView={mapView}
+            groupLayer={groupLayer}
             positionOnChange={(position) => {
                 dispatch(swipeWidgetHanlderPositionChanged(position));
             }}

@@ -27,12 +27,21 @@ import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import { useLandsatLayer } from '../LandsatLayer/useLandsatLayer';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
     mapView?: MapView;
+    /**
+     * If provided, the swipe widget layers will be added to this group layer
+     * instead of directly to the map in the map view.
+     */
+    groupLayer?: GroupLayer;
 };
 
-export const SwipeWidget4LandsatLayers: FC<Props> = ({ mapView }) => {
+export const SwipeWidget4LandsatLayers: FC<Props> = ({
+    mapView,
+    groupLayer,
+}) => {
     const dispatch = useAppDispatch();
 
     const mode = useAppSelector(selectMapMode);
@@ -70,6 +79,7 @@ export const SwipeWidget4LandsatLayers: FC<Props> = ({ mapView }) => {
             leadingLayer={leadingLayer}
             trailingLayer={trailingLayer}
             mapView={mapView}
+            groupLayer={groupLayer}
             positionOnChange={(position) => {
                 dispatch(swipeWidgetHanlderPositionChanged(position));
             }}

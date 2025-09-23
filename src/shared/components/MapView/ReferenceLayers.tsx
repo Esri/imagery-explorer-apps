@@ -30,11 +30,76 @@ import {
     HUMAN_GEO_DARK_DRY_LAYER_TITLE,
     WORLD_IMAGERY_BASEMAP_LAYER_TITLE,
     CUSTOM_OCEAN_BASEMAP_LAYER_TITLE,
-    // TERRAIN_LAYER_TITLE,
+    TERRAIN_LAYER_TITLE,
 } from '@shared/constants/map';
 
 type Props = {
     mapView?: IMapView;
+};
+
+/**
+ * Retrieves the map label layers from the provided map view.
+ *
+ * Filters the layers in the map to include only those whose titles match
+ * specific human geography layer titles.
+ *
+ * @param mapView - The map view instance containing the map and its layers.
+ * @returns A collection of layers matching the specified titles, or `null` if the map is not available.
+ */
+export const getMapLabelLayers = (
+    mapView: IMapView
+): __esri.Collection<Layer> => {
+    if (!mapView?.map) {
+        return null;
+    }
+    return mapView.map.allLayers.filter((layer: Layer) => {
+        return (
+            layer.title === HUMAN_GEO_DARK_LABEL_LAYER_TITLE ||
+            layer.title === HUMAN_GEO_LIGHT_WATER_LAYER_TITLE ||
+            layer.title === HUMAN_GEO_DARK_DRY_LAYER_TITLE
+        );
+    });
+};
+
+/**
+ * Retrieves the basemap layers from the given map view.
+ *
+ * Filters the layers in the map to include only those whose titles match
+ * either `WORLD_IMAGERY_BASEMAP_LAYER_TITLE` or `CUSTOM_OCEAN_BASEMAP_LAYER_TITLE`.
+ *
+ * @param mapView - The map view instance containing the map and its layers.
+ * @returns A collection of basemap layers matching the specified titles, or `null` if the map is not available.
+ */
+export const getBasemapLayers = (
+    mapView: IMapView
+): __esri.Collection<Layer> => {
+    if (!mapView?.map) {
+        return null;
+    }
+
+    return mapView.map.allLayers.filter((layer: Layer) => {
+        return (
+            layer.title === WORLD_IMAGERY_BASEMAP_LAYER_TITLE ||
+            layer.title === CUSTOM_OCEAN_BASEMAP_LAYER_TITLE
+        );
+    });
+};
+
+/** Retrieves the terrain layer from the provided map view.
+ *
+ * Searches through all layers in the map to find a layer with a title
+ * matching `TERRAIN_LAYER_TITLE`.
+ * @param mapView - The map view instance containing the map and its layers.
+ * @returns The terrain layer if found, otherwise `null`.
+ */
+export const getTerrainLayer = (mapView: IMapView): Layer => {
+    if (!mapView?.map) {
+        return null;
+    }
+
+    return mapView.map.allLayers.find(
+        (layer) => layer.title === TERRAIN_LAYER_TITLE
+    );
 };
 
 const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
@@ -69,22 +134,24 @@ const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
     };
 
     const init = () => {
-        mapLabelLayersRef.current = mapView.map.allLayers.filter((layer) => {
-            return (
-                layer.title === HUMAN_GEO_DARK_LABEL_LAYER_TITLE ||
-                layer.title === HUMAN_GEO_LIGHT_WATER_LAYER_TITLE ||
-                layer.title === HUMAN_GEO_DARK_DRY_LAYER_TITLE
-            );
-        });
+        mapLabelLayersRef.current = getMapLabelLayers(mapView);
+        // mapView.map.allLayers.filter((layer) => {
+        //     return (
+        //         layer.title === HUMAN_GEO_DARK_LABEL_LAYER_TITLE ||
+        //         layer.title === HUMAN_GEO_LIGHT_WATER_LAYER_TITLE ||
+        //         layer.title === HUMAN_GEO_DARK_DRY_LAYER_TITLE
+        //     );
+        // });
 
-        basemapLayersRef.current = mapView.map.allLayers.filter(
-            (layer: Layer) => {
-                return (
-                    layer.title === WORLD_IMAGERY_BASEMAP_LAYER_TITLE ||
-                    layer.title === CUSTOM_OCEAN_BASEMAP_LAYER_TITLE
-                );
-            }
-        );
+        basemapLayersRef.current = getBasemapLayers(mapView);
+        // mapView.map.allLayers.filter(
+        //     (layer: Layer) => {
+        //         return (
+        //             layer.title === WORLD_IMAGERY_BASEMAP_LAYER_TITLE ||
+        //             layer.title === CUSTOM_OCEAN_BASEMAP_LAYER_TITLE
+        //         );
+        //     }
+        // );
 
         // update visibiliy in case user want these layers to be turned off by default
         updateLabelLayersVisibility();

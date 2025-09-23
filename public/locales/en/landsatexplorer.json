@@ -7,7 +7,7 @@
     "natural_color_label": "Natural Color",
     "color_infrared_description": "Bands near-IR, red, green (5, 4, 3) with dynamic range adjustment applied. Healthy vegetation is bright red while stressed vegetation is dull red.",
     "color_infrared_label": "Color IR",
-    "short_wave_infrared_description": "Bands shortwave IR-2, shortwave IR-1, red (7, 5, 4) with dynamic range adjustment applied.",
+    "short_wave_infrared_description": "Bands shortwave IR-2, near IR, red (7, 5, 4) with dynamic range adjustment applied.",
     "short_wave_infrared_label": "Short-wave IR",
     "agriculture_description": "Bands shortwave IR-1, near-IR, blue (6, 5, 2) with dynamic range adjustment applied. Vigorous veg. is bright green, stressed veg. dull green and bare areas as brown.",
     "agriculture_label": "Agriculture",

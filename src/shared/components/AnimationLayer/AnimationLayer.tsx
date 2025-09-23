@@ -40,6 +40,8 @@ import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-para
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import { fr } from 'date-fns/locale';
 
 type Props = {
     /**
@@ -54,6 +56,10 @@ type Props = {
      * The animation metadata sources.
      */
     animationMetadataSources: string;
+    /**
+     * If provided, the animation layer will be added to this map view
+     */
+    groupLayer?: GroupLayer;
     mapView?: MapView;
 };
 
@@ -61,6 +67,7 @@ export const AnimationLayer: FC<Props> = ({
     imageryServiceUrl,
     authoringAppName,
     animationMetadataSources,
+    groupLayer,
     mapView,
 }: Props) => {
     const dispatch = useAppDispatch();
@@ -103,6 +110,7 @@ export const AnimationLayer: FC<Props> = ({
         mediaLayerElements,
         sortedQueryParams4ScenesInAnimationMode,
         animationMetadataSources,
+        mapView,
     });
 
     /**
@@ -138,20 +146,25 @@ export const AnimationLayer: FC<Props> = ({
         try {
             mediaLayerRef.current = new MediaLayer({
                 visible: true,
-                // effect: LandCoverLayerEffect,
-                // blendMode: LandCoverLayerBlendMode,
             });
 
-            mapView.map.add(mediaLayerRef.current);
+            groupLayer.add(mediaLayerRef.current);
         } catch (err) {
             console.error(err);
         }
     };
 
     useEffect(() => {
+        if (!mediaLayerRef.current) {
+            initMediaLayer();
+            return;
+        }
+    }, [groupLayer]);
+
+    useEffect(() => {
         (async () => {
             if (!mediaLayerRef.current) {
-                initMediaLayer();
+                // initMediaLayer();
                 return;
             }
 
@@ -164,6 +177,11 @@ export const AnimationLayer: FC<Props> = ({
             source.elements.removeAll();
 
             if (!mediaLayerElements || mediaLayerElements.length === 0) {
+                return;
+            }
+
+            // should not start animation if frame data for download job is not ready
+            if (!frameData4DownloadJob || frameData4DownloadJob.length === 0) {
                 return;
             }
 
@@ -215,7 +233,7 @@ export const AnimationLayer: FC<Props> = ({
                 dispatch(animationStatusChanged('failed-loading'));
             }
         })();
-    }, [mediaLayerElements, mapView]);
+    }, [mediaLayerElements, frameData4DownloadJob]);
 
     // If the map view's height changes during an animation,
     // set the animation status to 'loading' so the useMediaLayerImageElement hook

@@ -34,7 +34,7 @@ export const About: FC<Props> = ({ children }) => {
     }
 
     return (
-        <div className="absolute top-0 left-0 bottom-0 right-0 px-4 py-10 bg-custom-background-95 z-20 text-custom-light-blue overflow-y-auto fancy-scrollbar">
+        <div className="absolute top-0 left-0 bottom-0 right-0 px-4 py-10 bg-custom-background-95 z-50 text-custom-light-blue overflow-y-auto fancy-scrollbar">
             <CloseButton
                 onClick={() => {
                     dispatch(shouldShowAboutThisAppToggled());

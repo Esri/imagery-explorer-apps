@@ -20,6 +20,7 @@ import GroupLayer from '@arcgis/core/layers/GroupLayer';
 type Props = {
     index?: number;
     mapView?: MapView;
+    blendMode?: 'multiply' | null;
     /**
      * Children Elements that will receive Map View and Group  as prop
      */
@@ -29,12 +30,15 @@ type Props = {
 export const GroupLayerWrapper: FC<Props> = ({
     index,
     mapView,
+    blendMode,
     children,
 }: Props) => {
     const [groupLayer, setGroupLayer] = useState<GroupLayer>();
 
     const initGroupLayer = async () => {
-        const groupLayer = new GroupLayer();
+        const groupLayer = new GroupLayer({
+            blendMode: blendMode || 'normal',
+        });
 
         mapView.map.add(groupLayer, index);
 
@@ -48,6 +52,15 @@ export const GroupLayerWrapper: FC<Props> = ({
 
         initGroupLayer();
     }, [mapView]);
+
+    useEffect(() => {
+        if (!groupLayer) {
+            return;
+        }
+
+        groupLayer.blendMode = blendMode || 'normal';
+        // console.log('Group Layer Blend Mode set to:', blendMode);
+    }, [blendMode, groupLayer]);
 
     return (
         <>

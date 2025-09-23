@@ -25,12 +25,19 @@ import {
     selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
+    /**
+     * The GroupLayer to which the sentinel-2 layer will be added
+     * This is to ensure the sentinel-2 layer is added under the hillshade layer
+     * with the blend mode applied
+     */
+    groupLayer?: GroupLayer;
     mapView?: IMapView;
 };
 
-const Sentinel2Layer: FC<Props> = ({ mapView }: Props) => {
+const Sentinel2Layer: FC<Props> = ({ groupLayer, mapView }: Props) => {
     const year = useAppSelector(selectYear);
 
     const mode = useAppSelector(selectMapMode);
@@ -63,10 +70,10 @@ const Sentinel2Layer: FC<Props> = ({ mapView }: Props) => {
     });
 
     useEffect(() => {
-        if (mapView && layer) {
-            mapView.map.add(layer);
+        if (groupLayer && layer) {
+            groupLayer.add(layer);
         }
-    }, [mapView, layer]);
+    }, [groupLayer, layer]);
 
     return null;
 };

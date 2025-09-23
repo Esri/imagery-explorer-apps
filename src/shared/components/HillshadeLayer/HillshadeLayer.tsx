@@ -29,21 +29,31 @@ type Props = {
     mapView?: MapView;
 };
 
+/**
+ * Creates and returns a configured TileLayer instance for displaying hillshade terrain.
+ *
+ * @param visible - Determines whether the hillshade layer should be visible on the map.
+ * @returns A new TileLayer instance with predefined settings for hillshade visualization.
+ */
+export const getHillshadeLayer = (visible: boolean) => {
+    return new TileLayer({
+        title: TERRAIN_LAYER_TITLE,
+        portalItem: {
+            id: TERRAIN_LAYER_ITEM_ID,
+        },
+        blendMode: 'multiply',
+        opacity: 0.8,
+        visible,
+    });
+};
+
 export const HillshadeLayer: FC<Props> = ({ mapView }) => {
     const visible = useAppSelector(selectShowTerrain);
 
     const terrainLayerRef = useRef<TileLayer>(null);
 
     const init = async () => {
-        terrainLayerRef.current = new TileLayer({
-            title: TERRAIN_LAYER_TITLE,
-            portalItem: {
-                id: TERRAIN_LAYER_ITEM_ID,
-            },
-            blendMode: 'multiply',
-            opacity: 0.8,
-            visible,
-        });
+        terrainLayerRef.current = getHillshadeLayer(visible);
 
         // use index of 2 to place the hillshade layer on top of the imagery layer
         // so the blend mode would make better

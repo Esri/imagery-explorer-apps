@@ -16,7 +16,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
-import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
+// import { WEB_MAP_ID } from '@landcover-explorer/constants/map';
 import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
@@ -33,12 +33,12 @@ import { selectHideBottomPanel } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 // import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 // import ReferenceLayersToggleControl from '../ReferenceLayersToggleControl/ReferenceLayersToggleControl';
-import ReferenceLayers from './ReferenceLayers';
+// import ReferenceLayers from './ReferenceLayers';
 import { saveMapCenterToHashParams } from '@landcover-explorer/utils/URLHashParams';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 // import Sentinel2Layer from '../Sentinel2Layer/Sentinel2Layer';
 // import LandcoverLayer from '../LandcoverLayer/LandCoverLayer';
-import AnimationPanel from '../AnimationPanel/AnimationPanel';
+// import AnimationPanel from '../AnimationPanel/AnimationPanel';
 import MapInfoIndicators from './MapReferenceInfo';
 // import MapView from './MapView';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
@@ -56,21 +56,23 @@ import { MapActionButtonGroup4LandcoverExplorer } from './MapActionButtonGroup4L
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 import { ReferenceLayersToggleControl } from '@shared/components/ReferenceLayersToggleControl';
+import { WEB_MAP_ID } from '@shared/constants/map';
+import ReferenceLayers from '@shared/components/MapView/ReferenceLayers';
 
 type MapViewContainerProps = {
     attribution: string;
     /**
      * URL for the Land Cover Image Service
      */
-    landCoverServiceUrl: string;
+    // landCoverServiceUrl: string;
     /**
      * name of the raster function that will be used for rendering the land cover layer.
      */
-    landcoverLayerRasterFunctionName: string;
+    // landcoverLayerRasterFunctionName: string;
     /**
      * URL for the Satellite Imagery Service
      */
-    satellteImageryServiceUrl: string;
+    // satellteImageryServiceUrl: string;
     /**
      * name of the satellite imagery layer that will be displayed as a reference layer. (e.g. "Sentinel-2")
      */
@@ -81,9 +83,9 @@ type MapViewContainerProps = {
 
 export const MapViewContainer: FC<MapViewContainerProps> = ({
     attribution,
-    landCoverServiceUrl,
-    landcoverLayerRasterFunctionName,
-    satellteImageryServiceUrl,
+    // landCoverServiceUrl,
+    // landcoverLayerRasterFunctionName,
+    // satellteImageryServiceUrl,
     nameOfSatelliteImageryLayer,
     // isSatelliteImageryOutOfVisibleRange,
     nativeScale,
@@ -164,7 +166,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
 
                 <CustomMapArrtribution atrribution={attribution} />
 
-                <AnimationPanel
+                {/* <AnimationPanel
                     landCoverServiceUrl={landCoverServiceUrl}
                     satellteImageryServiceUrl={satellteImageryServiceUrl}
                     landcoverLayerRasterFunctionName={
@@ -173,7 +175,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                     animationMetadataSources={t('animation_metadata', {
                         ns: APP_NAME,
                     })}
-                />
+                /> */}
 
                 <MapActionButtonGroup4LandcoverExplorer
                     nativeScale={nativeScale}

@@ -16,7 +16,12 @@
 import ImageElement from '@arcgis/core/layers/support/ImageElement';
 // import { appConfig } from '@shared/config';
 // import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
-import { selectMapCenter } from '@shared/store/Map/selectors';
+import {
+    selectMapCenter,
+    selectShowBasemap,
+    selectShowMapLabel,
+    selectShowTerrain,
+} from '@shared/store/Map/selectors';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 // import { AnimationFrameData4DownloadJob } from '@shared/components/AnimationDownloadPanel/DownloadPanel';
@@ -24,13 +29,19 @@ import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client';
 // import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import MapView from '@arcgis/core/views/MapView';
-import { combineLandcoverImageWithMapScreenshot } from './helpers';
+import {
+    // combineLandcoverImageWithMapScreenshot,
+    combineAnimationFrameImageWithMapScreenshots,
+    getScreenshotOfBasemapLayers,
+} from '@shared/components/AnimationLayer/helpers';
 import {
     selectLandcoverAnimationYears,
     selectShouldShowSatelliteImageryLayer,
+    // selectShouldShowSatelliteImageryLayer,
 } from '@shared/store/LandcoverExplorer/selectors';
-import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
+// import { loadImageAsHTMLIMageElement } from '@shared/utils/snippets/loadImage';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
+import { WEB_MAP_ID } from '@shared/constants/map';
 
 /**
  * Represents the properties required by the custom hook `useFrameDataForDownloadJob`.
@@ -66,11 +77,24 @@ export const useFrameDataForDownloadJob = ({
 
     const years = useAppSelector(selectLandcoverAnimationYears);
 
-    const shouldShowSentinel2Layer = useAppSelector(
-        selectShouldShowSatelliteImageryLayer
-    );
+    // const shouldShowSentinel2Layer = useAppSelector(
+    //     selectShouldShowSatelliteImageryLayer
+    // );
 
     const [frameData, setFrameData] = useState<AnimationFrameData[]>([]);
+
+    // determine whether to include basemap layers in the screenshot
+    const includeBasemapInScreenshot = useAppSelector(selectShowBasemap);
+
+    // determine whether to include terrain layer in the screenshot
+    const includeTerrainInScreenshot = useAppSelector(selectShowTerrain);
+
+    // determine whether to include map label layers in the screenshot
+    const includeMapLabelsInScreenshot = useAppSelector(selectShowMapLabel);
+
+    const showSatelliteImageryLayer = useAppSelector(
+        selectShouldShowSatelliteImageryLayer
+    );
 
     useEffect(() => {
         (async () => {
@@ -80,22 +104,38 @@ export const useFrameDataForDownloadJob = ({
             }
 
             try {
-                // take a screenshot for the basemap layers if it is showing the landcover layer,
-                // as the landcover layer will need to be combined/blended with the screenshot of basemap layers
-                const screenshot = !shouldShowSentinel2Layer
-                    ? await mapView.takeScreenshot()
-                    : null;
-                // console.log(screenshot)
+                const {
+                    basemapScreenshot,
+                    referenceLayersScreenshot,
+                    hillshadeScreenshot,
+                } = await getScreenshotOfBasemapLayers({
+                    mapView: mapView,
+                    webmapId: WEB_MAP_ID,
+                    includeBasemapInScreenshot,
+                    includeTerrainInScreenshot,
+                    includeMapLabelsInScreenshot,
+                });
 
                 // load media layer elements as an array of HTML Image Elements
                 const images = await Promise.all(
                     mediaLayerElements.map((d) => {
-                        return shouldShowSentinel2Layer
-                            ? loadImageAsHTMLIMageElement(d.image as string)
-                            : combineLandcoverImageWithMapScreenshot(
-                                  d.image as string,
-                                  screenshot.data
-                              ); // if showing Landcover layer, the image need to be blended with the screenshot of basemap layers
+                        return combineAnimationFrameImageWithMapScreenshots(
+                            {
+                                animationFrameImageUrl: d.image as string,
+                                basemapScreenshotData:
+                                    basemapScreenshot?.data || null,
+                                mapLabelScreenshotData:
+                                    referenceLayersScreenshot?.data || null,
+                                hillshadeScreenshotData:
+                                    hillshadeScreenshot?.data || null,
+                                shouldBlendAnimationFrameWithBasemap:
+                                    showSatelliteImageryLayer === false,
+                            }
+                            // d.image as string,
+                            // basemapScreenshot?.data || null,
+                            // referenceLayersScreenshot?.data || null,
+                            // hillshadeScreenshot?.data || null
+                        ); // if showing Landcover layer, the image need to be blended with the screenshot of basemap layers
                     })
                 );
 

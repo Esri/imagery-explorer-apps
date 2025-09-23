@@ -40,9 +40,17 @@ import { CloseButton } from '@shared/components/CloseButton';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
+import GroupLayer from '@arcgis/core/layers/GroupLayer';
 
 type Props = {
     mapView?: IMapView;
+    /**
+     * If provided, the media layer will be added to this group layer
+     * instead of directly to the map in the map view.
+     */
+    groupLayer?: GroupLayer;
     /**
      * The URL for the Land Cover Image Service.
      */
@@ -63,11 +71,14 @@ type Props = {
 
 const AnimationPanel: FC<Props> = ({
     mapView,
+    groupLayer,
     landCoverServiceUrl,
     satellteImageryServiceUrl,
     landcoverLayerRasterFunctionName,
     animationMetadataSources,
 }: Props) => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const animationMode = useAppSelector(selectAnimationStatus);
@@ -90,7 +101,7 @@ const AnimationPanel: FC<Props> = ({
 
     const animationSpeed = useAppSelector(selectAnimationSpeed);
 
-    const shouldShowSentinel2Layer = useAppSelector(
+    const shouldShowSatelliteImageryLayer = useAppSelector(
         selectShouldShowSatelliteImageryLayer
     );
 
@@ -100,10 +111,11 @@ const AnimationPanel: FC<Props> = ({
         mediaLayerRef.current = new MediaLayer({
             visible: true,
             effect: LandCoverLayerEffect,
-            blendMode: LandCoverLayerBlendMode,
+            // blendMode: LandCoverLayerBlendMode,
         });
 
-        mapView.map.add(mediaLayerRef.current);
+        groupLayer.add(mediaLayerRef.current);
+        // console.log(groupLayer);
     };
 
     // useEffect(() => {
@@ -182,14 +194,14 @@ const AnimationPanel: FC<Props> = ({
     }, [mediaLayerElements, frameData4DownloadJob]);
 
     useEffect(() => {
-        if (!mapView) {
+        if (!groupLayer) {
             return;
         }
 
         if (!mediaLayerRef.current) {
             initMediaLayer();
         }
-    }, [mapView]);
+    }, [groupLayer]);
 
     if (!animationMode) {
         return null;
@@ -219,7 +231,13 @@ const AnimationPanel: FC<Props> = ({
                     height: mapView.height,
                 }}
                 authoringAppName={
-                    shouldShowSentinel2Layer ? 'sentinel2' : 'landcover'
+                    shouldShowSatelliteImageryLayer
+                        ? t('animation_output_prefix_satellite_layer_on', {
+                              ns: APP_NAME,
+                          })
+                        : t('animation_output_prefix_landcover_layer_on', {
+                              ns: APP_NAME,
+                          })
                 }
             />
         </div>
