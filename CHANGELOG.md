@@ -4,17 +4,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]()
+## 2025-09-23
 
 ### Shared
-#### Fixed
-- Corrected usage of the `useRef` hook in multiple components to ensure proper default values.
 
 #### Updated
+- Enhancement for Export Animation to MP4 - Add Basemap, Hillshade, and Reference Layers to Animation Frames.
+- Consolidate Imagery Explorer Apps to Use One Web Map for clarity and maintainability.
+- implement user privilege checks for saving and publishing content.
 - Upgraded `react` and `react-dom` to version 19.
 - Adopted components from `@esri/calcite-components-react` for enhanced type safety and consistency.
 
+#### Fixed
+- Corrected usage of the `useRef` hook in multiple components to ensure proper default values.
+
 ---
+
+### Sentinel-2 Explorer
+
+#### Added
+- Added translation support for Spanish (es).
+
+--- 
+
+### Sentinel-2 Land Cover Explorer
+
+#### Fixed
+- Update web map (https://www.arcgis.com/home/item.html?id=47b723ae4c874045933f7a7ef52793a3) used in the download panel to the one owned by esri_imagery account.
 
 ## 2025-07-09
 
