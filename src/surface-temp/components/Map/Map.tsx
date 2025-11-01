@@ -36,6 +36,7 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/co
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { UrbanAreaLayer } from '../UrbanAreaLayer';
 
 const Map = () => {
     const { t } = useTranslation();
@@ -66,6 +67,7 @@ const Map = () => {
                         ns: APP_NAME,
                     })}
                 />
+                <UrbanAreaLayer />
             </GroupLayer>
             {/* <SwipeWidget /> */}
 
@@ -75,7 +77,7 @@ const Map = () => {
             <HillshadeLayer />
             <Popup />
             {/* use crosshair cursor for the map component all the time */}
-            <CrosshairCursor />
+            {/* <CrosshairCursor /> */}
         </MapViewContainer>
     );
 };
