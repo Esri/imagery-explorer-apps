@@ -58,11 +58,15 @@ export type UrbanHeatIslandToolState = {
      */
     selectedUrbanAreaFeature: UrbanAreaFeature;
     /**
-     * if ture, it is in process of loading data to render trend tool
+     * list of selected months (1-12) to run the urban heat island analysis
+     */
+    selectedMonths: number[]; // default to current month
+    /**
+     * if ture, it is in process of loading data for urban heat island analysis
      */
     loading: boolean;
     /**
-     * message from the error that was caught while fetch the temporal profile data
+     * message from the error that was caught while run urban heat island analysis
      */
     error: string;
 };
@@ -72,6 +76,7 @@ export const initialUrbanHeatIslandToolState: UrbanHeatIslandToolState = {
     loading: false,
     error: null,
     selectedUrbanAreaFeature: null,
+    selectedMonths: [],
 };
 
 const slice = createSlice({
@@ -99,6 +104,9 @@ const slice = createSlice({
         ) => {
             state.selectedUrbanAreaFeature = action.payload;
         },
+        selectedMonthsChanged: (state, action: PayloadAction<number[]>) => {
+            state.selectedMonths = action.payload;
+        },
     },
 });
 
@@ -109,6 +117,7 @@ export const {
     urbanHeatIslandToolIsLoadingChanged,
     errorChanged,
     selectedUrbanAreaFeatureChanged,
+    selectedMonthsChanged,
 } = slice.actions;
 
 export default reducer;

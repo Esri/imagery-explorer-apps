@@ -1,3 +1,9 @@
 {
-    "landsat_explorer_attribution": "Landsat imagery courtesy of USGS, NASA, and Microsoft"
+    "landsat_explorer_attribution": "Landsat imagery courtesy of USGS, NASA, and Microsoft",
+    "create_new_urban_heat_island_analysis": "Start a SIUHI analysis",
+    "create_new_job": "Create new job",
+    "siuhi_full_name": "Landsat Surface Intra-Urban Heat Island (SIUHI)",
+    "reset": "Reset",
+    "choose_aoi_polygon": "Choose an AOI polygon",
+    "no_aoi_polygon_selected": "No AOI polygon selected, click map to select one."
 }
