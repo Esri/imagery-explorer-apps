@@ -48,6 +48,11 @@ type UrbanAreaFeature = {
     COUNTRY: string;
 };
 
+export type UrbanHeatIslandToolPanel =
+    | 'create new job'
+    | 'view previous jobs'
+    | 'view pending job';
+
 export type UrbanHeatIslandToolState = {
     /**
      * Query Location for Urban Heat Island Tool
@@ -69,6 +74,10 @@ export type UrbanHeatIslandToolState = {
      * message from the error that was caught while run urban heat island analysis
      */
     error: string;
+    /**
+     * active panel in the urban heat island tool UI
+     */
+    activePanel: UrbanHeatIslandToolPanel;
 };
 
 export const initialUrbanHeatIslandToolState: UrbanHeatIslandToolState = {
@@ -77,6 +86,7 @@ export const initialUrbanHeatIslandToolState: UrbanHeatIslandToolState = {
     error: null,
     selectedUrbanAreaFeature: null,
     selectedMonths: [],
+    activePanel: 'create new job',
 };
 
 const slice = createSlice({
@@ -107,6 +117,12 @@ const slice = createSlice({
         selectedMonthsChanged: (state, action: PayloadAction<number[]>) => {
             state.selectedMonths = action.payload;
         },
+        activePanel4UrbanHeatIslandToolChanged: (
+            state,
+            action: PayloadAction<UrbanHeatIslandToolPanel>
+        ) => {
+            state.activePanel = action.payload;
+        },
     },
 });
 
@@ -118,6 +134,7 @@ export const {
     errorChanged,
     selectedUrbanAreaFeatureChanged,
     selectedMonthsChanged,
+    activePanel4UrbanHeatIslandToolChanged,
 } = slice.actions;
 
 export default reducer;

@@ -8,3 +8,6 @@ export const selectSelectedUrbanAreaFeature = (state: RootState) =>
 
 export const selectSelectedMonths = (state: RootState) =>
     state.UrbanHeatIslandTool.selectedMonths;
+
+export const selectActivePanel4UrbanHeatIslandTool = (state: RootState) =>
+    state.UrbanHeatIslandTool.activePanel;
