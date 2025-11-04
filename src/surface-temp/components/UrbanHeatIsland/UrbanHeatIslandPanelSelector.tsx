@@ -34,7 +34,7 @@ export const UrbanHeatIslandPanelSelector = () => {
                         activePanel === 'create new job' ? 'left' : null
                     }
                 >
-                    Create New Job
+                    New Task
                 </Button>
             </div>
 
@@ -53,7 +53,7 @@ export const UrbanHeatIslandPanelSelector = () => {
                         activePanel === 'view pending job' ? 'left' : null
                     }
                 >
-                    Pending Job
+                    Pending Task
                 </Button>
             </div>
 
@@ -72,7 +72,7 @@ export const UrbanHeatIslandPanelSelector = () => {
                         activePanel === 'view previous jobs' ? 'left' : null
                     }
                 >
-                    Finished Jobs
+                    Previous Tasks
                 </Button>
             </div>
         </div>

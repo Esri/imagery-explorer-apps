@@ -5,5 +5,7 @@
     "siuhi_full_name": "Landsat Surface Intra-Urban Heat Island (SIUHI)",
     "reset": "Reset",
     "choose_aoi_polygon": "Choose an AOI polygon",
-    "no_aoi_polygon_selected": "No AOI polygon selected, click map to select one."
+    "no_aoi_polygon_selected": "No AOI polygon selected, click map to select one.",
+    "choose_months": "Choose months for analysis",
+    "start_new_siuhi_analysis": "Start new SIUHI analysis"
 }

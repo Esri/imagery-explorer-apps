@@ -10,16 +10,8 @@ export const CreateNewJob = () => {
 
     const selectedFeature = useAppSelector(selectSelectedUrbanAreaFeature);
     return (
-        <div className="min-w-[400px]">
-            <div>
-                <span className="uppercas">
-                    {t('create_new_urban_heat_island_analysis', {
-                        ns: APP_NAME,
-                    })}
-                </span>
-            </div>
-
-            <div className="mb-1">
+        <div className="flex justify-between w-full h-full">
+            <div className="w-1/3 h-full pr-2 mr-2">
                 <div className="flex opacity-50">
                     <CalciteIcon icon="pin" scale="s" className="mr-1" />
                     <span className="text-sm ">
@@ -43,35 +35,50 @@ export const CreateNewJob = () => {
                 </div>
             </div>
 
-            <div></div>
+            <div className="w-1/3 h-full pr-2 mr-2">
+                <div className="flex opacity-50">
+                    <CalciteIcon icon="calendar" scale="s" className="mr-1" />
+                    <span className="text-sm ">
+                        {t('choose_months', { ns: APP_NAME })}
+                    </span>
+                </div>
+            </div>
 
             <div
-                className="flex items-center"
+                className="w-1/3"
                 style={
                     {
-                        // '--calcite-button-border-color': 'var(--custom-light-blue-90)',
+                        '--calcite-button-border-color':
+                            'var(--custom-light-blue-90)',
                         '--calcite-button-text-color':
                             'var(--custom-light-blue)',
                     } as React.CSSProperties
                 }
             >
-                <div className="mr-2">
-                    <CalciteButton
-                        appearance="transparent"
-                        scale="m"
-                        iconStart="plus"
-                    >
-                        {t('create_new_job', { ns: APP_NAME })}
-                    </CalciteButton>
+                <div className="flex opacity-50">
+                    <CalciteIcon icon="heat-chart" scale="s" className="mr-1" />
+                    <span className="text-sm ">
+                        {t('start_new_siuhi_analysis', { ns: APP_NAME })}
+                    </span>
                 </div>
 
                 <CalciteButton
-                    appearance="transparent"
-                    scale="s"
-                    iconEnd="reset"
-                    round
+                    appearance="outline"
+                    scale="m"
+                    width="full"
+                    iconStart="plus"
+                    className="mb-2"
                 >
-                    {/* {t('reset', { ns: APP_NAME })} */}
+                    {t('create_new_job', { ns: APP_NAME })}
+                </CalciteButton>
+
+                <CalciteButton
+                    appearance="outline"
+                    scale="m"
+                    iconStart="reset"
+                    width="full"
+                >
+                    {t('reset', { ns: APP_NAME })}
                 </CalciteButton>
             </div>
         </div>
