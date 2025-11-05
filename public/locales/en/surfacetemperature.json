@@ -7,6 +7,8 @@
     "choose_aoi_polygon": "Choose an AOI polygon",
     "no_aoi_polygon_selected": "No AOI polygon selected, click map to select one.",
     "selected_aoi_polygon": "You have selected the AOI polygon for <strong>{{name}}</strong>, {{country}}.",
+    "start_new_siuhi_analysis": "Start new SIUHI analysis",
+    "choose_month_and_year": "Choose year and month",
     "choose_months": "Choose months for analysis",
-    "start_new_siuhi_analysis": "Start new SIUHI analysis"
+    "choose_years": "Choose years"
 }

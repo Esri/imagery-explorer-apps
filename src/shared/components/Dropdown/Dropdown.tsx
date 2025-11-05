@@ -17,7 +17,11 @@ import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import useWindowSize from '@shared/hooks/useWindowSize';
-import { CalciteIcon } from '@esri/calcite-components-react';
+import {
+    CalciteCheckbox,
+    CalciteIcon,
+    CalciteLabel,
+} from '@esri/calcite-components-react';
 
 export type DropdownData = {
     /**
@@ -42,6 +46,15 @@ type Props = {
      * If true, the label text will not be converted to uppercase
      */
     skipUppercase?: boolean;
+    /**
+     * The selection mode of the dropdown, default is 'single'
+     */
+    selectionMode?: 'single' | 'multiple';
+    /**
+     * The title of the dropdown, which will be shown when selectionMode is 'multiple',
+     * for single selection mode, dropdown title is not needed as the selected item is shown directly
+     */
+    title?: string;
     onChange: (val: string) => void;
 };
 
@@ -50,6 +63,8 @@ export const Dropdown: FC<Props> = ({
     disabled,
     tooltip,
     skipUppercase,
+    title,
+    selectionMode = 'single',
     onChange,
 }: Props) => {
     const [shouldShowOptions, setShouldShowOptions] = useState(false);
@@ -63,6 +78,10 @@ export const Dropdown: FC<Props> = ({
     });
 
     const getLabel = () => {
+        if (selectionMode === 'multiple' && title) {
+            return title;
+        }
+
         let selectedItem = data.find((d) => d.selected);
 
         if (!selectedItem) {
@@ -84,6 +103,16 @@ export const Dropdown: FC<Props> = ({
                 {data.map((d, index) => {
                     const { value, label } = d;
 
+                    const labelText = (
+                        <span
+                            className={classNames({
+                                uppercase: !skipUppercase,
+                            })}
+                        >
+                            {label || value}
+                        </span>
+                    );
+
                     return (
                         <div
                             className="p-1 border-custom-light-blue-5 border-b cursor-pointer"
@@ -94,13 +123,27 @@ export const Dropdown: FC<Props> = ({
                                 setShouldShowOptions(false);
                             }}
                         >
-                            <span
-                                className={classNames({
-                                    uppercase: !skipUppercase,
-                                })}
-                            >
-                                {label || value}
-                            </span>
+                            {selectionMode === 'multiple' && (
+                                <div
+                                    className="flex items-center"
+                                    style={{
+                                        '--calcite-checkbox-border-color':
+                                            'var(--custom-light-blue-90)',
+                                    }}
+                                >
+                                    <CalciteCheckbox
+                                        class="mx-1"
+                                        checked={d.selected}
+                                        onCalciteCheckboxChange={() => {
+                                            onChange(value);
+                                        }}
+                                        scale="s"
+                                    ></CalciteCheckbox>
+                                    {labelText}
+                                </div>
+                            )}
+
+                            {selectionMode === 'single' && labelText}
                         </div>
                     );
                 })}
