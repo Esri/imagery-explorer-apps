@@ -14,5 +14,7 @@
     "please_select_months_and_years": "Please select months and years for the analysis.",
     "please_select_months": "Please select months for the analysis.",
     "please_select_years": "Please select years for the analysis.",
-    "selected_months_and_years": "You have selected <strong>{{months}}</strong> for the months and <strong>{{years}}</strong> for the years."
+    "selected_months_and_years": "You have selected <strong>{{months}}</strong> for the months and <strong>{{years}}</strong> for the years.",
+    "output_service_name": "Output service name",
+    "get_estimate": "Get Estimate"
 }
