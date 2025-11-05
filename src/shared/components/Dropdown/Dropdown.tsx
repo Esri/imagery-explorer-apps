@@ -120,7 +120,10 @@ export const Dropdown: FC<Props> = ({
                             data-testid={`dropdown-option-${value}`}
                             onClick={() => {
                                 onChange(value);
-                                setShouldShowOptions(false);
+
+                                if (selectionMode === 'single') {
+                                    setShouldShowOptions(false);
+                                }
                             }}
                         >
                             {selectionMode === 'multiple' && (

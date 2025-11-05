@@ -12,7 +12,7 @@ import {
 } from '@shared/store/UrbanHeatIslandTool/selectors';
 import { getMonthAbbreviation } from '@shared/utils/date-time/monthHelpers';
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 export const SelectYearAndMonth = () => {
     const { t } = useTranslation();
@@ -67,7 +67,7 @@ export const SelectYearAndMonth = () => {
 
     return (
         <div>
-            <div>
+            <div className="flex items-center relative w-full">
                 <Dropdown
                     data={availableYearsDropdownData}
                     title={t('choose_years', { ns: APP_NAME })}
@@ -84,23 +84,63 @@ export const SelectYearAndMonth = () => {
                     }}
                     selectionMode="multiple"
                 />
+
+                <div className="ml-2 pl-2 border-l border-custom-light-blue-50">
+                    <Dropdown
+                        data={availableMonthsDropdownData}
+                        title={t('choose_months', { ns: APP_NAME })}
+                        onChange={(val) => {
+                            const month = parseInt(val, 10);
+                            const newSelectedMonths = selectedMonths.includes(
+                                month
+                            )
+                                ? selectedMonths.filter((m) => m !== month)
+                                : [...selectedMonths, month];
+
+                            // Dispatch action to update selected months in the store
+                            dispatch(selectedMonthsChanged(newSelectedMonths));
+                        }}
+                        selectionMode="multiple"
+                    />
+                </div>
             </div>
 
-            <div className="mt-2">
-                <Dropdown
-                    data={availableMonthsDropdownData}
-                    title={t('choose_months', { ns: APP_NAME })}
-                    onChange={(val) => {
-                        const month = parseInt(val, 10);
-                        const newSelectedMonths = selectedMonths.includes(month)
-                            ? selectedMonths.filter((m) => m !== month)
-                            : [...selectedMonths, month];
+            <div className="mt-3 text-xs opacity-80">
+                {selectedMonths?.length === 0 &&
+                    selectedYears?.length === 0 && (
+                        <p>
+                            {t('please_select_months_and_years', {
+                                ns: APP_NAME,
+                            })}
+                        </p>
+                    )}
+                {selectedMonths?.length > 0 && selectedYears?.length === 0 && (
+                    <p>{t('please_select_years', { ns: APP_NAME })}</p>
+                )}
+                {selectedMonths?.length === 0 && selectedYears?.length > 0 && (
+                    <p>{t('please_select_months', { ns: APP_NAME })}</p>
+                )}
 
-                        // Dispatch action to update selected months in the store
-                        dispatch(selectedMonthsChanged(newSelectedMonths));
-                    }}
-                    selectionMode="multiple"
-                />
+                {selectedMonths?.length > 0 && selectedYears?.length > 0 && (
+                    // t('selected_months_and_years', {
+                    //         months: selectedMonths
+                    //             .map((m) => m.toString())
+                    //             .join(', '),
+                    //         years: selectedYears.join(', '),
+                    //         ns: APP_NAME,
+                    // })
+                    <Trans
+                        i18nKey="selected_months_and_years"
+                        ns={APP_NAME}
+                        values={{
+                            months: selectedMonths
+                                .map((m) => m.toString())
+                                .join(', '),
+                            years: selectedYears.join(', '),
+                        }}
+                        components={{ strong: <strong /> }}
+                    />
+                )}
             </div>
         </div>
     );

@@ -18,7 +18,7 @@ export const SelectAOIPolygon = () => {
     }
 
     return (
-        <div className="text-sm text-opacity-80">
+        <div className="text-xs text-opacity-80">
             {/* <span className="font-medium">
                 {selectedFeature.NAME ||
                     selectedFeature.ALL_NAMES}
