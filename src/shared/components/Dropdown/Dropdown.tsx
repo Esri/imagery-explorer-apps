@@ -134,9 +134,6 @@ export const Dropdown: FC<Props> = ({
                                     <CalciteCheckbox
                                         class="mx-1"
                                         checked={d.selected}
-                                        onCalciteCheckboxChange={() => {
-                                            onChange(value);
-                                        }}
                                         scale="s"
                                     ></CalciteCheckbox>
                                     {labelText}

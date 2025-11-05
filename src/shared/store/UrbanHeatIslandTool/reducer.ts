@@ -67,6 +67,10 @@ export type UrbanHeatIslandToolState = {
      */
     selectedMonths: number[]; // default to current month
     /**
+     * list of selected years to run the urban heat island analysis
+     */
+    selectedYears: number[]; // default to current year
+    /**
      * if ture, it is in process of loading data for urban heat island analysis
      */
     loading: boolean;
@@ -86,6 +90,7 @@ export const initialUrbanHeatIslandToolState: UrbanHeatIslandToolState = {
     error: null,
     selectedUrbanAreaFeature: null,
     selectedMonths: [],
+    selectedYears: [],
     activePanel: 'create new job',
 };
 
@@ -117,6 +122,9 @@ const slice = createSlice({
         selectedMonthsChanged: (state, action: PayloadAction<number[]>) => {
             state.selectedMonths = action.payload;
         },
+        selectedYearsChanged: (state, action: PayloadAction<number[]>) => {
+            state.selectedYears = action.payload;
+        },
         activePanel4UrbanHeatIslandToolChanged: (
             state,
             action: PayloadAction<UrbanHeatIslandToolPanel>
@@ -134,6 +142,7 @@ export const {
     errorChanged,
     selectedUrbanAreaFeatureChanged,
     selectedMonthsChanged,
+    selectedYearsChanged,
     activePanel4UrbanHeatIslandToolChanged,
 } = slice.actions;
 
