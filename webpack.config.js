@@ -242,6 +242,10 @@ module.exports =  (env, options)=> {
                  * Optional: defaults to `f8770e0adc5c41038026494b871ceb99` if not specified.
                  */
                 ENV_WEB_MAP_ID: JSON.stringify(envConfig.IMAGERY_EXPLORER_WEB_MAP_ID),
+                /**
+                 * Application ID for the LANDSAT SURFACE TEMP EXPLORER app.
+                 */
+                ENV_SUREFACE_TEMP_EXPLORER_APP_ID: JSON.stringify(envConfig.SUREFACE_TEMP_EXPLORER_APP_ID),
             }),
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output

@@ -94,3 +94,11 @@ export const LANDCOVER_EXPLORER_APP_ID = ENV_LANDCOVER_EXPLORER_APP_ID || '';
  */
 export const NLCD_LANDCOVER_EXPLORER_APP_ID =
     ENV_NLCD_LANDCOVER_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the Surface Temperature Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as running SIHUI analysis.
+ * This is defined in the environment variable `ENV_SUREFACE_TEMP_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const SURFACE_TEMP_EXPLORER_APP_ID =
+    ENV_SUREFACE_TEMP_EXPLORER_APP_ID || '';
