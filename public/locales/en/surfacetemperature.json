@@ -20,5 +20,8 @@
     "sign_in_to_use_urban_heat_island_tool": "<action>Sign in </action>to use the Urban Heat Island Tool",
     "sign_in_to_use_urban_heat_island_tool_with_previlige": "Urban Heat Island Tool requires a minimum of a Professional User Type with a Publisher role. <action>Sign in </action>with an account that has the required privileges to use this tool.",
     "checking_privileges": "Checking privileges...",
-    "failed_to_create_new_job": "Failed to create new SIUHI analysis job: {{errorMessage}}"
+    "failed_to_create_new_job": "Failed to create new SIUHI analysis job: {{errorMessage}}",
+    "new_job": "New Job",
+    "pending_job": "Pending Job",
+    "previous_jobs": "Previous Jobs"
 }

@@ -1,4 +1,5 @@
 import { Button } from '@shared/components/Button';
+import { APP_NAME } from '@shared/config';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     activePanel4UrbanHeatIslandToolChanged,
@@ -7,9 +8,12 @@ import {
 import { selectActivePanel4UrbanHeatIslandTool } from '@shared/store/UrbanHeatIslandTool/selectors';
 import classNames from 'classnames';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const UrbanHeatIslandPanelSelector = () => {
     const dispatch = useAppDispatch();
+
+    const { t } = useTranslation();
 
     const activePanel = useAppSelector(selectActivePanel4UrbanHeatIslandTool);
 
@@ -34,7 +38,9 @@ export const UrbanHeatIslandPanelSelector = () => {
                         activePanel === 'create new job' ? 'left' : null
                     }
                 >
-                    New Task
+                    <span className="text-xs">
+                        {t('new_job', { ns: APP_NAME })}
+                    </span>
                 </Button>
             </div>
 
@@ -53,7 +59,9 @@ export const UrbanHeatIslandPanelSelector = () => {
                         activePanel === 'view pending job' ? 'left' : null
                     }
                 >
-                    Pending Task
+                    <span className="text-xs">
+                        {t('pending_job', { ns: APP_NAME })}
+                    </span>
                 </Button>
             </div>
 
@@ -72,7 +80,9 @@ export const UrbanHeatIslandPanelSelector = () => {
                         activePanel === 'view previous jobs' ? 'left' : null
                     }
                 >
-                    Previous Tasks
+                    <span className="text-xs">
+                        {t('previous_jobs', { ns: APP_NAME })}
+                    </span>
                 </Button>
             </div>
         </div>
