@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { CreateNewSurfaceHeatIndexJob } from './CreateNewJob';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
@@ -6,11 +6,42 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { selectActivePanel4UrbanHeatIslandTool } from '@shared/store/UrbanHeatIslandTool/selectors';
 import { ViewPendingJob } from './PendingJob';
 import { ViewFinishedJobs } from './FinishedJobs';
+import { isAnonymouns } from '@shared/utils/esri-oauth';
+import { useHasSaveOrPublishPrivileges } from '@shared/components/SavePanel/useHasSaveOrPublishPrivileges';
+import { SignInPanel } from './SignInPanel';
 
 export const UrbanHeatIslandContainer = () => {
     const { t } = useTranslation();
 
     const activePanel = useAppSelector(selectActivePanel4UrbanHeatIslandTool);
+
+    const { canPublishHostedImagery, isCheckingPrivileges } =
+        useHasSaveOrPublishPrivileges();
+
+    const notSignedIn = isAnonymouns();
+
+    const getContent = () => {
+        if (notSignedIn || !canPublishHostedImagery) {
+            return (
+                <SignInPanel
+                    notSignedIn={notSignedIn}
+                    // canPublishHostedImagery={canPublishHostedImagery}
+                    isCheckingPrivileges={isCheckingPrivileges}
+                />
+            );
+        }
+
+        if (activePanel === 'create new job') {
+            return <CreateNewSurfaceHeatIndexJob />;
+        }
+        if (activePanel === 'view pending job') {
+            return <ViewPendingJob />;
+        }
+        if (activePanel === 'view previous jobs') {
+            return <ViewFinishedJobs />;
+        }
+        return null;
+    };
 
     return (
         <div className="relative h-full">
@@ -19,13 +50,7 @@ export const UrbanHeatIslandContainer = () => {
                     {t('siuhi_full_name', { ns: APP_NAME })}
                 </span>
             </div>
-            <div className="w-full flex h-[160px]">
-                {activePanel === 'create new job' && (
-                    <CreateNewSurfaceHeatIndexJob />
-                )}
-                {activePanel === 'view pending job' && <ViewPendingJob />}
-                {activePanel === 'view previous jobs' && <ViewFinishedJobs />}
-            </div>
+            <div className="w-full flex h-[160px]">{getContent()}</div>
         </div>
     );
 };

@@ -16,5 +16,8 @@
     "please_select_years": "Please select years for the analysis.",
     "selected_months_and_years": "You have selected <strong>{{months}}</strong> for the months and <strong>{{years}}</strong> for the years.",
     "output_service_name": "Output service name",
-    "get_estimate": "Get Estimate"
+    "get_estimate": "Get Estimate",
+    "sign_in_to_use_urban_heat_island_tool": "<action>Sign in </action>to use the Urban Heat Island Tool",
+    "sign_in_to_use_urban_heat_island_tool_with_previlige": "Urban Heat Island Tool requires a minimum of a Professional User Type with a Publisher role. <action>Sign in </action>with an account that has the required privileges to use this tool.",
+    "checking_privileges": "Checking privileges..."
 }
