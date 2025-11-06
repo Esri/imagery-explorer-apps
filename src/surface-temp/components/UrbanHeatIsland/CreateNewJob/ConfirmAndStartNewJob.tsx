@@ -4,16 +4,27 @@ import {
     CalciteLabel,
 } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
-import { useAppSelector } from '@shared/store/configureStore';
-import { selectShouldDisableCreateJobButton } from '@shared/store/UrbanHeatIslandTool/selectors';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
+import { urbanHeatIslandToolFiltersReset } from '@shared/store/UrbanHeatIslandTool/reducer';
+import {
+    selectFailedToCreateJobErrorMessage,
+    selectShouldDisableCreateJobButton,
+} from '@shared/store/UrbanHeatIslandTool/selectors';
+import { createNewSIUHIAnalysisJob } from '@shared/store/UrbanHeatIslandTool/thunks';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const ConfirmAndStartNewJob = () => {
     const { t } = useTranslation();
 
+    const dispatch = useAppDispatch();
+
     const shouldDisableCreateJobButton = useAppSelector(
         selectShouldDisableCreateJobButton
+    );
+
+    const failedToCreateJobErrorMessage = useAppSelector(
+        selectFailedToCreateJobErrorMessage
     );
 
     return (
@@ -37,7 +48,7 @@ export const ConfirmAndStartNewJob = () => {
                     } as React.CSSProperties
                 }
             >
-                <CalciteButton
+                {/* <CalciteButton
                     appearance="outline"
                     scale="m"
                     width="full"
@@ -45,7 +56,7 @@ export const ConfirmAndStartNewJob = () => {
                     disabled={shouldDisableCreateJobButton}
                 >
                     {t('get_estimate', { ns: APP_NAME })}
-                </CalciteButton>
+                </CalciteButton> */}
 
                 <CalciteButton
                     appearance="outline"
@@ -54,10 +65,42 @@ export const ConfirmAndStartNewJob = () => {
                     iconStart="plus"
                     disabled={shouldDisableCreateJobButton}
                     className="mt-2"
+                    onClick={() => {
+                        // Dispatch action to create new SIUHI analysis job
+                        dispatch(createNewSIUHIAnalysisJob());
+                    }}
                 >
                     {t('create_new_job', { ns: APP_NAME })}
                 </CalciteButton>
+
+                {failedToCreateJobErrorMessage && (
+                    <CalciteButton
+                        appearance="outline"
+                        scale="s"
+                        width="full"
+                        className="mt-2"
+                        onClick={() => {
+                            // Clear the error message when user clicks to dismiss
+                            dispatch(urbanHeatIslandToolFiltersReset());
+                        }}
+                    >
+                        {t('reset', { ns: APP_NAME })}
+                    </CalciteButton>
+                )}
             </div>
+
+            {failedToCreateJobErrorMessage && (
+                <>
+                    <div className="mt-2 text-red-500 flex ">
+                        <p className="font-medium text-sm">
+                            {t('failed_to_create_new_job', {
+                                ns: APP_NAME,
+                                errorMessage: failedToCreateJobErrorMessage,
+                            })}
+                        </p>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

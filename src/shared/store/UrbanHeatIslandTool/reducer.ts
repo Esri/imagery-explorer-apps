@@ -53,6 +53,93 @@ export type UrbanHeatIslandToolPanel =
     | 'view previous jobs'
     | 'view pending job';
 
+/**
+ * Represents the status of a surface intra-urban heat islands (SIUHI) analysis job
+ */
+export type SIUHIAnalysisJobStatus =
+    | 'waiting to start'
+    | 'checking credits'
+    | 'in progress'
+    | 'completed'
+    | 'failed'
+    | 'cancelled';
+
+/**
+ * Represents a sub-job within the surface intra-urban heat islands (SIUHI) analysis job
+ */
+export type SIUHIAnalysisSubJob = {
+    /**
+     * Timestamp when the step started
+     */
+    startedAt: number;
+    /**
+     * Timestamp when the step ended
+     */
+    finishedAt: number;
+    /**
+     * Status of the step
+     */
+    status: SIUHIAnalysisJobStatus;
+    /**
+     * the credit cost incurred for this step
+     */
+    creditCost: number;
+    /**
+     * If the step completed successfully, the ID of the output item created
+     */
+    outputItemId: string;
+    /**
+     * If the step completed successfully, the URL of the output service
+     */
+    outputServiceUrl: string;
+    /**
+     * If the step failed, the error message
+     */
+    errorMessage: string;
+};
+
+/**
+ * Represents a surface intra-urban heat islands (SIUHI) analysis job
+ */
+export type SIUHIAnalysisJob = {
+    /**
+     * Unique identifier for the job
+     */
+    jobId: string;
+    /**
+     * Status of the job
+     */
+    status: SIUHIAnalysisJobStatus;
+    /**
+     * Timestamp when the job was created
+     */
+    createdAt: number;
+    /**
+     * Username of the user who created the job
+     */
+    createdBy: string;
+    /**
+     * If the job failed, the error message describing the failure
+     */
+    errorMessage: string;
+    /**
+     * Parameters used for the job
+     */
+    inputParams: {
+        years: number[];
+        months: number[];
+        urbanAreaFeature: UrbanAreaFeature;
+    };
+    /**
+     * Sub-jobs that make up the overall SIUHI analysis job
+     */
+    subJobs: {
+        dataAggregation: SIUHIAnalysisSubJob;
+        zonalMean: SIUHIAnalysisSubJob;
+        surfaceHeatIndexCalculation: SIUHIAnalysisSubJob;
+    };
+};
+
 export type UrbanHeatIslandToolState = {
     /**
      * Query Location for Urban Heat Island Tool
@@ -71,27 +158,39 @@ export type UrbanHeatIslandToolState = {
      */
     selectedYears: number[]; // default to current year
     /**
-     * if ture, it is in process of loading data for urban heat island analysis
-     */
-    loading: boolean;
-    /**
-     * message from the error that was caught while run urban heat island analysis
-     */
-    error: string;
-    /**
      * active panel in the urban heat island tool UI
      */
     activePanel: UrbanHeatIslandToolPanel;
+    /**
+     * list of SIUHI analysis jobs
+     */
+    jobs: {
+        /**
+         * Mapping of jobId to SIUHIAnalysisJob
+         */
+        byJobId: Record<string, SIUHIAnalysisJob>;
+        /**
+         * List of all job IDs
+         */
+        allJobIds: string[];
+    };
+    /**
+     * Error message when failing to create a new SIUHI analysis job
+     */
+    failedToCreateJobErrorMessage: string;
 };
 
 export const initialUrbanHeatIslandToolState: UrbanHeatIslandToolState = {
     queryLocation: null,
-    loading: false,
-    error: null,
     selectedUrbanAreaFeature: null,
     selectedMonths: [],
     selectedYears: [],
     activePanel: 'create new job',
+    jobs: {
+        byJobId: {},
+        allJobIds: [],
+    },
+    failedToCreateJobErrorMessage: '',
 };
 
 const slice = createSlice({
@@ -103,15 +202,6 @@ const slice = createSlice({
             action: PayloadAction<Point>
         ) => {
             state.queryLocation = action.payload;
-        },
-        urbanHeatIslandToolIsLoadingChanged: (
-            state,
-            action: PayloadAction<boolean>
-        ) => {
-            state.loading = action.payload;
-        },
-        errorChanged: (state, action: PayloadAction<string>) => {
-            state.error = action.payload;
         },
         selectedUrbanAreaFeatureChanged: (
             state,
@@ -131,6 +221,43 @@ const slice = createSlice({
         ) => {
             state.activePanel = action.payload;
         },
+        urbanHeatIslandToolFiltersReset: (state) => {
+            state.queryLocation = initialUrbanHeatIslandToolState.queryLocation;
+            state.selectedUrbanAreaFeature =
+                initialUrbanHeatIslandToolState.selectedUrbanAreaFeature;
+            state.selectedMonths =
+                initialUrbanHeatIslandToolState.selectedMonths;
+            state.selectedYears = initialUrbanHeatIslandToolState.selectedYears;
+            state.failedToCreateJobErrorMessage = '';
+        },
+        SIUHIAnalysisJobCreated: (
+            state,
+            action: PayloadAction<SIUHIAnalysisJob>
+        ) => {
+            const newJob = action.payload;
+            state.jobs.byJobId[newJob.jobId] = newJob;
+            state.jobs.allJobIds.push(newJob.jobId);
+        },
+        SIUHIAnalysisJobUpdated: (
+            state,
+            action: PayloadAction<SIUHIAnalysisJob>
+        ) => {
+            const updatedJob = action.payload;
+            state.jobs.byJobId[updatedJob.jobId] = updatedJob;
+        },
+        SIUHIAnalysisJobRemoved: (state, action: PayloadAction<string>) => {
+            const jobIdToRemove = action.payload;
+            delete state.jobs.byJobId[jobIdToRemove];
+            state.jobs.allJobIds = state.jobs.allJobIds.filter(
+                (id) => id !== jobIdToRemove
+            );
+        },
+        failedToCreateJobErrorMessageChanged: (
+            state,
+            action: PayloadAction<string>
+        ) => {
+            state.failedToCreateJobErrorMessage = action.payload;
+        },
     },
 });
 
@@ -138,12 +265,15 @@ const { reducer } = slice;
 
 export const {
     queryLocation4UrbanHeatIslandToolChanged,
-    urbanHeatIslandToolIsLoadingChanged,
-    errorChanged,
     selectedUrbanAreaFeatureChanged,
     selectedMonthsChanged,
     selectedYearsChanged,
     activePanel4UrbanHeatIslandToolChanged,
+    urbanHeatIslandToolFiltersReset,
+    SIUHIAnalysisJobCreated,
+    SIUHIAnalysisJobUpdated,
+    SIUHIAnalysisJobRemoved,
+    failedToCreateJobErrorMessageChanged,
 } = slice.actions;
 
 export default reducer;
