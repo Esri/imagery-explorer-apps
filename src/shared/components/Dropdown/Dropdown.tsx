@@ -84,6 +84,10 @@ export const Dropdown: FC<Props> = ({
 
         let selectedItem = data.find((d) => d.selected);
 
+        if (!selectedItem && title) {
+            return title;
+        }
+
         if (!selectedItem) {
             selectedItem = data[0];
         }

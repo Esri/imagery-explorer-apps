@@ -24,12 +24,15 @@ const SectionContent: FC<{ children: React.ReactNode }> = ({ children }) => (
     <div className="grow">{children}</div>
 );
 
+const GridCardContainerClassName =
+    'flex flex-col border border-custom-light-blue-20 p-4';
+
 export const CreateNewJob = () => {
     const { t } = useTranslation();
 
     return (
-        <div className="flex justify-between w-full h-full">
-            <div className="w-1/3 h-full px-2 mr-2 flex flex-col">
+        <div className="grid grid-cols-3 gap-4 w-full h-full">
+            <div className={GridCardContainerClassName}>
                 <SectionHeader
                     icon="pin"
                     text={t('choose_aoi_polygon', { ns: APP_NAME })}
@@ -40,7 +43,7 @@ export const CreateNewJob = () => {
                 </SectionContent>
             </div>
 
-            <div className="w-1/3 h-full px-2 mr-2 flex flex-col">
+            <div className={GridCardContainerClassName}>
                 <SectionHeader
                     icon="calendar"
                     text={t('choose_month_and_year', { ns: APP_NAME })}
@@ -51,7 +54,7 @@ export const CreateNewJob = () => {
                 </SectionContent>
             </div>
 
-            <div className="w-1/3 h-full px-2 flex flex-col">
+            <div className={GridCardContainerClassName}>
                 <SectionHeader
                     icon="heat-chart"
                     text={t('start_new_siuhi_analysis', { ns: APP_NAME })}

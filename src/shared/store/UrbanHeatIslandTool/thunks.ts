@@ -32,7 +32,7 @@ import { getSignedInUser } from '@shared/utils/esri-oauth';
 import {
     selectSelectedMonths4UrbanHeatIslandTool,
     selectSelectedUrbanAreaFeature,
-    selectSelectedYears4UrbanHeatIslandTool,
+    selectSelectedYear4UrbanHeatIslandTool,
 } from './selectors';
 
 /**
@@ -70,8 +70,7 @@ export const createNewSIUHIAnalysisJob =
             const state = getState();
 
             // Retrieve necessary input parameters from the state
-            const selectedYears =
-                selectSelectedYears4UrbanHeatIslandTool(state);
+            const selectedYear = selectSelectedYear4UrbanHeatIslandTool(state);
             const selectedMonths =
                 selectSelectedMonths4UrbanHeatIslandTool(state);
             const selectedUrbanAreaFeature =
@@ -89,7 +88,7 @@ export const createNewSIUHIAnalysisJob =
                 );
             }
 
-            if (selectedYears.length === 0) {
+            if (selectedYear === null) {
                 throw new Error(
                     'No years selected. Cannot create SIUHI analysis job.'
                 );
@@ -98,7 +97,6 @@ export const createNewSIUHIAnalysisJob =
             // Create the new SIUHI analysis job object
             const subJobObj: SIUHIAnalysisSubJob = {
                 status: 'waiting to start',
-                creditCost: 0,
                 startedAt: 0,
                 finishedAt: 0,
                 outputItemId: '',
@@ -111,13 +109,17 @@ export const createNewSIUHIAnalysisJob =
                 jobId: nanoid(5),
                 createdAt: Date.now(),
                 createdBy: signedInUser.username,
+                jobCost: {
+                    estimatedCredits: 0,
+                    status: 'checking',
+                },
                 inputParams: {
                     // Populate with actual input parameters as needed
                     urbanAreaFeature: {
                         ...selectedUrbanAreaFeature,
                     },
                     months: [...selectedMonths],
-                    years: [...selectedYears],
+                    year: selectedYear,
                 },
                 status: 'waiting to start',
                 errorMessage: '',

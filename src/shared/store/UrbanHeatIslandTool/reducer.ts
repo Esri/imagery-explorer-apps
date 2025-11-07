@@ -58,7 +58,6 @@ export type UrbanHeatIslandToolPanel =
  */
 export type SIUHIAnalysisJobStatus =
     | 'waiting to start'
-    | 'checking credits'
     | 'in progress'
     | 'completed'
     | 'failed'
@@ -80,10 +79,6 @@ export type SIUHIAnalysisSubJob = {
      * Status of the step
      */
     status: SIUHIAnalysisJobStatus;
-    /**
-     * the credit cost incurred for this step
-     */
-    creditCost: number;
     /**
      * If the step completed successfully, the ID of the output item created
      */
@@ -123,10 +118,18 @@ export type SIUHIAnalysisJob = {
      */
     errorMessage: string;
     /**
+     * Total credits that will be consumed by the job,
+     * This is estimated at job creation time and may differ from actual credits consumed
+     */
+    jobCost: {
+        estimatedCredits: number;
+        status: 'checking' | 'pending-acceptance' | 'accepted' | 'rejected';
+    };
+    /**
      * Parameters used for the job
      */
     inputParams: {
-        years: number[];
+        year: number;
         months: number[];
         urbanAreaFeature: UrbanAreaFeature;
     };
@@ -154,9 +157,9 @@ export type UrbanHeatIslandToolState = {
      */
     selectedMonths: number[]; // default to current month
     /**
-     * list of selected years to run the urban heat island analysis
+     * selected year to run the urban heat island analysis
      */
-    selectedYears: number[]; // default to current year
+    selectedYear: number; // default to current year
     /**
      * active panel in the urban heat island tool UI
      */
@@ -184,7 +187,7 @@ export const initialUrbanHeatIslandToolState: UrbanHeatIslandToolState = {
     queryLocation: null,
     selectedUrbanAreaFeature: null,
     selectedMonths: [],
-    selectedYears: [],
+    selectedYear: null,
     activePanel: 'create new job',
     jobs: {
         byJobId: {},
@@ -212,8 +215,8 @@ const slice = createSlice({
         selectedMonthsChanged: (state, action: PayloadAction<number[]>) => {
             state.selectedMonths = action.payload;
         },
-        selectedYearsChanged: (state, action: PayloadAction<number[]>) => {
-            state.selectedYears = action.payload;
+        selectedYearChanged: (state, action: PayloadAction<number>) => {
+            state.selectedYear = action.payload;
         },
         activePanel4UrbanHeatIslandToolChanged: (
             state,
@@ -227,7 +230,7 @@ const slice = createSlice({
                 initialUrbanHeatIslandToolState.selectedUrbanAreaFeature;
             state.selectedMonths =
                 initialUrbanHeatIslandToolState.selectedMonths;
-            state.selectedYears = initialUrbanHeatIslandToolState.selectedYears;
+            state.selectedYear = initialUrbanHeatIslandToolState.selectedYear;
             state.failedToCreateJobErrorMessage = '';
         },
         SIUHIAnalysisJobCreated: (
@@ -267,7 +270,7 @@ export const {
     queryLocation4UrbanHeatIslandToolChanged,
     selectedUrbanAreaFeatureChanged,
     selectedMonthsChanged,
-    selectedYearsChanged,
+    selectedYearChanged,
     activePanel4UrbanHeatIslandToolChanged,
     urbanHeatIslandToolFiltersReset,
     SIUHIAnalysisJobCreated,

@@ -50,7 +50,9 @@ export const UrbanHeatIslandContainer = () => {
                     {t('siuhi_full_name', { ns: APP_NAME })}
                 </span>
             </div>
-            <div className="w-full flex h-[160px]">{getContent()}</div>
+            <div className="w-full max-w-5xl flex h-[160px]">
+                {getContent()}
+            </div>
         </div>
     );
 };

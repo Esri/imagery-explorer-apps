@@ -4,11 +4,11 @@ import { useAvailableAcquisitionYears } from '@shared/hooks/useAvailableAcquisit
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     selectedMonthsChanged,
-    selectedYearsChanged,
+    selectedYearChanged,
 } from '@shared/store/UrbanHeatIslandTool/reducer';
 import {
     selectSelectedMonths4UrbanHeatIslandTool,
-    selectSelectedYears4UrbanHeatIslandTool,
+    selectSelectedYear4UrbanHeatIslandTool,
 } from '@shared/store/UrbanHeatIslandTool/selectors';
 import { getMonthAbbreviation } from '@shared/utils/date-time/monthHelpers';
 import React, { useMemo } from 'react';
@@ -19,9 +19,7 @@ export const SelectYearAndMonth = () => {
 
     const dispatch = useAppDispatch();
 
-    const selectedYears = useAppSelector(
-        selectSelectedYears4UrbanHeatIslandTool
-    );
+    const selectedYear = useAppSelector(selectSelectedYear4UrbanHeatIslandTool);
 
     const selectedMonths = useAppSelector(
         selectSelectedMonths4UrbanHeatIslandTool
@@ -41,19 +39,19 @@ export const SelectYearAndMonth = () => {
     }, []);
 
     const availableYearsDropdownData = useMemo(() => {
-        const selectedYearsSet = new Set(selectedYears);
+        // const selectedYearsSet = new Set(selectedYears);
         // console.log('Selected Years Set: ', selectedYearsSet);
 
         const output = availableYears
             .map((year) => ({
                 value: year.toString(),
                 label: year.toString(),
-                selected: selectedYearsSet.has(year),
+                selected: year === selectedYear,
             }))
             .reverse();
         // console.log('Available Years Dropdown Data: ', output);
         return output;
-    }, [availableYears, selectedYears]);
+    }, [availableYears, selectedYear]);
 
     const availableMonthsDropdownData = useMemo(() => {
         const selectedMonthsSet = new Set(selectedMonths);
@@ -67,25 +65,20 @@ export const SelectYearAndMonth = () => {
 
     return (
         <div>
-            <div className="flex items-center relative w-full">
+            <div className="relative w-full">
                 <Dropdown
                     data={availableYearsDropdownData}
-                    title={t('choose_years', { ns: APP_NAME })}
+                    title={t('choose_year', { ns: APP_NAME })}
                     onChange={(val) => {
                         const year = parseInt(val, 10);
-                        const newSelectedYears = selectedYears.includes(year)
-                            ? selectedYears.filter((y) => y !== year)
-                            : [...selectedYears, year];
-
-                        console.log('newSelectedYears', newSelectedYears);
 
                         // Dispatch action to update selected years in the store
-                        dispatch(selectedYearsChanged(newSelectedYears));
+                        dispatch(selectedYearChanged(year));
                     }}
-                    selectionMode="multiple"
+                    // selectionMode="multiple"
                 />
 
-                <div className="ml-2 pl-2 border-l border-custom-light-blue-50">
+                <div className="mt-2">
                     <Dropdown
                         data={availableMonthsDropdownData}
                         title={t('choose_months', { ns: APP_NAME })}
@@ -106,22 +99,21 @@ export const SelectYearAndMonth = () => {
             </div>
 
             <div className="mt-3 text-xs opacity-80">
-                {selectedMonths?.length === 0 &&
-                    selectedYears?.length === 0 && (
-                        <p>
-                            {t('please_select_months_and_years', {
-                                ns: APP_NAME,
-                            })}
-                        </p>
-                    )}
-                {selectedMonths?.length > 0 && selectedYears?.length === 0 && (
-                    <p>{t('please_select_years', { ns: APP_NAME })}</p>
+                {selectedMonths?.length === 0 && selectedYear === null && (
+                    <p>
+                        {t('please_select_months_and_year', {
+                            ns: APP_NAME,
+                        })}
+                    </p>
                 )}
-                {selectedMonths?.length === 0 && selectedYears?.length > 0 && (
+                {selectedMonths?.length > 0 && selectedYear === null && (
+                    <p>{t('please_select_year', { ns: APP_NAME })}</p>
+                )}
+                {selectedMonths?.length === 0 && selectedYear !== null && (
                     <p>{t('please_select_months', { ns: APP_NAME })}</p>
                 )}
 
-                {selectedMonths?.length > 0 && selectedYears?.length > 0 && (
+                {selectedMonths?.length > 0 && (
                     // t('selected_months_and_years', {
                     //         months: selectedMonths
                     //             .map((m) => m.toString())
@@ -130,13 +122,13 @@ export const SelectYearAndMonth = () => {
                     //         ns: APP_NAME,
                     // })
                     <Trans
-                        i18nKey="selected_months_and_years"
+                        i18nKey="selected_time_range_verbose"
                         ns={APP_NAME}
                         values={{
                             months: selectedMonths
                                 .map((m) => m.toString())
                                 .join(', '),
-                            years: selectedYears.join(', '),
+                            year: selectedYear,
                         }}
                         components={{ strong: <strong /> }}
                     />
