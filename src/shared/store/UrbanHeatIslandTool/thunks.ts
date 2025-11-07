@@ -25,11 +25,13 @@ import {
     queryLocation4UrbanHeatIslandToolChanged,
     SIUHIAnalysisJob,
     SIUHIAnalysisJobCreated,
+    SIUHIAnalysisJobUpdated,
     SIUHIAnalysisSubJob,
 } from './reducer';
 import { nanoid } from 'nanoid';
 import { getSignedInUser } from '@shared/utils/esri-oauth';
 import {
+    selectPendingSIUHIAnalysisJob,
     selectSelectedMonths4UrbanHeatIslandTool,
     selectSelectedUrbanAreaFeature,
     selectSelectedYear4UrbanHeatIslandTool,
@@ -161,4 +163,41 @@ export const updateSIUHIAnalysisJob =
 export const removeSIUHIAnalysisJob =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         // Implementation for removing a SIUHI analysis job goes here.
+    };
+
+export const startSIUHIAnalysisDataAggregationSubJob =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const store = getState();
+        const pendingJob = selectPendingSIUHIAnalysisJob(store);
+
+        if (!pendingJob) {
+            console.log(
+                'No pending job found to start data aggregation sub-job.'
+            );
+            return;
+        }
+
+        dispatch(
+            SIUHIAnalysisJobUpdated({
+                ...pendingJob,
+                subJobs: {
+                    ...pendingJob.subJobs,
+                    dataAggregation: {
+                        ...pendingJob.subJobs.dataAggregation,
+                        status: 'in progress',
+                        startedAt: Date.now(),
+                    },
+                },
+            })
+        );
+    };
+
+export const startSIUHIAnalysisZonalMeanSubJob =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        // Implementation for starting the zonal mean sub-job goes here.
+    };
+
+export const startSIUHIAnalysisSurfaceHeatIndexCalculationSubJob =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        // Implementation for starting the surface heat index calculation sub-job goes here.
     };

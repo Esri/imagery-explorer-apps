@@ -32,7 +32,7 @@ export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
                     },
                 })
             );
-        }, 5000);
+        }, 2000);
 
         return () => {
             clearTimeout(timeout);

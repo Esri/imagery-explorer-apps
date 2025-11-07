@@ -8,13 +8,18 @@ import {
     SIUHIAnalysisJobUpdated,
     SIUHIAnalysisJobRemoved,
 } from '@shared/store/UrbanHeatIslandTool/reducer';
+import { useRunDataAggregationJob } from './useRunDataAggregationJob';
 
 export const PendingJobContainer = () => {
     const dispatch = useAppDispatch();
 
     const pendingJob = useAppSelector(selectPendingSIUHIAnalysisJob);
 
+    // this hook will check credits when the pending job is initiated
     useCheckSIUHIAnalysisJobCredits(pendingJob);
+
+    // this hook will manage data aggregation job after credits are accepted
+    useRunDataAggregationJob(pendingJob);
 
     const getContent = () => {
         if (!pendingJob) {

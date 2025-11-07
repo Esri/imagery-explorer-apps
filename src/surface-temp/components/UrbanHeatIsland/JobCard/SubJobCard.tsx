@@ -3,6 +3,7 @@ import { SIUHIAnalysisSubJob } from '@shared/store/UrbanHeatIslandTool/reducer';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SIUHIAnalysisJobCardContainerClassName } from './JobCard';
+import { CalciteLoader } from '@esri/calcite-components-react';
 
 type SubJobCardProps = {
     /**
@@ -26,6 +27,26 @@ export const SubJobCard: FC<SubJobCardProps> = ({ subJobData, title }) => {
                 </div>
             );
         }
+
+        if (subJobData.status === 'in progress') {
+            const message = t('sub_job_in_progress', {
+                ns: APP_NAME,
+                time: new Date(subJobData.startedAt || 0).toLocaleString(),
+            });
+            return (
+                <div
+                    className="w-full py-2 flex justify-center"
+                    style={{
+                        '--calcite-loader-spacing': '0px',
+                        '--calcite-loader-text-color':
+                            'var(--custom-light-blue-50)',
+                    }}
+                >
+                    <CalciteLoader scale="s" text={message} />
+                </div>
+            );
+        }
+
         return (
             <div>
                 <div>Status: {subJobData.status}</div>
