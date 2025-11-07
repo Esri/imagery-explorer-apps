@@ -109,6 +109,7 @@ export const createNewSIUHIAnalysisJob =
                 jobId: nanoid(5),
                 createdAt: Date.now(),
                 createdBy: signedInUser.username,
+                isPending: true,
                 jobCost: {
                     estimatedCredits: 0,
                     status: 'checking',

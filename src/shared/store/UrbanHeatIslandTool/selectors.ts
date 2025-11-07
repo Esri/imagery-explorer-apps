@@ -47,11 +47,7 @@ export const selectPendingSIUHIAnalysisJob = createSelector(
     (byJobId, allJobIds) => {
         const pendingJobs = allJobIds
             .map((jobId) => byJobId[jobId])
-            .filter(
-                (job) =>
-                    job.status === 'waiting to start' ||
-                    job.status === 'in progress'
-            );
+            .filter((job) => job.isPending === true);
 
         return pendingJobs[0] || null;
     }

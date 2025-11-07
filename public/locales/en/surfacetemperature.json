@@ -36,5 +36,6 @@
     "total_cost": "Total Cost",
     "total_cost_summary": "Total Cost: {{credits}} credits",
     "credits_rejection_message": "Job is failed due to insufficient credits or rejection of estimated credit cost.",
-    "remove_job": "Remove Job"
+    "remove_job": "Remove Job",
+    "job_failed_message": "Job is failed"
 }

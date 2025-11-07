@@ -102,6 +102,10 @@ export type SIUHIAnalysisJob = {
      */
     jobId: string;
     /**
+     * Indicates if the job is pending (waiting all sub-jobs to complete) and it will be shown in the pending job panel
+     */
+    isPending: boolean;
+    /**
      * Status of the job
      */
     status: SIUHIAnalysisJobStatus;
@@ -123,6 +127,13 @@ export type SIUHIAnalysisJob = {
      */
     jobCost: {
         estimatedCredits: number;
+        /**
+         * Status of the credit estimation process
+         * - checking: credits are being checked
+         * - pending-acceptance: credits have been estimated and are pending user acceptance
+         * - accepted: user has accepted the estimated credits
+         * - rejected: user has rejected the estimated credits
+         */
         status: 'checking' | 'pending-acceptance' | 'accepted' | 'rejected';
     };
     /**

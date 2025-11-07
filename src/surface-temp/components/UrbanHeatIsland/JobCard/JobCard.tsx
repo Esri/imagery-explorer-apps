@@ -38,14 +38,19 @@ export const JobCard: FC<Props> = ({
 
     const getContent = () => {
         if (
-            jobData?.jobCost?.status === 'rejected' ||
-            jobData?.status === 'failed'
+            jobData?.status === 'failed' ||
+            jobData?.jobCost?.status === 'rejected'
         ) {
+            let errorMessage = t('job_failed_message', { ns: APP_NAME });
+
+            if (jobData?.jobCost?.status === 'rejected') {
+                errorMessage = t('credits_rejection_message', { ns: APP_NAME });
+            }
+
             return (
                 <div className="text-xs mb-2">
-                    <p className="mb-2">
-                        {t('credits_rejection_message', { ns: APP_NAME })}
-                    </p>
+                    <p className="opacity-50 mb-2">{errorMessage}</p>
+
                     <CalciteButton
                         scale="s"
                         appearance="outline"

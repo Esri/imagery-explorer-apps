@@ -48,6 +48,7 @@ export const PendingJobContainer = () => {
                                     ...pendingJob.jobCost,
                                     status: 'rejected',
                                 },
+                                status: 'failed',
                             })
                         );
                     }}
