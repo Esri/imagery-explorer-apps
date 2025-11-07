@@ -28,7 +28,7 @@ import Point from '@arcgis/core/geometry/Point';
 
 // type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
 
-type UrbanAreaFeature = {
+export type UrbanAreaFeature = {
     OBJECTID: number;
     /**
      * Unique identifier for the urban area

@@ -1,41 +1,74 @@
+import { getEstimateRasterAnalysisCost } from '@shared/services/raster-analysis/checkEstimatedCost';
 import { useAppDispatch } from '@shared/store/configureStore';
 import {
     SIUHIAnalysisJob,
     SIUHIAnalysisJobUpdated,
 } from '@shared/store/UrbanHeatIslandTool/reducer';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        if (
-            !job ||
-            job.status !== 'waiting to start' ||
-            job.jobCost?.status !== 'checking'
-        ) {
-            console.log('No need to check credits for job:', job);
-            return;
-        }
+    const intervalIdRef = useRef<NodeJS.Timeout>(null);
 
-        // Simulate checking credits
-        const timeout = setTimeout(() => {
-            // Here you would normally call an API to check credits
-            console.log('Checking credits for job:', job);
+    const shouldCheckCredits = React.useMemo(() => {
+        return (
+            job?.jobId &&
+            job?.status === 'waiting to start' &&
+            job?.jobCost?.status === 'checking'
+        );
+    }, [job?.jobId, job?.status, job?.jobCost?.status]);
+
+    const checkJobCost = async (job: SIUHIAnalysisJob) => {
+        console.log('Checking job cost for SIUHI analysis job:', job);
+
+        try {
+            const res = await getEstimateRasterAnalysisCost(null);
+
+            if (!res.succeeded) {
+                return;
+            }
+
+            const actualCost = res.credits;
+
+            // add the actual cost to the job
+            const updatedJobData: SIUHIAnalysisJob = {
+                ...job,
+                jobCost: {
+                    estimatedCredits: actualCost,
+                    status: actualCost > 0 ? 'pending-acceptance' : 'accepted',
+                },
+            };
+
+            dispatch(SIUHIAnalysisJobUpdated(updatedJobData));
+        } catch (error) {
+            console.error(
+                `Error checking cost for SIUHI analysis job ${job.jobId}:`,
+                error
+            );
 
             dispatch(
                 SIUHIAnalysisJobUpdated({
                     ...job,
-                    jobCost: {
-                        estimatedCredits: 10,
-                        status: 'pending-acceptance', // or 'accepted' / 'rejected' based on actual check
-                    },
+                    status: 'failed',
+                    errorMessage: 'Error checking job cost',
                 })
             );
-        }, 2000);
+        }
+    };
 
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [job?.jobId, job?.status, job?.jobCost?.status]);
+    useEffect(() => {
+        clearInterval(intervalIdRef.current);
+
+        if (shouldCheckCredits === false) {
+            console.log('No need to check credits for job:', job);
+            return;
+        }
+
+        intervalIdRef.current = setInterval(() => {
+            checkJobCost(job);
+        }, 15 * 1000); // 15 seconds
+
+        return () => clearInterval(intervalIdRef.current); // Cleanup interval on unmount
+    }, [shouldCheckCredits]);
 };
