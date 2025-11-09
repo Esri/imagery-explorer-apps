@@ -17,7 +17,7 @@ type InitializeAppParams = {
  * Check if the app is hosted on Living Atlas
  * If so, it should use ArcGIS Online as the portal URL
  */
-const isHostedOnLivingAtlasServer =
+const IS_HOSTED_ON_LIVING_ATLAS_SERVER =
     window.location.host === 'livingatlas.arcgis.com' ||
     window.location.host === 'livingatlasstg.arcgis.com';
 
@@ -38,7 +38,7 @@ export const initializeApp = async ({
     // If the app is hosted on Living Atlas, it must use ArcGIS Online as the portal URL
     // If the current portal URL is not ArcGIS Online, throw an error
     if (
-        isHostedOnLivingAtlasServer &&
+        IS_HOSTED_ON_LIVING_ATLAS_SERVER &&
         AGOL_PORTAL_ROOT !== 'https://www.arcgis.com'
     ) {
         throw new Error(
@@ -71,7 +71,6 @@ export const initializeApp = async ({
 
     // Load Adobe Analytics script if the application is hosted on Living Atlas
     // This will append the Adobe Analytics script to the document head.
-    loadAdobeAnalytics(isHostedOnLivingAtlasServer);
-
+    loadAdobeAnalytics(IS_HOSTED_ON_LIVING_ATLAS_SERVER);
     console.log('Application initialized successfully.');
 };
