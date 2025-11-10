@@ -13,6 +13,7 @@ const OUT_FIELDS = [
     UrbanAreaLayerFieldNames.COUNTRY,
     UrbanAreaLayerFieldNames.URBAN_CENTER_NAME,
     UrbanAreaLayerFieldNames.URBAN_CENTER_ALL_NAMES,
+    UrbanAreaLayerFieldNames.URBAN_CENTER_ID,
 ];
 
 /**

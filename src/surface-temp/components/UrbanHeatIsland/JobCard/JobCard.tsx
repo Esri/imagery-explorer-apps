@@ -41,7 +41,10 @@ export const JobCard: FC<Props> = ({
             jobData?.status === 'failed' ||
             jobData?.jobCost?.status === 'rejected'
         ) {
-            let errorMessage = t('job_failed_message', { ns: APP_NAME });
+            let errorMessage = t('job_failed_message', {
+                ns: APP_NAME,
+                error: jobData?.errorMessage,
+            });
 
             if (jobData?.jobCost?.status === 'rejected') {
                 errorMessage = t('credits_rejection_message', { ns: APP_NAME });

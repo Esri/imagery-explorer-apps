@@ -37,6 +37,6 @@
     "total_cost_summary": "Total Cost: {{credits}} credits",
     "credits_rejection_message": "Job is failed due to insufficient credits or rejection of estimated credit cost.",
     "remove_job": "Remove Job",
-    "job_failed_message": "Job is failed",
+    "job_failed_message": "SIUHI analysis job failed: {{error}}",
     "sub_job_in_progress": "Job is in progress..."
 }
