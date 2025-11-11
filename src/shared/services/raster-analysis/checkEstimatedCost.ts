@@ -21,6 +21,7 @@ import {
 import { checkRasterAnalysisJobStatus } from './checkJobStatus';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { RasterAnalysisRasterFunction } from './types';
+import { IExtent } from '@esri/arcgis-rest-feature-service';
 
 type EstimateRasterAnalysisCostOutCostResponse = {
     dataType: string;
@@ -42,18 +43,20 @@ const jobIdByRasterFunction = new Map<any, string>();
  * Retrieves an estimate of the cost to perform a raster analysis using the provided raster function.
  *
  * @param {RasterAnalysisRasterFunction} rasterFunction - The raster function to estimate the cost for.
+ * @param {IExtent} extent - Optional extent for the analysis.
  * @returns {Promise<getEstimateRasterAnalysisCostResponse>} - A promise resolving to an object containing the estimated credits and success status.
  * @throws Will throw an error if the job fails, times out, or is otherwise unsuccessful.
  */
 export const getEstimateRasterAnalysisCost = async (
-    rasterFunction: RasterAnalysisRasterFunction
+    rasterFunction: RasterAnalysisRasterFunction,
+    extent?: IExtent
 ): Promise<getEstimateRasterAnalysisCostResponse> => {
     const key = JSON.stringify(rasterFunction);
 
     let jobId = jobIdByRasterFunction.get(key);
 
     if (!jobId) {
-        jobId = await submitJob(rasterFunction);
+        jobId = await submitJob(rasterFunction, extent);
         jobIdByRasterFunction.set(key, jobId);
     }
 
@@ -116,11 +119,13 @@ const getOutCost = async (
  * Submits a job to estimate the cost of running a raster function.
  *
  * @param {any} rasterFunction - The raster function to be processed.
+ * @param {IExtent} extent - Optional extent for the analysis.
  * @returns {Promise<string>} - A promise resolving to the job ID.
  * @throws Will throw an error if the job submission fails.
  */
 const submitJob = async (
-    rasterFunction: RasterAnalysisRasterFunction
+    rasterFunction: RasterAnalysisRasterFunction,
+    extent?: IExtent
 ): Promise<string> => {
     const token = getToken();
 
@@ -144,6 +149,7 @@ const submitJob = async (
                     folderId: '',
                 },
             },
+            context: extent ? { extent } : undefined,
         }),
         token,
     });

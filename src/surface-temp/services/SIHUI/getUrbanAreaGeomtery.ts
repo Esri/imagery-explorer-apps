@@ -6,15 +6,15 @@ import {
 import { IExtent, IPolygon } from '@esri/arcgis-rest-request';
 
 /**
- * Query the geometry of the urban area feature by urban center ID
- * @param urbanCenterId id of the urban center
+ * Query the geometry of the urban area feature by object ID
+ * @param OBJECTID - object ID of the urban area feature
  * @returns geometry of the urban area feature
  */
 export const getUrbanAreaGeometry = async (
-    urbanCenterId: number
+    OBJECTID: number
 ): Promise<IPolygon> => {
     const params = new URLSearchParams({
-        where: `${UrbanAreaLayerFieldNames.URBAN_CENTER_ID} = ${urbanCenterId}`,
+        objectIds: `${OBJECTID}`,
         outFields: UrbanAreaLayerFieldNames.OBJECTID,
         returnGeometry: 'true',
         f: 'json',
@@ -45,11 +45,22 @@ export const getUrbanAreaGeometry = async (
     return feature.geometry as IPolygon;
 };
 
+const mapOfUrbanAreaFeatureExtent: Map<number, IExtent> = new Map();
+
+/**
+ * Get
+ * @param OBJECTID The object ID of the urban area feature
+ * @returns
+ */
 export const getUrbanAreaFeatureExtent = async (
-    urbanCenterId: number
+    OBJECTID: number
 ): Promise<IExtent> => {
+    if (mapOfUrbanAreaFeatureExtent.has(OBJECTID)) {
+        return mapOfUrbanAreaFeatureExtent.get(OBJECTID) as IExtent;
+    }
+
     const params = new URLSearchParams({
-        where: `${UrbanAreaLayerFieldNames.URBAN_CENTER_ID} = ${urbanCenterId}`,
+        objectIds: `${OBJECTID}`,
         outFields: UrbanAreaLayerFieldNames.OBJECTID,
         returnExtentOnly: 'true',
         f: 'json',
@@ -75,6 +86,8 @@ export const getUrbanAreaFeatureExtent = async (
     if (!extent) {
         throw new Error('No extent found for the given urban center ID.');
     }
+
+    mapOfUrbanAreaFeatureExtent.set(OBJECTID, extent);
 
     return extent;
 };

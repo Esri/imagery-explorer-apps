@@ -6,6 +6,7 @@ import {
 } from '@shared/store/UrbanHeatIslandTool/reducer';
 import React, { useEffect, useRef } from 'react';
 import { getRasterFunction4DataAggregation } from '../../../services/SIHUI/getRasterFunctions';
+import { getUrbanAreaFeatureExtent } from '../../../services/SIHUI/getUrbanAreaGeomtery';
 
 export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
     const dispatch = useAppDispatch();
@@ -27,13 +28,19 @@ export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
             const { year, months, urbanAreaFeature } = job.inputParams;
 
             const rasterFunction = await getRasterFunction4DataAggregation({
-                jobId: job.jobId,
                 selectedFeature: urbanAreaFeature,
                 selectedYear: year,
                 selectedMonths: months,
             });
 
-            const res = await getEstimateRasterAnalysisCost(rasterFunction);
+            const extent = await getUrbanAreaFeatureExtent(
+                urbanAreaFeature.OBJECTID
+            );
+
+            const res = await getEstimateRasterAnalysisCost(
+                rasterFunction,
+                extent
+            );
 
             if (!res.succeeded) {
                 return;

@@ -7,18 +7,18 @@ type GetRasterFunction4DataAggregationParams = {
      * Origin Landsat Service URL
      */
     landsatServiceUrl: string;
-    /**
-     * Output service name
-     */
-    outputServiceName: string;
+    // /**
+    //  * Output service name
+    //  */
+    // outputServiceName: string;
     /**
      * Geometry of the selected urban area feature
      */
     geometry: IPolygon;
-    /**
-     * Analysis extent
-     */
-    analysisExtent: IExtent;
+    // /**
+    //  * Analysis extent
+    //  */
+    // analysisExtent: IExtent;
     /**
      * Selected year for data aggregation
      */
@@ -36,9 +36,7 @@ type GetRasterFunction4DataAggregationParams = {
 // Function to get the raster function template for data aggregation
 export const createRasterFunction4DataAggregation = ({
     landsatServiceUrl,
-    // outputServiceName,
     geometry,
-    // analysisExtent,
     selectedYear,
     selectedMonths,
     token,

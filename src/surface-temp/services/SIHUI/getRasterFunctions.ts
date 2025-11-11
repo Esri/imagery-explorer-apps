@@ -2,14 +2,10 @@ import { UrbanAreaFeature } from '@shared/store/UrbanHeatIslandTool/reducer';
 import { createRasterFunction4DataAggregation } from './createRasterFunction4DataAggregation';
 import { LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { getToken } from '@shared/utils/esri-oauth';
-import {
-    getUrbanAreaFeatureExtent,
-    getUrbanAreaGeometry,
-} from './getUrbanAreaGeomtery';
+import { getUrbanAreaGeometry } from './getUrbanAreaGeomtery';
 import { RasterAnalysisRasterFunction } from '@shared/services/raster-analysis/types';
 
 type GetRasterFunction4DataAggregationParam = {
-    jobId: string;
     selectedFeature: UrbanAreaFeature;
     selectedYear: number;
     selectedMonths: number[];
@@ -21,7 +17,6 @@ const RasterFunctionMap: Record<string, any> = new Map<
 >();
 
 export const getRasterFunction4DataAggregation = async ({
-    jobId,
     selectedFeature,
     selectedYear,
     selectedMonths,
@@ -39,23 +34,13 @@ export const getRasterFunction4DataAggregation = async ({
     }
 
     // Get the geometry of the selected urban area feature
-    const geometry = await getUrbanAreaGeometry(
-        selectedFeature.URBAN_CENTER_ID
-    );
+    const geometry = await getUrbanAreaGeometry(selectedFeature.OBJECTID);
     // console.log('Urban Area Geometry:', geometry);
 
-    const extent = await getUrbanAreaFeatureExtent(
-        selectedFeature.URBAN_CENTER_ID
-    );
     // console.log('Urban Area Extent:', extent);
-
-    const outputServiceName = `SIUHI_Data_Aggregation_${jobId}`;
-
     const rasterFunction = createRasterFunction4DataAggregation({
         landsatServiceUrl: LANDSAT_LEVEL_2_ORIGINAL_SERVICE_URL,
-        outputServiceName,
         geometry,
-        analysisExtent: extent,
         selectedYear,
         selectedMonths,
         token,
