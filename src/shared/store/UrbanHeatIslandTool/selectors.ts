@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
+import { PublishAndDownloadJobStatus } from '../PublishAndDownloadJobs/reducer';
 
 export const selectQueryLocation4UrbanHeatIslandTool = (state: RootState) =>
     state.UrbanHeatIslandTool.queryLocation;
@@ -60,7 +61,9 @@ export const selectFinishedSIUHIAnalysisJobs = createSelector(
         const finishedJobs = allJobIds
             .map((jobId) => byJobId[jobId])
             .filter(
-                (job) => job.status === 'completed' || job.status === 'failed'
+                (job) =>
+                    job.status === PublishAndDownloadJobStatus.Succeeded ||
+                    job.status === PublishAndDownloadJobStatus.Failed
             );
 
         return finishedJobs;

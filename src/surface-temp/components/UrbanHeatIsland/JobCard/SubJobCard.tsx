@@ -3,7 +3,8 @@ import { SIUHIAnalysisSubJob } from '@shared/store/UrbanHeatIslandTool/reducer';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SIUHIAnalysisJobCardContainerClassName } from './JobCard';
-import { CalciteLoader } from '@esri/calcite-components-react';
+import { CalciteIcon, CalciteLoader } from '@esri/calcite-components-react';
+import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 
 type SubJobCardProps = {
     /**
@@ -20,7 +21,10 @@ export const SubJobCard: FC<SubJobCardProps> = ({ subJobData, title }) => {
     const { t } = useTranslation();
 
     const getSubJobStatusContent = () => {
-        if (!subJobData || subJobData.status === 'waiting to start') {
+        if (
+            !subJobData ||
+            subJobData.status === PublishAndDownloadJobStatus.Waiting
+        ) {
             return (
                 <div className="opacity-50 text-center w-full text-xs">
                     {t('sub_job_not_started', { ns: APP_NAME })}
@@ -28,7 +32,10 @@ export const SubJobCard: FC<SubJobCardProps> = ({ subJobData, title }) => {
             );
         }
 
-        if (subJobData.status === 'in progress') {
+        if (
+            subJobData.status === PublishAndDownloadJobStatus.Executing ||
+            subJobData.status === PublishAndDownloadJobStatus.New
+        ) {
             const message = t('sub_job_in_progress', {
                 ns: APP_NAME,
                 time: new Date(subJobData.startedAt || 0).toLocaleString(),
@@ -47,9 +54,35 @@ export const SubJobCard: FC<SubJobCardProps> = ({ subJobData, title }) => {
             );
         }
 
+        if (
+            subJobData.status === PublishAndDownloadJobStatus.Failed ||
+            subJobData.status === PublishAndDownloadJobStatus.Cancelled ||
+            subJobData.status === PublishAndDownloadJobStatus.TimedOut ||
+            subJobData.status === PublishAndDownloadJobStatus.Expired
+        ) {
+            return (
+                <div className="text-xs text-center text-red-500">
+                    <div className="mb-1 w-full text-center">
+                        <CalciteIcon icon="exclamation-mark-circle" />
+                    </div>
+
+                    <p>
+                        {t('sub_job_failed', {
+                            ns: APP_NAME,
+                            error: subJobData.errorMessage || '',
+                        })}
+                    </p>
+                </div>
+            );
+        }
+
         return (
-            <div>
-                <div>Status: {subJobData.status}</div>
+            <div className="text-xs  text-center">
+                <div className="mb-1 w-full text-center text-green-500">
+                    <CalciteIcon icon="check-circle" />
+                </div>
+
+                <p>{t('sub_job_completed', { ns: APP_NAME })}</p>
             </div>
         );
     };

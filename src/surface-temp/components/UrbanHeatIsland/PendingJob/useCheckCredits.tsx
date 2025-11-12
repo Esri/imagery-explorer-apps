@@ -7,6 +7,7 @@ import {
 import React, { useEffect, useRef } from 'react';
 import { getRasterFunction4DataAggregation } from '../../../services/SIHUI/getRasterFunctions';
 import { getUrbanAreaFeatureExtent } from '../../../services/SIHUI/getUrbanAreaGeomtery';
+import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 
 export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
     const dispatch = useAppDispatch();
@@ -16,8 +17,9 @@ export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
     const shouldCheckCredits = React.useMemo(() => {
         return (
             job?.jobId &&
-            job?.status === 'waiting to start' &&
-            job?.jobCost?.status === 'checking'
+            job?.status === PublishAndDownloadJobStatus.Waiting &&
+            job?.jobCost?.status ===
+                PublishAndDownloadJobStatus.PendingCheckingCost
         );
     }, [job?.jobId, job?.status, job?.jobCost?.status]);
 
@@ -53,7 +55,10 @@ export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
                 ...job,
                 jobCost: {
                     estimatedCredits: actualCost,
-                    status: actualCost > 0 ? 'pending-acceptance' : 'accepted',
+                    status:
+                        actualCost > 0
+                            ? PublishAndDownloadJobStatus.PendingUserApprovalForActualCost
+                            : PublishAndDownloadJobStatus.Succeeded,
                 },
             };
 
@@ -67,7 +72,7 @@ export const useCheckSIUHIAnalysisJobCredits = (job: SIUHIAnalysisJob) => {
             dispatch(
                 SIUHIAnalysisJobUpdated({
                     ...job,
-                    status: 'failed',
+                    status: PublishAndDownloadJobStatus.Failed,
                     errorMessage: 'Error checking job cost',
                 })
             );

@@ -36,6 +36,9 @@ import {
     selectSelectedUrbanAreaFeature,
     selectSelectedYear4UrbanHeatIslandTool,
 } from './selectors';
+import { RasterAnalysisRasterFunction } from '@shared/services/raster-analysis/types';
+import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
+import { PublishAndDownloadJobStatus } from '../PublishAndDownloadJobs/reducer';
 
 /**
  * This thunk function updates the query location for the Urban Heat Island Tool.
@@ -98,12 +101,13 @@ export const createNewSIUHIAnalysisJob =
 
             // Create the new SIUHI analysis job object
             const subJobObj: SIUHIAnalysisSubJob = {
-                status: 'waiting to start',
+                status: PublishAndDownloadJobStatus.Waiting,
                 startedAt: 0,
                 finishedAt: 0,
                 outputItemId: '',
                 outputServiceUrl: '',
                 errorMessage: '',
+                rasterAnalysisJobId: '',
             };
 
             // create an object for the new job
@@ -114,7 +118,7 @@ export const createNewSIUHIAnalysisJob =
                 isPending: true,
                 jobCost: {
                     estimatedCredits: 0,
-                    status: 'checking',
+                    status: PublishAndDownloadJobStatus.PendingCheckingCost,
                 },
                 inputParams: {
                     // Populate with actual input parameters as needed
@@ -124,7 +128,7 @@ export const createNewSIUHIAnalysisJob =
                     months: [...selectedMonths],
                     year: selectedYear,
                 },
-                status: 'waiting to start',
+                status: PublishAndDownloadJobStatus.Waiting,
                 errorMessage: '',
                 subJobs: {
                     dataAggregation: {
@@ -166,7 +170,8 @@ export const removeSIUHIAnalysisJob =
     };
 
 export const startSIUHIAnalysisDataAggregationSubJob =
-    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+    (rasterFunction: RasterAnalysisRasterFunction) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const store = getState();
         const pendingJob = selectPendingSIUHIAnalysisJob(store);
 
@@ -177,19 +182,86 @@ export const startSIUHIAnalysisDataAggregationSubJob =
             return;
         }
 
-        dispatch(
-            SIUHIAnalysisJobUpdated({
-                ...pendingJob,
-                subJobs: {
-                    ...pendingJob.subJobs,
-                    dataAggregation: {
-                        ...pendingJob.subJobs.dataAggregation,
-                        status: 'in progress',
-                        startedAt: Date.now(),
+        const jobCostStatus = pendingJob.jobCost?.status;
+
+        if (
+            !jobCostStatus ||
+            jobCostStatus !== PublishAndDownloadJobStatus.Succeeded
+        ) {
+            console.log(
+                'Data aggregation sub-job cannot be started as job cost is not accepted.'
+            );
+            return;
+        }
+
+        try {
+            // Update the sub-job status to Executing
+            // so that the UI can reflect that the sub-job has started
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        dataAggregation: {
+                            ...pendingJob.subJobs.dataAggregation,
+                            status: PublishAndDownloadJobStatus.Failed,
+                            errorMessage:
+                                'Data aggregation sub-job start not yet implemented.',
+                        },
                     },
-                },
-            })
-        );
+                })
+            );
+
+            // const res = await publishSceneAsHostedImageryLayer({
+            //     title: `SIUHI Data Aggregation - Job ${pendingJob.jobId}`,
+            //     snippet: 'Surface Intra-Urban Heat Islands Data Aggregation Result',
+            //     description:
+            //         '',
+            //     accessInformation: '',
+            //     licenseInfo: '',
+            //     rasterFunction,
+            //     cost: pendingJob.jobCost.estimatedCredits,
+            // })
+
+            // dispatch(
+            //     SIUHIAnalysisJobUpdated({
+            //         ...pendingJob,
+            //         subJobs: {
+            //             ...pendingJob.subJobs,
+            //             dataAggregation: {
+            //                 ...pendingJob.subJobs.dataAggregation,
+            //                 status: PublishAndDownloadJobStatus.Executing,
+            //                 startedAt: Date.now(),
+            //                 rasterAnalysisJobId: res.rasterAnalysisJobId,
+            //                 outputItemId: res.outputItemId,
+            //                 outputServiceUrl: res.outputServiceUrl
+            //             },
+            //         },
+            //     })
+            // );
+        } catch (error) {
+            console.error(
+                'Error starting SIUHI analysis data aggregation sub-job:',
+                error
+            );
+
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        dataAggregation: {
+                            ...pendingJob.subJobs.dataAggregation,
+                            status: PublishAndDownloadJobStatus.Failed,
+                            finishedAt: Date.now(),
+                            errorMessage: (error as Error).message,
+                        },
+                    },
+                    status: PublishAndDownloadJobStatus.Failed,
+                    errorMessage: (error as Error).message,
+                })
+            );
+        }
     };
 
 export const startSIUHIAnalysisZonalMeanSubJob =

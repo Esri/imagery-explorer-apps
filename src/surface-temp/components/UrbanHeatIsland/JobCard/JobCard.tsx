@@ -1,5 +1,6 @@
 import { CalciteButton, CalciteLoader } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
+import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { SIUHIAnalysisJob } from '@shared/store/UrbanHeatIslandTool/reducer';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,15 +39,20 @@ export const JobCard: FC<Props> = ({
 
     const getContent = () => {
         if (
-            jobData?.status === 'failed' ||
-            jobData?.jobCost?.status === 'rejected'
+            jobData?.status === PublishAndDownloadJobStatus.Failed ||
+            jobData?.status === PublishAndDownloadJobStatus.Cancelled ||
+            jobData?.jobCost?.status === PublishAndDownloadJobStatus.Failed ||
+            jobData?.jobCost?.status === PublishAndDownloadJobStatus.Cancelled
         ) {
             let errorMessage = t('job_failed_message', {
                 ns: APP_NAME,
                 error: jobData?.errorMessage,
             });
 
-            if (jobData?.jobCost?.status === 'rejected') {
+            if (
+                jobData?.jobCost?.status ===
+                PublishAndDownloadJobStatus.Cancelled
+            ) {
                 errorMessage = t('credits_rejection_message', { ns: APP_NAME });
             }
 
@@ -71,7 +77,7 @@ export const JobCard: FC<Props> = ({
                 <div className="text-xs">
                     <table className="table-auto mb-2 text-xs w-full">
                         <tbody>
-                            <tr>
+                            {/* <tr>
                                 <td className="opacity-70">
                                     {t('created_at', { ns: APP_NAME })}:
                                 </td>
@@ -80,7 +86,7 @@ export const JobCard: FC<Props> = ({
                                         jobData.createdAt
                                     ).toLocaleString()}
                                 </td>
-                            </tr>
+                            </tr> */}
                             <tr>
                                 <td className="opacity-70">
                                     {t('aoi', { ns: APP_NAME })}:
@@ -104,22 +110,25 @@ export const JobCard: FC<Props> = ({
                                 </td>
                             </tr>
 
-                            {jobCost && jobCost?.status === 'accepted' && (
-                                <tr>
-                                    <td className="opacity-70">
-                                        {t('total_cost', { ns: APP_NAME })}:
-                                    </td>
-                                    <td>
-                                        {jobCost.estimatedCredits}{' '}
-                                        {t('credits', { ns: APP_NAME })}
-                                    </td>
-                                </tr>
-                            )}
+                            {jobCost &&
+                                jobCost?.status ===
+                                    PublishAndDownloadJobStatus.Succeeded && (
+                                    <tr>
+                                        <td className="opacity-70">
+                                            {t('total_cost', { ns: APP_NAME })}:
+                                        </td>
+                                        <td>
+                                            {jobCost.estimatedCredits}{' '}
+                                            {t('credits', { ns: APP_NAME })}
+                                        </td>
+                                    </tr>
+                                )}
                         </tbody>
                     </table>
                 </div>
 
-                {jobCost?.status === 'pending-acceptance' && (
+                {jobCost?.status ===
+                    PublishAndDownloadJobStatus.PendingUserApprovalForActualCost && (
                     <>
                         <p className="text-xs">
                             {t('total_cost_summary', {
@@ -153,7 +162,8 @@ export const JobCard: FC<Props> = ({
                     </>
                 )}
 
-                {jobCost?.status === 'checking' && (
+                {jobCost?.status ===
+                    PublishAndDownloadJobStatus.PendingCheckingCost && (
                     <div className="opacity-50 w-full text-sm mt-2 flex items-center">
                         <CalciteLoader inline scale="m" />
                         <span className="ml-1">

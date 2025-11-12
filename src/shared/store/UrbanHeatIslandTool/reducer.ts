@@ -25,6 +25,7 @@ import {
 } from '@shared/utils/date-time/getCurrentDateTime';
 
 import Point from '@arcgis/core/geometry/Point';
+import { PublishAndDownloadJobStatus } from '../PublishAndDownloadJobs/reducer';
 
 // type MaskOptionsBySpectralIndex = Partial<Record<SpectralIndex, MaskOptions>>;
 
@@ -53,20 +54,25 @@ export type UrbanHeatIslandToolPanel =
     | 'view previous jobs'
     | 'view pending job';
 
-/**
- * Represents the status of a surface intra-urban heat islands (SIUHI) analysis job
- */
-export type SIUHIAnalysisJobStatus =
-    | 'waiting to start'
-    | 'in progress'
-    | 'completed'
-    | 'failed'
-    | 'cancelled';
+// /**
+//  * Represents the status of a surface intra-urban heat islands (SIUHI) analysis job
+//  */
+// export type SIUHIAnalysisJobStatus =
+//     | 'waiting to start'
+//     | 'in progress'
+//     | 'completed'
+//     | 'failed'
+//     | 'cancelled';
 
 /**
  * Represents a sub-job within the surface intra-urban heat islands (SIUHI) analysis job
  */
 export type SIUHIAnalysisSubJob = {
+    /**
+     * The ID of the raster analysis job associated with this sub-job.
+     * This ID is returned by the Raster Analysis service when the job is submitted and will be used to track the status of the job.
+     */
+    rasterAnalysisJobId: string;
     /**
      * Timestamp when the step started
      */
@@ -78,7 +84,7 @@ export type SIUHIAnalysisSubJob = {
     /**
      * Status of the step
      */
-    status: SIUHIAnalysisJobStatus;
+    status: PublishAndDownloadJobStatus;
     /**
      * If the step completed successfully, the ID of the output item created
      */
@@ -108,7 +114,7 @@ export type SIUHIAnalysisJob = {
     /**
      * Status of the job
      */
-    status: SIUHIAnalysisJobStatus;
+    status: PublishAndDownloadJobStatus;
     /**
      * Timestamp when the job was created
      */
@@ -129,12 +135,8 @@ export type SIUHIAnalysisJob = {
         estimatedCredits: number;
         /**
          * Status of the credit estimation process
-         * - checking: credits are being checked
-         * - pending-acceptance: credits have been estimated and are pending user acceptance
-         * - accepted: user has accepted the estimated credits
-         * - rejected: user has rejected the estimated credits
          */
-        status: 'checking' | 'pending-acceptance' | 'accepted' | 'rejected';
+        status: PublishAndDownloadJobStatus;
     };
     /**
      * Parameters used for the job
