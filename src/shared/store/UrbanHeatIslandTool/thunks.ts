@@ -173,6 +173,7 @@ export const startSIUHIAnalysisDataAggregationSubJob =
     (rasterFunction: RasterAnalysisRasterFunction) =>
     async (dispatch: StoreDispatch, getState: StoreGetState) => {
         const store = getState();
+
         const pendingJob = selectPendingSIUHIAnalysisJob(store);
 
         if (!pendingJob) {
@@ -204,41 +205,39 @@ export const startSIUHIAnalysisDataAggregationSubJob =
                         ...pendingJob.subJobs,
                         dataAggregation: {
                             ...pendingJob.subJobs.dataAggregation,
-                            status: PublishAndDownloadJobStatus.Failed,
-                            errorMessage:
-                                'Data aggregation sub-job start not yet implemented.',
+                            status: PublishAndDownloadJobStatus.Executing,
                         },
                     },
                 })
             );
 
-            // const res = await publishSceneAsHostedImageryLayer({
-            //     title: `SIUHI Data Aggregation - Job ${pendingJob.jobId}`,
-            //     snippet: 'Surface Intra-Urban Heat Islands Data Aggregation Result',
-            //     description:
-            //         '',
-            //     accessInformation: '',
-            //     licenseInfo: '',
-            //     rasterFunction,
-            //     cost: pendingJob.jobCost.estimatedCredits,
-            // })
+            const res = await publishSceneAsHostedImageryLayer({
+                title: `SIUHI Data Aggregation - Job ${pendingJob.jobId}`,
+                snippet:
+                    'Surface Intra-Urban Heat Islands Data Aggregation Result',
+                description: '',
+                accessInformation: '',
+                licenseInfo: '',
+                rasterFunction,
+                cost: pendingJob.jobCost.estimatedCredits,
+            });
 
-            // dispatch(
-            //     SIUHIAnalysisJobUpdated({
-            //         ...pendingJob,
-            //         subJobs: {
-            //             ...pendingJob.subJobs,
-            //             dataAggregation: {
-            //                 ...pendingJob.subJobs.dataAggregation,
-            //                 status: PublishAndDownloadJobStatus.Executing,
-            //                 startedAt: Date.now(),
-            //                 rasterAnalysisJobId: res.rasterAnalysisJobId,
-            //                 outputItemId: res.outputItemId,
-            //                 outputServiceUrl: res.outputServiceUrl
-            //             },
-            //         },
-            //     })
-            // );
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        dataAggregation: {
+                            ...pendingJob.subJobs.dataAggregation,
+                            status: PublishAndDownloadJobStatus.Executing,
+                            startedAt: Date.now(),
+                            rasterAnalysisJobId: res.rasterAnalysisJobId,
+                            outputItemId: res.outputItemId,
+                            outputServiceUrl: res.outputServiceUrl,
+                        },
+                    },
+                })
+            );
         } catch (error) {
             console.error(
                 'Error starting SIUHI analysis data aggregation sub-job:',
@@ -265,11 +264,192 @@ export const startSIUHIAnalysisDataAggregationSubJob =
     };
 
 export const startSIUHIAnalysisZonalMeanSubJob =
-    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        // Implementation for starting the zonal mean sub-job goes here.
+    (rasterFunction: RasterAnalysisRasterFunction) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const store = getState();
+
+        const pendingJob = selectPendingSIUHIAnalysisJob(store);
+
+        if (!pendingJob) {
+            console.log('No pending job found to start zonal eman sub-job.');
+            return;
+        }
+
+        const dataAggregationJob = pendingJob.subJobs.dataAggregation;
+
+        if (
+            !dataAggregationJob ||
+            dataAggregationJob.status !==
+                PublishAndDownloadJobStatus.Succeeded ||
+            !dataAggregationJob.outputServiceUrl
+        ) {
+            console.log(
+                'Zonal mean sub-job cannot be started as data aggregation sub-job is not yet succeeded.'
+            );
+            return;
+        }
+
+        try {
+            // Update the sub-job status to Executing
+            // so that the UI can reflect that the sub-job has started
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        zonalMean: {
+                            ...pendingJob.subJobs.zonalMean,
+                            status: PublishAndDownloadJobStatus.Executing,
+                        },
+                    },
+                })
+            );
+
+            const res = await publishSceneAsHostedImageryLayer({
+                title: `SIUHI Zonal Mean ${pendingJob.jobId}`,
+                snippet: 'Surface Intra-Urban Heat Islands Zonal Mean Result',
+                description: '',
+                accessInformation: '',
+                licenseInfo: '',
+                rasterFunction,
+                cost: pendingJob.jobCost.estimatedCredits,
+            });
+
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        zonalMean: {
+                            ...pendingJob.subJobs.zonalMean,
+                            status: PublishAndDownloadJobStatus.Executing,
+                            startedAt: Date.now(),
+                            rasterAnalysisJobId: res.rasterAnalysisJobId,
+                            outputItemId: res.outputItemId,
+                            outputServiceUrl: res.outputServiceUrl,
+                        },
+                    },
+                })
+            );
+        } catch (error) {
+            console.error(
+                'Error starting SIUHI analysis zonal Mean sub-job:',
+                error
+            );
+
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        zonalMean: {
+                            ...pendingJob.subJobs.zonalMean,
+                            status: PublishAndDownloadJobStatus.Failed,
+                            finishedAt: Date.now(),
+                            errorMessage: (error as Error).message,
+                        },
+                    },
+                    status: PublishAndDownloadJobStatus.Failed,
+                    errorMessage: (error as Error).message,
+                })
+            );
+        }
     };
 
 export const startSIUHIAnalysisSurfaceHeatIndexCalculationSubJob =
-    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
-        // Implementation for starting the surface heat index calculation sub-job goes here.
+    (rasterFunction: RasterAnalysisRasterFunction) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const store = getState();
+
+        const pendingJob = selectPendingSIUHIAnalysisJob(store);
+
+        if (!pendingJob) {
+            console.log('No pending job found to start zonal eman sub-job.');
+            return;
+        }
+
+        const dataAggregationJob = pendingJob.subJobs.dataAggregation;
+        const zonalMeanJob = pendingJob.subJobs.zonalMean;
+
+        if (
+            !dataAggregationJob ||
+            dataAggregationJob.status !==
+                PublishAndDownloadJobStatus.Succeeded ||
+            !dataAggregationJob.outputServiceUrl ||
+            !zonalMeanJob ||
+            zonalMeanJob.status !== PublishAndDownloadJobStatus.Succeeded ||
+            !zonalMeanJob.outputServiceUrl
+        ) {
+            console.log(
+                'Surface Heat Index Calculation sub-job cannot be started as data aggregation or zonal mean sub-job is not yet succeeded.'
+            );
+            return;
+        }
+
+        try {
+            // Update the sub-job status to Executing
+            // so that the UI can reflect that the sub-job has started
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        surfaceHeatIndexCalculation: {
+                            ...pendingJob.subJobs.surfaceHeatIndexCalculation,
+                            status: PublishAndDownloadJobStatus.Executing,
+                        },
+                    },
+                })
+            );
+
+            const res = await publishSceneAsHostedImageryLayer({
+                title: `SIUHI Surface Heat Index ${pendingJob.jobId}`,
+                snippet:
+                    'Surface Intra-Urban Heat Islands Surface Heat Index Result',
+                description: '',
+                accessInformation: '',
+                licenseInfo: '',
+                rasterFunction,
+                cost: pendingJob.jobCost.estimatedCredits,
+            });
+
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        surfaceHeatIndexCalculation: {
+                            ...pendingJob.subJobs.surfaceHeatIndexCalculation,
+                            status: PublishAndDownloadJobStatus.Executing,
+                            startedAt: Date.now(),
+                            rasterAnalysisJobId: res.rasterAnalysisJobId,
+                            outputItemId: res.outputItemId,
+                            outputServiceUrl: res.outputServiceUrl,
+                        },
+                    },
+                })
+            );
+        } catch (error) {
+            console.error(
+                'Error starting SIUHI analysis zonal Mean sub-job:',
+                error
+            );
+
+            dispatch(
+                SIUHIAnalysisJobUpdated({
+                    ...pendingJob,
+                    subJobs: {
+                        ...pendingJob.subJobs,
+                        surfaceHeatIndexCalculation: {
+                            ...pendingJob.subJobs.surfaceHeatIndexCalculation,
+                            status: PublishAndDownloadJobStatus.Failed,
+                            finishedAt: Date.now(),
+                            errorMessage: (error as Error).message,
+                        },
+                    },
+                    status: PublishAndDownloadJobStatus.Failed,
+                    errorMessage: (error as Error).message,
+                })
+            );
+        }
     };

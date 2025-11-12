@@ -10,6 +10,8 @@ import {
 } from '@shared/store/UrbanHeatIslandTool/reducer';
 import { useManageDataAggregationJob } from './useManageDataAggregationJob';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
+import { useManageZonalMeanJob } from './useManageZonalMeanJob';
+import { useManageSurfaceHeatIndexJob } from './useManageSurfaceHeatIndexJob';
 
 export const PendingJobContainer = () => {
     const dispatch = useAppDispatch();
@@ -21,6 +23,12 @@ export const PendingJobContainer = () => {
 
     // this hook will manage data aggregation job after credits are accepted
     useManageDataAggregationJob(pendingJob);
+
+    // this hook will manage zonal mean job after data aggregation is succeeded
+    useManageZonalMeanJob(pendingJob);
+
+    // this hook will manage surface heat index job after zonal mean is succeeded
+    useManageSurfaceHeatIndexJob(pendingJob);
 
     const getContent = () => {
         if (!pendingJob) {
@@ -73,6 +81,7 @@ export const PendingJobContainer = () => {
                 />
                 <SubJobCard
                     subJobData={pendingJob.subJobs.surfaceHeatIndexCalculation}
+                    shouldShowOpenItemButton={true}
                     title="Step 3: Surface Heat Index"
                 />
             </div>

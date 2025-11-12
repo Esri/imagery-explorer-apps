@@ -1,9 +1,13 @@
-import { APP_NAME } from '@shared/config';
+import { AGOL_PORTAL_ROOT, APP_NAME } from '@shared/config';
 import { SIUHIAnalysisSubJob } from '@shared/store/UrbanHeatIslandTool/reducer';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SIUHIAnalysisJobCardContainerClassName } from './JobCard';
-import { CalciteIcon, CalciteLoader } from '@esri/calcite-components-react';
+import {
+    CalciteButton,
+    CalciteIcon,
+    CalciteLoader,
+} from '@esri/calcite-components-react';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 
 type SubJobCardProps = {
@@ -15,9 +19,17 @@ type SubJobCardProps = {
      * Title for the sub job card
      */
     title: string;
+    /**
+     * If true, show the "Open Item" button
+     */
+    shouldShowOpenItemButton?: boolean;
 };
 
-export const SubJobCard: FC<SubJobCardProps> = ({ subJobData, title }) => {
+export const SubJobCard: FC<SubJobCardProps> = ({
+    subJobData,
+    title,
+    shouldShowOpenItemButton,
+}) => {
     const { t } = useTranslation();
 
     const getSubJobStatusContent = () => {
@@ -82,7 +94,28 @@ export const SubJobCard: FC<SubJobCardProps> = ({ subJobData, title }) => {
                     <CalciteIcon icon="check-circle" />
                 </div>
 
-                <p>{t('sub_job_completed', { ns: APP_NAME })}</p>
+                {shouldShowOpenItemButton && subJobData.outputItemId ? (
+                    <div
+                        className="mt-2 w-full"
+                        style={{
+                            '--calcite-button-background-color':
+                                'var(--calcite-color-status-success)',
+                        }}
+                    >
+                        <CalciteButton
+                            width="full"
+                            scale="s"
+                            href={`${AGOL_PORTAL_ROOT}/home/item.html?id=${subJobData.outputItemId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            iconEnd="launch"
+                        >
+                            {t('view_result_item', { ns: APP_NAME })}
+                        </CalciteButton>
+                    </div>
+                ) : (
+                    <p>{t('sub_job_completed', { ns: APP_NAME })}</p>
+                )}
             </div>
         );
     };

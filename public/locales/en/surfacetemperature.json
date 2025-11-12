@@ -40,5 +40,6 @@
     "job_failed_message": "SIUHI analysis job failed: {{error}}",
     "sub_job_in_progress": "Job is in progress...",
     "sub_job_completed": "Job completed successfully.",
-    "sub_job_failed": "Job failed: {{error}}"
+    "sub_job_failed": "Job failed: {{error}}",
+    "view_result_item": "Open Item"
 }
