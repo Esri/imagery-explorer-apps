@@ -63,7 +63,7 @@ export const createRasterFunction4DataAggregation = ({
                     url: serviceUrl,
                     name: 'Landsat Level-2',
                     renderingRule: {
-                        rasterFunction: 'Natural Color for Visualization',
+                        rasterFunction: 'None',
                     },
                     mosaicRule: {
                         ascending: true,
@@ -131,8 +131,7 @@ export const createRasterFunction4DataAggregation = ({
                                     url: serviceUrl,
                                     name: 'Landsat Level-2',
                                     renderingRule: {
-                                        rasterFunction:
-                                            'Natural Color for Visualization',
+                                        rasterFunction: 'None',
                                     },
                                     mosaicRule: {
                                         ascending: true,
