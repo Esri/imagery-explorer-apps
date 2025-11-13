@@ -80,9 +80,6 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
                 throw new Error('Job status not found');
             }
 
-            const succeeded =
-                response.jobStatus === PublishAndDownloadJobStatus.Succeeded;
-
             dispatch(
                 SIUHIAnalysisJobUpdated({
                     ...job,
@@ -91,14 +88,8 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
                         surfaceHeatIndexCalculation: {
                             ...job.subJobs.surfaceHeatIndexCalculation,
                             status: response.jobStatus,
-                            finishedAt: succeeded ? Date.now() : 0,
                         },
                     },
-                    // Update overall job status based on sub-job status
-                    // since this is the last sub-job to complete
-                    status: succeeded
-                        ? PublishAndDownloadJobStatus.Succeeded
-                        : job.status,
                 })
             );
         } catch (error) {
@@ -211,4 +202,26 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
         surfaceHeatIndexCalculationStatus,
         jobStatus,
     ]);
+
+    useEffect(() => {
+        if (
+            surfaceHeatIndexCalculationStatus !==
+                PublishAndDownloadJobStatus.Succeeded &&
+            surfaceHeatIndexCalculationStatus !==
+                PublishAndDownloadJobStatus.Failed &&
+            surfaceHeatIndexCalculationStatus !==
+                PublishAndDownloadJobStatus.Cancelled
+        ) {
+            return;
+        }
+
+        // Update overall job status based on final status of surfaceHeatIndexCalculation sub-job,
+        // as it's the last sub-job in the sequence.
+        dispatch(
+            SIUHIAnalysisJobUpdated({
+                ...job,
+                status: surfaceHeatIndexCalculationStatus,
+            })
+        );
+    }, [surfaceHeatIndexCalculationStatus]);
 };

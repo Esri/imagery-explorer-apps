@@ -22,6 +22,12 @@ type Props = {
      * @returns
      */
     removeJobButtonOnClick: () => void;
+    /**
+     * emit when the open output item button is clicked
+     * this button is shown only when the job is finished successfully and the output item is available
+     * @returns
+     */
+    openOutputItemButtonOnClick?: () => void;
 };
 
 export const SIUHIAnalysisJobCardContainerClassName =
@@ -32,6 +38,7 @@ export const JobCard: FC<Props> = ({
     acceptCreditsButtonOnClick,
     rejectCreditsButtonOnClick,
     removeJobButtonOnClick,
+    openOutputItemButtonOnClick,
 }) => {
     const { t } = useTranslation();
 
@@ -173,6 +180,33 @@ export const JobCard: FC<Props> = ({
                         </span>
                     </div>
                 )}
+
+                {jobData.status === PublishAndDownloadJobStatus.Succeeded &&
+                    jobData.subJobs.surfaceHeatIndexCalculation.status ===
+                        PublishAndDownloadJobStatus.Succeeded &&
+                    jobData.subJobs.surfaceHeatIndexCalculation.outputItemId &&
+                    openOutputItemButtonOnClick && (
+                        <div
+                            className="mt-2 w-full"
+                            style={{
+                                '--calcite-button-background-color':
+                                    'var(--calcite-color-status-success)',
+                                '--calcite-button-border-color':
+                                    'var(--calcite-color-status-success)',
+                                '--calcite-button-text-color': '#000',
+                            }}
+                        >
+                            <CalciteButton
+                                width="full"
+                                scale="s"
+                                onClick={openOutputItemButtonOnClick}
+                                // rel="noopener noreferrer"
+                                iconEnd="launch"
+                            >
+                                {t('view_result_item', { ns: APP_NAME })}
+                            </CalciteButton>
+                        </div>
+                    )}
             </>
         );
     };

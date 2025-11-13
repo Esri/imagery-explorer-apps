@@ -1,4 +1,4 @@
-import { APP_NAME } from '@shared/config';
+import { AGOL_PORTAL_ROOT, APP_NAME } from '@shared/config';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectFinishedSIUHIAnalysisJobs } from '@shared/store/UrbanHeatIslandTool/selectors';
 import React from 'react';
@@ -19,7 +19,7 @@ export const FinishiedJobsContainer = () => {
     }
 
     return (
-        <div className="flex gap-1">
+        <div className="flex gap-1 w-full">
             {finishedJobs.map((job) => {
                 return (
                     <JobCard
@@ -27,6 +27,10 @@ export const FinishiedJobsContainer = () => {
                         jobData={job}
                         removeJobButtonOnClick={() => {
                             // no-op for finished jobs
+                        }}
+                        openOutputItemButtonOnClick={() => {
+                            const url = `${AGOL_PORTAL_ROOT}/home/item.html?id=${job.subJobs.surfaceHeatIndexCalculation.outputItemId}`;
+                            window.open(url, '_blank');
                         }}
                     />
                 );

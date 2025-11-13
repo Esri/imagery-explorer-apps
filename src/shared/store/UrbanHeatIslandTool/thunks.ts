@@ -39,6 +39,7 @@ import {
 import { RasterAnalysisRasterFunction } from '@shared/services/raster-analysis/types';
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import { PublishAndDownloadJobStatus } from '../PublishAndDownloadJobs/reducer';
+import { AGOL_PORTAL_ROOT } from '@shared/config';
 
 /**
  * This thunk function updates the query location for the Urban Heat Island Tool.
@@ -473,4 +474,40 @@ export const startSIUHIAnalysisSurfaceHeatIndexCalculationSubJob =
                 })
             );
         }
+    };
+
+export const openPendingSIUHIAnalysisJobOutputItem =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const store = getState();
+
+        const pendingJob = selectPendingSIUHIAnalysisJob(store);
+
+        if (!pendingJob) {
+            console.log('No pending job found.');
+            return;
+        }
+
+        const outputItemId =
+            pendingJob.subJobs.surfaceHeatIndexCalculation.outputItemId;
+
+        if (!outputItemId) {
+            console.log('No output item ID found for the pending job.');
+            return;
+        }
+
+        // open the output item in a new tab
+        const url = `${AGOL_PORTAL_ROOT}/home/item.html?id=${outputItemId}`;
+        window.open(url, '_blank');
+
+        // mark the job as no longer pending so that it moves to the previous jobs list
+        // and user can start a new job if they want to
+        dispatch(
+            SIUHIAnalysisJobUpdated({
+                ...pendingJob,
+                isPending: false,
+            })
+        );
+
+        // open the "view previous jobs" panel so that the user can see the job in the previous jobs list
+        dispatch(activePanel4UrbanHeatIslandToolChanged('view previous jobs'));
     };

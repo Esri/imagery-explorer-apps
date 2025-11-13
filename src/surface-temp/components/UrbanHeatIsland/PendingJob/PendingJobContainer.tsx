@@ -12,6 +12,8 @@ import { useManageDataAggregationJob } from './useManageDataAggregationJob';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { useManageZonalMeanJob } from './useManageZonalMeanJob';
 import { useManageSurfaceHeatIndexJob } from './useManageSurfaceHeatIndexJob';
+import { AGOL_PORTAL_ROOT } from '@shared/config';
+import { openPendingSIUHIAnalysisJobOutputItem } from '@shared/store/UrbanHeatIslandTool/thunks';
 
 export const PendingJobContainer = () => {
     const dispatch = useAppDispatch();
@@ -69,6 +71,9 @@ export const PendingJobContainer = () => {
                     removeJobButtonOnClick={() => {
                         dispatch(SIUHIAnalysisJobRemoved(pendingJob.jobId));
                     }}
+                    openOutputItemButtonOnClick={() => {
+                        dispatch(openPendingSIUHIAnalysisJobOutputItem());
+                    }}
                 />
 
                 <SubJobCard
@@ -81,7 +86,6 @@ export const PendingJobContainer = () => {
                 />
                 <SubJobCard
                     subJobData={pendingJob.subJobs.surfaceHeatIndexCalculation}
-                    shouldShowOpenItemButton={true}
                     title="Step 3: Surface Heat Index"
                 />
             </div>

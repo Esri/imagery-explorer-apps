@@ -19,16 +19,16 @@ type SubJobCardProps = {
      * Title for the sub job card
      */
     title: string;
-    /**
-     * If true, show the "Open Item" button
-     */
-    shouldShowOpenItemButton?: boolean;
+    // /**
+    //  * If true, show the "Open Item" button
+    //  */
+    // shouldShowOpenItemButton?: boolean;
 };
 
 export const SubJobCard: FC<SubJobCardProps> = ({
     subJobData,
     title,
-    shouldShowOpenItemButton,
+    // shouldShowOpenItemButton,
 }) => {
     const { t } = useTranslation();
 
@@ -94,7 +94,9 @@ export const SubJobCard: FC<SubJobCardProps> = ({
                     <CalciteIcon icon="check-circle" />
                 </div>
 
-                {shouldShowOpenItemButton && subJobData.outputItemId ? (
+                <p>{t('sub_job_completed', { ns: APP_NAME })}</p>
+
+                {/* {shouldShowOpenItemButton && subJobData.outputItemId ? (
                     <div
                         className="mt-2 w-full"
                         style={{
@@ -115,7 +117,7 @@ export const SubJobCard: FC<SubJobCardProps> = ({
                     </div>
                 ) : (
                     <p>{t('sub_job_completed', { ns: APP_NAME })}</p>
-                )}
+                )} */}
             </div>
         );
     };
