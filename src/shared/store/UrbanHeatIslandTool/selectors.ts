@@ -61,9 +61,7 @@ export const selectFinishedSIUHIAnalysisJobs = createSelector(
         const finishedJobs = allJobIds
             .map((jobId) => byJobId[jobId])
             .filter(
-                (job) =>
-                    job.status === PublishAndDownloadJobStatus.Succeeded ||
-                    job.status === PublishAndDownloadJobStatus.Failed
+                (job) => job.status === PublishAndDownloadJobStatus.Succeeded
             );
 
         return finishedJobs;
@@ -72,3 +70,10 @@ export const selectFinishedSIUHIAnalysisJobs = createSelector(
 
 export const selectFailedToCreateJobErrorMessage = (state: RootState) =>
     state.UrbanHeatIslandTool.failedToCreateJobErrorMessage;
+
+export const selectHasPendingSIUHIAnalysisJob = createSelector(
+    selectPendingSIUHIAnalysisJob,
+    (pendingJob) => {
+        return pendingJob !== null;
+    }
+);

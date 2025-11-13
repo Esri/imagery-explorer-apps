@@ -159,6 +159,27 @@ export const createNewSIUHIAnalysisJob =
         }
     };
 
+export const cancelPendingSIUHIAnalysisJob =
+    () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const store = getState();
+
+        const pendingJob = selectPendingSIUHIAnalysisJob(store);
+
+        if (!pendingJob) {
+            console.log('No pending job found to cancel.');
+            return;
+        }
+
+        dispatch(
+            SIUHIAnalysisJobUpdated({
+                ...pendingJob,
+                status: PublishAndDownloadJobStatus.Cancelled,
+                errorMessage: 'Job was cancelled by the user.',
+                isPending: false,
+            })
+        );
+    };
+
 export const updateSIUHIAnalysisJob =
     () => async (dispatch: StoreDispatch, getState: StoreGetState) => {
         // Implementation for updating an existing SIUHI analysis job goes here.

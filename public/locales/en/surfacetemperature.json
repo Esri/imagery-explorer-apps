@@ -41,5 +41,7 @@
     "sub_job_in_progress": "Job is in progress...",
     "sub_job_completed": "Job completed successfully.",
     "sub_job_failed": "Job failed: {{error}}",
-    "view_result_item": "Open Item"
+    "view_result_item": "Open Item",
+    "pending_job_exists": "There is already a pending SIUHI analysis job. Please wait for it to complete before creating a new one.",
+    "no_finished_jobs": "No finished SIUHI analysis jobs found."
 }

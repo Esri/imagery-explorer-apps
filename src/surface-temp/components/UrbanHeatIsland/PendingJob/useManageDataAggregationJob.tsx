@@ -126,9 +126,25 @@ export const useManageDataAggregationJob = (job: SIUHIAnalysisJob) => {
         }
 
         if (
+            jobStatus === PublishAndDownloadJobStatus.Succeeded ||
+            jobStatus === PublishAndDownloadJobStatus.Failed ||
+            jobStatus === PublishAndDownloadJobStatus.Cancelled
+        ) {
+            console.log(
+                'Data aggregation job management: Overall job already completed for job:',
+                job
+            );
+            return;
+        }
+
+        if (
             dataAggregationStatus !== PublishAndDownloadJobStatus.Executing &&
             dataAggregationStatus !== PublishAndDownloadJobStatus.New
         ) {
+            console.log(
+                'Data aggregation job management: Data aggregation job not in executing or new state for job:',
+                job
+            );
             return;
         }
 
@@ -144,5 +160,5 @@ export const useManageDataAggregationJob = (job: SIUHIAnalysisJob) => {
         return () => {
             clearInterval(interval);
         };
-    }, [dataAggregationJobId, dataAggregationStatus]);
+    }, [dataAggregationJobId, dataAggregationStatus, jobStatus]);
 };

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { selectPendingSIUHIAnalysisJob } from '@shared/store/UrbanHeatIslandTool/selectors';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubJobCard } from '../JobCard/SubJobCard';
 import { JobCard } from '../JobCard/JobCard';
 import { useCheckSIUHIAnalysisJobCredits } from './useCheckCredits';

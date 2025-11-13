@@ -119,6 +119,18 @@ export const useManageZonalMeanJob = (job: SIUHIAnalysisJob) => {
         }
 
         if (
+            jobStatus === PublishAndDownloadJobStatus.Succeeded ||
+            jobStatus === PublishAndDownloadJobStatus.Failed ||
+            jobStatus === PublishAndDownloadJobStatus.Cancelled
+        ) {
+            console.log(
+                'Zonal Mean job management: Overall job already completed for job:',
+                job
+            );
+            return;
+        }
+
+        if (
             zonalMeanStatus !== PublishAndDownloadJobStatus.Waiting ||
             zonalMeanJobId
         ) {
@@ -137,10 +149,19 @@ export const useManageZonalMeanJob = (job: SIUHIAnalysisJob) => {
         zonalMeanStatus,
         zonalMeanJobId,
         dataAggregationOutoutServiceUrl,
+        jobStatus,
     ]);
 
     useEffect(() => {
         if (!zonalMeanJobId) {
+            return;
+        }
+
+        if (
+            jobStatus === PublishAndDownloadJobStatus.Succeeded ||
+            jobStatus === PublishAndDownloadJobStatus.Failed ||
+            jobStatus === PublishAndDownloadJobStatus.Cancelled
+        ) {
             return;
         }
 
@@ -160,5 +181,10 @@ export const useManageZonalMeanJob = (job: SIUHIAnalysisJob) => {
         return () => {
             clearInterval(interval);
         };
-    }, [zonalMeanJobId, zonalMeanStatus, dataAggregationOutoutServiceUrl]);
+    }, [
+        zonalMeanJobId,
+        zonalMeanStatus,
+        dataAggregationOutoutServiceUrl,
+        jobStatus,
+    ]);
 };

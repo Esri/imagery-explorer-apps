@@ -11,12 +11,12 @@ type Props = {
      * Emit when the accept credits button is clicked
      * @returns void
      */
-    acceptCreditsButtonOnClick: () => void;
+    acceptCreditsButtonOnClick?: () => void;
     /**
      * Emit when the reject credits button is clicked
      * @returns void
      */
-    rejectCreditsButtonOnClick: () => void;
+    rejectCreditsButtonOnClick?: () => void;
     /**
      * emit when the remove job button is clicked
      * @returns
@@ -127,40 +127,42 @@ export const JobCard: FC<Props> = ({
                     </table>
                 </div>
 
-                {jobCost?.status ===
-                    PublishAndDownloadJobStatus.PendingUserApprovalForActualCost && (
-                    <>
-                        <p className="text-xs">
-                            {t('total_cost_summary', {
-                                ns: APP_NAME,
-                                credits: jobCost.estimatedCredits,
-                            })}
-                        </p>
-                        <div className="grid grid-cols-2 gap-1">
-                            <CalciteButton
-                                scale="s"
-                                // width="full"
-                                appearance="outline"
-                                kind="neutral"
-                                // iconEnd='check'
-                                onClick={acceptCreditsButtonOnClick}
-                            >
-                                {t('accept_credits', { ns: APP_NAME })}
-                            </CalciteButton>
+                {acceptCreditsButtonOnClick &&
+                    rejectCreditsButtonOnClick &&
+                    jobCost?.status ===
+                        PublishAndDownloadJobStatus.PendingUserApprovalForActualCost && (
+                        <>
+                            <p className="text-xs">
+                                {t('total_cost_summary', {
+                                    ns: APP_NAME,
+                                    credits: jobCost.estimatedCredits,
+                                })}
+                            </p>
+                            <div className="grid grid-cols-2 gap-1">
+                                <CalciteButton
+                                    scale="s"
+                                    // width="full"
+                                    appearance="outline"
+                                    kind="neutral"
+                                    // iconEnd='check'
+                                    onClick={acceptCreditsButtonOnClick}
+                                >
+                                    {t('accept_credits', { ns: APP_NAME })}
+                                </CalciteButton>
 
-                            <CalciteButton
-                                scale="s"
-                                appearance="outline"
-                                kind="neutral"
-                                // width="full"
-                                // iconEnd='x'
-                                onClick={rejectCreditsButtonOnClick}
-                            >
-                                {t('reject_credits', { ns: APP_NAME })}
-                            </CalciteButton>
-                        </div>
-                    </>
-                )}
+                                <CalciteButton
+                                    scale="s"
+                                    appearance="outline"
+                                    kind="neutral"
+                                    // width="full"
+                                    // iconEnd='x'
+                                    onClick={rejectCreditsButtonOnClick}
+                                >
+                                    {t('reject_credits', { ns: APP_NAME })}
+                                </CalciteButton>
+                            </div>
+                        </>
+                    )}
 
                 {jobCost?.status ===
                     PublishAndDownloadJobStatus.PendingCheckingCost && (

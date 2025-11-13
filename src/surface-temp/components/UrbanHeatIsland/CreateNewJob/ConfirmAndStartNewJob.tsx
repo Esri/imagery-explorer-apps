@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { urbanHeatIslandToolFiltersReset } from '@shared/store/UrbanHeatIslandTool/reducer';
 import {
     selectFailedToCreateJobErrorMessage,
+    selectHasPendingSIUHIAnalysisJob,
     selectShouldDisableCreateJobButton,
 } from '@shared/store/UrbanHeatIslandTool/selectors';
 import { createNewSIUHIAnalysisJob } from '@shared/store/UrbanHeatIslandTool/thunks';
@@ -25,6 +26,10 @@ export const ConfirmAndStartNewJob = () => {
 
     const failedToCreateJobErrorMessage = useAppSelector(
         selectFailedToCreateJobErrorMessage
+    );
+
+    const hasPendingSIUHIAnalysisJob = useAppSelector(
+        selectHasPendingSIUHIAnalysisJob
     );
 
     return (
@@ -63,8 +68,10 @@ export const ConfirmAndStartNewJob = () => {
                     scale="m"
                     width="full"
                     iconStart="plus"
-                    disabled={shouldDisableCreateJobButton}
-                    className="mt-2"
+                    disabled={
+                        shouldDisableCreateJobButton ||
+                        hasPendingSIUHIAnalysisJob
+                    }
                     onClick={() => {
                         // Dispatch action to create new SIUHI analysis job
                         dispatch(createNewSIUHIAnalysisJob());
@@ -92,7 +99,7 @@ export const ConfirmAndStartNewJob = () => {
             {failedToCreateJobErrorMessage && (
                 <>
                     <div className="mt-2 text-red-500 flex ">
-                        <p className="font-medium text-sm">
+                        <p className="font-medium text-xs">
                             {t('failed_to_create_new_job', {
                                 ns: APP_NAME,
                                 errorMessage: failedToCreateJobErrorMessage,
@@ -100,6 +107,16 @@ export const ConfirmAndStartNewJob = () => {
                         </p>
                     </div>
                 </>
+            )}
+
+            {hasPendingSIUHIAnalysisJob && (
+                <div className="mt-1 flex ">
+                    <p className="opacity-50 text-xs">
+                        {t('pending_job_exists', {
+                            ns: APP_NAME,
+                        })}
+                    </p>
+                </div>
             )}
         </div>
     );

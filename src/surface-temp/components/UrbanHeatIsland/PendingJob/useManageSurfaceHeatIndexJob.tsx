@@ -23,6 +23,8 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
 
     const { subJobs } = job || {};
 
+    const jobStatus = job?.status;
+
     const { zonalMean, dataAggregation, surfaceHeatIndexCalculation } =
         subJobs || {};
 
@@ -78,6 +80,9 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
                 throw new Error('Job status not found');
             }
 
+            const succeeded =
+                response.jobStatus === PublishAndDownloadJobStatus.Succeeded;
+
             dispatch(
                 SIUHIAnalysisJobUpdated({
                     ...job,
@@ -86,8 +91,14 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
                         surfaceHeatIndexCalculation: {
                             ...job.subJobs.surfaceHeatIndexCalculation,
                             status: response.jobStatus,
+                            finishedAt: succeeded ? Date.now() : 0,
                         },
                     },
+                    // Update overall job status based on sub-job status
+                    // since this is the last sub-job to complete
+                    status: succeeded
+                        ? PublishAndDownloadJobStatus.Succeeded
+                        : job.status,
                 })
             );
         } catch (error) {
@@ -126,6 +137,18 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
         }
 
         if (
+            jobStatus === PublishAndDownloadJobStatus.Succeeded ||
+            jobStatus === PublishAndDownloadJobStatus.Failed ||
+            jobStatus === PublishAndDownloadJobStatus.Cancelled
+        ) {
+            console.log(
+                'Surface Heat Index Calculation job management: Overall job already completed for job:',
+                job
+            );
+            return;
+        }
+
+        if (
             surfaceHeatIndexCalculationStatus !==
                 PublishAndDownloadJobStatus.Waiting ||
             surfaceHeatIndexCalculationJobId
@@ -146,6 +169,7 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
         zonalMeanOutputServiceUrl,
         surfaceHeatIndexCalculationStatus,
         surfaceHeatIndexCalculationJobId,
+        jobStatus,
     ]);
 
     useEffect(() => {
@@ -162,6 +186,14 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
             return;
         }
 
+        if (
+            jobStatus === PublishAndDownloadJobStatus.Succeeded ||
+            jobStatus === PublishAndDownloadJobStatus.Failed ||
+            jobStatus === PublishAndDownloadJobStatus.Cancelled
+        ) {
+            return;
+        }
+
         const interval = setInterval(async () => {
             console.log(
                 'Checking Surface Heat Index Calculation job status for job:',
@@ -174,5 +206,9 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
         return () => {
             clearInterval(interval);
         };
-    }, [surfaceHeatIndexCalculationJobId, surfaceHeatIndexCalculationStatus]);
+    }, [
+        surfaceHeatIndexCalculationJobId,
+        surfaceHeatIndexCalculationStatus,
+        jobStatus,
+    ]);
 };
