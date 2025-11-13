@@ -2,7 +2,7 @@ import { CalciteButton, CalciteLoader } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { SIUHIAnalysisJob } from '@shared/store/UrbanHeatIslandTool/reducer';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -43,6 +43,24 @@ export const JobCard: FC<Props> = ({
     const { t } = useTranslation();
 
     const { jobCost } = jobData || {};
+
+    const totalCost = useMemo(() => {
+        if (!jobCost?.estimatedCredits) {
+            return 0;
+        }
+
+        // for step 2 and step 3, each step is about 2/3 of the total cost
+        // of the estimated credits for step 1
+        const costMultiplierPerStep = 2 / 3;
+
+        const step1Cost = jobCost.estimatedCredits;
+        const step2Cost = step1Cost * costMultiplierPerStep;
+        const step3Cost = step2Cost * costMultiplierPerStep;
+
+        const total = step1Cost + step2Cost + step3Cost;
+
+        return Math.ceil(total);
+    }, [jobCost?.estimatedCredits]);
 
     const getContent = () => {
         if (
@@ -125,7 +143,7 @@ export const JobCard: FC<Props> = ({
                                             {t('total_cost', { ns: APP_NAME })}:
                                         </td>
                                         <td>
-                                            {jobCost.estimatedCredits}{' '}
+                                            {totalCost}{' '}
                                             {t('credits', { ns: APP_NAME })}
                                         </td>
                                     </tr>
@@ -142,7 +160,7 @@ export const JobCard: FC<Props> = ({
                             <p className="text-xs">
                                 {t('total_cost_summary', {
                                     ns: APP_NAME,
-                                    credits: jobCost.estimatedCredits,
+                                    credits: totalCost,
                                 })}
                             </p>
                             <div className="grid grid-cols-2 gap-1">

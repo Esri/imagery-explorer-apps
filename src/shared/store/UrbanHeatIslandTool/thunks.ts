@@ -40,6 +40,7 @@ import { RasterAnalysisRasterFunction } from '@shared/services/raster-analysis/t
 import { publishSceneAsHostedImageryLayer } from '@shared/services/raster-analysis/publishSceneAsHostedImageryLayer';
 import { PublishAndDownloadJobStatus } from '../PublishAndDownloadJobs/reducer';
 import { AGOL_PORTAL_ROOT } from '@shared/config';
+import { deleteItems } from '@shared/services/arcgis-online/deleteItem';
 
 /**
  * This thunk function updates the query location for the Urban Heat Island Tool.
@@ -234,9 +235,9 @@ export const startSIUHIAnalysisDataAggregationSubJob =
             );
 
             const res = await publishSceneAsHostedImageryLayer({
-                title: `SIUHI Data Aggregation - Job ${pendingJob.jobId}`,
+                title: `SIUHI Data Aggregation ${pendingJob.jobId}`,
                 snippet:
-                    'Surface Intra-Urban Heat Islands Data Aggregation Result',
+                    'Surface Intra-Urban Heat Islands Data Aggregation Result. This is an temprorary layer used for further analysis and will be deleted after the final result is published.',
                 description: '',
                 accessInformation: '',
                 licenseInfo: '',
@@ -329,7 +330,8 @@ export const startSIUHIAnalysisZonalMeanSubJob =
 
             const res = await publishSceneAsHostedImageryLayer({
                 title: `SIUHI Zonal Mean ${pendingJob.jobId}`,
-                snippet: 'Surface Intra-Urban Heat Islands Zonal Mean Result',
+                snippet:
+                    'Surface Intra-Urban Heat Islands Zonal Mean Result. This is an temprorary layer used for further analysis and will be deleted after the final result is published.',
                 description: '',
                 accessInformation: '',
                 licenseInfo: '',
@@ -393,6 +395,10 @@ export const startSIUHIAnalysisSurfaceHeatIndexCalculationSubJob =
         const dataAggregationJob = pendingJob.subJobs.dataAggregation;
         const zonalMeanJob = pendingJob.subJobs.zonalMean;
 
+        const inputParams = pendingJob.inputParams;
+
+        const urbanAreaFeature = inputParams.urbanAreaFeature;
+
         if (
             !dataAggregationJob ||
             dataAggregationJob.status !==
@@ -426,8 +432,7 @@ export const startSIUHIAnalysisSurfaceHeatIndexCalculationSubJob =
 
             const res = await publishSceneAsHostedImageryLayer({
                 title: `SIUHI Surface Heat Index ${pendingJob.jobId}`,
-                snippet:
-                    'Surface Intra-Urban Heat Islands Surface Heat Index Result',
+                snippet: `Surface Intra-Urban Heat Islands Surface Heat Index Result for ${urbanAreaFeature.ALL_NAMES}, ${urbanAreaFeature.COUNTRY}. The time period is months (${inputParams.months.join(', ')}) of ${inputParams.year}.`,
                 description: '',
                 accessInformation: '',
                 licenseInfo: '',

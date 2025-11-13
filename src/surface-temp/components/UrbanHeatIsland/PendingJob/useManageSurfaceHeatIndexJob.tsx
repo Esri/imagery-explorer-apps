@@ -17,6 +17,7 @@ import {
 import { RasteranalysisTaskName } from '@shared/services/raster-analysis/config';
 import { checkRasterAnalysisJobStatus } from '@shared/services/raster-analysis/checkJobStatus';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
+import { deleteItems } from '@shared/services/arcgis-online/deleteItem';
 
 export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
     const dispatch = useAppDispatch();
@@ -112,6 +113,32 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
                     status: PublishAndDownloadJobStatus.Failed,
                     errorMessage: (error as Error).message,
                 })
+            );
+        }
+    };
+
+    /**
+     * Delete temporary items created during the job process as they are no longer needed and
+     * will consume credits if left undeleted.
+     * @returns
+     */
+    const deleteTemporaryItems = async () => {
+        const itemIds = [
+            dataAggregation?.outputItemId,
+            zonalMean?.outputItemId,
+        ].filter((id): id is string => Boolean(id));
+
+        if (itemIds.length === 0) {
+            return;
+        }
+
+        try {
+            await deleteItems(itemIds);
+            console.log(`Deleted temporary items: ${itemIds.join(', ')}.`);
+        } catch (error) {
+            console.error(
+                `Error deleting temporary items: ${itemIds.join(', ')}:`,
+                error
             );
         }
     };
@@ -224,4 +251,16 @@ export const useManageSurfaceHeatIndexJob = (job: SIUHIAnalysisJob) => {
             })
         );
     }, [surfaceHeatIndexCalculationStatus]);
+
+    useEffect(() => {
+        if (
+            jobStatus !== PublishAndDownloadJobStatus.Succeeded ||
+            surfaceHeatIndexCalculationStatus !==
+                PublishAndDownloadJobStatus.Succeeded
+        ) {
+            return;
+        }
+
+        deleteTemporaryItems();
+    }, [jobStatus, surfaceHeatIndexCalculationStatus]);
 };
