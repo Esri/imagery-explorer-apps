@@ -29,7 +29,7 @@ type AppConfig = {
 /**
  * a type that represents the keys of the apps object in the `/src/config.json` file
  */
-export type AppName = keyof typeof config.apps;
+export type AppName = keyof typeof config;
 
 /**
  * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
@@ -41,7 +41,7 @@ export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
  * config file for the imagery explorer app to start/build
  */
 export const appConfig: Readonly<AppConfig> = Object.freeze(
-    config.apps[APP_NAME] as AppConfig
+    config[APP_NAME] as AppConfig
 );
 
 /**
