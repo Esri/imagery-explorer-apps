@@ -33,7 +33,6 @@
         "title": "Landsat Surface Temperature",
         "description": "Explore Landsat surface temperature archive",
         "pathname": "/surface-temp",
-        "entrypoint": "/src/surface-temp/index.tsx",
         "supportedLocales": ["en"]
     },
     "nlcdlandcoverexplorer": {
