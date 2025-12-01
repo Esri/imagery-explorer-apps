@@ -235,16 +235,16 @@ export const AnimationLayer: FC<Props> = ({
         })();
     }, [mediaLayerElements, frameData4DownloadJob]);
 
-    // If the map view's height changes during an animation,
-    // set the animation status to 'loading' so the useMediaLayerImageElement hook
-    // can re-fetch the animation frame images to cover the entire map.
-    useEffect(() => {
-        if (!animationStatus || animationStatus === 'loading') {
-            return;
-        }
+    // // If the map view's height changes during an animation,
+    // // set the animation status to 'loading' so the useMediaLayerImageElement hook
+    // // can re-fetch the animation frame images to cover the entire map.
+    // useEffect(() => {
+    //     if (!animationStatus || animationStatus === 'loading') {
+    //         return;
+    //     }
 
-        dispatch(animationStatusChanged('loading'));
-    }, [mapView?.height]);
+    //     dispatch(animationStatusChanged('loading'));
+    // }, [mapView?.height]);
 
     useEffect(() => {
         // We only need to save animation window information when the animation is in progress.
