@@ -92,7 +92,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appConfig.title} />
+                <AppHeader />
                 <BottomPanel>
                     <div className="mx-auto">
                         <DynamicModeInfo />
@@ -104,7 +104,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={appConfig.title} />
+            <AppHeader />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     {/* <LandsatSurefaceTempModeSelector /> */}
