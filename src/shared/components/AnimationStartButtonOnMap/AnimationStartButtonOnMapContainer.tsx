@@ -4,7 +4,7 @@ import {
     selectAppMode,
     selectNumOfSelectedItemsInListOfQueryParams,
 } from '@shared/store/ImageryScene/selectors';
-// import { animationStatusChanged } from '@shared/store/UI/reducer';
+import { animationStatusChanged } from '@shared/store/UI/reducer';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,5 +27,11 @@ export const AnimationStartButtonOnMapContainer: FC = () => {
         return null;
     }
 
-    return <AnimationStartButtonOnMap />;
+    return (
+        <AnimationStartButtonOnMap
+            startAnimationButtonOnClick={() => {
+                dispatch(animationStatusChanged('loading'));
+            }}
+        />
+    );
 };
