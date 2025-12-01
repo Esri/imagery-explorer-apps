@@ -60,6 +60,7 @@ import { appConfig } from '@shared/config';
 import { ZoomWidget } from './ZoomWidget';
 import { autoSwipeStatusChanged } from '@shared/store/Map/reducer';
 import { WEB_MAP_ID } from '@shared/constants/map';
+import { AnimationStartButtonOnMapContainer } from '../AnimationStartButtonOnMap/AnimationStartButtonOnMapContainer';
 
 type Props = {
     /**
@@ -205,6 +206,8 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
             </MapView>
 
             <ReferenceLayersControl shoudHide={isAnimationPlaying} />
+
+            <AnimationStartButtonOnMapContainer />
         </div>
     );
 };

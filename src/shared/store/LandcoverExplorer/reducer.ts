@@ -107,6 +107,10 @@ export type LandcoverExplorerAppState = {
             [year: number]: TimeExtentData;
         };
     };
+    /**
+     * If true, show animation controls in the bottom panel for landcover explorer app
+     */
+    showAnimationControls4Landcover: boolean;
 };
 
 export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
@@ -137,6 +141,7 @@ export const initialLandcoverExplorerAppState: LandcoverExplorerAppState = {
         availableYears: [],
         timeExtentByYear: {},
     },
+    showAnimationControls4Landcover: false,
 };
 
 const slice = createSlice({
@@ -200,6 +205,12 @@ const slice = createSlice({
         ) => {
             state.animationYearRange = action.payload;
         },
+        showAnimationControls4LandcoverToggled: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.showAnimationControls4Landcover = action.payload;
+        },
     },
 });
 
@@ -217,6 +228,7 @@ export const {
     showInfoPanelToggled,
     showSwipeWidgetYearIndicatorToggled,
     landcoverAnimationYearRangeChanged,
+    showAnimationControls4LandcoverToggled,
 } = slice.actions;
 
 export default reducer;
