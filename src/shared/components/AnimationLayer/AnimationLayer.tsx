@@ -42,6 +42,7 @@ import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { fr } from 'date-fns/locale';
+import { AnimationFrameAcquisitionDateDisplayContainer } from './AnimationFrameAcquisitionDateDisplayContainer';
 
 type Props = {
     /**
@@ -282,6 +283,10 @@ export const AnimationLayer: FC<Props> = ({
             {animationStatus === 'loading' && (
                 <CalciteLoader scale="l"></CalciteLoader>
             )}
+
+            <AnimationFrameAcquisitionDateDisplayContainer
+                animationStatus={animationStatus}
+            />
 
             <CloseButton
                 onClick={() => {
