@@ -23,7 +23,7 @@ export const AnimationFrameAcquisitionDateDisplay: FC<Props> = ({
 
     return (
         <div
-            className="absolute top-0 left-0 p-2 text-6xl text-custom-light-gray pointer-events-none select-none"
+            className="absolute top-0 left-0 p-2 text-6xl font-thin text-custom-light-gray pointer-events-none select-none"
             style={{ textShadow: '3px 3px 8px rgba(0, 0, 0, 0.9)' }}
         >
             <span>{acquisitionDate}</span>
