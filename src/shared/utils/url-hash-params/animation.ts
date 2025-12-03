@@ -82,3 +82,15 @@ export const getAnimationSpeedFromHashParams = (
     const val = getHashParamValueByKey('animation', hashParams);
     return val ? +val : null;
 };
+
+/**
+ * Check if the bottom panel is set to be hidden in the hash params
+ * @param hashParams
+ * @returns
+ */
+export const getHideBottomPanelFromHashParams = (
+    hashParams: URLSearchParams
+) => {
+    const val = getHashParamValueByKey('hideBottomPanel', hashParams);
+    return val === 'true';
+};

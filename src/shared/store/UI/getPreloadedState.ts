@@ -19,12 +19,15 @@ import { getAnimationSpeedFromHashParams } from '@shared/utils/url-hash-params';
 import { getOpenSavePanelFromSessionStorage } from '@shared/utils/session-storage/sessionStorage';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { getLocaleSuggestionPreferenceFromLocalstorage } from '@shared/i18n/getAppLanguage';
+import { getHideBottomPanelFromHashParams } from '@shared/utils/url-hash-params/animation';
 
 export const getPreloadedState4UI = (
     hashParams: URLSearchParams,
     randomInterestingPlace: InterestingPlaceData
 ): UIState => {
     const animationSpeed = getAnimationSpeedFromHashParams(hashParams);
+
+    const hideBottomPanel = getHideBottomPanelFromHashParams(hashParams);
 
     const showSavePanel = getOpenSavePanelFromSessionStorage();
 
@@ -37,6 +40,7 @@ export const getPreloadedState4UI = (
         keyOfSelectedInterestingPlace: randomInterestingPlace?.key || '',
         showSavePanel,
         hasDisabledLocaleSuggestion,
+        hideBottomPanel: hideBottomPanel ?? initialUIState.hideBottomPanel,
     };
 
     if (animationSpeed && IS_MOBILE_DEVICE === false) {
