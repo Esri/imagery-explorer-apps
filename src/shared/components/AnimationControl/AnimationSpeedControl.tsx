@@ -169,7 +169,6 @@ export const AnimationSpeedControl: FC<Props> = ({
 
     return (
         <div
-            // id="cloud-filter-container"
             className={classNames('flex-grow pl-1 pr-2 pt-2', {
                 'use-enhanced-style': shouldUseEnhancedStyle,
             })}
@@ -183,7 +182,6 @@ export const AnimationSpeedControl: FC<Props> = ({
                 className={classNames('text-center mt-1', {
                     'text-xs': !shouldUseEnhancedStyle,
                     'text-base': shouldUseEnhancedStyle,
-                    // 'mt-2': useAlternativeStyle,
                 })}
             >
                 <span
