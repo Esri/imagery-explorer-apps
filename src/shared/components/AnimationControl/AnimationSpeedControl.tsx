@@ -16,12 +16,19 @@
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { Slider } from '../Slider';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 type Props = {
     /**
      * current animation speed in milliseconds
      */
     speed: number;
+    /**
+     * If true, uses larger and brighter styling for better visibility.
+     * This is useful when the component is placed on the top right corner of the map view
+     * along with other animation controls.
+     */
+    shouldUseEnhancedStyle?: boolean;
     /**
      * fires when user selects a new animation speed
      * @param val new animation speed
@@ -153,36 +160,41 @@ export const AnimationSpeedSlider: FC<AnimationSpeedSliderProps> = ({
  * @param param0
  * @returns
  */
-export const AnimationSpeedControl: FC<Props> = ({ speed, onChange }) => {
+export const AnimationSpeedControl: FC<Props> = ({
+    speed,
+    shouldUseEnhancedStyle = false,
+    onChange,
+}) => {
     const { t } = useTranslation();
 
     return (
         <div
             // id="cloud-filter-container"
-            className="flex-grow pl-1 pr-2 pt-2"
+            className={classNames('flex-grow pl-1 pr-2 pt-2', {
+                'use-enhanced-style': shouldUseEnhancedStyle,
+            })}
         >
-            {/* <Slider
-                steps={steps}
-                value={getSliderThumbPositionByAnimationSpeed(speed)} // 0.5 as the mid point of the slider, which is equivelant to 1 second per frame
-                onChange={(newThumbPosition) => {
-                    // console.log(newThumbPosition, getAnimationSpeedBySliderThumbPosition(newThumbPosition));
-
-                    const newAnimationSpeed =
-                        getAnimationSpeedBySliderThumbPosition(
-                            newThumbPosition
-                        );
-
-                    onChange(newAnimationSpeed);
-                }}
-            /> */}
-
             <AnimationSpeedSlider
                 speedInMilliseonds={speed}
                 speedOnChange={onChange}
             />
 
-            <div className="text-xs text-center mt-1">
-                <span>{t('speed')}</span>
+            <div
+                className={classNames('text-center mt-1', {
+                    'text-xs': !shouldUseEnhancedStyle,
+                    'text-base': shouldUseEnhancedStyle,
+                    // 'mt-2': useAlternativeStyle,
+                })}
+            >
+                <span
+                    style={{
+                        textShadow: shouldUseEnhancedStyle
+                            ? '0 0 8px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1)'
+                            : 'unset',
+                    }}
+                >
+                    {t('speed')}
+                </span>
             </div>
         </div>
     );
