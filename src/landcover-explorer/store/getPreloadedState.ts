@@ -34,6 +34,7 @@ import {
     getRegionFromHashParams,
     getShowSaveWebMapPanelFromHashParams,
     getAnimationDataFromHashParams,
+    getHideBottomPanelFromHashParams,
 } from '@landcover-explorer/utils/URLHashParams';
 import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
 import { LandCoverClassification } from '@typing/landcover';
@@ -179,6 +180,8 @@ export const getPreloadedUIState4LandcoverExplorerApp = ({
 }: GetPreloadedUIState4LandcoverExplorerAppParams): UIState => {
     const showDownloadPanel = getDonwloadModeFromHashParams();
 
+    const hideBottomPanel = getHideBottomPanelFromHashParams();
+
     const showSaveWebMapPanel = getShowSaveWebMapPanelFromHashParams();
 
     const animationStatus = isAnimationModeOn ? 'loading' : null;
@@ -192,6 +195,7 @@ export const getPreloadedUIState4LandcoverExplorerApp = ({
          */
         animationStatus: isMobileView ? null : animationStatus,
         showSaveWebMapPanel,
+        hideBottomPanel: hideBottomPanel ?? initialUIState.hideBottomPanel,
     };
 };
 
