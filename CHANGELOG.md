@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Added `/webpack` directory containing webpack configuration files and utility functions for building the applications.
 - Added translation workflow doc to the docs directory.
 - Added `AnimationStartButtonOnMap` component to offer an alternative way to start animation when the main animation controls in the bottom panel are minimized.
+- Added `AnimationFrameAcquisitionDateDisplay` component to show the acquisition date of the current animation frame.
 
 #### Changed
 - Improved webpack configuration to better handle of loading environment variables and other app-specific settings. Moved webpack-related code blocks into a dedicated `webpack` directory for better organization.
