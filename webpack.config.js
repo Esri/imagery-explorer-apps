@@ -10,7 +10,7 @@ const { DefinePlugin } = require('webpack');
 
 const validateEnv = require('./webpack/validateEnvironmentVariables');
 const getEntryPointByApp = require('./webpack/getEntryPoint');
-const loadEnvironmentVariables = require('./webpack/loadEnvironmentVaraibles');
+const loadEnvironmentVariables = require('./webpack/loadEnvironmentVariables');
 const getMetaTagsDataForApp = require('./webpack/getMetaTagsDataForApp');
 const getGlobalConstants = require('./webpack/getGlobalContants');
 const { ERROR_TERMIAL_OUTPUT_COLOR } = require('./webpack/constants');

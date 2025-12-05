@@ -25,7 +25,7 @@ const validateEnv = (
     }
 
     if(!envConfig){
-        console.error(errorTerminalOutputColor, 'Failed to validate environment variables: No environment configuration provided for validation.');
+        console.error(ERROR_TERMIAL_OUTPUT_COLOR, 'Failed to validate environment variables: No environment configuration provided for validation.');
         process.exit(1);
     }
 
@@ -33,7 +33,7 @@ const validateEnv = (
     const environmentVariables = ENV_VARIABLES_BY_APP_NAME[app];
 
     if(!environmentVariables){
-        console.error(errorTerminalOutputColor, `Failed to validate environment variables: No environment variable configuration found for application: "${app}".`);
+        console.error(ERROR_TERMIAL_OUTPUT_COLOR, `Failed to validate environment variables: No environment variable configuration found for application: "${app}".`);
         process.exit(1);
     }
 
@@ -49,7 +49,7 @@ const validateEnv = (
 
     for(const varName of requiredEnvVars){
         if(envConfig && !(varName in envConfig)){
-            console.error(errorTerminalOutputColor, `Missing required environment variable: "${varName}" for "${app}". Please define it in your .env file.`);
+            console.error(ERROR_TERMIAL_OUTPUT_COLOR, `Missing required environment variable: "${varName}" for "${app}". Please define it in your .env file.`);
             process.exit(1);
         }
     }
