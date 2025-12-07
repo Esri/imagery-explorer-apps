@@ -48,7 +48,7 @@ test.describe('Sentinel-2 Land Cover Explorer - Download Panel', () => {
 
         // Wait for the LULC Footprints layer query to complete
         await page.waitForResponse(response =>
-            response.url().includes('LULC_Footprints/FeatureServer/0/query') && response.status() === 200
+            response.url().includes('S2LULCFootprints/FeatureServer/0/query') && response.status() === 200
         );
 
         // Click on the map at the specified coordinates
