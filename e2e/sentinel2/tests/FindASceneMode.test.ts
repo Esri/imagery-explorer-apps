@@ -83,6 +83,9 @@ test.describe('Sentinel-2 Explorer - Find a Scnene', () => {
         // This behavior is controlled by the useAcquisitionYear hook
         if((new Date().getUTCMonth() !== 11)) {
             await expect(yearSelectionDropdown).toHaveText(/Past 12 Months/i);
+        } else {
+            const currentUTCYear = new Date().getUTCFullYear().toString();
+            await expect(yearSelectionDropdown).toHaveText(currentUTCYear);
         }
 
         // // Ensure the dropdown is initially set to "Past 12 Months"
