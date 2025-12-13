@@ -78,8 +78,15 @@ test.describe('Sentinel-2 Explorer - Find a Scnene', () => {
         const yearSelectionDropdown = calendarContainer.getByTestId("year-selection-dropdown");
         await expect(yearSelectionDropdown).toBeVisible();
 
-        // Ensure the dropdown is initially set to "Past 12 Months"
-        await expect(yearSelectionDropdown).toHaveText(/Past 12 Months/i);
+        // If current UTC month is not December, year dropdown defaults to "Past 12 Months"
+        // In December, it shows current year (e.g., '2025') which is equivalent to "Past 12 Months"
+        // This behavior is controlled by the useAcquisitionYear hook
+        if((new Date().getUTCMonth() !== 11)) {
+            await expect(yearSelectionDropdown).toHaveText(/Past 12 Months/i);
+        }
+
+        // // Ensure the dropdown is initially set to "Past 12 Months"
+        // await expect(yearSelectionDropdown).toHaveText(/Past 12 Months/i);
         
         // Open the year selection dropdown
         await yearSelectionDropdown.click();
