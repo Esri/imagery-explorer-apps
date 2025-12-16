@@ -12,7 +12,7 @@ const validateEnv = require('./webpack/validateEnvironmentVariables');
 const getEntryPointByApp = require('./webpack/getEntryPoint');
 const loadEnvironmentVariables = require('./webpack/loadEnvironmentVariables');
 const getMetaTagsDataForApp = require('./webpack/getMetaTagsDataForApp');
-const getGlobalConstants = require('./webpack/getGlobalContants');
+const getGlobalConstants = require('./webpack/getGlobalConstants');
 const { ERROR_TERMIAL_OUTPUT_COLOR } = require('./webpack/constants');
 
 module.exports =  (env, options)=> {
