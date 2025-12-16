@@ -13,7 +13,12 @@ if (
   !process.env.E2E_TEST_ARCGIS_ONLINE_USERNAME || 
   !process.env.E2E_TEST_ARCGIS_ONLINE_PASSWORD
 ) {
-    throw new Error('Please set E2E_TEST_ARCGIS_ONLINE_USERNAME and E2E_TEST_ARCGIS_ONLINE_PASSWORD in your .env.e2e file');
+    // throw new Error('Please set E2E_TEST_ARCGIS_ONLINE_USERNAME and E2E_TEST_ARCGIS_ONLINE_PASSWORD in your .env.e2e file');
+    console.error(
+      '\x1b[31m%s\x1b[0m', // ANSI escape code for red text
+      'E2E_TEST_ARCGIS_ONLINE_USERNAME and E2E_TEST_ARCGIS_ONLINE_PASSWORD are not set in your .env.e2e file.\nPlease follow the instructions in e2e/README.md to set up the end-to-end testing environment.'
+    );
+    process.exit(1);
 }
 
 export const DEV_SERVER_URL = process.env.WEBPACK_DEV_SERVER_HOSTNAME
