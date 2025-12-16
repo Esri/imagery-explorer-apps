@@ -6,8 +6,15 @@ import { devices } from "@playwright/test";
  */
 import { config } from 'dotenv';
 config({
-    path: '.env.development', // Specify the path to your .env file
+    path: '.env.e2e', // Specify the path to your .env file
 });
+
+if (
+  !process.env.E2E_TEST_ARCGIS_ONLINE_USERNAME || 
+  !process.env.E2E_TEST_ARCGIS_ONLINE_PASSWORD
+) {
+    throw new Error('Please set E2E_TEST_ARCGIS_ONLINE_USERNAME and E2E_TEST_ARCGIS_ONLINE_PASSWORD in your .env.e2e file');
+}
 
 export const DEV_SERVER_URL = process.env.WEBPACK_DEV_SERVER_HOSTNAME
     ? `https://${process.env.WEBPACK_DEV_SERVER_HOSTNAME}:8080`

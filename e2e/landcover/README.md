@@ -1,6 +1,23 @@
 # End-to-End Testing for Sentinel-2 Land Cover Explorer App
 End-to-end tests for the Sentinel-2 Land Cover Explorer verify the functionality and reliability of key features.
 
+## Prerequisites
+Update the `.env.e2e` file in project root with these variables.
+
+```sh
+# Required: ArcGIS Online username for E2E tests
+E2E_TEST_ARCGIS_ONLINE_USERNAME = your_username_here
+
+# Required: ArcGIS Online password for E2E tests
+E2E_TEST_ARCGIS_ONLINE_PASSWORD = your_password_here
+
+# OPtional: Specify the hostname used by the Webpack development server.
+# This value is utilized in end-to-end tests to connect to the development server.
+# Ensure it matches the dev server host configuration in `webpack.config.js`.
+# If not set, defaults to 'http://localhost:8080'.
+WEBPACK_DEV_SERVER_HOSTNAME = custom.hostname.here
+```
+
 ## Running the Tests
 
 - To run all tests, use:
