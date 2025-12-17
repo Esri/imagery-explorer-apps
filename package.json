@@ -134,7 +134,7 @@
   "dependencies": {
     "@arcgis/core": "4.34",
     "@esri/arcgis-rest-feature-service": "^4.0.4",
-    "@esri/calcite-components-react": "^3.2.1",
+    "@esri/calcite-components-react": "^3.3.3",
     "@reduxjs/toolkit": "2.5",
     "@vannizhang/images-to-video-converter-client": "^1.1.14",
     "@vannizhang/react-d3-charts": "^1.0.38",
