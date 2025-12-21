@@ -53,10 +53,10 @@
         // Helps catch missing or incorrect typings early
         "noImplicitAny": true,
 
-        // Preserve const enum declarations in emitted JavaScript
-        // Prevents inlining and ensures enums exist at runtime
-        // May increase bundle size and reduce tree-shaking effectiveness
-        "preserveConstEnums": true,
+        // // Preserve const enum declarations in emitted JavaScript
+        // // Prevents inlining and ensures enums exist at runtime
+        // // May increase bundle size and reduce tree-shaking effectiveness
+        // "preserveConstEnums": true,
 
         // Remove all comments from emitted JavaScript
         // Helps reduce output size
