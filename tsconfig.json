@@ -2,23 +2,28 @@
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
         "allowJs": false,
-        "jsx": "react",
-        "module": "commonjs",
+        "jsx": "react-jsx",
+        "skipLibCheck": true,
+        "baseUrl": "./",
+        "forceConsistentCasingInFileNames": true,
+        // Specify library type definitions to be included in the compilation.
+        // "lib": ["DOM", "DOM.Iterable", "ES2023"],
+        "lib": ["DOM", "DOM.Iterable", "ES2022"],
+        "target": "ES2022",
+        "module": "ESNext",
+        // Respects package.json's "exports" conditions.
+        "moduleResolution": "Bundler",
+        "esModuleInterop": true,
         "noImplicitAny": true,
         "preserveConstEnums": true,
         "removeComments": true,
         "sourceMap": false,
-        "target": "es5",
+        
         "resolveJsonModule": true,
-        "esModuleInterop": true ,
-        // "suppressImplicitAnyIndexErrors": true,
-        "downlevelIteration": true,
-        "isolatedModules": true,
         "typeRoots": [  
             "./src/types", 
             "./node_modules/@types"
         ],
-        "lib": [ "es2015", "dom" ],
         "paths": {
             "@shared/*": ["./src/shared/*"],
             "@landsat-explorer/*": ["./src/landsat-explorer/*"],
@@ -33,6 +38,6 @@
         "**/.*/"
     ],
     "include": [
-        "./src/**/**/*"
-, "public/__tests__"    ]
+        "./src/**/**/*", "public/__tests__"    
+    ]
 }
