@@ -63,7 +63,7 @@
         "e2e/**/*.{ts,tsx,json}": [
             "prettier --write"
         ],
-        "public/**/*.{json}": [
+        "public/**/*.{json,html}": [
             "prettier --write"
         ]
     },
