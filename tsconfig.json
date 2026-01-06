@@ -73,8 +73,8 @@
         // Explicit directories to search for global type definitions
         // NOTE: When specified, TypeScript ONLY searches these directories
         "typeRoots": [
-            "./src/types",              // Project-specific global typings
-            "./node_modules/@types"     // Third-party typings from DefinitelyTyped
+            "./src/types", // Project-specific global typings
+            "./node_modules/@types" // Third-party typings from DefinitelyTyped
         ],
 
         // Path aliases for cleaner and more maintainable imports
@@ -90,13 +90,8 @@
     },
 
     // Files and directories excluded from compilation
-    "exclude": [
-        "**/node_modules", 
-        "**/.*/"
-    ],
+    "exclude": ["**/node_modules", "**/.*/"],
 
     // Files and directories included in compilation
-    "include": [
-        "./src/**/**/*", "public/__tests__"    
-    ]
+    "include": ["./src/**/**/*", "public/__tests__"]
 }

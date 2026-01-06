@@ -281,7 +281,7 @@
     "classes_selector_subTitle": "Haga click para elegir",
     "at_year": "{{year}}",
     "from_to_year": "De {{fromYear}} a {{toYear}}",
-    
+
     "Land_Cover_Change": "Cambio en la cobertura del suelo",
     "Land_Cover_Totals": "Total de cobertura de suelo",
     "Expanded_Summary_Chart": "Tabla resumida expandida",
@@ -290,7 +290,7 @@
     "zoom_to_see_totals_graph": "Ampliar la imagen para ver el gráfico de total de cobertura de suelo",
     "imagery_renderers_title": "Renderizaciones visuales",
     "imagery_renderers_subtitle": "Haga click para cambiar la visibilidad",
-    "start_animation"  : "Comenzar animación",
+    "start_animation": "Comenzar animación",
     "swipe_mode_zoom_message": "Acercar para comparar las capas de imágenes {{layerName}}",
     "animate_mode_zoom_message": "Acercar para habilitar el control de tiempo",
     "load_animation": "Cargando animación",

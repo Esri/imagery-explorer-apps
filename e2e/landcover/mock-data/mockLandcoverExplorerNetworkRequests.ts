@@ -1,9 +1,9 @@
 import { test, expect, Page } from '@playwright/test';
-import { 
-    mockedSentinel2LandcoverRasterAttributeTableResponse, 
-    mockedSentinel2LandcoverServiceJSONResponse, 
-    mockedSentinel2LandcoverComputeHistogramResponse, 
-    mockedSentinel2IdentifyResponse
+import {
+    mockedSentinel2LandcoverRasterAttributeTableResponse,
+    mockedSentinel2LandcoverServiceJSONResponse,
+    mockedSentinel2LandcoverComputeHistogramResponse,
+    mockedSentinel2IdentifyResponse,
 } from './mockedResponses';
 
 /**
@@ -27,7 +27,9 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
-                body: JSON.stringify(mockedSentinel2LandcoverRasterAttributeTableResponse),
+                body: JSON.stringify(
+                    mockedSentinel2LandcoverRasterAttributeTableResponse
+                ),
             });
         }
     );
@@ -36,11 +38,15 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
     await page.route(
         '**/Sentinel2_10m_LandCover/ImageServer?f=json',
         async (route) => {
-            console.log('Mocking Sentinel2_10m_LandCover Service JSON response');
+            console.log(
+                'Mocking Sentinel2_10m_LandCover Service JSON response'
+            );
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
-                body: JSON.stringify(mockedSentinel2LandcoverServiceJSONResponse),
+                body: JSON.stringify(
+                    mockedSentinel2LandcoverServiceJSONResponse
+                ),
             });
         }
     );
@@ -53,7 +59,9 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
-                body: JSON.stringify(mockedSentinel2LandcoverComputeHistogramResponse),
+                body: JSON.stringify(
+                    mockedSentinel2LandcoverComputeHistogramResponse
+                ),
             });
         }
     );
@@ -69,41 +77,45 @@ export const mockSentinel2LandcoverNetworkRequests = async (page: Page) => {
                 url.searchParams.get('mosaicRule') || ''
             );
 
-            if(mosaicRule.includes('2017') || mosaicRule.includes('2018') || mosaicRule.includes('2019')) {
+            if (
+                mosaicRule.includes('2017') ||
+                mosaicRule.includes('2018') ||
+                mosaicRule.includes('2019')
+            ) {
                 console.log('Mocking identify response for 2017-2019');
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',
                     body: JSON.stringify({
                         ...mockedSentinel2IdentifyResponse,
-                        value: "2" // Trees
+                        value: '2', // Trees
                     }),
                 });
-            }
-            else if(mosaicRule.includes('2020') || mosaicRule.includes('2021') || mosaicRule.includes('2022')) {
+            } else if (
+                mosaicRule.includes('2020') ||
+                mosaicRule.includes('2021') ||
+                mosaicRule.includes('2022')
+            ) {
                 console.log('Mocking identify response for 2020-2022');
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',
                     body: JSON.stringify({
                         ...mockedSentinel2IdentifyResponse,
-                        value: "7" // Built Area
+                        value: '7', // Built Area
                     }),
                 });
-            }
-            else {
+            } else {
                 console.log('Mocking identify response for other years');
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',
                     body: JSON.stringify({
                         ...mockedSentinel2IdentifyResponse,
-                        value: "11" // Rangeland
+                        value: '11', // Rangeland
                     }),
                 });
             }
-
-
         }
     );
 };

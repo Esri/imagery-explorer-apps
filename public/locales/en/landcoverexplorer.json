@@ -18,35 +18,35 @@
 
     "Water": "Water",
     "Water_description": "Areas where water was predominantly present throughout the year; may not cover areas with sporadic or ephemeral water; contains little to no sparse vegetation, no rock outcrop nor built up features like docks.",
-    
+
     "Trees": "Trees",
     "Trees_description": "Any significant clustering of tall (~15-m or higher) dense vegetation, typically with a closed or dense canopy.",
-    
+
     "Flooded Vegetation": "Flooded Vegetation",
     "Flooded": "Flooded",
     "Flooded Vegetation_description": "Areas of any type of vegetation with obvious intermixing of water throughout a majority of the year; seasonally flooded area that is a mix of grass/shrub/trees/bare ground.",
-    
+
     "Crops": "Crops",
     "Crops_description": "Human planted/plotted cereals, grasses, and crops not at tree height.",
-    
+
     "Built Area": "Built Area",
     "Built": "Built",
     "Built Area_description": "Human made structures; major road and rail networks; large homogenous impervious surfaces including parking structures, office buildings and residential housing.",
-    
+
     "Bare Ground": "Bare Ground",
     "Bare": "Bare",
     "Bare Ground_description": "Areas of rock or soil with very sparse to no vegetation for the entire year; large areas of sand and deserts with no to little vegetation.",
-    
+
     "Snow/Ice": "Snow/Ice",
     "Snow/Ice_description": "Large homogenous areas of permanent snow or ice, typically only in mountain areas or highest latitudes.",
-    
+
     "Clouds": "Clouds",
     "Clouds_description": "No land cover information due to persistent cloud cover.",
-    
+
     "Rangeland": "Rangeland",
     "Range": "Range",
     "Rangeland_description": "Open areas covered in homogenous grasses with little to no taller vegetation; wild cereals and grasses, Mix of small clusters of plants or single plants dispersed on a landscape that shows exposed soil or rock; scrub-filled clearings within forests that are clearly not taller than trees.",
-    
+
     "No_Data": "No Data",
     "No_Data_description": "no data",
 

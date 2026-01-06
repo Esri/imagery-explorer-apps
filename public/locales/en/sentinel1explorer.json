@@ -23,16 +23,16 @@
 
     "false_color_db_with_dra_description": "VV and VH refer to the Vertical or Horizontal orientation of the radar signals as they are transmitted to, and returned from, Earth's surface. VV is particularly good for characterizing soil and water surfaces while VH for canopy vs bare ground.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> The RGB image is composited as follows: Red=VV, Green=VH, B=VV-VH in decibel (dB) scale.</br><br />Black to purple indicates low backscatter, green to white indicates high backscatter.",
     "false_color_db_with_dra_label": "False Color",
-    
+
     "vv_db_colorized_description": "VV refers to a signal sent in a vertical orientation and returned in a vertical orientation. VV signals are strongest when they reflect off and return from vertically oriented surface features and are good for characterizing soil and water surfaces.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> This is a single band renderer with a color ramp applied for visualization.<br/><br />Black to amber indicates low backscatter, yellow to white indicates high backscatter.",
     "vv_db_colorized_label": "Colorized VV",
-    
+
     "vh_db_colorized_description": "VH refers to a signal sent in a vertical orientation and returned in a horizontal orientation. This cross polarization typically occurs with volumetric targets such as tree canopies. VH signals are strongest when they reflect off and return from horizontally oriented surface features and are good for helping to distinguish canopy vs bare ground.<br /><br />See the RENDERER information tool tip as well as the Sentinel-1 SAR Quick Reference Guide in the app title bar for more information on VV and VH polarizations.<br /><br /> This is a single band renderer with a color ramp applied for visualization.<br/><br />Black to amber indicates low backscatter, yellow to white indicates high backscatter.",
     "vh_db_colorized_label": "Colorized VH",
-    
+
     "swi_colorized_description": "Sentinel-1 Water Index with a color map applied. Computed as (0.1747 * dB_vv) + (0.0082 * dB_vh * dB_vv) + (0.0023 * dB_vv ^ 2) - (0.0015 * dB_vh ^ 2) + 0.1904. <br/><br />Areas of higher water content range from dark blue to light blue while the driest areas range from tan to white.",
     "swi_colorized_label": "Water Index ",
-    
+
     "water_anomaly_index_colorized_description": "A water anomaly index with a color map applied. Water anomalies can include oil, industrial pollutants, sewage, red ocean tides, seaweed blobs, turbidity, and more.<br /><br /> Computed as Ln(0.01/(0.01 + VV*2)).<br /><br />Increased water anomalies are indicated by bright red, orange, and yellow colors; Black to blue colors indicate normal water.",
     "water_anomaly_index_colorized_label": "Water Anomaly",
     "renderer_header_tooltip": "<div class='text-left'><p class='mb-2'>Sentinel-1 SAR sensors send and receive radar pulses that echo off the Earth's surface. The echoes returned to the sensor are known as radar backscatter. The amplitude (strength) of the backscatter varies depending on the characteristics of the surface at any given location, resulting in variable dark to bright pixels. Consider the following:</p><p>Smoother surfaces = Lower backscatter = Darker pixels</p><p>Rougher surfaces = Higher backscatter = Brighter pixels</p><p>Water bodies/wet soils = Lower backscatter = Darker pixels</p><p>Vertical objects = Higher backscatter = Brighter pixels</p><p>Thicker vegetation = Lower backscatter = Darker pixels</p><p class='mt-2'>NOTE: In some cases, multiple factors need to be considered simultaneously. For example, water bodies generally have greater signal reflectivity away from the sensor, resulting in lower backscatter and a darker appearance. However, a rough water surface will result in higher backscatter and appear brighter than a smooth water surface.</p></div>.",
@@ -49,23 +49,23 @@
     "singapore_name": "Singapore",
     "singapore_label": "Port of Singapore",
     "singapore_description": "Due to its strategic location in maritime Southeast Asia, the city of Singapore is home to one of the busiest shipping ports in the world. One fifth of the worlds shipping containers pass through the Port of Singapore. Here you can visually depict shipping vessels in the waters off the southern tip of the Malay Peninsula.",
-    
+
     "crater_lake_name": "Crater Lake",
     "crater_lake_label": "Crater Lake",
     "crater_lake_description": "Crater Lake sits in a volcanic crater in South-central Oregon in the Western United States. The lake partially fills the caldera left by the collapse of Mount Mazama thousands of years ago. With a maximum depth of 2,148 feet (655 meters) it is the deepest lake in the United States and ranks tenth deepest in the world. Here, the body of the lake is depicted using the Sentinel-1 SAR Water Index (SWI).",
-    
+
     "torshavn_name": "Tórshavn",
     "torshavn_label": "Tórshavn, Faroe Islands",
     "torshavn_description": "Tórshavn is the capital and largest city of the Faroe Islands. It is among the cloudiest places in the world averaging only 2.4 hours of sunshine per day and 840 hours per year. Since SAR signals penetrate clouds, Sentinel-1 can collect imagery of the islands even when they are enshrouded with clouds.",
-    
+
     "amazon_estuary_name": "Amazon Estuary",
     "amazon_estuary_label": "Amazon Estuary",
     "amazon_estuary_description": "The Amazon River in South America is the largest river by discharge volume of water in the world and two of the top ten rivers by discharge are tributaries of the Amazon. The river has an average discharge of about 6,591–7,570 km³ (1,581–1,816 mi³) per year, greater than the next seven largest independent rivers combined. The high concentrations of sediment the Amazon carries, and discharges into the Atlantic Ocean, lights up here with this rendering of a water anomaly index.",
-    
+
     "richat_name": "Richat",
     "richat_label": "Richat Structure (Eye of the Sahara)",
     "richat_description": "The Richat Structure, also known as the Eye of the Sahara, is a prominent circular geological feature in the Sahara Desert. It is an eroded geological dome, 40 km (25 mi) in diameter, exposing sedimentary rock in layers that appear as concentric rings.",
-    
+
     "gunak_barlu_name": "Gunak Barlu",
     "gunak_barlu_label": "Garig Gunak Barlu National Park",
     "gunak_barlu_description": "Garig Gunak Barlu is a national park in the Northern Territory of Australia on the Cobourg Peninsula. Its name derives from the local Garig language, and the words gunak (land) and barlu (deep water). It is categorized as an IUCN Category II protected area and is home to all six species of Australian marine turtles: green sea turtles, hawksbill sea turtles, flatback sea turtles, leatherback sea turtles, and olive ridley sea turtles.",
@@ -111,7 +111,7 @@
     "doc_references_section_title": "References and additional information",
     "doc_references_section_content_1": "<a class=\"underline\" href=\"https://hyp3-docs.asf.alaska.edu/guides/introduction_to_sar/\" target=\"_blank\" rel=\"noreferrer\">ASF – Introduction to SAR</a>",
     "doc_references_section_content_2": "<a class=\"underline\" href=\"https://ntrs.nasa.gov/api/citations/20190002563/downloads/20190002563.pdf\" target=\"_blank\" rel=\"noreferrer\">SERVIR – The SAR Handbook</a>",
-  
+
     "about_the_data_title": "About the data",
     "about_the_data_content_1": "Sentinel-1 is a spaceborne Synthetic Aperture Radar (SAR) imaging system and mission from the European Space Agency and the European Commission. The mission launched and began collecting imagery in 2014.",
     "about_the_data_content_2": "The Sentinel-1 RTC data in this collection is an analysis ready product derived from the Ground Range Detected (GRD) Level-1 products produced by the European Space Agency. Radiometric Terrain Correction (RTC) accounts for terrain variations that affect both the position of a given point on the Earth's surface and the brightness of the radar return.",

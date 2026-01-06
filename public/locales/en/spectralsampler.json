@@ -10,7 +10,7 @@
     "continue_previous_session_header": "Continue with the previous session",
     "no_previous_session": "You have no previous session to continue.",
     "create_new_session": "Begin session",
-    "create_new_session_header": "Create new session", 
+    "create_new_session_header": "Create new session",
     "create_new_session_instruction_service": "Choose a Multispectral Imagery Source",
     "create_new_session_instruction_session_name": "Provide a name for the session (e.g. Bare Dry Soil)",
     "session_name_placeholder": "Session name",
@@ -32,8 +32,7 @@
     "how_it_works_section_4_title": "4. Download spectral samples",
     "how_it_works_section_4_description": "When finished with collection, download your spectral samples to CSV.",
     "purpose": "Purpose",
-    "purpose_description": "The goal of this tool is to make the creation of land cover training datasets as efficient and transparent as possible. By simplifying the process of sourcing and organizing labeled imagery, we aim to support better classification outcomes across a range of remote sensing and geospatial applications."
-    ,
+    "purpose_description": "The goal of this tool is to make the creation of land cover training datasets as efficient and transparent as possible. By simplifying the process of sourcing and organizing labeled imagery, we aim to support better classification outcomes across a range of remote sensing and geospatial applications.",
     "accuracy_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
     "terms_of_use_service_landsat_header": "Landsat Source Imagery – USGS, NASA",
     "terms_of_use_service_landsat_desc": "USGS-authored or produced data and information are considered to be in the U.S. Public Domain and may be used without restriction. <a class=\"underline\" rel=\"noreferrer\" href=\"https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs\" target=\"_blank\">Acknowledging or Crediting USGS</a>",
