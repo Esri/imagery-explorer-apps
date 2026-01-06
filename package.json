@@ -59,6 +59,12 @@
             "prettier --write",
             "eslint src --fix",
             "jest --bail --findRelatedTests --passWithNoTests"
+        ],
+        "e2e/**/*.{ts,tsx,json}": [
+            "prettier --write"
+        ],
+        "public/**/*.{json}": [
+            "prettier --write"
         ]
     },
     "repository": {
