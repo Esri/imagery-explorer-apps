@@ -51,11 +51,11 @@
     "build:surface-temp:dev": "webpack --mode production --env app=surfacetemperature --env envFileName=.env.development",
     "build:surface-temp:prod": "webpack --mode production --env app=surfacetemperature --env envFileName=.env.production",
     "prepare": "husky install",
-    "format": "prettier --write 'src/**/*.{ts,tsx,json,css,scss}'",
+    "format": "prettier --write \"**/*.{ts,tsx,json,js,md,css}\"",
     "lint": "eslint src --ext .ts,.tsx --fix"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx,json}": [
+    "src/**/*.{ts,tsx,json,css}": [
       "prettier --write",
       "eslint src --fix",
       "jest --bail --findRelatedTests --passWithNoTests"
