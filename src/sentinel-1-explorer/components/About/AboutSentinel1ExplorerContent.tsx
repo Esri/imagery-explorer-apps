@@ -65,13 +65,19 @@ export const AboutSentinel1ExplorerContent = () => {
                     {t('about_the_app_content_2', { ns: APP_NAME })}
                 </p>
 
-                <ul className="list-disc list-inside">
+                <ul className="list-disc list-inside mb-4">
                     <li>{t('about_the_app_capability_1', { ns: APP_NAME })}</li>
                     <li>{t('about_the_app_capability_2', { ns: APP_NAME })}</li>
                     <li>{t('about_the_app_capability_3', { ns: APP_NAME })}</li>
                     <li>{t('about_the_app_capability_4', { ns: APP_NAME })}</li>
                     <li>{t('about_the_app_capability_5', { ns: APP_NAME })}</li>
                 </ul>
+
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: t('about_github_repo'),
+                    }}
+                ></p>
             </div>
 
             <div className="mb-4 font-light">

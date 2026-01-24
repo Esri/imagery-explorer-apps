@@ -83,7 +83,7 @@ const AboutLandcoverExplorer = () => {
 
                     <p>{t('about_app_paragraph_2', { ns: APP_NAME })}</p>
 
-                    <ul className="list-disc list-inside mt-2">
+                    <ul className="list-disc list-inside mt-2 mb-4">
                         <li>{t('about_app_capability_1', { ns: APP_NAME })}</li>
                         <li>{t('about_app_capability_2', { ns: APP_NAME })}</li>
                         <li>{t('about_app_capability_3', { ns: APP_NAME })}</li>
@@ -92,6 +92,12 @@ const AboutLandcoverExplorer = () => {
                         <li>{t('about_app_capability_6', { ns: APP_NAME })}</li>
                         <li>{t('about_app_capability_7', { ns: APP_NAME })}</li>
                     </ul>
+
+                    <p
+                        dangerouslySetInnerHTML={{
+                            __html: t('about_github_repo'),
+                        }}
+                    ></p>
                 </div>
 
                 <div className="mb-4 font-light">

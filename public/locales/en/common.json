@@ -314,5 +314,6 @@
     "switch_language": "Switch Language",
     "choose_language": "Choose Language",
     "locale_switcher_suggestion_message": "Switch the language of the app to {{locale}}?",
-    "do_not_show_again": "Do not show again"
+    "do_not_show_again": "Do not show again",
+    "about_github_repo": "For access to the source code, or to submit issues and feature requests, please see the <a href='https://github.com/Esri/imagery-explorer-apps' target='_blank' class='underline'>Imagery Explorer Apps</a> public GitHub repository."
 }

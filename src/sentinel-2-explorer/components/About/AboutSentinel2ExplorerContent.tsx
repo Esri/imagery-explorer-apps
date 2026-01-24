@@ -80,7 +80,7 @@ export const AboutSentinel2ExplorerContent = () => {
                     })}
                 </p>
 
-                <ul className="list-disc list-inside">
+                <ul className="list-disc list-inside mb-4">
                     <li>
                         {t('about_app_list_item_1', {
                             ns: APP_NAME,
@@ -107,6 +107,12 @@ export const AboutSentinel2ExplorerContent = () => {
                         })}
                     </li>
                 </ul>
+
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: t('about_github_repo'),
+                    }}
+                ></p>
             </div>
 
             <div className="mb-4 font-light">

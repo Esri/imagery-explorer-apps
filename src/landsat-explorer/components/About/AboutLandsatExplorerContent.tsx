@@ -82,7 +82,7 @@ const AboutLandsatExplorer = () => {
                     })}
                 </p>
 
-                <ul className="list-disc list-inside mt-2">
+                <ul className="list-disc list-inside mt-2 mb-4">
                     <li>
                         {t('about_app_list_item_1', {
                             ns: APP_NAME,
@@ -109,6 +109,12 @@ const AboutLandsatExplorer = () => {
                         })}
                     </li>
                 </ul>
+
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: t('about_github_repo'),
+                    }}
+                ></p>
             </div>
 
             <div className="mb-4 font-light">
