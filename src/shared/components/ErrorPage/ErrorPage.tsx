@@ -14,7 +14,7 @@
  */
 
 import React, { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 type Props = {
     error?: Error;
@@ -25,14 +25,30 @@ export const ErrorPage: FC<Props> = ({ error }) => {
 
     return (
         <div className="flex justify-center items-center w-screen h-screen theme-background text-custom-light-blue">
-            <div className="max-w-2xl">
+            <div className="max-w-3xl">
                 <p>{t('app_temporarily_unavailable')}</p>
 
                 {error && error.message ? (
-                    <p className="mt-4 text-sm">
-                        {t('error_message')}: {error.message}
+                    <p className="mt-4 text-sm italic">
+                        {t('error_details')}: {error.message}
                     </p>
                 ) : null}
+
+                <div className="mt-6 ">
+                    <Trans
+                        i18nKey="report_issue"
+                        components={{
+                            action: (
+                                <a
+                                    href="https://github.com/Esri/imagery-explorer-apps/issues"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline font-bold"
+                                ></a>
+                            ),
+                        }}
+                    ></Trans>
+                </div>
             </div>
         </div>
     );

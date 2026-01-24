@@ -45,6 +45,8 @@ import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 
         const store = getLandcoverExplorerStore(timeInfo);
 
+        throw new Error('Test error page');
+
         root.render(
             <ReduxProvider store={store}>
                 <AppLayout />

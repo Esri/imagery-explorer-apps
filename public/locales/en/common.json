@@ -315,5 +315,7 @@
     "choose_language": "Choose Language",
     "locale_switcher_suggestion_message": "Switch the language of the app to {{locale}}?",
     "do_not_show_again": "Do not show again",
-    "about_github_repo": "For access to the source code, or to submit issues and feature requests, please see the <a href='https://github.com/Esri/imagery-explorer-apps' target='_blank' class='underline'>Imagery Explorer Apps</a> public GitHub repository."
+    "about_github_repo": "For access to the source code, or to submit issues and feature requests, please see the <a href='https://github.com/Esri/imagery-explorer-apps' target='_blank' class='underline'>Imagery Explorer Apps</a> public GitHub repository.",
+    "report_issue": "If this problem persists, please report it by opening an new issue in the app’s <action>GitHub Issues page</action> so our team can investigate and get it resolved as quickly as possible.",
+    "error_details": "Error details"
 }
