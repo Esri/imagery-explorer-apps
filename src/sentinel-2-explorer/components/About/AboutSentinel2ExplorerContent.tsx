@@ -133,17 +133,11 @@ export const AboutSentinel2ExplorerContent = () => {
                     </p>
                     <p
                         dangerouslySetInnerHTML={{
-                            __html: t('terms_of_use_app_section_1', {
-                                ns: APP_NAME,
-                            }),
+                            __html: t('esri_work_terms_of_use'),
                         }}
                     ></p>
                     <br />
-                    <p>
-                        {t('terms_of_use_app_section_2', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
+                    <p>{t('app_attribution_disclaimer')}</p>
                 </div>
             </div>
 

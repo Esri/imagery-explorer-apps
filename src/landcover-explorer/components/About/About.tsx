@@ -187,9 +187,7 @@ const AboutLandcoverExplorer = () => {
                             }}
                         ></p>
                         <br />
-                        <p>
-                            {t('app_attribution_disclaimer', { ns: APP_NAME })}
-                        </p>
+                        <p>{t('app_attribution_disclaimer')}</p>
                     </div>
                 </div>
             </div>
