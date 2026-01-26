@@ -4,27 +4,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## 2026-01-26
+### Shared
+
+#### Added
+- Added `AnimationStartButtonOnMap` component to offer an alternative way to start animation when the main animation controls in the bottom panel are minimized.
+- Added `AnimationFrameAcquisitionDateDisplay` component to show the acquisition date of the current animation frame.
+- Added `/webpack` directory containing webpack configuration files and utility functions for building the applications.
+
+#### Changed
+- Updated ArcGIS core dependency to version 4.34
+- Updated @esri/calcite-components-react to version 3.3.3
+- Improved webpack configuration to better handle of loading environment variables and other app-specific settings. Moved webpack-related code blocks into a dedicated `webpack` directory for better organization.
+- Updated the `./src/config.json` structure to remove the entr point value of each application.
 
 ### Landsat Surface Temperature Utility App
 
 #### Added
 
 - Added Urban Heat Island Analysis Tool that allows user to create raster analysis workflow to calculate a surface heat index for selected areas and time periods.
-
-### Shared
-
-#### Added
-
-- Added `/webpack` directory containing webpack configuration files and utility functions for building the applications.
-- Added translation workflow doc to the docs directory.
-- Added `AnimationStartButtonOnMap` component to offer an alternative way to start animation when the main animation controls in the bottom panel are minimized.
-- Added `AnimationFrameAcquisitionDateDisplay` component to show the acquisition date of the current animation frame.
-
-#### Changed
-
-- Improved webpack configuration to better handle of loading environment variables and other app-specific settings. Moved webpack-related code blocks into a dedicated `webpack` directory for better organization.
-- Updated the `./src/config.json` structure to remove the entr point value of each application.
 
 ## 2025-10-30
 
