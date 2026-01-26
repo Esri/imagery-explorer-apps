@@ -25,6 +25,7 @@ import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import { About } from '@shared/components/About';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { Sentinel2ImageryTermsOfUse } from '@shared/components/About/Sentinel2ImageryTermsOfUse';
 
 const AboutLandcoverExplorer = () => {
     // const dispatch = useAppDispatch();
@@ -168,70 +169,12 @@ const AboutLandcoverExplorer = () => {
                     </div>
 
                     <div className="mb-3">
-                        {/* <p
-                            dangerouslySetInnerHTML={{
-                                __html: t('imagery_attribution_title', {
-                                    ns: APP_NAME,
-                                }),
-                            }}
-                        ></p>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t('imagery_attribution_license', {
-                                    ns: APP_NAME,
-                                }),
-                            }}
-                        ></p> */}
-
-                        <p className="mb-2">
-                            <span className="font-bold">
-                                {t(
-                                    'sentinel_2_imagery_terms_of_use_section_title',
-                                    { ns: APP_NAME }
-                                )}
-                            </span>
-                        </p>
-
-                        <div className="pl-8">
-                            <p className="mb-1">
-                                <span className="font-bold">
-                                    {t(
-                                        'sentinel_2_imagery_source_section_title',
-                                        { ns: APP_NAME }
-                                    )}
-                                </span>
-                            </p>
-                            <p
-                                className="mb-2"
-                                dangerouslySetInnerHTML={{
-                                    __html: t(
-                                        'sentinel_2_imagery_source_section_content',
-                                        { ns: APP_NAME }
-                                    ),
-                                }}
-                            ></p>
-                            <p
-                                className="mb-1 font-bold"
-                                dangerouslySetInnerHTML={{
-                                    __html: t(
-                                        'sentinel_2_imagery_service_section_title',
-                                        { ns: APP_NAME }
-                                    ),
-                                }}
-                            ></p>
-                            <p
-                                dangerouslySetInnerHTML={{
-                                    __html: t(
-                                        'sentinel_2_imagery_service_section_content',
-                                        { ns: APP_NAME }
-                                    ),
-                                }}
-                            ></p>
-                        </div>
+                        <Sentinel2ImageryTermsOfUse />
                     </div>
 
                     <div className="mb-3">
                         <p
+                            className="font-bold"
                             dangerouslySetInnerHTML={{
                                 __html: t('app_attribution_title', {
                                     ns: APP_NAME,

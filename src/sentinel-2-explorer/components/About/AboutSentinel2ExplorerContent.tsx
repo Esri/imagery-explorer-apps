@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { Sentinel2ImageryTermsOfUse } from '@shared/components/About/Sentinel2ImageryTermsOfUse';
 import { APP_NAME, appConfig } from '@shared/config';
 import { APP_LANGUAGE } from '@shared/constants/UI';
 import React from 'react';
@@ -121,49 +122,7 @@ export const AboutSentinel2ExplorerContent = () => {
                 </h3>
 
                 <div className="mb-4">
-                    <p className="mb-1 font-bold">
-                        {t('terms_of_use_service_header', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
-
-                    <div className="ml-8 mb-2">
-                        <p>
-                            <b className="font-bold">
-                                {t('terms_of_use_service_section_1_header', {
-                                    ns: APP_NAME,
-                                })}
-                            </b>
-                        </p>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t(
-                                    'terms_of_use_service_section_1_desc',
-                                    {
-                                        ns: APP_NAME,
-                                    }
-                                ),
-                            }}
-                        ></p>
-                    </div>
-
-                    <div className="ml-8">
-                        <p className="font-bold">
-                            {t('terms_of_use_service_section_2_header', {
-                                ns: APP_NAME,
-                            })}
-                        </p>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t(
-                                    'terms_of_use_service_section_2_desc',
-                                    {
-                                        ns: APP_NAME,
-                                    }
-                                ),
-                            }}
-                        ></p>
-                    </div>
+                    <Sentinel2ImageryTermsOfUse />
                 </div>
 
                 <div className="mb-4">
@@ -179,6 +138,7 @@ export const AboutSentinel2ExplorerContent = () => {
                             }),
                         }}
                     ></p>
+                    <br />
                     <p>
                         {t('terms_of_use_app_section_2', {
                             ns: APP_NAME,
@@ -187,7 +147,7 @@ export const AboutSentinel2ExplorerContent = () => {
                 </div>
             </div>
 
-            <div className="mb-4 mt-10 font-light italic opacity-80">
+            <div className="mb-4 font-light italic opacity-80">
                 <p className="mb-2">{t('interetsing_places_data_source')}</p>
 
                 {APP_LANGUAGE !== 'en' && (
