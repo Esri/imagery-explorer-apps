@@ -140,9 +140,7 @@ const AboutLandcoverExplorer = () => {
                             ></p>
                             <p
                                 dangerouslySetInnerHTML={{
-                                    __html: t('esri_work_terms_of_use', {
-                                        ns: APP_NAME,
-                                    }),
+                                    __html: t('esri_work_terms_of_use'),
                                 }}
                             ></p>
                         </div>
