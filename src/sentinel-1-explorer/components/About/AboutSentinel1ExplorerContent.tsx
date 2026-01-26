@@ -86,47 +86,44 @@ export const AboutSentinel1ExplorerContent = () => {
                 </h3>
 
                 <div className="mb-4">
-                    <p className="mb-1">
-                        <b className="font-bold">
-                            {t('about_attribution_and_terms_content_1', {
-                                ns: APP_NAME,
-                            })}
-                        </b>
+                    <p className="mb-2">
+                        <span className="font-bold">
+                            {t(
+                                'sentinel_1_imagery_terms_of_use_section_title',
+                                { ns: APP_NAME }
+                            )}
+                        </span>
                     </p>
-                    <div className="ml-8 mb-2">
-                        <p>
-                            <b className="font-bold">
-                                {t('about_attribution_and_terms_content_2', {
+
+                    <div className="pl-8">
+                        <p className="mb-1">
+                            <span className="font-bold">
+                                {t('sentinel_1_imagery_source_section_title', {
                                     ns: APP_NAME,
                                 })}
-                            </b>
+                            </span>
                         </p>
                         <p
+                            className="mb-2"
                             dangerouslySetInnerHTML={{
                                 __html: t(
-                                    'about_attribution_and_terms_content_3',
+                                    'sentinel_1_imagery_source_section_content',
                                     { ns: APP_NAME }
                                 ),
                             }}
                         ></p>
-                    </div>
-
-                    <div className="ml-8">
                         <p
-                            className="font-bold"
+                            className="mb-1 font-bold"
                             dangerouslySetInnerHTML={{
                                 __html: t(
-                                    'about_attribution_and_terms_content_4',
+                                    'sentinel_1_imagery_service_section_title',
                                     { ns: APP_NAME }
                                 ),
                             }}
                         ></p>
                         <p
                             dangerouslySetInnerHTML={{
-                                __html: t(
-                                    'about_attribution_and_terms_content_5',
-                                    { ns: APP_NAME }
-                                ),
+                                __html: t('esri_work_terms_of_use'),
                             }}
                         ></p>
                     </div>
@@ -134,30 +131,21 @@ export const AboutSentinel1ExplorerContent = () => {
 
                 <div className="mb-4">
                     <p className="font-bold mb-1">
-                        {t('about_attribution_and_terms_content_6', {
+                        {t('app_attribution_title', {
                             ns: APP_NAME,
                         })}
                     </p>
                     <p
                         dangerouslySetInnerHTML={{
-                            __html: t('about_attribution_and_terms_content_7', {
-                                ns: APP_NAME,
-                            }),
+                            __html: t('esri_work_terms_of_use'),
                         }}
                     ></p>
-                    <p>
-                        {t('about_attribution_and_terms_content_8', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
+                    <br />
+                    <p>{t('app_attribution_disclaimer')}</p>
                 </div>
 
                 <div className="mb-4 font-light">
-                    <p>
-                        {t('about_attribution_and_terms_content_9', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
+                    <p>{t('interetsing_places_data_source')}</p>
                 </div>
             </div>
         </div>

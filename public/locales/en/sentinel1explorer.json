@@ -125,15 +125,13 @@
     "about_the_app_capability_4": "Visual change by time and renderings with Swipe and Animation modes.",
     "about_the_app_capability_5": "Analysis such as threshold masking and temporal profiles for vegetation, water, land surface temperature, and more.",
     "about_attribution_and_terms_title": "Attribution and Terms of Use",
-    "about_attribution_and_terms_content_1": "Sentinel-1 RTC Imagery – Esri, Microsoft, European Space Agency, European Commission",
-    "about_attribution_and_terms_content_2": "Sentinel-1 RTC Source Imagery – Microsoft",
-    "about_attribution_and_terms_content_3": "The source imagery is hosted on Microsoft Planetary Computer under an open <a class=\"underline\" rel=\"noreferrer\" href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC BY 4.0 license</a>.",
-    "about_attribution_and_terms_content_4": "Sentinel-1 RTC Image Service – Esri",
-    "about_attribution_and_terms_content_5": "This work is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-    "about_attribution_and_terms_content_6": "Sentinel-1 Explorer - Esri",
-    "about_attribution_and_terms_content_7": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-    "about_attribution_and_terms_content_8": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
-    "about_attribution_and_terms_content_9": "Information contained in the Interesting Places descriptions was sourced from Wikipedia.",
 
+    "sentinel_1_imagery_terms_of_use_section_title": "Sentinel-1 RTC Imagery",
+    "sentinel_1_imagery_source_section_title": "Source Sentinel-1 RTC Imagery – Microsoft",
+    "sentinel_1_imagery_source_section_content": "The source imagery is hosted on Microsoft Planetary Computer under an open <a class=\"underline\" rel=\"noreferrer\" href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">CC BY 4.0 license</a>.",
+
+    "sentinel_1_imagery_service_section_title": "<a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=ca91605a3261409aa984f01f7d065fbc\" target=\"_blank\" rel=\"noreferrer\">Sentinel-1 RTC Image Service</a> - Esri",
+
+    "app_attribution_title": "Sentinel-1 Explorer - Esri",
     "animation_metadata": "Esri, European Space Agency"
 }
