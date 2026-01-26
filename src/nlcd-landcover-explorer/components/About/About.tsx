@@ -21,6 +21,7 @@ import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import { About } from '@shared/components/About';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { LandsatImageryTermsOfUse } from '@shared/components/About/LandsatImageryTermsOfUse';
 
 export const AboutNLCDLandcoverExplorer = () => {
     // const dispatch = useAppDispatch();
@@ -99,8 +100,8 @@ export const AboutNLCDLandcoverExplorer = () => {
                         {t('attribution_title', { ns: APP_NAME })}
                     </h3>
 
-                    <div className="mb-3">
-                        <p
+                    <div className="mb-4">
+                        {/* <p
                             dangerouslySetInnerHTML={{
                                 __html: t('nlcd_attribution_title', {
                                     ns: APP_NAME,
@@ -113,28 +114,63 @@ export const AboutNLCDLandcoverExplorer = () => {
                                     ns: APP_NAME,
                                 }),
                             }}
+                        ></p> */}
+
+                        <p
+                            className="mb-2 font-bold"
+                            dangerouslySetInnerHTML={{
+                                __html: t(
+                                    'nlcd_landcover_terms_of_use_section_title',
+                                    {
+                                        ns: APP_NAME,
+                                    }
+                                ),
+                            }}
                         ></p>
+
+                        <div className="pl-8">
+                            <p className="mb-1 font-bold">
+                                {t('nlcd_landcover_source_section_title', {
+                                    ns: APP_NAME,
+                                })}
+                            </p>
+                            <p
+                                className="mb-2"
+                                dangerouslySetInnerHTML={{
+                                    __html: t(
+                                        'nlcd_landcover_source_section_content',
+                                        {
+                                            ns: APP_NAME,
+                                        }
+                                    ),
+                                }}
+                            ></p>
+                            <p
+                                className="mb-1 font-bold"
+                                dangerouslySetInnerHTML={{
+                                    __html: t(
+                                        'nlcd_landcover_service_section_title',
+                                        {
+                                            ns: APP_NAME,
+                                        }
+                                    ),
+                                }}
+                            ></p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: t('esri_work_terms_of_use'),
+                                }}
+                            ></p>
+                        </div>
                     </div>
 
-                    {/* <div className="mb-3">
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t('imagery_attribution_title', {
-                                    ns: APP_NAME,
-                                }),
-                            }}
-                        ></p>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t('imagery_attribution_license', {
-                                    ns: APP_NAME,
-                                }),
-                            }}
-                        ></p>
-                    </div> */}
+                    <div className="mb-4">
+                        <LandsatImageryTermsOfUse />
+                    </div>
 
                     <div className="mb-3">
                         <p
+                            className="font-bold"
                             dangerouslySetInnerHTML={{
                                 __html: t('app_attribution_title', {
                                     ns: APP_NAME,
@@ -143,14 +179,11 @@ export const AboutNLCDLandcoverExplorer = () => {
                         ></p>
                         <p
                             dangerouslySetInnerHTML={{
-                                __html: t('app_attribution_license', {
-                                    ns: APP_NAME,
-                                }),
+                                __html: t('esri_work_terms_of_use'),
                             }}
                         ></p>
-                        <p>
-                            {t('app_attribution_disclaimer', { ns: APP_NAME })}
-                        </p>
+                        <br />
+                        <p>{t('app_attribution_disclaimer')}</p>
                     </div>
                 </div>
             </div>

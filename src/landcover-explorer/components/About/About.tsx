@@ -115,26 +115,6 @@ const AboutLandcoverExplorer = () => {
                                 }),
                             }}
                         ></p>
-                        {/* <p
-                            dangerouslySetInnerHTML={{
-                                __html: t(
-                                    'lulc_attribution_license_imagery_layer',
-                                    {
-                                        ns: APP_NAME,
-                                    }
-                                ),
-                            }}
-                        ></p>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t(
-                                    'lulc_attribution_license_source_data',
-                                    {
-                                        ns: APP_NAME,
-                                    }
-                                ),
-                            }}
-                        ></p> */}
 
                         <div className="pl-8">
                             <p className="mb-1 font-bold">
