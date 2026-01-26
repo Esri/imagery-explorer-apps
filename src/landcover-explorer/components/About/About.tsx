@@ -160,7 +160,7 @@ const AboutLandcoverExplorer = () => {
                             ></p>
                             <p
                                 dangerouslySetInnerHTML={{
-                                    __html: t('lulc_service_section_content', {
+                                    __html: t('esri_work_terms_of_use', {
                                         ns: APP_NAME,
                                     }),
                                 }}
@@ -183,9 +183,7 @@ const AboutLandcoverExplorer = () => {
                         ></p>
                         <p
                             dangerouslySetInnerHTML={{
-                                __html: t('app_attribution_license', {
-                                    ns: APP_NAME,
-                                }),
+                                __html: t('esri_work_terms_of_use', {}),
                             }}
                         ></p>
                         <br />

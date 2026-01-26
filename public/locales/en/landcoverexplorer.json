@@ -89,7 +89,6 @@
 
     "attribution_title": "Attribution and Terms of Use",
     "app_attribution_title": "<a class=\"undeline\" href=\"https://www.arcgis.com/home/item.html?id=efd2d197cc6742598b463adfa7505ed2\" target=\"_blank\" rel=\"noreferrer\">Sentinel-2 Land Cover Explorer App</a> - Esri",
-    "app_attribution_license": "This work is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
     "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
     "download_historical_data": "Download Historical Data",
     "donwload_as_csv": "Download Historical Data as CSV",
@@ -105,6 +104,5 @@
     "lulc_terms_of_use_section_title": "Sentinel-2 10m Land Use/Land Cover",
     "lulc_source_section_title": "Source Sentinel-2 LULC Data – Esri and Impact Observatory",
     "lulc_source_section_content": "The source data, available for download, is licensed under a Creative Commons by Attribution (CC BY 4.0) license. <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0\" target=\"_blank\" rel=\"noreferrer\">View License Deed </a> | <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0/legalcode\" target=\"_blank\" rel=\"noreferrer\">View Legal Code</a>.",
-    "lulc_service_section_title": "<a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d\" target=\"_blank\" rel=\"noreferrer\">Sentinel-2 LULC Image Service</a> - Esri",
-    "lulc_service_section_content": "This work is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>"
+    "lulc_service_section_title": "<a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d\" target=\"_blank\" rel=\"noreferrer\">Sentinel-2 LULC Image Service</a> - Esri"
 }

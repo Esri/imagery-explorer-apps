@@ -31,7 +31,7 @@ export const Sentinel2ImageryTermsOfUse = () => {
                 ></p>
                 <p
                     dangerouslySetInnerHTML={{
-                        __html: t('sentinel_2_imagery_service_section_content'),
+                        __html: t('esri_work_terms_of_use'),
                     }}
                 ></p>
             </div>
