@@ -107,13 +107,14 @@ const AboutLandcoverExplorer = () => {
 
                     <div className="mb-3">
                         <p
+                            className="mb-2 font-bold"
                             dangerouslySetInnerHTML={{
-                                __html: t('lulc_attribution_title', {
+                                __html: t('lulc_terms_of_use_section_title', {
                                     ns: APP_NAME,
                                 }),
                             }}
                         ></p>
-                        <p
+                        {/* <p
                             dangerouslySetInnerHTML={{
                                 __html: t(
                                     'lulc_attribution_license_imagery_layer',
@@ -132,11 +133,42 @@ const AboutLandcoverExplorer = () => {
                                     }
                                 ),
                             }}
-                        ></p>
+                        ></p> */}
+
+                        <div className="pl-8">
+                            <p className="mb-1 font-bold">
+                                {t('lulc_source_section_title', {
+                                    ns: APP_NAME,
+                                })}
+                            </p>
+                            <p
+                                className="mb-2"
+                                dangerouslySetInnerHTML={{
+                                    __html: t('lulc_source_section_content', {
+                                        ns: APP_NAME,
+                                    }),
+                                }}
+                            ></p>
+                            <p
+                                className="mb-1 font-bold"
+                                dangerouslySetInnerHTML={{
+                                    __html: t('lulc_service_section_title', {
+                                        ns: APP_NAME,
+                                    }),
+                                }}
+                            ></p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: t('lulc_service_section_content', {
+                                        ns: APP_NAME,
+                                    }),
+                                }}
+                            ></p>
+                        </div>
                     </div>
 
                     <div className="mb-3">
-                        <p
+                        {/* <p
                             dangerouslySetInnerHTML={{
                                 __html: t('imagery_attribution_title', {
                                     ns: APP_NAME,
@@ -149,7 +181,53 @@ const AboutLandcoverExplorer = () => {
                                     ns: APP_NAME,
                                 }),
                             }}
-                        ></p>
+                        ></p> */}
+
+                        <p className="mb-2">
+                            <span className="font-bold">
+                                {t(
+                                    'sentinel_2_imagery_terms_of_use_section_title',
+                                    { ns: APP_NAME }
+                                )}
+                            </span>
+                        </p>
+
+                        <div className="pl-8">
+                            <p className="mb-1">
+                                <span className="font-bold">
+                                    {t(
+                                        'sentinel_2_imagery_source_section_title',
+                                        { ns: APP_NAME }
+                                    )}
+                                </span>
+                            </p>
+                            <p
+                                className="mb-2"
+                                dangerouslySetInnerHTML={{
+                                    __html: t(
+                                        'sentinel_2_imagery_source_section_content',
+                                        { ns: APP_NAME }
+                                    ),
+                                }}
+                            ></p>
+                            <p
+                                className="mb-1 font-bold"
+                                dangerouslySetInnerHTML={{
+                                    __html: t(
+                                        'sentinel_2_imagery_service_section_title',
+                                        { ns: APP_NAME }
+                                    ),
+                                }}
+                            ></p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: t(
+                                        'sentinel_2_imagery_service_section_content',
+                                        { ns: APP_NAME }
+                                    ),
+                                }}
+                            ></p>
+                        </div>
                     </div>
 
                     <div className="mb-3">
@@ -167,6 +245,7 @@ const AboutLandcoverExplorer = () => {
                                 }),
                             }}
                         ></p>
+                        <br />
                         <p>
                             {t('app_attribution_disclaimer', { ns: APP_NAME })}
                         </p>
