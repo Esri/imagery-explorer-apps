@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import { LandsatImageryTermsOfUse } from '@shared/components/About/LandsatImageryTermsOfUse';
 import { APP_NAME, appConfig } from '@shared/config';
 // import { LANDSAT_LEVEL_2_ITEM_URL } from '@shared/services/landsat-level-2/config';
 import React from 'react';
@@ -123,7 +124,7 @@ const AboutLandsatExplorer = () => {
                 </h3>
 
                 <div className="mb-4">
-                    <p
+                    {/* <p
                         className="mb-1"
                         dangerouslySetInnerHTML={{
                             __html: t('terms_of_use_service_header', {
@@ -165,7 +166,8 @@ const AboutLandsatExplorer = () => {
                                 ),
                             }}
                         ></p>
-                    </div>
+                    </div> */}
+                    <LandsatImageryTermsOfUse />
                 </div>
 
                 <div className="mb-4">
@@ -176,20 +178,15 @@ const AboutLandsatExplorer = () => {
                     </p>
                     <p
                         dangerouslySetInnerHTML={{
-                            __html: t('terms_of_use_app_paragraph1', {
-                                ns: APP_NAME,
-                            }),
+                            __html: t('esri_work_terms_of_use'),
                         }}
                     ></p>
-                    <p>
-                        {t('terms_of_use_app_paragraph2', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
+                    <br />
+                    <p>{t('app_attribution_disclaimer')}</p>
                 </div>
             </div>
 
-            <div className="mb-4 font-light">
+            <div className="mb-4 font-light italic">
                 <p>{t('interetsing_places_data_source')}</p>
             </div>
         </div>

@@ -144,7 +144,7 @@ export const AboutSentinel1ExplorerContent = () => {
                     <p>{t('app_attribution_disclaimer')}</p>
                 </div>
 
-                <div className="mb-4 font-light">
+                <div className="mb-4 font-light italic">
                     <p>{t('interetsing_places_data_source')}</p>
                 </div>
             </div>
