@@ -51,7 +51,7 @@
         "build:surface-temp:dev": "webpack --mode production --env app=surfacetemperature --env envFileName=.env.development",
         "build:surface-temp:prod": "webpack --mode production --env app=surfacetemperature --env envFileName=.env.production",
         "e2e:all": "npm run e2e:landsat && npm run e2e:sentinel2 && npm run e2e:sentinel1 && npm run e2e:landcover",
-        "build:all:prod": "npm run build:landsat:prod && npm run build:sentinel2:prod && npm run build:sentinel1:prod && npm run build:landcover:prod && npm run build:nlcd-landcover:prod",
+        "build:all:prod": "npm run build:landsat:prod && npm run build:sentinel2:prod && npm run build:sentinel1:prod && npm run build:landcover:prod && npm run build:nlcd-landcover:prod && build:spectral-sampler:prod",
         "prepare": "husky install",
         "format": "prettier --write \"**/*.{ts,tsx,json,js,md,css}\"",
         "lint": "eslint src --ext .ts,.tsx --fix"
