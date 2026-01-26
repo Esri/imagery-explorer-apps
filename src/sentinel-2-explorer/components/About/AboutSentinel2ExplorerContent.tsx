@@ -141,7 +141,7 @@ export const AboutSentinel2ExplorerContent = () => {
                 </div>
             </div>
 
-            <div className="mb-4 font-light italic opacity-80">
+            <div className="mb-4 font-light opacity-80">
                 <p className="mb-2">{t('interetsing_places_data_source')}</p>
 
                 {APP_LANGUAGE !== 'en' && (

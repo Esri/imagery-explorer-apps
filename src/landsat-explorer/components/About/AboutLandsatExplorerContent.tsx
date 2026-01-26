@@ -186,7 +186,7 @@ const AboutLandsatExplorer = () => {
                 </div>
             </div>
 
-            <div className="mb-4 font-light italic">
+            <div className="mb-4 font-light">
                 <p>{t('interetsing_places_data_source')}</p>
             </div>
         </div>
