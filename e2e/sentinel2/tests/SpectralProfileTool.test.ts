@@ -1,15 +1,16 @@
 import { test, expect, Page } from '@playwright/test';
 import { DEV_SERVER_URL } from '../../base.config';
-import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '../mock-data/mockSentinel2NetworkRequests';
+import {
+    mockSentinel2NetworkRequests,
+    resetMockSentinel2NetworkRequest,
+} from '../mock-data/mockSentinel2NetworkRequests';
 import { clickOnMap, selectDayFromCalendar, urlHashContains } from '../helpers';
 import { mockedIdentityResponseFor20230801 } from '../mock-data/mockedIdentityResponse';
 
 test.describe('Sentinel-2 Explorer - Spectral Profile Tool', () => {
-
     const APP_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516`;
 
     test('spectral profile tool functionalities', async ({ page }) => {
-
         // Set up network mocks and sign in
         await mockSentinel2NetworkRequests(page);
 
@@ -20,7 +21,7 @@ test.describe('Sentinel-2 Explorer - Spectral Profile Tool', () => {
                 await route.fulfill({
                     status: 200,
                     contentType: 'application/json',
-                    body: JSON.stringify(mockedIdentityResponseFor20230801)
+                    body: JSON.stringify(mockedIdentityResponseFor20230801),
                 });
             }
         );
@@ -33,7 +34,9 @@ test.describe('Sentinel-2 Explorer - Spectral Profile Tool', () => {
         await analyzeButton.click();
 
         // Ensure the spectral profile tool button is visible and activate it
-        const spectralProfileButton = page.getByTestId('analyze-tool-selector-spectral');
+        const spectralProfileButton = page.getByTestId(
+            'analyze-tool-selector-spectral'
+        );
         await expect(spectralProfileButton).toBeVisible();
         await spectralProfileButton.click();
 
@@ -48,22 +51,25 @@ test.describe('Sentinel-2 Explorer - Spectral Profile Tool', () => {
         await expect(spectralProfileChart).toBeVisible();
 
         // Check that the spectral profile chart legend is visible
-        const spectralProfileChartLegend = page.getByTestId('spectral-profile-chart-legend');
+        const spectralProfileChartLegend = page.getByTestId(
+            'spectral-profile-chart-legend'
+        );
         await expect(spectralProfileChartLegend).toBeVisible();
 
         // Verify the legend displays the expected feature of interest
-        const featureOfInterestName = await spectralProfileChartLegend.getAttribute('data-selected-feature-of-interest');
+        const featureOfInterestName =
+            await spectralProfileChartLegend.getAttribute(
+                'data-selected-feature-of-interest'
+            );
         expect(featureOfInterestName).toBe('Healthy Vegetation');
-        
+
         // // Pause for manual inspection
         // await page.pause();
-        
+
         // Clean up network mocks
         await resetMockSentinel2NetworkRequest(page);
 
         // Remove the identify request route
-        await page.unroute('*/**/Sentinel2L2A/ImageServer/identify?**')
-    })
-
-
-})
+        await page.unroute('*/**/Sentinel2L2A/ImageServer/identify?**');
+    });
+});

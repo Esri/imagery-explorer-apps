@@ -1,24 +1,84 @@
 {
     "compilerOptions": {
+        // Allow default imports from modules that don't explicitly define a default export
+        // This is a type-system relaxation only and does NOT affect emitted JavaScript
+        // Commonly used for smoother interop with CommonJS modules
         "allowSyntheticDefaultImports": true,
+
+        // Do not include or type-check .js/.jsx files as part of the TypeScript program
+        // Keeps the project strictly TypeScript-based
         "allowJs": false,
-        "jsx": "react",
-        "module": "commonjs",
+
+        // Control how JSX is transformed
+        // "react-jsx" uses the React 17+ automatic JSX runtime (no need to import React)
+        "jsx": "react-jsx",
+
+        // Skip type-checking of declaration files (*.d.ts)
+        // Significantly improves build speed in large projects
+        "skipLibCheck": true,
+
+        // Base directory for resolving non-relative module imports
+        // Required for path aliasing via "paths"
+        "baseUrl": "./",
+
+        // Enforce consistent file name casing in imports
+        // Prevents issues when deploying to case-sensitive file systems (e.g., Linux)
+        "forceConsistentCasingInFileNames": true,
+
+        // Specify built-in library type definitions to include
+        // DOM: Browser APIs (window, document, etc.)
+        // DOM.Iterable: Enables iteration over DOM collections
+        // ES2022: Built-in JS APIs available in ES2022
+        "lib": ["DOM", "DOM.Iterable", "ES2022"],
+
+        // Target JavaScript version for emitted output
+        // ES2022 supports features like class fields and top-level await
+        "target": "ES2022",
+
+        // Emit native ES module syntax (import/export)
+        // Leave module transformation to the bundler or runtime
+        "module": "ESNext",
+
+        // Define how module specifiers are resolved
+        // "Bundler" mode matches modern bundlers (Vite, Webpack, Rollup):
+        //  - Respects package.json "exports"/"imports"
+        //  - Does NOT require explicit file extensions in relative imports
+        "moduleResolution": "Bundler",
+
+        // Improve interoperability between CommonJS and ES Modules
+        // Affects emitted JavaScript and enables more natural default imports
+        "esModuleInterop": true,
+
+        // Report errors when variables or parameters implicitly have type 'any'
+        // Helps catch missing or incorrect typings early
         "noImplicitAny": true,
-        "preserveConstEnums": true,
+
+        // // Preserve const enum declarations in emitted JavaScript
+        // // Prevents inlining and ensures enums exist at runtime
+        // // May increase bundle size and reduce tree-shaking effectiveness
+        // "preserveConstEnums": true,
+
+        // Remove all comments from emitted JavaScript
+        // Helps reduce output size
         "removeComments": true,
+
+        // Do not generate source map files
+        // Disabling source maps reduces build output size and build time
         "sourceMap": false,
-        "target": "es5",
+
+        // Allow importing JSON files as modules
+        // Example: import config from './config.json'
         "resolveJsonModule": true,
-        "esModuleInterop": true ,
-        // "suppressImplicitAnyIndexErrors": true,
-        "downlevelIteration": true,
-        "isolatedModules": true,
-        "typeRoots": [  
-            "./src/types", 
-            "./node_modules/@types"
+
+        // Explicit directories to search for global type definitions
+        // NOTE: When specified, TypeScript ONLY searches these directories
+        "typeRoots": [
+            "./src/types", // Project-specific global typings
+            "./node_modules/@types" // Third-party typings from DefinitelyTyped
         ],
-        "lib": [ "es2015", "dom" ],
+
+        // Path aliases for cleaner and more maintainable imports
+        // Must be mirrored by the bundler/test runner for runtime resolution
         "paths": {
             "@shared/*": ["./src/shared/*"],
             "@landsat-explorer/*": ["./src/landsat-explorer/*"],
@@ -28,11 +88,10 @@
             "@typing/*": ["./src/types/*"]
         }
     },
-    "exclude": [
-        "**/node_modules", 
-        "**/.*/"
-    ],
-    "include": [
-        "./src/**/**/*"
-, "public/__tests__"    ]
+
+    // Files and directories excluded from compilation
+    "exclude": ["**/node_modules", "**/.*/"],
+
+    // Files and directories included in compilation
+    "include": ["./src/**/**/*", "public/__tests__"]
 }

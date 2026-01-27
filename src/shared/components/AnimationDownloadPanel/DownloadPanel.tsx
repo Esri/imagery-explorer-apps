@@ -25,7 +25,10 @@ import { selectShouldShowDownloadAnimationPanel } from '@shared/store/UI/selecto
 import { DownloadJobStatusInfo } from './DownloadJobStatus';
 import { CloseButton } from '../CloseButton';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { showDownloadAnimationPanelChanged } from '@shared/store/UI/reducer';
+import {
+    animationSpeedChanged,
+    showDownloadAnimationPanelChanged,
+} from '@shared/store/UI/reducer';
 // import { selectMapCenter } from '@shared/store/Map/selectors';
 import { OpenDownloadPanelButton } from './OpenDownloadPanelButton';
 import { appConfig } from '@shared/config';
@@ -36,6 +39,7 @@ import {
 import { CopyLinkButton } from './CopyLinkButton';
 import { CopiedLinkMessage } from './CopiedLinkMessage';
 import { PlayPauseButton } from './PlayPauseButton';
+import { AnimationSpeedControl } from '../AnimationControl/AnimationSpeedControl';
 
 // /**
 //  * This object contains the data for each animation frame.
@@ -173,6 +177,18 @@ export const AnimationDownloadPanel: FC<Props> = ({
                 {shouldShowDownloadPanel === false && (
                     <>
                         <div className=" absolute top-1 right-16 flex items-center">
+                            <div className="h-[64px] pt-4 mr-2">
+                                <AnimationSpeedControl
+                                    speed={animationSpeed}
+                                    onChange={(updatedSpeed) => {
+                                        dispatch(
+                                            animationSpeedChanged(updatedSpeed)
+                                        );
+                                    }}
+                                    shouldUseEnhancedStyle={true}
+                                />
+                            </div>
+
                             <CopyLinkButton />
                             <OpenDownloadPanelButton />
                             <PlayPauseButton />

@@ -18,24 +18,20 @@ import '@shared/styles/index.css';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
-import { getLandsatExplorerStore } from './store';
+import { getLandsatSurfaceTempExplorerStore } from './store';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import Map from './components/Map/Map';
 import Layout from './components/Layout/Layout';
 import '@shared/components/calcite-components';
 import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
-// import AppContextProvider from '@shared/contexts/AppContextProvider';
-// import { getTimeExtentOfLandsatService } from '@shared/services/landsat-level-2/getTimeExtent';
-// import { LANDSAT_RASTER_FUNCTION_INFOS } from '@shared/services/landsat-level-2/config';
+import { SURFACE_TEMP_EXPLORER_APP_ID } from '@shared/config';
 
 (async () => {
     await initializeApp({
-        appId: '',
+        appId: SURFACE_TEMP_EXPLORER_APP_ID,
     });
 
-    const store = await getLandsatExplorerStore();
-
-    // const timeExtent = await getTimeExtentOfLandsatService();
+    const store = await getLandsatSurfaceTempExplorerStore();
 
     const root = createRoot(document.getElementById('root'));
 

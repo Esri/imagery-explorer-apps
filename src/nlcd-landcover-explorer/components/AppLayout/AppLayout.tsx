@@ -90,11 +90,7 @@ export const AppLayout = () => {
 
     return (
         <ErrorBoundary>
-            <AppHeader
-                title={t('esri_nlcd_land_cover_explorer_title', {
-                    ns: APP_NAME,
-                })}
-            />
+            <AppHeader />
             <AboutNLCDLandcoverExplorer />
             <NLCDLandcoverMapViewContainer />
             <NLCDLandCoverSaveWebMap />

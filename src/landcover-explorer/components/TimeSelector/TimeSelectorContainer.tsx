@@ -15,12 +15,13 @@
 
 import classNames from 'classnames';
 import React, { FC, useEffect } from 'react';
-import { useAppSelector } from '@shared/store/configureStore';
+import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 
 import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,
     selectMapMode,
     selectShouldShowSatelliteImageryLayer,
+    selectShowAnimationControls4Landcover,
     // selectYear,
 } from '@shared/store/LandcoverExplorer/selectors';
 
@@ -34,6 +35,7 @@ import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { showAnimationControls4LandcoverToggled } from '@shared/store/LandcoverExplorer/reducer';
 
 type TimeSelectorContainerProps = {
     /**
@@ -60,6 +62,8 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
     showDownloadGeoTIFFButton,
     satelliteName,
 }) => {
+    const dispatch = useAppDispatch();
+
     const { t } = useTranslation();
 
     const mode = useAppSelector(selectMapMode);
@@ -78,8 +82,12 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
 
     const animationStatus = useAppSelector(selectAnimationStatus);
 
-    const [showAnimationControls, setShowAnimationControls] = React.useState(
-        animationStatus !== null
+    // const [showAnimationControls, setShowAnimationControls] = React.useState(
+    //     animationStatus !== null
+    // );
+
+    const showAnimationControls = useAppSelector(
+        selectShowAnimationControls4Landcover
     );
 
     const getContent = () => {
@@ -101,7 +109,12 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
                     toggleAnimationControlsButtonOnClick={(
                         shouldShowAnimationControls
                     ) => {
-                        setShowAnimationControls(shouldShowAnimationControls);
+                        // setShowAnimationControls(shouldShowAnimationControls);
+                        dispatch(
+                            showAnimationControls4LandcoverToggled(
+                                shouldShowAnimationControls
+                            )
+                        );
                     }}
                 />
 
@@ -136,7 +149,8 @@ export const LandcoverTimeSelectorContainer: FC<TimeSelectorContainerProps> = ({
         // or when the mode changes
         // This is to ensure that the animation controls are hidden when user exits animation mode
         if (mode !== 'step') {
-            setShowAnimationControls(false);
+            // setShowAnimationControls(false);
+            dispatch(showAnimationControls4LandcoverToggled(false));
         }
     }, [animationStatus, mode]);
 

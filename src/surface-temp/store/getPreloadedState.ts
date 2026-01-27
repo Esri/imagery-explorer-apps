@@ -31,6 +31,7 @@ import {
     ImageryScenesState,
     DefaultQueryParams4ImageryScene,
     AppMode,
+    AnalysisTool,
     // QueryParams4ImageryScene,
 } from '@shared/store/ImageryScene/reducer';
 import { PartialRootState } from '@shared/store/configureStore';
@@ -66,6 +67,7 @@ const getPreloadedImageryScenesState = (
 ): ImageryScenesState => {
     const mode: AppMode =
         (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';
+    console.log('Preloaded ImageryScenes mode:', mode);
 
     const queryParams4MainScene = getQueryParams4MainSceneFromHashParams(
         hashParams
@@ -84,6 +86,8 @@ const getPreloadedImageryScenesState = (
     const rasterFunction4SecondaryScene: LandsatRasterFunctionName =
         'Surface Temperature Colorized (Fahrenheit) for Visualization';
 
+    const tool = getHashParamValueByKey('tool', hashParams) as AnalysisTool;
+
     return {
         ...initialImagerySceneState,
         mode,
@@ -95,6 +99,7 @@ const getPreloadedImageryScenesState = (
             ...queryParams4SecondaryScene,
             rasterFunctionName: rasterFunction4SecondaryScene,
         },
+        tool: tool || 'urban heat island',
     };
 };
 

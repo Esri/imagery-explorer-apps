@@ -26,7 +26,7 @@ import {
     selectAppHeaderDropdownPanel,
     selectIsAnimationPlaying,
 } from '@shared/store/UI/selectors';
-import { APP_NAME, AppName } from '@shared/config';
+import { APP_NAME, appConfig, AppName } from '@shared/config';
 import { encodeMapCenter } from '@shared/utils/url-hash-params/map';
 import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import { UrlHashParamKey } from '@shared/utils/url-hash-params';
@@ -42,10 +42,10 @@ import { LocaleSwitcher } from './LocaleSwitcher';
 import { useShouldSuggestLocale } from '@shared/hooks/useSuggestLocale';
 
 type Props = {
-    /**
-     * title of the explorer app
-     */
-    title: string;
+    // /**
+    //  * title of the explorer app
+    //  */
+    // title: string;
     /**
      * if true, show the doc button that allows user to launch the doc panel
      */
@@ -56,10 +56,14 @@ type Props = {
     docButtonTooltip?: string;
 };
 
-const AppHeader: FC<Props> = ({ title, showDocButton, docButtonTooltip }) => {
+const AppHeader: FC<Props> = ({ showDocButton, docButtonTooltip }) => {
     const { t } = useTranslation();
 
     const dispatch = useAppDispatch();
+
+    const title = useMemo(() => {
+        return appConfig.title || 'Imagery Explorer';
+    }, []);
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 

@@ -1,18 +1,41 @@
 # End-to-End Testing for Sentinel-2 Explorer App
+
 End-to-end tests for the Sentinel-2 Explorer App ensure the functionality and reliability of key features.
 
+## Prerequisites
+
+Update the `.env.e2e` file in project root with these variables.
+
+```sh
+# Required: ArcGIS Online username for E2E tests
+E2E_TEST_ARCGIS_ONLINE_USERNAME = your_username_here
+
+# Required: ArcGIS Online password for E2E tests
+E2E_TEST_ARCGIS_ONLINE_PASSWORD = your_password_here
+
+# OPtional: Specify the hostname used by the Webpack development server.
+# This value is utilized in end-to-end tests to connect to the development server.
+# Ensure it matches the dev server host configuration in `webpack.config.js`.
+# If not set, defaults to 'http://localhost:8080'.
+WEBPACK_DEV_SERVER_HOSTNAME = custom.hostname.here
+```
+
 ## Run the Tests
+
 - To run the tests, use the following command:
+
 ```bash
 npm run e2e:sentinel2
 ```
 
 To run the tests in a headed mode, use the following command:
+
 ```bash
 npm run e2e:sentinel2:headed
 ```
 
 To run a specific test file, use the following command:
+
 ```bash
 npx playwright test e2e/sentinel2/tests/{file-name} --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
@@ -20,12 +43,15 @@ npx playwright test e2e/sentinel2/tests/{file-name} --config e2e/playwright.sent
 ## Test "Dynamic" Mode
 
 ### Run the Test
+
 To run the "Dynamic Mode" test, use the following command:
-```bash 
+
+```bash
 npx playwright test e2e/sentinel2/tests/DynamicMode.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
 ### Test Steps
+
 1. Verify the "Interesting Places" container is visible.
 2. Confirm that the "Fucino" and "Mississippi" interesting place cards are displayed.
 3. Click the "Fucino" card and ensure it is selected while "Mississippi" is not.
@@ -42,12 +68,15 @@ npx playwright test e2e/sentinel2/tests/DynamicMode.test.ts --config e2e/playwri
 ## Test "Find a Scene" Mode
 
 ### Run the Test
+
 To run the "Find a Scene" test, use the following command:
-```bash 
+
+```bash
 npx playwright test e2e/sentinel2/tests/FindASceneMode.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
 ### Test Steps
+
 1. Navigate to the "Find a Scene" mode URL (e.g., `http://localhost:8080/#mode=find+a+scene`).
 2. Verify the "Scene Selection" header is visible.
 3. Confirm the calendar container is displayed.
@@ -65,12 +94,15 @@ npx playwright test e2e/sentinel2/tests/FindASceneMode.test.ts --config e2e/play
 ## Test "Swipe Mode"
 
 ### Run the Test
+
 To run the "Swipe Mode" test, use the following command:
+
 ```bash
 npx playwright test e2e/sentinel2/tests/SwipeMode.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
 ### Test Steps
+
 1. Navigate to the "Swipe Mode" URL (e.g., `http://localhost:8080/#mapCenter=-117.07809%2C34.03876%2C13.516&mode=swipe`).
 2. Verify the left and right swipe layer selectors are visible.
 3. Select the date for the left swipe layer (e.g., "2024-01-08").
@@ -84,12 +116,15 @@ npx playwright test e2e/sentinel2/tests/SwipeMode.test.ts --config e2e/playwrigh
 ## Test "Map Popup"
 
 ### Run the Test
+
 To run the test, use the following command:
+
 ```bash
 npx playwright test e2e/sentinel2/tests/MapPopup.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
 ### Test Steps
+
 1. Locates the map view container and ensures it is visible.
 2. Selects the specified day from the calendar.
 3. Clicks on the map to trigger the popup.
@@ -101,8 +136,10 @@ npx playwright test e2e/sentinel2/tests/MapPopup.test.ts --config e2e/playwright
 ## Test "Animate" Mode
 
 ### Run the Test
+
 To run the "Animate" test, use the following command:
-```bash 
+
+```bash
 npx playwright test e2e/sentinel2/tests/AnimateMode.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
@@ -125,12 +162,15 @@ npx playwright test e2e/sentinel2/tests/AnimateMode.test.ts --config e2e/playwri
 ## Test "Spectral Profile" Tool
 
 ### Run the Test
+
 To run the "Spectral Profile Tool" test, use the following command:
-```bash 
+
+```bash
 npx playwright test e2e/sentinel2/tests/SpectralProfileTool.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
 ### Test Steps
+
 1. Activate "Analyze Mode" and open the "Spectral Profile Tool".
 2. Select a date from the calendar.
 3. Simulate a map click to trigger the spectral profile.
@@ -140,12 +180,15 @@ npx playwright test e2e/sentinel2/tests/SpectralProfileTool.test.ts --config e2e
 ## Test "Save Panel"
 
 ### Run the Test
+
 To run the "Save Panel" test, use the following command:
+
 ```bash
 npx playwright test e2e/sentinel2/tests/SavePanel.test.ts --config e2e/playwright.sentinel2.config.ts --headed --workers=1
 ```
 
 ### Test Steps
+
 1. Open the application and ensure you are signed in to ArcGIS Online via the Save Panel.
 2. **When no scene is selected:**
     - Open the Save Panel.
@@ -159,9 +202,9 @@ npx playwright test e2e/sentinel2/tests/SavePanel.test.ts --config e2e/playwrigh
     - Confirm the options: "Save as Web Mapping Application", "Save as Web Map", and "Publish Scene" are available.
     - Save as a Web Map and verify the job appears and links correctly.
     - Publish the scene as a hosted imagery service:
-      - Review the estimated credit cost.
-      - Accept the credits to proceed.
-      - Confirm the job completes successfully and links to the ArcGIS Online item.
+        - Review the estimated credit cost.
+        - Accept the credits to proceed.
+        - Confirm the job completes successfully and links to the ArcGIS Online item.
 4. **With multiple scenes selected (e.g., in Swipe Mode):**
     - Ensure two scenes are selected.
     - Open the Save Panel and sign in.

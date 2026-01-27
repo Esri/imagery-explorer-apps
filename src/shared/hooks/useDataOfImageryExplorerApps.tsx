@@ -2,6 +2,8 @@ import { APP_NAME, AppName } from '@shared/config';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import config from '../../config.json';
+
 /**
  * Type representing the information for an Imagery Explorer App.
  * This type includes the app name, title, URL, and an optional tooltip.
@@ -35,31 +37,31 @@ export const useDataOfImageryExplorerApps = () => {
             {
                 appName: 'landsatexplorer',
                 title: t('landsat_explorer'),
-                url: '/landsatexplorer',
+                url: config.landsatexplorer.pathname,
                 tooltip: t('launch_landsat_explorer'),
             },
             {
                 appName: 'sentinel2explorer',
                 title: t('sentinel_2_explorer'),
-                url: '/sentinel2explorer',
+                url: config.sentinel2explorer.pathname,
                 tooltip: t('launch_sentinel_2_explorer'),
             },
             {
                 appName: 'sentinel1explorer',
                 title: t('sentinel_1_explorer'),
-                url: '/sentinel1explorer',
+                url: config.sentinel1explorer.pathname,
                 tooltip: t('launch_sentinel_1_explorer'),
             },
             {
                 appName: 'landcoverexplorer',
                 title: t('landcover_explorer'),
-                url: '/landcoverexplorer',
+                url: config.landcoverexplorer.pathname,
                 tooltip: t('launch_landcover_explorer'),
             },
             {
                 appName: 'nlcdlandcoverexplorer',
                 title: t('nlcd_landcover_explorer'),
-                url: '/nlcdlandcoverexplorer',
+                url: config.nlcdlandcoverexplorer.pathname,
                 tooltip: t('launch_nlcd_landcover_explorer'),
             },
         ];
@@ -78,7 +80,7 @@ export const useDataOfImageryUtilityApps = () => {
             {
                 appName: 'spectralsampler',
                 title: t('spectral_sampler'),
-                url: '/spectralsampler',
+                url: config.spectralsampler.pathname,
                 tooltip: t('launch_spectral_sampler'),
             },
         ];

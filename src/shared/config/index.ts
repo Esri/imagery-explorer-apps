@@ -29,7 +29,7 @@ type AppConfig = {
 /**
  * a type that represents the keys of the apps object in the `/src/config.json` file
  */
-export type AppName = keyof typeof config.apps;
+export type AppName = keyof typeof config;
 
 /**
  * Name of the imagery explore app to start/build that defined in Webpack via DefinePlugin.
@@ -41,7 +41,7 @@ export const APP_NAME: AppName = WEBPACK_DEFINED_APP_NAME as AppName;
  * config file for the imagery explorer app to start/build
  */
 export const appConfig: Readonly<AppConfig> = Object.freeze(
-    config.apps[APP_NAME] as AppConfig
+    config[APP_NAME] as AppConfig
 );
 
 /**
@@ -94,3 +94,11 @@ export const LANDCOVER_EXPLORER_APP_ID = ENV_LANDCOVER_EXPLORER_APP_ID || '';
  */
 export const NLCD_LANDCOVER_EXPLORER_APP_ID =
     ENV_NLCD_LANDCOVER_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for the Surface Temperature Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as running SIHUI analysis.
+ * This is defined in the environment variable `ENV_SUREFACE_TEMP_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const SURFACE_TEMP_EXPLORER_APP_ID =
+    ENV_SUREFACE_TEMP_EXPLORER_APP_ID || '';
