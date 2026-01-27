@@ -68,12 +68,12 @@
     "about_app_capability_5": "Select imagery renderings (e.g. SWIR to visualize forest burn scars)",
 
     "attribution_title": "Attribution and Terms of Use",
-    "nlcd_attribution_title": "<span class=\"font-bold\">Annual NLCD Land Cover Data</span> – USGS",
-    "nlcd_attribution_license": "U.S. Geological Survey (USGS), 2024, Annual NLCD Collection 1 Science Products: U.S. Geological Survey data release. <a class=\"underline\" href=\"https://www.sciencebase.gov/catalog/item/655ceb8ad34ee4b6e05cc51a\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>.",
+    "nlcd_landcover_terms_of_use_section_title": "Annual NLCD Land Cover",
+    "nlcd_landcover_source_section_title": "Source Annual NLCD Land Cover Data - USGS",
+    "nlcd_landcover_source_section_content": "U.S. Geological Survey (USGS), 2024, Annual NLCD Collection 1 Science Products: U.S. Geological Survey data release. <a class=\"underline\" href=\"https://www.sciencebase.gov/catalog/item/655ceb8ad34ee4b6e05cc51a\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>.",
+    "nlcd_landcover_service_section_title": "<a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=32e2ccc6416746a9a72b4d216813f84f\" target=\"_blank\" rel=\"noreferrer\">Annual NLCD Land Cover Image Service</a> - Esri",
 
-    "app_attribution_title": "<span class=\"font-bold\">NLCD Land Cover Explorer App</span> - Esri",
-    "app_attribution_license": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-    "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
+    "app_attribution_title": "NLCD Land Cover Explorer App - Esri",
     "zoom_to_native_resolution": "Zoom to NLCD Land Cover layer's native resolution",
 
     "animation_output_prefix_satellite_layer_on": "landsat",

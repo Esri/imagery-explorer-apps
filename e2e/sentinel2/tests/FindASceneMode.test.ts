@@ -1,6 +1,9 @@
 import { test, expect, Page } from '@playwright/test';
 import { DEV_SERVER_URL } from '../../base.config';
-import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '../mock-data/mockSentinel2NetworkRequests';
+import {
+    mockSentinel2NetworkRequests,
+    resetMockSentinel2NetworkRequest,
+} from '../mock-data/mockSentinel2NetworkRequests';
 import { selectDayFromCalendar } from '../helpers';
 
 /**
@@ -17,7 +20,7 @@ import { selectDayFromCalendar } from '../helpers';
  * @param page - The Playwright Page object representing the browser page.
  * @param date - The date string (in 'YYYY-MM-DD' format) to select and verify in the calendar.
  */
-const testSelectASceneByDate = async (page:Page, date:string) => {
+const testSelectASceneByDate = async (page: Page, date: string) => {
     await selectDayFromCalendar(page, date);
 
     // Check that calendar cells with available scenes are visible
@@ -35,13 +38,21 @@ const testSelectASceneByDate = async (page:Page, date:string) => {
     // Check that the scene information table is visible and contains the correct acquisition date
     const sceneInfoTable = page.locator('[data-element="scene-info-table"]');
     await expect(sceneInfoTable).toBeVisible();
-    const acquisitionDateField = sceneInfoTable.locator('[data-scene-info-field="Acquired"]');
-    await expect(acquisitionDateField).toHaveAttribute('data-scene-info-value', date);
+    const acquisitionDateField = sceneInfoTable.locator(
+        '[data-scene-info-field="Acquired"]'
+    );
+    await expect(acquisitionDateField).toHaveAttribute(
+        'data-scene-info-value',
+        date
+    );
 
     // Check that the acquisition date label is visible and has the correct attribute
     const acuqiesitionDateLabel = page.getByTestId('acquisition-date-label');
     await expect(acuqiesitionDateLabel).toBeVisible();
-    await expect(acuqiesitionDateLabel).toHaveAttribute('data-aququisition-date', date);
+    await expect(acuqiesitionDateLabel).toHaveAttribute(
+        'data-aququisition-date',
+        date
+    );
 
     // Click the reset button and verify the label and table are hidden
     const resetButton = page.getByTestId('reset-selected-date-btn');
@@ -49,10 +60,9 @@ const testSelectASceneByDate = async (page:Page, date:string) => {
     await resetButton.click();
     await expect(acuqiesitionDateLabel).not.toBeVisible();
     await expect(sceneInfoTable).not.toBeVisible();
-}
+};
 
 test.describe('Sentinel-2 Explorer - Find a Scnene', () => {
-
     const FIND_A_SCENE_MODE_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516`;
 
     test('Calendar Component Functionalities', async ({ page }) => {
@@ -75,19 +85,35 @@ test.describe('Sentinel-2 Explorer - Find a Scnene', () => {
         await expect(calendarContainer).toBeVisible();
 
         // Check that the year selection dropdown is visible and clickable
-        const yearSelectionDropdown = calendarContainer.getByTestId("year-selection-dropdown");
+        const yearSelectionDropdown = calendarContainer.getByTestId(
+            'year-selection-dropdown'
+        );
         await expect(yearSelectionDropdown).toBeVisible();
 
-        // Ensure the dropdown is initially set to "Past 12 Months"
-        await expect(yearSelectionDropdown).toHaveText(/Past 12 Months/i);
-        
+        // If current UTC month is not December, year dropdown defaults to "Past 12 Months"
+        // In December, it shows current year (e.g., '2025') which is equivalent to "Past 12 Months"
+        // This behavior is controlled by the useAcquisitionYear hook
+        if (new Date().getUTCMonth() !== 11) {
+            await expect(yearSelectionDropdown).toHaveText(/Past 12 Months/i);
+        } else {
+            const currentUTCYear = new Date().getUTCFullYear().toString();
+            await expect(yearSelectionDropdown).toHaveText(currentUTCYear);
+        }
+
+        // // Ensure the dropdown is initially set to "Past 12 Months"
+        // await expect(yearSelectionDropdown).toHaveText(/Past 12 Months/i);
+
         // Open the year selection dropdown
         await yearSelectionDropdown.click();
 
         // The dropdown renders two sets of options for different screen sizes.
         // Select the visible option for 2024.
-        const dropdownOptions = await yearSelectionDropdown.getByTestId('dropdown-option-2024').all();
-        const dropdownOptionFor2024 = dropdownOptions.find(async option => await option.isVisible());
+        const dropdownOptions = await yearSelectionDropdown
+            .getByTestId('dropdown-option-2024')
+            .all();
+        const dropdownOptionFor2024 = dropdownOptions.find(
+            async (option) => await option.isVisible()
+        );
         if (!dropdownOptionFor2024) {
             throw new Error('No visible dropdown option for 2024 found');
         }
@@ -97,7 +123,8 @@ test.describe('Sentinel-2 Explorer - Find a Scnene', () => {
         await expect(yearSelectionDropdown).toHaveText('2024');
 
         // Check that the calendar updates to show January 2024
-        const monthGrid2024Jan = calendarContainer.getByTestId('month-grid-2024-1');
+        const monthGrid2024Jan =
+            calendarContainer.getByTestId('month-grid-2024-1');
         await expect(monthGrid2024Jan).toBeVisible();
 
         await testSelectASceneByDate(page, '2024-01-03');
@@ -109,5 +136,5 @@ test.describe('Sentinel-2 Explorer - Find a Scnene', () => {
 
         // Reset mocked network requests after the test
         await resetMockSentinel2NetworkRequest(page);
-    })
-})
+    });
+});

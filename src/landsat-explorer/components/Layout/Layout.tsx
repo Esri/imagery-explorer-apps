@@ -54,10 +54,6 @@ import { Notification } from '@shared/components/Notification';
 const Layout = () => {
     const { t } = useTranslation();
 
-    const appTitle = t('esri_landsat_explorer', {
-        ns: APP_NAME,
-    });
-
     const mode = useAppSelector(selectAppMode);
 
     const analysisTool = useAppSelector(selectActiveAnalysisTool);
@@ -80,7 +76,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appTitle} />
+                <AppHeader />
                 <BottomPanel>
                     <div className="mx-auto">
                         <LandsatDynamicModeInfo />
@@ -94,7 +90,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={appTitle} />
+            <AppHeader />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />

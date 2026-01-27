@@ -43,6 +43,7 @@ import { CalciteLoader } from '@esri/calcite-components-react';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import { AnimationYearDisplay } from './AnimationYearDisplay';
 
 type Props = {
     mapView?: IMapView;
@@ -216,6 +217,8 @@ const AnimationPanel: FC<Props> = ({
             {animationMode === 'loading' && (
                 <CalciteLoader scale="l"></CalciteLoader>
             )}
+
+            <AnimationYearDisplay animationStatus={animationMode} />
 
             <CloseButton
                 onClick={() => {

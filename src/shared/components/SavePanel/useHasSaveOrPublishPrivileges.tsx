@@ -15,6 +15,7 @@ type CanSaveOrPublishPrivileges = {
     canSaveWebMappingApp: boolean;
     canSaveWebMap: boolean;
     canPublishHostedImagery: boolean;
+    isCheckingPrivileges?: boolean;
 };
 
 /**
@@ -31,6 +32,11 @@ export const useHasSaveOrPublishPrivileges = (): CanSaveOrPublishPrivileges => {
 
     const [userLicenseData, setUserLicenseData] =
         React.useState<UserLicenseData>(null);
+
+    /**
+     * Indicates whether the privilege check is still loading.
+     */
+    const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
     /**
      * The type of ArcGIS Online account the user is signed in with.
@@ -51,6 +57,7 @@ export const useHasSaveOrPublishPrivileges = (): CanSaveOrPublishPrivileges => {
             setCanSaveWebMappingApp(true);
             setCanSaveWebMap(false);
             setCanPublishHostedImagery(false);
+            setIsLoading(false);
             return;
         }
 
@@ -60,6 +67,7 @@ export const useHasSaveOrPublishPrivileges = (): CanSaveOrPublishPrivileges => {
             setCanSaveWebMappingApp(false);
             setCanSaveWebMap(false);
             setCanPublishHostedImagery(false);
+            setIsLoading(false);
             return;
         }
 
@@ -72,6 +80,7 @@ export const useHasSaveOrPublishPrivileges = (): CanSaveOrPublishPrivileges => {
             ? hasRasterAnalysisPrivileges(userLicenseData?.userLicenseTypeId)
             : false;
         setCanPublishHostedImagery(canUseRasterAnalysis);
+        setIsLoading(false);
     }, [arcgisOnlineAccountType, canCreateItem, userLicenseData]);
 
     useEffect(() => {
@@ -100,5 +109,6 @@ export const useHasSaveOrPublishPrivileges = (): CanSaveOrPublishPrivileges => {
         canSaveWebMappingApp,
         canSaveWebMap,
         canPublishHostedImagery,
+        isCheckingPrivileges: isLoading,
     };
 };

@@ -12,11 +12,11 @@ import { baseConfig } from './base.config';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  ...baseConfig,
-  testDir: './landsat',
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    ...baseConfig.webServer,
-    command: 'npm run start:landsat:dev',
-  },
+    ...baseConfig,
+    testDir: './landsat',
+    /* Run your local dev server before starting the tests */
+    webServer: {
+        ...baseConfig.webServer,
+        command: 'npm run start:landsat:dev',
+    },
 });

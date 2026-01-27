@@ -146,3 +146,6 @@ export const selectAvaiableYearsForLandCoverLayer = (state: RootState) =>
 
 export const selectTimeExtentByYear = (state: RootState) =>
     state.LandcoverExplorer.timeInfo.timeExtentByYear;
+
+export const selectShowAnimationControls4Landcover = (state: RootState) =>
+    state.LandcoverExplorer.showAnimationControls4Landcover;

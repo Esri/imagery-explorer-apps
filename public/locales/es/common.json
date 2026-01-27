@@ -281,7 +281,7 @@
     "classes_selector_subTitle": "Haga click para elegir",
     "at_year": "{{year}}",
     "from_to_year": "De {{fromYear}} a {{toYear}}",
-    
+
     "Land_Cover_Change": "Cambio en la cobertura del suelo",
     "Land_Cover_Totals": "Total de cobertura de suelo",
     "Expanded_Summary_Chart": "Tabla resumida expandida",
@@ -290,7 +290,7 @@
     "zoom_to_see_totals_graph": "Ampliar la imagen para ver el gráfico de total de cobertura de suelo",
     "imagery_renderers_title": "Renderizaciones visuales",
     "imagery_renderers_subtitle": "Haga click para cambiar la visibilidad",
-    "start_animation"  : "Comenzar animación",
+    "start_animation": "Comenzar animación",
     "swipe_mode_zoom_message": "Acercar para comparar las capas de imágenes {{layerName}}",
     "animate_mode_zoom_message": "Acercar para habilitar el control de tiempo",
     "load_animation": "Cargando animación",
@@ -314,5 +314,20 @@
     "switch_language": "Cambiar idioma",
     "choose_language": "Elegir idioma",
     "locale_switcher_suggestion_message": "¿Cambiar el idioma de la aplicación a {{locale}}?",
-    "do_not_show_again": "No mostrar de nuevo"
+    "do_not_show_again": "No mostrar de nuevo",
+
+    "about_github_repo": "Para acceder al código fuente o enviar incidencias y solicitudes de funciones, consulta el repositorio público de GitHub de <a href='https://github.com/Esri/imagery-explorer-apps' target='_blank' class='underline'>Imagery Explorer Apps</a>.",
+
+    "sentinel_2_imagery_terms_of_use_section_title": "Imágenes Sentinel-2 Nivel 2A",
+    "sentinel_2_imagery_source_section_title": "Fuente de imágenes Sentinel-2 – ESA, Comisión Europea, Microsoft",
+    "sentinel_2_imagery_source_section_content": "El acceso y uso de los datos e información de los servicios Copernicus Sentinel están regulados por la legislación de la UE. Los usuarios tienen acceso libre, completo y abierto a los datos e información de Copernicus Sentinel, sin garantías expresas ni implícitas, incluida la calidad o la idoneidad para cualquier propósito. <a class=\"underline\" href=\"https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice\" target=\"_blank\" rel=\"noreferrer\">Más información</a>…",
+    "sentinel_2_imagery_service_section_title": "<a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=255af1ceee844d6da8ef8440c8f90d00\" target=\"_blank\" rel=\"noreferrer\">Servicio de imágenes Sentinel-2 Nivel 2A</a> - Esri",
+
+    "landsat_imagery_terms_of_use_section_title": "Imágenes Landsat Nivel 2",
+    "landsat_imagery_source_section_title": "Fuente de imágenes Landsat Nivel 2 – USGS, Microsoft",
+    "landsat_imagery_source_section_content": "Los datos e información elaborados o producidos por el USGS son de dominio público en Estados Unidos y pueden utilizarse sin restricciones. <a class=\"underline\" rel=\"noreferrer\" href=\"https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs\" target=\"_blank\">Reconocimiento al USGS</a>",
+    "landsat_imagery_service_section_title": "<a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=bd6b545b95654d91a0b7faf7b5e010f5\" target=\"_blank\" rel=\"noreferrer\">Servicio de imágenes Landsat Nivel 2</a> - Esri",
+
+    "esri_work_terms_of_use": "Este trabajo está licenciado bajo el Acuerdo Maestro de Licencia de Esri. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">Ver resumen</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">Ver términos de uso</a>",
+    "app_attribution_disclaimer": "Esta aplicación se proporciona solo con fines informativos. La exactitud de la información depende de la exactitud de los datos de origen."
 }

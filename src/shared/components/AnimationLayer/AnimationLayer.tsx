@@ -41,7 +41,7 @@ import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { once } from '@arcgis/core/core/reactiveUtils';
 import { CalciteLoader } from '@esri/calcite-components-react';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
-import { fr } from 'date-fns/locale';
+import { AnimationFrameAcquisitionDateDisplayContainer } from './AnimationFrameAcquisitionDateDisplayContainer';
 
 type Props = {
     /**
@@ -190,24 +190,6 @@ export const AnimationLayer: FC<Props> = ({
             // dispatch(animationStatusChanged('playing'));
 
             try {
-                // // Wait until all mediaLayerElements are loaded before proceeding
-                // await Promise.all(
-                //     mediaLayerElements.map((element) =>
-                //         once(
-                //             () =>
-                //                 element.loadStatus === 'loaded' ||
-                //                 element.loadStatus === 'failed'
-                //         )
-                //     )
-                // );
-
-                // for (const element of mediaLayerElements) {
-                //     if (element.loadStatus === 'failed') {
-                //         throw new Error(`Element failed to load: ${element}`);
-                //     }
-                //     // console.log(`Element loaded: ${element.loadStatus}`);
-                // }
-
                 for (const element of mediaLayerElements) {
                     source.elements.add(element);
 
@@ -235,16 +217,16 @@ export const AnimationLayer: FC<Props> = ({
         })();
     }, [mediaLayerElements, frameData4DownloadJob]);
 
-    // If the map view's height changes during an animation,
-    // set the animation status to 'loading' so the useMediaLayerImageElement hook
-    // can re-fetch the animation frame images to cover the entire map.
-    useEffect(() => {
-        if (!animationStatus || animationStatus === 'loading') {
-            return;
-        }
+    // // If the map view's height changes during an animation,
+    // // set the animation status to 'loading' so the useMediaLayerImageElement hook
+    // // can re-fetch the animation frame images to cover the entire map.
+    // useEffect(() => {
+    //     if (!animationStatus || animationStatus === 'loading') {
+    //         return;
+    //     }
 
-        dispatch(animationStatusChanged('loading'));
-    }, [mapView?.height]);
+    //     dispatch(animationStatusChanged('loading'));
+    // }, [mapView?.height]);
 
     useEffect(() => {
         // We only need to save animation window information when the animation is in progress.
@@ -282,6 +264,10 @@ export const AnimationLayer: FC<Props> = ({
             {animationStatus === 'loading' && (
                 <CalciteLoader scale="l"></CalciteLoader>
             )}
+
+            <AnimationFrameAcquisitionDateDisplayContainer
+                animationStatus={animationStatus}
+            />
 
             <CloseButton
                 onClick={() => {

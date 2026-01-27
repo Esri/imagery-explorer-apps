@@ -18,35 +18,35 @@
 
     "Water": "Water",
     "Water_description": "Areas where water was predominantly present throughout the year; may not cover areas with sporadic or ephemeral water; contains little to no sparse vegetation, no rock outcrop nor built up features like docks.",
-    
+
     "Trees": "Trees",
     "Trees_description": "Any significant clustering of tall (~15-m or higher) dense vegetation, typically with a closed or dense canopy.",
-    
+
     "Flooded Vegetation": "Flooded Vegetation",
     "Flooded": "Flooded",
     "Flooded Vegetation_description": "Areas of any type of vegetation with obvious intermixing of water throughout a majority of the year; seasonally flooded area that is a mix of grass/shrub/trees/bare ground.",
-    
+
     "Crops": "Crops",
     "Crops_description": "Human planted/plotted cereals, grasses, and crops not at tree height.",
-    
+
     "Built Area": "Built Area",
     "Built": "Built",
     "Built Area_description": "Human made structures; major road and rail networks; large homogenous impervious surfaces including parking structures, office buildings and residential housing.",
-    
+
     "Bare Ground": "Bare Ground",
     "Bare": "Bare",
     "Bare Ground_description": "Areas of rock or soil with very sparse to no vegetation for the entire year; large areas of sand and deserts with no to little vegetation.",
-    
+
     "Snow/Ice": "Snow/Ice",
     "Snow/Ice_description": "Large homogenous areas of permanent snow or ice, typically only in mountain areas or highest latitudes.",
-    
+
     "Clouds": "Clouds",
     "Clouds_description": "No land cover information due to persistent cloud cover.",
-    
+
     "Rangeland": "Rangeland",
     "Range": "Range",
     "Rangeland_description": "Open areas covered in homogenous grasses with little to no taller vegetation; wild cereals and grasses, Mix of small clusters of plants or single plants dispersed on a landscape that shows exposed soil or rock; scrub-filled clearings within forests that are clearly not taller than trees.",
-    
+
     "No_Data": "No Data",
     "No_Data_description": "no data",
 
@@ -88,14 +88,7 @@
     "about_app_capability_7": "Data download for offline use",
 
     "attribution_title": "Attribution and Terms of Use",
-    "lulc_attribution_title": "<span class=\"font-bold\">Sentinel-2 10m Land Use/Land Cover </span> – Esri and Impact Observatory",
-    "lulc_attribution_license": "This work is licensed under a Creative Commons by Attribution (CC BY 4.0) license. <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0\" target=\"_blank\" rel=\"noreferrer\">View License Deed </a> | <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0/legalcode\" target=\"_blank\" rel=\"noreferrer\">View Legal Code</a>",
-
-    "imagery_attribution_title": "<span class=\"font-bold\">Sentinel-2 Level-2A Imagery</span> – Esri, Microsoft, ESA, and the European Commission",
-    "imagery_attribution_license": "This work is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
-
-    "app_attribution_title": "<span class=\"font-bold\">Sentinel-2 Land Cover Explorer App</span> - Esri",
-    "app_attribution_license": "This app is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
+    "app_attribution_title": "<a class=\"undeline\" href=\"https://www.arcgis.com/home/item.html?id=efd2d197cc6742598b463adfa7505ed2\" target=\"_blank\" rel=\"noreferrer\">Sentinel-2 Land Cover Explorer App</a> - Esri",
     "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
     "download_historical_data": "Download Historical Data",
     "donwload_as_csv": "Download Historical Data as CSV",
@@ -106,5 +99,10 @@
     "output_webmap_default_snippet": "Sentinel-2 10m land use/land cover time series of the world.",
     "output_webmap_default_tags": "Sentinel-2, Land Use, Land Cover, LULC, Living Atlas",
     "animation_output_prefix_satellite_layer_on": "sentinel2",
-    "animation_output_prefix_landcover_layer_on": "sentinel2-landcover"
+    "animation_output_prefix_landcover_layer_on": "sentinel2-landcover",
+
+    "lulc_terms_of_use_section_title": "Sentinel-2 10m Land Use/Land Cover",
+    "lulc_source_section_title": "Source Sentinel-2 LULC Data – Esri and Impact Observatory",
+    "lulc_source_section_content": "The source data, available for download, is licensed under a Creative Commons by Attribution (CC BY 4.0) license. <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0\" target=\"_blank\" rel=\"noreferrer\">View License Deed </a> | <a class=\"underline\" href=\"https://creativecommons.org/licenses/by/4.0/legalcode\" target=\"_blank\" rel=\"noreferrer\">View Legal Code</a>.",
+    "lulc_service_section_title": "<a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=cfcb7609de5f478eb7666240902d4d3d\" target=\"_blank\" rel=\"noreferrer\">Sentinel-2 LULC Image Service</a> - Esri"
 }

@@ -41,6 +41,7 @@ import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { AnimationControl } from '@shared/components/AnimationControl';
 import { AnalyzeToolSelector4LandsatSurfaceTemp } from '../ModeSelector/AnalyzeToolSelector';
 import { UrbanHeatIsland } from '../UrbanHeatIsland';
+import { UrbanHeatIslandPanelSelector } from '../UrbanHeatIsland/UrbanHeatIslandPanelSelector';
 
 const Layout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -91,7 +92,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appConfig.title} />
+                <AppHeader />
                 <BottomPanel>
                     <div className="mx-auto">
                         <DynamicModeInfo />
@@ -103,7 +104,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={appConfig.title} />
+            <AppHeader />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     {/* <LandsatSurefaceTempModeSelector /> */}
@@ -116,6 +117,13 @@ const Layout = () => {
                             <AnalyzeToolSelector4LandsatSurfaceTemp />
                         </ContainerOfSecondaryControls>
                     )}
+
+                    {mode === 'analysis' &&
+                        analyzeTool === 'urban heat island' && (
+                            <ContainerOfSecondaryControls>
+                                <UrbanHeatIslandPanelSelector />
+                            </ContainerOfSecondaryControls>
+                        )}
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">

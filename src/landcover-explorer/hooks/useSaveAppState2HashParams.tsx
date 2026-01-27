@@ -25,6 +25,7 @@ import {
     saveAnimationDataToHashParams,
     saveAnimationModeToHashParams,
     saveTimeExtentToHashParams,
+    updateHashParams,
 } from '@landcover-explorer/utils/URLHashParams';
 
 import {
@@ -33,7 +34,10 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import {
+    selectAnimationStatus,
+    selectHideBottomPanel,
+} from '@shared/store/UI/selectors';
 
 export const useSaveAppState2HashParams = () => {
     const { year4LeadingLayer, year4TrailingLayer } = useAppSelector(
@@ -50,6 +54,8 @@ export const useSaveAppState2HashParams = () => {
 
     const year = useAppSelector(selectYear);
 
+    const hideBottomPanel = useAppSelector(selectHideBottomPanel);
+
     useEffect(() => {
         saveTimeExtentToHashParams(year4LeadingLayer, year4TrailingLayer);
     }, [year4LeadingLayer, year4TrailingLayer]);
@@ -65,4 +71,8 @@ export const useSaveAppState2HashParams = () => {
             yearRange: animationStatus ? animationYearRange : null,
         });
     }, [animationStatus, animationYearRange]);
+
+    useEffect(() => {
+        updateHashParams('hideBottomPanel', hideBottomPanel ? 'true' : null);
+    }, [hideBottomPanel]);
 };

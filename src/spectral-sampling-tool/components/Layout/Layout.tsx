@@ -91,7 +91,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={t('spectral_sampling_tool', { ns: APP_NAME })} />
+            <AppHeader />
 
             {!targetService && <SplashScreen />}
 

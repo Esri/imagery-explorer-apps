@@ -17,7 +17,10 @@ import React from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import BottomPanelToggleBtn from './BottomPanelToggleBtn';
-import { selectHideBottomPanel } from '../../store/UI/selectors';
+import {
+    selectHideBottomPanel,
+    selectIsAnimationPlaying,
+} from '../../store/UI/selectors';
 import { bottomPanelToggled } from '../../store/UI/reducer';
 
 const BottomPanelToggleBtnContainer = () => {
@@ -25,8 +28,11 @@ const BottomPanelToggleBtnContainer = () => {
 
     const isHidden = useAppSelector(selectHideBottomPanel);
 
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
+
     return (
         <BottomPanelToggleBtn
+            shouldHide={isAnimationPlaying}
             isBottomPanelHidden={isHidden}
             onClickHandler={() => {
                 dispatch(bottomPanelToggled(!isHidden));

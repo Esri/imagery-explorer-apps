@@ -37,7 +37,7 @@ import { INTERESTING_PLACES, DEFAULT_MAP_ZOOM } from '../constants/map';
 // import { LandCoverClassification } from '@typing/landcover';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 // import { Sentinel2RasterFunction } from '@landcover-explorer/components/ControlPanel/Sentinel2LayerRasterFunctionsList/Sentinel2LayerRasterFunctionsListContainer';
-import { isMobileDevice } from 'helper-toolkit-ts';
+// import { isMobileDevice } from 'helper-toolkit-ts';
 import { PartialRootState } from '@shared/store/configureStore';
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
@@ -45,48 +45,51 @@ import {
     getPreloadedStateForLandcoverExplorerApp,
     getPreloadedUIState4LandcoverExplorerApp,
 } from '@landcover-explorer/store/getPreloadedState';
-import { LandcoverExplorerAppState } from '@shared/store/LandcoverExplorer/reducer';
-import { getMapCenterFromHashParams } from '@landcover-explorer/utils/URLHashParams';
-import { UIState } from '@shared/store/UI/reducer';
+// import { LandcoverExplorerAppState } from '@shared/store/LandcoverExplorer/reducer';
+import {
+    getAnimationModeFromHashParams,
+    getMapCenterFromHashParams,
+} from '@landcover-explorer/utils/URLHashParams';
+// import { UIState } from '@shared/store/UI/reducer';
 import { LandCoverLayerTimeInfo } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
 
-const isMobileView = isMobileDevice();
+// const isMobileView = isMobileDevice();
 
-const getPreloadedStateForNLCDLandcoverExplorerApp = (
-    timeInfo: LandCoverLayerTimeInfo
-): LandcoverExplorerAppState => {
-    const state = getPreloadedStateForLandcoverExplorerApp(timeInfo);
-    // console.log('getPreloadedStateForNLCDLandcoverExplorerApp: ', state);
+// const getPreloadedStateForNLCDLandcoverExplorerApp = (
+//     timeInfo: LandCoverLayerTimeInfo
+// ): LandcoverExplorerAppState => {
+//     const state = getPreloadedStateForLandcoverExplorerApp(timeInfo);
+//     // console.log('getPreloadedStateForNLCDLandcoverExplorerApp: ', state);
 
-    return {
-        ...state,
-    };
-};
+//     return {
+//         ...state,
+//     };
+// };
 
-const getPreloadedUIStatForNLCDLandcoverExplorerApp = (): UIState => {
-    // const showDownloadPanel = getDonwloadModeFromHashParams();
-    // const isAnimationModeOn = getAnimationModeFromHashParams();
+// const getPreloadedUIStatForNLCDLandcoverExplorerApp = (): UIState => {
+//     // const showDownloadPanel = getDonwloadModeFromHashParams();
+//     // const isAnimationModeOn = getAnimationModeFromHashParams();
 
-    // const showSaveWebMapPanel = getShowSaveWebMapPanelFromHashParams();
+//     // const showSaveWebMapPanel = getShowSaveWebMapPanelFromHashParams();
 
-    // const animationStatus = isAnimationModeOn ? 'loading' : null;
+//     // const animationStatus = isAnimationModeOn ? 'loading' : null;
 
-    // return {
-    //     ...initialUIState,
-    //     showDownloadPanel,
-    //     /**
-    //      * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
-    //      * animation mode can only be enabled in desktop view with wide screen
-    //      */
-    //     animationStatus: isMobileView ? null : animationStatus,
-    //     showSaveWebMapPanel,
-    // };
-    const state = getPreloadedUIState4LandcoverExplorerApp();
+//     // return {
+//     //     ...initialUIState,
+//     //     showDownloadPanel,
+//     //     /**
+//     //      * set animation mode to loading so the animation panel can start loading frames data once Median Layer is ready.
+//     //      * animation mode can only be enabled in desktop view with wide screen
+//     //      */
+//     //     animationStatus: isMobileView ? null : animationStatus,
+//     //     showSaveWebMapPanel,
+//     // };
+//     const state = getPreloadedUIState4LandcoverExplorerApp();
 
-    return {
-        ...state,
-    };
-};
+//     return {
+//         ...state,
+//     };
+// };
 
 const getPreloadedMapState = (): MapState => {
     const { zoom, center } = getMapCenterFromHashParams() || {};
@@ -103,10 +106,16 @@ const getPreloadedMapState = (): MapState => {
 export const getPreloadedState = (
     timeInfo: LandCoverLayerTimeInfo
 ): PartialRootState => {
+    const isAnimationModeOn = getAnimationModeFromHashParams();
+
     return {
-        LandcoverExplorer:
-            getPreloadedStateForNLCDLandcoverExplorerApp(timeInfo),
-        UI: getPreloadedUIStatForNLCDLandcoverExplorerApp(),
+        LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp({
+            timeInfo,
+            isAnimationModeOn,
+        }),
+        UI: getPreloadedUIState4LandcoverExplorerApp({
+            isAnimationModeOn,
+        }),
         Map: getPreloadedMapState(),
     };
 };

@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 import { DEV_SERVER_URL } from '../base.config';
 
 test('has title', async ({ page }) => {
-  await page.goto(DEV_SERVER_URL);
+    await page.goto(DEV_SERVER_URL);
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Sentinel-1 Explorer/);
+    // Expect a title "to contain" a substring.
+    await expect(page).toHaveTitle(/Sentinel-1 Explorer/);
 });
 
 // test('get started link', async ({ page }) => {

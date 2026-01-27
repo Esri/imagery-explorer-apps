@@ -47,7 +47,8 @@ export type RasterAnalysisRasterFunction = {
         description: string;
     };
     arguments: {
-        Raster: any;
+        Raster?: any;
+        RasterCollection?: any;
         [key: string]: any;
     };
     [key: string]: any;

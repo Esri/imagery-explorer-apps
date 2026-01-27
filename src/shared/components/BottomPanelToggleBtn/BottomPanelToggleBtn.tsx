@@ -18,6 +18,10 @@ import React, { FC } from 'react';
 
 type Props = {
     /**
+     * if true, the button should be hidden during animation
+     */
+    shouldHide: boolean;
+    /**
      * if true, Bottom Panel is hidden
      */
     isBottomPanelHidden: boolean;
@@ -49,6 +53,7 @@ const CheveronUpIcon = (
 );
 
 const BottomPanelToggleBtn: FC<Props> = ({
+    shouldHide,
     isBottomPanelHidden,
     onClickHandler,
 }: Props) => {
@@ -57,6 +62,7 @@ const BottomPanelToggleBtn: FC<Props> = ({
             className={classNames('absolute right-0 w-10 h-10', {
                 'bottom-bottom-panel-height': isBottomPanelHidden === false,
                 'bottom-0': isBottomPanelHidden,
+                hidden: shouldHide,
             })}
         >
             <div

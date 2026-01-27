@@ -114,3 +114,9 @@ declare const ENV_NLCD_LANDCOVER_SERVICE_URL: string;
  * Optional: defaults to f8770e0adc5c41038026494b871ceb99 if not specified.
  */
 declare const ENV_WEB_MAP_ID: string;
+
+/**
+ * Application ID for the LANDSAT SURFACE TEMP EXPLORER app.
+ * Required for authentication and features such running SIHUI analysis.
+ */
+declare const ENV_SUREFACE_TEMP_EXPLORER_APP_ID: string;

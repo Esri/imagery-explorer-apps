@@ -34,7 +34,8 @@ type UrlHashParamKey =
     | 'animation'
     | 'region'
     | 'saveWebMap'
-    | 'animationData';
+    | 'animationData'
+    | 'hideBottomPanel';
 
 const SupportedSentinel2RasterFunctions: ImageryRasterFunction4LandcoverApp[] =
     [
@@ -266,4 +267,8 @@ export const saveShowSaveWebMapPanelToHashParams = (
 
 export const getShowSaveWebMapPanelFromHashParams = () => {
     return getHashParamValueByKey('saveWebMap') === 'true';
+};
+
+export const getHideBottomPanelFromHashParams = () => {
+    return getHashParamValueByKey('hideBottomPanel') === 'true';
 };

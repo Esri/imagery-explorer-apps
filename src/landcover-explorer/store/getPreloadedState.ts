@@ -34,6 +34,7 @@ import {
     getRegionFromHashParams,
     getShowSaveWebMapPanelFromHashParams,
     getAnimationDataFromHashParams,
+    getHideBottomPanelFromHashParams,
 } from '@landcover-explorer/utils/URLHashParams';
 import { DEFAULT_MAP_CENTERS, DEFAULT_MAP_ZOOM } from '../constants/map';
 import { LandCoverClassification } from '@typing/landcover';
@@ -48,6 +49,27 @@ import { PartialRootState } from '@shared/store/configureStore';
 import { initialMapState, MapState } from '@shared/store/Map/reducer';
 import { getRandomElement } from '@shared/utils/snippets/getRandomElement';
 
+/**
+ * Parameters for getPreloadedStateForLandcoverExplorerApp function
+ */
+type GetPreloadedStateForLandcoverExplorerAppParams = {
+    /**
+     * Time info for the land cover layer
+     */
+    timeInfo: LandCoverLayerTimeInfo;
+    /**
+     * Indicates if animation mode is enabled from URL hash params
+     */
+    isAnimationModeOn: boolean;
+};
+
+type GetPreloadedUIState4LandcoverExplorerAppParams = {
+    /**
+     * Indicates if animation mode is enabled from URL hash params
+     */
+    isAnimationModeOn: boolean;
+};
+
 const isMobileView = isMobileDevice();
 
 /**
@@ -56,9 +78,10 @@ const isMobileView = isMobileDevice();
  * Handles mobile/desktop-specific logic for map mode and satellite imagery layer visibility.
  * Also determines if the Info Panel should be shown based on the presence of a region in the hash params.
  */
-export const getPreloadedStateForLandcoverExplorerApp = (
-    timeInfo: LandCoverLayerTimeInfo
-): LandcoverExplorerAppState => {
+export const getPreloadedStateForLandcoverExplorerApp = ({
+    timeInfo,
+    isAnimationModeOn,
+}: GetPreloadedStateForLandcoverExplorerAppParams): LandcoverExplorerAppState => {
     // Get the list of available years for land cover data
     const availableYears = populateAvailableYears(timeInfo.timeExtent); //getAvailableYears();
 
@@ -148,12 +171,16 @@ export const getPreloadedStateForLandcoverExplorerApp = (
             availableYears,
             timeExtentByYear,
         },
+        showAnimationControls4Landcover: isAnimationModeOn,
     };
 };
 
-export const getPreloadedUIState4LandcoverExplorerApp = (): UIState => {
+export const getPreloadedUIState4LandcoverExplorerApp = ({
+    isAnimationModeOn,
+}: GetPreloadedUIState4LandcoverExplorerAppParams): UIState => {
     const showDownloadPanel = getDonwloadModeFromHashParams();
-    const isAnimationModeOn = getAnimationModeFromHashParams();
+
+    const hideBottomPanel = getHideBottomPanelFromHashParams();
 
     const showSaveWebMapPanel = getShowSaveWebMapPanelFromHashParams();
 
@@ -168,6 +195,7 @@ export const getPreloadedUIState4LandcoverExplorerApp = (): UIState => {
          */
         animationStatus: isMobileView ? null : animationStatus,
         showSaveWebMapPanel,
+        hideBottomPanel: hideBottomPanel ?? initialUIState.hideBottomPanel,
     };
 };
 
@@ -184,9 +212,16 @@ const getPreloadedMapState = (): MapState => {
 export const getPreloadedState = (
     timeInfo: LandCoverLayerTimeInfo
 ): PartialRootState => {
+    const isAnimationModeOn = getAnimationModeFromHashParams();
+
     return {
-        LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp(timeInfo),
-        UI: getPreloadedUIState4LandcoverExplorerApp(),
+        LandcoverExplorer: getPreloadedStateForLandcoverExplorerApp({
+            timeInfo,
+            isAnimationModeOn,
+        }),
+        UI: getPreloadedUIState4LandcoverExplorerApp({
+            isAnimationModeOn,
+        }),
         Map: getPreloadedMapState(),
     };
 };

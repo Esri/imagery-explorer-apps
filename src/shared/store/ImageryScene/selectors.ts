@@ -91,6 +91,13 @@ export const selectSelectedItemFromListOfQueryParams = createSelector(
     }
 );
 
+export const selectNumOfSelectedItemsInListOfQueryParams = createSelector(
+    (state: RootState) => state.ImageryScenes.queryParamsList,
+    (queryParamsList) => {
+        return queryParamsList.ids.length;
+    }
+);
+
 // export const selectAcquisitionYear = createSelector(
 //     (state: RootState) => state.ImageryScenes.acquisitionYear,
 //     (acquisitionYear) => acquisitionYear

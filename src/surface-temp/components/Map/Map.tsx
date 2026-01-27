@@ -27,15 +27,17 @@ import { Popup } from '@landsat-explorer/components/PopUp/';
 import { MaskLayer } from '@landsat-explorer/components/MaskLayer';
 import { LandsatLayer } from '../LandsatLayer';
 // import { SwipeWidget } from '../SwipeWidget';
-import { CrosshairCursor } from './CrosshairCursor';
+// import { CrosshairCursor } from './CrosshairCursor';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
-import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
+// import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/config';
 import { AnimationLayer } from '@shared/components/AnimationLayer';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { UrbanAreaLayer } from '../UrbanAreaLayer';
+import { updateQueryLocation4UrbanHeatIslandTool } from '@shared/store/UrbanHeatIslandTool/thunks';
 
 const Map = () => {
     const { t } = useTranslation();
@@ -47,7 +49,7 @@ const Map = () => {
             mapOnClick={(point) => {
                 dispatch(updateQueryLocation4TrendTool(point));
 
-                dispatch(updateQueryLocation4SpectralProfileTool(point));
+                dispatch(updateQueryLocation4UrbanHeatIslandTool(point));
             }}
         >
             <GroupLayer
@@ -66,6 +68,7 @@ const Map = () => {
                         ns: APP_NAME,
                     })}
                 />
+                <UrbanAreaLayer />
             </GroupLayer>
             {/* <SwipeWidget /> */}
 
@@ -75,7 +78,7 @@ const Map = () => {
             <HillshadeLayer />
             <Popup />
             {/* use crosshair cursor for the map component all the time */}
-            <CrosshairCursor />
+            {/* <CrosshairCursor /> */}
         </MapViewContainer>
     );
 };
