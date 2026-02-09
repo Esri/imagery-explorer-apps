@@ -68,9 +68,14 @@ export const BookmarksList: FC = () => {
         }
     }, [selectedProjectId, user, dispatch]);
 
-    // Convert bookmarks to InterestingPlaceData format
+    // Convert bookmarks to InterestingPlaceData format, sorted alphabetically by name
     const bookmarksAsInterestingPlaces: InterestingPlaceData[] = useMemo(() => {
-        return bookmarks.map((bookmark) => ({
+        // Sort bookmarks alphabetically by name
+        const sortedBookmarks = [...bookmarks].sort((a, b) =>
+            a.name.localeCompare(b.name)
+        );
+
+        return sortedBookmarks.map((bookmark) => ({
             key: bookmark.id,
             name: bookmark.name,
             location: {

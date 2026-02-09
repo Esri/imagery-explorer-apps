@@ -16,15 +16,14 @@
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC } from 'react';
 import { MapActionButtonGroup } from './MapActionButtonGroup';
-import { OpenSavePanelButton } from '../OpenSavePanelButton';
-import { CopyLinkWidget } from '../CopyLinkWidget';
-import { ScreenshotWidget } from '../ScreenshotWidget/ScreenshotWidget';
 import { ZoomToExtent } from '../ZoomToExtent';
 import { ZoomWidget } from '../MapView/ZoomWidget';
 import { Zoom2NativeScale } from '../Zoom2NativeScale/Zoom2NativeScale';
 import { SearchWidget } from '../SearchWidget';
 import { useTranslation } from 'react-i18next';
 import { AddBookmarkButton } from '../AddBookmarkButton/AddBookmarkButton';
+import { BasemapGallery } from '../BasemapGallery';
+import { MapillaryControl } from '../MapillaryControl';
 
 type Props = {
     mapView?: MapView;
@@ -55,6 +54,7 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
     return (
         <MapActionButtonGroup>
             <SearchWidget mapView={mapView} />
+            <BasemapGallery mapView={mapView} />
             <ZoomWidget mapView={mapView} />
             <Zoom2NativeScale
                 mapView={mapView}
@@ -65,13 +65,8 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
 
             <div className="h-[1px] my-[5px] w-map-action-button-size bg-custom-background"></div>
 
-            <ScreenshotWidget mapView={mapView} />
-            <CopyLinkWidget />
-            <OpenSavePanelButton />
-
-            <div className="h-[1px] my-[5px] w-map-action-button-size bg-custom-background"></div>
-
             <AddBookmarkButton mapView={mapView} />
+            <MapillaryControl mapView={mapView} />
         </MapActionButtonGroup>
     );
 };

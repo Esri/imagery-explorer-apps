@@ -40,6 +40,10 @@ type Props = {
      */
     disabled?: boolean;
     /**
+     * if true, the button is in an active state (highlighted)
+     */
+    active?: boolean;
+    /**
      * marging space on top
      */
     topMarging?: number;
@@ -59,6 +63,7 @@ export const MapActionButton: FC<Props> = ({
     notificationMessage,
     showLoadingIndicator,
     disabled,
+    active,
     topMarging,
     children,
     onClickHandler,
@@ -75,7 +80,15 @@ export const MapActionButton: FC<Props> = ({
             title={tooltip}
             onClick={onClickHandler}
         >
-            <div className="w-map-action-button-size h-map-action-button-size flex items-center justify-center bg-custom-background text-custom-light-blue-90 cursor-pointer">
+            <div
+                className={classNames(
+                    'w-map-action-button-size h-map-action-button-size flex items-center justify-center cursor-pointer',
+                    {
+                        'bg-custom-light-blue-5 text-custom-light-blue': active,
+                        'bg-custom-background text-custom-light-blue-90': !active,
+                    }
+                )}
+            >
                 {showLoadingIndicator ? (
                     <div className="w-full h-full flex items-center justify-center text-center">
                         <CalciteLoader
