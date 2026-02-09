@@ -422,7 +422,7 @@ npm run start:sentinel2
 ```
 
 ## Deploying 
-To build and deploy the app, you can run the commands below, this will place all files needed for deployment into the `/dist/sentinel2explorer` directory and publish to gh-pages.
+To build and deploy the app, merge the branch into master and push the changes then run the commands below, this will place all files needed for deployment into the `/dist/sentinel2explorer` directory and publish to gh-pages.
 ```sh
 npm run build:sentinel2
 npx gh-pages -d dist/sentinel2explorer
