@@ -35,24 +35,33 @@ export const fetchNDVITimeSeries = async (
     startDate: string,
     endDate: string
 ): Promise<NDVIDataPoint[]> => {
-    const url = new URL(NDVI_TIMESERIES_ENDPOINT);
-    url.searchParams.append('lat', lat.toFixed(6));
-    url.searchParams.append('lon', lon.toFixed(6));
-    url.searchParams.append('start', startDate);
-    url.searchParams.append('end', endDate);
-
-    const response = await fetch(url.toString());
+    const response = await fetch(NDVI_TIMESERIES_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            latitude: parseFloat(lat.toFixed(6)),
+            longitude: parseFloat(lon.toFixed(6)),
+            start: startDate,
+            end: endDate,
+        }),
+    });
 
     if (!response.ok) {
+        let detail = '';
+        try {
+            detail = await response.text();
+        } catch (_) {
+            // ignore
+        }
         throw new Error(
-            `NDVI time series request failed: ${response.status} ${response.statusText}`
+            `NDVI time series request failed: ${response.status} ${response.statusText}${detail ? ` — ${detail}` : ''}`
         );
     }
 
     const raw = await response.json();
 
     // Normalise to NDVIDataPoint[] regardless of response envelope
-    const items: unknown[] = Array.isArray(raw) ? raw : raw?.data ?? raw?.results ?? [];
+    const items: unknown[] = Array.isArray(raw) ? raw : raw?.timeseries ?? raw?.data ?? raw?.results ?? [];
 
     return items.map((item: any) => ({
         date: item.date ?? item.timestamp ?? item.time ?? '',
@@ -61,17 +70,21 @@ export const fetchNDVITimeSeries = async (
 };
 
 /**
- * Returns the default start date (5 years ago) as a YYYY-MM-DD string.
+ * Returns the default start date (2 years ago) as a YYYY-MM-DD string.
  */
 export const getDefaultStartDate = (): string => {
     const d = new Date();
-    d.setFullYear(d.getFullYear() - 5);
+    d.setFullYear(d.getFullYear() - 2);
     return d.toISOString().split('T')[0];
 };
 
 /**
- * Returns today's date as a YYYY-MM-DD string.
+ * Returns yesterday's date as a YYYY-MM-DD string.
+ * Using yesterday avoids 400 errors from APIs that reject future or same-day end dates
+ * due to satellite data processing delays.
  */
 export const getDefaultEndDate = (): string => {
-    return new Date().toISOString().split('T')[0];
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().split('T')[0];
 };
