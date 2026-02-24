@@ -13,5 +13,14 @@
  * limitations under the License.
  */
 
-export const NDVI_TIMESERIES_ENDPOINT =
-    'https://europe-west6-restor-gis.cloudfunctions.net/ndvi-timeseries';
+const isLocalDev =
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+/**
+ * When running locally the request goes to the local server on 127.0.0.1.
+ * In production it hits the Cloud Function.
+ */
+export const NDVI_TIMESERIES_ENDPOINT = isLocalDev
+    ? 'http://127.0.0.1:8000'
+    : 'https://europe-west6-restor-gis.cloudfunctions.net/ndvi-timeseries';

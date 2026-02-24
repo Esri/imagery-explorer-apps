@@ -15,10 +15,12 @@
 
 import { NDVI_TIMESERIES_ENDPOINT } from './config';
 
+export type IndexType = 'ndvi' | 'evi' | 'nbr';
+
 export type NDVIDataPoint = {
     /** ISO date string, e.g. "2023-06-15" */
     date: string;
-    /** NDVI value, typically in range [-1, 1] */
+    /** Index value (NDVI, EVI, or NBR) */
     ndvi: number;
 };
 
@@ -33,7 +35,8 @@ export const fetchNDVITimeSeries = async (
     lat: number,
     lon: number,
     startDate: string,
-    endDate: string
+    endDate: string,
+    index: IndexType = 'ndvi'
 ): Promise<NDVIDataPoint[]> => {
     const response = await fetch(NDVI_TIMESERIES_ENDPOINT, {
         method: 'POST',
@@ -41,8 +44,9 @@ export const fetchNDVITimeSeries = async (
         body: JSON.stringify({
             latitude: parseFloat(lat.toFixed(6)),
             longitude: parseFloat(lon.toFixed(6)),
-            start: startDate,
-            end: endDate,
+            start_date: startDate,
+            end_date: endDate,
+            index,
         }),
     });
 
@@ -65,7 +69,7 @@ export const fetchNDVITimeSeries = async (
 
     return items.map((item: any) => ({
         date: item.date ?? item.timestamp ?? item.time ?? '',
-        ndvi: Number(item.ndvi ?? item.value ?? item.ndvi_value ?? 0),
+        ndvi: Number(item.index ?? item.ndvi ?? item.value ?? item.ndvi_value ?? 0),
     }));
 };
 

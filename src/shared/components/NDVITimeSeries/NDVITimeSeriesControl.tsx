@@ -13,10 +13,17 @@
  * limitations under the License.
  */
 
-import React, { FC, useState, useEffect, useRef, useCallback } from 'react';
+import React, { FC, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import MapView from '@arcgis/core/views/MapView';
+import Graphic from '@arcgis/core/Graphic';
+import Point from '@arcgis/core/geometry/Point';
+import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import SimpleMarkerSymbol from '@arcgis/core/symbols/SimpleMarkerSymbol';
 import { LineChartBasic } from '@vannizhang/react-d3-charts';
-import { LineChartDataItem } from '@vannizhang/react-d3-charts/dist/LineChart/types';
+import {
+    LineChartDataItem,
+    VerticalReferenceLineData,
+} from '@vannizhang/react-d3-charts/dist/LineChart/types';
 import { MapActionButton } from '@shared/components/MapActionButton/MapActionButton';
 import { CalciteIcon } from '@esri/calcite-components-react';
 import {
@@ -24,27 +31,105 @@ import {
     getDefaultStartDate,
     getDefaultEndDate,
     NDVIDataPoint,
+    IndexType,
 } from '@shared/services/ndvi-timeseries/helpers';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
-type ClickedLocation = {
-    lat: number;
-    lon: number;
-};
+// ── Types ─────────────────────────────────────────────────────────────────────
 
-type Props = {
-    mapView?: MapView;
-};
+type ClickedLocation = { lat: number; lon: number };
 
+/** How raw data is aggregated for display. 'raw' shows every observation. */
+type AggMode = 'raw' | 'mean' | 'min' | 'max';
+
+type Props = { mapView?: MapView };
+
+// ── Constants ─────────────────────────────────────────────────────────────────
+
+const MIN_PANEL_WIDTH = 360;
+const MAX_PANEL_WIDTH = 900;
+const DEFAULT_PANEL_WIDTH = 480;
+const MIN_CHART_HEIGHT = 100;
+const MAX_CHART_HEIGHT = 600;
+const DEFAULT_CHART_HEIGHT = 200;
+
+/** Pixels-per-month threshold above which month labels are shown on the x-axis. */
+const MONTH_LABEL_THRESHOLD_PX = 22;
+
+/** Chart left+right margins (determines inner drawing width from panel width). */
+const CHART_MARGIN_H = 60; // left 45 + right 15
+
+// ── Pure data helpers ─────────────────────────────────────────────────────────
+
+/** Convert raw NDVI data to chart items. No clamping — y-axis domain handles display range. */
 const ndviToChartData = (data: NDVIDataPoint[]): LineChartDataItem[] =>
     data
         .filter((d) => d.date)
         .map((d) => ({
             x: new Date(d.date).getTime(),
-            y: Math.min(1, Math.max(-0.2, d.ndvi)),
+            y: d.ndvi,
             tooltip: `${d.date}: ${d.ndvi.toFixed(3)}`,
         }))
         .sort((a, b) => a.x - b.x);
+
+/** Short month names for tooltip labels. */
+const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/**
+ * Aggregate raw NDVI data by calendar month (UTC).
+ * Each output point is placed at the 15th of the month.
+ */
+const aggregateByMonth = (
+    data: NDVIDataPoint[],
+    mode: 'mean' | 'min' | 'max'
+): LineChartDataItem[] => {
+    const buckets = new Map<string, { year: number; month: number; vals: number[] }>();
+
+    for (const d of data) {
+        if (!d.date) continue;
+        const dt = new Date(d.date);
+        const year = dt.getUTCFullYear();
+        const month = dt.getUTCMonth();
+        const key = `${year}-${month}`;
+        if (!buckets.has(key)) buckets.set(key, { year, month, vals: [] });
+        buckets.get(key)!.vals.push(d.ndvi);
+    }
+
+    const points: LineChartDataItem[] = [];
+    for (const { year, month, vals } of buckets.values()) {
+        const x = Date.UTC(year, month, 15);
+        const y =
+            mode === 'mean'
+                ? vals.reduce((a, b) => a + b, 0) / vals.length
+                : mode === 'max'
+                ? Math.max(...vals)
+                : Math.min(...vals);
+        points.push({
+            x,
+            y,
+            tooltip: `${MONTH_ABBR[month]} ${year}: ${y.toFixed(3)} (n=${vals.length})`,
+        });
+    }
+
+    return points.sort((a, b) => a.x - b.x);
+};
+
+/**
+ * Single-pass weighted 3-point smoother [0.25, 0.5, 0.25].
+ * End-points are left unchanged.
+ */
+const smoothLine = (data: LineChartDataItem[]): LineChartDataItem[] => {
+    if (data.length < 3) return data;
+    return data.map((pt, i) => {
+        if (i === 0 || i === data.length - 1) return pt;
+        return {
+            ...pt,
+            y: 0.25 * data[i - 1].y + 0.5 * pt.y + 0.25 * data[i + 1].y,
+        };
+    });
+};
+
+// ── Component ─────────────────────────────────────────────────────────────────
 
 export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
     const [isActive, setIsActive] = useState(false);
@@ -54,27 +139,57 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
     const [startDate, setStartDate] = useState(getDefaultStartDate);
     const [endDate, setEndDate] = useState(getDefaultEndDate);
     const [error, setError] = useState<string | null>(null);
+    const [aggMode, setAggMode] = useState<AggMode>('raw');
+    const [indexType, setIndexType] = useState<IndexType>('ndvi');
+    const [panelWidth, setPanelWidth] = useState(DEFAULT_PANEL_WIDTH);
+    const [chartHeight, setChartHeight] = useState(DEFAULT_CHART_HEIGHT);
 
     const clickHandlerRef = useRef<__esri.Handle | null>(null);
     const abortControllerRef = useRef<AbortController | null>(null);
+    const graphicsLayerRef = useRef<GraphicsLayer | null>(null);
+
+    // Stable ref so resize callbacks never need to be re-created when size changes.
+    const sizeRef = useRef({ width: DEFAULT_PANEL_WIDTH, height: DEFAULT_CHART_HEIGHT });
+    sizeRef.current = { width: panelWidth, height: chartHeight };
+
+    // ── Map marker ────────────────────────────────────────────────────────────
+
+    const showPointOnMap = useCallback(
+        (lat: number, lon: number) => {
+            if (!mapView) return;
+            if (!graphicsLayerRef.current) {
+                graphicsLayerRef.current = new GraphicsLayer({ listMode: 'hide' });
+                mapView.map.add(graphicsLayerRef.current);
+            }
+            graphicsLayerRef.current.removeAll();
+            graphicsLayerRef.current.add(
+                new Graphic({
+                    geometry: new Point({ latitude: lat, longitude: lon }),
+                    symbol: new SimpleMarkerSymbol({
+                        style: 'circle',
+                        color: [5, 203, 99, 220],
+                        size: 12,
+                        outline: { color: [255, 255, 255, 200], width: 1.5 },
+                    }),
+                })
+            );
+        },
+        [mapView]
+    );
+
+    // ── Data fetching ─────────────────────────────────────────────────────────
 
     const fetchData = useCallback(
-        async (lat: number, lon: number, start: string, end: string) => {
-            // Cancel any in-flight request
-            if (abortControllerRef.current) {
-                abortControllerRef.current.abort();
-            }
+        async (lat: number, lon: number, start: string, end: string, index: IndexType = 'ndvi') => {
+            if (abortControllerRef.current) abortControllerRef.current.abort();
             abortControllerRef.current = new AbortController();
-
             setIsLoading(true);
             setError(null);
-
             try {
-                const data = await fetchNDVITimeSeries(lat, lon, start, end);
+                const data = await fetchNDVITimeSeries(lat, lon, start, end, index);
                 setNdviData(data);
-                if (data.length === 0) {
+                if (data.length === 0)
                     setError('No data returned for this location and date range.');
-                }
             } catch (err: any) {
                 if (err.name !== 'AbortError') {
                     console.error('NDVI fetch error:', err);
@@ -87,43 +202,139 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
         []
     );
 
-    // Set up / tear down map click handler
+    // ── Map click handler ─────────────────────────────────────────────────────
+
     useEffect(() => {
         if (!mapView || !isActive) {
-            if (clickHandlerRef.current) {
-                clickHandlerRef.current.remove();
-                clickHandlerRef.current = null;
-            }
+            clickHandlerRef.current?.remove();
+            clickHandlerRef.current = null;
             return;
         }
-
         clickHandlerRef.current = mapView.on('click', (event) => {
             event.stopPropagation();
             const { latitude, longitude } = event.mapPoint;
             const lat = Math.round(latitude * 1e6) / 1e6;
             const lon = Math.round(longitude * 1e6) / 1e6;
             setLocation({ lat, lon });
-            fetchData(lat, lon, startDate, endDate);
+            showPointOnMap(lat, lon);
+            fetchData(lat, lon, startDate, endDate, indexType);
         });
-
         return () => {
-            if (clickHandlerRef.current) {
-                clickHandlerRef.current.remove();
-                clickHandlerRef.current = null;
-            }
+            clickHandlerRef.current?.remove();
+            clickHandlerRef.current = null;
         };
-    }, [mapView, isActive, startDate, endDate, fetchData]);
+    }, [mapView, isActive, startDate, endDate, indexType, fetchData, showPointOnMap]);
 
-    // Close panel and reset when deactivated
+    // ── Clean up on deactivate ────────────────────────────────────────────────
+
     useEffect(() => {
         if (!isActive) {
+            if (graphicsLayerRef.current) {
+                graphicsLayerRef.current.removeAll();
+                if (mapView) mapView.map.remove(graphicsLayerRef.current);
+                graphicsLayerRef.current = null;
+            }
             setLocation(null);
             setNdviData([]);
             setError(null);
         }
-    }, [isActive]);
+    }, [isActive, mapView]);
 
-    const chartData: LineChartDataItem[] = ndviToChartData(ndviData);
+    // ── Re-fetch when index type changes (if a location is already loaded) ────
+    const prevIndexRef = useRef<IndexType>(indexType);
+    useEffect(() => {
+        if (prevIndexRef.current === indexType) return;
+        prevIndexRef.current = indexType;
+        if (location && isActive) {
+            fetchData(location.lat, location.lon, startDate, endDate, indexType);
+        }
+    }, [indexType, location, isActive, startDate, endDate, fetchData]);
+
+    // ── Panel resize ──────────────────────────────────────────────────────────
+
+    const startResize = useCallback(
+        (type: 'right' | 'corner') => (e: React.MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startW = sizeRef.current.width;
+            const startH = sizeRef.current.height;
+
+            const onMove = (ev: MouseEvent) => {
+                if (type === 'right' || type === 'corner') {
+                    setPanelWidth(
+                        Math.max(MIN_PANEL_WIDTH, Math.min(MAX_PANEL_WIDTH, startW + ev.clientX - startX))
+                    );
+                }
+                if (type === 'corner') {
+                    setChartHeight(
+                        Math.max(MIN_CHART_HEIGHT, Math.min(MAX_CHART_HEIGHT, startH + ev.clientY - startY))
+                    );
+                }
+            };
+            const onUp = () => {
+                document.body.style.userSelect = '';
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onUp);
+            };
+            document.body.style.userSelect = 'none';
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+        },
+        [] // stable — reads size via sizeRef
+    );
+
+    // ── Derived chart data ────────────────────────────────────────────────────
+
+    const chartData = useMemo<LineChartDataItem[]>(() => {
+        if (ndviData.length === 0) return [];
+        if (aggMode === 'raw') return ndviToChartData(ndviData);
+        return smoothLine(aggregateByMonth(ndviData, aggMode));
+    }, [ndviData, aggMode]);
+
+    // Dynamic y-axis — extend below -0.2 for water/negative NDVI land covers.
+    const yMin = useMemo(() => {
+        if (ndviData.length === 0) return -0.2;
+        const dataMin = Math.min(...ndviData.map((d) => d.ndvi));
+        return Math.min(-0.2, Math.floor(dataMin * 10) / 10);
+    }, [ndviData]);
+
+    const yDomain: [number, number] = [yMin, 1];
+
+    // Year-boundary vertical reference lines (Jan 1 of each year in range).
+    const verticalReferenceLines = useMemo<VerticalReferenceLineData[] | undefined>(() => {
+        if (chartData.length < 2) return undefined;
+        const minYear = new Date(chartData[0].x).getUTCFullYear();
+        const maxYear = new Date(chartData[chartData.length - 1].x).getUTCFullYear();
+        const lines: VerticalReferenceLineData[] = [];
+        for (let yr = minYear + 1; yr <= maxYear; yr++) {
+            lines.push({ x: Date.UTC(yr, 0, 1), tooltip: String(yr) });
+        }
+        return lines.length > 0 ? lines : undefined;
+    }, [chartData]);
+
+    // Adaptive x-axis label: show "MMM yyyy" when the panel is wide enough to fit month labels.
+    const showMonthLabels = useMemo(() => {
+        if (chartData.length < 2) return false;
+        const spanMs = chartData[chartData.length - 1].x - chartData[0].x;
+        const spanMonths = spanMs / (1000 * 60 * 60 * 24 * 30.44);
+        const innerWidth = panelWidth - CHART_MARGIN_H;
+        return spanMonths > 0 && innerWidth / spanMonths >= MONTH_LABEL_THRESHOLD_PX;
+    }, [chartData, panelWidth]);
+
+    const xTickCount = showMonthLabels
+        ? Math.min(14, Math.round((chartData[chartData.length - 1]?.x - chartData[0]?.x) / (1000 * 60 * 60 * 24 * 30.44)))
+        : 5;
+
+    // ── Render ────────────────────────────────────────────────────────────────
+
+    const aggModes: { key: AggMode; label: string }[] = [
+        { key: 'raw',  label: 'Raw'  },
+        { key: 'mean', label: 'Mean' },
+        { key: 'min',  label: 'Min'  },
+        { key: 'max',  label: 'Max'  },
+    ];
 
     return (
         <>
@@ -144,7 +355,7 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                     style={{
                         top: '80px',
                         left: '80px',
-                        width: '480px',
+                        width: panelWidth,
                         background: 'var(--custom-background-95, rgba(30,30,30,0.97))',
                         border: '1px solid var(--custom-light-blue-25)',
                         borderRadius: '4px',
@@ -160,7 +371,7 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                             className="text-xs font-semibold uppercase tracking-wider"
                             style={{ color: 'var(--custom-light-blue)' }}
                         >
-                            NDVI Time Series
+                            {indexType.toUpperCase()} Time Series
                         </span>
                         <button
                             onClick={() => setIsActive(false)}
@@ -219,7 +430,7 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                         {location && (
                             <button
                                 onClick={() =>
-                                    fetchData(location.lat, location.lon, startDate, endDate)
+                                    fetchData(location.lat, location.lon, startDate, endDate, indexType)
                                 }
                                 disabled={isLoading}
                                 title="Refresh with new dates"
@@ -235,6 +446,72 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                         )}
                     </div>
 
+                    {/* Index selector: NDVI / EVI / NBR */}
+                    <div
+                        className="flex items-center gap-2 px-3 pb-2"
+                        style={{ borderBottom: '1px solid var(--custom-light-blue-25)' }}
+                    >
+                        <span
+                            className="text-xs"
+                            style={{ color: 'var(--custom-light-blue-50)', minWidth: 36 }}
+                        >
+                            Index
+                        </span>
+                        {(['ndvi', 'evi', 'nbr'] as IndexType[]).map((idx) => {
+                            const active = indexType === idx;
+                            return (
+                                <button
+                                    key={idx}
+                                    onClick={() => setIndexType(idx)}
+                                    style={{
+                                        fontSize: 11,
+                                        padding: '1px 10px',
+                                        borderRadius: 10,
+                                        border: active
+                                            ? '1px solid #05CB63'
+                                            : '1px solid var(--custom-light-blue-25)',
+                                        background: active ? 'rgba(5,203,99,0.15)' : 'transparent',
+                                        color: active ? '#05CB63' : 'var(--custom-light-blue-50)',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.15s',
+                                    }}
+                                >
+                                    {idx.toUpperCase()}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* Aggregation mode toggles */}
+                    <div
+                        className="flex items-center gap-2 px-3 pb-2"
+                        style={{ borderBottom: '1px solid var(--custom-light-blue-25)' }}
+                    >
+                        {aggModes.map(({ key, label }) => {
+                            const active = aggMode === key;
+                            return (
+                                <button
+                                    key={key}
+                                    onClick={() => setAggMode(key)}
+                                    style={{
+                                        fontSize: 11,
+                                        padding: '1px 10px',
+                                        borderRadius: 10,
+                                        border: active
+                                            ? '1px solid #05CB63'
+                                            : '1px solid var(--custom-light-blue-25)',
+                                        background: active ? 'rgba(5,203,99,0.15)' : 'transparent',
+                                        color: active ? '#05CB63' : 'var(--custom-light-blue-50)',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.15s',
+                                    }}
+                                >
+                                    {label}
+                                </button>
+                            );
+                        })}
+                    </div>
+
                     {/* Body */}
                     <div className="px-3 pb-3">
                         {!location && (
@@ -248,8 +525,9 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
 
                         {location && (
                             <>
+                                {/* Clicked coordinate */}
                                 <div
-                                    className="text-xs mb-2"
+                                    className="text-xs mb-2 mt-1"
                                     style={{ color: 'var(--custom-light-blue-50)' }}
                                 >
                                     {location.lat.toFixed(4)}°{location.lat >= 0 ? 'N' : 'S'},{' '}
@@ -277,20 +555,14 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                                 {!isLoading && !error && chartData.length > 0 && (
                                     <div
                                         style={{
-                                            height: 200,
-                                            '--axis-tick-line-color':
-                                                'var(--custom-light-blue-50)',
-                                            '--axis-tick-text-color':
-                                                'var(--custom-light-blue-50)',
-                                            '--crosshair-reference-line-color':
-                                                'var(--custom-light-blue-50)',
+                                            height: chartHeight,
+                                            '--axis-tick-line-color': 'var(--custom-light-blue-50)',
+                                            '--axis-tick-text-color': 'var(--custom-light-blue-50)',
+                                            '--crosshair-reference-line-color': 'var(--custom-light-blue-50)',
                                             '--tooltip-text-font-size': '.725rem',
-                                            '--tooltip-text-color':
-                                                'var(--custom-light-blue-70)',
-                                            '--tooltip-background-color':
-                                                'var(--custom-background-95)',
-                                            '--tooltip-border-color':
-                                                'var(--custom-light-blue-50)',
+                                            '--tooltip-text-color': 'var(--custom-light-blue-70)',
+                                            '--tooltip-background-color': 'var(--custom-background-95)',
+                                            '--tooltip-border-color': 'var(--custom-light-blue-50)',
                                         } as React.CSSProperties}
                                     >
                                         <LineChartBasic
@@ -298,24 +570,63 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                                             showTooltip
                                             stroke="#05CB63"
                                             strokeWidth={1.5}
-                                            margin={{
-                                                bottom: 30,
-                                                left: 45,
-                                                right: 15,
-                                                top: 10,
-                                            }}
-                                            yScaleOptions={{ domain: [-0.2, 1] }}
+                                            margin={{ bottom: 30, left: 45, right: 15, top: 10 }}
+                                            yScaleOptions={{ domain: yDomain }}
                                             xScaleOptions={{ useTimeScale: true }}
                                             bottomAxisOptions={{
-                                                numberOfTicks: 5,
+                                                numberOfTicks: xTickCount,
                                                 tickFormatFunction: (val: any) =>
-                                                    formatInUTCTimeZone(val, 'yyyy'),
+                                                    formatInUTCTimeZone(
+                                                        val,
+                                                        showMonthLabels ? 'MMM yyyy' : 'yyyy'
+                                                    ),
                                             }}
+                                            verticalReferenceLines={verticalReferenceLines}
                                         />
                                     </div>
                                 )}
                             </>
                         )}
+                    </div>
+
+                    {/* Right-edge drag handle */}
+                    <div
+                        onMouseDown={startResize('right')}
+                        title="Drag to resize panel width"
+                        style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: 6,
+                            cursor: 'ew-resize',
+                        }}
+                    />
+
+                    {/* Bottom-right corner resize (width + height) */}
+                    <div
+                        onMouseDown={startResize('corner')}
+                        title="Drag to resize"
+                        style={{
+                            position: 'absolute',
+                            right: 0,
+                            bottom: 0,
+                            width: 16,
+                            height: 16,
+                            cursor: 'nwse-resize',
+                            display: 'flex',
+                            alignItems: 'flex-end',
+                            justifyContent: 'flex-end',
+                            paddingRight: 2,
+                            paddingBottom: 2,
+                        }}
+                    >
+                        {/* Visual grip dots */}
+                        <svg width="10" height="10" viewBox="0 0 10 10" style={{ opacity: 0.35 }}>
+                            <circle cx="8" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="5" cy="8" r="1.2" fill="currentColor" />
+                            <circle cx="8" cy="5" r="1.2" fill="currentColor" />
+                        </svg>
                     </div>
                 </div>
             )}
