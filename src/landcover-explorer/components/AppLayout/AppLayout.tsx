@@ -43,11 +43,7 @@ const AppLayout = () => {
             {/* <AppTitle /> */}
             <About />
             <Sentinel2LandCoverSaveWebMap />
-            <AppHeader
-                title={t('esri_land_cover_explorer_title', {
-                    ns: APP_NAME,
-                })}
-            />
+            <AppHeader />
         </ErrorBoundary>
     );
 };

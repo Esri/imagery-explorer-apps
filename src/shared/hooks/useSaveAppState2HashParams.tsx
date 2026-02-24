@@ -33,6 +33,7 @@ import { selectMaskToolState } from '@shared/store/MaskTool/selectors';
 import {
     selectAnimationSpeed,
     selectAnimationStatus,
+    selectHideBottomPanel,
     selectShowSavePanel,
 } from '@shared/store/UI/selectors';
 import {
@@ -95,6 +96,8 @@ export const useSaveAppState2HashParams = () => {
     const autoSwipeStatus = useAppSelector(selectAutoSwipeStatus);
 
     const autoSwipeSpeed = useAppSelector(selectAutoSwipeSpeed);
+
+    const hideBottomPanel = useAppSelector(selectHideBottomPanel);
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -204,4 +207,8 @@ export const useSaveAppState2HashParams = () => {
             updateHashParams('autoSwipeSpeed', autoSwipeSpeed.toString());
         }
     }, [autoSwipeSpeed, autoSwipeStatus]);
+
+    useEffect(() => {
+        updateHashParams('hideBottomPanel', hideBottomPanel ? 'true' : null);
+    }, [hideBottomPanel]);
 };

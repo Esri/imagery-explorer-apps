@@ -58,6 +58,7 @@ import { useTranslation } from 'react-i18next';
 import { ReferenceLayersControl } from '@shared/components/ReferenceLayersControl';
 import { WEB_MAP_ID } from '@shared/constants/map';
 import ReferenceLayers from '@shared/components/MapView/ReferenceLayers';
+import { AnimationStartButtonOnMap4LandcoverExplorer } from '../AnimationAndExportControls/AnimationStartButtonOnMap';
 
 type MapViewContainerProps = {
     attribution: string;
@@ -198,6 +199,8 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                 nameOfSatelliteImageryLayer={nameOfSatelliteImageryLayer}
                 isSwipeWidgetVisible={isSwipeWidgetVisible}
             />
+
+            <AnimationStartButtonOnMap4LandcoverExplorer />
         </div>
     );
 };

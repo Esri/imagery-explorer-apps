@@ -25,6 +25,7 @@ import { selectShouldShowAboutThisApp } from '@shared/store/UI/selectors';
 import { About } from '@shared/components/About';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { Sentinel2ImageryTermsOfUse } from '@shared/components/About/Sentinel2ImageryTermsOfUse';
 
 const AboutLandcoverExplorer = () => {
     // const dispatch = useAppDispatch();
@@ -83,7 +84,7 @@ const AboutLandcoverExplorer = () => {
 
                     <p>{t('about_app_paragraph_2', { ns: APP_NAME })}</p>
 
-                    <ul className="list-disc list-inside mt-2">
+                    <ul className="list-disc list-inside mt-2 mb-4">
                         <li>{t('about_app_capability_1', { ns: APP_NAME })}</li>
                         <li>{t('about_app_capability_2', { ns: APP_NAME })}</li>
                         <li>{t('about_app_capability_3', { ns: APP_NAME })}</li>
@@ -92,6 +93,12 @@ const AboutLandcoverExplorer = () => {
                         <li>{t('about_app_capability_6', { ns: APP_NAME })}</li>
                         <li>{t('about_app_capability_7', { ns: APP_NAME })}</li>
                     </ul>
+
+                    <p
+                        dangerouslySetInnerHTML={{
+                            __html: t('about_github_repo'),
+                        }}
+                    ></p>
                 </div>
 
                 <div className="mb-4 font-light">
@@ -101,40 +108,51 @@ const AboutLandcoverExplorer = () => {
 
                     <div className="mb-3">
                         <p
+                            className="mb-2 font-bold"
                             dangerouslySetInnerHTML={{
-                                __html: t('lulc_attribution_title', {
+                                __html: t('lulc_terms_of_use_section_title', {
                                     ns: APP_NAME,
                                 }),
                             }}
                         ></p>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t('lulc_attribution_license', {
+
+                        <div className="pl-8">
+                            <p className="mb-1 font-bold">
+                                {t('lulc_source_section_title', {
                                     ns: APP_NAME,
-                                }),
-                            }}
-                        ></p>
+                                })}
+                            </p>
+                            <p
+                                className="mb-2"
+                                dangerouslySetInnerHTML={{
+                                    __html: t('lulc_source_section_content', {
+                                        ns: APP_NAME,
+                                    }),
+                                }}
+                            ></p>
+                            <p
+                                className="mb-1 font-bold"
+                                dangerouslySetInnerHTML={{
+                                    __html: t('lulc_service_section_title', {
+                                        ns: APP_NAME,
+                                    }),
+                                }}
+                            ></p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: t('esri_work_terms_of_use'),
+                                }}
+                            ></p>
+                        </div>
+                    </div>
+
+                    <div className="mb-3">
+                        <Sentinel2ImageryTermsOfUse />
                     </div>
 
                     <div className="mb-3">
                         <p
-                            dangerouslySetInnerHTML={{
-                                __html: t('imagery_attribution_title', {
-                                    ns: APP_NAME,
-                                }),
-                            }}
-                        ></p>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: t('imagery_attribution_license', {
-                                    ns: APP_NAME,
-                                }),
-                            }}
-                        ></p>
-                    </div>
-
-                    <div className="mb-3">
-                        <p
+                            className="font-bold"
                             dangerouslySetInnerHTML={{
                                 __html: t('app_attribution_title', {
                                     ns: APP_NAME,
@@ -143,14 +161,11 @@ const AboutLandcoverExplorer = () => {
                         ></p>
                         <p
                             dangerouslySetInnerHTML={{
-                                __html: t('app_attribution_license', {
-                                    ns: APP_NAME,
-                                }),
+                                __html: t('esri_work_terms_of_use', {}),
                             }}
                         ></p>
-                        <p>
-                            {t('app_attribution_disclaimer', { ns: APP_NAME })}
-                        </p>
+                        <br />
+                        <p>{t('app_attribution_disclaimer')}</p>
                     </div>
                 </div>
             </div>

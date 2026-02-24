@@ -89,10 +89,6 @@ const Layout = () => {
 
     const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
-    const appTitle = t('esri_sentinel_2_explorer', {
-        ns: APP_NAME,
-    });
-
     /**
      * This custom hook gets invoked whenever the acquisition year, map center
      * changes, it will dispatch the query that finds the available sentinel-2 scenes.
@@ -104,7 +100,7 @@ const Layout = () => {
     if (IS_MOBILE_DEVICE) {
         return (
             <>
-                <AppHeader title={appTitle} />
+                <AppHeader />
                 <BottomPanel>
                     <div className="mx-auto">
                         <Sentinel2DynamicModeInfo />
@@ -118,7 +114,7 @@ const Layout = () => {
 
     return (
         <>
-            <AppHeader title={appTitle} />
+            <AppHeader />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
                     <ModeSelector />

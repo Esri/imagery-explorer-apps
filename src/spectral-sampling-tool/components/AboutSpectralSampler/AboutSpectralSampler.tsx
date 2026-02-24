@@ -1,4 +1,6 @@
 import { About } from '@shared/components/About';
+import { LandsatImageryTermsOfUse } from '@shared/components/About/LandsatImageryTermsOfUse';
+import { Sentinel2ImageryTermsOfUse } from '@shared/components/About/Sentinel2ImageryTermsOfUse';
 import { APP_NAME } from '@shared/config';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -113,7 +115,7 @@ export const AboutSpectralSampler = () => {
                     </h3>
 
                     <div className="mb-4">
-                        <p>
+                        {/* <p>
                             <b className="font-bold">
                                 {t('terms_of_use_service_landsat_header', {
                                     ns: APP_NAME,
@@ -126,11 +128,12 @@ export const AboutSpectralSampler = () => {
                                     ns: APP_NAME,
                                 }),
                             }}
-                        ></p>
+                        ></p> */}
+                        <LandsatImageryTermsOfUse />
                     </div>
 
                     <div className="mb-4">
-                        <p className="font-bold">
+                        {/* <p className="font-bold">
                             {t('terms_of_use_service_sentinel2_header', {
                                 ns: APP_NAME,
                             })}
@@ -144,10 +147,11 @@ export const AboutSpectralSampler = () => {
                                     }
                                 ),
                             }}
-                        ></p>
+                        ></p> */}
+                        <Sentinel2ImageryTermsOfUse />
                     </div>
 
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                         <p className="font-bold">
                             {t('terms_of_use_service_esri_header', {
                                 ns: APP_NAME,
@@ -160,7 +164,7 @@ export const AboutSpectralSampler = () => {
                                 }),
                             }}
                         ></p>
-                    </div>
+                    </div> */}
 
                     <div className="mb-4">
                         <p className="font-bold mb-1">
@@ -170,15 +174,13 @@ export const AboutSpectralSampler = () => {
                         </p>
                         <p
                             dangerouslySetInnerHTML={{
-                                __html: t('terms_of_use_app_desc', {
-                                    ns: APP_NAME,
-                                }),
+                                __html: t('esri_work_terms_of_use'),
                             }}
                         ></p>
+                        <br />
+                        <p>{t('app_attribution_disclaimer')}</p>
                     </div>
                 </div>
-
-                <p>{t('accuracy_disclaimer', { ns: APP_NAME })}</p>
             </div>
         </About>
     );

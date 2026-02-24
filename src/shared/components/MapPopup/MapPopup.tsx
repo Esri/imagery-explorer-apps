@@ -91,10 +91,12 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
             return;
         }
 
-        // no need to show pop-up when using Trend or Spectral Profile Tool
+        // no need to show pop-up when using the following analysis tools: 'temporal profile', 'spectral profile', 'urban heat island'
         if (
             mode === 'analysis' &&
-            (analysisTool === 'trend' || analysisTool === 'spectral')
+            (analysisTool === 'trend' ||
+                analysisTool === 'spectral' ||
+                analysisTool === 'urban heat island')
         ) {
             return;
         }

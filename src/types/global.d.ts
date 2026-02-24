@@ -116,37 +116,7 @@ declare const ENV_NLCD_LANDCOVER_SERVICE_URL: string;
 declare const ENV_WEB_MAP_ID: string;
 
 /**
- * Firebase API Key for Google SSO authentication.
- * Get this value from Firebase Console > Project Settings > General > Your apps > SDK setup and configuration.
+ * Application ID for the LANDSAT SURFACE TEMP EXPLORER app.
+ * Required for authentication and features such running SIHUI analysis.
  */
-declare const ENV_FIREBASE_API_KEY: string;
-
-/**
- * Firebase Auth Domain for Google SSO authentication.
- * Get this value from Firebase Console > Project Settings > General > Your apps > SDK setup and configuration.
- */
-declare const ENV_FIREBASE_AUTH_DOMAIN: string;
-
-/**
- * Firebase Project ID for Google SSO authentication.
- * Get this value from Firebase Console > Project Settings > General > Your apps > SDK setup and configuration.
- */
-declare const ENV_FIREBASE_PROJECT_ID: string;
-
-/**
- * Firebase Storage Bucket for Google SSO authentication.
- * Get this value from Firebase Console > Project Settings > General > Your apps > SDK setup and configuration.
- */
-declare const ENV_FIREBASE_STORAGE_BUCKET: string;
-
-/**
- * Firebase Messaging Sender ID for Google SSO authentication.
- * Get this value from Firebase Console > Project Settings > General > Your apps > SDK setup and configuration.
- */
-declare const ENV_FIREBASE_MESSAGING_SENDER_ID: string;
-
-/**
- * Firebase App ID for Google SSO authentication.
- * Get this value from Firebase Console > Project Settings > General > Your apps > SDK setup and configuration.
- */
-declare const ENV_FIREBASE_APP_ID: string;
+declare const ENV_SUREFACE_TEMP_EXPLORER_APP_ID: string;

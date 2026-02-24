@@ -1,10 +1,17 @@
 import { test, expect, Page } from '@playwright/test';
 import { DEV_SERVER_URL } from '../../base.config';
-import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '../mock-data/mockSentinel2NetworkRequests';
-import { selectDayFromCalendar, formatInUTCTimeZone, formattedDateString2Unixtimestamp, clickOnMap } from '../helpers';
+import {
+    mockSentinel2NetworkRequests,
+    resetMockSentinel2NetworkRequest,
+} from '../mock-data/mockSentinel2NetworkRequests';
+import {
+    selectDayFromCalendar,
+    formatInUTCTimeZone,
+    formattedDateString2Unixtimestamp,
+    clickOnMap,
+} from '../helpers';
 
 test.describe('Sentinel-2 Explorer - Map Popup', () => {
-
     test.setTimeout(60000); // Set timeout to 60 seconds for each test
 
     test('Map Popup in Find a Scene Mode', async ({ page }) => {
@@ -16,24 +23,18 @@ test.describe('Sentinel-2 Explorer - Map Popup', () => {
         await page.goto(FIND_A_SCENE_MODE_URL);
 
         // test the map popup for a specific date
-        await testMapPopup(
-            page, 
-            '2024-01-03',
-        );
+        await testMapPopup(page, '2024-01-03');
 
         // test the map popup for another date
-        await testMapPopup(
-            page, 
-            '2023-08-01',
-        );
+        await testMapPopup(page, '2023-08-01');
 
         // // Uncomment to pause the test for manual inspection
         // await page.pause();
 
         // Reset mocked network requests after the test
         await resetMockSentinel2NetworkRequest(page);
-    })
-})
+    });
+});
 
 /**
  * Tests the map popup functionality for a given date in the Sentinel-2 imagery explorer app.
@@ -51,7 +52,6 @@ test.describe('Sentinel-2 Explorer - Map Popup', () => {
  * @param date - The date string (in 'YYYY-MM-DD' format) to select and test the popup for.
  */
 export const testMapPopup = async (page: Page, date: string) => {
-
     // Select the specified day from the calendar
     await selectDayFromCalendar(page, date);
 
@@ -79,9 +79,12 @@ export const testMapPopup = async (page: Page, date: string) => {
     await clickOnMap(page, 500, 500, true);
 
     // Wait for the identify network request, which populates the popup content
-    const identifyPromise = page.waitForResponse(request =>
-        request.url().includes('Sentinel2L2A/ImageServer/identify') && request.status() === 200, {
-            timeout: 20000 // Wait up to 20 seconds for the response
+    const identifyPromise = page.waitForResponse(
+        (request) =>
+            request.url().includes('Sentinel2L2A/ImageServer/identify') &&
+            request.status() === 200,
+        {
+            timeout: 20000, // Wait up to 20 seconds for the response
         }
     );
     await identifyPromise;
@@ -89,16 +92,16 @@ export const testMapPopup = async (page: Page, date: string) => {
     // Verify the popup is visible
     const popup = page.locator('.esri-popup__main-container');
     await expect(popup).toBeVisible({
-        timeout: 10000 // Wait up to 10 seconds
+        timeout: 10000, // Wait up to 10 seconds
     });
 
     // Verify the popup title contains the formatted date
     const formattedDateLabel = formatInUTCTimeZone(
         formattedDateString2Unixtimestamp(date)
-    )
+    );
 
     expect(popup).toContainText(formattedDateLabel, {
-        timeout: 10000 // Wait up to 10 seconds
+        timeout: 10000, // Wait up to 10 seconds
     });
 
     // Verify the popup content contains the expected spectral indices
@@ -121,10 +124,12 @@ export const testMapPopup = async (page: Page, date: string) => {
     await locationInfo.click();
 
     // Verify the coordinates are copied to clipboard
-    const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+    const clipboardText = await page.evaluate(() =>
+        navigator.clipboard.readText()
+    );
     const coordinatesRegex = /x: -?\d+(\.\d+)? y: -?\d+(\.\d+)?/;
     expect(clipboardText).toMatch(coordinatesRegex);
-}
+};
 
 /**
  * Tests whether a given spectral index value is defined, can be converted to a number,
@@ -139,10 +144,10 @@ export const testMapPopup = async (page: Page, date: string) => {
  * @throws Will throw an assertion error if the value is undefined, not a number,
  *         or outside the valid range.
  */
-export const testSpectralIndex = (spectralIndexValue:string | null) => {
+export const testSpectralIndex = (spectralIndexValue: string | null) => {
     expect(spectralIndexValue).toBeDefined();
     const ndmiNumber = Number(spectralIndexValue);
     expect(ndmiNumber).not.toBeNaN();
     expect(ndmiNumber).toBeGreaterThanOrEqual(-1);
     expect(ndmiNumber).toBeLessThanOrEqual(1);
-}
+};

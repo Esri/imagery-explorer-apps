@@ -1,14 +1,22 @@
 import { test, expect, Page } from '@playwright/test';
 import { DEV_SERVER_URL } from '../../base.config';
-import { mockSentinel2NetworkRequests, resetMockSentinel2NetworkRequest } from '../mock-data/mockSentinel2NetworkRequests';
-import { formatInUTCTimeZone, formattedDateString2Unixtimestamp, selectDayFromCalendar, urlHashContains } from '../helpers';
+import {
+    mockSentinel2NetworkRequests,
+    resetMockSentinel2NetworkRequest,
+} from '../mock-data/mockSentinel2NetworkRequests';
+import {
+    formatInUTCTimeZone,
+    formattedDateString2Unixtimestamp,
+    selectDayFromCalendar,
+    urlHashContains,
+} from '../helpers';
 
 test.describe('Sentinel-2 Explorer - Animate Mode', () => {
-
     const ANIMATE_MODE_URL = `${DEV_SERVER_URL}/#mapCenter=-117.07809%2C34.03876%2C13.516`;
 
-    test('should allow adding and removing animation scenes in Animate Mode', async ({ page }) => {
-
+    test('should allow adding and removing animation scenes in Animate Mode', async ({
+        page,
+    }) => {
         // Set up network mocks and sign in
         await mockSentinel2NetworkRequests(page);
 
@@ -20,7 +28,7 @@ test.describe('Sentinel-2 Explorer - Animate Mode', () => {
         await animateButton.click();
 
         const day1 = '2023-08-01';
-        const day2 = '2024-01-03';  
+        const day2 = '2024-01-03';
         const day3 = '2024-12-18';
 
         // Add animation frames for the specified dates in reverse order.
@@ -48,9 +56,8 @@ test.describe('Sentinel-2 Explorer - Animate Mode', () => {
 
         // Clean up network mocks
         await resetMockSentinel2NetworkRequest(page);
-    })
-
-})
+    });
+});
 
 /**
  * Adds a new animation frame by interacting with the UI.
@@ -64,16 +71,18 @@ test.describe('Sentinel-2 Explorer - Animate Mode', () => {
  * @param acquisitionDate - The date string to select from the calendar for the new animation frame.
  * @returns A promise that resolves when the animation frame has been added and the date selected.
  */
-const addNewAnimationFrame = async (page: Page, acquisitionDate:string) => {
+const addNewAnimationFrame = async (page: Page, acquisitionDate: string) => {
     // Verify the Animate button is visible and clickable
-    const addAnimationFrameButton = page.getByTestId('add-animation-frame-button');
+    const addAnimationFrameButton = page.getByTestId(
+        'add-animation-frame-button'
+    );
     await expect(addAnimationFrameButton).toBeVisible();
     await addAnimationFrameButton.click();
 
-    // select the acquisition date from the calendar 
+    // select the acquisition date from the calendar
     // which will be used for the new animation frame
     await selectDayFromCalendar(page, acquisitionDate);
-}
+};
 
 /**
  * Verifies that an animation frame card displays the correct date and renderer.
@@ -88,11 +97,16 @@ const addNewAnimationFrame = async (page: Page, acquisitionDate:string) => {
  * @param date - The expected acquisition date string for the card, in 'YYYY-MM-DD' format.
  * @param rendererName - The expected renderer name for the card.
  */
-const testAnimationFrameCard = async (page: Page, index: number, date: string, rendererName: string) => {
+const testAnimationFrameCard = async (
+    page: Page,
+    index: number,
+    date: string,
+    rendererName: string
+) => {
     // Verify that the animation frame card is visible
     const card = page.getByTestId(`animation-frame-card-${index}`);
     await expect(card).toBeVisible();
-    
+
     // Verify the card is clickable and can be selected
     await card.click();
     await expect(card).toHaveAttribute('data-selected', 'true');
@@ -108,7 +122,7 @@ const testAnimationFrameCard = async (page: Page, index: number, date: string, r
     await expect(rendererGridCard).toBeVisible();
     await rendererGridCard.click();
     expect(card).toContainText(rendererName);
-}
+};
 
 /**
  * Removes an animation frame card from the page by its index.
@@ -128,16 +142,18 @@ const removeAnimationFrame = async (page: Page, index: number) => {
     const card = page.getByTestId(`animation-frame-card-${index}`);
     await expect(card).toBeVisible();
     await card.click();
-    
+
     // Verify the animation frame card is no longer visible
     await card.hover();
-    const removeButton = card.getByTestId(`remove-animation-frame-button-${index}`);
+    const removeButton = card.getByTestId(
+        `remove-animation-frame-button-${index}`
+    );
     await expect(removeButton).toBeVisible();
     await removeButton.click();
 
     // Verify the card is no longer visible
     await expect(card).not.toBeVisible();
-}
+};
 
 /**
  * Tests the animation controls UI for correct visibility, interactivity, and status transitions.
@@ -164,9 +180,14 @@ const testAnimationControls = async (page: Page) => {
     await playButton.click();
 
     // Loading: Confirm the loading indicator appears and status is 'loading'
-    const loadingIndicator = animationControls.getByTestId('animation-loading-indicator');
+    const loadingIndicator = animationControls.getByTestId(
+        'animation-loading-indicator'
+    );
     await expect(loadingIndicator).toBeVisible();
-    expect(animationControls).toHaveAttribute('data-animation-status', 'loading');
+    expect(animationControls).toHaveAttribute(
+        'data-animation-status',
+        'loading'
+    );
 
     // Playing: Wait for status to become 'playing' after loading
     await expect(animationControls).toHaveAttribute(
@@ -179,17 +200,25 @@ const testAnimationControls = async (page: Page) => {
     const pauseButton = animationControls.getByTestId('pause-animation-button');
     await expect(pauseButton).toBeVisible();
     await pauseButton.click();
-    expect(animationControls).toHaveAttribute('data-animation-status', 'pausing');
+    expect(animationControls).toHaveAttribute(
+        'data-animation-status',
+        'pausing'
+    );
 
     // Resume: Check the resume button is visible, clickable, and returns status to 'playing'
-    const resumeButton = animationControls.getByTestId('resume-animation-button');
+    const resumeButton = animationControls.getByTestId(
+        'resume-animation-button'
+    );
     await expect(resumeButton).toBeVisible();
     await resumeButton.click();
-    expect(animationControls).toHaveAttribute('data-animation-status', 'playing');
+    expect(animationControls).toHaveAttribute(
+        'data-animation-status',
+        'playing'
+    );
 
     // Stop: Ensure the stop button is visible, clickable, and removes the animation status
     const stopButton = animationControls.getByTestId('stop-animation-button');
     await expect(stopButton).toBeVisible();
     await stopButton.click();
     expect(animationControls).not.toHaveAttribute('data-animation-status');
-}
+};
