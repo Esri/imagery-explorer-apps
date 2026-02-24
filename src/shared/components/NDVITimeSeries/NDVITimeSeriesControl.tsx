@@ -482,36 +482,6 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                         })}
                     </div>
 
-                    {/* Aggregation mode toggles */}
-                    <div
-                        className="flex items-center gap-2 px-3 pb-2"
-                        style={{ borderBottom: '1px solid var(--custom-light-blue-25)' }}
-                    >
-                        {aggModes.map(({ key, label }) => {
-                            const active = aggMode === key;
-                            return (
-                                <button
-                                    key={key}
-                                    onClick={() => setAggMode(key)}
-                                    style={{
-                                        fontSize: 11,
-                                        padding: '1px 10px',
-                                        borderRadius: 10,
-                                        border: active
-                                            ? '1px solid #05CB63'
-                                            : '1px solid var(--custom-light-blue-25)',
-                                        background: active ? 'rgba(5,203,99,0.15)' : 'transparent',
-                                        color: active ? '#05CB63' : 'var(--custom-light-blue-50)',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.15s',
-                                    }}
-                                >
-                                    {label}
-                                </button>
-                            );
-                        })}
-                    </div>
-
                     {/* Body */}
                     <div className="px-3 pb-3">
                         {!location && (
@@ -583,6 +553,35 @@ export const NDVITimeSeriesControl: FC<Props> = ({ mapView }) => {
                                             }}
                                             verticalReferenceLines={verticalReferenceLines}
                                         />
+                                    </div>
+                                )}
+
+                                {/* Aggregation mode toggles — below the chart */}
+                                {!isLoading && !error && chartData.length > 0 && (
+                                    <div className="flex items-center gap-2 pt-2">
+                                        {aggModes.map(({ key, label }) => {
+                                            const active = aggMode === key;
+                                            return (
+                                                <button
+                                                    key={key}
+                                                    onClick={() => setAggMode(key)}
+                                                    style={{
+                                                        fontSize: 11,
+                                                        padding: '1px 10px',
+                                                        borderRadius: 10,
+                                                        border: active
+                                                            ? '1px solid #05CB63'
+                                                            : '1px solid var(--custom-light-blue-25)',
+                                                        background: active ? 'rgba(5,203,99,0.15)' : 'transparent',
+                                                        color: active ? '#05CB63' : 'var(--custom-light-blue-50)',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.15s',
+                                                    }}
+                                                >
+                                                    {label}
+                                                </button>
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </>
