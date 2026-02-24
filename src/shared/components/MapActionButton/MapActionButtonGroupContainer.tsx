@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { AddBookmarkButton } from '../AddBookmarkButton/AddBookmarkButton';
 import { BasemapGallery } from '../BasemapGallery';
 import { MapillaryControl } from '../MapillaryControl';
+import { NDVITimeSeriesControl } from '@shared/components/NDVITimeSeries/NDVITimeSeriesControl';
 
 type Props = {
     mapView?: MapView;
@@ -67,6 +68,7 @@ export const MapActionButtonGroupContainer: FC<Props> = ({
 
             <AddBookmarkButton mapView={mapView} />
             <MapillaryControl mapView={mapView} />
+            <NDVITimeSeriesControl mapView={mapView} />
         </MapActionButtonGroup>
     );
 };
