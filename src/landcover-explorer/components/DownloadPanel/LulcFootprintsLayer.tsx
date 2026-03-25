@@ -32,10 +32,8 @@ type Props = {
  * @returns
  */
 const getImageURL = (year: number, imageName: string) => {
-    // PLEASE NOTE: This is a temporary solution until the file name of the 2024
-    // data is fixed. The file name of the 2024 data is not consistent with the
-    // file name of the 2017-2023 data.
-    if (year === 2024) {
+    // Hayden Hoffmeister confirmed on 2026/03/25 that the naming convention for data from 2024 onwards will be different than previous years.
+    if (year >= 2024) {
         return `${LULC_TIMESERIES_STORE}/lc${year}/${imageName}_${year}0101-${year}1231.tif`;
     }
 
