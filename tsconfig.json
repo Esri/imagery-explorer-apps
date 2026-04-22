@@ -17,9 +17,9 @@
         // Significantly improves build speed in large projects
         "skipLibCheck": true,
 
-        // Base directory for resolving non-relative module imports
-        // Required for path aliasing via "paths"
-        "baseUrl": "./",
+        // // Base directory for resolving non-relative module imports
+        // // Required for path aliasing via "paths"
+        // "baseUrl": "./",
 
         // Enforce consistent file name casing in imports
         // Prevents issues when deploying to case-sensitive file systems (e.g., Linux)
@@ -86,7 +86,10 @@
             "@landcover-explorer/*": ["./src/landcover-explorer/*"],
             "@spectral-sampling-tool/*": ["./src/spectral-sampling-tool/*"],
             "@typing/*": ["./src/types/*"]
-        }
+        },
+
+        // Disable all strict type-checking options
+        "strict": false
     },
 
     // Files and directories excluded from compilation
