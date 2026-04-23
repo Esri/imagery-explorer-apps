@@ -17,7 +17,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 import MapView from '@arcgis/core/views/MapView';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
-import PixelBlock from '@arcgis/core/layers/support/PixelBlock';
+import type { PixelData } from '@arcgis/core/layers/raster/types';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { getLockRasterMosaicRule } from '../ImageryLayer/useImageLayer';
 import { BlendMode } from '@typing/argis-sdk-for-javascript';
@@ -85,10 +85,6 @@ type Props = {
     ) => void;
 };
 
-type PixelData = {
-    pixelBlock: PixelBlock;
-};
-
 export const ImageryLayerWithPixelFilter: FC<Props> = ({
     mapView,
     groupLayer,
@@ -149,7 +145,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
      * Pixel filter function to process and filter pixel data based on the provided ranges and colors
      * @param pixelData - The pixel data to filter
      */
-    const pixelFilterFunction = (pixelData: PixelData) => {
+    const pixelFilterFunction = (pixelData: PixelData): void => {
         // const color = colorRef.current || [255, 255, 255];
 
         const { pixelBlock } = pixelData || {};

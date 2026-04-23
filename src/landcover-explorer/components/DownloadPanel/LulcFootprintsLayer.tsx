@@ -20,6 +20,8 @@ import IPoint from '@arcgis/core/geometry/Point';
 import IGraphic from '@arcgis/core/Graphic';
 import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import { LULC_TIMESERIES_STORE } from '@landcover-explorer/constants';
+import { ResourceHandle } from '@arcgis/core/core/Handles';
+import FeatureLayerView from '@arcgis/core/views/layers/FeatureLayerView';
 
 type Props = {
     availableYears?: number[];
@@ -44,9 +46,9 @@ const getImageURL = (year: number, imageName: string) => {
 const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
     const layerRef = useRef<IFeatureLayer>(null);
 
-    const layerViewRef = useRef<__esri.FeatureLayerView>(null);
+    const layerViewRef = useRef<FeatureLayerView>(null);
 
-    const highlight = useRef<__esri.Handle>(null);
+    const highlight = useRef<ResourceHandle>(null);
 
     const init = async () => {
         layerRef.current = mapView.map.allLayers.find(

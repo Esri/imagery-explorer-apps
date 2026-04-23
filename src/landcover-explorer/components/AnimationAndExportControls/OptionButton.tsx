@@ -1,4 +1,4 @@
-import { CalciteIcon } from '@esri/calcite-components-react';
+// import { CalciteIcon } from '@esri/calcite-components-react';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
@@ -25,7 +25,7 @@ export const OptionButton: FC<OptionButtonProps> = ({
             })}
             onClick={onClick}
         >
-            <CalciteIcon icon={icon} scale="s" />
+            <calcite-icon icon={icon as any} scale="s" />
             <span className="ml-1 text-xs">{label}</span>
         </div>
     );

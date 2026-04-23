@@ -1,7 +1,7 @@
-import { CalciteButton, CalciteIcon } from '@esri/calcite-components-react';
+// import { CalciteButton, CalciteIcon } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
-import { useAppSelector } from '@shared/store/configureStore';
-import { selectSelectedUrbanAreaFeature } from '@shared/store/UrbanHeatIslandTool/selectors';
+// import { useAppSelector } from '@shared/store/configureStore';
+// import { selectSelectedUrbanAreaFeature } from '@shared/store/UrbanHeatIslandTool/selectors';
 import React, { FC } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { SelectAOIPolygon } from './SelectAOIPolygon';
@@ -15,7 +15,7 @@ import { ConfirmAndStartNewJob } from './ConfirmAndStartNewJob';
  */
 const SectionHeader: FC<{ icon: string; text: string }> = ({ icon, text }) => (
     <div className="flex opacity-50 mb-4">
-        <CalciteIcon icon={icon} scale="s" className="mr-1" />
+        <calcite-icon icon={icon as any} scale="s" className="mr-1" />
         <span className="text-sm ">{text}</span>
     </div>
 );

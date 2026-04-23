@@ -5,6 +5,8 @@ import { UrbanAreaLayerServiceURL } from './config';
 import { useQueryUrbanAreaFeature } from './useQueryUrbanAreaFeature';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectSelectedUrbanAreaFeature } from '@shared/store/UrbanHeatIslandTool/selectors';
+import FeatureLayerView from '@arcgis/core/views/layers/FeatureLayerView';
+import { ResourceHandle } from '@arcgis/core/core/Handles';
 
 type UrbanAreaLayerProps = {
     mapView?: MapView;
@@ -22,12 +24,12 @@ export const UrbanAreaLayer: FC<UrbanAreaLayerProps> = ({
     /**
      * Reference to the highlight handle
      */
-    const highlightHandle = useRef<__esri.Handle>(null);
+    const highlightHandle = useRef<ResourceHandle>(null);
 
     /**
      * Reference to the layer view of the urban area layer
      */
-    const layerViewRef = useRef<__esri.FeatureLayerView>(null);
+    const layerViewRef = useRef<FeatureLayerView>(null);
 
     useQueryUrbanAreaFeature(urbanAreaLayerRef.current);
 
@@ -56,7 +58,7 @@ export const UrbanAreaLayer: FC<UrbanAreaLayerProps> = ({
             mapView
                 .whenLayerView(urbanAreaLayer)
                 .then((layerView) => {
-                    layerViewRef.current = layerView as __esri.FeatureLayerView;
+                    layerViewRef.current = layerView as FeatureLayerView;
                 })
                 .catch((error) => {
                     console.error('Error getting layer view:', error);

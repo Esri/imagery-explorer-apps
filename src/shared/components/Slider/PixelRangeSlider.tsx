@@ -20,6 +20,7 @@ import SliderWidget from '@arcgis/core/widgets/Slider';
 import './Slider.css';
 import classNames from 'classnames';
 import { nanoid } from 'nanoid';
+import { TickConfig } from '@arcgis/core/widgets/Slider/types';
 
 type Props = {
     /**
@@ -120,7 +121,7 @@ export const PixelRangeSlider: FC<Props> = ({
                         : getTickLabels(min, max), //[-1, -0.5, 0, 0.5, 1],
                 labelsVisible: true,
             },
-        ] as __esri.TickConfig[];
+        ] as TickConfig[];
     };
 
     const init = async () => {

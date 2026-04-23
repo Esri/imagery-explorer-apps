@@ -30,7 +30,7 @@ interface Props {
     /**
      * Coordinate pair `[longitude, latitude]` that represent the default center of the map view
      */
-    center?: number[];
+    center?: [number, number];
     /**
      * deafult zoom level
      */
@@ -75,8 +75,8 @@ const MapView: React.FC<Props> = ({
             popupEnabled: false,
         });
 
-        // Removes all default UI components, except Attribution.
-        mapViewRef.current.ui.components = ['attribution'];
+        // Removes all default UI components
+        mapViewRef.current.ui.components = [];
 
         mapViewRef.current.when(() => {
             setMapView(mapViewRef.current);

@@ -26,6 +26,7 @@ import {
 } from '@shared/components/MapView/ReferenceLayers';
 import MapView from '@arcgis/core/views/MapView';
 import { getHillshadeLayer } from '@shared/components/HillshadeLayer/HillshadeLayer';
+import { Screenshot } from '@arcgis/core/views/types';
 
 type GetScreenshotOfBasemapLayersParams = {
     mapView: MapView;
@@ -45,9 +46,9 @@ type GetScreenshotOfBasemapLayersParams = {
 };
 
 type GetScreenshotOfBasemapLayersOutput = {
-    basemapScreenshot: __esri.Screenshot | null;
-    hillshadeScreenshot: __esri.Screenshot | null;
-    referenceLayersScreenshot: __esri.Screenshot | null;
+    basemapScreenshot: Screenshot | null;
+    hillshadeScreenshot: Screenshot | null;
+    referenceLayersScreenshot: Screenshot | null;
 };
 
 /**
@@ -193,9 +194,9 @@ export const getScreenshotOfBasemapLayers = async ({
         };
     }
 
-    let basemapScreenshot: __esri.Screenshot | null = null;
-    let referenceLayersScreenshot: __esri.Screenshot | null = null;
-    let hillshadeScreenshot: __esri.Screenshot | null = null;
+    let basemapScreenshot: Screenshot | null = null;
+    let referenceLayersScreenshot: Screenshot | null = null;
+    let hillshadeScreenshot: Screenshot | null = null;
 
     const containerDivId = 'offscreen-map-container';
 

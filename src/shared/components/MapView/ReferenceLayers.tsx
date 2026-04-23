@@ -32,6 +32,7 @@ import {
     CUSTOM_OCEAN_BASEMAP_LAYER_TITLE,
     TERRAIN_LAYER_TITLE,
 } from '@shared/constants/map';
+import Collection from '@arcgis/core/core/Collection';
 
 type Props = {
     mapView?: IMapView;
@@ -46,9 +47,7 @@ type Props = {
  * @param mapView - The map view instance containing the map and its layers.
  * @returns A collection of layers matching the specified titles, or `null` if the map is not available.
  */
-export const getMapLabelLayers = (
-    mapView: IMapView
-): __esri.Collection<Layer> => {
+export const getMapLabelLayers = (mapView: IMapView): Collection<Layer> => {
     if (!mapView?.map) {
         return null;
     }
@@ -70,9 +69,7 @@ export const getMapLabelLayers = (
  * @param mapView - The map view instance containing the map and its layers.
  * @returns A collection of basemap layers matching the specified titles, or `null` if the map is not available.
  */
-export const getBasemapLayers = (
-    mapView: IMapView
-): __esri.Collection<Layer> => {
+export const getBasemapLayers = (mapView: IMapView): Collection<Layer> => {
     if (!mapView?.map) {
         return null;
     }
@@ -103,10 +100,10 @@ export const getTerrainLayer = (mapView: IMapView): Layer => {
 };
 
 const ReferenceLayers: FC<Props> = ({ mapView }: Props) => {
-    const mapLabelLayersRef = useRef<__esri.Collection<Layer>>(null);
+    const mapLabelLayersRef = useRef<Collection<Layer>>(null);
     // const terrainLayerRef = useRef<__esri.Layer>();
 
-    const basemapLayersRef = useRef<__esri.Collection<__esri.Layer>>(null);
+    const basemapLayersRef = useRef<Collection<Layer>>(null);
 
     const showMapLabel = useAppSelector(selectShowMapLabel);
     // const showTerrain = useAppSelector(selectShowTerrain);

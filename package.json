@@ -57,10 +57,13 @@
         "lint": "eslint src --ext .ts,.tsx --fix"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx,json,css}": [
+        "src/**/*.{ts,tsx,json}": [
             "prettier --write",
             "eslint src --fix",
             "jest --bail --findRelatedTests --passWithNoTests"
+        ],
+        "src/**/*.css}": [
+            "prettier --write"
         ],
         "e2e/**/*.{ts,tsx,json}": [
             "prettier --write"
@@ -140,8 +143,10 @@
         "webpack-dev-server": "^5.2.2"
     },
     "dependencies": {
-        "@arcgis/core": "4.34",
+        "@arcgis/core": "^5.0.18",
+        "@arcgis/map-components": "^5.0.18",
         "@esri/arcgis-rest-feature-service": "^4.0.4",
+        "@esri/calcite-components": "^5.0.2",
         "@esri/calcite-components-react": "^3.3.3",
         "@reduxjs/toolkit": "2.5",
         "@vannizhang/images-to-video-converter-client": "^1.1.14",

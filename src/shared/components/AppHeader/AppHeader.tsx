@@ -36,7 +36,7 @@ import {
     useDataOfImageryUtilityApps,
 } from '@shared/hooks/useDataOfImageryExplorerApps';
 import { AppLauchList } from './AppLauchList';
-import { CalciteButton, CalciteIcon } from '@esri/calcite-components-react';
+// import { CalciteIcon } from '@esri/calcite-components-react';
 import { useSupportedLocales } from '@shared/hooks/useSupportedLocales';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { useShouldSuggestLocale } from '@shared/hooks/useSuggestLocale';
@@ -207,9 +207,9 @@ const AppHeader: FC<Props> = ({ showDocButton, docButtonTooltip }) => {
                         onClick={toggleAppLauncherList}
                     >
                         {showImageryExplorerAppsList ? (
-                            <CalciteIcon icon="chevron-up" />
+                            <calcite-icon icon="chevron-up" />
                         ) : (
-                            <CalciteIcon icon="chevron-down" />
+                            <calcite-icon icon="chevron-down" />
                         )}
                     </div>
                 </div>
@@ -223,7 +223,7 @@ const AppHeader: FC<Props> = ({ showDocButton, docButtonTooltip }) => {
                     }}
                     title={docButtonTooltip || ''}
                 >
-                    <CalciteIcon icon="open-book" />
+                    <calcite-icon icon="open-book" />
                 </div>
             )}
 
@@ -236,13 +236,13 @@ const AppHeader: FC<Props> = ({ showDocButton, docButtonTooltip }) => {
                     }}
                     title={t('switch_language')}
                 >
-                    <CalciteButton
+                    <calcite-button
                         appearance="transparent"
                         scale="s"
-                        iconStart="language-2"
+                        iconStart="language2"
                         label={t('switch_language')}
                         onClick={toggleLanguageSwitcherList}
-                    ></CalciteButton>
+                    ></calcite-button>
                 </div>
             )}
 

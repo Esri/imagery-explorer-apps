@@ -22,10 +22,10 @@ import ArcGISSearchWidget from '@arcgis/core/widgets/Search';
 import classNames from 'classnames';
 
 type SearchResult = {
-    extent: Extent;
+    extent?: Extent;
     feature: Graphic;
     name: string;
-    target: string;
+    target: Graphic;
 };
 
 type Props = {

@@ -75,7 +75,7 @@ type Props = {
 const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
     const dispatch = useAppDispatch();
 
-    const center = useAppSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter) as [number, number];
 
     const zoom = useAppSelector(selectMapZoom);
 
