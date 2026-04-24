@@ -128,7 +128,7 @@ export const SaveWebMap: FC<Props> = ({
     const { t } = useTranslation();
 
     const [title, setTitle] = useState<string>(
-        // 'Sentinel-2 Land Cover Exlorer export map'
+        // 'Sentinel-2 Land Cover Explorerexport map'
         t('output_webmap_default_title', { ns: APP_NAME })
     );
     const [tags, setTags] = useState<string>(
