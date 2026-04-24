@@ -13,11 +13,11 @@
  * limitations under the License.
  */
 
-import './CustomMapViewStyle.css';
+// import './CustomMapViewStyle.css';
 import React, { useEffect, useState, useRef } from 'react';
 
 import ArcGISMapView from '@arcgis/core/views/MapView';
-import WebMap from '@arcgis/core/WebMap';
+// import WebMap from '@arcgis/core/WebMap';
 import TileInfo from '@arcgis/core/layers/support/TileInfo';
 import classNames from 'classnames';
 import '@arcgis/map-components/components/arcgis-map';

@@ -33,14 +33,14 @@ import EventHandlers from './EventHandlers';
 import { useAppDispatch } from '@shared/store/configureStore';
 import {
     centerChanged,
-    extentUpdated,
+    // extentUpdated,
     isUpdatingChanged,
     resolutionUpdated,
     scaleUpdated,
-    swipeWidgetHanlderPositionChanged,
+    // swipeWidgetHanlderPositionChanged,
     zoomChanged,
 } from '../../store/Map/reducer';
-import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
+// import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
 // import { queryLocation4TrendToolChanged } from '@shared/store/TrendTool/reducer';
 // import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
@@ -49,15 +49,15 @@ import { ReferenceLayersControl } from '../ReferenceLayersControl';
 import ReferenceLayers from './ReferenceLayers';
 // import SearchWidget from '../SearchWidget/SearchWidget';
 import {
-    selectActiveAnalysisTool,
+    // selectActiveAnalysisTool,
     selectAppMode,
     selectIsSwipeModeOn,
 } from '@shared/store/ImageryScene/selectors';
 // import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { MapCenterIndicator } from './MapCenterIndicator';
 // import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
-import { appConfig } from '@shared/config';
-import { ZoomWidget } from './ZoomWidget';
+// import { appConfig } from '@shared/config';
+// import { ZoomWidget } from './ZoomWidget';
 import { autoSwipeStatusChanged } from '@shared/store/Map/reducer';
 import { WEB_MAP_ID } from '@shared/constants/map';
 import { AnimationStartButtonOnMapContainer } from '../AnimationStartButtonOnMap/AnimationStartButtonOnMapContainer';
@@ -118,6 +118,20 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                         shouldHideBottomPanel === false,
                 }
             )}
+            style={
+                {
+                    '--calcite-color-foreground-1': 'var(--custom-background)',
+                    '--calcite-color-foreground-2': 'var(--custom-background)',
+                    '--calcite-color-foreground-3': 'var(--custom-background)',
+                    '--calcite-color-foreground-4': 'var(--custom-background)',
+
+                    '--calcite-color-text-1': 'var(--custom-light-blue)',
+                    '--calcite-color-text-2': 'var(--custom-light-blue)',
+                    '--calcite-color-text-3': 'var(--custom-light-blue)',
+
+                    '--calcite-color-border-3': 'var(--custom-light-blue-50)',
+                } as React.CSSProperties
+            }
         >
             <MapView
                 webmapId={WEB_MAP_ID}

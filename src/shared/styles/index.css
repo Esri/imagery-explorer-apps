@@ -40,9 +40,9 @@
     }
 }
 
-#root .esri-view-root {
+/* #root .esri-view-root {
     --esri-view-outline: 0;
-}
+} */
 
 /* Prevent user interaction and visually indicate disabled state when animation mode is active */
 .disabled-when-animation-mode-is-on {
