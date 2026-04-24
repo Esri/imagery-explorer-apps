@@ -96,11 +96,6 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
     const anchorLocation = useAppSelector(selectMapPopupAnchorLocation);
 
     useEffect(() => {
-        // console.log('map view zoom and center has changed', center, zoom);
-        saveMapCenterToHashParams(center, zoom);
-    }, [zoom, center]);
-
-    useEffect(() => {
         // adding this class will hide map zoom widget when animation mode is on
         document.body.classList.toggle('hide-map-control', isAnimationPlaying);
     }, [isAnimationPlaying]);

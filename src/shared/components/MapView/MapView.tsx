@@ -58,6 +58,12 @@ const MapView: React.FC<Props> = ({
 
     const [mapView, setMapView] = useState<ArcGISMapView>(null);
 
+    // Capture initial center/zoom once — never pass updated values to arcgis-map.
+    // The web component treats every prop write as a goTo() call, which could possible
+    // create an infinite loop: onStationary → Redux update → re-render → goTo() → onStationary.
+    const initialCenterRef = useRef(center);
+    const initialZoomRef = useRef(zoom);
+
     // const mapViewRef = useRef<ArcGISMapView>(null);
 
     // const initMapView = async () => {
@@ -119,26 +125,28 @@ const MapView: React.FC<Props> = ({
     //     };
     // }, []);
 
-    // useEffect(() => {
-    //     if (!mapView) {
-    //         return;
-    //     }
+    // handle center and zoom changes from outside of the map view (e.g. when user clicks on a interesting place and we want to fly to that location, or when we want to reset the map view to the default center/zoom)
+    useEffect(() => {
+        if (!mapView) {
+            return;
+        }
 
-    //     const [longitude, latitude] = center;
+        const [longitude, latitude] = center;
 
-    //     if (
-    //         mapView.center.longitude.toFixed(6) === longitude.toFixed(6) &&
-    //         mapView.center.latitude.toFixed(6) === latitude.toFixed(6) &&
-    //         mapView.zoom.toFixed(5) === zoom.toFixed(5)
-    //     ) {
-    //         return;
-    //     }
+        if (
+            mapView.center.longitude.toFixed(6) === longitude.toFixed(6) &&
+            mapView.center.latitude.toFixed(6) === latitude.toFixed(6) &&
+            mapView.zoom.toFixed(3) === zoom.toFixed(3)
+        ) {
+            // console.log('Map view center and zoom are already at the desired values, no need to call goTo');
+            return;
+        }
 
-    //     mapView.goTo({
-    //         center,
-    //         zoom,
-    //     });
-    // }, [center, zoom]);
+        mapView.goTo({
+            center,
+            zoom,
+        });
+    }, [center, zoom]);
 
     return (
         <>
@@ -150,8 +158,8 @@ const MapView: React.FC<Props> = ({
                 ref={mapDivRef}
             >
                 <arcgis-map
-                    center={center}
-                    zoom={zoom}
+                    center={initialCenterRef.current} // only use initial center and zoom to prevent unnecessary goTo calls
+                    zoom={initialZoomRef.current} // only use initial center and zoom to prevent unnecessary goTo calls
                     popupDisabled={true}
                     padding={{
                         left: 0,

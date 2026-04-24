@@ -25,6 +25,8 @@ import {
 import {
     selectAutoSwipeSpeed,
     selectAutoSwipeStatus,
+    selectMapCenter,
+    selectMapZoom,
     selectShowBasemap,
     selectShowMapLabel,
     selectShowTerrain,
@@ -47,6 +49,7 @@ import {
     saveSpectralProfileToolStateToHashParams,
     saveChangeCompareToolStateToHashParams,
     saveTemporalCompositeToolStateToHashParams,
+    saveMapCenterToHashParams,
 } from '@shared/utils/url-hash-params';
 import React, { FC, useEffect } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -98,6 +101,10 @@ export const useSaveAppState2HashParams = () => {
     const autoSwipeSpeed = useAppSelector(selectAutoSwipeSpeed);
 
     const hideBottomPanel = useAppSelector(selectHideBottomPanel);
+
+    const center = useAppSelector(selectMapCenter) as [number, number];
+
+    const zoom = useAppSelector(selectMapZoom);
 
     useEffect(() => {
         updateHashParams('mode', mode);
@@ -211,4 +218,9 @@ export const useSaveAppState2HashParams = () => {
     useEffect(() => {
         updateHashParams('hideBottomPanel', hideBottomPanel ? 'true' : null);
     }, [hideBottomPanel]);
+
+    useEffect(() => {
+        // console.log('map view zoom and center has changed', center, zoom);
+        saveMapCenterToHashParams(center, zoom);
+    }, [zoom, center]);
 };
