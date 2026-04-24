@@ -16,6 +16,7 @@
 import { useAppSelector } from '@shared/store/configureStore';
 import './style.css';
 import React, { FC, useEffect, useState } from 'react';
+import { ArcgisMap } from '@arcgis/map-components/dist/components/arcgis-map';
 import {
     selectMapResolution,
     selectMapScale,
@@ -52,13 +53,22 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
     // };
 
     useEffect(() => {
-        const element = document.querySelector('.esri-attribution');
-        if (!element) {
-            console.warn('Esri attribution element not found');
+        // const element = document.querySelector('.esri-attribution');
+        // if (!element) {
+        //     console.warn('Esri attribution element not found');
+        //     return;
+        // }
+
+        // element.classList.toggle('show', shouldShowEsriAttribution);
+
+        const viewElement = document.querySelector('arcgis-map') as ArcgisMap;
+
+        if (!viewElement) {
+            console.warn('ArcGIS Map element not found');
             return;
         }
 
-        element.classList.toggle('show', shouldShowEsriAttribution);
+        viewElement.hideAttribution = !shouldShowEsriAttribution;
     }, [shouldShowEsriAttribution]);
 
     return (
