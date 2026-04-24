@@ -1,4 +1,4 @@
-// import { CalciteIcon } from '@esri/calcite-components-react';
+//
 import classNames from 'classnames';
 import React, { FC } from 'react';
 

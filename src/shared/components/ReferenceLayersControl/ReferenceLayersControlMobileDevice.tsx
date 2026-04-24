@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReferenceLayersToggleControl } from './ReferenceLayersToggleControl';
-import { CalciteButton } from '@esri/calcite-components-react';
 import classNames from 'classnames';
 import useOnClickOutside from '@shared/hooks/useOnClickOutside';
 
@@ -36,7 +35,7 @@ export const ReferenceLayersControlMobileDevice = () => {
                     } as React.CSSProperties
                 }
             >
-                <CalciteButton
+                <calcite-button
                     iconStart="layers"
                     appearance="transparent"
                     kind="neutral"

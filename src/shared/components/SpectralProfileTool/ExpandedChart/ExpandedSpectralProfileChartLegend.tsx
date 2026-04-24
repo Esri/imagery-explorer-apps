@@ -18,7 +18,6 @@ import { LandCoverType, ListOfLandCoverTypes } from '../config';
 import { getFillColorByLandCoverType } from '../helpers';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { CalciteIcon } from '@esri/calcite-components-react';
 
 type LegendData = {
     label: string;
@@ -60,16 +59,16 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                     className="flex items-center mb-2"
                     title="toggle select all"
                 >
-                    <CalciteIcon
+                    <calcite-icon
                         icon={
                             excludedLandCoverTypes.size === 0
                                 ? 'square-inset-medium'
                                 : 'square'
                         }
-                        class="cursor-pointer"
+                        className="cursor-pointer"
                         scale="s"
                         onClick={toggleSelectAll}
-                    ></CalciteIcon>
+                    ></calcite-icon>
                     <span className="text-sm ml-3">
                         {t('spectral_profiles')}
                     </span>
@@ -82,12 +81,12 @@ export const ExpandedSpectralProfileChartLegend: FC<Props> = ({
                             onMouseOver={() => landCoverTypeOnHover(data.value)}
                             onMouseOut={() => landCoverTypeOnHover(null)}
                         >
-                            <CalciteIcon
+                            <calcite-icon
                                 icon={data.selected ? 'check-square' : 'square'}
-                                class="text-sm cursor-pointer"
+                                className="text-sm cursor-pointer"
                                 scale="s"
                                 onClick={() => landCoverTypeOnClick(data.value)}
-                            ></CalciteIcon>
+                            ></calcite-icon>
 
                             <svg
                                 width="16"

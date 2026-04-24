@@ -17,7 +17,6 @@ import React, { FC, useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import { Slider } from '../Slider/Slider';
 import { useTranslation } from 'react-i18next';
-import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -108,7 +107,7 @@ export const CloudFilter: FC<Props> = ({
 
             <div className="flex items-center ml-2">
                 {/* use offline icon to indicate low cloud tolerance */}
-                <CalciteIcon
+                <calcite-icon
                     scale="s"
                     icon="offline"
                     style={{
@@ -133,7 +132,7 @@ export const CloudFilter: FC<Props> = ({
                 </div>
 
                 {/* use online icon to indicate high cloud tolerance */}
-                <CalciteIcon
+                <calcite-icon
                     scale="s"
                     icon="online"
                     style={{

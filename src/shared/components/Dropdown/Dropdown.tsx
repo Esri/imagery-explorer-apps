@@ -17,11 +17,6 @@ import classNames from 'classnames';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import useWindowSize from '@shared/hooks/useWindowSize';
-import {
-    CalciteCheckbox,
-    CalciteIcon,
-    CalciteLabel,
-} from '@esri/calcite-components-react';
 
 export type DropdownData = {
     /**
@@ -138,11 +133,11 @@ export const Dropdown: FC<Props> = ({
                                             'var(--custom-light-blue-90)',
                                     }}
                                 >
-                                    <CalciteCheckbox
-                                        class="mx-1"
+                                    <calcite-checkbox
+                                        className="mx-1"
                                         checked={d.selected}
                                         scale="s"
-                                    ></CalciteCheckbox>
+                                    ></calcite-checkbox>
                                     {labelText}
                                 </div>
                             )}
@@ -221,7 +216,7 @@ export const Dropdown: FC<Props> = ({
                         {getLabel()}
                     </span>
 
-                    <CalciteIcon icon="chevron-down" scale="s" />
+                    <calcite-icon icon="chevron-down" scale="s" />
                 </div>
 
                 {tooltip && (

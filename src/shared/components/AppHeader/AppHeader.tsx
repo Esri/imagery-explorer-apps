@@ -36,7 +36,7 @@ import {
     useDataOfImageryUtilityApps,
 } from '@shared/hooks/useDataOfImageryExplorerApps';
 import { AppLauchList } from './AppLauchList';
-// import { CalciteIcon } from '@esri/calcite-components-react';
+//
 import { useSupportedLocales } from '@shared/hooks/useSupportedLocales';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { useShouldSuggestLocale } from '@shared/hooks/useSuggestLocale';

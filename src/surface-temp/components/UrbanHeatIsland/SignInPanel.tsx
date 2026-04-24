@@ -1,4 +1,3 @@
-import { CalciteLoader } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
 import { destroyCredentials, signIn } from '@shared/utils/esri-oauth';
 import React, { FC } from 'react';
@@ -20,7 +19,7 @@ export const SignInPanel: FC<SignInPanelProps> = ({
     isCheckingPrivileges,
 }) => {
     if (isCheckingPrivileges) {
-        return <CalciteLoader scale="s"></CalciteLoader>;
+        return <calcite-loader label={'loading'} scale="s"></calcite-loader>;
     }
 
     return (

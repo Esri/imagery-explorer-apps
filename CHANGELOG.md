@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]:
+
+### Shared
+
+#### Changed
+- Updated @arcgis/core to version 5.0.18 and added @arcgis/map-components and @esri/calcite-components dependencies.
+- Refactored the cadebase to use calcite components instead of calcite-components-react, which has been deprecated. 
+
 ## 2026-01-26
 ### Shared
 

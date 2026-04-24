@@ -20,7 +20,6 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
-import { CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -78,7 +77,8 @@ export const MapActionButton: FC<Props> = ({
             <div className="w-map-action-button-size h-map-action-button-size flex items-center justify-center bg-custom-background text-custom-light-blue-90 cursor-pointer">
                 {showLoadingIndicator ? (
                     <div className="w-full h-full flex items-center justify-center text-center">
-                        <CalciteLoader
+                        <calcite-loader
+                            label={'loading'}
                             scale="m"
                             inline
                             style={{ marginRight: 0 } as React.CSSProperties}

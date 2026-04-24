@@ -1,14 +1,5 @@
 import React, { FC, useEffect, useMemo } from 'react';
 import { SupportedLocaleData } from '../../hooks/useSupportedLocales';
-import {
-    CalciteButton,
-    CalciteCheckbox,
-    CalciteLabel,
-    CalciteOption,
-    CalciteRadioButton,
-    CalciteRadioButtonGroup,
-    CalciteSelect,
-} from '@esri/calcite-components-react';
 import { APP_LANGUAGE, SUGGESTED_LOCALE } from '@shared/constants/UI';
 import { setPreferredLocale } from '@shared/i18n/getAppLanguage';
 import { useTranslation } from 'react-i18next';
@@ -106,16 +97,17 @@ export const LocaleSwitcher: FC<Props> = ({ data, shouldSuggestLocale }) => {
                 </div>
             ) : null}
 
-            <CalciteLabel scale="s">
+            <calcite-label scale="s">
                 <span className="text-custom-light-blue text-sm">
                     {strings.choose_language}:
                 </span>
-                <CalciteSelect
-                    onCalciteSelectChange={(event) => {
+                <calcite-select
+                    oncalciteSelectChange={(event) => {
                         const selected = event.target.selectedOption;
                         setSelectedLocale(selected.value);
                     }}
                     scale="s"
+                    label={selectedLocale}
                     value={selectedLocale}
                     style={{
                         '--calcite-select-text-color':
@@ -127,17 +119,17 @@ export const LocaleSwitcher: FC<Props> = ({ data, shouldSuggestLocale }) => {
                 >
                     {data.map((locale) => {
                         return (
-                            <CalciteOption
+                            <calcite-option
                                 key={locale.code}
                                 value={locale.code}
                                 selected={selectedLocale === locale.code}
                             >
                                 {locale.label}
-                            </CalciteOption>
+                            </calcite-option>
                         );
                     })}
-                </CalciteSelect>
-            </CalciteLabel>
+                </calcite-select>
+            </calcite-label>
 
             <div
                 className="w-full grid grid-cols-2 gap-2"
@@ -150,7 +142,7 @@ export const LocaleSwitcher: FC<Props> = ({ data, shouldSuggestLocale }) => {
                     } as React.CSSProperties
                 }
             >
-                <CalciteButton
+                <calcite-button
                     appearance="outline"
                     scale="s"
                     disabled={selectedLocale === APP_LANGUAGE}
@@ -160,9 +152,9 @@ export const LocaleSwitcher: FC<Props> = ({ data, shouldSuggestLocale }) => {
                     }}
                 >
                     {strings.switch_language}
-                </CalciteButton>
+                </calcite-button>
 
-                <CalciteButton
+                <calcite-button
                     appearance="outline"
                     scale="s"
                     // width='full'
@@ -173,15 +165,15 @@ export const LocaleSwitcher: FC<Props> = ({ data, shouldSuggestLocale }) => {
                     }}
                 >
                     {strings.cancel}
-                </CalciteButton>
+                </calcite-button>
             </div>
 
             {showSuggestedLocaleMessage && (
                 <div className="mt-4 flex items-center">
-                    <CalciteCheckbox
+                    <calcite-checkbox
                         scale="s"
                         label={strings.do_not_show_again}
-                        onCalciteCheckboxChange={(event) => {
+                        oncalciteCheckboxChange={(event) => {
                             const checked = event.target.checked;
                             // console.log('disableLocaleSuggestion', checked);
                             // if (checked) {

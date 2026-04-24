@@ -1,4 +1,3 @@
-// import { CalciteButton, CalciteIcon } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
 // import { useAppSelector } from '@shared/store/configureStore';
 // import { selectSelectedUrbanAreaFeature } from '@shared/store/UrbanHeatIslandTool/selectors';

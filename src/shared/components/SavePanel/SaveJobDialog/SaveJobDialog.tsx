@@ -22,7 +22,6 @@ import { useDefaultTitleAndSummary } from './useDefaultTitleAndSummary';
 import { formatHostedImageryServiceName } from '@shared/services/raster-analysis/createHostedImageryService';
 import { useValidateTextInput } from './useValidateTextInput';
 import { useTranslation } from 'react-i18next';
-import { CalciteLoader } from '@esri/calcite-components-react';
 
 type SaveJobDialogProps = {
     saveJobType: PublishAndDownloadJobType;
@@ -155,7 +154,10 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                     {validateTitleResponse.isValid &&
                         isCheckingTitleAvailability && (
                             <div className="text-sm text-custom-light-blue-50 mt-2 flex items-center">
-                                <CalciteLoader inline></CalciteLoader>
+                                <calcite-loader
+                                    label={t('loading')}
+                                    inline
+                                ></calcite-loader>
                                 <span className="ml-1">
                                     {t('checking_title_availability')}...
                                 </span>

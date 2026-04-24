@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { CalciteIcon } from '@esri/calcite-components-react';
 import { Button } from '@shared/components/Button';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
 import { Tooltip } from '@shared/components/Tooltip';
@@ -64,7 +63,7 @@ export const OrbitDirectionFilter: FC<Props> = ({
                 width={280}
             >
                 <div className="flex items-center mr-1">
-                    <CalciteIcon scale="s" icon="information" />
+                    <calcite-icon scale="s" icon="information" />
                 </div>
             </Tooltip>
 

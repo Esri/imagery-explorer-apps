@@ -22,7 +22,6 @@ import React, { CSSProperties, FC } from 'react';
 import { saveJobStatusLabels } from '../constants';
 import { getItemUrl } from '@shared/utils/esri-oauth';
 import { useTranslation } from 'react-i18next';
-import { CalciteButton } from '@esri/calcite-components-react';
 
 type JobStatusProps = {
     job: PublishAndDownloadJob;
@@ -83,7 +82,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                         </span>
                     </div>
 
-                    <CalciteButton
+                    <calcite-button
                         scale="s"
                         width="half"
                         // icon-start="check"
@@ -94,7 +93,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                         }}
                     >
                         <span className="uppercase">{t('accept')}</span>
-                    </CalciteButton>
+                    </calcite-button>
                 </div>
             </div>
         );
@@ -124,7 +123,7 @@ export const JobStatus: FC<JobStatusProps> = ({
 
     return (
         <div style={CustomCalciteButtonStyles}>
-            <CalciteButton
+            <calcite-button
                 // scale="s"
                 width="full"
                 icon-start={'launch'}
@@ -133,7 +132,7 @@ export const JobStatus: FC<JobStatusProps> = ({
                 data-testid="open-job-output-button"
             >
                 {t('open')}
-            </CalciteButton>
+            </calcite-button>
         </div>
     );
 };

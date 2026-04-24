@@ -20,7 +20,6 @@ import classNames from 'classnames';
 import { Tooltip } from '../Tooltip';
 import { use } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -56,9 +55,9 @@ export const RenderingControls: FC<Props> = ({
                 <div className="cursor-pointer" onClick={shouldClipOnToggle}>
                     <Tooltip content={t('clipping_mask_info')} width={200}>
                         {shouldClip ? (
-                            <CalciteIcon icon="check-square" scale="s" />
+                            <calcite-icon icon="check-square" scale="s" />
                         ) : (
-                            <CalciteIcon icon="square" scale="s" />
+                            <calcite-icon icon="square" scale="s" />
                         )}
                     </Tooltip>
                 </div>

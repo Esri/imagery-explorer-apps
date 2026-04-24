@@ -39,7 +39,7 @@ import { AnimationDownloadPanel } from '../AnimationDownloadPanel';
 import { saveAnimationWindowInfoToHashParams } from '@shared/utils/url-hash-params';
 import { useFrameDataForDownloadJob } from './useFrameDataForDownloadJob';
 import { once } from '@arcgis/core/core/reactiveUtils';
-import { CalciteLoader } from '@esri/calcite-components-react';
+
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { AnimationFrameAcquisitionDateDisplayContainer } from './AnimationFrameAcquisitionDateDisplayContainer';
 
@@ -262,7 +262,7 @@ export const AnimationLayer: FC<Props> = ({
             )}
         >
             {animationStatus === 'loading' && (
-                <CalciteLoader scale="l"></CalciteLoader>
+                <calcite-loader label={'loading'} scale="l"></calcite-loader>
             )}
 
             <AnimationFrameAcquisitionDateDisplayContainer

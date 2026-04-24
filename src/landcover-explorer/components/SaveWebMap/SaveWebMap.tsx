@@ -20,7 +20,6 @@ import { CreateWebMapResponse } from './createWebMap';
 import { CloseButton } from '@shared/components/CloseButton';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
-import { CalciteInputText } from '@esri/calcite-components-react';
 
 export type WebMapMetadata = {
     /**
@@ -106,9 +105,9 @@ const TextInput: FC<TextInputProps> = ({
                 {isRequired ? '*' : ''}
             </h4>
 
-            <CalciteInputText
+            <calcite-input-text
                 value={value}
-                onCalciteInputTextInput={(evt: any) => {
+                oncalciteInputTextInput={(evt) => {
                     onChange(evt.target?.value);
                 }}
             />

@@ -28,7 +28,6 @@ import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -52,7 +51,7 @@ const MessageClassNames =
 const Sentinel2LoadingIndicator = () => {
     return (
         <div>
-            <CalciteLoader scale="m"></CalciteLoader>
+            <calcite-loader label={'loading'} scale="m"></calcite-loader>
             {/* <div className={MessageClassNames}>Loading Sentinel-2 Imagery</div> */}
         </div>
     );

@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { TimeSliderWidget } from '../TimeSelector/TimeSliderWidget';
 import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 import { get } from 'http';
-import { CalciteLoader } from '@esri/calcite-components-react';
 
 type AnimationStatusIndicatorProps = {
     animationStatus: AnimationStatus;
@@ -38,11 +37,11 @@ export const AnimationStatusIndicator: FC<AnimationStatusIndicatorProps> = ({
         if (animationStatus === 'loading') {
             return (
                 <div className="flex ">
-                    <CalciteLoader
+                    <calcite-loader
                         scale="m"
                         inline
                         label={t('load_animation')}
-                    ></CalciteLoader>
+                    ></calcite-loader>
                     <span className="ml-2">{t('load_animation')}</span>
                 </div>
             );
