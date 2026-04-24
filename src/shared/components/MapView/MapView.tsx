@@ -23,6 +23,7 @@ import classNames from 'classnames';
 import '@arcgis/map-components/components/arcgis-map';
 import '@arcgis/map-components/components/arcgis-zoom';
 import '@arcgis/map-components/components/arcgis-search';
+import MapViewConstraints from '@arcgis/core/views/2d/MapViewConstraints';
 
 interface Props {
     /**
@@ -106,12 +107,6 @@ const MapView: React.FC<Props> = ({
                 console.log('ArcGISMapView is ready', viewElement, view);
             }
 
-            // Set the map view constraints to use the same LODs as the tile layer, and disable snapToZoom to allow for more flexible zooming
-            view.constraints = {
-                lods: TileInfo.create().lods,
-                snapToZoom: false,
-            };
-
             setMapView(view as ArcGISMapView);
         });
     }, []);
@@ -167,6 +162,13 @@ const MapView: React.FC<Props> = ({
                         right: 0,
                         bottom: 0,
                     }}
+                    constraints={
+                        new MapViewConstraints({
+                            lods: TileInfo.create().lods,
+                            snapToZoom: false,
+                            rotationEnabled: false,
+                        })
+                    }
                     itemId={webmapId}
                     hideAttribution={true}
                 ></arcgis-map>
