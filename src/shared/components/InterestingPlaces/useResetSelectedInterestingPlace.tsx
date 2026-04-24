@@ -36,12 +36,6 @@ export const useResetSelectedInterestingPlace = (
 
         const { location } = selectedInterestingPlace;
 
-        console.log(
-            mapCenter[0] - location.center[0],
-            mapCenter[1] - location.center[1],
-            zoom - location.zoom
-        );
-
         if (
             Math.abs(mapCenter[0] - location.center[0]) > 0.01 ||
             Math.abs(mapCenter[1] - location.center[1]) > 0.01 ||
