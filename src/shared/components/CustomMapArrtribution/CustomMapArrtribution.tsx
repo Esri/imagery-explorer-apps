@@ -53,6 +53,11 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
 
     useEffect(() => {
         const element = document.querySelector('.esri-attribution');
+        if (!element) {
+            console.warn('Esri attribution element not found');
+            return;
+        }
+
         element.classList.toggle('show', shouldShowEsriAttribution);
     }, [shouldShowEsriAttribution]);
 

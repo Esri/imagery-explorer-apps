@@ -20,7 +20,9 @@ import ArcGISMapView from '@arcgis/core/views/MapView';
 import WebMap from '@arcgis/core/WebMap';
 import TileInfo from '@arcgis/core/layers/support/TileInfo';
 import classNames from 'classnames';
-import Color from '@arcgis/core/Color';
+import '@arcgis/map-components/components/arcgis-map';
+import '@arcgis/map-components/components/arcgis-zoom';
+import '@arcgis/map-components/components/arcgis-search';
 
 interface Props {
     /**
@@ -56,62 +58,87 @@ const MapView: React.FC<Props> = ({
 
     const [mapView, setMapView] = useState<ArcGISMapView>(null);
 
-    const mapViewRef = useRef<ArcGISMapView>(null);
+    // const mapViewRef = useRef<ArcGISMapView>(null);
 
-    const initMapView = async () => {
-        mapViewRef.current = new ArcGISMapView({
-            container: mapDivRef.current,
-            center,
-            zoom,
-            map: new WebMap({
-                portalItem: {
-                    id: webmapId,
-                },
-            }),
-            constraints: {
+    // const initMapView = async () => {
+    //     mapViewRef.current = new ArcGISMapView({
+    //         container: mapDivRef.current,
+    //         center,
+    //         zoom,
+    //         map: new WebMap({
+    //             portalItem: {
+    //                 id: webmapId,
+    //             },
+    //         }),
+    //         constraints: {
+    //             lods: TileInfo.create().lods,
+    //             snapToZoom: false,
+    //         },
+    //         popupEnabled: false,
+    //     });
+
+    //     // Removes all default UI components
+    //     mapViewRef.current.ui.components = [];
+
+    //     mapViewRef.current.when(() => {
+    //         setMapView(mapViewRef.current);
+    //     });
+    // };
+
+    useEffect(() => {
+        const viewElement = mapDivRef.current.querySelector(
+            'arcgis-map'
+        ) as any;
+
+        viewElement.addEventListener('arcgisViewReadyChange', () => {
+            const view = viewElement.view;
+
+            if (!(view instanceof ArcGISMapView)) {
+                console.error('The view is not an instance of ArcGISMapView');
+                return;
+            } else {
+                console.log('ArcGISMapView is ready', viewElement, view);
+            }
+
+            // Set the map view constraints to use the same LODs as the tile layer, and disable snapToZoom to allow for more flexible zooming
+            view.constraints = {
                 lods: TileInfo.create().lods,
                 snapToZoom: false,
-            },
-            popupEnabled: false,
+            };
+
+            setMapView(view as ArcGISMapView);
         });
-
-        // Removes all default UI components
-        mapViewRef.current.ui.components = [];
-
-        mapViewRef.current.when(() => {
-            setMapView(mapViewRef.current);
-        });
-    };
-
-    useEffect(() => {
-        // loadCss();
-        initMapView();
-
-        return () => {
-            mapViewRef.current.destroy();
-        };
     }, []);
 
-    useEffect(() => {
-        if (!mapView) {
-            return;
-        }
+    // useEffect(() => {
+    //     // loadCss();
+    //     initMapView();
 
-        const [longitude, latitude] = center;
+    //     return () => {
+    //         mapViewRef.current.destroy();
+    //     };
+    // }, []);
 
-        if (
-            mapView.center.longitude.toFixed(6) === longitude.toFixed(6) &&
-            mapView.center.latitude.toFixed(6) === latitude.toFixed(6) &&
-            mapView.zoom.toFixed(3) === zoom.toFixed(3)
-        ) {
-            return;
-        }
+    // useEffect(() => {
+    //     if (!mapView) {
+    //         return;
+    //     }
 
-        mapView.goTo({
-            center,
-            zoom,
-        });
-    }, [center, zoom]);
+    //     const [longitude, latitude] = center;
+
+    //     if (
+    //         mapView.center.longitude.toFixed(6) === longitude.toFixed(6) &&
+    //         mapView.center.latitude.toFixed(6) === latitude.toFixed(6) &&
+    //         mapView.zoom.toFixed(5) === zoom.toFixed(5)
+    //     ) {
+    //         return;
+    //     }
+
+    //     mapView.goTo({
+    //         center,
+    //         zoom,
+    //     });
+    // }, [center, zoom]);
 
     return (
         <>
@@ -121,7 +148,21 @@ const MapView: React.FC<Props> = ({
                     'pointer-events-none': shouldDisableMapNavigate,
                 })}
                 ref={mapDivRef}
-            ></div>
+            >
+                <arcgis-map
+                    center={center}
+                    zoom={zoom}
+                    popupDisabled={true}
+                    padding={{
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                    }}
+                    itemId={webmapId}
+                    hideAttribution={true}
+                ></arcgis-map>
+            </div>
             {mapView
                 ? React.Children.map(children, (child) => {
                       if (!child) {

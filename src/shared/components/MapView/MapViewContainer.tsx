@@ -14,7 +14,7 @@
  */
 
 import classNames from 'classnames';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import MapView from './MapView';
 // import { WEB_MAP_ID } from '../../constants/map';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -89,29 +89,11 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
         selectSwipeWidgetHandlerPosition
     );
 
-    const [isUpdating, setIsUpdating] = useState<boolean>(true);
-
     const mode = useAppSelector(selectAppMode);
 
     // const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const anchorLocation = useAppSelector(selectMapPopupAnchorLocation);
-
-    // const showMagnifier = useMemo(() => {
-    //     if (mode !== 'analysis') {
-    //         return false;
-    //     }
-
-    //     return analysisTool === 'trend' || analysisTool === 'spectral';
-    // }, [analysisTool, mode]);
-
-    const showMapLoadingIndicator = useMemo(() => {
-        if (isAnimationPlaying) {
-            return false;
-        }
-
-        return isUpdating;
-    }, [isUpdating, isAnimationPlaying]);
 
     useEffect(() => {
         // console.log('map view zoom and center has changed', center, zoom);
@@ -122,10 +104,6 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
         // adding this class will hide map zoom widget when animation mode is on
         document.body.classList.toggle('hide-map-control', isAnimationPlaying);
     }, [isAnimationPlaying]);
-
-    useEffect(() => {
-        dispatch(isUpdatingChanged(isUpdating));
-    }, [isUpdating]);
 
     useEffect(() => {
         // turn off auto swipe when app mode is not swipe
@@ -182,11 +160,12 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                             mapOnClick(queryLocation);
                         }
                     }}
-                    mapViewUpdatingOnChange={setIsUpdating}
+                    mapViewUpdatingOnChange={(val) =>
+                        dispatch(isUpdatingChanged(val))
+                    }
                 />
 
                 <MapLoadingIndicator
-                    active={showMapLoadingIndicator}
                     swipeWidgetHandlerPosition={
                         isSwipeWidgetVisible ? swipeWidgetHandlerPosition : null
                     }
