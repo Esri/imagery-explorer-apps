@@ -130,6 +130,7 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
         mapView.popup.alignment = 'bottom-right';
         mapView.popup.visibleElements = {
             collapseButton: false,
+            actionBar: false,
         };
 
         mapView.on('click', (evt) => {

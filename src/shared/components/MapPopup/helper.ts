@@ -54,14 +54,33 @@ export const getPopUpContentWithLocationInfo = (
 
     const popupDiv = document.createElement('div');
 
+    // const coordinatesHTML = `
+    //     <span><span class='text-custom-light-blue-50'>x</span> ${lon}</span>
+    //     <span class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</span>
+    // `;
+
+    // const locationInfoHTML = `
+    //     <div
+    //         class='popup-location-info-container text-custom-light-blue text-xs cursor-pointer'
+    //         title="${t('click_to_copy_coordinates')}"
+    //     >
+    //         <div class='popup-location-info-content'
+    //             data-testid='popup-location-info-content'
+    //         >
+    //             ${coordinatesHTML}
+    //         </div>
+    //     </div>
+    // `;
+
     const coordinatesHTML = `
-        <span><span class='text-custom-light-blue-50'>x</span> ${lon}</span>
-        <span class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</span>
+        <span><span style='color: var(--custom-light-blue-50);'>x</span> ${lon}</span>
+        <span style='margin-left: 0.5rem;'><span style='color: var(--custom-light-blue-50);'>y</span> ${lat}</span>
     `;
 
     const locationInfoHTML = `
         <div 
-            class='popup-location-info-container text-custom-light-blue text-xs cursor-pointer' 
+            class='popup-location-info-container'
+            style='color: var(--custom-light-blue); font-size: 0.75rem; line-height: 1rem; cursor: pointer;'
             title="${t('click_to_copy_coordinates')}"
         >
             <div class='popup-location-info-content'
