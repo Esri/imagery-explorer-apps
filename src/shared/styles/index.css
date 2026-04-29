@@ -48,3 +48,17 @@
 .disabled-when-animation-mode-is-on {
     @apply pointer-events-none opacity-40;
 }
+
+/* Custom styles to override Calcite components' default styles to fit our theme */
+.calcite-theme-override {
+    --calcite-color-foreground-1: var(--custom-background);
+    --calcite-color-foreground-2: var(--custom-background);
+    --calcite-color-foreground-3: var(--custom-background);
+    --calcite-color-foreground-4: var(--custom-background);
+
+    --calcite-color-text-1: var(--custom-light-blue);
+    --calcite-color-text-2: var(--custom-light-blue);
+    --calcite-color-text-3: var(--custom-light-blue);
+
+    --calcite-color-border-3: var(--custom-light-blue-50);
+}

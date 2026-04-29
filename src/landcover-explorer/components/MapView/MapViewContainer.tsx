@@ -138,6 +138,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
         <div
             className={classNames(
                 'absolute top-app-header-size md:top-0 left-0 w-full wide-popup',
+                'calcite-theme-override',
                 {
                     'bottom-bottom-panel-height': hideControlPanel === false,
                     'bottom-0': hideControlPanel,

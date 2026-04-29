@@ -112,26 +112,27 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
         <div
             className={classNames(
                 'absolute top-app-header-size md:top-0 left-0 w-full',
+                'calcite-theme-override',
                 {
                     'bottom-0': shouldHideBottomPanel === true,
                     'bottom-bottom-panel-height':
                         shouldHideBottomPanel === false,
                 }
             )}
-            style={
-                {
-                    '--calcite-color-foreground-1': 'var(--custom-background)',
-                    '--calcite-color-foreground-2': 'var(--custom-background)',
-                    '--calcite-color-foreground-3': 'var(--custom-background)',
-                    '--calcite-color-foreground-4': 'var(--custom-background)',
+            // style={
+            //     {
+            //         '--calcite-color-foreground-1': 'var(--custom-background)',
+            //         '--calcite-color-foreground-2': 'var(--custom-background)',
+            //         '--calcite-color-foreground-3': 'var(--custom-background)',
+            //         '--calcite-color-foreground-4': 'var(--custom-background)',
 
-                    '--calcite-color-text-1': 'var(--custom-light-blue)',
-                    '--calcite-color-text-2': 'var(--custom-light-blue)',
-                    '--calcite-color-text-3': 'var(--custom-light-blue)',
+            //         '--calcite-color-text-1': 'var(--custom-light-blue)',
+            //         '--calcite-color-text-2': 'var(--custom-light-blue)',
+            //         '--calcite-color-text-3': 'var(--custom-light-blue)',
 
-                    '--calcite-color-border-3': 'var(--custom-light-blue-50)',
-                } as React.CSSProperties
-            }
+            //         '--calcite-color-border-3': 'var(--custom-light-blue-50)',
+            //     } as React.CSSProperties
+            // }
         >
             <MapView
                 webmapId={WEB_MAP_ID}
