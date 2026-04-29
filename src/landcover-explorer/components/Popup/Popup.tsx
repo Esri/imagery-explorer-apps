@@ -155,9 +155,71 @@ const Popup: FC<Props> = ({
             ? format(acquisitionDate, DATE_FORMAT)
             : '';
 
+        // const htmlString4AcquisitionDate = acquisitionDateFormatted
+        //     ? `
+        //         <div class='mx-2 mt-4 pb-2 text-center'>
+        //             <span>${t('satellite_imagery_acquisition_date', {
+        //                 // ns: APP_NAME,
+        //                 date: acquisitionDateFormatted, // Pass the formatted date dynamically for translation
+        //                 satelliteName: satelliteImageryServiceName,
+        //             })}</span>
+        //         </div>
+        //     `
+        //     : '';
+
+        // const htmlString4LandCoverData: string = landCoverData
+        //     ? landCoverData
+        //           .sort((a, b) => b.year - a.year)
+        //           .map((item) => {
+        //               const { year, data } = item;
+
+        //               const [R, G, B] = data.Color;
+
+        //               const backgroundColor = `rgb(${R}, ${G}, ${B})`;
+
+        //               const classNameTranslated = t(data.ClassName, {
+        //                   ns: APP_NAME,
+        //                   defaultValue: data.ClassName, // Fallback to the original ClassName if translation is not available
+        //               });
+
+        //               return `
+        //                 <div class='flex my-2 items-center'
+        //                     data-testid="popup-item-${year}-${data.ClassName}"
+        //                 >
+        //                     <div class='rounded-full mr-2 bg-custom-light-blue-80 w-[6px] h-[6px] ${
+        //                         year !== aquisitionYear ? 'opacity-0' : ''
+        //                     }'></div>
+        //                     <span>${year}</span>
+        //                     <div class='rounded-full w-4 h-4 border-2 border-white mx-2' style="background-color:${backgroundColor};"></div>
+        //                     <span>${classNameTranslated}</span>
+        //                 </div>
+        //             `;
+        //           })
+        //           .join('')
+        //     : '';
+
+        // const htmlString4LandCoverList = htmlString4LandCoverData
+        //     ? `
+        //         <div class='flex justify-center mt-2'>
+        //             <div>
+        //                 ${htmlString4LandCoverData}
+        //             </div>
+        //         </div>
+        //     `
+        //     : '';
+
+        // popupDiv.innerHTML = `
+        //     <div class='text-custom-light-blue'
+        //         data-testid="landcover-popup-content"
+        //     >
+        //         ${htmlString4AcquisitionDate}
+        //         ${htmlString4LandCoverList}
+        //     </div>
+        // `;
+
         const htmlString4AcquisitionDate = acquisitionDateFormatted
             ? `
-                <div class='mx-2 mt-4 pb-2 text-center'>
+                <div style='margin: 0 0.5rem; margin-top: 1rem; padding-bottom: 0.5rem; text-align: center;'>
                     <span>${t('satellite_imagery_acquisition_date', {
                         // ns: APP_NAME,
                         date: acquisitionDateFormatted, // Pass the formatted date dynamically for translation
@@ -183,14 +245,14 @@ const Popup: FC<Props> = ({
                       });
 
                       return `
-                        <div class='flex my-2 items-center'
+                        <div style='display: flex; margin-top: 0.5rem; margin-bottom: 0.5rem; align-items: center;'
                             data-testid="popup-item-${year}-${data.ClassName}"
                         >
-                            <div class='rounded-full mr-2 bg-custom-light-blue-80 w-[6px] h-[6px] ${
-                                year !== aquisitionYear ? 'opacity-0' : ''
-                            }'></div>
+                            <div style='border-radius: 9999px; margin-right: 0.5rem; background-color: var(--custom-light-blue-80); width: 6px; height: 6px; opacity: ${
+                                year !== aquisitionYear ? 0 : 1
+                            };'></div>
                             <span>${year}</span>
-                            <div class='rounded-full w-4 h-4 border-2 border-white mx-2' style="background-color:${backgroundColor};"></div>
+                            <div style='border-radius: 9999px; width: 1rem; height: 1rem; border: 2px solid white; margin: 0 0.5rem; background-color: ${backgroundColor};'></div>
                             <span>${classNameTranslated}</span>
                         </div>
                     `;
@@ -200,7 +262,7 @@ const Popup: FC<Props> = ({
 
         const htmlString4LandCoverList = htmlString4LandCoverData
             ? `
-                <div class='flex justify-center mt-2'>
+                <div style='display: flex; justify-content: center; margin-top: 0.5rem;'>
                     <div>
                         ${htmlString4LandCoverData}
                     </div>
@@ -209,7 +271,7 @@ const Popup: FC<Props> = ({
             : '';
 
         popupDiv.innerHTML = `
-            <div class='text-custom-light-blue'
+            <div style='color: rgb(191,238,254);'
                 data-testid="landcover-popup-content"
             >
                 ${htmlString4AcquisitionDate}
