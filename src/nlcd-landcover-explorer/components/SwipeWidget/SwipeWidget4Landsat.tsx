@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,
@@ -21,13 +21,14 @@ import {
     selectShouldShowSatelliteImageryLayer,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
+// import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import MapView from '@arcgis/core/views/MapView';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import { useLandsatLayer } from '../LandsatLayer/useLandsatLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import { SwipeComponent } from '@shared/components/SwipeWidget/SwipeComponent';
 
 type Props = {
     mapView?: MapView;
@@ -73,19 +74,47 @@ export const SwipeWidget4LandsatLayers: FC<Props> = ({
         visible: isSwipeWidgetVisible,
     });
 
+    useEffect(() => {
+        if (!leadingLayer || !trailingLayer) {
+            return;
+        }
+
+        // if the group layer is provided, add the swipe widget layers to it
+        // otherwise add the layers to the map in the map view
+        if (groupLayer) {
+            groupLayer.addMany([leadingLayer, trailingLayer]);
+        } else {
+            mapView?.map.addMany([leadingLayer, trailingLayer]);
+        }
+    }, [leadingLayer, trailingLayer]);
+
     return (
-        <SwipeWidget
+        // <SwipeWidget
+        //     visible={isSwipeWidgetVisible}
+        //     leadingLayer={leadingLayer}
+        //     trailingLayer={trailingLayer}
+        //     mapView={mapView}
+        //     groupLayer={groupLayer}
+        //     positionOnChange={(position) => {
+        //         dispatch(swipeWidgetHanlderPositionChanged(position));
+        //     }}
+        //     referenceInfoOnToggle={(shouldDisplay) => {
+        //         dispatch(toggleShowSwipeWidgetYearIndicator(shouldDisplay));
+        //     }}
+        // />
+
+        <SwipeComponent
             visible={isSwipeWidgetVisible}
             leadingLayer={leadingLayer}
             trailingLayer={trailingLayer}
             mapView={mapView}
-            groupLayer={groupLayer}
+            // groupLayer={groupLayer}
             positionOnChange={(position) => {
                 dispatch(swipeWidgetHanlderPositionChanged(position));
             }}
-            referenceInfoOnToggle={(shouldDisplay) => {
-                dispatch(toggleShowSwipeWidgetYearIndicator(shouldDisplay));
-            }}
+            // referenceInfoOnToggle={(shouldDisplay) => {
+            //     dispatch(toggleShowSwipeWidgetYearIndicator(shouldDisplay));
+            // }}
         />
     );
 };

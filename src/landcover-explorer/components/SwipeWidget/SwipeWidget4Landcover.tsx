@@ -21,11 +21,11 @@ import {
     selectShouldShowSatelliteImageryLayer,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
+// import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import MapView from '@arcgis/core/views/MapView';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
+// import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { SwipeComponent } from '@shared/components/SwipeWidget/SwipeComponent';
 // import { SENTINEL_2_LANDCOVER_10M_IMAGE_SERVICE_URL } from '@shared/services/sentinel-2-10m-landcover/config';

@@ -14,7 +14,7 @@
  */
 
 import React, { FC, useEffect } from 'react';
-import useLandCoverLayer from '../LandcoverLayer/useLandCoverLayer';
+// import useLandCoverLayer from '../LandcoverLayer/useLandCoverLayer';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSatelliteImageryLayerOutOfVisibleRange,
@@ -22,11 +22,11 @@ import {
     selectShouldShowSatelliteImageryLayer,
     selectYearsForSwipeWidgetLayers,
 } from '@shared/store/LandcoverExplorer/selectors';
-import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
+// import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import MapView from '@arcgis/core/views/MapView';
 import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
+// import { toggleShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/thunks';
 import useSentinel2Layer from '../Sentinel2Layer/useSentinel2Layer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { SwipeComponent } from '@shared/components/SwipeWidget/SwipeComponent';
