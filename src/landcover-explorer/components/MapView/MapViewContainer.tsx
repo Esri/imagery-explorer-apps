@@ -45,6 +45,7 @@ import { selectMapCenter, selectMapZoom } from '@shared/store/Map/selectors';
 import {
     centerChanged,
     extentUpdated,
+    isUpdatingChanged,
     resolutionUpdated,
     scaleUpdated,
     // swipeWidgetHanlderPositionChanged,
@@ -106,7 +107,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
         selectIsSatelliteImageryLayerOutOfVisibleRange
     );
 
-    const [isUpdating, setIsUpdating] = useState<boolean>(true);
+    // const [isUpdating, setIsUpdating] = useState<boolean>(true);
 
     // const { center, zoom } = useAppSelector(selectMapCenterAndZoom);
 
@@ -159,7 +160,8 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
                         dispatch(scaleUpdated(scale));
                     }}
                     mapViewUpdatingOnChange={(val: boolean) => {
-                        setIsUpdating(val);
+                        // setIsUpdating(val);
+                        dispatch(isUpdatingChanged(val));
                     }}
                 />
 
@@ -195,7 +197,7 @@ export const MapViewContainer: FC<MapViewContainerProps> = ({
             <ReferenceLayersControl shoudHide={animationMode !== null} />
 
             <MapInfoIndicators
-                isUpdating={isUpdating}
+                // isUpdating={isUpdating}
                 nameOfSatelliteImageryLayer={nameOfSatelliteImageryLayer}
                 isSwipeWidgetVisible={isSwipeWidgetVisible}
             />

@@ -15,7 +15,7 @@
 
 import MapView from '@arcgis/core/views/MapView';
 import React, { FC, useEffect } from 'react';
-import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
+// import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectIsSwipeModeOn,

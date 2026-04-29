@@ -72,36 +72,28 @@ const useLandCoverLayer = ({
     /**
      * get land cover layer using time extent for the input year
      */
-    const getLandCoverLayer = async () => {
-        try {
-            const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
+    const getLandCoverLayer = () => {
+        const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
 
-            layerRef.current = new ImageryLayer({
-                // URL to the imagery service
-                url: serviceUrl,
-                timeExtent,
-                rasterFunction: {
-                    functionName: rasterFunctionName,
-                    // getRasterFunctionByLandCoverClassName(activeLandCoverType),
-                },
-                effect: LandCoverLayerEffect,
-                // blendMode: LandCoverLayerBlendMode,
-                visible,
-            });
+        layerRef.current = new ImageryLayer({
+            // URL to the imagery service
+            url: serviceUrl,
+            timeExtent,
+            rasterFunction: {
+                functionName: rasterFunctionName,
+                // getRasterFunctionByLandCoverClassName(activeLandCoverType),
+            },
+            effect: LandCoverLayerEffect,
+            // blendMode: LandCoverLayerBlendMode,
+            visible,
+        });
 
-            setLandCoverLayer(layerRef.current);
-        } catch (error) {
-            console.error('Error creating land cover layer:', error);
-        }
+        setLandCoverLayer(layerRef.current);
     };
 
-    const updateTimeExtent = async () => {
-        try {
-            const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
-            layerRef.current.timeExtent = timeExtent as any;
-        } catch (error) {
-            console.error('Error updating time extent:', error);
-        }
+    const updateTimeExtent = () => {
+        const timeExtent = timeExtentByYear[year]; //await getTimeExtentByYear(year, serviceUrl);
+        layerRef.current.timeExtent = timeExtent as any;
     };
 
     useEffect(() => {

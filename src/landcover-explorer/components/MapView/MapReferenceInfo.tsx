@@ -25,15 +25,18 @@ import {
 } from '@shared/store/LandcoverExplorer/selectors';
 import { selectShowSwipeWidgetYearIndicator } from '@shared/store/LandcoverExplorer/selectors';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
-import { selectSwipeWidgetHandlerPosition } from '@shared/store/Map/selectors';
-import { t } from 'i18next';
+import {
+    selectIsMapUpdating,
+    selectSwipeWidgetHandlerPosition,
+} from '@shared/store/Map/selectors';
+// import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-    /**
-     * If true, map view is in process of update (e.g. fetch layer data, render layer)
-     */
-    isUpdating: boolean;
+    // /**
+    //  * If true, map view is in process of update (e.g. fetch layer data, render layer)
+    //  */
+    // isUpdating: boolean;
     /**
      * Indicate if swipe widget is currently visible
      */
@@ -64,10 +67,12 @@ const Sentinel2LoadingIndicator = () => {
  * - selected year on both sides of the swipe widget
  */
 const MapInfoIndicators: FC<Props> = ({
-    isUpdating,
+    // isUpdating,
     isSwipeWidgetVisible,
     nameOfSatelliteImageryLayer,
 }: Props) => {
+    const isUpdating = useAppSelector(selectIsMapUpdating);
+
     const { t } = useTranslation();
 
     const position = useAppSelector(selectSwipeWidgetHandlerPosition);
