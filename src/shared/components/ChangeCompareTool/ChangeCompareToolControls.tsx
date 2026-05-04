@@ -34,6 +34,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
 import { TotalVisibleAreaInfo } from '../TotalAreaInfo/TotalAreaInfo';
 import { useTranslation } from 'react-i18next';
+import { RangeSlider } from '../Slider/RangeSlider';
 
 type Props = {
     /**
@@ -92,8 +93,29 @@ export const ChangeCompareToolControls: FC<Props> = ({
 
         // console.log(min, max, fullRange, countOfTicks, tickLabels);
 
+        // a static legend rendered above the track, for visual reference only (no mouse events)
+        const legend: React.ReactNode = (
+            <div
+                className="w-full h-2"
+                style={{
+                    background: getChangeCompareLayerColorrampAsCSSGradient(),
+                }}
+            ></div>
+        );
+
         return (
-            <PixelRangeSlider
+            // <PixelRangeSlider
+            //     values={selectedRange}
+            //     valuesOnChange={(vals: number[]) => {
+            //         dispatch(selectedRangeUpdated(vals));
+            //     }}
+            //     min={min}
+            //     max={max}
+            //     steps={0.01}
+            //     showSliderTooltip={true}
+            // />
+
+            <RangeSlider
                 values={selectedRange}
                 valuesOnChange={(vals: number[]) => {
                     dispatch(selectedRangeUpdated(vals));
@@ -102,6 +124,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
                 max={max}
                 steps={0.01}
                 showSliderTooltip={true}
+                legend={legend}
             />
         );
     };
@@ -147,7 +170,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
             return null;
         }
 
-        return <div className="w-full mt-12">{content}</div>;
+        return <div className="w-full mt-4">{content}</div>;
     };
 
     const totalVisibleAreaInfo = useMemo(() => {
@@ -177,13 +200,12 @@ export const ChangeCompareToolControls: FC<Props> = ({
     }
 
     return (
-        <div className={classNames('relative w-full h-[0px] pt-[50px]')}>
-            <div className="absolute top-3 w-full text-right ">
-                {/* <span className="text-xs">{legendTitle}</span> */}
+        <div className={classNames('relative w-full h-[0px]')}>
+            <div className="mt-3 mb-4 w-full text-right ">
                 <TotalVisibleAreaInfo label={totalVisibleAreaInfo} />
             </div>
 
-            <div className="relative w-full">
+            {/* <div className="relative w-full">
                 <div
                     className="w-full h-2"
                     style={{
@@ -191,7 +213,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
                             getChangeCompareLayerColorrampAsCSSGradient(),
                     }}
                 ></div>
-            </div>
+            </div> */}
 
             {getPixelRangeSlider()}
             {getLegendLabelText()}

@@ -62,6 +62,10 @@ type Props = {
      * Emits the updated [start, end] values whenever the user moves a handle or drags the segment
      */
     valuesOnChange: (vals: number[]) => void;
+    /**
+     * Optional static legend rendered above the track at full width, for visual reference only (no mouse events)
+     */
+    legend?: React.ReactNode;
 };
 
 type HandleType = 'min' | 'max';
@@ -176,6 +180,7 @@ export const RangeSlider: FC<Props> = ({
     tickLabels,
     showSliderTooltip,
     valuesOnChange,
+    legend,
 }) => {
     // track the position of the slider handles and whether the user is currently dragging a handle or the segment between them
     const [startValue, setStartValue] = useState(values[0]); // position of the left (min) handle
@@ -383,7 +388,17 @@ export const RangeSlider: FC<Props> = ({
                 <div
                     ref={trackRef}
                     className="absolute w-full h-[2px] bg-[var(--custom-slider-track-color)]"
-                />
+                >
+                    {/* Static legend — absolutely positioned above the track line at a fixed height, pointer events disabled */}
+                    {legend && (
+                        <div
+                            className="absolute bottom-full w-full pointer-events-none"
+                            // style={{ bottom: 'calc(50% + 2px)' }}
+                        >
+                            {legend}
+                        </div>
+                    )}
+                </div>
 
                 {/* Highlighted Range — draggable to shift both handles simultaneously */}
                 <div
