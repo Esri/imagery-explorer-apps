@@ -14,12 +14,13 @@
  */
 
 import React, { FC } from 'react';
-import { Slider } from '../Slider';
+// import { Slider } from '../Slider';
 import { ColorPicker } from './ColorPicker';
 import classNames from 'classnames';
 import { Tooltip } from '../Tooltip';
-import { use } from 'i18next';
+// import { use } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { CalciteSlider } from '../Slider/CalciteSlider';
 
 type Props = {
     /**
@@ -67,13 +68,24 @@ export const RenderingControls: FC<Props> = ({
             </div>
 
             <div className={classNames('flex-grow px-4')}>
-                <Slider
+                {/* <Slider
                     value={transparence}
                     showSliderTooltip={true}
                     tooltipTextFormatter={(val) => {
                         return Math.floor(val * 100).toString() + '%';
                     }}
                     onChange={transparenceOnChange}
+                /> */}
+                <CalciteSlider
+                    value={transparence}
+                    min={0}
+                    max={1}
+                    step={0.1}
+                    // scale={'s'}
+                    onChange={(val) => {
+                        console.log(val);
+                        transparenceOnChange(val);
+                    }}
                 />
             </div>
 

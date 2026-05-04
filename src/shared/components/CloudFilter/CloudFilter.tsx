@@ -15,9 +15,9 @@
 
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames';
-import { Slider } from '../Slider/Slider';
+// import { Slider } from '../Slider/Slider';
 import { useTranslation } from 'react-i18next';
-import { CalciteSlider } from '../Slider/CalciteSlider';
+// import { CalciteSlider } from '../Slider/CalciteSlider';
 import { CalciteSliderByValues } from '../Slider/CalidteSliderByValues';
 
 type Props = {
