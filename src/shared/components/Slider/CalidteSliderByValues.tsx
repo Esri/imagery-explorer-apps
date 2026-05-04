@@ -28,6 +28,7 @@ type Props = {
 export const CalciteSliderByValues: FC<Props> = ({
     value,
     steps,
+    scale = 'm',
     onChange,
 }) => {
     // Map indices to steps so the native slider always advances by 1
@@ -53,7 +54,7 @@ export const CalciteSliderByValues: FC<Props> = ({
             min={min}
             max={max}
             step={step}
-            scale={'s'}
+            scale={scale}
             fillPlacement="none"
             oncalciteSliderInput={(e) => {
                 const index = e.target.value as number;
