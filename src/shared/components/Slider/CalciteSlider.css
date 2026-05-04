@@ -1,6 +1,6 @@
 calcite-slider {
     --calcite-slider-handle-fill-color: var(--custom-light-blue-90);
-    --calcite-slider-track-color: #193d49;
+    --calcite-slider-track-color: var(--custom-slider-track-color);
     --calcite-color-text-3: var(--custom-light-blue-90);
     --calcite-color-brand: var(--custom-light-blue-90);
 }

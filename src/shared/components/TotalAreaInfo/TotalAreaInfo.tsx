@@ -35,10 +35,6 @@ export const TotalVisibleAreaInfo: FC<Props> = ({ label }: Props) => {
 
     const { t } = useTranslation();
 
-    if (totalArea === null) {
-        return null;
-    }
-
     const getFormattedArea = () => {
         if (!totalArea) {
             return 0;

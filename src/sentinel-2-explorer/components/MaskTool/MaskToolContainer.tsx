@@ -39,6 +39,7 @@ import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 import { useSentinel2MaskToolFullPixelValueRange } from './useSentinel2MaskToolFullPixelValueRange';
 import { useTranslation } from 'react-i18next';
+import { RangeSlider } from '@shared/components/Slider/RangeSlider';
 
 export const MaskToolContainer = () => {
     const { t } = useTranslation();
@@ -104,13 +105,25 @@ export const MaskToolContainer = () => {
             ) : (
                 <>
                     <div className={classNames('relative w-full h-[120px]')}>
-                        <div className="absolute top-3 right-0">
+                        <div className="text-right mb-4 mt-3">
                             <TotalVisibleAreaInfo
                                 label={t('estimated_mask_area')}
                             />
                         </div>
 
-                        <PixelRangeSlider
+                        {/* <PixelRangeSlider
+                            values={maskOptions.selectedRange}
+                            min={fullPixelValueRange[0]}
+                            max={fullPixelValueRange[1]}
+                            valuesOnChange={(values) => {
+                                dispatch(updateMaskLayerSelectedRange(values));
+                            }}
+                            countOfTicks={17}
+                            tickLabels={[-1, -0.5, 0, 0.5, 1]}
+                            showSliderTooltip={true}
+                        /> */}
+
+                        <RangeSlider
                             values={maskOptions.selectedRange}
                             min={fullPixelValueRange[0]}
                             max={fullPixelValueRange[1]}
