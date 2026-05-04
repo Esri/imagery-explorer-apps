@@ -31,6 +31,7 @@ import {
     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
 } from '@shared/services/landsat-level-2/config';
 import { useLandsatMaskToolFullPixelValueRange } from './useLandsatMaskToolFullPixelValueRange';
+import { RangeSlider } from '@shared/components/Slider/RangeSlider';
 
 export const SurfaceTempCelsiusPixelRangeSlider = () => {
     const dispatch = useAppDispatch();
@@ -46,7 +47,19 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
     }
 
     return (
-        <PixelRangeSlider
+        // <PixelRangeSlider
+        //     values={maskOptions.selectedRange}
+        //     min={fullPixelValueRange[0]}
+        //     max={fullPixelValueRange[1]}
+        //     steps={1}
+        //     valuesOnChange={(values) => {
+        //         dispatch(updateMaskLayerSelectedRange(values));
+        //     }}
+        //     countOfTicks={0}
+        //     tickLabels={[-30, -15, 0, 15, 30, 45, 60, 75, 90]}
+        //     showSliderTooltip={true}
+        // />
+        <RangeSlider
             values={maskOptions.selectedRange}
             min={fullPixelValueRange[0]}
             max={fullPixelValueRange[1]}
@@ -54,7 +67,7 @@ export const SurfaceTempCelsiusPixelRangeSlider = () => {
             valuesOnChange={(values) => {
                 dispatch(updateMaskLayerSelectedRange(values));
             }}
-            countOfTicks={0}
+            countOfTicks={9}
             tickLabels={[-30, -15, 0, 15, 30, 45, 60, 75, 90]}
             showSliderTooltip={true}
         />
@@ -82,7 +95,7 @@ export const SurfaceTempFarhenheitPixelRangeSlider = () => {
     }
 
     return (
-        <PixelRangeSlider
+        <RangeSlider
             values={rangeValues}
             min={fullPixelValueRange[0]}
             max={fullPixelValueRange[1]}

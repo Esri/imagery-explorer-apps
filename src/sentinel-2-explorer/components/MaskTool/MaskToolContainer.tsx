@@ -104,8 +104,8 @@ export const MaskToolContainer = () => {
                 <MaskToolWarnigMessage />
             ) : (
                 <>
-                    <div className={classNames('relative w-full h-[120px]')}>
-                        <div className="text-right mb-4 mt-3">
+                    <div className={classNames('relative w-full')}>
+                        <div className="relative mt-3 mb-4 text-right">
                             <TotalVisibleAreaInfo
                                 label={t('estimated_mask_area')}
                             />
@@ -136,7 +136,9 @@ export const MaskToolContainer = () => {
                         />
                     </div>
 
-                    <MaskLayerRenderingControls />
+                    <div className="mt-4">
+                        <MaskLayerRenderingControls />
+                    </div>
                 </>
             )}
         </div>
