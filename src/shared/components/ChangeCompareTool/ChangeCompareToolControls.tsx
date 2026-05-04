@@ -170,7 +170,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
             return null;
         }
 
-        return <div className="w-full mt-4">{content}</div>;
+        return <div className="w-full mt-3">{content}</div>;
     };
 
     const totalVisibleAreaInfo = useMemo(() => {
@@ -201,7 +201,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
 
     return (
         <div className={classNames('relative w-full h-[0px]')}>
-            <div className="mt-3 mb-4 w-full text-right ">
+            <div className="mt-3 mb-3 w-full text-right ">
                 <TotalVisibleAreaInfo label={totalVisibleAreaInfo} />
             </div>
 

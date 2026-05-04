@@ -446,7 +446,7 @@ export const RangeSlider: FC<Props> = ({
                             )}
                             style={{
                                 left: `${getPositionFromValue(tick)}%`,
-                                top: 'calc(50% + 12px)',
+                                top: 'calc(50% + 8px)',
                             }}
                         />
                     );
@@ -454,7 +454,7 @@ export const RangeSlider: FC<Props> = ({
             </div>
 
             {/* Tick Labels */}
-            <div className="relative h-4 mt-2">
+            <div className="relative h-4 mt-1">
                 {resolvedTickLabels.map((label, idx) => (
                     <span
                         key={idx}
