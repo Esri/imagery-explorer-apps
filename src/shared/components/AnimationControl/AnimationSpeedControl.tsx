@@ -25,6 +25,10 @@ type Props = {
      */
     speed: number;
     /**
+     * list of animation speed options that will be used to generate the slider steps.
+     */
+    speeedOptions?: number[];
+    /**
      * If true, uses larger and brighter styling for better visibility.
      * This is useful when the component is placed on the top right corner of the map view
      * along with other animation controls.
@@ -43,6 +47,10 @@ type AnimationSpeedSliderProps = {
      * current animation speed in millisecond
      */
     speedInMilliseonds: number;
+    /**
+     * list of animation speed options that will be used to generate the slider steps.
+     */
+    speedOptions?: number[];
     /**
      * scale of the slider, can be 's', 'm' or 'l'
      */
@@ -140,6 +148,7 @@ const SPEEDS = [2000, 1000, 800, 500, 400, 200, 100, 20, 0];
  */
 export const AnimationSpeedSlider: FC<AnimationSpeedSliderProps> = ({
     speedInMilliseonds,
+    speedOptions = SPEEDS,
     scale,
     speedOnChange,
 }) => {
@@ -162,7 +171,7 @@ export const AnimationSpeedSlider: FC<AnimationSpeedSliderProps> = ({
 
     return (
         <CalciteSliderByValues
-            steps={SPEEDS}
+            steps={speedOptions}
             value={speedInMilliseonds}
             scale={scale ?? 's'}
             onChange={(newSpeed) => {
@@ -179,6 +188,7 @@ export const AnimationSpeedSlider: FC<AnimationSpeedSliderProps> = ({
  */
 export const AnimationSpeedControl: FC<Props> = ({
     speed,
+    speeedOptions,
     shouldUseEnhancedStyle = false,
     onChange,
 }) => {
@@ -186,13 +196,14 @@ export const AnimationSpeedControl: FC<Props> = ({
 
     return (
         <div
-            className={classNames('relative flex-grow pl-1 pr-2', {
+            className={classNames('relative flex-grow', {
                 'use-enhanced-style': shouldUseEnhancedStyle,
                 'min-w-[80px]': shouldUseEnhancedStyle,
             })}
         >
             <AnimationSpeedSlider
                 speedInMilliseonds={speed}
+                speedOptions={speeedOptions}
                 scale={shouldUseEnhancedStyle ? 'm' : 's'}
                 speedOnChange={onChange}
             />
@@ -201,7 +212,7 @@ export const AnimationSpeedControl: FC<Props> = ({
                 className={classNames('absolute right-0 left-0 text-center', {
                     'text-xs': !shouldUseEnhancedStyle,
                     'text-base': shouldUseEnhancedStyle,
-                    'bottom-[-.75rem]': !shouldUseEnhancedStyle,
+                    'bottom-[-.8rem]': !shouldUseEnhancedStyle,
                     'bottom-[-1.5rem]': shouldUseEnhancedStyle,
                 })}
             >
@@ -210,6 +221,8 @@ export const AnimationSpeedControl: FC<Props> = ({
                         textShadow: shouldUseEnhancedStyle
                             ? '0 0 8px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1)'
                             : 'unset',
+                        pointerEvents: 'none',
+                        userSelect: 'none',
                     }}
                 >
                     {t('speed')}

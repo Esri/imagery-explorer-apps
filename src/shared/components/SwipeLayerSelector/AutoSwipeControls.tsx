@@ -30,10 +30,11 @@ import {
     AutoSwipeStatus,
     autoSwipeStatusChanged,
 } from '@shared/store/Map/reducer';
-import { Slider } from '../Slider';
+// import { Slider } from '../Slider';
 import classNames from 'classnames';
 import { delay } from '@shared/utils/snippets/delay';
 import { useTranslation } from 'react-i18next';
+import { AnimationSpeedControl } from '../AnimationControl/AnimationSpeedControl';
 
 export const AutoSwipeControls = () => {
     const dispatch = useAppDispatch();
@@ -82,11 +83,11 @@ export const AutoSwipeControls = () => {
     return (
         <div className="flex items-center">
             <div
-                className={classNames('flex-grow mx-2 mt-2', {
+                className={classNames('flex-grow mx-2', {
                     'is-disabled': !status,
                 })}
             >
-                <Slider
+                {/* <Slider
                     value={AUTO_SWIPE_SPEEDS.indexOf(speed)}
                     steps={sliderSteps}
                     onChange={(index) => {
@@ -101,7 +102,14 @@ export const AutoSwipeControls = () => {
 
                 <div className="text-xs text-center mt-1">
                     <span>{t('speed')}</span>
-                </div>
+                </div> */}
+                <AnimationSpeedControl
+                    speed={speed}
+                    speeedOptions={AUTO_SWIPE_SPEEDS}
+                    onChange={(val) => {
+                        dispatch(autoSwipeSpeedChanged(val));
+                    }}
+                />
             </div>
 
             <div className={'flex cursor-pointer items-center mx-1'}>

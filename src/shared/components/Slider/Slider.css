@@ -1,4 +1,4 @@
-.esri-slider-custom-style.esri-widget {
+/* .esri-slider-custom-style.esri-widget {
     background: transparent;
 }
 
@@ -48,4 +48,4 @@
 
 .show-slider-tooltip .esri-slider__anchor:hover:after {
     content: attr(aria-tooltip-text);
-}
+} */

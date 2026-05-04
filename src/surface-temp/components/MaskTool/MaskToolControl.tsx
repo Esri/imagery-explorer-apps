@@ -13,13 +13,14 @@
  * limitations under the License.
  */
 
-import { Slider } from '@shared/components/Slider';
+// import { Slider } from '@shared/components/Slider';
 import { maskLayerOpacityChanged } from '@shared/store/MaskTool/reducer';
 import { selectMaskLayerOpcity } from '@shared/store/MaskTool/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
+import { CalciteSlider } from '@shared/components/Slider/CalciteSlider';
 
 export const MaskLayerOpacityControl = () => {
     const dispatch = useAppDispatch();
@@ -38,7 +39,16 @@ export const MaskLayerOpacityControl = () => {
             </div>
 
             <div className={classNames('flex-grow pr-4')}>
-                <Slider
+                {/* <Slider
+                    value={opacity}
+                    onChange={(val) => {
+                        dispatch(maskLayerOpacityChanged(val));
+                    }}
+                /> */}
+                <CalciteSlider
+                    min={0}
+                    max={1}
+                    step={0.01}
                     value={opacity}
                     onChange={(val) => {
                         dispatch(maskLayerOpacityChanged(val));
