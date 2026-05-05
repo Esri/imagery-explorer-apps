@@ -351,10 +351,22 @@ export const RangeSlider: FC<Props> = ({
     }, [dragging, handleMouseMove, handleMouseUp]);
 
     // Determine the tick labels to display, using the provided tickLabels prop or defaulting to quarter-point labels if not provided
-    const resolvedTickLabels = useMemo(
-        () => (tickLabels?.length ? tickLabels : getTickLabels(min, max)),
-        [min, max, tickLabels]
-    );
+    const resolvedTickLabels = useMemo(() => {
+        const labels =
+            tickLabels && tickLabels.length > 0
+                ? tickLabels
+                : getTickLabels(min, max);
+
+        // there should not be more than 10 tick labels, so if there are too many, reduce them by only showing every other label until we have 10 or fewer
+        // if possible, we want to keep those labels as balanced as possible across the range, so we calculate a factor based on the total number of labels and filter accordingly
+        const MAX_LABELS = 10;
+        if (labels.length > MAX_LABELS) {
+            const factor = Math.ceil(labels.length / MAX_LABELS);
+            return labels.filter((_, idx) => idx % factor === 0);
+        }
+
+        return labels;
+    }, [min, max, tickLabels]);
 
     // Generate evenly-spaced tick positions from countOfTicks (or the default derived count)
     const ticks = useMemo(() => {
@@ -363,11 +375,15 @@ export const RangeSlider: FC<Props> = ({
                 ? countOfTicks
                 : getCountOfTicks(min, max)
         );
-        return Array.from({ length: count }, (_, i) =>
-            parseFloat(
-                (min + (i / (count - 1)) * (max - min)).toFixed(stepDecimals)
-            )
-        );
+        return Array.from({ length: count }, (_, i) => {
+            // Calculate the fraction of the way through the range (0 at min, 1 at max)
+            const fraction = i / (count - 1);
+
+            // Interpolate between min and max, then round to avoid floating-point drift
+            const rawValue = min + fraction * (max - min);
+
+            return parseFloat(rawValue.toFixed(stepDecimals));
+        });
     }, [min, max, countOfTicks, stepDecimals]);
 
     const formatTickLabel = (value: number) => {
