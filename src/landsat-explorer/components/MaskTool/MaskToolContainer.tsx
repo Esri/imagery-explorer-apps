@@ -38,7 +38,7 @@ import {
 import classNames from 'classnames';
 // import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { SpectralIndex } from '@typing/imagery-service';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
     SurfaceTempCelsiusPixelRangeSlider,
     SurfaceTempFarhenheitPixelRangeSlider,

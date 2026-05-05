@@ -23,13 +23,13 @@ import React, { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
 import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
-import {
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-level-2/config';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import {
+//     LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+//     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+//     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+//     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+// } from '@shared/services/landsat-level-2/config';
 import { useLandsatMaskToolFullPixelValueRange } from './useLandsatMaskToolFullPixelValueRange';
 import { RangeSlider } from '@shared/components/Slider/RangeSlider';
 

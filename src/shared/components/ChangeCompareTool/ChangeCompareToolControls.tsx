@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
     selectedRangeUpdated,
     selectedOption4ChangeCompareToolChanged,

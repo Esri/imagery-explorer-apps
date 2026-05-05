@@ -37,7 +37,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import { RadarIndex } from '@typing/imagery-service';
 import {
     SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE,
