@@ -185,7 +185,7 @@ export const CustomTimeSlider: FC<Props> = ({
                             className="absolute -translate-x-1/2 w-[0.5px] h-1 pointer-events-none bg-custom-light-blue-50"
                             style={{
                                 left: `${getPositionFromYear(year)}%`,
-                                top: 'calc(50% + 8px)',
+                                top: 'calc(50% + 12px)',
                             }}
                         />
                     ))}
@@ -215,7 +215,7 @@ export const CustomTimeSlider: FC<Props> = ({
             </div>
 
             {/* Year labels */}
-            <div className="relative h-4 mt-1">
+            <div className="relative h-4 mt-2">
                 {labelYears.map((year) => (
                     <span
                         key={year}
