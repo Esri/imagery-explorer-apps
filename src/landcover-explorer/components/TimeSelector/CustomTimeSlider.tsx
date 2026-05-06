@@ -22,8 +22,9 @@ import React, {
     useEffect,
 } from 'react';
 import classNames from 'classnames';
+import { isMobileDevice } from 'helper-toolkit-ts';
 
-const MAX_LABELS = 10;
+// const MAX_LABELS = 10;
 
 type Props = {
     /**
@@ -51,16 +52,18 @@ type Props = {
  * @returns
  */
 const getLabelYears = (years: number[]): number[] => {
-    if (years.length <= MAX_LABELS) return years;
+    const numberOfLabels = isMobileDevice() ? 5 : 10; // Show fewer labels on mobile to avoid clutter
+
+    if (years.length <= numberOfLabels) return years;
 
     const minYear = years[0];
     const maxYear = years[years.length - 1];
 
     const result: number[] = [];
 
-    const factor = Math.ceil((maxYear - minYear) / (MAX_LABELS - 1));
+    const factor = Math.ceil((maxYear - minYear) / (numberOfLabels - 1));
 
-    for (let i = 0; i < MAX_LABELS; i++) {
+    for (let i = 0; i < numberOfLabels; i++) {
         const targetYear = minYear + i * factor;
 
         // Find the closest available year to the targetYear
