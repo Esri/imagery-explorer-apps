@@ -8,9 +8,7 @@ import {
 import { AnimationStatus } from '@shared/store/UI/reducer';
 import React, { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TimeSliderWidget } from '../TimeSelector/TimeSliderWidget';
-import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
-import { get } from 'http';
+import { CustomTimeSlider } from '../TimeSelector/CustomTimeSlider';
 
 type AnimationStatusIndicatorProps = {
     animationStatus: AnimationStatus;
@@ -76,15 +74,11 @@ export const AnimationStatusIndicator: FC<AnimationStatusIndicatorProps> = ({
                 {getHeader()}
             </div>
             <div className="w-full mt-2 pointer-events-none ">
-                <TimeSliderWidget
-                    mode="instant"
+                <CustomTimeSlider
                     years={availableYears}
                     selectedYear={selectedYear}
-                    initialTimeExtent={{
-                        start: getUTCDate(selectedYear, 1, 1),
-                        end: getUTCDate(selectedYear, 1, 1),
-                    }}
                     visible={true}
+                    onChange={() => {}}
                 />
             </div>
         </div>
