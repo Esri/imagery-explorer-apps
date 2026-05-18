@@ -75,7 +75,7 @@ export const AppLayout = () => {
             <AppHeader />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
-                    <ModeSelector />
+                    <ModeSelector hideExploreSubModes={true} />
 
                     {shouldShowSecondaryControls && (
                         <ContainerOfSecondaryControls>

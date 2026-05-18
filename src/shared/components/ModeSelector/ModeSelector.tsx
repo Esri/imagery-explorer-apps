@@ -33,6 +33,11 @@ type Props = {
      */
     disabled: boolean;
     /**
+     * If true, the sub modes under 'explore' (i.e. 'dynamic' and 'find a scene') will be hidden, and users won't be able to switch between these two modes.
+     * This is used by app like Disaster Response Explorer, which only has one explore mode, so there is no need to show the explore sub modes in the Mode Selector.
+     */
+    hideExploreSubModes?: boolean;
+    /**
      * fires when app mode is changed
      * @param value
      * @returns
@@ -45,6 +50,7 @@ const ButtonWrapperClassnames = `relative mb-1 h-12`;
 export const ModeSelector: FC<Props> = ({
     selectedMode,
     disabled,
+    hideExploreSubModes = false,
     selectedModeOnChange,
 }: Props) => {
     const { t } = useTranslation();
@@ -124,7 +130,9 @@ export const ModeSelector: FC<Props> = ({
                     {exploreModes.map((mode) => (
                         <div
                             key={mode}
-                            className={classNames('relative mb-1')}
+                            className={classNames('relative mb-1', {
+                                hidden: hideExploreSubModes,
+                            })}
                             data-testid={`mode-selector-${mode}`}
                         >
                             <Button
