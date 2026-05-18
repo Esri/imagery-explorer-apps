@@ -10,3 +10,31 @@ const DISASTER_RESPONSE_RASTER_FUNCTIONS = [
 
 export type DisasterResponseRasterFunctionName =
     (typeof DISASTER_RESPONSE_RASTER_FUNCTIONS)[number];
+
+export enum DisasterResponseImageryServiceField {
+    OBJECTID = 'objectid',
+    NAME = 'name',
+    MINPS = 'minps',
+    MAXPS = 'maxps',
+    LOWPS = 'lowps',
+    HIGHPS = 'highps',
+    CATEGORY = 'category',
+    TAG = 'tag',
+    GROUP_NAME = 'groupname',
+    PRODUCT_NAME = 'productname',
+    CENTER_X = 'centerx',
+    CENTER_Y = 'centery',
+    ZORDER = 'zorder',
+    PROVIDER = 'provider',
+    EVENT = 'event',
+    TITLE = 'title',
+    DESCRIPTION = 'description',
+    PLATFORM = 'platform',
+    IMAGE_TYPE = 'image_type',
+    EVENT_START_DATE = 'event_start_date',
+    DATETIME = 'datetime',
+    CATALOG_ID = 'catalog_id',
+    CLOUDS_PERCENT = 'clouds_percent',
+    SHAPE = 'shape',
+    EVENT_TYPE = 'event_type',
+}

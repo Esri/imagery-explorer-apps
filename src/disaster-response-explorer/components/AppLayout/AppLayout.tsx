@@ -33,6 +33,9 @@ import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecon
 import { useTranslation } from 'react-i18next';
 import { Notification } from '@shared/components/Notification';
 import { SceneInfo } from '../SceneInfo';
+import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableLandsatScenes';
+import { EventSelector } from '../EventSelector';
+import { EventSceneSelector } from '../EventSceneSelector';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -41,11 +44,10 @@ export const AppLayout = () => {
 
     const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
-    // /**
-    //  * This custom hook gets invoked whenever the acquisition year, map center, or selected landsat missions
-    //  * changes, it will dispatch the query that finds the available landsat scenes.
-    //  */
-    // useQueryAvailableLandsatScenes();
+    /**
+     * Query the available Disaster Response scenes when the selected event changes
+     */
+    useQueryAvailableDisasterResponseScenes();
 
     useSaveAppState2HashParams();
 
@@ -78,12 +80,13 @@ export const AppLayout = () => {
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">
-                    <div className="ml-2 3xl:ml-0">
+                    <div className="ml-2 3xl:ml-0 flex gap-4">
                         {/* <Calendar>
                             <LandsatMissionFilter />
                             <CloudFilter />
                         </Calendar> */}
-                        <p>Placeholder for scene selection</p>
+                        <EventSelector />
+                        <EventSceneSelector />
                     </div>
 
                     {/* {mode === 'analysis' && (

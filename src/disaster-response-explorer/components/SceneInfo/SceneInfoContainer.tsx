@@ -23,8 +23,10 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { useDataFromSelectedImageryScene } from '@shared/components/SceneInfoTable/useDataFromSelectedScene';
-// import { getLandsatSceneByObjectId } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { useTranslation } from 'react-i18next';
+import { getDisasterResponseSceneByObjectId } from '@shared/services/disaster-response/getDisasterResponseScenes';
+import { DisasterResponseScene } from '@typing/imagery-service';
+import { APP_NAME } from '@shared/config';
 
 export const SceneInfoContainer = () => {
     const { t } = useTranslation();
@@ -32,67 +34,58 @@ export const SceneInfoContainer = () => {
     const mode = useAppSelector(selectAppMode);
 
     const fetchSceneByObjectId = useCallback(async (objectId: number) => {
-        // const res = await getLandsatSceneByObjectId(objectId);
-        const res = null as any;
+        const res = await getDisasterResponseSceneByObjectId(objectId);
         return res;
     }, []);
 
-    // const data =
-    //     useDataFromSelectedImageryScene<LandsatScene>(fetchSceneByObjectId);
+    const data =
+        useDataFromSelectedImageryScene<DisasterResponseScene>(
+            fetchSceneByObjectId
+        );
 
-    // const tableData: SceneInfoTableData[] = useMemo(() => {
-    //     if (!data) {
-    //         return [];
-    //     }
+    const tableData: SceneInfoTableData[] = useMemo(() => {
+        if (!data) {
+            return [];
+        }
 
-    //     const {
-    //         satellite,
-    //         row,
-    //         path,
-    //         acquisitionDate,
-    //         sensor,
-    //         formattedCloudCover,
-    //         // collectionCategory,
-    //         // collectionNumber,
-    //         correctionLevel,
-    //         // processingDate,
-    //         name,
-    //         sunAzimuth,
-    //         sunElevation,
-    //     } = data;
+        const { name, eventTimestamp, provider } = data;
 
-    //     return [
-    //         // the produt id is too long to be displayed in one row,
-    //         // therefore we need to split it into two separate rows
-    //         {
-    //             // name: 'Scene ID',
-    //             name: t('scene_id'),
-    //             value: name, //name.slice(0, 17),
-    //             clickToCopy: true,
-    //         },
-    //         // {
-    //         //     name: '',
-    //         //     value: name.slice(17),
-    //         // },
-    //         {
-    //             // name: 'Satellite',
-    //             name: t('satellite'),
-    //             value: satellite,
-    //         },
-    //     ];
-    // }, [data]);
-
-    const tableData = [
-        {
-            name: t('scene_id'),
-            value: 'placeholder scene id',
-            clickToCopy: true,
-        },
-        {
-            name: t('satellite'),
-            value: 'placeholder satellite',
-        },
-    ];
+        return [
+            // the produt id is too long to be displayed in one row,
+            // therefore we need to split it into two separate rows
+            {
+                // name: 'Scene ID',
+                name: t('scene_id'),
+                value: name,
+                clickToCopy: true,
+            },
+            {
+                name: t('provider', {
+                    ns: APP_NAME,
+                }),
+                value: provider,
+            },
+            {
+                name: t('event_timestamp', {
+                    ns: APP_NAME,
+                }),
+                value: formatInUTCTimeZone(
+                    eventTimestamp,
+                    `yyyy-MM-dd HH:mm:ss 'UTC'`
+                ),
+            },
+            {
+                name: t('event_type', {
+                    ns: APP_NAME,
+                }),
+                value: data.event,
+            },
+            {
+                name: t('cloud_cover'),
+                value: `${data.cloudPercent}%`,
+            },
+        ];
+    }, [data]);
 
     if (mode === 'dynamic' || mode === 'analysis') {
         return null;

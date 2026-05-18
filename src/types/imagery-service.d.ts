@@ -285,3 +285,56 @@ export type Sentinel1Scene = {
      */
     acquisitionMonth: number;
 };
+
+/**
+ * A disaster response imagery scene that is defined in the disaster response imagery service.
+ */
+export type DisasterResponseScene = {
+    objectId: number;
+    /**
+     * Name of the disaster response event that this scene belongs to, e.g. 'Cyclone-Ditwah-Sri-Lanka-Nov-2025', etc.
+     */
+    event: string;
+    /**
+     * Timestamp of when the event scene was acquired in unix timestamp.
+     */
+    eventTimestamp: number;
+    /**
+     * Timestamp of when the event started in unix timestamp.
+     */
+    eventStartDate: number;
+    /**
+     * Title of the disaster response scene that can be used in the UI
+     */
+    title: string;
+    /**
+     * Description of the disaster response scene that can be used in the UI to provide more information about the scene, such as the damage condition, etc.
+     */
+    description: string;
+    /**
+     * Name of the imagery scene: CycloneDitwahSriLankaNov2025_103001010C477F00_20250117``
+     */
+    name: string;
+    /**
+     * Provider of the imagery scene, e.g. 'Vantor'
+     */
+    provider: string;
+    platform: string;
+    /**
+     * Percent of cloud cover, the value ranges from 0 - 100
+     */
+    cloudPercent: number;
+    imageType: string;
+    /**
+     * Formatted acquisition date in string format like `2025-01-17` that can be used for display in the UI. The formatted acquisition date is derived from the `eventTimestamp` field.
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * Year when this scene was acquired, derived from the `eventTimestamp` field.
+     */
+    acquisitionYear: number;
+    /**
+     * Month when this scene was acquired, derived from the `eventTimestamp` field.
+     */
+    acquisitionMonth: number;
+};

@@ -1,4 +1,7 @@
 {
     "animation_metadata": "__Animation Metadata__",
-    "drx_attribution": "__attribution for disaster response explorer__"
+    "drx_attribution": "__attribution for disaster response explorer__",
+    "provider": "provider",
+    "event_timestamp": "event timestamp",
+    "event_type": "event type"
 }
