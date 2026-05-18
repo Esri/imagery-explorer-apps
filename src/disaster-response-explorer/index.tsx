@@ -25,6 +25,7 @@ import '@shared/components/calcite-components';
 import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 import { DISASTER_RESPONSE_EXPLORER_APP_ID } from '@shared/config';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
+import { Map } from './components/Map/Map';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -39,6 +40,7 @@ import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
         root.render(
             <ReduxProvider store={store}>
                 <ErrorBoundary>
+                    <Map />
                     <AppLayout />
                 </ErrorBoundary>
             </ReduxProvider>

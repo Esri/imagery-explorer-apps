@@ -21,6 +21,8 @@ import { getMapCenterFromHashParams } from '@shared/utils/url-hash-params';
 import { PartialRootState } from '@shared/store/configureStore';
 import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
+import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
+import { DisasterResponseRasterFunctionName } from '@shared/services/disaster-response/config';
 
 export const getPreloadedState4DRX = (): PartialRootState => {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
@@ -30,14 +32,26 @@ export const getPreloadedState4DRX = (): PartialRootState => {
      */
     const mapLocationFromHashParams = getMapCenterFromHashParams(hashParams);
 
+    const defaultRasterFunction: DisasterResponseRasterFunctionName =
+        'Natural Color for Visualization - DRA';
+
+    const preloadedState4ImageryScenes = getPreloadedState4ImageryScenes(
+        hashParams,
+        undefined,
+        defaultRasterFunction
+    );
+
     return {
         Map: getPreloadedState4Map(hashParams, undefined),
         UI: getPreloadedState4UI(hashParams, undefined),
-        // ImageryScenes: getPreloadedState4ImageryScenes(
-        //     hashParams,
-        //     randomInterestingPlace,
-        //     defaultRasterFunction
-        // ),
+        ImageryScenes: {
+            ...preloadedState4ImageryScenes,
+            // override the mode to "find a scene" if the mode is "dynamic" since DRX only supports "find a scene" mode
+            mode:
+                preloadedState4ImageryScenes.mode === 'dynamic'
+                    ? 'find a scene'
+                    : preloadedState4ImageryScenes.mode,
+        },
         // ImageryService: getPreloadedState4ImageryService(
         //     timeExtent,
         //     rasterFunctionInfo
