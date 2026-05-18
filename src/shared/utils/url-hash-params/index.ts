@@ -77,7 +77,8 @@ export type UrlHashParamKey =
     | 'tool' // hash params for active analysis tool
     | 'sentinel1' // hash params for Sentinel-1 scenes
     | 'autoSwipeSpeed' // hash params for auto-swipe feature
-    | 'hideBottomPanel'; // hash params for hiding bottom panel in the UI
+    | 'hideBottomPanel' // hash params for hiding bottom panel in the UI
+    | 'disasterResponseEvent'; // hash params for selected disaster response event
 
 const hashParams = new URLSearchParams();
 

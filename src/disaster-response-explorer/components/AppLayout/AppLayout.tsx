@@ -36,6 +36,7 @@ import { SceneInfo } from '../SceneInfo';
 import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableLandsatScenes';
 import { EventSelector } from '../EventSelector';
 import { EventSceneSelector } from '../EventSceneSelector';
+import { useSaveDRXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -50,6 +51,11 @@ export const AppLayout = () => {
     useQueryAvailableDisasterResponseScenes();
 
     useSaveAppState2HashParams();
+
+    /**
+     * Save the states specific to Disaster Response Explorer (e.g. selected event, selected scene) to hash params, so that the app state can be restored when users share the URL or revisit the app
+     */
+    useSaveDRXStatesToHashParams();
 
     if (IS_MOBILE_DEVICE) {
         return (

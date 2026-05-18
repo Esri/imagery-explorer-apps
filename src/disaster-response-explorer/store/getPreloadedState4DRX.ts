@@ -23,6 +23,7 @@ import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 import { DisasterResponseRasterFunctionName } from '@shared/services/disaster-response/config';
+import { getPreloadedState4DisasterResponseExplorer } from '@shared/store/DisasterResponse/getPreloadedState';
 
 export const getPreloadedState4DRX = (): PartialRootState => {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
@@ -52,9 +53,7 @@ export const getPreloadedState4DRX = (): PartialRootState => {
                     ? 'find a scene'
                     : preloadedState4ImageryScenes.mode,
         },
-        // ImageryService: getPreloadedState4ImageryService(
-        //     timeExtent,
-        //     rasterFunctionInfo
-        // ),
+        DisasterResponseExplorer:
+            getPreloadedState4DisasterResponseExplorer(hashParams),
     };
 };
