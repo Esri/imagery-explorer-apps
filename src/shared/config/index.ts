@@ -102,3 +102,18 @@ export const NLCD_LANDCOVER_EXPLORER_APP_ID =
  */
 export const SURFACE_TEMP_EXPLORER_APP_ID =
     ENV_SUREFACE_TEMP_EXPLORER_APP_ID || '';
+
+/**
+ * Application ID for Disaster Response Explorer app.
+ * Required for ArcGIS OAuth authentication for features such as saving web maps.
+ * This is defined in the environment variable `ENV_DISASTER_RESPONSE_EXPLORER_APP_ID` by Webpack DefinePlugin.
+ */
+export const DISASTER_RESPONSE_EXPLORER_APP_ID =
+    ENV_DISASTER_RESPONSE_EXPLORER_APP_ID || '';
+
+/**
+ * URL of the disaster response service for Disaster Response Explorer app.
+ * This is defined in the environment variable `ENV_DISASTER_RESPONSE_SERVICE_URL` by Webpack DefinePlugin.
+ */
+export const DISASTER_RESPONSE_SERVICE_URL =
+    ENV_DISASTER_RESPONSE_SERVICE_URL || '';
