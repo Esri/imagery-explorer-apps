@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { SwipeComponent4ImageryLayers } from '@shared/components/SwipeWidget/SwipeComponent4ImageryLayers';
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
+import { ZoomToExtentOfSelectedScene } from './ZoomToExtentOfSelectedScene';
 
 export const Map = () => {
     const dispatch = useAppDispatch();
@@ -75,6 +76,8 @@ export const Map = () => {
                     ns: APP_NAME,
                 })}
             />
+
+            <ZoomToExtentOfSelectedScene />
         </MapViewContainer>
     );
 };

@@ -33,7 +33,7 @@ import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecon
 import { useTranslation } from 'react-i18next';
 import { Notification } from '@shared/components/Notification';
 import { SceneInfo } from '../SceneInfo';
-import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableLandsatScenes';
+import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableDisasterResponseScenes';
 import { EventSelector } from '../EventSelector';
 import { EventSceneSelector } from '../EventSceneSelector';
 import { useSaveDRXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
