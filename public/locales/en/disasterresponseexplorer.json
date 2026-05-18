@@ -3,5 +3,6 @@
     "drx_attribution": "__attribution for disaster response explorer__",
     "provider": "provider",
     "event_timestamp": "event timestamp",
-    "event_type": "event type"
+    "event_type": "event type",
+    "select_event_from_timeline": "__Select an event from the timeline to view details here.__"
 }

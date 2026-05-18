@@ -95,5 +95,12 @@ export const SceneInfoContainer = () => {
     //     return null;
     // }
 
-    return <SceneInfoTable data={tableData} />;
+    return (
+        <SceneInfoTable
+            data={tableData}
+            noSelectionText={t('select_event_from_timeline', {
+                ns: APP_NAME,
+            })}
+        />
+    );
 };
