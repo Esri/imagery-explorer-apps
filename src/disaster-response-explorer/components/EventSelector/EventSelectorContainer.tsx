@@ -1,3 +1,5 @@
+import { Dropdown, DropdownData } from '@shared/components/Dropdown';
+import { APP_NAME } from '@shared/config';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     DisasterResponseEvent,
@@ -8,9 +10,12 @@ import {
     selectSelectedEventName,
 } from '@shared/store/DisasterResponse/selectors';
 import { updateSelectedDisasterResponseEvent } from '@shared/store/DisasterResponse/thunks';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const EventSelectorContainer = () => {
+    const { t } = useTranslation();
+
     const dispatch = useAppDispatch();
 
     const selectedEventName = useAppSelector(selectSelectedEventName);
@@ -19,28 +24,23 @@ export const EventSelectorContainer = () => {
         selectDisasterResponseEvents
     );
 
-    return (
-        <div className="max-h-60 overflow-y-auto max-w-xs">
-            <h3>Event Selector</h3>
-            {events.map((d) => {
-                const selected = selectedEventName === d.event;
-                return (
-                    <div
-                        key={d.event}
-                        className={`cursor-pointer ${selected ? ' text-white font-medium' : 'text-white/50'}`}
-                        onClick={() => {
-                            console.log('selected event: ', d);
-                            dispatch(
-                                updateSelectedDisasterResponseEvent(d.event)
-                            );
-                        }}
-                    >
-                        <p className="text-sm">{d.title}</p>
+    const eventDropdownOptions: DropdownData[] = useMemo(() => {
+        return events.map((d) => ({
+            label: d.title,
+            value: d.event,
+            selected: selectedEventName === d.event,
+        }));
+    }, [events, selectedEventName]);
 
-                        {/* <p className='text-xs'>{d.description}</p> */}
-                    </div>
-                );
+    return (
+        <Dropdown
+            title={t('select_event', {
+                ns: APP_NAME,
             })}
-        </div>
+            data={eventDropdownOptions}
+            onChange={(eventName) => {
+                dispatch(updateSelectedDisasterResponseEvent(eventName));
+            }}
+        />
     );
 };

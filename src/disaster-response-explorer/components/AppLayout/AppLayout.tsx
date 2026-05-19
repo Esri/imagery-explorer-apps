@@ -37,6 +37,7 @@ import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAva
 import { EventSelector } from '../EventSelector';
 import { EventSceneSelector } from '../EventSceneSelector';
 import { useSaveDRXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
+import { CloudFilter } from '@shared/components/CloudFilter';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -91,8 +92,9 @@ export const AppLayout = () => {
                             <LandsatMissionFilter />
                             <CloudFilter />
                         </Calendar> */}
-                        <EventSelector />
-                        <EventSceneSelector />
+                        <EventSceneSelector>
+                            <CloudFilter />
+                        </EventSceneSelector>
                     </div>
 
                     {/* {mode === 'analysis' && (
