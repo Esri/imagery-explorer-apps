@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
+import { selectDisasterResponseEventScene } from '@shared/store/DisasterResponse/thunks';
 import {
     selectAvailableScenes,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
-import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -33,9 +33,7 @@ export const EventSceneSelectorContainer = () => {
                                 }
                             )}
                             onClick={() => {
-                                dispatch(
-                                    updateObjectIdOfSelectedScene(d.objectId)
-                                );
+                                dispatch(selectDisasterResponseEventScene(d));
                             }}
                         >
                             <span>

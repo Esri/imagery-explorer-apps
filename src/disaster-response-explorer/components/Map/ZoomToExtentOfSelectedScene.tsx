@@ -3,7 +3,12 @@ import MapView from '@arcgis/core/views/MapView';
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
 import { getExtentByObjectId } from '@shared/services/helpers/getExtentById';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectQueryParams4SceneInSelectedMode } from '@shared/store/ImageryScene/selectors';
+import {
+    selectAppMode,
+    selectQueryParams4SceneInSelectedMode,
+} from '@shared/store/ImageryScene/selectors';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import { is } from 'date-fns/locale';
 import React, { FC, useEffect } from 'react';
 
 type Props = {
@@ -14,6 +19,10 @@ export const ZoomToExtentOfSelectedScene: FC<Props> = ({ mapView }) => {
     const queryParamsForSelectedScene = useAppSelector(
         selectQueryParams4SceneInSelectedMode
     );
+
+    const mode = useAppSelector(selectAppMode);
+
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const zommToScene = async (objectId: number) => {
         try {
@@ -52,8 +61,13 @@ export const ZoomToExtentOfSelectedScene: FC<Props> = ({ mapView }) => {
             return;
         }
 
+        // no need to zoom to scene when in swipe mode or animation is playing
+        if (mode === 'swipe' || isAnimationPlaying) {
+            return;
+        }
+
         zommToScene(objectId);
-    }, [queryParamsForSelectedScene]);
+    }, [queryParamsForSelectedScene, mode, isAnimationPlaying]);
 
     return null;
 };

@@ -11,6 +11,9 @@ const DISASTER_RESPONSE_RASTER_FUNCTIONS = [
 export type DisasterResponseRasterFunctionName =
     (typeof DISASTER_RESPONSE_RASTER_FUNCTIONS)[number];
 
+export const DisasterResponseImageryServiceDefaultRenderer: DisasterResponseRasterFunctionName =
+    'Natural Color for Visualization - DRA';
+
 export enum DisasterResponseImageryServiceField {
     OBJECTID = 'objectid',
     NAME = 'name',

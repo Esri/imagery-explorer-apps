@@ -20,15 +20,23 @@ import { DisasterResponseScene } from '@typing/imagery-service';
 // } from '@shared/utils/date-time/formatDateString';
 // import { selectQueryParams4SceneInSelectedMode } from '../ImageryScene/selectors';
 import {
+    DefaultQueryParams4ImageryScene,
     ImageryScene,
     availableImageryScenesUpdated,
+    queryParams4MainSceneChanged,
+    queryParams4SecondarySceneChanged,
+    queryParamsListChanged,
 } from '../ImageryScene/reducer';
 import { getDisasterResponseScenes } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import {
     disasterResponseSecenesUpdated,
     selectedEventUpdated,
 } from './reducer';
-import { updateObjectIdOfSelectedScene } from '../ImageryScene/thunks';
+import {
+    updateAcquisitionDate,
+    updateObjectIdOfSelectedScene,
+} from '../ImageryScene/thunks';
+import { DisasterResponseImageryServiceDefaultRenderer } from '@shared/services/disaster-response/config';
 
 let abortController: AbortController = null;
 /**
@@ -92,8 +100,39 @@ export const queryAvailableDisasterResponseScenes =
 
 export const updateSelectedDisasterResponseEvent =
     (eventName: string) => (dispatch: StoreDispatch) => {
-        // reset selected scene when selected event changes as the selected scene is no longer associated with the newly selected event
-        dispatch(updateObjectIdOfSelectedScene(null));
+        // reset the query params for main scene and secondary scene as they are no longer associated with the newly selected event
+        dispatch(
+            queryParams4MainSceneChanged({
+                ...DefaultQueryParams4ImageryScene,
+                rasterFunctionName:
+                    DisasterResponseImageryServiceDefaultRenderer,
+            })
+        );
 
+        dispatch(
+            queryParams4SecondarySceneChanged({
+                ...DefaultQueryParams4ImageryScene,
+                rasterFunctionName:
+                    DisasterResponseImageryServiceDefaultRenderer,
+            })
+        );
+
+        // reset query params list as well since the query params are no longer associated with the newly selected event
+        dispatch(
+            queryParamsListChanged({
+                queryParams: [],
+                selectedItemID: '',
+            })
+        );
+
+        // update selected event in the store
         dispatch(selectedEventUpdated(eventName));
+    };
+
+export const selectDisasterResponseEventScene =
+    (imageScene: ImageryScene) => (dispatch: StoreDispatch) => {
+        dispatch(updateObjectIdOfSelectedScene(imageScene.objectId));
+
+        // Acquisition date is not used to select the scene, but the Swipe and Animation mode UIs require it for display.
+        dispatch(updateAcquisitionDate(imageScene.formattedAcquisitionDate));
     };
