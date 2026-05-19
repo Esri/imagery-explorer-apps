@@ -9,7 +9,7 @@ export const getDistinctListOfEvents = async (): Promise<
     DisasterResponseEvent[]
 > => {
     const params = new URLSearchParams({
-        where: '1=1',
+        where: `${DisasterResponseImageryServiceField.EVENT} IS NOT NULL`,
         outFields: [
             DisasterResponseImageryServiceField.EVENT,
             DisasterResponseImageryServiceField.TITLE,
