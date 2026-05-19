@@ -9,6 +9,7 @@ import {
 import { selectDisasterResponseEventScene } from '@shared/store/DisasterResponse/thunks';
 import {
     selectAvailableScenes,
+    selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
@@ -16,6 +17,7 @@ import React, { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EventSelector } from '../EventSelector';
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
+import { format } from 'date-fns';
 
 type Props = {
     children?: React.ReactNode;
@@ -59,6 +61,8 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         );
     }, [imageryScenesGroupedByAcquisitionDate]);
 
+    const cloudCover = useAppSelector(selectCloudCover);
+
     return (
         <div
             className={classNames('select-none', {
@@ -85,12 +89,12 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 {children}
             </div>
 
-            <div className="w-[800px] relative py-2 h-[120px]">
-                {/* horizontal line — inset by half dot-width (5px) so it starts/ends at dot centers */}
-                <div className="absolute top-[13px] left-[5px] right-[5px] h-px bg-custom-light-blue-50" />
+            <div className="w-[800px] relative py-2 h-[156px]">
+                {/* horizontal line — top-[49px] = 8px padding + 36px label area + 5px half-dot */}
+                <div className="absolute top-[49px] left-0 right-0 h-px bg-custom-light-blue-50" />
 
-                {/* dots — px-[5px] shifts first/last dot centers to align with line ends */}
-                <div className="flex justify-between px-[5px] h-full">
+                {/* dots — justify-evenly gives equal space around every dot including edges */}
+                <div className="flex justify-evenly h-full">
                     {uniqueAcquisitionDates.map((date) => {
                         // const isSelected = queryParams?.acquisitionDate === date;
                         const scenes =
@@ -98,8 +102,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                         return (
                             <div
                                 key={date}
-                                className="h-full relative flex flex-col items-center cursor-pointer group"
-                                title={date}
+                                className="h-full relative flex flex-col items-center justify-even cursor-pointer group"
                                 onClick={() => {
                                     if (scenes?.length) {
                                         dispatch(
@@ -110,6 +113,12 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                     }
                                 }}
                             >
+                                {/* tilted label above the dot */}
+                                <div className="h-[36px] relative w-0 overflow-visible flex items-end">
+                                    <span className="absolute bottom-[2px] left-0 origin-bottom-left -rotate-45 text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none">
+                                        {date}
+                                    </span>
+                                </div>
                                 {/* dot on horizontal line */}
                                 <div
                                     className={classNames(
@@ -119,26 +128,41 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                 {/* dotted vertical line + scene boxes below the dot */}
                                 <div className="flex-1 relative flex flex-col justify-start items-center mt-1 gap-[1px] overflow-hidden">
                                     {/* dotted vertical line spanning full height */}
-                                    {/* <div className='absolute top-0 bottom-0 left-1/2 w-0 border-l border-dashed border-custom-light-blue-50' /> */}
+                                    <div className="absolute top-0 h-16 left-1/2 w-0 border-l border-dashed border-custom-light-blue-50 z-0" />
                                     {scenes.map((scene) => {
                                         const isSceneSelected =
                                             queryParams?.objectIdOfSelectedScene ===
                                             scene.objectId;
+
+                                        const withinCloudCoverThreshold =
+                                            scene.cloudCover <=
+                                            cloudCover * 100;
+                                        console.log(
+                                            'cloud cover',
+                                            scene.cloudCover,
+                                            cloudCover,
+                                            withinCloudCoverThreshold
+                                        );
+
                                         return (
                                             <div
                                                 key={scene.objectId}
                                                 className={classNames(
-                                                    'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 transition-colors',
+                                                    'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 bg-custom-background',
                                                     {
-                                                        'bg-custom-light-blue-50':
+                                                        'bg-custom-calendar-background-selected':
                                                             isSceneSelected,
-                                                        'bg-custom-background hover:bg-custom-light-blue-30':
+                                                        'border-custom-calendar-border-selected':
+                                                            isSceneSelected,
+                                                        'bg-custom-calendar-background-available':
+                                                            withinCloudCoverThreshold &&
                                                             !isSceneSelected,
                                                     }
                                                 )}
-                                                title={
-                                                    scene.formattedAcquisitionDate
-                                                }
+                                                title={format(
+                                                    scene.acquisitionDate,
+                                                    'yyyy-MM-dd HH:mm:ss'
+                                                )}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     dispatch(
