@@ -34,6 +34,10 @@ export type DisasterResponseEvent = {
      * Description of the disaster response event, e.g. "Cyclone Ditwah caused severe flooding in Sri Lanka, affecting nearly 1 million residents. Hundreds are reported missing or dead. The rainfall also triggered multiple fatal landslides."
      */
     description: string;
+    /**
+     * Start date of the disaster response event in unix timestamp, e.g. 1700000000, etc.
+     */
+    startDate: number;
 };
 
 /**
@@ -53,7 +57,7 @@ export type DRXState = {
      * list of all disaster response events to be displayed in the dropdown for selection
      */
     events: {
-        byEvent: {
+        byEventId: {
             [key: string]: DisasterResponseEvent;
         };
         eventIds: string[];
@@ -70,7 +74,7 @@ export const initialDRXState: DRXState = {
         objectIds: [],
     },
     events: {
-        byEvent: {},
+        byEventId: {},
         eventIds: [],
     },
     selectedEvent: '',
@@ -102,28 +106,6 @@ const slice = createSlice({
                 byObjectId,
             };
         },
-        eventsUpdated: (
-            state,
-            action: PayloadAction<DisasterResponseEvent[]>
-        ) => {
-            const eventIds: string[] = [];
-
-            const byEvent: {
-                [key: string]: DisasterResponseEvent;
-            } = {};
-
-            for (const event of action.payload) {
-                const { event: eventId } = event;
-
-                eventIds.push(eventId);
-                byEvent[eventId] = event;
-            }
-
-            state.events = {
-                eventIds,
-                byEvent,
-            };
-        },
         selectedEventUpdated: (state, action: PayloadAction<string>) => {
             state.selectedEvent = action.payload;
         },
@@ -132,10 +114,7 @@ const slice = createSlice({
 
 const { reducer } = slice;
 
-export const {
-    disasterResponseSecenesUpdated,
-    eventsUpdated,
-    selectedEventUpdated,
-} = slice.actions;
+export const { disasterResponseSecenesUpdated, selectedEventUpdated } =
+    slice.actions;
 
 export default reducer;

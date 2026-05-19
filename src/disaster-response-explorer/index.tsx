@@ -26,6 +26,7 @@ import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
 import { DISASTER_RESPONSE_EXPLORER_APP_ID } from '@shared/config';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import { Map } from './components/Map/Map';
+import { getDistinctListOfEvents } from '@shared/services/disaster-response/getListOfEvents';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -35,7 +36,12 @@ import { Map } from './components/Map/Map';
             appId: DISASTER_RESPONSE_EXPLORER_APP_ID,
         });
 
-        const store = getDRXStore();
+        const events = await getDistinctListOfEvents();
+        // console.log('fetched events: ', events);
+
+        const store = getDRXStore({
+            events,
+        });
 
         root.render(
             <ReduxProvider store={store}>

@@ -24,8 +24,13 @@ import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 import { DisasterResponseRasterFunctionName } from '@shared/services/disaster-response/config';
 import { getPreloadedState4DisasterResponseExplorer } from '@shared/store/DisasterResponse/getPreloadedState';
+import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
 
-export const getPreloadedState4DRX = (): PartialRootState => {
+export const getPreloadedState4DRX = ({
+    events,
+}: {
+    events: DisasterResponseEvent[];
+}): PartialRootState => {
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
     /**
@@ -53,7 +58,9 @@ export const getPreloadedState4DRX = (): PartialRootState => {
                     ? 'find a scene'
                     : preloadedState4ImageryScenes.mode,
         },
-        DisasterResponseExplorer:
-            getPreloadedState4DisasterResponseExplorer(hashParams),
+        DisasterResponseExplorer: getPreloadedState4DisasterResponseExplorer({
+            hashParams,
+            events,
+        }),
     };
 };
