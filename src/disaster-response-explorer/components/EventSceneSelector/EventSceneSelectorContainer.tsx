@@ -18,7 +18,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
-import React, { FC, useCallback, useMemo, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EventSelector } from '../EventSelector';
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
@@ -27,6 +27,16 @@ import { APP_NAME } from '@shared/config';
 
 type Props = {
     children?: React.ReactNode;
+};
+
+/**
+ * Object that groups available scenes for the selected event by acquisition date.
+ * The list of scenes in each group is sorted by acquisition time in descending order (newest scene first).
+ */
+type SceneGroupByAcquisitionDate = {
+    acquisitionDate: string;
+    shouldShowYearLabel: boolean;
+    scenes: ImageryScene[];
 };
 
 export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
@@ -64,47 +74,69 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         );
     }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
 
-    const imageryScenesGroupedByAcquisitionDate = useMemo(() => {
-        const groupedResult: Record<
-            string,
-            {
-                scenes: ImageryScene[];
-                shouldShowYearLabel: boolean;
+    const imageryScenesGroupedByAcquisitionDate: SceneGroupByAcquisitionDate[][] =
+        useMemo(() => {
+            const paginatedResult: SceneGroupByAcquisitionDate[][] = [];
+
+            const groupedResultMap: {
+                [acquisitionDate: string]: SceneGroupByAcquisitionDate;
+            } = {};
+
+            const maxNumberOfAcquisitionDatesPerPage = 16;
+
+            let currentPage: SceneGroupByAcquisitionDate[] = [];
+
+            for (let i = 0; i < scenesInCurrentMapExtent.length; i++) {
+                const scene = scenesInCurrentMapExtent[i];
+
+                const previousScene = scenesInCurrentMapExtent[i - 1];
+
+                // only need to show year label when the year is different from previous scene, or it's the first scene in the list
+                const shouldShowYearLabel =
+                    i === 0 ||
+                    (previousScene &&
+                        previousScene.acquisitionYear !==
+                            scene.acquisitionYear);
+
+                const acquisitionDate = scene.formattedAcquisitionDate;
+
+                if (!groupedResultMap[acquisitionDate]) {
+                    groupedResultMap[acquisitionDate] = {
+                        acquisitionDate,
+                        scenes: [],
+                        shouldShowYearLabel,
+                    };
+
+                    currentPage.push(groupedResultMap[acquisitionDate]);
+
+                    if (
+                        currentPage.length >= maxNumberOfAcquisitionDatesPerPage
+                    ) {
+                        paginatedResult.push(currentPage);
+                        currentPage = [];
+                    }
+                }
+
+                groupedResultMap[acquisitionDate].scenes.unshift(scene);
             }
-        > = {};
 
-        for (let i = 0; i < scenesInCurrentMapExtent.length; i++) {
-            const scene = scenesInCurrentMapExtent[i];
-
-            const previousScene = scenesInCurrentMapExtent[i - 1];
-
-            // only need to show year label when the year is different from previous scene, or it's the first scene in the list
-            const shouldShowYearLabel =
-                i === 0 ||
-                (previousScene &&
-                    previousScene.acquisitionYear !== scene.acquisitionYear);
-
-            const acquisitionDate = scene.formattedAcquisitionDate;
-
-            if (!groupedResult[acquisitionDate]) {
-                groupedResult[acquisitionDate] = {
-                    scenes: [],
-                    shouldShowYearLabel,
-                };
+            // push the remaining page if it has any scene groups
+            if (currentPage.length) {
+                paginatedResult.push(currentPage);
             }
 
-            groupedResult[acquisitionDate].scenes.unshift(scene);
-        }
+            return paginatedResult;
+        }, [imageryScenes, scenesInCurrentMapExtent]);
 
-        return groupedResult;
-    }, [imageryScenes, scenesInCurrentMapExtent]);
+    const [pageIndexBeingDisplayed, setPageIndexBeingDisplayed] =
+        React.useState(0);
 
-    const uniqueAcquisitionDates = useMemo(() => {
-        return Object.keys(imageryScenesGroupedByAcquisitionDate).sort(
-            (a, b) => {
-                return a.localeCompare(b);
-            }
-        );
+    const currentPageOfSceneGroups =
+        imageryScenesGroupedByAcquisitionDate[pageIndexBeingDisplayed] || [];
+
+    useEffect(() => {
+        // reset to first page whenever the list of scenes in current map extent changes (e.g. when user pans the map or selects a different event)
+        setPageIndexBeingDisplayed(0);
     }, [imageryScenesGroupedByAcquisitionDate]);
 
     const cloudCover = useAppSelector(selectCloudCover);
@@ -174,13 +206,12 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 {/* horizontal line separates label on text and the scene cells */}
                 <div className="absolute top-[26px] left-0 right-0 h-px bg-custom-light-blue-10" />
 
-                {uniqueAcquisitionDates.map((date) => {
+                {currentPageOfSceneGroups.map((d) => {
                     // const isSelected = queryParams?.acquisitionDate === date;
-                    const scenes =
-                        imageryScenesGroupedByAcquisitionDate[date].scenes;
-                    const shouldShowYearLabel =
-                        imageryScenesGroupedByAcquisitionDate[date]
-                            .shouldShowYearLabel;
+                    const scenes = d.scenes;
+                    const shouldShowYearLabel = d.shouldShowYearLabel;
+                    const date = d.acquisitionDate;
+
                     return (
                         <div
                             key={date}
