@@ -58,6 +58,12 @@ export type DRXState = {
      */
     objectIdsOfScenesInCurrentMapExtent: number[];
     /**
+     * object id of the scene to show footprint on the map.
+     * This happens when user hovers over the scene box in the EventSceneSelector component, which provides a visual hint on the map about the location of the scene.
+     * The footprint will be hidden when user stops hovering over the scene box, which sets this value back to null.
+     */
+    objectIdOfHoveredScene: number;
+    /**
      * list of all disaster response events to be displayed in the dropdown for selection
      */
     events: {
@@ -78,6 +84,7 @@ export const initialDRXState: DRXState = {
         objectIds: [],
     },
     objectIdsOfScenesInCurrentMapExtent: [],
+    objectIdOfHoveredScene: null,
     events: {
         byEventId: {},
         eventIds: [],
@@ -120,6 +127,12 @@ const slice = createSlice({
         ) => {
             state.objectIdsOfScenesInCurrentMapExtent = action.payload;
         },
+        objectIdOfHoveredSceneUpdated: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.objectIdOfHoveredScene = action.payload;
+        },
     },
 });
 
@@ -129,6 +142,7 @@ export const {
     disasterResponseSecenesUpdated,
     selectedEventUpdated,
     objectIdsOfScenesInCurrentMapExtentUpdated,
+    objectIdOfHoveredSceneUpdated,
 } = slice.actions;
 
 export default reducer;

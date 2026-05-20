@@ -17,3 +17,6 @@ export const selectObjectIdsOfScenesInCurrentMapExtent = createSelector(
         state.DisasterResponseExplorer.objectIdsOfScenesInCurrentMapExtent,
     (objectIdsOfScenesInCurrentMapExtent) => objectIdsOfScenesInCurrentMapExtent
 );
+
+export const selectObjectIdOfHoveredScene = (state: RootState) =>
+    state.DisasterResponseExplorer.objectIdOfHoveredScene;

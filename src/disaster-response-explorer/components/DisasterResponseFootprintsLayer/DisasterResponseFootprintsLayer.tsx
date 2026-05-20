@@ -1,13 +1,18 @@
+import { ResourceHandle } from '@arcgis/core/core/Handles';
 import Polygon from '@arcgis/core/geometry/Polygon';
 import Graphic from '@arcgis/core/Graphic';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import FeatureLayerView from '@arcgis/core/views/layers/FeatureLayerView';
 import MapView from '@arcgis/core/views/MapView';
 import { DisasterResponseImageryServiceField } from '@shared/services/disaster-response/config';
 import { getEventFootprints } from '@shared/services/disaster-response/getEventFootprints';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { objectIdsOfScenesInCurrentMapExtentUpdated } from '@shared/store/DisasterResponse/reducer';
-import { selectSelectedEventName } from '@shared/store/DisasterResponse/selectors';
+import {
+    selectObjectIdOfHoveredScene,
+    selectSelectedEventName,
+} from '@shared/store/DisasterResponse/selectors';
 import {
     selectMapCenter,
     selectMapExtent,
@@ -28,16 +33,25 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
 
     const layerRef = useRef<FeatureLayer>(null);
 
+    const layerViewRef = useRef<FeatureLayerView>(null);
+
     const selectedEvent = useAppSelector(selectSelectedEventName);
 
     const mapCenter = useAppSelector(selectMapCenter);
 
     const zoom = useAppSelector(selectMapZoom);
 
+    const objectIdOfHoveredScene = useAppSelector(selectObjectIdOfHoveredScene);
+
+    // A handler can be used to remove any previous highlight when applying a new one
+    const hoverHighlightRef = useRef<ResourceHandle>(null);
+
     // load the footprints for the selected event and add them to the map
     const updateLayer = async () => {
         if (layerRef.current) {
             groupLayer.remove(layerRef.current);
+            layerRef.current = null;
+            layerViewRef.current = null;
         }
 
         if (!selectedEvent) return;
@@ -77,6 +91,10 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
                 },
             },
             effect: 'drop-shadow(0px 0px 5px #000)',
+        });
+
+        mapView.whenLayerView(layerRef.current).then((layerView) => {
+            layerViewRef.current = layerView as FeatureLayerView;
         });
 
         groupLayer.add(layerRef.current, 0);
@@ -120,6 +138,22 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
 
         queryFeaturesInCurrentExtent();
     }, [mapCenter, zoom]);
+
+    useEffect(() => {
+        if (!mapView) return;
+
+        if (!layerViewRef.current) return;
+
+        if (hoverHighlightRef.current) {
+            hoverHighlightRef.current.remove();
+        }
+
+        if (objectIdOfHoveredScene) {
+            hoverHighlightRef.current = layerViewRef.current.highlight(
+                objectIdOfHoveredScene
+            );
+        }
+    }, [objectIdOfHoveredScene]);
 
     return null;
 };

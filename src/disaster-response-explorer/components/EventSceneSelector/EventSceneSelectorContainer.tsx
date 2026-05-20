@@ -1,7 +1,10 @@
 import { useShouldDisableCalendar } from '@shared/components/Calendar/useShouldDisableCalendar';
 import { Dropdown, DropdownData } from '@shared/components/Dropdown';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
-import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
+import {
+    DisasterResponseEvent,
+    objectIdOfHoveredSceneUpdated,
+} from '@shared/store/DisasterResponse/reducer';
 import {
     selectDisasterResponseEvents,
     selectObjectIdsOfScenesInCurrentMapExtent,
@@ -14,7 +17,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
-import React, { FC, useMemo } from 'react';
+import React, { FC, useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EventSelector } from '../EventSelector';
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
@@ -71,6 +74,26 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     }, [imageryScenesGroupedByAcquisitionDate]);
 
     const cloudCover = useAppSelector(selectCloudCover);
+
+    const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const handleSceneHover = useCallback(
+        (scene: ImageryScene) => {
+            if (hoverTimerRef.current) {
+                clearTimeout(hoverTimerRef.current);
+            }
+
+            hoverTimerRef.current = setTimeout(() => {
+                if (!scene) {
+                    dispatch(objectIdOfHoveredSceneUpdated(null));
+                    return;
+                }
+
+                dispatch(objectIdOfHoveredSceneUpdated(scene.objectId));
+            }, 100);
+        },
+        [dispatch]
+    );
 
     return (
         <div
@@ -174,6 +197,12 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                                         )
                                                     );
                                                 }}
+                                                onMouseOver={() => {
+                                                    handleSceneHover(scene);
+                                                }}
+                                                onMouseOut={() =>
+                                                    handleSceneHover(null)
+                                                }
                                             />
                                         );
                                     })}
