@@ -7,6 +7,7 @@ import {
 } from '@shared/store/DisasterResponse/reducer';
 import {
     selectDisasterResponseEvents,
+    selectIsLoadingScenes,
     selectObjectIdsOfScenesInCurrentMapExtent,
     selectSelectedEventName,
 } from '@shared/store/DisasterResponse/selectors';
@@ -43,6 +44,8 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
      * if true, Calendar should be disbaled
      */
     const shouldBeDisabled = useShouldDisableCalendar();
+
+    const isLoadingScenes = useAppSelector(selectIsLoadingScenes);
 
     const objectIdsOfScenesInCurrentMapExtent = useAppSelector(
         selectObjectIdsOfScenesInCurrentMapExtent
@@ -127,6 +130,29 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     );
 
     const getContent = () => {
+        if (isLoadingScenes || objectIdsOfScenesInCurrentMapExtent === null) {
+            return (
+                <div className="w-full text-center">
+                    <div
+                        className="w-full flex items-center justify-center mt-2"
+                        style={
+                            {
+                                '--calcite-loader-spacing': '0px',
+                            } as React.CSSProperties
+                        }
+                    >
+                        <calcite-loader scale="s" label="loading" />
+                    </div>
+
+                    <p className="text-sm text-custom-light-blue-50 mt-1">
+                        {t('loading_scenes_for_selected_event', {
+                            ns: APP_NAME,
+                        })}
+                    </p>
+                </div>
+            );
+        }
+
         if (!selectedEventName || !scenesInCurrentMapExtent?.length) {
             return (
                 <div className="w-full flex items-center justify-center text-center">

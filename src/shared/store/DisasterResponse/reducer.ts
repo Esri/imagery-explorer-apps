@@ -76,6 +76,10 @@ export type DRXState = {
      * Unique identifier for the selected disaster response event, e.g. 'Cyclone-Ditwah-Sri-Lanka-Nov-2025', etc.
      */
     selectedEvent: string;
+    /**
+     * If true, it is in the process of fetching disaster response scenes for a selected event
+     */
+    isLoadingScenes: boolean;
 };
 
 export const initialDRXState: DRXState = {
@@ -83,13 +87,14 @@ export const initialDRXState: DRXState = {
         byObjectId: {},
         objectIds: [],
     },
-    objectIdsOfScenesInCurrentMapExtent: [],
+    objectIdsOfScenesInCurrentMapExtent: null,
     objectIdOfHoveredScene: null,
     events: {
         byEventId: {},
         eventIds: [],
     },
     selectedEvent: '',
+    isLoadingScenes: false,
 };
 
 const slice = createSlice({
@@ -133,6 +138,9 @@ const slice = createSlice({
         ) => {
             state.objectIdOfHoveredScene = action.payload;
         },
+        isLoadingScenesUpdated: (state, action: PayloadAction<boolean>) => {
+            state.isLoadingScenes = action.payload;
+        },
     },
 });
 
@@ -143,6 +151,7 @@ export const {
     selectedEventUpdated,
     objectIdsOfScenesInCurrentMapExtentUpdated,
     objectIdOfHoveredSceneUpdated,
+    isLoadingScenesUpdated,
 } = slice.actions;
 
 export default reducer;

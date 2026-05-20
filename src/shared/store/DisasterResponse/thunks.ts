@@ -30,6 +30,7 @@ import {
 import { getDisasterResponseScenes } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import {
     disasterResponseSecenesUpdated,
+    isLoadingScenesUpdated,
     objectIdsOfScenesInCurrentMapExtentUpdated,
     selectedEventUpdated,
 } from './reducer';
@@ -55,6 +56,9 @@ export const queryAvailableDisasterResponseScenes =
         abortController = new AbortController();
 
         try {
+            // set loading to true to show loading indicator in the UI while fetching scenes for the selected event
+            dispatch(isLoadingScenesUpdated(true));
+
             const scenes = await getDisasterResponseScenes({
                 eventName,
                 signal: abortController.signal,
@@ -96,6 +100,9 @@ export const queryAvailableDisasterResponseScenes =
             dispatch(availableImageryScenesUpdated(imageryScenes));
         } catch (err) {
             console.error(err);
+        } finally {
+            // set loading to false to hide loading indicator in the UI after fetching scenes for the selected event
+            dispatch(isLoadingScenesUpdated(false));
         }
     };
 

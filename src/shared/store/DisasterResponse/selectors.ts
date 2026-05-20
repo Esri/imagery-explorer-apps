@@ -20,3 +20,6 @@ export const selectObjectIdsOfScenesInCurrentMapExtent = createSelector(
 
 export const selectObjectIdOfHoveredScene = (state: RootState) =>
     state.DisasterResponseExplorer.objectIdOfHoveredScene;
+
+export const selectIsLoadingScenes = (state: RootState) =>
+    state.DisasterResponseExplorer.isLoadingScenes;
