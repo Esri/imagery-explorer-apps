@@ -79,28 +79,39 @@ export const ZoomToExtentOfSelectedSceneAndEvent: FC<Props> = ({ mapView }) => {
         }
     };
 
+    // useEffect(() => {
+    //     if (!queryParamsForSelectedScene) {
+    //         return;
+    //     }
+
+    //     // no need to zoom to scene when in swipe mode or animation is playing
+    //     if (mode === 'swipe' || isAnimationPlaying) {
+    //         return;
+    //     }
+
+    //     const objectId = queryParamsForSelectedScene.objectIdOfSelectedScene;
+
+    //     // if there is an object id in the query params for the selected scene, zoom to that scene
+    //     if (objectId) {
+    //         zommToScene(objectId);
+    //         return;
+    //     }
+
+    //     if (selectedEvent) {
+    //         zoomToEvent(selectedEvent);
+    //     }
+    // }, [queryParamsForSelectedScene, selectedEvent, mode, isAnimationPlaying]);
+
     useEffect(() => {
-        if (!queryParamsForSelectedScene) {
-            return;
-        }
-
-        // no need to zoom to scene when in swipe mode or animation is playing
-        if (mode === 'swipe' || isAnimationPlaying) {
-            return;
-        }
-
-        const objectId = queryParamsForSelectedScene.objectIdOfSelectedScene;
-
-        // if there is an object id in the query params for the selected scene, zoom to that scene
-        if (objectId) {
-            zommToScene(objectId);
+        // no need to zoom to event when in swipe mode or animation is playing
+        if (isAnimationPlaying) {
             return;
         }
 
         if (selectedEvent) {
             zoomToEvent(selectedEvent);
         }
-    }, [queryParamsForSelectedScene, selectedEvent, mode, isAnimationPlaying]);
+    }, [selectedEvent, isAnimationPlaying]);
 
     return null;
 };

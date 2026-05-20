@@ -63,6 +63,7 @@ import { WEB_MAP_ID } from '@shared/constants/map';
 import { AnimationStartButtonOnMapContainer } from '../AnimationStartButtonOnMap/AnimationStartButtonOnMapContainer';
 
 type Props = {
+    hideMapCenterIndicator?: boolean;
     /**
      * emits when user click on the map
      * @param point map point where the user has clicked
@@ -72,7 +73,11 @@ type Props = {
     children?: React.ReactNode;
 };
 
-const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
+const MapViewContainer: FC<Props> = ({
+    hideMapCenterIndicator = false,
+    mapOnClick,
+    children,
+}) => {
     const dispatch = useAppDispatch();
 
     const center = useAppSelector(selectMapCenter) as [number, number];
@@ -183,7 +188,9 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
 
                 <MapCenterIndicator
                     shouldShow={
-                        mode === 'find a scene' && anchorLocation === null
+                        mode === 'find a scene' &&
+                        anchorLocation === null &&
+                        !hideMapCenterIndicator
                     }
                 />
 

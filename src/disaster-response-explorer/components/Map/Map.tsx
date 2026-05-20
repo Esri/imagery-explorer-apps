@@ -37,6 +37,7 @@ export const Map = () => {
 
     return (
         <MapViewContainer
+            hideMapCenterIndicator={true}
             mapOnClick={(point) => {
                 console.log('map clicked at: ', point);
             }}
