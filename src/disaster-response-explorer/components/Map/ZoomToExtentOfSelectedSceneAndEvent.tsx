@@ -118,7 +118,7 @@ export const ZoomToExtentOfSelectedSceneAndEvent: FC<Props> = ({ mapView }) => {
         if (selectedEvent) {
             zoomToEvent(selectedEvent);
         }
-    }, [selectedEvent, isAnimationPlaying]);
+    }, [selectedEvent]);
 
     return null;
 };
