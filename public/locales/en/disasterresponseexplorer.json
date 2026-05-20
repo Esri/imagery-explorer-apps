@@ -7,6 +7,6 @@
     "select_event_from_timeline": "__Select an event from the timeline to view details here.__",
     "select_event": "Select Event",
     "select_an_event_to_see_available_scenes": "Select an event first to explore available scenes.",
-    "no_scenes_in_current_map_extent": "No scenes available in the current map extent. Please pan or zoom the map to find available scenes.",
+    "no_scenes_in_current_map_extent": "No scenes available in the current map extent. Please pan the map to find available scenes.",
     "loading_scenes_for_selected_event": "Loading scenes for the selected event..."
 }
