@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { EventSelector } from '../EventSelector';
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { format } from 'date-fns';
+import { APP_NAME } from '@shared/config';
 
 type Props = {
     children?: React.ReactNode;
@@ -31,6 +32,8 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     const { t } = useTranslation();
 
     const dispatch = useAppDispatch();
+
+    const selectedEventName = useAppSelector(selectSelectedEventName);
 
     const imageryScenes = useAppSelector(selectAvailableScenes);
 
@@ -45,6 +48,19 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         selectObjectIdsOfScenesInCurrentMapExtent
     );
 
+    const scenesInCurrentMapExtent = useMemo(() => {
+        if (
+            !imageryScenes?.length ||
+            !objectIdsOfScenesInCurrentMapExtent?.length
+        ) {
+            return [];
+        }
+
+        return imageryScenes.filter((scene) =>
+            objectIdsOfScenesInCurrentMapExtent.includes(scene.objectId)
+        );
+    }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
+
     const imageryScenesGroupedByAcquisitionDate = useMemo(() => {
         const groupedResult: Record<
             string,
@@ -53,10 +69,6 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 shouldShowYearLabel: boolean;
             }
         > = {};
-
-        const scenesInCurrentMapExtent = imageryScenes.filter((scene) =>
-            objectIdsOfScenesInCurrentMapExtent.includes(scene.objectId)
-        );
 
         for (let i = 0; i < scenesInCurrentMapExtent.length; i++) {
             const scene = scenesInCurrentMapExtent[i];
@@ -78,11 +90,11 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 };
             }
 
-            groupedResult[acquisitionDate].scenes.push(scene);
+            groupedResult[acquisitionDate].scenes.unshift(scene);
         }
 
         return groupedResult;
-    }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
+    }, [imageryScenes, scenesInCurrentMapExtent]);
 
     const uniqueAcquisitionDates = useMemo(() => {
         return Object.keys(imageryScenesGroupedByAcquisitionDate).sort(
@@ -114,6 +126,122 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         [dispatch]
     );
 
+    const getContent = () => {
+        if (!selectedEventName || !scenesInCurrentMapExtent?.length) {
+            return (
+                <div className="w-full flex items-center justify-center text-center">
+                    <p className="text-sm text-custom-light-blue-50 max-w-sm mt-6">
+                        {!selectedEventName
+                            ? t('select_an_event_to_see_available_scenes', {
+                                  ns: APP_NAME,
+                              })
+                            : t('no_scenes_in_current_map_extent', {
+                                  ns: APP_NAME,
+                              })}
+                    </p>
+                </div>
+            );
+        }
+
+        return (
+            <div className="flex justify-evenly h-full pb-4">
+                {/* horizontal line separates label on text and the scene cells */}
+                <div className="absolute top-[26px] left-0 right-0 h-px bg-custom-light-blue-10" />
+
+                {uniqueAcquisitionDates.map((date) => {
+                    // const isSelected = queryParams?.acquisitionDate === date;
+                    const scenes =
+                        imageryScenesGroupedByAcquisitionDate[date].scenes;
+                    const shouldShowYearLabel =
+                        imageryScenesGroupedByAcquisitionDate[date]
+                            .shouldShowYearLabel;
+                    return (
+                        <div
+                            key={date}
+                            className="h-full relative flex flex-col items-center justify-even shrink-0"
+                            onClick={() => {
+                                if (scenes?.length) {
+                                    dispatch(
+                                        selectDisasterResponseEventScene(
+                                            scenes[0]
+                                        )
+                                    );
+                                }
+                            }}
+                        >
+                            <div className="w-full text-center flex flex-col justify-end h-5">
+                                <p
+                                    className={classNames(
+                                        'text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none',
+                                        {
+                                            hidden:
+                                                shouldShowYearLabel === false,
+                                        }
+                                    )}
+                                >
+                                    {date.slice(0, 4)}
+                                </p>
+                                <p className="text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none mt-[2px]">
+                                    {date.slice(5)}
+                                </p>
+                            </div>
+
+                            <div className="flex-1 relative flex flex-col justify-end items-center gap-[1px] overflow-hidden mt-1">
+                                {/* dotted vertical line spanning full height */}
+                                <div className="absolute top-0 h-full left-1/2 w-0 border-l border-dashed border-custom-light-blue-50 z-0" />
+
+                                {scenes.map((scene) => {
+                                    const isSceneSelected =
+                                        queryParams?.objectIdOfSelectedScene ===
+                                        scene.objectId;
+
+                                    const withinCloudCoverThreshold =
+                                        scene.cloudCover <= cloudCover * 100;
+
+                                    return (
+                                        <div
+                                            key={scene.objectId}
+                                            className={classNames(
+                                                'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 bg-custom-background cursor-pointer',
+                                                {
+                                                    'bg-custom-calendar-background-selected':
+                                                        isSceneSelected,
+                                                    'border-custom-calendar-border-selected':
+                                                        isSceneSelected,
+                                                    'bg-custom-calendar-background-available':
+                                                        withinCloudCoverThreshold &&
+                                                        !isSceneSelected,
+                                                }
+                                            )}
+                                            title={format(
+                                                scene.acquisitionDate,
+                                                'yyyy-MM-dd HH:mm:ss'
+                                            )}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                dispatch(
+                                                    selectDisasterResponseEventScene(
+                                                        scene
+                                                    )
+                                                );
+                                            }}
+                                            onMouseOver={() => {
+                                                handleSceneHover(scene);
+                                            }}
+                                            onMouseOut={() =>
+                                                handleSceneHover(null)
+                                            }
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
     return (
         <div
             className={classNames('select-none', {
@@ -141,103 +269,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
             </div>
 
             <div className="w-[800px] relative pt-1 pb-2 mt-1 h-[150px]">
-                <div className="flex justify-evenly h-full pb-4">
-                    {/* horizontal line separates label on text and the scene cells */}
-                    <div className="absolute top-[26px] left-0 right-0 h-px bg-custom-light-blue-10" />
-
-                    {uniqueAcquisitionDates.map((date) => {
-                        // const isSelected = queryParams?.acquisitionDate === date;
-                        const scenes =
-                            imageryScenesGroupedByAcquisitionDate[date].scenes;
-                        const shouldShowYearLabel =
-                            imageryScenesGroupedByAcquisitionDate[date]
-                                .shouldShowYearLabel;
-                        return (
-                            <div
-                                key={date}
-                                className="h-full relative flex flex-col items-center justify-even shrink-0"
-                                onClick={() => {
-                                    if (scenes?.length) {
-                                        dispatch(
-                                            selectDisasterResponseEventScene(
-                                                scenes[0]
-                                            )
-                                        );
-                                    }
-                                }}
-                            >
-                                <div className="w-full text-center flex flex-col justify-end h-5">
-                                    <p
-                                        className={classNames(
-                                            'text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none',
-                                            {
-                                                hidden:
-                                                    shouldShowYearLabel ===
-                                                    false,
-                                            }
-                                        )}
-                                    >
-                                        {date.slice(0, 4)}
-                                    </p>
-                                    <p className="text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none mt-[2px]">
-                                        {date.slice(5)}
-                                    </p>
-                                </div>
-
-                                <div className="flex-1 relative flex flex-col justify-end items-center gap-[1px] overflow-hidden mt-1">
-                                    {/* dotted vertical line spanning full height */}
-                                    <div className="absolute top-0 h-full left-1/2 w-0 border-l border-dashed border-custom-light-blue-50 z-0" />
-
-                                    {scenes.map((scene) => {
-                                        const isSceneSelected =
-                                            queryParams?.objectIdOfSelectedScene ===
-                                            scene.objectId;
-
-                                        const withinCloudCoverThreshold =
-                                            scene.cloudCover <=
-                                            cloudCover * 100;
-
-                                        return (
-                                            <div
-                                                key={scene.objectId}
-                                                className={classNames(
-                                                    'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 bg-custom-background cursor-pointer',
-                                                    {
-                                                        'bg-custom-calendar-background-selected':
-                                                            isSceneSelected,
-                                                        'border-custom-calendar-border-selected':
-                                                            isSceneSelected,
-                                                        'bg-custom-calendar-background-available':
-                                                            withinCloudCoverThreshold &&
-                                                            !isSceneSelected,
-                                                    }
-                                                )}
-                                                title={format(
-                                                    scene.acquisitionDate,
-                                                    'yyyy-MM-dd HH:mm:ss'
-                                                )}
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    dispatch(
-                                                        selectDisasterResponseEventScene(
-                                                            scene
-                                                        )
-                                                    );
-                                                }}
-                                                onMouseOver={() => {
-                                                    handleSceneHover(scene);
-                                                }}
-                                                onMouseOut={() =>
-                                                    handleSceneHover(null)
-                                                }
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                {getContent()}
             </div>
         </div>
     );
