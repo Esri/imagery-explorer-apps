@@ -28,6 +28,7 @@ import { APP_NAME } from '@shared/config';
 import { SwipeComponent4ImageryLayers } from '@shared/components/SwipeWidget/SwipeComponent4ImageryLayers';
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
 import { ZoomToExtentOfSelectedSceneAndEvent } from './ZoomToExtentOfSelectedSceneAndEvent';
+import { DisasterResponseFootprintsLayer } from '../DisasterResponseFootprintsLayer/DisasterResponseFootprintsLayer';
 
 export const Map = () => {
     const dispatch = useAppDispatch();
@@ -45,6 +46,8 @@ export const Map = () => {
                 // hillsahde/terrain layer can be added on top of it with blend mode applied
                 index={1}
             >
+                <DisasterResponseFootprintsLayer />
+
                 <DisasterResponseLayer />
 
                 <MapPopUpAnchorPoint />

@@ -137,12 +137,6 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                         const withinCloudCoverThreshold =
                                             scene.cloudCover <=
                                             cloudCover * 100;
-                                        console.log(
-                                            'cloud cover',
-                                            scene.cloudCover,
-                                            cloudCover,
-                                            withinCloudCoverThreshold
-                                        );
 
                                         return (
                                             <div
