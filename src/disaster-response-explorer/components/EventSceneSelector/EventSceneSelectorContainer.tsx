@@ -46,21 +46,40 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     );
 
     const imageryScenesGroupedByAcquisitionDate = useMemo(() => {
-        const groupedResult: Record<string, ImageryScene[]> = {};
+        const groupedResult: Record<
+            string,
+            {
+                scenes: ImageryScene[];
+                shouldShowYearLabel: boolean;
+            }
+        > = {};
 
         const scenesInCurrentMapExtent = imageryScenes.filter((scene) =>
             objectIdsOfScenesInCurrentMapExtent.includes(scene.objectId)
         );
 
-        scenesInCurrentMapExtent.forEach((scene) => {
+        for (let i = 0; i < scenesInCurrentMapExtent.length; i++) {
+            const scene = scenesInCurrentMapExtent[i];
+
+            const previousScene = scenesInCurrentMapExtent[i - 1];
+
+            // only need to show year label when the year is different from previous scene, or it's the first scene in the list
+            const shouldShowYearLabel =
+                i === 0 ||
+                (previousScene &&
+                    previousScene.acquisitionYear !== scene.acquisitionYear);
+
             const acquisitionDate = scene.formattedAcquisitionDate;
 
             if (!groupedResult[acquisitionDate]) {
-                groupedResult[acquisitionDate] = [];
+                groupedResult[acquisitionDate] = {
+                    scenes: [],
+                    shouldShowYearLabel,
+                };
             }
 
-            groupedResult[acquisitionDate].push(scene);
-        });
+            groupedResult[acquisitionDate].scenes.push(scene);
+        }
 
         return groupedResult;
     }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
@@ -107,7 +126,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 </span>
             </div>
 
-            <div className="flex mb-2 items-center justify-between">
+            <div className="flex mb-0 items-center justify-between">
                 <div className="flex items-center flex-grow">
                     <div
                         className="relative w-[250px]"
@@ -121,20 +140,22 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 {children}
             </div>
 
-            <div className="w-[800px] relative py-2 h-[156px]">
-                {/* horizontal line — top-[49px] = 8px padding + 36px label area + 5px half-dot */}
-                <div className="absolute top-[49px] left-0 right-0 h-px bg-custom-light-blue-50" />
+            <div className="w-[800px] relative pt-1 pb-2 mt-1 h-[150px]">
+                <div className="flex justify-evenly h-full pb-4">
+                    {/* horizontal line separates label on text and the scene cells */}
+                    <div className="absolute top-[26px] left-0 right-0 h-px bg-custom-light-blue-10" />
 
-                {/* dots — justify-evenly gives equal space around every dot including edges */}
-                <div className="flex justify-evenly h-full">
                     {uniqueAcquisitionDates.map((date) => {
                         // const isSelected = queryParams?.acquisitionDate === date;
                         const scenes =
-                            imageryScenesGroupedByAcquisitionDate[date];
+                            imageryScenesGroupedByAcquisitionDate[date].scenes;
+                        const shouldShowYearLabel =
+                            imageryScenesGroupedByAcquisitionDate[date]
+                                .shouldShowYearLabel;
                         return (
                             <div
                                 key={date}
-                                className="h-full relative flex flex-col items-center justify-even cursor-pointer group"
+                                className="h-full relative flex flex-col items-center justify-even shrink-0"
                                 onClick={() => {
                                     if (scenes?.length) {
                                         dispatch(
@@ -145,22 +166,28 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                     }
                                 }}
                             >
-                                {/* tilted label above the dot */}
-                                <div className="h-[36px] relative w-0 overflow-visible flex items-end">
-                                    <span className="absolute bottom-[2px] left-0 origin-bottom-left -rotate-45 text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none">
-                                        {date}
-                                    </span>
+                                <div className="w-full text-center flex flex-col justify-end h-5">
+                                    <p
+                                        className={classNames(
+                                            'text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none',
+                                            {
+                                                hidden:
+                                                    shouldShowYearLabel ===
+                                                    false,
+                                            }
+                                        )}
+                                    >
+                                        {date.slice(0, 4)}
+                                    </p>
+                                    <p className="text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none mt-[2px]">
+                                        {date.slice(5)}
+                                    </p>
                                 </div>
-                                {/* dot on horizontal line */}
-                                <div
-                                    className={classNames(
-                                        'w-[10px] h-[10px] rounded-full border border-custom-light-blue-50  bg-custom-background pointer-events-none'
-                                    )}
-                                />
-                                {/* dotted vertical line + scene boxes below the dot */}
-                                <div className="flex-1 relative flex flex-col justify-start items-center mt-1 gap-[1px] overflow-hidden">
+
+                                <div className="flex-1 relative flex flex-col justify-end items-center gap-[1px] overflow-hidden mt-1">
                                     {/* dotted vertical line spanning full height */}
-                                    <div className="absolute top-0 h-16 left-1/2 w-0 border-l border-dashed border-custom-light-blue-50 z-0" />
+                                    <div className="absolute top-0 h-full left-1/2 w-0 border-l border-dashed border-custom-light-blue-50 z-0" />
+
                                     {scenes.map((scene) => {
                                         const isSceneSelected =
                                             queryParams?.objectIdOfSelectedScene ===
@@ -174,7 +201,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                             <div
                                                 key={scene.objectId}
                                                 className={classNames(
-                                                    'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 bg-custom-background',
+                                                    'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 bg-custom-background cursor-pointer',
                                                     {
                                                         'bg-custom-calendar-background-selected':
                                                             isSceneSelected,
