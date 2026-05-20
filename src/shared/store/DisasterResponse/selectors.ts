@@ -11,3 +11,9 @@ export const selectDisasterResponseEvents = createSelector(
 
 export const selectSelectedEventName = (state: RootState) =>
     state.DisasterResponseExplorer.selectedEvent;
+
+export const selectObjectIdsOfScenesInCurrentMapExtent = createSelector(
+    (state: RootState) =>
+        state.DisasterResponseExplorer.objectIdsOfScenesInCurrentMapExtent,
+    (objectIdsOfScenesInCurrentMapExtent) => objectIdsOfScenesInCurrentMapExtent
+);

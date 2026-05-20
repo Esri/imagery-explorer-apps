@@ -54,6 +54,10 @@ export type DRXState = {
         objectIds: number[];
     };
     /**
+     * list of object ids of the scenes that are currently within the map extent. This is used to determine which footprints to display on the map to optimize performance
+     */
+    objectIdsOfScenesInCurrentMapExtent: number[];
+    /**
      * list of all disaster response events to be displayed in the dropdown for selection
      */
     events: {
@@ -73,6 +77,7 @@ export const initialDRXState: DRXState = {
         byObjectId: {},
         objectIds: [],
     },
+    objectIdsOfScenesInCurrentMapExtent: [],
     events: {
         byEventId: {},
         eventIds: [],
@@ -109,12 +114,21 @@ const slice = createSlice({
         selectedEventUpdated: (state, action: PayloadAction<string>) => {
             state.selectedEvent = action.payload;
         },
+        objectIdsOfScenesInCurrentMapExtentUpdated: (
+            state,
+            action: PayloadAction<number[]>
+        ) => {
+            state.objectIdsOfScenesInCurrentMapExtent = action.payload;
+        },
     },
 });
 
 const { reducer } = slice;
 
-export const { disasterResponseSecenesUpdated, selectedEventUpdated } =
-    slice.actions;
+export const {
+    disasterResponseSecenesUpdated,
+    selectedEventUpdated,
+    objectIdsOfScenesInCurrentMapExtentUpdated,
+} = slice.actions;
 
 export default reducer;

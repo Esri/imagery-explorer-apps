@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
 import {
     selectDisasterResponseEvents,
+    selectObjectIdsOfScenesInCurrentMapExtent,
     selectSelectedEventName,
 } from '@shared/store/DisasterResponse/selectors';
 import { selectDisasterResponseEventScene } from '@shared/store/DisasterResponse/thunks';
@@ -37,10 +38,18 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
      */
     const shouldBeDisabled = useShouldDisableCalendar();
 
+    const objectIdsOfScenesInCurrentMapExtent = useAppSelector(
+        selectObjectIdsOfScenesInCurrentMapExtent
+    );
+
     const imageryScenesGroupedByAcquisitionDate = useMemo(() => {
         const groupedResult: Record<string, ImageryScene[]> = {};
 
-        imageryScenes.forEach((scene) => {
+        const scenesInCurrentMapExtent = imageryScenes.filter((scene) =>
+            objectIdsOfScenesInCurrentMapExtent.includes(scene.objectId)
+        );
+
+        scenesInCurrentMapExtent.forEach((scene) => {
             const acquisitionDate = scene.formattedAcquisitionDate;
 
             if (!groupedResult[acquisitionDate]) {
@@ -51,7 +60,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         });
 
         return groupedResult;
-    }, [imageryScenes]);
+    }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
 
     const uniqueAcquisitionDates = useMemo(() => {
         return Object.keys(imageryScenesGroupedByAcquisitionDate).sort(

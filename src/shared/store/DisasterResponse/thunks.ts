@@ -30,6 +30,7 @@ import {
 import { getDisasterResponseScenes } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import {
     disasterResponseSecenesUpdated,
+    objectIdsOfScenesInCurrentMapExtentUpdated,
     selectedEventUpdated,
 } from './reducer';
 import {
@@ -124,6 +125,9 @@ export const updateSelectedDisasterResponseEvent =
                 selectedItemID: '',
             })
         );
+
+        // reset the list of object ids of scenes in current map extent since they are no longer associated with the newly selected event
+        dispatch(objectIdsOfScenesInCurrentMapExtentUpdated([]));
 
         // update selected event in the store
         dispatch(selectedEventUpdated(eventName));
