@@ -134,7 +134,7 @@ export const updateSelectedDisasterResponseEvent =
         );
 
         // reset the list of object ids of scenes in current map extent since they are no longer associated with the newly selected event
-        dispatch(objectIdsOfScenesInCurrentMapExtentUpdated([]));
+        dispatch(objectIdsOfScenesInCurrentMapExtentUpdated(null));
 
         // update selected event in the store
         dispatch(selectedEventUpdated(eventName));
