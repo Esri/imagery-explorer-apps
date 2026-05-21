@@ -14,7 +14,6 @@ import {
 } from '@shared/store/DisasterResponse/selectors';
 import { selectDisasterResponseEventScene } from '@shared/store/DisasterResponse/thunks';
 import {
-    selectAvailableScenes,
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
@@ -22,7 +21,6 @@ import classNames from 'classnames';
 import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EventSelector } from '../EventSelector';
-import { ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { format } from 'date-fns';
 import { APP_NAME } from '@shared/config';
 import { DisasterResponseScene } from '@typing/imagery-service';
@@ -48,7 +46,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
 
     const selectedEventName = useAppSelector(selectSelectedEventName);
 
-    const imageryScenes = useAppSelector(selectDisasterResponseScenes);
+    const disasterResponseScenes = useAppSelector(selectDisasterResponseScenes);
 
     // const disasterResponseScenes = useAppSelector(selectDisasterResponseScenes);
 
@@ -90,10 +88,10 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
 
             let currentPage: SceneGroupByAcquisitionDate[] = [];
 
-            for (let i = 0; i < imageryScenes.length; i++) {
-                const scene = imageryScenes[i];
+            for (let i = 0; i < disasterResponseScenes.length; i++) {
+                const scene = disasterResponseScenes[i];
 
-                const previousScene = imageryScenes[i - 1];
+                const previousScene = disasterResponseScenes[i - 1];
 
                 // only need to show year label when the year is different from previous scene, or it's the first scene in the list
                 const shouldShowYearLabel =
@@ -130,7 +128,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
             }
 
             return paginatedResult;
-        }, [imageryScenes]);
+        }, [disasterResponseScenes]);
 
     const [pageIndexBeingDisplayed, setPageIndexBeingDisplayed] =
         React.useState(0);
@@ -189,7 +187,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
             );
         }
 
-        if (!selectedEventName || !imageryScenes?.length) {
+        if (!selectedEventName || !disasterResponseScenes?.length) {
             return (
                 <div className="w-full flex items-center justify-center text-center">
                     <p className="text-sm text-custom-light-blue-50 max-w-sm mt-6">
