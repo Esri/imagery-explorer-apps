@@ -41,6 +41,26 @@ export type DisasterResponseEvent = {
 };
 
 /**
+ * Type for the disaster response scenes grouped by acquisition date, which is used to display the scenes in the EventSceneSelector component.
+ * The scenes are grouped by acquisition date so it can be displayed in a chronological order with acquisition date as the header
+ */
+export type DisasterResponseScenesGroupedByAcquisitionDate = {
+    /**
+     * Acquisition date in the format of 'yyyy-MM-dd', e.g. '2025-11-01', etc.
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * If true, the year label (which is the first 4 digits of the acquisition date) will be displayed as a header for the group of scenes with the same acquisition date.
+     * The year label will only be displayed when the year is different from the previous scene, or it's the first scene in the list
+     */
+    shouldShowYearLabel: boolean;
+    /**
+     * List of object ids of the scenes with the same acquisition date. This is used to retrieve the scene information from the byObjectId map to display the scenes in the EventSceneSelector component
+     */
+    objectIds: number[];
+};
+
+/**
  * State for Disaster Response Explorer.
  */
 export type DRXState = {
@@ -52,6 +72,24 @@ export type DRXState = {
             [key: number]: DisasterResponseScene;
         };
         objectIds: number[];
+    };
+    scenePagination: {
+        /**
+         * total number of pages for the scenes of the selected event, which is determined by the total number of scenes and the number of scenes per page defined in the backend
+         */
+        totalPages: number;
+        /**
+         * index of the page that is currently being displayed in the EventSceneSelector component.
+         */
+        pageIndex: number;
+        /**
+         * Each page contains a list of scenes grouped by acquisition date, which is used to display the scenes in the EventSceneSelector component. The scenes are grouped by acquisition date so it can be displayed in a chronological order with acquisition date as the header
+         */
+        pages: {
+            [
+                pageIndex: number
+            ]: DisasterResponseScenesGroupedByAcquisitionDate[];
+        };
     };
     /**
      * list of object ids of the scenes that are currently within the map extent. This is used to determine which footprints to display on the map to optimize performance
@@ -86,6 +124,11 @@ export const initialDRXState: DRXState = {
     disasterResponseScenes: {
         byObjectId: {},
         objectIds: [],
+    },
+    scenePagination: {
+        totalPages: 0,
+        pageIndex: 0,
+        pages: {},
     },
     objectIdsOfScenesInCurrentMapExtent: null,
     objectIdOfHoveredScene: null,
