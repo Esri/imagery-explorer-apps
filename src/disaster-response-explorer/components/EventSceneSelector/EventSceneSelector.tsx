@@ -89,57 +89,62 @@ export const EventSceneSelector: FC<Props> = ({
                             {/* dotted vertical line spanning full height */}
                             <div className="absolute top-0 h-full left-1/2 w-0 border-l border-dashed border-custom-light-blue-50 z-0" />
 
-                            {objectIdsOfScenesInGroup.map((objectId) => {
-                                const scene = byObjectIdOfScenes[objectId];
+                            {objectIdsOfScenesInGroup
+                                .map((objectId) => byObjectIdOfScenes[objectId])
+                                .sort(
+                                    (a, b) =>
+                                        b.eventTimestamp - a.eventTimestamp
+                                )
+                                .map((scene) => {
+                                    if (!scene) return null;
 
-                                if (!scene) return null;
+                                    const isSceneSelected =
+                                        objectidOfSelectedScene ===
+                                        scene.objectId;
 
-                                const isSceneSelected =
-                                    objectidOfSelectedScene === scene.objectId;
+                                    const withinCloudCoverThreshold =
+                                        scene.cloudCover <= cloudCover * 100;
 
-                                const withinCloudCoverThreshold =
-                                    scene.cloudCover <= cloudCover * 100;
+                                    const notInMapExtent =
+                                        objectIdsOfScenesInCurrentMapExtent &&
+                                        !objectIdsOfScenesInCurrentMapExtent.includes(
+                                            scene.objectId
+                                        );
 
-                                const notInMapExtent =
-                                    objectIdsOfScenesInCurrentMapExtent &&
-                                    !objectIdsOfScenesInCurrentMapExtent.includes(
-                                        scene.objectId
-                                    );
-
-                                return (
-                                    <div
-                                        key={scene.objectId}
-                                        className={classNames(
-                                            'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 bg-custom-background cursor-pointer',
-                                            {
-                                                'bg-custom-calendar-background-selected':
-                                                    isSceneSelected,
-                                                'border-custom-calendar-border-selected':
-                                                    isSceneSelected,
-                                                'bg-custom-calendar-background-available':
-                                                    withinCloudCoverThreshold &&
-                                                    !isSceneSelected,
-                                                'pointer-events-none opacity-0':
-                                                    notInMapExtent,
+                                    return (
+                                        <div
+                                            key={scene.objectId}
+                                            className={classNames(
+                                                'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 bg-custom-background cursor-pointer',
+                                                {
+                                                    'bg-custom-calendar-background-selected':
+                                                        isSceneSelected,
+                                                    'border-custom-calendar-border-selected':
+                                                        isSceneSelected,
+                                                    'bg-custom-calendar-background-available':
+                                                        withinCloudCoverThreshold &&
+                                                        !isSceneSelected,
+                                                    'pointer-events-none opacity-0':
+                                                        notInMapExtent,
+                                                }
+                                            )}
+                                            title={format(
+                                                scene.eventTimestamp,
+                                                'yyyy-MM-dd HH:mm:ss'
+                                            )}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleSceneSelect(scene);
+                                            }}
+                                            onMouseOver={() => {
+                                                handleSceneHover(scene);
+                                            }}
+                                            onMouseOut={() =>
+                                                handleSceneHover(null)
                                             }
-                                        )}
-                                        title={format(
-                                            scene.eventTimestamp,
-                                            'yyyy-MM-dd HH:mm:ss'
-                                        )}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleSceneSelect(scene);
-                                        }}
-                                        onMouseOver={() => {
-                                            handleSceneHover(scene);
-                                        }}
-                                        onMouseOut={() =>
-                                            handleSceneHover(null)
-                                        }
-                                    />
-                                );
-                            })}
+                                        />
+                                    );
+                                })}
                         </div>
                     </div>
                 );
