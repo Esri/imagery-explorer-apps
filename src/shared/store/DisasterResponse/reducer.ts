@@ -248,6 +248,7 @@ export const {
     objectIdOfHoveredSceneUpdated,
     isLoadingScenesUpdated,
     disasterResponseSecenesReset,
+    pageIndexUpdated,
 } = slice.actions;
 
 export default reducer;

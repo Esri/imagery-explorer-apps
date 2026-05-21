@@ -61,17 +61,13 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
         }
 
         // if there is no selected event or no scenes in the current page, there is no need to query footprints or add the layer to the map
-        if (
-            !selectedEvent ||
-            !objectIdsOfScenesInCurrentPage ||
-            !objectIdsOfScenesInCurrentPage.length
-        )
-            return;
+        if (!selectedEvent) return;
 
         const features = await getEventFootprints(
-            selectedEvent,
-            objectIdsOfScenesInCurrentPage
+            selectedEvent
+            // objectIds
         );
+        console.log('footprint features: ', features);
 
         const graphics: Graphic[] = features.map((feature) => {
             return new Graphic({
@@ -144,9 +140,8 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
 
     useEffect(() => {
         if (!mapView) return;
-
         updateLayer();
-    }, [selectedEvent, objectIdsOfScenesInCurrentPage, mapView]);
+    }, [selectedEvent, mapView]);
 
     useEffect(() => {
         if (!mapView) return;

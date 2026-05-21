@@ -32,17 +32,17 @@ export const selectObjectIdOfHoveredScene = (state: RootState) =>
 export const selectIsLoadingScenes = (state: RootState) =>
     state.DisasterResponseExplorer.isLoadingScenes;
 
-export const selectTotalPagesOfScenes = (state: RootState) =>
+export const selectTotalPages = (state: RootState) =>
     state.DisasterResponseExplorer.scenePagination.totalPages;
 
-export const selectSelectedPageIndexOfScenes = (state: RootState) =>
+export const selectSelectedPageIndex = (state: RootState) =>
     state.DisasterResponseExplorer.scenePagination.pageIndex;
 
 export const selectScenesGroupedByAcquisitionDateForSelectedPage =
     createSelector(
         (state: RootState) =>
             state.DisasterResponseExplorer.scenePagination.pages,
-        selectSelectedPageIndexOfScenes,
+        selectSelectedPageIndex,
         (pages, selectedPageIndex) => pages[selectedPageIndex] || []
     );
 
