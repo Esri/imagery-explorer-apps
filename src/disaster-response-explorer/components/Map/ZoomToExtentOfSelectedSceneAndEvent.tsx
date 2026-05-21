@@ -71,7 +71,7 @@ export const ZoomToExtentOfSelectedSceneAndEvent: FC<Props> = ({ mapView }) => {
                         xmax: extent.xmax,
                         ymax: extent.ymax,
                         spatialReference: extent.spatialReference,
-                    }),
+                    }).expand(1.5), // expand the extent a little bit to make sure the footprints are well within the map view
                 });
             }
         } catch (error) {

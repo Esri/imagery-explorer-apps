@@ -98,7 +98,7 @@ export const SceneInfoContainer = () => {
     return (
         <SceneInfoTable
             data={tableData}
-            noSelectionText={t('select_event_from_timeline', {
+            noSelectionText={t('select_scene_from_timeline', {
                 ns: APP_NAME,
             })}
         />
