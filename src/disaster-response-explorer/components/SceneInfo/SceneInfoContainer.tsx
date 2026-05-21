@@ -82,7 +82,7 @@ export const SceneInfoContainer = () => {
             },
             {
                 name: t('cloud_cover'),
-                value: `${data.cloudPercent}%`,
+                value: `${data.cloudCover}%`,
             },
         ];
     }, [data]);

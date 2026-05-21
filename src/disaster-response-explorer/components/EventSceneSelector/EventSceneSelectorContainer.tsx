@@ -7,6 +7,7 @@ import {
 } from '@shared/store/DisasterResponse/reducer';
 import {
     selectDisasterResponseEvents,
+    selectDisasterResponseScenes,
     selectIsLoadingScenes,
     selectObjectIdsOfScenesInCurrentMapExtent,
     selectSelectedEventName,
@@ -24,6 +25,7 @@ import { EventSelector } from '../EventSelector';
 import { ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { format } from 'date-fns';
 import { APP_NAME } from '@shared/config';
+import { DisasterResponseScene } from '@typing/imagery-service';
 
 type Props = {
     children?: React.ReactNode;
@@ -36,7 +38,7 @@ type Props = {
 type SceneGroupByAcquisitionDate = {
     acquisitionDate: string;
     shouldShowYearLabel: boolean;
-    scenes: ImageryScene[];
+    scenes: DisasterResponseScene[];
 };
 
 export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
@@ -46,7 +48,9 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
 
     const selectedEventName = useAppSelector(selectSelectedEventName);
 
-    const imageryScenes = useAppSelector(selectAvailableScenes);
+    const imageryScenes = useAppSelector(selectDisasterResponseScenes);
+
+    // const disasterResponseScenes = useAppSelector(selectDisasterResponseScenes);
 
     const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
 
@@ -144,7 +148,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const handleSceneHover = useCallback(
-        (scene: ImageryScene) => {
+        (scene: DisasterResponseScene) => {
             if (hoverTimerRef.current) {
                 clearTimeout(hoverTimerRef.current);
             }
@@ -216,15 +220,6 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                         <div
                             key={date}
                             className="h-full relative flex flex-col items-center justify-even shrink-0"
-                            onClick={() => {
-                                if (scenes?.length) {
-                                    dispatch(
-                                        selectDisasterResponseEventScene(
-                                            scenes[0]
-                                        )
-                                    );
-                                }
-                            }}
                         >
                             <div className="w-full text-center flex flex-col justify-end h-5">
                                 <p
@@ -279,7 +274,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                                 }
                                             )}
                                             title={format(
-                                                scene.acquisitionDate,
+                                                scene.eventTimestamp,
                                                 'yyyy-MM-dd HH:mm:ss'
                                             )}
                                             onClick={(e) => {

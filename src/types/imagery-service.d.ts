@@ -319,16 +319,19 @@ export type DisasterResponseScene = {
      * Provider of the imagery scene, e.g. 'Vantor'
      */
     provider: string;
-    platform: string;
     /**
      * Percent of cloud cover, the value ranges from 0 - 100
      */
-    cloudPercent: number;
-    imageType: string;
+    cloudCover: number;
     /**
      * Formatted acquisition date in string format like `2025-01-17` that can be used for display in the UI. The formatted acquisition date is derived from the `eventTimestamp` field.
      */
     formattedAcquisitionDate: string;
+    /**
+     * Acquisition date in unix timestamp, which is the same as the `eventTimestamp` field.
+     * We keep both fields because some UI components require acquisition date in unix timestamp for date comparison and formatting, while some other UI components require acquisition date in formatted string for display.
+     */
+    acquisitionDate: number;
     /**
      * Year when this scene was acquired, derived from the `eventTimestamp` field.
      */
@@ -337,4 +340,6 @@ export type DisasterResponseScene = {
      * Month when this scene was acquired, derived from the `eventTimestamp` field.
      */
     acquisitionMonth: number;
+    imageType: string;
+    platform: string;
 };

@@ -18,6 +18,14 @@ export const selectObjectIdsOfScenesInCurrentMapExtent = createSelector(
     (objectIdsOfScenesInCurrentMapExtent) => objectIdsOfScenesInCurrentMapExtent
 );
 
+export const selectDisasterResponseScenes = createSelector(
+    (state: RootState) => state.DisasterResponseExplorer.disasterResponseScenes,
+    (disasterResponseScenes) => {
+        const { objectIds, byObjectId } = disasterResponseScenes;
+        return objectIds.map((objectId) => byObjectId[objectId]);
+    }
+);
+
 export const selectObjectIdOfHoveredScene = (state: RootState) =>
     state.DisasterResponseExplorer.objectIdOfHoveredScene;
 

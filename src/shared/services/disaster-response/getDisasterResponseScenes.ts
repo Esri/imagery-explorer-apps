@@ -56,10 +56,11 @@ export const getFormattedDisasterResponseScenes = (
                 ],
             eventTimestamp:
                 attributes[DisasterResponseImageryServiceField.DATETIME],
-            cloudPercent:
+            cloudCover:
                 attributes[DisasterResponseImageryServiceField.CLOUDS_PERCENT],
             name: attributes[DisasterResponseImageryServiceField.NAME],
             formattedAcquisitionDate,
+            acquisitionDate: eventTimestamp,
             acquisitionYear,
             acquisitionMonth,
         };

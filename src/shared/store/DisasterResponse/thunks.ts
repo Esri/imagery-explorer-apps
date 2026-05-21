@@ -64,40 +64,40 @@ export const queryAvailableDisasterResponseScenes =
                 signal: abortController.signal,
             });
 
-            // convert list of Landsat scenes to list of imagery scenes
-            const imageryScenes: ImageryScene[] = scenes.map(
-                (scene: DisasterResponseScene) => {
-                    const {
-                        objectId,
-                        name,
-                        eventTimestamp,
-                        cloudPercent,
-                        provider,
-                        formattedAcquisitionDate,
-                        acquisitionYear,
-                        acquisitionMonth,
-                    } = scene;
+            // // convert list of Landsat scenes to list of imagery scenes
+            // const imageryScenes: ImageryScene[] = scenes.map(
+            //     (scene: DisasterResponseScene) => {
+            //         const {
+            //             objectId,
+            //             name,
+            //             eventTimestamp,
+            //             cloudCover,
+            //             provider,
+            //             formattedAcquisitionDate,
+            //             acquisitionYear,
+            //             acquisitionMonth,
+            //         } = scene;
 
-                    const imageryScene: ImageryScene = {
-                        objectId,
-                        sceneId: name,
-                        formattedAcquisitionDate,
-                        acquisitionDate: eventTimestamp,
-                        acquisitionYear,
-                        acquisitionMonth,
-                        cloudCover: cloudPercent,
-                        satellite: provider,
-                        customTooltipText: [
-                            `${Math.round(cloudPercent)}% Cloudy`,
-                        ],
-                    };
+            //         const imageryScene: ImageryScene = {
+            //             objectId,
+            //             sceneId: name,
+            //             formattedAcquisitionDate,
+            //             acquisitionDate: eventTimestamp,
+            //             acquisitionYear,
+            //             acquisitionMonth,
+            //             cloudCover,
+            //             satellite: provider,
+            //             customTooltipText: [
+            //                 `${Math.round(cloudCover)}% Cloudy`,
+            //             ],
+            //         };
 
-                    return imageryScene;
-                }
-            );
+            //         return imageryScene;
+            //     }
+            // );
 
             dispatch(disasterResponseSecenesUpdated(scenes));
-            dispatch(availableImageryScenesUpdated(imageryScenes));
+            // dispatch(availableImageryScenesUpdated(imageryScenes));
         } catch (err) {
             console.error(err);
         } finally {
@@ -141,9 +141,11 @@ export const updateSelectedDisasterResponseEvent =
     };
 
 export const selectDisasterResponseEventScene =
-    (imageScene: ImageryScene) => (dispatch: StoreDispatch) => {
-        dispatch(updateObjectIdOfSelectedScene(imageScene.objectId));
+    (imageScene: DisasterResponseScene) => (dispatch: StoreDispatch) => {
+        dispatch(updateObjectIdOfSelectedScene(imageScene?.objectId || null));
 
         // Acquisition date is not used to select the scene, but the Swipe and Animation mode UIs require it for display.
-        dispatch(updateAcquisitionDate(imageScene.formattedAcquisitionDate));
+        dispatch(
+            updateAcquisitionDate(imageScene?.formattedAcquisitionDate || '')
+        );
     };
