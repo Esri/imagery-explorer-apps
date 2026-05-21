@@ -31,3 +31,36 @@ export const selectObjectIdOfHoveredScene = (state: RootState) =>
 
 export const selectIsLoadingScenes = (state: RootState) =>
     state.DisasterResponseExplorer.isLoadingScenes;
+
+export const selectTotalPagesOfScenes = (state: RootState) =>
+    state.DisasterResponseExplorer.scenePagination.totalPages;
+
+export const selectSelectedPageIndexOfScenes = (state: RootState) =>
+    state.DisasterResponseExplorer.scenePagination.pageIndex;
+
+export const selectScenesGroupedByAcquisitionDateForSelectedPage =
+    createSelector(
+        (state: RootState) =>
+            state.DisasterResponseExplorer.scenePagination.pages,
+        selectSelectedPageIndexOfScenes,
+        (pages, selectedPageIndex) => pages[selectedPageIndex] || []
+    );
+
+export const selectObjectIdOfScenesInCurrentPage = createSelector(
+    selectScenesGroupedByAcquisitionDateForSelectedPage,
+    (scenesGroupedByAcquisitionDateForSelectedPage) => {
+        const objectIds: number[] = [];
+
+        for (const group of scenesGroupedByAcquisitionDateForSelectedPage) {
+            objectIds.push(...group.objectIds);
+        }
+
+        return objectIds;
+    }
+);
+
+export const selectDisasterResponseScenesByObjectId = createSelector(
+    (state: RootState) =>
+        state.DisasterResponseExplorer.disasterResponseScenes.byObjectId,
+    (scenesByObjectId) => scenesByObjectId
+);

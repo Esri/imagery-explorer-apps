@@ -29,9 +29,11 @@ import {
 } from '../ImageryScene/reducer';
 import { getDisasterResponseScenes } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import {
+    disasterResponseSecenesReset,
     disasterResponseSecenesUpdated,
     isLoadingScenesUpdated,
     objectIdsOfScenesInCurrentMapExtentUpdated,
+    paginatedScenesLoaded,
     selectedEventUpdated,
 } from './reducer';
 import {
@@ -39,6 +41,7 @@ import {
     updateObjectIdOfSelectedScene,
 } from '../ImageryScene/thunks';
 import { DisasterResponseImageryServiceDefaultRenderer } from '@shared/services/disaster-response/config';
+import { getPaginatedScenesGroupedByAcquisitionDate } from './helpers';
 
 let abortController: AbortController = null;
 /**
@@ -64,40 +67,15 @@ export const queryAvailableDisasterResponseScenes =
                 signal: abortController.signal,
             });
 
-            // // convert list of Landsat scenes to list of imagery scenes
-            // const imageryScenes: ImageryScene[] = scenes.map(
-            //     (scene: DisasterResponseScene) => {
-            //         const {
-            //             objectId,
-            //             name,
-            //             eventTimestamp,
-            //             cloudCover,
-            //             provider,
-            //             formattedAcquisitionDate,
-            //             acquisitionYear,
-            //             acquisitionMonth,
-            //         } = scene;
-
-            //         const imageryScene: ImageryScene = {
-            //             objectId,
-            //             sceneId: name,
-            //             formattedAcquisitionDate,
-            //             acquisitionDate: eventTimestamp,
-            //             acquisitionYear,
-            //             acquisitionMonth,
-            //             cloudCover,
-            //             satellite: provider,
-            //             customTooltipText: [
-            //                 `${Math.round(cloudCover)}% Cloudy`,
-            //             ],
-            //         };
-
-            //         return imageryScene;
-            //     }
-            // );
+            const paginatedScenesGroupedByAcquisitionDate =
+                getPaginatedScenesGroupedByAcquisitionDate(scenes);
 
             dispatch(disasterResponseSecenesUpdated(scenes));
             // dispatch(availableImageryScenesUpdated(imageryScenes));
+
+            dispatch(
+                paginatedScenesLoaded(paginatedScenesGroupedByAcquisitionDate)
+            );
         } catch (err) {
             console.error(err);
         } finally {
@@ -133,8 +111,8 @@ export const updateSelectedDisasterResponseEvent =
             })
         );
 
-        // reset the list of object ids of scenes in current map extent since they are no longer associated with the newly selected event
-        dispatch(objectIdsOfScenesInCurrentMapExtentUpdated(null));
+        // reset disaster response scenes in the store when selected event changes to avoid showing scenes from previous event while new scenes are being fetched
+        dispatch(disasterResponseSecenesReset());
 
         // update selected event in the store
         dispatch(selectedEventUpdated(eventName));

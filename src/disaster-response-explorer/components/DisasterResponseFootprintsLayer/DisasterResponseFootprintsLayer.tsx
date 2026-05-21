@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { objectIdsOfScenesInCurrentMapExtentUpdated } from '@shared/store/DisasterResponse/reducer';
 import {
     selectObjectIdOfHoveredScene,
+    selectObjectIdOfScenesInCurrentPage,
     selectSelectedEventName,
 } from '@shared/store/DisasterResponse/selectors';
 import {
@@ -46,6 +47,11 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
     // A handler can be used to remove any previous highlight when applying a new one
     const hoverHighlightRef = useRef<ResourceHandle>(null);
 
+    // object ids of scenes in current page, used to determine which footprints to show on the map based on the current page selection in the scene selector component
+    const objectIdsOfScenesInCurrentPage = useAppSelector(
+        selectObjectIdOfScenesInCurrentPage
+    );
+
     // load the footprints for the selected event and add them to the map
     const updateLayer = async () => {
         if (layerRef.current) {
@@ -54,9 +60,18 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
             layerViewRef.current = null;
         }
 
-        if (!selectedEvent) return;
+        // if there is no selected event or no scenes in the current page, there is no need to query footprints or add the layer to the map
+        if (
+            !selectedEvent ||
+            !objectIdsOfScenesInCurrentPage ||
+            !objectIdsOfScenesInCurrentPage.length
+        )
+            return;
 
-        const features = await getEventFootprints(selectedEvent);
+        const features = await getEventFootprints(
+            selectedEvent,
+            objectIdsOfScenesInCurrentPage
+        );
 
         const graphics: Graphic[] = features.map((feature) => {
             return new Graphic({
@@ -122,7 +137,7 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
         const objectIds = features.features.map(
             (feature) => feature.attributes.OBJECTID
         );
-        console.log('objectIds in current extent: ', objectIds);
+        // console.log('objectIds in current extent: ', objectIds);
 
         dispatch(objectIdsOfScenesInCurrentMapExtentUpdated(objectIds));
     };
@@ -131,7 +146,7 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
         if (!mapView) return;
 
         updateLayer();
-    }, [selectedEvent, mapView]);
+    }, [selectedEvent, objectIdsOfScenesInCurrentPage, mapView]);
 
     useEffect(() => {
         if (!mapView) return;

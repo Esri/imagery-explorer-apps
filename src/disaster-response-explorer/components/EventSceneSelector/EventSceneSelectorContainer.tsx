@@ -8,8 +8,10 @@ import {
 import {
     selectDisasterResponseEvents,
     selectDisasterResponseScenes,
+    selectDisasterResponseScenesByObjectId,
     selectIsLoadingScenes,
     selectObjectIdsOfScenesInCurrentMapExtent,
+    selectScenesGroupedByAcquisitionDateForSelectedPage,
     selectSelectedEventName,
 } from '@shared/store/DisasterResponse/selectors';
 import { selectDisasterResponseEventScene } from '@shared/store/DisasterResponse/thunks';
@@ -63,83 +65,13 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         selectObjectIdsOfScenesInCurrentMapExtent
     );
 
-    // const scenesInCurrentMapExtent = useMemo(() => {
-    //     if (
-    //         !imageryScenes?.length ||
-    //         !objectIdsOfScenesInCurrentMapExtent?.length
-    //     ) {
-    //         return [];
-    //     }
+    const scenesGroupedByAcquisitionDate = useAppSelector(
+        selectScenesGroupedByAcquisitionDateForSelectedPage
+    );
 
-    //     return imageryScenes.filter((scene) =>
-    //         objectIdsOfScenesInCurrentMapExtent.includes(scene.objectId)
-    //     );
-    // }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
-
-    const imageryScenesGroupedByAcquisitionDate: SceneGroupByAcquisitionDate[][] =
-        useMemo(() => {
-            const paginatedResult: SceneGroupByAcquisitionDate[][] = [];
-
-            const groupedResultMap: {
-                [acquisitionDate: string]: SceneGroupByAcquisitionDate;
-            } = {};
-
-            const maxNumberOfAcquisitionDatesPerPage = 16;
-
-            let currentPage: SceneGroupByAcquisitionDate[] = [];
-
-            for (let i = 0; i < disasterResponseScenes.length; i++) {
-                const scene = disasterResponseScenes[i];
-
-                const previousScene = disasterResponseScenes[i - 1];
-
-                // only need to show year label when the year is different from previous scene, or it's the first scene in the list
-                const shouldShowYearLabel =
-                    i === 0 ||
-                    (previousScene &&
-                        previousScene.acquisitionYear !==
-                            scene.acquisitionYear);
-
-                const acquisitionDate = scene.formattedAcquisitionDate;
-
-                if (!groupedResultMap[acquisitionDate]) {
-                    groupedResultMap[acquisitionDate] = {
-                        acquisitionDate,
-                        scenes: [],
-                        shouldShowYearLabel,
-                    };
-
-                    currentPage.push(groupedResultMap[acquisitionDate]);
-
-                    if (
-                        currentPage.length >= maxNumberOfAcquisitionDatesPerPage
-                    ) {
-                        paginatedResult.push(currentPage);
-                        currentPage = [];
-                    }
-                }
-
-                groupedResultMap[acquisitionDate].scenes.unshift(scene);
-            }
-
-            // push the remaining page if it has any scene groups
-            if (currentPage.length) {
-                paginatedResult.push(currentPage);
-            }
-
-            return paginatedResult;
-        }, [disasterResponseScenes]);
-
-    const [pageIndexBeingDisplayed, setPageIndexBeingDisplayed] =
-        React.useState(0);
-
-    const currentPageOfSceneGroups =
-        imageryScenesGroupedByAcquisitionDate[pageIndexBeingDisplayed] || [];
-
-    useEffect(() => {
-        // reset to first page whenever the list of scenes in current map extent changes (e.g. when user pans the map or selects a different event)
-        setPageIndexBeingDisplayed(0);
-    }, [imageryScenesGroupedByAcquisitionDate]);
+    const byObjectIdOfScenes = useAppSelector(
+        selectDisasterResponseScenesByObjectId
+    );
 
     const cloudCover = useAppSelector(selectCloudCover);
 
@@ -208,11 +140,11 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 {/* horizontal line separates label on text and the scene cells */}
                 <div className="absolute top-[26px] left-0 right-0 h-px bg-custom-light-blue-10" />
 
-                {currentPageOfSceneGroups.map((d) => {
+                {scenesGroupedByAcquisitionDate.map((d) => {
                     // const isSelected = queryParams?.acquisitionDate === date;
-                    const scenes = d.scenes;
+                    const objectIdsOfScenesInGroup = d.objectIds;
                     const shouldShowYearLabel = d.shouldShowYearLabel;
-                    const date = d.acquisitionDate;
+                    const date = d.formattedAcquisitionDate;
 
                     return (
                         <div
@@ -240,7 +172,11 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                 {/* dotted vertical line spanning full height */}
                                 <div className="absolute top-0 h-full left-1/2 w-0 border-l border-dashed border-custom-light-blue-50 z-0" />
 
-                                {scenes.map((scene) => {
+                                {objectIdsOfScenesInGroup.map((objectId) => {
+                                    const scene = byObjectIdOfScenes[objectId];
+
+                                    if (!scene) return null;
+
                                     const isSceneSelected =
                                         queryParams?.objectIdOfSelectedScene ===
                                         scene.objectId;

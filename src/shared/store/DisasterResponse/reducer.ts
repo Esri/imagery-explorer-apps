@@ -144,6 +144,22 @@ const slice = createSlice({
     name: 'DRX',
     initialState: initialDRXState,
     reducers: {
+        disasterResponseSecenesReset: (state) => {
+            state.disasterResponseScenes = {
+                byObjectId: {},
+                objectIds: [],
+            };
+
+            state.scenePagination = {
+                totalPages: 0,
+                pageIndex: 0,
+                pages: {},
+            };
+
+            state.objectIdsOfScenesInCurrentMapExtent = null;
+            state.objectIdOfHoveredScene = null;
+            state.selectedEvent = '';
+        },
         disasterResponseSecenesUpdated: (
             state,
             action: PayloadAction<DisasterResponseScene[]>
@@ -166,8 +182,40 @@ const slice = createSlice({
                 byObjectId,
             };
         },
-        selectedEventUpdated: (state, action: PayloadAction<string>) => {
-            state.selectedEvent = action.payload;
+        paginatedScenesLoaded: (
+            state,
+            action: PayloadAction<
+                DisasterResponseScenesGroupedByAcquisitionDate[][]
+            >
+        ) => {
+            // the payload is an array of pages, and each page is an array of scenes grouped by acquisition date. If the payload is empty or null, reset the pagination state.
+            if (!action.payload || action.payload.length === 0) {
+                state.scenePagination = {
+                    pageIndex: 0,
+                    totalPages: 0,
+                    pages: {},
+                };
+                return;
+            }
+
+            const totalPages = action.payload.length;
+
+            const pages: {
+                [key: number]: DisasterResponseScenesGroupedByAcquisitionDate[];
+            } = {};
+
+            for (let i = 0; i < totalPages; i++) {
+                pages[i] = action.payload[i];
+            }
+
+            state.scenePagination = {
+                pageIndex: 0,
+                totalPages,
+                pages,
+            };
+        },
+        pageIndexUpdated: (state, action: PayloadAction<number>) => {
+            state.scenePagination.pageIndex = action.payload;
         },
         objectIdsOfScenesInCurrentMapExtentUpdated: (
             state,
@@ -184,6 +232,9 @@ const slice = createSlice({
         isLoadingScenesUpdated: (state, action: PayloadAction<boolean>) => {
             state.isLoadingScenes = action.payload;
         },
+        selectedEventUpdated: (state, action: PayloadAction<string>) => {
+            state.selectedEvent = action.payload;
+        },
     },
 });
 
@@ -191,10 +242,12 @@ const { reducer } = slice;
 
 export const {
     disasterResponseSecenesUpdated,
+    paginatedScenesLoaded,
     selectedEventUpdated,
     objectIdsOfScenesInCurrentMapExtentUpdated,
     objectIdOfHoveredSceneUpdated,
     isLoadingScenesUpdated,
+    disasterResponseSecenesReset,
 } = slice.actions;
 
 export default reducer;
