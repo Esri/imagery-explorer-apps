@@ -61,18 +61,18 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         selectObjectIdsOfScenesInCurrentMapExtent
     );
 
-    const scenesInCurrentMapExtent = useMemo(() => {
-        if (
-            !imageryScenes?.length ||
-            !objectIdsOfScenesInCurrentMapExtent?.length
-        ) {
-            return [];
-        }
+    // const scenesInCurrentMapExtent = useMemo(() => {
+    //     if (
+    //         !imageryScenes?.length ||
+    //         !objectIdsOfScenesInCurrentMapExtent?.length
+    //     ) {
+    //         return [];
+    //     }
 
-        return imageryScenes.filter((scene) =>
-            objectIdsOfScenesInCurrentMapExtent.includes(scene.objectId)
-        );
-    }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
+    //     return imageryScenes.filter((scene) =>
+    //         objectIdsOfScenesInCurrentMapExtent.includes(scene.objectId)
+    //     );
+    // }, [imageryScenes, objectIdsOfScenesInCurrentMapExtent]);
 
     const imageryScenesGroupedByAcquisitionDate: SceneGroupByAcquisitionDate[][] =
         useMemo(() => {
@@ -86,10 +86,10 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
 
             let currentPage: SceneGroupByAcquisitionDate[] = [];
 
-            for (let i = 0; i < scenesInCurrentMapExtent.length; i++) {
-                const scene = scenesInCurrentMapExtent[i];
+            for (let i = 0; i < imageryScenes.length; i++) {
+                const scene = imageryScenes[i];
 
-                const previousScene = scenesInCurrentMapExtent[i - 1];
+                const previousScene = imageryScenes[i - 1];
 
                 // only need to show year label when the year is different from previous scene, or it's the first scene in the list
                 const shouldShowYearLabel =
@@ -126,7 +126,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
             }
 
             return paginatedResult;
-        }, [imageryScenes, scenesInCurrentMapExtent]);
+        }, [imageryScenes]);
 
     const [pageIndexBeingDisplayed, setPageIndexBeingDisplayed] =
         React.useState(0);
@@ -162,7 +162,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     );
 
     const getContent = () => {
-        if (isLoadingScenes || objectIdsOfScenesInCurrentMapExtent === null) {
+        if (isLoadingScenes) {
             return (
                 <div className="w-full text-center">
                     <div
@@ -185,7 +185,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
             );
         }
 
-        if (!selectedEventName || !scenesInCurrentMapExtent?.length) {
+        if (!selectedEventName || !imageryScenes?.length) {
             return (
                 <div className="w-full flex items-center justify-center text-center">
                     <p className="text-sm text-custom-light-blue-50 max-w-sm mt-6">
@@ -255,6 +255,12 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                     const withinCloudCoverThreshold =
                                         scene.cloudCover <= cloudCover * 100;
 
+                                    const notInMapExtent =
+                                        objectIdsOfScenesInCurrentMapExtent &&
+                                        !objectIdsOfScenesInCurrentMapExtent.includes(
+                                            scene.objectId
+                                        );
+
                                     return (
                                         <div
                                             key={scene.objectId}
@@ -268,6 +274,8 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                                                     'bg-custom-calendar-background-available':
                                                         withinCloudCoverThreshold &&
                                                         !isSceneSelected,
+                                                    'pointer-events-none opacity-0':
+                                                        notInMapExtent,
                                                 }
                                             )}
                                             title={format(
