@@ -13,7 +13,11 @@ export const PaginationButton: FC<Props> = ({
 }) => {
     return (
         <calcite-button
-            className="text-custom-light-blue"
+            style={
+                {
+                    '--calcite-button-text-color': 'var(--custom-light-blue)',
+                } as React.CSSProperties
+            }
             appearance="transparent"
             kind="neutral"
             disabled={disabled}
