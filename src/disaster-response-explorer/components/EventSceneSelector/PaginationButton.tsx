@@ -13,6 +13,7 @@ export const PaginationButton: FC<Props> = ({
 }) => {
     return (
         <calcite-button
+            className="text-custom-light-blue"
             appearance="transparent"
             kind="neutral"
             disabled={disabled}
