@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { getDisasterResponseSceneByObjectId } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import { DisasterResponseScene } from '@typing/imagery-service';
 import { APP_NAME } from '@shared/config';
+import { getFormattedDateTimeStrInUTC } from '../../utils/getFormattedTimestampInUTC';
 
 export const SceneInfoContainer = () => {
     const { t } = useTranslation();
@@ -69,10 +70,7 @@ export const SceneInfoContainer = () => {
                 name: t('event_timestamp', {
                     ns: APP_NAME,
                 }),
-                value: formatInUTCTimeZone(
-                    eventTimestamp,
-                    `yyyy-MM-dd HH:mm:ss 'UTC'`
-                ),
+                value: getFormattedDateTimeStrInUTC(eventTimestamp),
             },
             {
                 name: t('event_type', {

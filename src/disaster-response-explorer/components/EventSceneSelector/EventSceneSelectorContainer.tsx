@@ -31,6 +31,7 @@ import { APP_NAME } from '@shared/config';
 import { DisasterResponseScene } from '@typing/imagery-service';
 import { EventSceneSelector } from './EventSceneSelector';
 import { PaginationButton } from './PaginationButton';
+import { AcquisitionTimestampLabel } from './AcquisitionTimestampLabel';
 
 type Props = {
     children?: React.ReactNode;
@@ -266,6 +267,15 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                     >
                         <EventSelector />
                     </div>
+
+                    <AcquisitionTimestampLabel
+                        acquisitionTimestamp={
+                            queryParams?.acquisitionTimestampOfSelectedScene
+                        }
+                        closeBtnOnClick={() => {
+                            dispatch(selectDisasterResponseEventScene(null));
+                        }}
+                    />
                 </div>
 
                 {/* {APP_NAME === 'landsat' && <LandsatMissionFilter />} */}
