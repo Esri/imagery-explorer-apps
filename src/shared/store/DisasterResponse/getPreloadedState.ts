@@ -10,6 +10,9 @@ export const getPreloadedState4DisasterResponseExplorer = ({
 }): DRXState => {
     const eventName = hashParams.get('disasterResponseEvent');
 
+    const pageIndexFromHash = getPageIndexFromHashParams(hashParams);
+    console.log('pageIndexFromHash: ', pageIndexFromHash);
+
     const eventIds: string[] = [];
 
     const byEventId: {
@@ -26,9 +29,18 @@ export const getPreloadedState4DisasterResponseExplorer = ({
     return {
         ...initialDRXState,
         selectedEvent: eventName,
+        scenePaginationCurrentPageIndex: pageIndexFromHash || 0,
         events: {
             eventIds,
             byEventId,
         },
     };
+};
+
+const getPageIndexFromHashParams = (hashParams: URLSearchParams): number => {
+    const pageIndexFromHash = hashParams.get('pageIndex');
+
+    return pageIndexFromHash && !isNaN(Number(pageIndexFromHash))
+        ? Number(pageIndexFromHash)
+        : 0;
 };

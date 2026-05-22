@@ -73,24 +73,15 @@ export type DRXState = {
         };
         objectIds: number[];
     };
-    scenePagination: {
-        /**
-         * total number of pages for the scenes of the selected event, which is determined by the total number of scenes and the number of scenes per page defined in the backend
-         */
-        totalPages: number;
-        /**
-         * index of the page that is currently being displayed in the EventSceneSelector component.
-         */
-        pageIndex: number;
-        /**
-         * Each page contains a list of scenes grouped by acquisition date, which is used to display the scenes in the EventSceneSelector component. The scenes are grouped by acquisition date so it can be displayed in a chronological order with acquisition date as the header
-         */
-        pages: {
-            [
-                pageIndex: number
-            ]: DisasterResponseScenesGroupedByAcquisitionDate[];
-        };
-    };
+    /**
+     * Paginated DisasterResponseScenesGroupedByAcquisitionDate for the selected event.
+     * The pagination ensures the scene selection component only renders a limited number of scene groups at a time to avoid overwhelming the UI.
+     */
+    scenePaginationPages: DisasterResponseScenesGroupedByAcquisitionDate[][];
+    /**
+     * Index of the current page in the pagination of scenes for the selected event.
+     */
+    scenePaginationCurrentPageIndex: number;
     /**
      * list of object ids of the scenes that are currently within the map extent. This is used to determine which footprints to display on the map to optimize performance
      */
@@ -125,11 +116,8 @@ export const initialDRXState: DRXState = {
         byObjectId: {},
         objectIds: [],
     },
-    scenePagination: {
-        totalPages: 0,
-        pageIndex: 0,
-        pages: {},
-    },
+    scenePaginationPages: [],
+    scenePaginationCurrentPageIndex: 0,
     objectIdsOfScenesInCurrentMapExtent: null,
     objectIdOfHoveredScene: null,
     events: {
@@ -150,11 +138,8 @@ const slice = createSlice({
                 objectIds: [],
             };
 
-            state.scenePagination = {
-                totalPages: 0,
-                pageIndex: 0,
-                pages: {},
-            };
+            state.scenePaginationPages = [];
+            state.scenePaginationCurrentPageIndex = 0;
 
             state.objectIdsOfScenesInCurrentMapExtent = null;
             state.objectIdOfHoveredScene = null;
@@ -188,34 +173,11 @@ const slice = createSlice({
                 DisasterResponseScenesGroupedByAcquisitionDate[][]
             >
         ) => {
-            // the payload is an array of pages, and each page is an array of scenes grouped by acquisition date. If the payload is empty or null, reset the pagination state.
-            if (!action.payload || action.payload.length === 0) {
-                state.scenePagination = {
-                    pageIndex: 0,
-                    totalPages: 0,
-                    pages: {},
-                };
-                return;
-            }
-
-            const totalPages = action.payload.length;
-
-            const pages: {
-                [key: number]: DisasterResponseScenesGroupedByAcquisitionDate[];
-            } = {};
-
-            for (let i = 0; i < totalPages; i++) {
-                pages[i] = action.payload[i];
-            }
-
-            state.scenePagination = {
-                pageIndex: 0,
-                totalPages,
-                pages,
-            };
+            const scenePaginationPages = action.payload || [];
+            state.scenePaginationPages = scenePaginationPages;
         },
         pageIndexUpdated: (state, action: PayloadAction<number>) => {
-            state.scenePagination.pageIndex = action.payload;
+            state.scenePaginationCurrentPageIndex = action.payload;
         },
         objectIdsOfScenesInCurrentMapExtentUpdated: (
             state,

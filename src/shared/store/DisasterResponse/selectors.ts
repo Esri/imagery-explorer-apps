@@ -33,17 +33,23 @@ export const selectIsLoadingScenes = (state: RootState) =>
     state.DisasterResponseExplorer.isLoadingScenes;
 
 export const selectTotalPages = (state: RootState) =>
-    state.DisasterResponseExplorer.scenePagination.totalPages;
+    state.DisasterResponseExplorer.scenePaginationPages.length;
 
 export const selectSelectedPageIndex = (state: RootState) =>
-    state.DisasterResponseExplorer.scenePagination.pageIndex;
+    state.DisasterResponseExplorer.scenePaginationCurrentPageIndex;
 
 export const selectScenesGroupedByAcquisitionDateForSelectedPage =
     createSelector(
         (state: RootState) =>
-            state.DisasterResponseExplorer.scenePagination.pages,
+            state.DisasterResponseExplorer.scenePaginationPages,
         selectSelectedPageIndex,
-        (pages, selectedPageIndex) => pages[selectedPageIndex] || []
+        (pages, selectedPageIndex) => {
+            if (pages.length === 0) {
+                return [];
+            }
+
+            return pages[selectedPageIndex] || [];
+        }
     );
 
 export const selectObjectIdOfScenesInCurrentPage = createSelector(

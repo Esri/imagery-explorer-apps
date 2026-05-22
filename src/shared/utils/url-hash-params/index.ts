@@ -78,7 +78,8 @@ export type UrlHashParamKey =
     | 'sentinel1' // hash params for Sentinel-1 scenes
     | 'autoSwipeSpeed' // hash params for auto-swipe feature
     | 'hideBottomPanel' // hash params for hiding bottom panel in the UI
-    | 'disasterResponseEvent'; // hash params for selected disaster response event
+    | 'disasterResponseEvent' // hash params for selected disaster response event
+    | 'pageIndex'; // hash params for selected page index in the pagination of disaster response scenes
 
 const hashParams = new URLSearchParams();
 
