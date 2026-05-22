@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
@@ -29,7 +29,13 @@ import { AutoSwipeControls } from './AutoSwipeControls';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 
-export const SwipeLayerSelectorContainer = () => {
+type Props = {
+    useAcquisitionTimestampAsLabel?: boolean;
+};
+
+export const SwipeLayerSelectorContainer: FC<Props> = ({
+    useAcquisitionTimestampAsLabel = false,
+}) => {
     const dispatch = useAppDispatch();
 
     const appMode = useAppSelector(selectAppMode);
@@ -62,6 +68,9 @@ export const SwipeLayerSelectorContainer = () => {
                     selectedSide={isSecondarySceneActive ? 'right' : 'left'}
                     queryParams4SceneOnLeft={queryParams4LeftSide}
                     queryParams4SceneOnRight={queryParams4RightSide}
+                    useAcquisitionTimestampAsLabel={
+                        useAcquisitionTimestampAsLabel
+                    }
                     onChange={(value) => {
                         const isSecondarySceneActive = value === 'right';
                         dispatch(

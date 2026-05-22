@@ -90,6 +90,10 @@ export type QueryParams4ImageryScene = {
      * User selected acquisition date range that will be used to query available imagery scenes.
      */
     acquisitionDateRange: DateRange;
+    /**
+     * Acquisition timestamp of the selected scene. This will be used in UI when the acquisition timestamp is needed to be displayed.
+     */
+    acquisitionTimestampOfSelectedScene?: number;
 };
 
 export type ImageryScene = {
@@ -194,6 +198,7 @@ export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     acquisitionDate: '',
     rasterFunctionName: '',
     objectIdOfSelectedScene: null,
+    acquisitionTimestampOfSelectedScene: null,
     uniqueId: null,
     acquisitionDateRange: getDateRangeForPast12Month(),
 };

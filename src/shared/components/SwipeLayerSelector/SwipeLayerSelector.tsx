@@ -21,6 +21,8 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '@shared/store/configureStore';
 import { selectImageryServiceRasterFunctionLabelMap } from '@shared/store/ImageryService/selectors';
+import { format } from 'date-fns';
+import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 // import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
@@ -30,6 +32,10 @@ type Props = {
     selectedSide: Side4SwipeMode;
     queryParams4SceneOnLeft: QueryParams4ImageryScene;
     queryParams4SceneOnRight: QueryParams4ImageryScene;
+    /**
+     * Whether to use the acquisition timestamp as the label in the SwipeLayerSelector instead of the raster function name.
+     */
+    useAcquisitionTimestampAsLabel?: boolean;
     onChange: (side: Side4SwipeMode) => void;
     swapButtonOnClick: () => void;
 };
@@ -38,6 +44,7 @@ export const SwipeLayerSelector: FC<Props> = ({
     selectedSide,
     queryParams4SceneOnLeft,
     queryParams4SceneOnRight,
+    useAcquisitionTimestampAsLabel = false,
     onChange,
     swapButtonOnClick,
 }) => {
@@ -54,6 +61,22 @@ export const SwipeLayerSelector: FC<Props> = ({
             side === 'left'
                 ? queryParams4SceneOnLeft
                 : queryParams4SceneOnRight;
+
+        // Additional label to be displayed under the acquisition date.
+        let additionalLabel =
+            rasterFunctionLabelMap.get(queryParams?.rasterFunctionName) ||
+            queryParams?.rasterFunctionName;
+
+        // If useAcquisitionTimestampAsLabel is true and acquisition timestamp is available, use the timestamp as the additional label instead of the raster function name.
+        if (
+            useAcquisitionTimestampAsLabel &&
+            queryParams?.acquisitionTimestampOfSelectedScene
+        ) {
+            additionalLabel = getTimeStrInUTCTimeZone(
+                queryParams.acquisitionTimestampOfSelectedScene,
+                true
+            );
+        }
 
         return (
             <div
@@ -73,9 +96,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                             <br />
 
                             <span className="normal-case">
-                                {rasterFunctionLabelMap.get(
-                                    queryParams?.rasterFunctionName
-                                ) || queryParams?.rasterFunctionName}
+                                {additionalLabel}
                             </span>
                         </>
                     ) : (

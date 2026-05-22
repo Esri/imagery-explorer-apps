@@ -38,6 +38,7 @@ import {
 } from './reducer';
 import {
     updateAcquisitionDate,
+    updateAcquisitionTimestampOfSelectedScene,
     updateObjectIdOfSelectedScene,
 } from '../ImageryScene/thunks';
 import { DisasterResponseImageryServiceDefaultRenderer } from '@shared/services/disaster-response/config';
@@ -121,6 +122,16 @@ export const updateSelectedDisasterResponseEvent =
 export const selectDisasterResponseEventScene =
     (imageScene: DisasterResponseScene) => (dispatch: StoreDispatch) => {
         dispatch(updateObjectIdOfSelectedScene(imageScene?.objectId || null));
+
+        // Store the acquisition timestamp of the selected scene so the Swipe and Animation
+        // mode UIs can display it in place of the raster function name. All scenes in
+        // the DRX app share the same raster function, so the timestamp is needed to
+        // distinguish between scenes acquired at different times.
+        dispatch(
+            updateAcquisitionTimestampOfSelectedScene(
+                imageScene?.acquisitionDate || null
+            )
+        );
 
         // Acquisition date is not used to select the scene, but the Swipe and Animation mode UIs require it for display.
         dispatch(

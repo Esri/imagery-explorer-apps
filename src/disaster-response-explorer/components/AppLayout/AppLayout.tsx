@@ -80,7 +80,9 @@ export const AppLayout = () => {
 
                     {shouldShowSecondaryControls && (
                         <ContainerOfSecondaryControls>
-                            <SwipeLayerSelector />
+                            <SwipeLayerSelector
+                                useAcquisitionTimestampAsLabel={true}
+                            />
                             <AnimationControl />
                         </ContainerOfSecondaryControls>
                     )}

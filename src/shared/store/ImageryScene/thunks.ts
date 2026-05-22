@@ -142,6 +142,28 @@ export const updateObjectIdOfSelectedScene =
         }
     };
 
+export const updateAcquisitionTimestampOfSelectedScene =
+    (acquisitionTimestampOfSelectedScene: number) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        try {
+            const queryParams =
+                selectQueryParams4SceneInSelectedMode(getState());
+
+            if (!queryParams) {
+                return;
+            }
+
+            const updatedQueryParams: QueryParams4ImageryScene = {
+                ...queryParams,
+                acquisitionTimestampOfSelectedScene,
+            };
+
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
 /**
  * Updates the user-selected acquisition date for an imagery scene. If `shouldSyncAcquisitionDateRange` is set to true,
  * the `acquisitionDateRange` will also be updated, using the date range for the year of the user-selected acquisition date.
