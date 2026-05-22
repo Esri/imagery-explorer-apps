@@ -340,6 +340,11 @@ export type DisasterResponseScene = {
      * Month when this scene was acquired, derived from the `eventTimestamp` field.
      */
     acquisitionMonth: number;
+    /**
+     * A formatted acquisition time string in the format of `HH:mm:ss` that can be used for display in the UI.
+     * The formatted acquisition time is derived from the `eventTimestamp` field.
+     */
+    formattedAcuisitionTime: string;
     imageType: string;
     platform: string;
 };

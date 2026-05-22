@@ -7,6 +7,7 @@ import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 import { getFeatureByObjectId } from '../helpers/getFeatureById';
 import { get } from 'http';
+import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 const disasterResponseSceneByObjectId = new Map<
     number,
@@ -39,6 +40,11 @@ export const getFormattedDisasterResponseScenes = (
             .split('-')
             .map((d) => +d);
 
+        const formattedAcuisitionTime = getTimeStrInUTCTimeZone(
+            eventTimestamp,
+            true
+        );
+
         const scene: DisasterResponseScene = {
             objectId: attributes[DisasterResponseImageryServiceField.OBJECTID],
             provider: attributes[DisasterResponseImageryServiceField.PROVIDER],
@@ -63,6 +69,7 @@ export const getFormattedDisasterResponseScenes = (
             acquisitionDate: eventTimestamp,
             acquisitionYear,
             acquisitionMonth,
+            formattedAcuisitionTime,
         };
 
         scenes.push(scene);

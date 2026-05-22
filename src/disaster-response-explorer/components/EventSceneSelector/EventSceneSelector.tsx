@@ -3,8 +3,8 @@ import { DisasterResponseScenesGroupedByAcquisitionDate } from '@shared/store/Di
 import { selectDisasterResponseScenesByObjectId } from '@shared/store/DisasterResponse/selectors';
 import { DisasterResponseScene } from '@typing/imagery-service';
 import classNames from 'classnames';
-import { format } from 'date-fns';
 import React, { FC, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     /**
@@ -49,6 +49,8 @@ export const EventSceneSelector: FC<Props> = ({
     handleSceneHover,
     handleSceneSelect,
 }) => {
+    const { t } = useTranslation();
+
     const byObjectIdOfScenes = useAppSelector(
         selectDisasterResponseScenesByObjectId
     );
@@ -126,7 +128,7 @@ export const EventSceneSelector: FC<Props> = ({
                         </div>
 
                         <div
-                            className="relative flex flex-row justify-center items-end gap-[2px] overflow-hidden shrink-0"
+                            className="relative flex flex-row justify-center items-end gap-[2px] shrink-0"
                             data-testid={`scene-selector-scenes-${date}`}
                         >
                             {sceneChunksByDate[date].map(
@@ -154,7 +156,7 @@ export const EventSceneSelector: FC<Props> = ({
                                                 <div
                                                     key={scene.objectId}
                                                     className={classNames(
-                                                        'relative z-10 shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 hover:border-arcgis-highlight  bg-custom-background  cursor-pointer',
+                                                        'relative shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 hover:border-arcgis-highlight  bg-custom-background  cursor-pointer group',
                                                         {
                                                             'bg-custom-calendar-background-selected':
                                                                 isSceneSelected,
@@ -166,10 +168,6 @@ export const EventSceneSelector: FC<Props> = ({
                                                             'pointer-events-none opacity-10':
                                                                 notInMapExtent,
                                                         }
-                                                    )}
-                                                    title={format(
-                                                        scene.eventTimestamp,
-                                                        'yyyy-MM-dd HH:mm:ss'
                                                     )}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
@@ -183,7 +181,37 @@ export const EventSceneSelector: FC<Props> = ({
                                                     onMouseOut={() =>
                                                         handleSceneHover(null)
                                                     }
-                                                />
+                                                >
+                                                    <div
+                                                        className={`
+                                                            absolute bottom-[0px] min-w-[90px] left-3 px-1 py-[2px] text-xs z-50
+                                                            bg-custom-background border border-custom-light-blue-50  
+                                                            hidden group-hover:block
+                                                        `}
+                                                    >
+                                                        <span>
+                                                            {
+                                                                scene.formattedAcquisitionDate
+                                                            }
+                                                        </span>
+                                                        <br />
+                                                        <span>
+                                                            {
+                                                                scene.formattedAcuisitionTime
+                                                            }
+                                                        </span>
+                                                        <br />
+                                                        <span>
+                                                            {t(
+                                                                'percent_cloudy',
+                                                                {
+                                                                    percent:
+                                                                        scene.cloudCover,
+                                                                }
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             );
                                         })}
                                     </div>

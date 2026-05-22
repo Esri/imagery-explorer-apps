@@ -43,6 +43,7 @@
     "estimated_mask_area": "Estimated Mask Area",
     "cloud": "Cloud",
     "cloudy": "Cloudy",
+    "percent_cloudy": "{{percent}}% Cloudy",
     "powered_by_esri": "Powered by Esri",
     "dynamic_view": "Dynamic View",
     "dynamic_view_instruction": "To select an individual scene for a specific date, try the <span class='open-find-a-scene underline cursor-pointer hover:opacity-100 uppercase'>FIND A SCENE</span> mode.",
