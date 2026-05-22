@@ -82,28 +82,28 @@ export const ZoomToExtentOfSelectedSceneAndEvent: FC<Props> = ({ mapView }) => {
         }
     };
 
-    useEffect(() => {
-        if (isInitialLoadScene.current) {
-            isInitialLoadScene.current = false;
-            return;
-        }
+    // useEffect(() => {
+    //     if (isInitialLoadScene.current) {
+    //         isInitialLoadScene.current = false;
+    //         return;
+    //     }
 
-        if (!queryParamsForSelectedScene) {
-            return;
-        }
+    //     if (!queryParamsForSelectedScene) {
+    //         return;
+    //     }
 
-        // no need to zoom to scene when in swipe mode or animation is playing
-        if (isAnimationPlaying) {
-            return;
-        }
+    //     // no need to zoom to scene when in swipe mode or animation is playing
+    //     if (isAnimationPlaying) {
+    //         return;
+    //     }
 
-        const objectId = queryParamsForSelectedScene.objectIdOfSelectedScene;
+    //     const objectId = queryParamsForSelectedScene.objectIdOfSelectedScene;
 
-        // if there is an object id in the query params for the selected scene, zoom to that scene
-        if (objectId) {
-            zommToScene(objectId);
-        }
-    }, [queryParamsForSelectedScene, isAnimationPlaying]);
+    //     // if there is an object id in the query params for the selected scene, zoom to that scene
+    //     if (objectId) {
+    //         zommToScene(objectId);
+    //     }
+    // }, [queryParamsForSelectedScene, isAnimationPlaying]);
 
     useEffect(() => {
         if (isInitialLoadEvent.current) {
