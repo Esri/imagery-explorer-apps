@@ -21,41 +21,44 @@ type Props = {
 };
 
 export const ZoomToExtentOfSelectedSceneAndEvent: FC<Props> = ({ mapView }) => {
-    // const queryParamsForSelectedScene = useAppSelector(
-    //     selectQueryParams4SceneInSelectedMode
-    // );
+    const queryParamsForSelectedScene = useAppSelector(
+        selectQueryParams4SceneInSelectedMode
+    );
 
-    // const mode = useAppSelector(selectAppMode);
+    const mode = useAppSelector(selectAppMode);
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const selectedEvent = useAppSelector(selectSelectedEventName);
 
-    // const zommToScene = async (objectId: number) => {
-    //     try {
-    //         const extent = await getExtentByObjectId({
-    //             objectId,
-    //             serviceUrl: DISASTER_RESPONSE_IMAGERY_SERVICE_URL,
-    //         });
+    const isInitialLoadScene = useRef(true);
+    const isInitialLoadEvent = useRef(true);
 
-    //         if (extent) {
-    //             mapView.goTo({
-    //                 target: new Extent({
-    //                     xmin: extent.xmin,
-    //                     ymin: extent.ymin,
-    //                     xmax: extent.xmax,
-    //                     ymax: extent.ymax,
-    //                     spatialReference: extent.spatialReference,
-    //                 }),
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error(
-    //             'failed to get extent for object id ' + objectId,
-    //             error
-    //         );
-    //     }
-    // };
+    const zommToScene = async (objectId: number) => {
+        try {
+            const extent = await getExtentByObjectId({
+                objectId,
+                serviceUrl: DISASTER_RESPONSE_IMAGERY_SERVICE_URL,
+            });
+
+            if (extent) {
+                mapView.goTo({
+                    target: new Extent({
+                        xmin: extent.xmin,
+                        ymin: extent.ymin,
+                        xmax: extent.xmax,
+                        ymax: extent.ymax,
+                        spatialReference: extent.spatialReference,
+                    }).expand(1.5),
+                });
+            }
+        } catch (error) {
+            console.error(
+                'failed to get extent for object id ' + objectId,
+                error
+            );
+        }
+    };
 
     const zoomToEvent = async (eventName: string) => {
         try {
@@ -79,39 +82,37 @@ export const ZoomToExtentOfSelectedSceneAndEvent: FC<Props> = ({ mapView }) => {
         }
     };
 
-    // useEffect(() => {
-    //     if (!queryParamsForSelectedScene) {
-    //         return;
-    //     }
-
-    //     // no need to zoom to scene when in swipe mode or animation is playing
-    //     if (mode === 'swipe' || isAnimationPlaying) {
-    //         return;
-    //     }
-
-    //     const objectId = queryParamsForSelectedScene.objectIdOfSelectedScene;
-
-    //     // if there is an object id in the query params for the selected scene, zoom to that scene
-    //     if (objectId) {
-    //         zommToScene(objectId);
-    //         return;
-    //     }
-
-    //     if (selectedEvent) {
-    //         zoomToEvent(selectedEvent);
-    //     }
-    // }, [queryParamsForSelectedScene, selectedEvent, mode, isAnimationPlaying]);
-
-    const isInitialLoad = useRef(true);
-
     useEffect(() => {
-        // no need to zoom to event when in swipe mode or animation is playing
+        if (isInitialLoadScene.current) {
+            isInitialLoadScene.current = false;
+            return;
+        }
+
+        if (!queryParamsForSelectedScene) {
+            return;
+        }
+
+        // no need to zoom to scene when in swipe mode or animation is playing
         if (isAnimationPlaying) {
             return;
         }
 
-        if (isInitialLoad.current) {
-            isInitialLoad.current = false;
+        const objectId = queryParamsForSelectedScene.objectIdOfSelectedScene;
+
+        // if there is an object id in the query params for the selected scene, zoom to that scene
+        if (objectId) {
+            zommToScene(objectId);
+        }
+    }, [queryParamsForSelectedScene, isAnimationPlaying]);
+
+    useEffect(() => {
+        if (isInitialLoadEvent.current) {
+            isInitialLoadEvent.current = false;
+            return;
+        }
+
+        // no need to zoom to event when in swipe mode or animation is playing
+        if (isAnimationPlaying) {
             return;
         }
 
