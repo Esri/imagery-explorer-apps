@@ -282,6 +282,9 @@ export const addNewItemToQueryParamsList =
                       uniqueId,
                   };
 
+        // reset objectIdOfSelectedScene because the newly added frame won't have a selected scene at the beginning
+        queryParamsOfNewFrame.objectIdOfSelectedScene = null;
+
         dispatch(
             queryParamsListChanged({
                 queryParams: [
