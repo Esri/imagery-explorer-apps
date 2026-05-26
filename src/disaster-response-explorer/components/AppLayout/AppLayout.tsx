@@ -38,6 +38,7 @@ import { EventSelector } from '../EventSelector';
 import { EventSceneSelector } from '../EventSceneSelector';
 import { useSaveDRXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
 import { CloudFilter } from '@shared/components/CloudFilter';
+import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -90,6 +91,7 @@ export const AppLayout = () => {
                                 useAcquisitionTimestampAsLabel={true}
                             />
                             {/* <AnimationControl /> */}
+                            <DRXAnalyzeToolSelector />
                         </ContainerOfSecondaryControls>
                     )}
                 </div>
