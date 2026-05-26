@@ -29,6 +29,7 @@ import { SwipeComponent4ImageryLayers } from '@shared/components/SwipeWidget/Swi
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
 import { ZoomToExtentOfSelectedSceneAndEvent } from './ZoomToExtentOfSelectedSceneAndEvent';
 import { DisasterResponseFootprintsLayer } from '../DisasterResponseFootprintsLayer/DisasterResponseFootprintsLayer';
+import { MapActionButtonGroup } from '@shared/components/MapActionButton/';
 
 export const Map = () => {
     const dispatch = useAppDispatch();
@@ -67,11 +68,11 @@ export const Map = () => {
 
             <HillshadeLayer />
 
-            {/* <MapActionButtonGroup
+            <MapActionButtonGroup
                 nativeScale={113386}
-                serviceName={'Landsat'}
-                serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
-            /> */}
+                serviceName={'Disaster Response Imagery Service'}
+                serviceUrl={DISASTER_RESPONSE_IMAGERY_SERVICE_URL}
+            />
 
             {/* <Popup />
             <MapMagnifier /> */}

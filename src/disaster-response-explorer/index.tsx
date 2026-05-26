@@ -27,6 +27,7 @@ import { DISASTER_RESPONSE_EXPLORER_APP_ID } from '@shared/config';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import { Map } from './components/Map/Map';
 import { getDistinctListOfEvents } from '@shared/services/disaster-response/getListOfEvents';
+import { AboutDisasterResponseExplorer } from './components/About';
 
 (async () => {
     const root = createRoot(document.getElementById('root'));
@@ -48,6 +49,7 @@ import { getDistinctListOfEvents } from '@shared/services/disaster-response/getL
                 <ErrorBoundary>
                     <Map />
                     <AppLayout />
+                    <AboutDisasterResponseExplorer />
                 </ErrorBoundary>
             </ReduxProvider>
         );

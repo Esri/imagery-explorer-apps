@@ -19,6 +19,7 @@ import {
     selectMapExtent,
     selectMapZoom,
 } from '@shared/store/Map/selectors';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import React, { FC, useEffect, useRef } from 'react';
 
 type Props = {
@@ -51,6 +52,10 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
     const objectIdsOfScenesInCurrentPage = useAppSelector(
         selectObjectIdOfScenesInCurrentPage
     );
+
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
+
+    const visible = !!selectedEvent && !isAnimationPlaying;
 
     // load the footprints for the selected event and add them to the map
     const updateLayer = async () => {
@@ -101,6 +106,7 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
                     },
                 },
             },
+            visible,
             effect: 'drop-shadow(0px 0px 5px #000)',
         });
 
@@ -164,6 +170,12 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
             );
         }
     }, [objectIdOfHoveredScene]);
+
+    useEffect(() => {
+        if (layerRef.current) {
+            layerRef.current.visible = visible;
+        }
+    }, [visible]);
 
     return null;
 };

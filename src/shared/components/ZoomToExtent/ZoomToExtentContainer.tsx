@@ -31,6 +31,7 @@ import {
 // } from '@shared/services/landsat-level-2/getLandsatScenes';
 import { getExtentByObjectId } from '@shared/services/helpers/getExtentById';
 import { useTranslation } from 'react-i18next';
+import Extent from '@arcgis/core/geometry/Extent';
 
 type Props = {
     /**
@@ -79,7 +80,13 @@ export const ZoomToExtentContainer: FC<Props> = ({ serviceUrl, mapView }) => {
                 serviceUrl,
                 objectId: objectIdOfSelectedScene,
             });
-            mapView.extent = extent as any;
+            mapView.extent = new Extent({
+                xmin: extent.xmin,
+                ymin: extent.ymin,
+                xmax: extent.xmax,
+                ymax: extent.ymax,
+                spatialReference: extent.spatialReference,
+            }).expand(1.1); // expand the extent a little bit to make sure the whole scene is visible
         } catch (err) {
             console.log(err);
         }
