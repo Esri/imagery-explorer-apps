@@ -17,19 +17,24 @@ import React, { FC, useEffect } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
-import { modeChanged } from '@shared/store/ImageryScene/reducer';
+import { AppMode, modeChanged } from '@shared/store/ImageryScene/reducer';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { ModeSelector } from './ModeSelector';
 
 type Props = {
+    // /**
+    //  * If true, the sub modes under "Explore" mode (i.e. "Swipe" and "Opacity") will be hidden in the mode selector, as they are not applicable for app like Disaster Response Explorer, which only has one explore mode.
+    //  */
+    // hideExploreSubModes?: boolean;
     /**
-     * If true, the sub modes under "Explore" mode (i.e. "Swipe" and "Opacity") will be hidden in the mode selector, as they are not applicable for app like Disaster Response Explorer, which only has one explore mode.
+     * List of modes to hide in the mode selector.
      */
-    hideExploreSubModes?: boolean;
+    modesToHide?: AppMode[];
 };
 
 export const ModeSelectorContainer: FC<Props> = ({
-    hideExploreSubModes = false,
+    // hideExploreSubModes = false,
+    modesToHide = [],
 }) => {
     const dispatch = useAppDispatch();
 
@@ -41,7 +46,7 @@ export const ModeSelectorContainer: FC<Props> = ({
         <ModeSelector
             selectedMode={selectedMode}
             disabled={isAnimationPlaying}
-            hideExploreSubModes={hideExploreSubModes}
+            modesToHide={modesToHide}
             selectedModeOnChange={(value) => {
                 dispatch(modeChanged(value));
             }}

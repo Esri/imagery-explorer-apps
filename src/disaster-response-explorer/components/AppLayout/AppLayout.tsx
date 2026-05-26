@@ -76,14 +76,20 @@ export const AppLayout = () => {
             <AppHeader />
             <BottomPanel>
                 <div className="flex flex-shrink-0">
-                    <ModeSelector hideExploreSubModes={true} />
+                    <ModeSelector
+                        // hideExploreSubModes={true}
+                        modesToHide={[
+                            'dynamic', // hide 'dynamic' mode as it is not applicable for Disaster Response Explorer. Hidding  'dynamic' mode will cause the sub modes under 'explore' mode (i.e. 'dynamic' and 'find a scene') to be hidden in the Mode Selector, as they are not applicable for Disaster Response Explorer, which only has one explore mode.
+                            'animate', // hide 'animate' mode as animation is not applicable for Disaster Response Explorer
+                        ]}
+                    />
 
                     {shouldShowSecondaryControls && (
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector
                                 useAcquisitionTimestampAsLabel={true}
                             />
-                            <AnimationControl />
+                            {/* <AnimationControl /> */}
                         </ContainerOfSecondaryControls>
                     )}
                 </div>

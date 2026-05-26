@@ -53,13 +53,13 @@ export const Map = () => {
                 <DisasterResponseLayer />
 
                 <MapPopUpAnchorPoint />
-                <AnimationLayer
+                {/* <AnimationLayer
                     imageryServiceUrl={DISASTER_RESPONSE_IMAGERY_SERVICE_URL}
                     authoringAppName="disaster-response-explorer"
                     animationMetadataSources={t('animation_metadata', {
                         ns: APP_NAME,
                     })}
-                />
+                /> */}
             </GroupLayer>
 
             <SwipeComponent4ImageryLayers
