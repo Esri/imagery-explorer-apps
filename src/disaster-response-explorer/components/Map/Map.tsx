@@ -30,6 +30,7 @@ import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster
 import { ZoomToExtentOfSelectedSceneAndEvent } from './ZoomToExtentOfSelectedSceneAndEvent';
 import { DisasterResponseFootprintsLayer } from '../DisasterResponseFootprintsLayer/DisasterResponseFootprintsLayer';
 import { MapActionButtonGroup } from '@shared/components/MapActionButton/';
+import { DRXTemporalCompositeLayer } from '../TemporalCompositeLayer';
 
 export const Map = () => {
     const dispatch = useAppDispatch();
@@ -53,13 +54,8 @@ export const Map = () => {
                 <DisasterResponseLayer />
 
                 <MapPopUpAnchorPoint />
-                {/* <AnimationLayer
-                    imageryServiceUrl={DISASTER_RESPONSE_IMAGERY_SERVICE_URL}
-                    authoringAppName="disaster-response-explorer"
-                    animationMetadataSources={t('animation_metadata', {
-                        ns: APP_NAME,
-                    })}
-                /> */}
+
+                <DRXTemporalCompositeLayer />
             </GroupLayer>
 
             <SwipeComponent4ImageryLayers
