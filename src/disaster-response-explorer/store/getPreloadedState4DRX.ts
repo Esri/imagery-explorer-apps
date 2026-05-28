@@ -16,7 +16,10 @@
 // import { PartialRootState } from './configureStore';
 
 // import { initialMapState, MapState } from '@shared/store/Map/reducer';
-import { getMapCenterFromHashParams } from '@shared/utils/url-hash-params';
+import {
+    getMapCenterFromHashParams,
+    getTemporalCompositeToolDataFromHashParams,
+} from '@shared/utils/url-hash-params';
 
 import { PartialRootState } from '@shared/store/configureStore';
 import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
@@ -25,6 +28,22 @@ import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getP
 import { DisasterResponseRasterFunctionName } from '@shared/services/disaster-response/config';
 import { getPreloadedState4DisasterResponseExplorer } from '@shared/store/DisasterResponse/getPreloadedState';
 import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
+import {
+    TemporalCompositeToolState,
+    initialState4TemporalCompositeTool,
+} from '@shared/store/TemporalCompositeTool/reducer';
+
+const getPreloadedTemporalCompositeToolState = (
+    hashParams: URLSearchParams
+): TemporalCompositeToolState => {
+    const data = getTemporalCompositeToolDataFromHashParams(hashParams);
+    const proloadedState: TemporalCompositeToolState = {
+        ...initialState4TemporalCompositeTool,
+        ...data,
+    };
+
+    return proloadedState;
+};
 
 export const getPreloadedState4DRX = ({
     events,
@@ -57,10 +76,13 @@ export const getPreloadedState4DRX = ({
                 preloadedState4ImageryScenes.mode === 'dynamic'
                     ? 'find a scene'
                     : preloadedState4ImageryScenes.mode,
+            useTwoSceneComposite: true, // for DRX, we want to use the main and secondary scenes for the temporal composite layer, so we set useTwoSceneComposite to true
         },
         DisasterResponseExplorer: getPreloadedState4DisasterResponseExplorer({
             hashParams,
             events,
         }),
+        TemporalCompositeTool:
+            getPreloadedTemporalCompositeToolState(hashParams),
     };
 };

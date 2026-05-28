@@ -21,6 +21,7 @@ import {
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
     selectActiveAnalysisTool,
+    selectUseTwoSceneComposite,
 } from '@shared/store/ImageryScene/selectors';
 import {
     selectAutoSwipeSpeed,
@@ -106,6 +107,8 @@ export const useSaveAppState2HashParams = () => {
 
     const zoom = useAppSelector(selectMapZoom);
 
+    const useTwoSceneComposite = useAppSelector(selectUseTwoSceneComposite);
+
     useEffect(() => {
         updateHashParams('mode', mode);
 
@@ -120,6 +123,14 @@ export const useSaveAppState2HashParams = () => {
         }
 
         if (mode === 'analysis' && analysisTool === 'change') {
+            queryParams = queryParams4SecondaryScene;
+        }
+
+        if (
+            mode === 'analysis' &&
+            analysisTool === 'temporal composite' &&
+            useTwoSceneComposite
+        ) {
             queryParams = queryParams4SecondaryScene;
         }
 

@@ -32,6 +32,7 @@ import {
     selectIdOfSelectedItemInListOfQueryParams,
     selectActiveAnalysisTool,
     selectIsSecondarySceneActive,
+    selectUseTwoSceneComposite,
     // selectLandsatMissionsToBeExcluded,
 } from './selectors';
 // import { nanoid } from 'nanoid';
@@ -50,6 +51,7 @@ export const updateQueryParams4SceneInSelectedMode =
         const mode = selectAppMode(getState());
         const analysisTool = selectActiveAnalysisTool(getState());
         const isSecondarySceneActive = selectIsSecondarySceneActive(getState());
+        const useTwoSceneComposite = selectUseTwoSceneComposite(getState());
 
         if (mode === 'find a scene' || mode === 'dynamic') {
             dispatch(queryParams4MainSceneChanged(updatedQueryParams));
@@ -57,7 +59,12 @@ export const updateQueryParams4SceneInSelectedMode =
         }
 
         if (mode === 'analysis') {
-            if (analysisTool === 'change') {
+            // when in 'change compare' tool, we need to find the query params based on selected scene
+            // when in 'temporal composite' tool, if useTwoSceneComposite is true, we will use the main and secondary scenes for the temporal composite layer, otherwise we will use the three scenes specified in queryParamsList for the temporal composite layer
+            if (
+                analysisTool === 'change' ||
+                (analysisTool === 'temporal composite' && useTwoSceneComposite)
+            ) {
                 if (isSecondarySceneActive) {
                     dispatch(
                         queryParams4SecondarySceneChanged(updatedQueryParams)

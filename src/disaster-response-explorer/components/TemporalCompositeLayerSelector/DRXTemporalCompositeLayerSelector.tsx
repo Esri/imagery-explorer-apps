@@ -19,6 +19,7 @@ import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@shared/components/Button';
 import { ViewCompositeLayerButton } from '@shared/components/TemporalCompositeLayerSelector/TemporalCompositeLayerSelector';
+import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 export type ActiveScene4ChangeCompareTool = 'scene a' | 'scene b';
 
@@ -82,7 +83,10 @@ const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
             <span className="">{queryParams4ActiveScene.acquisitionDate}</span>
             <br />
             <span>
-                {queryParams4ActiveScene.acquisitionTimestampOfSelectedScene}
+                {getTimeStrInUTCTimeZone(
+                    queryParams4ActiveScene.acquisitionTimestampOfSelectedScene,
+                    true
+                )}
             </span>
         </div>
     );
@@ -95,28 +99,12 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
     queryParams4SceneB,
     activeSceneOnChange,
     viewCompositeLayerButtonOnClick,
-    // selectedSpectralIndexOnChange,
     viewCompositeLayerDisabled,
 }) => {
     const { t } = useTranslation();
 
     return (
         <div>
-            {/* <div className="mb-2">
-                <Dropdown
-                    data={[
-                        {
-                            label: 'VEGETATION',
-                            value: 'vegetation' as SpectralIndex,
-                            selected: false,
-                        },
-                    ]}
-                    onChange={(val: SpectralIndex) => {
-                        // acquisitionYearOnChange(+val);
-                    }}
-                />
-            </div> */}
-
             <div className={classNames('relative mb-1')}>
                 <Button
                     appearance={

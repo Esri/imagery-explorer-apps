@@ -89,7 +89,9 @@
         },
 
         // Disable all strict type-checking options
-        "strict": false
+        "strict": false,
+
+        "types": ["jest"]
     },
 
     // Files and directories excluded from compilation

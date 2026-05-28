@@ -192,6 +192,13 @@ export type ImageryScenesState = {
      * will be overridden, and the scene will be reselected from the new list of scenes.
      */
     shouldForceSceneReselection: boolean;
+    /**
+     * If true, the temporal composite is built from the main and secondary scenes only (2 scenes),
+     * rather than three independent scenes.
+     *
+     * Set once at app initialization; do not change at runtime.
+     */
+    useTwoSceneComposite?: boolean;
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -224,6 +231,7 @@ export const initialImagerySceneState: ImageryScenesState = {
     },
     cloudCover: 0.5,
     shouldForceSceneReselection: false,
+    useTwoSceneComposite: false,
 };
 
 const slice = createSlice({

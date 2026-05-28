@@ -24,6 +24,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.ImageryScenes.isSecondarySceneActive,
     (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
     (state: RootState) => state.ImageryScenes.tool,
+    (state: RootState) => state.ImageryScenes.useTwoSceneComposite,
     (
         mode,
         queryParams4MainScene,
@@ -31,7 +32,8 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         queryParamsList,
         isSecondarySceneActive,
         selectedItemID,
-        activeAnalysisTool
+        activeAnalysisTool,
+        useTwoSceneComposite
     ) => {
         if (mode === 'find a scene' || mode === 'dynamic') {
             return queryParams4MainScene;
@@ -39,7 +41,12 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
 
         if (mode === 'analysis') {
             // when in 'change compare' tool, we need to find the query params based on selected scene
-            if (activeAnalysisTool === 'change') {
+            // when in 'temporal composite' tool, if useTwoSceneComposite is true, we will use the main and secondary scenes for the temporal composite layer, otherwise we will use the three scenes specified in queryParamsList for the temporal composite layer
+            if (
+                activeAnalysisTool === 'change' ||
+                (activeAnalysisTool === 'temporal composite' &&
+                    useTwoSceneComposite)
+            ) {
                 return isSecondarySceneActive
                     ? queryParams4SecondaryScene
                     : queryParams4MainScene;
@@ -133,3 +140,6 @@ export const selectActiveAnalysisTool = (state: RootState) =>
 
 export const selectShouldForceSceneReselection = (state: RootState) =>
     state.ImageryScenes.shouldForceSceneReselection;
+
+export const selectUseTwoSceneComposite = (state: RootState) =>
+    state.ImageryScenes.useTwoSceneComposite;
