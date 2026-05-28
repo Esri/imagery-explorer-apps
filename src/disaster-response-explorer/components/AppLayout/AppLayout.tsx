@@ -36,6 +36,7 @@ import { useSaveDRXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHash
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector/';
+import { TemporalCompositeTool } from '../TemporalCompositeTool';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -111,14 +112,12 @@ export const AppLayout = () => {
                         </EventSceneSelector>
                     </div>
 
-                    {/* {mode === 'analysis' && (
+                    {mode === 'analysis' && (
                         <div className="analyze-tool-and-scene-info-container">
-                            <MaskTool />
-                            <TrendTool />
-                            <LandsatSpectralProfileTool />
-                            <ChangeCompareTool />
+                            {/* <ChangeCompareTool /> */}
+                            <TemporalCompositeTool />
                         </div>
-                    )} */}
+                    )}
 
                     <SceneInfo />
                 </div>
