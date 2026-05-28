@@ -18,6 +18,7 @@ import {
 } from '@shared/components/ChangeCompareLayerSelector/ChangeCompareLayerSelector';
 import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 import { DRXTemporalCompositeLayerSelector } from './DRXTemporalCompositeLayerSelector';
+import { isTemporalCompositeLayerOnUpdated } from '@shared/store/TemporalCompositeTool/reducer';
 
 export const DRXTemporalCompositeToolLayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
@@ -48,7 +49,7 @@ export const DRXTemporalCompositeToolLayerSelectorContainer = () => {
             queryParams4SceneA={queryParams4SceneA}
             queryParams4SceneB={queryParams4SceneB}
             viewCompositeLayerButtonOnClick={() => {
-                // dispatch(changeCompareLayerIsOnUpdated(true));
+                dispatch(isTemporalCompositeLayerOnUpdated(true));
             }}
             activeSceneOnChange={(
                 activeScene: ActiveScene4ChangeCompareTool
@@ -56,7 +57,7 @@ export const DRXTemporalCompositeToolLayerSelectorContainer = () => {
                 dispatch(
                     isSecondarySceneActiveToggled(activeScene === 'scene b')
                 );
-                // dispatch(changeCompareLayerIsOnUpdated(false));
+                dispatch(isTemporalCompositeLayerOnUpdated(false));
             }}
         />
     );
