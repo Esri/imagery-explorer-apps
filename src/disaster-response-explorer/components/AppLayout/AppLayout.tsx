@@ -25,20 +25,17 @@ import {
     selectActiveAnalysisTool,
     selectAppMode,
 } from '@shared/store/ImageryScene/selectors';
-import { AnimationControl } from '@shared/components/AnimationControl';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
-import { useTranslation } from 'react-i18next';
-import { Notification } from '@shared/components/Notification';
 import { SceneInfo } from '../SceneInfo';
 import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableDisasterResponseScenes';
-import { EventSelector } from '../EventSelector';
 import { EventSceneSelector } from '../EventSceneSelector';
 import { useSaveDRXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
+import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector/';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -94,6 +91,13 @@ export const AppLayout = () => {
                             <DRXAnalyzeToolSelector />
                         </ContainerOfSecondaryControls>
                     )}
+
+                    {mode === 'analysis' &&
+                        analysisTool === 'temporal composite' && (
+                            <ContainerOfSecondaryControls>
+                                <DRXTemporalCompositeLayerSelector />
+                            </ContainerOfSecondaryControls>
+                        )}
                 </div>
 
                 <div className="flex flex-grow justify-center shrink-0">
