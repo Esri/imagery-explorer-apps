@@ -38,7 +38,7 @@ import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelect
 import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector/';
 import { TemporalCompositeTool } from '../TemporalCompositeTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
-import { DRXChangeCompareTool } from '../ChangeCompareTool/DRXChangeCompareTool';
+import { DRXChangeCompareTool } from '../ChangeCompareTool/';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);

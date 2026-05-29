@@ -37,6 +37,7 @@
     "decrease": "Decrease",
     "no_change": "No change",
     "increase": "Increase",
+    "high_change": "High change",
     "select_two_scenes": "Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE.",
     "est_change_area_variable": "Est. Change Area ({{comparisonTopic}})",
     "estimated_change_area": "Estimated Change Area",

@@ -74,17 +74,23 @@ export const DRXChangeCompareLayerContainer: FC<Props> = ({
             return null;
         }
 
-        const greyscaleRasterFunction4SceneA = getGrayscaleRasterFunction(
-            queryParams4SceneA.objectIdOfSelectedScene
+        const sortedScenes = [queryParams4SceneA, queryParams4SceneB].sort(
+            (a, b) =>
+                a.acquisitionTimestampOfSelectedScene -
+                b.acquisitionTimestampOfSelectedScene
         );
 
-        const greyscaleRasterFunction4SceneB = getGrayscaleRasterFunction(
-            queryParams4SceneB.objectIdOfSelectedScene
+        const greyscaleRasterFunction4EarlierScene = getGrayscaleRasterFunction(
+            sortedScenes[0].objectIdOfSelectedScene
+        );
+
+        const greyscaleRasterFunction4LaterScene = getGrayscaleRasterFunction(
+            sortedScenes[1].objectIdOfSelectedScene
         );
 
         return minus({
-            raster: greyscaleRasterFunction4SceneA,
-            raster2: greyscaleRasterFunction4SceneB,
+            raster: greyscaleRasterFunction4EarlierScene,
+            raster2: greyscaleRasterFunction4LaterScene,
         });
     }, [queryParams4SceneA, queryParams4SceneB, isVisible]);
 
