@@ -8,6 +8,7 @@ import MapView from '@arcgis/core/views/MapView';
 import { getLockRasterMosaicRule } from '@shared/components/ImageryLayer/useImageLayer';
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
 import React, { FC, useEffect, useMemo } from 'react';
+import { getGrayscaleRasterFunction } from '../../utils/getGrayscaleRasterFunction';
 
 type Props = {
     mapView?: MapView;
@@ -67,19 +68,16 @@ export const DRXTemporalCompositeLayer: FC<Props> = ({
             return null;
         }
 
-        // Convert each input scene to greyscale using the luminosity method,
-        // The formula for luminosity is 0.21 R + 0.72 G + 0.07 B.
-        const grayScaleWeights = [21, 72, 7];
+        // // Convert each input scene to greyscale using the luminosity method,
+        // // The formula for luminosity is 0.21 R + 0.72 G + 0.07 B.
+        // const grayScaleWeights = [21, 72, 7];
 
-        const greyscaleRasterFunction4EarlierScene = grayscale({
-            weights: grayScaleWeights,
-            raster: '$' + objectIdOfEarlierScene,
-        });
+        const greyscaleRasterFunction4EarlierScene = getGrayscaleRasterFunction(
+            objectIdOfEarlierScene
+        );
 
-        const greyscaleRasterFunction4LaterScene = grayscale({
-            weights: grayScaleWeights,
-            raster: '$' + objectIdOfLaterScene,
-        });
+        const greyscaleRasterFunction4LaterScene =
+            getGrayscaleRasterFunction(objectIdOfLaterScene);
 
         const compositeBandRasterFunction = compositeBand({
             // rasters: [

@@ -31,6 +31,7 @@ import { ZoomToExtentOfSelectedSceneAndEvent } from './ZoomToExtentOfSelectedSce
 import { DisasterResponseFootprintsLayer } from '../DisasterResponseFootprintsLayer/DisasterResponseFootprintsLayer';
 import { MapActionButtonGroup } from '@shared/components/MapActionButton/';
 import { DRXTemporalCompositeLayer } from '../TemporalCompositeLayer';
+import { DRXChangeCompareLayer } from '../ChangeCompareLayer';
 
 export const Map = () => {
     const dispatch = useAppDispatch();
@@ -56,6 +57,8 @@ export const Map = () => {
                 <MapPopUpAnchorPoint />
 
                 <DRXTemporalCompositeLayer />
+
+                <DRXChangeCompareLayer />
             </GroupLayer>
 
             <SwipeComponent4ImageryLayers

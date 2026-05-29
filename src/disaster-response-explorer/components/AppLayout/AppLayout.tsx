@@ -38,6 +38,7 @@ import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelect
 import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector/';
 import { TemporalCompositeTool } from '../TemporalCompositeTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
+import { DRXChangeCompareTool } from '../ChangeCompareTool/DRXChangeCompareTool';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -123,7 +124,7 @@ export const AppLayout = () => {
 
                     {mode === 'analysis' && (
                         <div className="analyze-tool-and-scene-info-container">
-                            {/* <ChangeCompareTool /> */}
+                            <DRXChangeCompareTool />
                             <TemporalCompositeTool />
                         </div>
                     )}
