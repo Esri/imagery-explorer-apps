@@ -37,6 +37,7 @@ import { CloudFilter } from '@shared/components/CloudFilter';
 import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector/';
 import { TemporalCompositeTool } from '../TemporalCompositeTool';
+import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -90,6 +91,14 @@ export const AppLayout = () => {
                             />
                             {/* <AnimationControl /> */}
                             <DRXAnalyzeToolSelector />
+                        </ContainerOfSecondaryControls>
+                    )}
+
+                    {mode === 'analysis' && analysisTool === 'change' && (
+                        <ContainerOfSecondaryControls>
+                            <ChangeCompareLayerSelector
+                                showAcquisitionTimestamp={true}
+                            />
                         </ContainerOfSecondaryControls>
                     )}
 
