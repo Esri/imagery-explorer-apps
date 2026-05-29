@@ -82,10 +82,15 @@ export const DRXTemporalCompositeLayer: FC<Props> = ({
         });
 
         const compositeBandRasterFunction = compositeBand({
+            // rasters: [
+            //     greyscaleRasterFunction4EarlierScene,
+            //     greyscaleRasterFunction4LaterScene,
+            //     greyscaleRasterFunction4LaterScene,
+            // ],
             rasters: [
+                greyscaleRasterFunction4LaterScene,
                 greyscaleRasterFunction4EarlierScene,
-                greyscaleRasterFunction4LaterScene,
-                greyscaleRasterFunction4LaterScene,
+                greyscaleRasterFunction4EarlierScene,
             ],
         });
 
