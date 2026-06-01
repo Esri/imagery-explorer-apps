@@ -33,6 +33,7 @@ import {
     selectActiveAnalysisTool,
     selectIsSecondarySceneActive,
     selectUseTwoSceneComposite,
+    selectSwipeSubMode,
     // selectLandsatMissionsToBeExcluded,
 } from './selectors';
 // import { nanoid } from 'nanoid';
@@ -48,10 +49,13 @@ import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
 export const updateQueryParams4SceneInSelectedMode =
     (updatedQueryParams: QueryParams4ImageryScene) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const mode = selectAppMode(getState());
-        const analysisTool = selectActiveAnalysisTool(getState());
-        const isSecondarySceneActive = selectIsSecondarySceneActive(getState());
-        const useTwoSceneComposite = selectUseTwoSceneComposite(getState());
+        const state = getState();
+
+        const mode = selectAppMode(state);
+        const analysisTool = selectActiveAnalysisTool(state);
+        const isSecondarySceneActive = selectIsSecondarySceneActive(state);
+        const useTwoSceneComposite = selectUseTwoSceneComposite(state);
+        const swipeSubMode = selectSwipeSubMode(state);
 
         if (mode === 'find a scene' || mode === 'dynamic') {
             dispatch(queryParams4MainSceneChanged(updatedQueryParams));
@@ -88,6 +92,12 @@ export const updateQueryParams4SceneInSelectedMode =
         }
 
         if (mode === 'swipe') {
+            if (swipeSubMode === 'scene-to-basemap') {
+                // in the 'scene-to-basemap' sub-mode, we will always update the main scene since the other layer is the basemap
+                dispatch(queryParams4MainSceneChanged(updatedQueryParams));
+                return;
+            }
+
             if (isSecondarySceneActive) {
                 dispatch(queryParams4SecondarySceneChanged(updatedQueryParams));
             } else {

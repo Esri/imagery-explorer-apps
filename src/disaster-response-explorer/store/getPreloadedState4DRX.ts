@@ -99,7 +99,10 @@ export const getPreloadedState4DRX = ({
                 preloadedState4ImageryScenes.mode === 'dynamic'
                     ? 'find a scene'
                     : preloadedState4ImageryScenes.mode,
-            useTwoSceneComposite: true, // for DRX, we want to use the main and secondary scenes for the temporal composite layer, so we set useTwoSceneComposite to true
+            // for DRX, we want to use the main and secondary scenes for the temporal composite layer, so we set useTwoSceneComposite to true
+            useTwoSceneComposite: true,
+            // for DRX, we want to support both 'scene-to-scene' and 'scene-to-basemap' sub-modes in the swipe mode, so we set the availableSwipeSubModes to include both sub-modes
+            availableSwipeSubModes: ['scene-to-scene', 'scene-to-basemap'],
         },
         DisasterResponseExplorer: getPreloadedState4DisasterResponseExplorer({
             hashParams,

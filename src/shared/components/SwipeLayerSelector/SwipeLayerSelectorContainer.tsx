@@ -20,6 +20,7 @@ import {
     selectIsSecondarySceneActive,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
+    selectSwipeSubMode,
 } from '@shared/store/ImageryScene/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { SwipeLayerSelector } from './SwipeLayerSelector';
@@ -48,6 +49,8 @@ export const SwipeLayerSelectorContainer: FC<Props> = ({
         selectQueryParams4SecondaryScene
     );
 
+    const swipeSubMode = useAppSelector(selectSwipeSubMode);
+
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     if (appMode !== 'swipe') {
@@ -64,25 +67,31 @@ export const SwipeLayerSelectorContainer: FC<Props> = ({
                     height: `calc(100% - 30px)`,
                 }}
             >
-                <SwipeLayerSelector
-                    selectedSide={isSecondarySceneActive ? 'right' : 'left'}
-                    queryParams4SceneOnLeft={queryParams4LeftSide}
-                    queryParams4SceneOnRight={queryParams4RightSide}
-                    useAcquisitionTimestampAsLabel={
-                        useAcquisitionTimestampAsLabel
-                    }
-                    onChange={(value) => {
-                        const isSecondarySceneActive = value === 'right';
-                        dispatch(
-                            isSecondarySceneActiveToggled(
-                                isSecondarySceneActive
-                            )
-                        );
-                    }}
-                    swapButtonOnClick={() => {
-                        dispatch(swapMainAndSecondaryScenes());
-                    }}
-                />
+                {swipeSubMode === 'scene-to-scene' && (
+                    <SwipeLayerSelector
+                        selectedSide={isSecondarySceneActive ? 'right' : 'left'}
+                        queryParams4SceneOnLeft={queryParams4LeftSide}
+                        queryParams4SceneOnRight={queryParams4RightSide}
+                        useAcquisitionTimestampAsLabel={
+                            useAcquisitionTimestampAsLabel
+                        }
+                        onChange={(value) => {
+                            const isSecondarySceneActive = value === 'right';
+                            dispatch(
+                                isSecondarySceneActiveToggled(
+                                    isSecondarySceneActive
+                                )
+                            );
+                        }}
+                        swapButtonOnClick={() => {
+                            dispatch(swapMainAndSecondaryScenes());
+                        }}
+                    />
+                )}
+
+                {swipeSubMode === 'scene-to-basemap' && (
+                    <div>selector for scene-to-basemap sub-mode</div>
+                )}
             </div>
 
             <AutoSwipeControls />

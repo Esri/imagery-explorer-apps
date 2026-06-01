@@ -62,6 +62,13 @@ export type AnalysisTool =
     | 'urban heat island'; // urban heat island tool that runs Landsat Surface Intra-Urban Heat Island (SIUHI) workflow.
 
 /**
+ * the sub-mode of the Swipe mode, which determines how the two scenes are compared with each other
+ * - `scene-to-scene` to compare two different scenes, each on one side of the swipe widget;
+ * - `scene-to-basemap` to compare one scene with the basemap, where the scene is on one side of the swipe widget and the basemap is on the other side.
+ */
+export type SwipeSubMode = 'scene-to-scene' | 'scene-to-basemap';
+
+/**
  * Query Params and Rendering Options for a Imagery Scene (e.g. Landsat or Sentinel-2)
  */
 export type QueryParams4ImageryScene = {
@@ -199,6 +206,21 @@ export type ImageryScenesState = {
      * Set once at app initialization; do not change at runtime.
      */
     useTwoSceneComposite?: boolean;
+    /**
+     * the sub-mode of the Swipe mode, which determines how the two scenes are compared with each other.
+     * By default, the Swipe mode is in `scene-to-scene` sub-mode, which means two different scenes will be compared, each on one side of the swipe widget.
+     */
+    swipeSubMode?: SwipeSubMode;
+    /**
+     * The list of sub-modes available in the Swipe mode.
+     * Defaults to `['scene-to-scene']`. The `scene-to-basemap` sub-mode is only available
+     * for select apps (e.g. Disaster Response Explorer) and must be explicitly enabled
+     * by including it in this array.
+     *
+     * Used by the UI to determine whether to show the sub-mode toggle.
+     * Set once at app initialization; do not change at runtime.
+     */
+    availableSwipeSubModes?: SwipeSubMode[];
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -232,6 +254,8 @@ export const initialImagerySceneState: ImageryScenesState = {
     cloudCover: 0.5,
     shouldForceSceneReselection: false,
     useTwoSceneComposite: false,
+    swipeSubMode: 'scene-to-scene',
+    availableSwipeSubModes: ['scene-to-scene'],
 };
 
 const slice = createSlice({
@@ -343,6 +367,9 @@ const slice = createSlice({
         ) => {
             state.shouldForceSceneReselection = action.payload;
         },
+        swipeSubModeChanged: (state, action: PayloadAction<SwipeSubMode>) => {
+            state.swipeSubMode = action.payload;
+        },
     },
 });
 
@@ -361,6 +388,7 @@ export const {
     activeAnalysisToolChanged,
     availableImageryScenesUpdated,
     shouldForceSceneReselectionUpdated,
+    swipeSubModeChanged,
 } = slice.actions;
 
 export default reducer;

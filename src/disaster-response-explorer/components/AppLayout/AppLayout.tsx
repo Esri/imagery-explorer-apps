@@ -24,6 +24,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectActiveAnalysisTool,
     selectAppMode,
+    selectShouldShowSwipeSubModeToggle,
 } from '@shared/store/ImageryScene/selectors';
 import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
 import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
@@ -39,6 +40,8 @@ import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSele
 import { TemporalCompositeTool } from '../TemporalCompositeTool';
 import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
 import { DRXChangeCompareTool } from '../ChangeCompareTool/';
+import { useShouldShowSwipeSubModeToggle } from '@shared/hooks/useShouldShowSwipeSubModeToggle';
+import { SwipeSubModeToggle } from '@shared/components/SwipeLayerSelector/SwipeSubModeToggle';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -47,6 +50,7 @@ export const AppLayout = () => {
 
     const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
+    const shouldShowSwipeSubModeToggle = useShouldShowSwipeSubModeToggle();
     /**
      * Query the available Disaster Response scenes when the selected event changes
      */
@@ -84,6 +88,12 @@ export const AppLayout = () => {
                             'animate', // hide 'animate' mode as animation is not applicable for Disaster Response Explorer
                         ]}
                     />
+
+                    {shouldShowSwipeSubModeToggle && (
+                        <ContainerOfSecondaryControls>
+                            <SwipeSubModeToggle />
+                        </ContainerOfSecondaryControls>
+                    )}
 
                     {shouldShowSecondaryControls && (
                         <ContainerOfSecondaryControls>

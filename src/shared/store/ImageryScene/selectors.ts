@@ -25,6 +25,7 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
     (state: RootState) => state.ImageryScenes.queryParamsList.selectedItemID,
     (state: RootState) => state.ImageryScenes.tool,
     (state: RootState) => state.ImageryScenes.useTwoSceneComposite,
+    (state: RootState) => state.ImageryScenes.swipeSubMode,
     (
         mode,
         queryParams4MainScene,
@@ -33,7 +34,8 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         isSecondarySceneActive,
         selectedItemID,
         activeAnalysisTool,
-        useTwoSceneComposite
+        useTwoSceneComposite,
+        swipeSubMode
     ) => {
         if (mode === 'find a scene' || mode === 'dynamic') {
             return queryParams4MainScene;
@@ -63,6 +65,11 @@ export const selectQueryParams4SceneInSelectedMode = createSelector(
         }
 
         if (mode === 'swipe') {
+            // in the 'scene-to-basemap' sub-mode, we will always use the main scene for the swipe layer since the other layer is the basemap
+            if (swipeSubMode === 'scene-to-basemap') {
+                return queryParams4MainScene;
+            }
+
             return isSecondarySceneActive
                 ? queryParams4SecondaryScene
                 : queryParams4MainScene;
@@ -143,3 +150,16 @@ export const selectShouldForceSceneReselection = (state: RootState) =>
 
 export const selectUseTwoSceneComposite = (state: RootState) =>
     state.ImageryScenes.useTwoSceneComposite;
+
+export const selectSwipeSubMode = (state: RootState) =>
+    state.ImageryScenes.swipeSubMode;
+
+export const selectAvailableSwipeSubModes = (state: RootState) =>
+    state.ImageryScenes.availableSwipeSubModes;
+
+export const selectShouldShowSwipeSubModeToggle = createSelector(
+    selectAvailableSwipeSubModes,
+    (availableSwipeSubModes) => {
+        return availableSwipeSubModes && availableSwipeSubModes.length > 1;
+    }
+);
