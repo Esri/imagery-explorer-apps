@@ -42,6 +42,8 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import { DRXChangeCompareTool } from '../ChangeCompareTool/';
 import { useShouldShowSwipeSubModeToggle } from '@shared/hooks/useShouldShowSwipeSubModeToggle';
 import { SwipeSubModeToggle } from '@shared/components/SwipeLayerSelector/SwipeSubModeToggle';
+import { selectSelectedEventName } from '@shared/store/DisasterResponse/selectors';
+import classNames from 'classnames';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -51,6 +53,9 @@ export const AppLayout = () => {
     const shouldShowSecondaryControls = useShouldShowSecondaryControls();
 
     const shouldShowSwipeSubModeToggle = useShouldShowSwipeSubModeToggle();
+
+    const selectedEvent = useAppSelector(selectSelectedEventName);
+
     /**
      * Query the available Disaster Response scenes when the selected event changes
      */
@@ -80,7 +85,11 @@ export const AppLayout = () => {
         <>
             <AppHeader />
             <BottomPanel>
-                <div className="flex flex-shrink-0">
+                <div
+                    className={classNames('flex flex-shrink-0', {
+                        'is-disabled': !selectedEvent, // disable the controls in the header when no event is selected, as there is no scene to operate on
+                    })}
+                >
                     <ModeSelector
                         // hideExploreSubModes={true}
                         modesToHide={[
