@@ -11,7 +11,7 @@ export const getPreloadedState4DisasterResponseExplorer = ({
     const eventName = hashParams.get('disasterResponseEvent');
 
     const pageIndexFromHash = getPageIndexFromHashParams(hashParams);
-    console.log('pageIndexFromHash: ', pageIndexFromHash);
+    // console.log('pageIndexFromHash: ', pageIndexFromHash);
 
     const eventIds: string[] = [];
 

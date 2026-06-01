@@ -72,7 +72,7 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
             selectedEvent
             // objectIds
         );
-        console.log('footprint features: ', features);
+        // console.log('footprint features: ', features);
 
         const graphics: Graphic[] = features.map((feature) => {
             return new Graphic({

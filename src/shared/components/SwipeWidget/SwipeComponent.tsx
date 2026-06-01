@@ -127,9 +127,8 @@ export const SwipeComponent: FC<Props> = ({
     };
 
     const destroySwipeComponent = () => {
-        console.log('removing swipe component');
-
         if (arcgisSwipeRef.current) {
+            console.log('removing swipe component');
             arcgisSwipeRef.current.destroy();
             arcgisSwipeRef.current = null;
         }

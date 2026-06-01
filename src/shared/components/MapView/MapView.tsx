@@ -104,7 +104,7 @@ const MapView: React.FC<Props> = ({
                 console.error('The view is not an instance of ArcGISMapView');
                 return;
             } else {
-                console.log('ArcGISMapView is ready', viewElement, view);
+                // console.log('ArcGISMapView is ready', viewElement, view);
             }
 
             setMapView(view as ArcGISMapView);

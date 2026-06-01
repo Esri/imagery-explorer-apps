@@ -124,10 +124,10 @@ export const getDisasterResponseScenes = async ({
         where: whereClauses.join(` AND `),
     });
 
-    console.log(
-        'querying disaster response scenes with params: ',
-        params.toString()
-    );
+    // console.log(
+    //     'querying disaster response scenes with params: ',
+    //     params.toString()
+    // );
 
     const res = await fetch(
         `${DISASTER_RESPONSE_IMAGERY_SERVICE_URL}/query?${params.toString()}`,
