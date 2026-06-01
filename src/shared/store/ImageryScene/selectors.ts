@@ -166,3 +166,17 @@ export const selectShouldShowSwipeSubModeToggle = createSelector(
 
 export const selectIsBasemapOnRightSideOfSwipe = (state: RootState) =>
     state.ImageryScenes.isBasemapOnRightSideOfSwipe;
+
+export const selectIsSceneToSceneSwipeVisible = createSelector(
+    selectIsSwipeModeOn,
+    selectSwipeSubMode,
+    (isSwipeModeOn, swipeSubMode) =>
+        isSwipeModeOn && swipeSubMode === 'scene-to-scene'
+);
+
+export const selectIsSceneToBasemapSwipeVisible = createSelector(
+    selectIsSwipeModeOn,
+    selectSwipeSubMode,
+    (isSwipeModeOn, swipeSubMode) =>
+        isSwipeModeOn && swipeSubMode === 'scene-to-basemap'
+);

@@ -18,9 +18,12 @@ import React, { FC, useEffect } from 'react';
 // import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
+    selectIsBasemapOnRightSideOfSwipe,
+    selectIsSceneToBasemapSwipeVisible,
     selectIsSceneToSceneSwipeVisible,
     selectIsSwipeModeOn,
     selectQueryParams4MainScene,
+    selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
@@ -28,6 +31,8 @@ import { swipeWidgetHanlderPositionChanged } from '@shared/store/Map/reducer';
 import { useImageryLayerByObjectId } from '../ImageryLayer/useImageLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { SwipeComponent } from './SwipeComponent';
+import TileLayer from '@arcgis/core/layers/TileLayer';
+import { useBasemapLayerForSwipeWidget } from './useBasemapLayerForSwipeWidget';
 
 type Props = {
     /**
@@ -42,60 +47,56 @@ type Props = {
     mapView?: MapView;
 };
 
-export const SwipeComponent4ImageryLayers: FC<Props> = ({
+export const SwipeComponent4ImageryAndBasemapLayers: FC<Props> = ({
     serviceUrl,
     groupLayer,
     mapView,
 }: Props) => {
     const dispatch = useAppDispatch();
 
-    // const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
     const isSwipeWidgetVisible = useAppSelector(
-        selectIsSceneToSceneSwipeVisible
+        selectIsSceneToBasemapSwipeVisible
     );
 
-    const queryParams4LeftSide = useAppSelector(selectQueryParams4MainScene);
-
-    const queryParams4RightSide = useAppSelector(
-        selectQueryParams4SecondaryScene
+    const queryParams4SelectedScene = useAppSelector(
+        selectQueryParams4SceneInSelectedMode
     );
 
-    const leadingLayer = useImageryLayerByObjectId({
+    const showBasemapOnRightSide = useAppSelector(
+        selectIsBasemapOnRightSideOfSwipe
+    );
+
+    const imageryLayer = useImageryLayerByObjectId({
         url: serviceUrl,
         visible:
             isSwipeWidgetVisible &&
-            queryParams4LeftSide?.objectIdOfSelectedScene !== null,
-        rasterFunction: queryParams4LeftSide?.rasterFunctionName || '',
-        objectId: queryParams4LeftSide?.objectIdOfSelectedScene,
+            queryParams4SelectedScene?.objectIdOfSelectedScene !== null,
+        rasterFunction: queryParams4SelectedScene?.rasterFunctionName || '',
+        objectId: queryParams4SelectedScene?.objectIdOfSelectedScene,
     });
 
-    const trailingLayer = useImageryLayerByObjectId({
-        url: serviceUrl,
-        visible:
-            isSwipeWidgetVisible &&
-            queryParams4RightSide?.objectIdOfSelectedScene !== null,
-        rasterFunction: queryParams4RightSide?.rasterFunctionName || '',
-        objectId: queryParams4RightSide?.objectIdOfSelectedScene,
+    const basemapLayer = useBasemapLayerForSwipeWidget({
+        visible: isSwipeWidgetVisible,
     });
 
     useEffect(() => {
-        if (!leadingLayer || !trailingLayer) {
+        if (!imageryLayer || !basemapLayer) {
             return;
         }
 
         if (groupLayer) {
-            groupLayer.addMany([leadingLayer, trailingLayer]);
+            groupLayer.addMany([imageryLayer, basemapLayer]);
         } else if (mapView) {
-            mapView.map.addMany([leadingLayer, trailingLayer]);
+            mapView.map.addMany([imageryLayer, basemapLayer]);
         }
-    }, [mapView, groupLayer, leadingLayer, trailingLayer]);
+    }, [mapView, groupLayer, imageryLayer, basemapLayer]);
 
     return (
         <SwipeComponent
             mapView={mapView}
             visible={isSwipeWidgetVisible}
-            leadingLayer={leadingLayer}
-            trailingLayer={trailingLayer}
+            leadingLayer={showBasemapOnRightSide ? imageryLayer : basemapLayer}
+            trailingLayer={showBasemapOnRightSide ? basemapLayer : imageryLayer}
             positionOnChange={(pos) => {
                 // console.log(pos)
                 dispatch(swipeWidgetHanlderPositionChanged(Math.trunc(pos)));

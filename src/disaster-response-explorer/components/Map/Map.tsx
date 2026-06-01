@@ -32,6 +32,7 @@ import { DisasterResponseFootprintsLayer } from '../DisasterResponseFootprintsLa
 import { MapActionButtonGroup } from '@shared/components/MapActionButton/';
 import { DRXTemporalCompositeLayer } from '../TemporalCompositeLayer';
 import { DRXChangeCompareLayer } from '../ChangeCompareLayer';
+import { SwipeComponent4ImageryAndBasemapLayers } from '@shared/components/SwipeWidget/SwipeComponent4ImageryAndBasemapLayers';
 
 export const Map = () => {
     const dispatch = useAppDispatch();
@@ -62,6 +63,10 @@ export const Map = () => {
             </GroupLayer>
 
             <SwipeComponent4ImageryLayers
+                serviceUrl={DISASTER_RESPONSE_IMAGERY_SERVICE_URL}
+            />
+
+            <SwipeComponent4ImageryAndBasemapLayers
                 serviceUrl={DISASTER_RESPONSE_IMAGERY_SERVICE_URL}
             />
 
