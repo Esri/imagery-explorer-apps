@@ -163,3 +163,6 @@ export const selectShouldShowSwipeSubModeToggle = createSelector(
         return availableSwipeSubModes && availableSwipeSubModes.length > 1;
     }
 );
+
+export const selectIsBasemapOnRightSideOfSwipe = (state: RootState) =>
+    state.ImageryScenes.isBasemapOnRightSideOfSwipe;

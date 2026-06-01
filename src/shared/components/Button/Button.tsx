@@ -43,10 +43,12 @@ type Props = {
      */
     disabled?: boolean;
     /**
-     * fire when user clicks the button
+     * fire when user clicks the button.
+     * If not provided, the button will be rendered without pointer cursor and click events will be ignored.
+     * This is useful for cases where the button is used for display purposes and should not be interactive.
      * @returns
      */
-    onClickHandler: () => void;
+    onClickHandler?: () => void;
 };
 
 export const Button: FC<Props> = ({
@@ -77,10 +79,15 @@ export const Button: FC<Props> = ({
                     'horizontal-indicator-on-left':
                         decorativeIndicator === 'left',
                     'opacity-50 pointer-events-none': disabled,
+                    'pointer-events-none': !onClickHandler,
                 }
             )}
             data-element="button"
-            onClick={onClickHandler}
+            onClick={() => {
+                if (!disabled && onClickHandler) {
+                    onClickHandler();
+                }
+            }}
         >
             <div className="w-full">{children}</div>
         </div>

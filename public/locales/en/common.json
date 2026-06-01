@@ -337,5 +337,7 @@
     "composite": "Composite",
 
     "scene_to_scene": "Scene to Scene",
-    "scene_to_basemap": "Scene to Basemap"
+    "scene_to_basemap": "Scene to Basemap",
+
+    "world_imagery": "World Imagery"
 }

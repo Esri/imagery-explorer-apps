@@ -221,6 +221,11 @@ export type ImageryScenesState = {
      * Set once at app initialization; do not change at runtime.
      */
     availableSwipeSubModes?: SwipeSubMode[];
+    /**
+     * Flag to determine whether to show the basemap on the right side of the Swipe in the 'scene-to-basemap' sub-mode,
+     * or to show the selected scene on the right side. This is only applicable for the 'scene-to-basemap' sub-mode.
+     */
+    isBasemapOnRightSideOfSwipe?: boolean;
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
@@ -256,6 +261,7 @@ export const initialImagerySceneState: ImageryScenesState = {
     useTwoSceneComposite: false,
     swipeSubMode: 'scene-to-scene',
     availableSwipeSubModes: ['scene-to-scene'],
+    isBasemapOnRightSideOfSwipe: false,
 };
 
 const slice = createSlice({
@@ -370,6 +376,12 @@ const slice = createSlice({
         swipeSubModeChanged: (state, action: PayloadAction<SwipeSubMode>) => {
             state.swipeSubMode = action.payload;
         },
+        isBasemapOnRightSideOfSwipeChanged: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.isBasemapOnRightSideOfSwipe = action.payload;
+        },
     },
 });
 
@@ -389,6 +401,7 @@ export const {
     availableImageryScenesUpdated,
     shouldForceSceneReselectionUpdated,
     swipeSubModeChanged,
+    isBasemapOnRightSideOfSwipeChanged,
 } = slice.actions;
 
 export default reducer;

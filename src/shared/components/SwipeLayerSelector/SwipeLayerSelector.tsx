@@ -13,16 +13,11 @@
  * limitations under the License.
  */
 
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { Button } from '../Button';
 import { QueryParams4ImageryScene } from '../../store/ImageryScene/reducer';
 import classNames from 'classnames';
-// import { AppContext } from '@shared/contexts/AppContextProvider';
-import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '@shared/store/configureStore';
-import { selectImageryServiceRasterFunctionLabelMap } from '@shared/store/ImageryService/selectors';
-import { format } from 'date-fns';
-import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import { SwipeLayerSelectorButtonContent } from './SwipeLayerSelectorButtonContent';
 
 // import { getRasterFunctionLabelText } from '@shared/services/helpers/getRasterFunctionLabelText';
 
@@ -48,65 +43,6 @@ export const SwipeLayerSelector: FC<Props> = ({
     onChange,
     swapButtonOnClick,
 }) => {
-    const { t } = useTranslation();
-
-    // const { rasterFunctionLabelMap } = useContext(AppContext);
-
-    const rasterFunctionLabelMap = useAppSelector(
-        selectImageryServiceRasterFunctionLabelMap
-    );
-
-    const getButtonContent = (side: Side4SwipeMode) => {
-        const queryParams =
-            side === 'left'
-                ? queryParams4SceneOnLeft
-                : queryParams4SceneOnRight;
-
-        // Additional label to be displayed under the acquisition date.
-        let additionalLabel =
-            rasterFunctionLabelMap.get(queryParams?.rasterFunctionName) ||
-            queryParams?.rasterFunctionName;
-
-        // If useAcquisitionTimestampAsLabel is true and acquisition timestamp is available, use the timestamp as the additional label instead of the raster function name.
-        if (
-            useAcquisitionTimestampAsLabel &&
-            queryParams?.acquisitionTimestampOfSelectedScene
-        ) {
-            additionalLabel = getTimeStrInUTCTimeZone(
-                queryParams.acquisitionTimestampOfSelectedScene,
-                true
-            );
-        }
-
-        return (
-            <div
-                data-testid={`swipe-layer-selector-${side}`}
-                data-selected={selectedSide === side}
-                data-acquisition-date={queryParams?.acquisitionDate || ''}
-            >
-                <div>
-                    <span>{t(side)}</span>
-                </div>
-
-                <div className="text-xs text-center lowercase max-w-[126px] overflow-hidden text-ellipsis whitespace-nowrap">
-                    {queryParams?.acquisitionDate ? (
-                        <>
-                            <span>{queryParams.acquisitionDate}</span>
-
-                            <br />
-
-                            <span className="normal-case">
-                                {additionalLabel}
-                            </span>
-                        </>
-                    ) : (
-                        <span>{t('no_scene_selected')}</span>
-                    )}
-                </div>
-            </div>
-        );
-    };
-
     return (
         <div className="flex flex-col h-full w-full">
             {/* {sides.map((side) => (
@@ -149,7 +85,14 @@ export const SwipeLayerSelector: FC<Props> = ({
                         selectedSide === 'left' ? 'left' : null
                     }
                 >
-                    {getButtonContent('left')}
+                    <SwipeLayerSelectorButtonContent
+                        side="left"
+                        queryParams={queryParams4SceneOnLeft}
+                        selectedSide={selectedSide}
+                        useAcquisitionTimestampAsLabel={
+                            useAcquisitionTimestampAsLabel
+                        }
+                    />
                 </Button>
             </div>
 
@@ -178,7 +121,14 @@ export const SwipeLayerSelector: FC<Props> = ({
                         selectedSide === 'right' ? 'left' : null
                     }
                 >
-                    {getButtonContent('right')}
+                    <SwipeLayerSelectorButtonContent
+                        side="right"
+                        queryParams={queryParams4SceneOnRight}
+                        selectedSide={selectedSide}
+                        useAcquisitionTimestampAsLabel={
+                            useAcquisitionTimestampAsLabel
+                        }
+                    />
                 </Button>
             </div>
         </div>

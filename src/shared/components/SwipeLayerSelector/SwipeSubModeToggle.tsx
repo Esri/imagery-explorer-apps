@@ -11,6 +11,7 @@ import {
     SwipeSubMode,
     swipeSubModeChanged,
 } from '@shared/store/ImageryScene/reducer';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 export const SwipeSubModeToggle = () => {
     const { t } = useTranslation();
@@ -25,6 +26,8 @@ export const SwipeSubModeToggle = () => {
 
     const isSceneToBasemapMode = swipeSubMode === 'scene-to-basemap';
 
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
+
     const onChange = (swipeSubMode: SwipeSubMode) => {
         dispatch(swipeSubModeChanged(swipeSubMode));
     };
@@ -34,7 +37,11 @@ export const SwipeSubModeToggle = () => {
     }
 
     return (
-        <div>
+        <div
+            className={classNames({
+                'is-disabled': isAnimationPlaying,
+            })}
+        >
             <div
                 className={classNames('relative mb-2 w-full')}
                 key={'scene-to-scene'}
