@@ -101,8 +101,8 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
                     type: 'simple-fill',
                     color: [255, 255, 255, 0],
                     outline: {
-                        color: [191, 238, 254, 0.5],
-                        width: 1,
+                        color: [191, 238, 254, 0.75],
+                        width: 2,
                     },
                 },
             },
