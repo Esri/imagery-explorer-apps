@@ -27,8 +27,8 @@ import { getPreloadedState4UI } from '@shared/store/UI/getPreloadedState';
 import { getPreloadedState4Map } from '@shared/store/Map/getPreloadedState';
 import { getPreloadedState4ImageryScenes } from '@shared/store/ImageryScene/getPreloadedState';
 import { DisasterResponseRasterFunctionName } from '@shared/services/disaster-response/config';
-import { getPreloadedState4DisasterResponseExplorer } from '@shared/store/DisasterResponse/getPreloadedState';
-import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
+import { getPreloadedState4DisasterImageryExplorer } from '@shared/store/DisasterImageryExplorer/getPreloadedState';
+import { DisasterResponseEvent } from '@shared/store/DisasterImageryExplorer/reducer';
 import {
     TemporalCompositeToolState,
     initialState4TemporalCompositeTool,
@@ -103,8 +103,9 @@ export const getPreloadedState4DRX = ({
             useTwoSceneComposite: true,
             // for DRX, we want to support both 'scene-to-scene' and 'scene-to-basemap' sub-modes in the swipe mode, so we set the availableSwipeSubModes to include both sub-modes
             availableSwipeSubModes: ['scene-to-scene', 'scene-to-basemap'],
+            swipeSubMode: 'scene-to-basemap', // set the default swipe sub-mode to 'scene-to-basemap' since it's more commonly used in DRX use cases
         },
-        DisasterResponseExplorer: getPreloadedState4DisasterResponseExplorer({
+        DisasterImageryExplorer: getPreloadedState4DisasterImageryExplorer({
             hashParams,
             events,
         }),

@@ -30,7 +30,7 @@ import Sentinel1 from './Sentinel1/reducer';
 import PublishAndDownloadJobs from './PublishAndDownloadJobs/reducer';
 import ImageryService from './ImageryService/reducer';
 import UrbanHeatIslandTool from './UrbanHeatIslandTool/reducer';
-import DisasterResponseExplorer from './DisasterResponse/reducer';
+import DisasterImageryExplorer from './DisasterImageryExplorer/reducer';
 
 const reducers = combineReducers({
     Map,
@@ -49,7 +49,7 @@ const reducers = combineReducers({
     TemporalCompositeTool,
     PublishAndDownloadJobs,
     UrbanHeatIslandTool,
-    DisasterResponseExplorer,
+    DisasterImageryExplorer,
 });
 
 export default reducers;

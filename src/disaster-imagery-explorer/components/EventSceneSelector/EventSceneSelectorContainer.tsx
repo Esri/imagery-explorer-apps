@@ -5,7 +5,7 @@ import {
     DisasterResponseEvent,
     objectIdOfHoveredSceneUpdated,
     pageIndexUpdated,
-} from '@shared/store/DisasterResponse/reducer';
+} from '@shared/store/DisasterImageryExplorer/reducer';
 import {
     selectDisasterResponseEvents,
     selectDisasterResponseScenes,
@@ -16,8 +16,8 @@ import {
     selectSelectedEventName,
     selectSelectedPageIndex,
     selectTotalPages,
-} from '@shared/store/DisasterResponse/selectors';
-import { selectDisasterResponseEventScene } from '@shared/store/DisasterResponse/thunks';
+} from '@shared/store/DisasterImageryExplorer/selectors';
+import { selectDisasterResponseEventScene } from '@shared/store/DisasterImageryExplorer/thunks';
 import {
     selectCloudCover,
     selectQueryParams4SceneInSelectedMode,

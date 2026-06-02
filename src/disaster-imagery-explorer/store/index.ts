@@ -15,7 +15,7 @@
 
 import configureAppStore from '@shared/store/configureStore';
 import { getPreloadedState4DRX } from './getPreloadedState4DRX';
-import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
+import { DisasterResponseEvent } from '@shared/store/DisasterImageryExplorer/reducer';
 
 /**
  * Get the redux store for Disaster Imagery Explorer

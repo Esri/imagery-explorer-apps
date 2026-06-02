@@ -2,7 +2,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectSelectedEventName,
     selectSelectedPageIndex,
-} from '@shared/store/DisasterResponse/selectors';
+} from '@shared/store/DisasterImageryExplorer/selectors';
 import { updateHashParams } from '@shared/utils/url-hash-params';
 import React, { useEffect } from 'react';
 

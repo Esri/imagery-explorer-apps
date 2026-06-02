@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
 export const selectDisasterResponseEvents = createSelector(
-    (state: RootState) => state.DisasterResponseExplorer.events,
+    (state: RootState) => state.DisasterImageryExplorer.events,
     (events) => {
         const { eventIds, byEventId } = events;
         return eventIds.map((eventId) => byEventId[eventId]);
@@ -10,16 +10,16 @@ export const selectDisasterResponseEvents = createSelector(
 );
 
 export const selectSelectedEventName = (state: RootState) =>
-    state.DisasterResponseExplorer.selectedEvent;
+    state.DisasterImageryExplorer.selectedEvent;
 
 export const selectObjectIdsOfScenesInCurrentMapExtent = createSelector(
     (state: RootState) =>
-        state.DisasterResponseExplorer.objectIdsOfScenesInCurrentMapExtent,
+        state.DisasterImageryExplorer.objectIdsOfScenesInCurrentMapExtent,
     (objectIdsOfScenesInCurrentMapExtent) => objectIdsOfScenesInCurrentMapExtent
 );
 
 export const selectDisasterResponseScenes = createSelector(
-    (state: RootState) => state.DisasterResponseExplorer.disasterResponseScenes,
+    (state: RootState) => state.DisasterImageryExplorer.disasterResponseScenes,
     (disasterResponseScenes) => {
         const { objectIds, byObjectId } = disasterResponseScenes;
         return objectIds.map((objectId) => byObjectId[objectId]);
@@ -27,21 +27,21 @@ export const selectDisasterResponseScenes = createSelector(
 );
 
 export const selectObjectIdOfHoveredScene = (state: RootState) =>
-    state.DisasterResponseExplorer.objectIdOfHoveredScene;
+    state.DisasterImageryExplorer.objectIdOfHoveredScene;
 
 export const selectIsLoadingScenes = (state: RootState) =>
-    state.DisasterResponseExplorer.isLoadingScenes;
+    state.DisasterImageryExplorer.isLoadingScenes;
 
 export const selectTotalPages = (state: RootState) =>
-    state.DisasterResponseExplorer.scenePaginationPages.length;
+    state.DisasterImageryExplorer.scenePaginationPages.length;
 
 export const selectSelectedPageIndex = (state: RootState) =>
-    state.DisasterResponseExplorer.scenePaginationCurrentPageIndex;
+    state.DisasterImageryExplorer.scenePaginationCurrentPageIndex;
 
 export const selectScenesGroupedByAcquisitionDateForSelectedPage =
     createSelector(
         (state: RootState) =>
-            state.DisasterResponseExplorer.scenePaginationPages,
+            state.DisasterImageryExplorer.scenePaginationPages,
         selectSelectedPageIndex,
         (pages, selectedPageIndex) => {
             if (pages.length === 0) {
@@ -67,6 +67,6 @@ export const selectObjectIdOfScenesInCurrentPage = createSelector(
 
 export const selectDisasterResponseScenesByObjectId = createSelector(
     (state: RootState) =>
-        state.DisasterResponseExplorer.disasterResponseScenes.byObjectId,
+        state.DisasterImageryExplorer.disasterResponseScenes.byObjectId,
     (scenesByObjectId) => scenesByObjectId
 );

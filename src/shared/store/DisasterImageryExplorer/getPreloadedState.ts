@@ -1,7 +1,7 @@
 import { init } from 'i18next';
 import { DisasterResponseEvent, DRXState, initialDRXState } from './reducer';
 
-export const getPreloadedState4DisasterResponseExplorer = ({
+export const getPreloadedState4DisasterImageryExplorer = ({
     hashParams,
     events,
 }: {

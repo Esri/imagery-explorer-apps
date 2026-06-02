@@ -42,7 +42,7 @@ import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLaye
 import { DRXChangeCompareTool } from '../ChangeCompareTool/';
 import { useShouldShowSwipeSubModeToggle } from '@shared/hooks/useShouldShowSwipeSubModeToggle';
 import { SwipeSubModeToggle } from '@shared/components/SwipeLayerSelector/SwipeSubModeToggle';
-import { selectSelectedEventName } from '@shared/store/DisasterResponse/selectors';
+import { selectSelectedEventName } from '@shared/store/DisasterImageryExplorer/selectors';
 import classNames from 'classnames';
 
 export const AppLayout = () => {

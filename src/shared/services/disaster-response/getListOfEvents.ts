@@ -1,4 +1,4 @@
-import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
+import { DisasterResponseEvent } from '@shared/store/DisasterImageryExplorer/reducer';
 import {
     DISASTER_RESPONSE_IMAGERY_SERVICE_URL,
     DisasterResponseImageryServiceField,

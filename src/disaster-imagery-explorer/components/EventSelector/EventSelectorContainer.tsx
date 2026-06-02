@@ -4,12 +4,12 @@ import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     DisasterResponseEvent,
     selectedEventUpdated,
-} from '@shared/store/DisasterResponse/reducer';
+} from '@shared/store/DisasterImageryExplorer/reducer';
 import {
     selectDisasterResponseEvents,
     selectSelectedEventName,
-} from '@shared/store/DisasterResponse/selectors';
-import { updateSelectedDisasterResponseEvent } from '@shared/store/DisasterResponse/thunks';
+} from '@shared/store/DisasterImageryExplorer/selectors';
+import { updateSelectedDisasterResponseEvent } from '@shared/store/DisasterImageryExplorer/thunks';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -8,12 +8,12 @@ import MapView from '@arcgis/core/views/MapView';
 import { DisasterResponseImageryServiceField } from '@shared/services/disaster-response/config';
 import { getEventFootprints } from '@shared/services/disaster-response/getEventFootprints';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
-import { objectIdsOfScenesInCurrentMapExtentUpdated } from '@shared/store/DisasterResponse/reducer';
+import { objectIdsOfScenesInCurrentMapExtentUpdated } from '@shared/store/DisasterImageryExplorer/reducer';
 import {
     selectObjectIdOfHoveredScene,
     selectObjectIdOfScenesInCurrentPage,
     selectSelectedEventName,
-} from '@shared/store/DisasterResponse/selectors';
+} from '@shared/store/DisasterImageryExplorer/selectors';
 import {
     selectMapCenter,
     selectMapExtent,

@@ -1,6 +1,6 @@
 import { useAppSelector } from '@shared/store/configureStore';
-import { DisasterResponseScenesGroupedByAcquisitionDate } from '@shared/store/DisasterResponse/reducer';
-import { selectDisasterResponseScenesByObjectId } from '@shared/store/DisasterResponse/selectors';
+import { DisasterResponseScenesGroupedByAcquisitionDate } from '@shared/store/DisasterImageryExplorer/reducer';
+import { selectDisasterResponseScenesByObjectId } from '@shared/store/DisasterImageryExplorer/selectors';
 import { DisasterResponseScene } from '@typing/imagery-service';
 import classNames from 'classnames';
 import React, { FC, useMemo } from 'react';

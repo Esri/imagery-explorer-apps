@@ -47,14 +47,14 @@ export const SwipeSubModeToggle = () => {
                 key={'scene-to-scene'}
             >
                 <Button
-                    appearance={isSceneToSceneMode ? 'solid' : 'transparent'}
+                    appearance={isSceneToBasemapMode ? 'solid' : 'transparent'}
                     fullHeight={true}
-                    onClickHandler={onChange.bind(null, 'scene-to-scene')}
-                    decorativeIndicator={isSceneToSceneMode ? 'left' : null}
+                    onClickHandler={onChange.bind(null, 'scene-to-basemap')}
+                    decorativeIndicator={isSceneToBasemapMode ? 'left' : null}
                     scale="s"
                 >
                     <div className="text-center text-xs">
-                        {t('scene_to_scene')}
+                        {t('scene_to_basemap')}
                     </div>
                 </Button>
             </div>
@@ -64,14 +64,14 @@ export const SwipeSubModeToggle = () => {
                 key={'scene-to-basemap'}
             >
                 <Button
-                    appearance={isSceneToBasemapMode ? 'solid' : 'transparent'}
+                    appearance={isSceneToSceneMode ? 'solid' : 'transparent'}
                     fullHeight={true}
-                    onClickHandler={onChange.bind(null, 'scene-to-basemap')}
-                    decorativeIndicator={isSceneToBasemapMode ? 'left' : null}
+                    onClickHandler={onChange.bind(null, 'scene-to-scene')}
+                    decorativeIndicator={isSceneToSceneMode ? 'left' : null}
                     scale="s"
                 >
                     <div className="text-center text-xs">
-                        {t('scene_to_basemap')}
+                        {t('scene_to_scene')}
                     </div>
                 </Button>
             </div>

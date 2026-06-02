@@ -19,8 +19,8 @@ import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
 // import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
-import { selectSelectedEventName } from '@shared/store/DisasterResponse/selectors';
-import { queryAvailableDisasterResponseScenes } from '@shared/store/DisasterResponse/thunks';
+import { selectSelectedEventName } from '@shared/store/DisasterImageryExplorer/selectors';
+import { queryAvailableDisasterResponseScenes } from '@shared/store/DisasterImageryExplorer/thunks';
 // import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
 /**

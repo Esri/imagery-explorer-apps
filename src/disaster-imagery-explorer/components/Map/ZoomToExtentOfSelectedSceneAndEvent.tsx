@@ -7,7 +7,7 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectDisasterResponseEvents,
     selectSelectedEventName,
-} from '@shared/store/DisasterResponse/selectors';
+} from '@shared/store/DisasterImageryExplorer/selectors';
 import {
     selectAppMode,
     selectQueryParams4SceneInSelectedMode,
