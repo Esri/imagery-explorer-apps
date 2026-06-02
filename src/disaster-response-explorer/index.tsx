@@ -23,7 +23,7 @@ import { AppLayout } from './components/AppLayout/AppLayout';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import '@shared/components/calcite-components';
 import { initializeApp } from '@shared/utils/initialize-app/initializeApp';
-import { DISASTER_RESPONSE_EXPLORER_APP_ID } from '@shared/config';
+import { DISASTER_IMAGERY_EXPLORER_APP_ID } from '@shared/config';
 import ErrorBoundary from '@shared/components/ErrorBoundary/ErrorBoundary';
 import { Map } from './components/Map/Map';
 import { getDistinctListOfEvents } from '@shared/services/disaster-response/getListOfEvents';
@@ -34,7 +34,7 @@ import { AboutDisasterResponseExplorer } from './components/About';
 
     try {
         await initializeApp({
-            appId: DISASTER_RESPONSE_EXPLORER_APP_ID,
+            appId: DISASTER_IMAGERY_EXPLORER_APP_ID,
         });
 
         const events = await getDistinctListOfEvents();

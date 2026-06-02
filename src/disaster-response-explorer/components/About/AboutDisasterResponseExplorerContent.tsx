@@ -30,7 +30,7 @@ export const AboutDisasterResponseExplorerContent = () => {
         >
             <div className="flex items-center mb-8">
                 <div className=" text-custom-light-blue text-3xl pr-4 mr-4">
-                    <span>Esri | Disaster Response Explorer</span>
+                    <span>Esri | Disaster Imagery Explorer</span>
                 </div>
             </div>
 

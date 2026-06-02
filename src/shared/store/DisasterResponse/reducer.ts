@@ -61,7 +61,7 @@ export type DisasterResponseScenesGroupedByAcquisitionDate = {
 };
 
 /**
- * State for Disaster Response Explorer.
+ * State for Disaster Imagery Explorer.
  */
 export type DRXState = {
     /**

@@ -122,12 +122,12 @@ declare const ENV_WEB_MAP_ID: string;
 declare const ENV_SUREFACE_TEMP_EXPLORER_APP_ID: string;
 
 /**
- * Application ID for the Disaster Response Explorer app.
+ * Application ID for the Disaster Imagery Explorer app.
  * Required for authentication and features such as saving web maps.
  */
-declare const ENV_DISASTER_RESPONSE_EXPLORER_APP_ID: string;
+declare const ENV_DISASTER_IMAGERY_EXPLORER_APP_ID: string;
 
 /**
- * The service URL for the disaster response service for Disaster Response Explorer app.
+ * The service URL for the disaster response service for Disaster Imagery Explorer app.
  */
 declare const ENV_DISASTER_RESPONSE_SERVICE_URL: string;

@@ -214,7 +214,7 @@ export type ImageryScenesState = {
     /**
      * The list of sub-modes available in the Swipe mode.
      * Defaults to `['scene-to-scene']`. The `scene-to-basemap` sub-mode is only available
-     * for select apps (e.g. Disaster Response Explorer) and must be explicitly enabled
+     * for select apps (e.g. Disaster Imagery Explorer) and must be explicitly enabled
      * by including it in this array.
      *
      * Used by the UI to determine whether to show the sub-mode toggle.

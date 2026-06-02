@@ -64,7 +64,7 @@ export const AppLayout = () => {
     useSaveAppState2HashParams();
 
     /**
-     * Save the states specific to Disaster Response Explorer (e.g. selected event, selected scene) to hash params, so that the app state can be restored when users share the URL or revisit the app
+     * Save the states specific to Disaster Imagery Explorer (e.g. selected event, selected scene) to hash params, so that the app state can be restored when users share the URL or revisit the app
      */
     useSaveDRXStatesToHashParams();
 
@@ -93,8 +93,8 @@ export const AppLayout = () => {
                     <ModeSelector
                         // hideExploreSubModes={true}
                         modesToHide={[
-                            'dynamic', // hide 'dynamic' mode as it is not applicable for Disaster Response Explorer. Hidding  'dynamic' mode will cause the sub modes under 'explore' mode (i.e. 'dynamic' and 'find a scene') to be hidden in the Mode Selector, as they are not applicable for Disaster Response Explorer, which only has one explore mode.
-                            'animate', // hide 'animate' mode as animation is not applicable for Disaster Response Explorer
+                            'dynamic', // hide 'dynamic' mode as it is not applicable for Disaster Imagery Explorer. Hidding  'dynamic' mode will cause the sub modes under 'explore' mode (i.e. 'dynamic' and 'find a scene') to be hidden in the Mode Selector, as they are not applicable for Disaster Imagery Explorer, which only has one explore mode.
+                            'animate', // hide 'animate' mode as animation is not applicable for Disaster Imagery Explorer
                         ]}
                     />
 

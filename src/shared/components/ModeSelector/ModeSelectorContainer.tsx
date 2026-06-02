@@ -23,7 +23,7 @@ import { ModeSelector } from './ModeSelector';
 
 type Props = {
     // /**
-    //  * If true, the sub modes under "Explore" mode (i.e. "Swipe" and "Opacity") will be hidden in the mode selector, as they are not applicable for app like Disaster Response Explorer, which only has one explore mode.
+    //  * If true, the sub modes under "Explore" mode (i.e. "Swipe" and "Opacity") will be hidden in the mode selector, as they are not applicable for app like Disaster Imagery Explorer, which only has one explore mode.
     //  */
     // hideExploreSubModes?: boolean;
     /**

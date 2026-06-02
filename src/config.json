@@ -41,10 +41,10 @@
         "pathname": "/nlcdlandcoverexplorer",
         "supportedLocales": ["en"]
     },
-    "disasterresponseexplorer": {
-        "title": "Esri | Disaster Response Explorer",
+    "disasterimageryexplorer": {
+        "title": "Esri | Disaster Imagery Explorer",
         "description": "",
-        "pathname": "/disasterresponseexplorer",
+        "pathname": "/disasterimageryexplorer",
         "supportedLocales": ["en"]
     }
 }

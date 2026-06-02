@@ -18,7 +18,7 @@ import { getPreloadedState4DRX } from './getPreloadedState4DRX';
 import { DisasterResponseEvent } from '@shared/store/DisasterResponse/reducer';
 
 /**
- * Get the redux store for Disaster Response Explorer
+ * Get the redux store for Disaster Imagery Explorer
  *
  * @param events list of disaster response events to be displayed in the dropdown for selection
  * @returns

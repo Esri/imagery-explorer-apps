@@ -34,7 +34,7 @@ type Props = {
     disabled: boolean;
     // /**
     //  * If true, the sub modes under 'explore' (i.e. 'dynamic' and 'find a scene') will be hidden, and users won't be able to switch between these two modes.
-    //  * This is used by app like Disaster Response Explorer, which only has one explore mode, so there is no need to show the explore sub modes in the Mode Selector.
+    //  * This is used by app like Disaster Imagery Explorer, which only has one explore mode, so there is no need to show the explore sub modes in the Mode Selector.
     //  */
     // hideExploreSubModes?: boolean;
     /**
@@ -60,7 +60,7 @@ export const ModeSelector: FC<Props> = ({
 }: Props) => {
     const { t } = useTranslation();
 
-    // if modesToHide includes 'dynamic', then we will hide the explore sub modes and only show 'find a scene' mode in the mode selector, as 'dynamic' mode is not applicable for apps like Disaster Response Explorer
+    // if modesToHide includes 'dynamic', then we will hide the explore sub modes and only show 'find a scene' mode in the mode selector, as 'dynamic' mode is not applicable for apps like Disaster Imagery Explorer
     const hideExploreSubModes = modesToHide.includes('dynamic');
 
     const getFormattedModeName = (mode: AppMode) => {

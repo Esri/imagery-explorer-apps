@@ -144,16 +144,16 @@ const getGlobalConstants = (app, envConfig) => {
         ),
 
         /**
-         * URL for Disaster Response Explorer service
+         * URL for Disaster Imagery Explorer service
          */
         ENV_DISASTER_RESPONSE_SERVICE_URL: JSON.stringify(
             envConfig.DISASTER_RESPONSE_SERVICE_URL
         ),
         /**
-         * Application ID for the Disaster Response Explorer app.
+         * Application ID for the Disaster Imagery Explorer app.
          */
-        ENV_DISASTER_RESPONSE_EXPLORER_APP_ID: JSON.stringify(
-            envConfig.DISASTER_RESPONSE_EXPLORER_APP_ID
+        ENV_DISASTER_IMAGERY_EXPLORER_APP_ID: JSON.stringify(
+            envConfig.DISASTER_IMAGERY_EXPLORER_APP_ID
         ),
     };
 };
