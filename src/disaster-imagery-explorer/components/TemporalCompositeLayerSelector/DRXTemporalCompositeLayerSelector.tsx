@@ -51,6 +51,11 @@ type Props = {
      * @returns
      */
     activeSceneOnChange: (val: ActiveScene4ChangeCompareTool) => void;
+    /**
+     * Emits when user clicks on swap button to swap Scene A and Scene B
+     * @returns
+     */
+    swapButtonOnClick: () => void;
 };
 
 type ButtonTextLabelProps = {
@@ -99,6 +104,7 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
     queryParams4SceneB,
     activeSceneOnChange,
     viewCompositeLayerButtonOnClick,
+    swapButtonOnClick,
     viewCompositeLayerDisabled,
 }) => {
     const { t } = useTranslation();
@@ -139,6 +145,15 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
             {/* <div className='text-center leading-none'>
                 <span>-</span>
             </div> */}
+
+            <div
+                data-testid="temporal-composite-tool-swap-button"
+                className="flex justify-center cursor-pointer w-full my-1"
+                title="swap scene a and scene b"
+                onClick={swapButtonOnClick}
+            >
+                <calcite-icon icon="arrow-up-down" scale="s" />
+            </div>
 
             <div className={classNames('relative mb-1')}>
                 <Button

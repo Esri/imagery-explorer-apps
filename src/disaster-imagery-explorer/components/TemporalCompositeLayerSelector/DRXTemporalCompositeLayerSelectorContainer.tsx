@@ -19,6 +19,7 @@ import {
 import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 import { DRXTemporalCompositeLayerSelector } from './DRXTemporalCompositeLayerSelector';
 import { isTemporalCompositeLayerOnUpdated } from '@shared/store/TemporalCompositeTool/reducer';
+import { swapMainAndSecondaryScenes } from '@shared/store/ImageryScene/thunks';
 
 export const DRXTemporalCompositeToolLayerSelectorContainer = () => {
     const dispatch = useAppDispatch();
@@ -58,6 +59,9 @@ export const DRXTemporalCompositeToolLayerSelectorContainer = () => {
                     isSecondarySceneActiveToggled(activeScene === 'scene b')
                 );
                 dispatch(isTemporalCompositeLayerOnUpdated(false));
+            }}
+            swapButtonOnClick={() => {
+                dispatch(swapMainAndSecondaryScenes());
             }}
         />
     );

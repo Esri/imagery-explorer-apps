@@ -1,6 +1,7 @@
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 import {
+    clip,
     compositeBand,
     grayscale,
 } from '@arcgis/core/layers/support/rasterFunctionUtils';
@@ -21,8 +22,16 @@ type Props = {
      * Indicates whether the temporal composite layer is on or off.
      */
     isTemporalCompositeLayerOn: boolean;
-    objectIdOfEarlierScene: number;
-    objectIdOfLaterScene: number;
+    /**
+     * The object ID of scene A used for generating the temporal composite layer.
+     * Pixels from this scene will be used to generate the red band of the composite layer.
+     */
+    objectIdOfSceneA: number;
+    /**
+     * The object ID of scene B used for generating the temporal composite layer.
+     * Pixels from this scene will be used to generate the green and blue bands of the composite layer.
+     */
+    objectIdOfSceneB: number;
     objectIdOfSelectedScene: number;
 };
 
@@ -31,8 +40,8 @@ export const DRXTemporalCompositeLayer: FC<Props> = ({
     groupLayer,
     visible,
     isTemporalCompositeLayerOn,
-    objectIdOfEarlierScene,
-    objectIdOfLaterScene,
+    objectIdOfSceneA,
+    objectIdOfSceneB,
     objectIdOfSelectedScene,
 }) => {
     const layerRef = React.useRef<ImageryLayer>(null);
@@ -64,7 +73,7 @@ export const DRXTemporalCompositeLayer: FC<Props> = ({
             return null;
         }
 
-        if (!objectIdOfEarlierScene || !objectIdOfLaterScene) {
+        if (!objectIdOfSceneA || !objectIdOfSceneB) {
             return null;
         }
 
@@ -72,12 +81,11 @@ export const DRXTemporalCompositeLayer: FC<Props> = ({
         // // The formula for luminosity is 0.21 R + 0.72 G + 0.07 B.
         // const grayScaleWeights = [21, 72, 7];
 
-        const greyscaleRasterFunction4EarlierScene = getGrayscaleRasterFunction(
-            objectIdOfEarlierScene
-        );
+        const greyscaleRasterFunction4SceneA =
+            getGrayscaleRasterFunction(objectIdOfSceneA);
 
-        const greyscaleRasterFunction4LaterScene =
-            getGrayscaleRasterFunction(objectIdOfLaterScene);
+        const greyscaleRasterFunction4SceneB =
+            getGrayscaleRasterFunction(objectIdOfSceneB);
 
         const compositeBandRasterFunction = compositeBand({
             // rasters: [
@@ -86,9 +94,9 @@ export const DRXTemporalCompositeLayer: FC<Props> = ({
             //     greyscaleRasterFunction4LaterScene,
             // ],
             rasters: [
-                greyscaleRasterFunction4LaterScene,
-                greyscaleRasterFunction4EarlierScene,
-                greyscaleRasterFunction4EarlierScene,
+                greyscaleRasterFunction4SceneA,
+                greyscaleRasterFunction4SceneB,
+                greyscaleRasterFunction4SceneB,
             ],
         });
 
@@ -96,8 +104,8 @@ export const DRXTemporalCompositeLayer: FC<Props> = ({
     }, [
         isTemporalCompositeLayerOn,
         visible,
-        objectIdOfEarlierScene,
-        objectIdOfLaterScene,
+        objectIdOfSceneA,
+        objectIdOfSceneB,
     ]);
 
     const initLayer = () => {

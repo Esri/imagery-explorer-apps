@@ -94,41 +94,14 @@ export const DRXTemporalCompositeLayerContainer: FC<Props> = ({
         queryParams4SelectedScene,
     ]);
 
-    const [objectIdOfEarlierScene, objectIdOfLaterScene] = useMemo(() => {
-        if (!isTemporalCompositeLayerOn) {
-            return [null, null];
-        }
-
-        if (
-            !queryParams4SceneA?.objectIdOfSelectedScene ||
-            !queryParams4SceneB?.objectIdOfSelectedScene
-        ) {
-            return [null, null];
-        }
-
-        const objectIdOfEarlierScene =
-            queryParams4SceneA.acquisitionTimestampOfSelectedScene <
-            queryParams4SceneB.acquisitionTimestampOfSelectedScene
-                ? queryParams4SceneA.objectIdOfSelectedScene
-                : queryParams4SceneB.objectIdOfSelectedScene;
-
-        const objectIdOfLaterScene =
-            queryParams4SceneA.acquisitionTimestampOfSelectedScene >=
-            queryParams4SceneB.acquisitionTimestampOfSelectedScene
-                ? queryParams4SceneA.objectIdOfSelectedScene
-                : queryParams4SceneB.objectIdOfSelectedScene;
-
-        return [objectIdOfEarlierScene, objectIdOfLaterScene];
-    }, [isTemporalCompositeLayerOn, queryParams4SceneA, queryParams4SceneB]);
-
     return (
         <DRXTemporalCompositeLayer
             mapView={mapView}
             groupLayer={groupLayer}
             visible={isVisible}
             isTemporalCompositeLayerOn={isTemporalCompositeLayerOn}
-            objectIdOfEarlierScene={objectIdOfEarlierScene}
-            objectIdOfLaterScene={objectIdOfLaterScene}
+            objectIdOfSceneA={queryParams4SceneA?.objectIdOfSelectedScene}
+            objectIdOfSceneB={queryParams4SceneB?.objectIdOfSelectedScene}
             objectIdOfSelectedScene={
                 queryParams4SelectedScene?.objectIdOfSelectedScene
             }
