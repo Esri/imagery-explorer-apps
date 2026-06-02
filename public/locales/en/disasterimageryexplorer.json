@@ -10,5 +10,7 @@
     "no_scenes_in_current_map_extent": "No scenes available in the current map extent. Please pan the map to find available scenes.",
     "loading_scenes_for_selected_event": "Loading scenes for the selected event...",
     "composite_header_tooltip": "__composite_header_tooltip__",
-    "change_tool_header_tooltip": "__change_tool_header_tooltip__"
+    "change_tool_header_tooltip": "__change_tool_header_tooltip__",
+    "scene_a_brighter": "scene A brighter",
+    "scene_b_brighter": "scene B brighter"
 }

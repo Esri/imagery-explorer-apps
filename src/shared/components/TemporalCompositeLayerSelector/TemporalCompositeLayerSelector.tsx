@@ -24,6 +24,10 @@ type ViewCompositeButtonProps = {
      */
     isCompositeLayerOn: boolean;
     /**
+     * If true, the legend of the button on top left corner will be hidden
+     */
+    hideLegend?: boolean;
+    /**
      * Emits when user clicks the button to toggle the temporal composite layer on the map
      * @returns
      */
@@ -36,6 +40,7 @@ type ViewCompositeButtonProps = {
  */
 export const ViewCompositeLayerButton: FC<ViewCompositeButtonProps> = ({
     isCompositeLayerOn,
+    hideLegend = false,
     viewCompositeLayerButtonOnClick,
 }) => {
     const { t } = useTranslation();
@@ -55,10 +60,12 @@ export const ViewCompositeLayerButton: FC<ViewCompositeButtonProps> = ({
                 </div>
             </Button>
 
-            <img
-                src={CompositeIndicatorRGB}
-                className="absolute top-0 left-0"
-            />
+            {hideLegend !== true && (
+                <img
+                    src={CompositeIndicatorRGB}
+                    className="absolute top-0 left-0"
+                />
+            )}
         </div>
     );
 };

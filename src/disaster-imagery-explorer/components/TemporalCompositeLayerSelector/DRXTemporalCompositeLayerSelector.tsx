@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@shared/components/Button';
 import { ViewCompositeLayerButton } from '@shared/components/TemporalCompositeLayerSelector/TemporalCompositeLayerSelector';
 import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
+import CompositeIndicatorRed from '@shared/components/TemporalCompositeLayerSelector/images/Composite_Red.png';
 
 export type ActiveScene4ChangeCompareTool = 'scene a' | 'scene b';
 
@@ -140,6 +141,16 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
                         queryParams4ActiveScene={queryParams4SceneA}
                     />
                 </Button>
+
+                <div
+                    className="absolute top-0 left-0"
+                    style={{
+                        width: 0,
+                        height: 0,
+                        borderTop: '12px solid red',
+                        borderRight: '12px solid transparent',
+                    }}
+                />
             </div>
 
             {/* <div className='text-center leading-none'>
@@ -184,6 +195,16 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
                         queryParams4ActiveScene={queryParams4SceneB}
                     />
                 </Button>
+
+                <div
+                    className="absolute top-0 left-0"
+                    style={{
+                        width: 0,
+                        height: 0,
+                        borderTop: '12px solid cyan',
+                        borderRight: '12px solid transparent',
+                    }}
+                />
             </div>
 
             <div
@@ -193,6 +214,7 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
             >
                 <ViewCompositeLayerButton
                     isCompositeLayerOn={isTemporalCompositeLayerOn}
+                    hideLegend={true}
                     viewCompositeLayerButtonOnClick={
                         viewCompositeLayerButtonOnClick
                     }

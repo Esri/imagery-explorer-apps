@@ -34,12 +34,46 @@ export const DRXTemporalCompositeToolContainer = () => {
                 tooltipText={t('composite_header_tooltip', { ns: APP_NAME })}
             />
 
-            <div className="mt-2 opacity-50 text-sm text-center">
+            {/* <div className="mt-2 opacity-50 text-sm text-center">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua.
                 </p>
+            </div> */}
+
+            <div className={classNames('relative mt-4')}>
+                <div
+                    className={classNames('relative w-full h-[10px]')}
+                    style={{
+                        background:
+                            'linear-gradient(to right, #FF0000, #666666, #666666, #00FFFF)',
+                        // 'linear-gradient(to right, #FF0000, #666666 45%, #666666 55%, #00FFFF)',
+                    }}
+                ></div>
+
+                <div className="relative w-full mt-2 flex justify-between text-xs">
+                    <div className="text-left max-w-[80px]">
+                        <span>
+                            {t('scene_a_brighter', {
+                                ns: APP_NAME,
+                            })}
+                        </span>
+                    </div>
+                    {/* <span>{t('scene_a_brighter')}</span> */}
+
+                    <div className="text-center lowercase">
+                        <span>{t('no_change')}</span>
+                    </div>
+
+                    <div className="text-right max-w-[80px]">
+                        <span>
+                            {t('scene_b_brighter', {
+                                ns: APP_NAME,
+                            })}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     );
