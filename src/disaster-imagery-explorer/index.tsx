@@ -18,7 +18,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import { getDRXStore } from './store';
+import { getDIEXStore } from './store';
 import { AppLayout } from './components/AppLayout/AppLayout';
 import { ErrorPage } from '@shared/components/ErrorPage';
 import '@shared/components/calcite-components';
@@ -40,7 +40,8 @@ import { AboutDisasterResponseExplorer } from './components/About';
         const events = await getDistinctListOfEvents();
         // console.log('fetched events: ', events);
 
-        const store = getDRXStore({
+        // Get the redux store for Disaster Imagery Explorer
+        const store = getDIEXStore({
             events,
         });
 

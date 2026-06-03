@@ -33,7 +33,7 @@ import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecon
 import { SceneInfo } from '../SceneInfo';
 import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableDisasterResponseScenes';
 import { EventSceneSelector } from '../EventSceneSelector';
-import { useSaveDRXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
+import { useSaveDIEXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
 import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector/';
@@ -66,7 +66,7 @@ export const AppLayout = () => {
     /**
      * Save the states specific to Disaster Imagery Explorer (e.g. selected event, selected scene) to hash params, so that the app state can be restored when users share the URL or revisit the app
      */
-    useSaveDRXStatesToHashParams();
+    useSaveDIEXStatesToHashParams();
 
     if (IS_MOBILE_DEVICE) {
         return (

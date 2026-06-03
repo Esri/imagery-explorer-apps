@@ -38,6 +38,8 @@ import {
     ChangeCompareToolState,
     initialChangeCompareToolState,
 } from '@shared/store/ChangeCompareTool/reducer';
+import type { ImageryScenesState } from '@shared/store/ImageryScene/reducer';
+import { getSwipeSubModeFromHashParams } from '@shared/utils/url-hash-params/swipeSubMode';
 
 const getPreloadedTemporalCompositeToolState = (
     hashParams: URLSearchParams
@@ -68,7 +70,43 @@ const getPreloadedChangeCompareToolState = (hashParams: URLSearchParams) => {
     return preloadedState;
 };
 
-export const getPreloadedState4DRX = ({
+const getStateForImageryScenes = (
+    hashParams: URLSearchParams
+): ImageryScenesState => {
+    const defaultRasterFunction: DisasterResponseRasterFunctionName =
+        'Natural Color for Visualization - DRA';
+
+    const preloadedState4ImageryScenes = getPreloadedState4ImageryScenes(
+        hashParams,
+        undefined,
+        defaultRasterFunction
+    );
+
+    // For DIEX, if the mode in the URL hash params is 'dynamic', we will override it to 'find a scene' since DIEX only supports 'find a scene' mode.
+    const mode =
+        preloadedState4ImageryScenes.mode === 'dynamic'
+            ? 'find a scene'
+            : preloadedState4ImageryScenes.mode;
+
+    const swipeSubModeFromHashParams =
+        getSwipeSubModeFromHashParams(hashParams);
+
+    return {
+        ...preloadedState4ImageryScenes,
+        // override the mode to "find a scene" if the mode is "dynamic" since DRX only supports "find a scene" mode
+        mode,
+        // for DIEX, we want to use the main and secondary scenes for the temporal composite layer, so we set useTwoSceneComposite to true
+        useTwoSceneComposite: true,
+        // for DIEX, we want to support both 'scene-to-scene' and 'scene-to-basemap' sub-modes in the swipe mode, so we set the availableSwipeSubModes to include both sub-modes
+        availableSwipeSubModes: ['scene-to-scene', 'scene-to-basemap'],
+        swipeSubMode:
+            swipeSubModeFromHashParams?.selectedSubMode || 'scene-to-basemap', // default to 'scene-to-scene' sub-mode if the swipeSubMode is not specified in the URL hash params,
+        isBasemapOnRightSideOfSwipe:
+            swipeSubModeFromHashParams?.isBasemapOnRightSideOfSwipe || false, // default to having the basemap on the left side of the swipe by default if the swipeSubMode is not specified in the URL hash params
+    };
+};
+
+export const getPreloadedState4DIEX = ({
     events,
 }: {
     events: DisasterResponseEvent[];
@@ -80,31 +118,10 @@ export const getPreloadedState4DRX = ({
      */
     const mapLocationFromHashParams = getMapCenterFromHashParams(hashParams);
 
-    const defaultRasterFunction: DisasterResponseRasterFunctionName =
-        'Natural Color for Visualization - DRA';
-
-    const preloadedState4ImageryScenes = getPreloadedState4ImageryScenes(
-        hashParams,
-        undefined,
-        defaultRasterFunction
-    );
-
     return {
         Map: getPreloadedState4Map(hashParams, undefined),
         UI: getPreloadedState4UI(hashParams, undefined),
-        ImageryScenes: {
-            ...preloadedState4ImageryScenes,
-            // override the mode to "find a scene" if the mode is "dynamic" since DRX only supports "find a scene" mode
-            mode:
-                preloadedState4ImageryScenes.mode === 'dynamic'
-                    ? 'find a scene'
-                    : preloadedState4ImageryScenes.mode,
-            // for DRX, we want to use the main and secondary scenes for the temporal composite layer, so we set useTwoSceneComposite to true
-            useTwoSceneComposite: true,
-            // for DRX, we want to support both 'scene-to-scene' and 'scene-to-basemap' sub-modes in the swipe mode, so we set the availableSwipeSubModes to include both sub-modes
-            availableSwipeSubModes: ['scene-to-scene', 'scene-to-basemap'],
-            swipeSubMode: 'scene-to-basemap', // set the default swipe sub-mode to 'scene-to-basemap' since it's more commonly used in DRX use cases
-        },
+        ImageryScenes: getStateForImageryScenes(hashParams),
         DisasterImageryExplorer: getPreloadedState4DisasterImageryExplorer({
             hashParams,
             events,

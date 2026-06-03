@@ -14,7 +14,7 @@
  */
 
 import configureAppStore from '@shared/store/configureStore';
-import { getPreloadedState4DRX } from './getPreloadedState4DRX';
+import { getPreloadedState4DIEX } from './getPreloadedState4DIEX';
 import { DisasterResponseEvent } from '@shared/store/DisasterImageryExplorer/reducer';
 
 /**
@@ -23,12 +23,12 @@ import { DisasterResponseEvent } from '@shared/store/DisasterImageryExplorer/red
  * @param events list of disaster response events to be displayed in the dropdown for selection
  * @returns
  */
-export const getDRXStore = ({
+export const getDIEXStore = ({
     events,
 }: {
     events: DisasterResponseEvent[];
 }) => {
-    const preloadedState = getPreloadedState4DRX({
+    const preloadedState = getPreloadedState4DIEX({
         events,
     });
     return configureAppStore(preloadedState);

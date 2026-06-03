@@ -69,7 +69,7 @@ export type UrlHashParamKey =
     | 'profile' // key for 'trend' used to be 'profile'
     | 'trend' // hash params for trend tool
     | 'spectral' // hash params for spectral profile tool
-    | 'change' // hash params for spectral profile tool
+    | 'change' // hash params for change detection tool
     | 'composite' // hash params for temporal composite tool
     | 'hideTerrain' // hash params for terrain layer
     | 'hideMapLabels' // hash params for map labels layer
@@ -78,7 +78,8 @@ export type UrlHashParamKey =
     | 'sentinel1' // hash params for Sentinel-1 scenes
     | 'autoSwipeSpeed' // hash params for auto-swipe feature
     | 'hideBottomPanel' // hash params for hiding bottom panel in the UI
-    | 'disasterResponseEvent'; // hash params for selected disaster response event
+    | 'disasterResponseEvent' // hash params for selected disaster response event
+    | 'swipeSubMode'; // hash params for sub mode of the swipe mode
 
 const hashParams = new URLSearchParams();
 
@@ -92,7 +93,7 @@ const hashParams = new URLSearchParams();
 export const updateHashParams = (key: UrlHashParamKey, value: string) => {
     // const hashParams = getHashParams();
 
-    if (value === undefined || value === null) {
+    if (value === undefined || value === null || value === '') {
         hashParams.delete(key);
     } else {
         hashParams.set(key, value);
