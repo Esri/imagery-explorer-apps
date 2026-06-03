@@ -1,3 +1,4 @@
+import { APP_NAME } from '@shared/config';
 import { useAppSelector } from '@shared/store/configureStore';
 import { DisasterResponseScenesGroupedByAcquisitionDate } from '@shared/store/DisasterImageryExplorer/reducer';
 import { selectDisasterResponseScenesByObjectId } from '@shared/store/DisasterImageryExplorer/selectors';
@@ -199,6 +200,15 @@ export const EventSceneSelector: FC<Props> = ({
                                                             {
                                                                 scene.formattedAcuisitionTime
                                                             }
+                                                        </span>
+                                                        <br />
+                                                        <span>
+                                                            {t(
+                                                                scene.imageType,
+                                                                {
+                                                                    ns: APP_NAME,
+                                                                }
+                                                            )}
                                                         </span>
                                                         <br />
                                                         <span>
