@@ -72,11 +72,19 @@ export const SceneInfoContainer = () => {
                 }),
                 value: getFormattedDateTimeStrInUTC(eventTimestamp),
             },
+            // {
+            //     name: t('event_type', {
+            //         ns: APP_NAME,
+            //     }),
+            //     value: data.event,
+            // },
             {
-                name: t('event_type', {
+                name: t('image_type', {
                     ns: APP_NAME,
                 }),
-                value: data.event,
+                value: t(data.imageType, {
+                    ns: APP_NAME,
+                }),
             },
             {
                 name: t('cloud_cover'),

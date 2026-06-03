@@ -345,6 +345,9 @@ export type DisasterResponseScene = {
      * The formatted acquisition time is derived from the `eventTimestamp` field.
      */
     formattedAcuisitionTime: string;
+    /**
+     * Image type of the scene, e.g. 'pre-event' or 'post-event', etc. This field is used to indicate whether the scene was captured before or after the disaster event, which can help users quickly identify the imagery they are interested in when they are exploring the disaster response scenes.
+     */
     imageType: string;
     platform: string;
 };
