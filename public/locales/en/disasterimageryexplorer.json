@@ -11,6 +11,6 @@
     "loading_scenes_for_selected_event": "Loading scenes for the selected event...",
     "composite_header_tooltip": "__composite_header_tooltip__",
     "change_tool_header_tooltip": "__change_tool_header_tooltip__",
-    "scene_a_brighter": "scene A brighter",
-    "scene_b_brighter": "scene B brighter"
+    "scene_a_brighter": "Scene A brighter",
+    "scene_b_brighter": "Scene B brighter"
 }

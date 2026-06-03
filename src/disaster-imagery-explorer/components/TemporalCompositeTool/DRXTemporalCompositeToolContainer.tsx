@@ -62,7 +62,7 @@ export const DRXTemporalCompositeToolContainer = () => {
                     </div>
                     {/* <span>{t('scene_a_brighter')}</span> */}
 
-                    <div className="text-center lowercase">
+                    <div className="text-center">
                         <span>{t('no_change')}</span>
                     </div>
 
