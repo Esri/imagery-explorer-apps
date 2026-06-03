@@ -339,5 +339,7 @@
     "scene_to_scene": "Scene to Scene",
     "scene_to_basemap": "Scene to Basemap",
 
-    "world_imagery": "World Imagery"
+    "world_imagery": "World Imagery",
+    "disaster_imagery_explorer": "Disaster Imagery Explorer",
+    "launch_disaster_imagery_explorer": "Launch the Disaster Imagery Explorer in a new tab"
 }
