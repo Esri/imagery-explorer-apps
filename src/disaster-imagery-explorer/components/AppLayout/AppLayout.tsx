@@ -45,6 +45,7 @@ import { SwipeSubModeToggle } from '@shared/components/SwipeLayerSelector/SwipeS
 import { selectSelectedEventName } from '@shared/store/DisasterImageryExplorer/selectors';
 import classNames from 'classnames';
 import { useSyncPaginationWithScene } from '../../hooks/useSyncPaginationWithScene';
+import { DisasterImageryExplorerSavePanel } from '../SavePanel/DisasterImageryExplorerSavePanel';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -158,6 +159,7 @@ export const AppLayout = () => {
                     <SceneInfo />
                 </div>
             </BottomPanel>
+            <DisasterImageryExplorerSavePanel />
         </>
     );
 };

@@ -41,12 +41,17 @@ export const usePublishSceneRasterFunction = ({
             return null;
         }
 
-        return createClipRasterFunction({
+        const rasterFunction = createClipRasterFunction({
             serviceUrl: originalServiceUrl,
             objectId: queryParams4MainScene?.objectIdOfSelectedScene,
             token,
             clippingGeometry,
         });
+        console.log(
+            'Created raster function for publishing scene:',
+            rasterFunction
+        );
+        return rasterFunction;
     }, [clippingGeometry, queryParams4MainScene?.objectIdOfSelectedScene]);
 
     return rasterFunction;
