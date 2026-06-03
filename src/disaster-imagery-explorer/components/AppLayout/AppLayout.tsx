@@ -44,6 +44,7 @@ import { useShouldShowSwipeSubModeToggle } from '@shared/hooks/useShouldShowSwip
 import { SwipeSubModeToggle } from '@shared/components/SwipeLayerSelector/SwipeSubModeToggle';
 import { selectSelectedEventName } from '@shared/store/DisasterImageryExplorer/selectors';
 import classNames from 'classnames';
+import { useSyncPaginationWithScene } from '../../hooks/useSyncPaginationWithScene';
 
 export const AppLayout = () => {
     const mode = useAppSelector(selectAppMode);
@@ -67,6 +68,12 @@ export const AppLayout = () => {
      * Save the states specific to Disaster Imagery Explorer (e.g. selected event, selected scene) to hash params, so that the app state can be restored when users share the URL or revisit the app
      */
     useSaveDIEXStatesToHashParams();
+
+    /**
+     * Keeps the pagination page in sync with the selected scene.
+     * When switching between selected scenes (e.g. in swipe mode), the pagination automatically navigates to the page containing that scene.
+     */
+    useSyncPaginationWithScene();
 
     if (IS_MOBILE_DEVICE) {
         return (

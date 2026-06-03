@@ -70,3 +70,6 @@ export const selectDisasterResponseScenesByObjectId = createSelector(
         state.DisasterImageryExplorer.disasterResponseScenes.byObjectId,
     (scenesByObjectId) => scenesByObjectId
 );
+
+export const selectScenePaginationPages = (state: RootState) =>
+    state.DisasterImageryExplorer.scenePaginationPages;
