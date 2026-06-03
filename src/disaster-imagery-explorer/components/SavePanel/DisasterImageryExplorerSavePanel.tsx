@@ -14,11 +14,19 @@ import { usePublishSceneRasterFunction } from '@shared/components/SavePanel/useP
 import { useDownloadAndPublishOptions } from '@shared/components/SavePanel/useDownloadAndPublishOptions';
 import { useSceneIds } from '@shared/components/SavePanel/useSceneIds';
 import { getDisasterResponseSceneByObjectId } from '@shared/services/disaster-response/getDisasterResponseScenes';
+import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
 
 export const DisasterImageryExplorerSavePanel = () => {
     const token = getToken();
 
     const publishOptions = useDownloadAndPublishOptions();
+
+    // DIEx does not support change detection, so remove that publish option
+    const publishOptionsFiltered = publishOptions.filter((d) => {
+        return (
+            d.saveJobType !== PublishAndDownloadJobType.PublishChangeDetection
+        );
+    });
 
     const sceneIds = useSceneIds({
         getSceneByObjectId: getDisasterResponseSceneByObjectId,
@@ -39,7 +47,7 @@ export const DisasterImageryExplorerSavePanel = () => {
         <SavePanel
             originalServiceUrl={DISASTER_RESPONSE_IMAGERY_SERVICE_URL}
             sceneIds={sceneIds}
-            publishOptions={publishOptions}
+            publishOptions={publishOptionsFiltered}
             serviceName={'Disaster Imagery'}
             tags={TAGS}
             description={DISASTER_SERVICE_DESCRIPTION}
