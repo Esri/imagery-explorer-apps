@@ -55,6 +55,15 @@ export type DisasterResponseScenesGroupedByAcquisitionDate = {
      */
     shouldShowYearLabel: boolean;
     /**
+     * Type of the disaster response scenes in the group. If any scene in the group is a post-event image, the image type of the group will be 'post-event', otherwise it will be 'pre-event'.
+     * This is used for adding indicators in the UI to differentiate pre-event and post-event images, which can help users quickly identify the scenes they are interested in.
+     */
+    imageType: 'pre-event' | 'post-event' | 'unknown';
+    /**
+     * Indicates whether this is the first group that contains post-event images in the list of scenes for the selected event.
+     */
+    firstGroupWithPostEventImage: boolean;
+    /**
      * List of object ids of the scenes with the same acquisition date. This is used to retrieve the scene information from the byObjectId map to display the scenes in the EventSceneSelector component
      */
     objectIds: number[];

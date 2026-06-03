@@ -45,6 +45,14 @@ export const getFormattedDisasterResponseScenes = (
             true
         );
 
+        const validImageTypes = ['pre-event', 'post-event'];
+
+        const imageType = validImageTypes.includes(
+            attributes[DisasterResponseImageryServiceField.IMAGE_TYPE]
+        )
+            ? attributes[DisasterResponseImageryServiceField.IMAGE_TYPE]
+            : 'unknown';
+
         const scene: DisasterResponseScene = {
             objectId: attributes[DisasterResponseImageryServiceField.OBJECTID],
             provider: attributes[DisasterResponseImageryServiceField.PROVIDER],
@@ -54,8 +62,7 @@ export const getFormattedDisasterResponseScenes = (
                 attributes[DisasterResponseImageryServiceField.DESCRIPTION] ||
                 '',
             platform: attributes[DisasterResponseImageryServiceField.PLATFORM],
-            imageType:
-                attributes[DisasterResponseImageryServiceField.IMAGE_TYPE],
+            imageType,
             eventStartDate:
                 attributes[
                     DisasterResponseImageryServiceField.EVENT_START_DATE
