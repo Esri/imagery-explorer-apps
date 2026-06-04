@@ -40,7 +40,8 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
             objectId,
             formattedAcquisitionDate,
             acquisitionYear,
-            acquisitionDate,
+            // acquisitionDate,
+            daysFromEventStart,
         } = scenes[i];
 
         if (
@@ -57,11 +58,7 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
                 // which can be used for adding indicators in the UI to highlight the scenes that are acquired on the same day as the disaster response event starts
                 isEventStartDate:
                     formattedAcquisitionDate === formattedEventStartDate,
-                daysFromEventStart: Math.floor(
-                    (new Date(acquisitionDate).getTime() -
-                        new Date(formattedEventStartDate).getTime()) /
-                        (1000 * 60 * 60 * 24)
-                ), // calculate the number of days between the acquisition date of the scenes in the group and the event start date
+                daysFromEventStart,
             };
 
             groups.push(currentGroup);

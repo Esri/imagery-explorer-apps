@@ -29,6 +29,9 @@ export const getFormattedDisasterResponseScenes = (
         const eventTimestamp =
             +attributes[DisasterResponseImageryServiceField.DATETIME];
 
+        const eventStartDate =
+            +attributes[DisasterResponseImageryServiceField.EVENT_START_DATE];
+
         /**
          * formatted aquisition date should be like `2023-05-01`
          */
@@ -52,6 +55,13 @@ export const getFormattedDisasterResponseScenes = (
         )
             ? attributes[DisasterResponseImageryServiceField.IMAGE_TYPE]
             : 'unknown';
+
+        // 24 hours in milliseconds
+        const millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+        const daysFromEventStart = Math.floor(
+            (eventTimestamp - eventStartDate) / millisecondsPerDay
+        );
 
         const scene: DisasterResponseScene = {
             objectId: attributes[DisasterResponseImageryServiceField.OBJECTID],
@@ -77,6 +87,7 @@ export const getFormattedDisasterResponseScenes = (
             acquisitionYear,
             acquisitionMonth,
             formattedAcuisitionTime,
+            daysFromEventStart,
         };
 
         scenes.push(scene);

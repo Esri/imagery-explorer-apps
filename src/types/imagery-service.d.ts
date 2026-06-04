@@ -349,5 +349,9 @@ export type DisasterResponseScene = {
      * Image type of the scene, e.g. 'pre-event' or 'post-event', etc. This field is used to indicate whether the scene was captured before or after the disaster event, which can help users quickly identify the imagery they are interested in when they are exploring the disaster response scenes.
      */
     imageType: 'pre-event' | 'post-event' | 'unknown';
+    /**
+     * Number of days between the acquisition date of the scene and the event start date. Negative value means the scene was acquired before the event start date, positive value means the scene was acquired after the event start date, and zero means the scene was acquired on the same day as the event starts.
+     */
+    daysFromEventStart: number;
     platform: string;
 };
