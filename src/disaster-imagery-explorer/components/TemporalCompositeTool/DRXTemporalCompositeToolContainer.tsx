@@ -44,7 +44,9 @@ export const DRXTemporalCompositeToolContainer = () => {
 
             <div className={classNames('relative mt-4')}>
                 <div
-                    className={classNames('relative w-full h-[10px]')}
+                    className={classNames(
+                        'relative w-full h-[10px] border border-white/70'
+                    )}
                     style={{
                         background:
                             'linear-gradient(to right, #FF0000, #666666, #666666, #00FFFF)',
