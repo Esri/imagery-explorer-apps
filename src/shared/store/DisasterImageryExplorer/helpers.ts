@@ -21,7 +21,7 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
         return [];
     }
 
-    const maxNumOfGroupsPerPage = 15;
+    const maxNumOfGroupsPerPage = 16;
 
     const eventStartDate = scenes[0].eventStartDate;
 

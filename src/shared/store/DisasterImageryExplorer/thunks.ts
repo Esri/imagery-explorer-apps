@@ -43,6 +43,7 @@ import {
 } from '../ImageryScene/thunks';
 import { DisasterResponseImageryServiceDefaultRenderer } from '@shared/services/disaster-response/config';
 import { getPaginatedScenesGroupedByAcquisitionDate } from './helpers';
+import { selectSelectedEventName } from './selectors';
 
 let abortController: AbortController = null;
 /**
@@ -86,7 +87,17 @@ export const queryAvailableDisasterResponseScenes =
     };
 
 export const updateSelectedDisasterResponseEvent =
-    (eventName: string) => (dispatch: StoreDispatch) => {
+    (eventName: string) =>
+    (dispatch: StoreDispatch, getState: StoreGetState) => {
+        const state = getState();
+
+        const selectedEvent = selectSelectedEventName(state);
+
+        if (selectedEvent === eventName) {
+            // do nothing if the selected event is the same as the current selected event in the store
+            return;
+        }
+
         // reset the query params for main scene and secondary scene as they are no longer associated with the newly selected event
         dispatch(
             queryParams4MainSceneChanged({
