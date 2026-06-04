@@ -73,7 +73,7 @@ export const Map = () => {
             <HillshadeLayer />
 
             <MapActionButtonGroup
-                nativeScale={113386}
+                nativeScale={1937}
                 serviceName={'Disaster Response Imagery Service'}
                 serviceUrl={DISASTER_RESPONSE_IMAGERY_SERVICE_URL}
             />
