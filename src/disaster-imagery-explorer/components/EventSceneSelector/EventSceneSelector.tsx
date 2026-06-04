@@ -105,18 +105,14 @@ export const EventSceneSelector: FC<Props> = ({
                 const daysAbs = Math.abs(d.daysFromEventStart);
                 let dateTooltipText =
                     d.daysFromEventStart < 0
-                        ? t(
-                              daysAbs === 1
-                                  ? 'days_before_event_start_singular'
-                                  : 'days_before_event_start',
-                              { days: daysAbs, ns: APP_NAME }
-                          )
-                        : t(
-                              d.daysFromEventStart === 1
-                                  ? 'days_from_event_start_singular'
-                                  : 'days_from_event_start',
-                              { days: d.daysFromEventStart, ns: APP_NAME }
-                          );
+                        ? t('days_before_event_start', {
+                              count: daysAbs,
+                              ns: APP_NAME,
+                          })
+                        : t('days_from_event_start', {
+                              count: d.daysFromEventStart,
+                              ns: APP_NAME,
+                          });
 
                 // if the acquisition date of the scenes in the group is the same as the event start date, update the tooltip text to indicate that it's the event start date
                 if (d.isEventStartDate) {

@@ -17,8 +17,8 @@
     "post-event": "Post-event",
     "image_type": "Image Type",
     "event_start_date": "Event Start Date",
-    "days_from_event_start": "{{days}} days since event start",
-    "days_from_event_start_singular": "{{days}} day since event start",
-    "days_before_event_start": "{{days}} days before event start",
-    "days_before_event_start_singular": "{{days}} day before event start"
+    "days_from_event_start_other": "{{count}} days since event start",
+    "days_from_event_start_one": "{{count}} day since event start",
+    "days_before_event_start_other": "{{count}} days before event start",
+    "days_before_event_start_one": "{{count}} day before event start"
 }
