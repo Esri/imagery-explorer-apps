@@ -15,5 +15,10 @@
     "scene_b_brighter": "Scene B brighter",
     "pre-event": "Pre-event",
     "post-event": "Post-event",
-    "image_type": "Image Type"
+    "image_type": "Image Type",
+    "event_start_date": "Event Start Date",
+    "days_from_event_start": "{{days}} days after event start",
+    "days_from_event_start_singular": "{{days}} day after event start",
+    "days_before_event_start": "{{days}} days before event start",
+    "days_before_event_start_singular": "{{days}} day before event start"
 }

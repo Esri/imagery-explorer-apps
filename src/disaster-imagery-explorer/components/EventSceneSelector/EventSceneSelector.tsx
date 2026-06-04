@@ -100,6 +100,29 @@ export const EventSceneSelector: FC<Props> = ({
                 const shouldShowYearLabel = d.shouldShowYearLabel;
                 const date = d.formattedAcquisitionDate;
 
+                // determine the tooltip text for the acquisition date label based on the number of days between the acquisition date and the event start date,
+                // which can help users understand the temporal relationship between the scenes and the disaster response event
+                const daysAbs = Math.abs(d.daysFromEventStart);
+                let dateTooltipText =
+                    d.daysFromEventStart < 0
+                        ? t(
+                              daysAbs === 1
+                                  ? 'days_before_event_start_singular'
+                                  : 'days_before_event_start',
+                              { days: daysAbs, ns: APP_NAME }
+                          )
+                        : t(
+                              d.daysFromEventStart === 1
+                                  ? 'days_from_event_start_singular'
+                                  : 'days_from_event_start',
+                              { days: d.daysFromEventStart, ns: APP_NAME }
+                          );
+
+                // if the acquisition date of the scenes in the group is the same as the event start date, update the tooltip text to indicate that it's the event start date
+                if (d.isEventStartDate) {
+                    dateTooltipText = t('event_start_date', { ns: APP_NAME });
+                }
+
                 return (
                     <div
                         key={date}
@@ -108,6 +131,7 @@ export const EventSceneSelector: FC<Props> = ({
                         <div
                             className="w-full text-center flex flex-col justify-end h-5 mb-1"
                             data-testid={`scene-selector-label-${date}`}
+                            title={dateTooltipText}
                         >
                             <p
                                 className={classNames(
@@ -125,7 +149,15 @@ export const EventSceneSelector: FC<Props> = ({
                         </div>
 
                         <div className="flex-grow relative flex items-center justify-center">
-                            <div className="w-0 h-full border-l border-custom-light-blue-20 border-dashed pointer-events-none" />
+                            <div
+                                className={classNames(
+                                    'w-0 h-full border-l border-custom-light-blue-20 pointer-events-none',
+                                    {
+                                        'border-dashed':
+                                            d.isEventStartDate === false,
+                                    }
+                                )}
+                            />
                         </div>
 
                         <div

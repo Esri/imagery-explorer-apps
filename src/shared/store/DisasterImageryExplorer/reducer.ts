@@ -50,23 +50,28 @@ export type DisasterResponseScenesGroupedByAcquisitionDate = {
      */
     formattedAcquisitionDate: string;
     /**
+     * aquisition year, e.g. 2025, etc. for the group of scenes with the same acquisition date.
+     */
+    acquisitionYear: number;
+    /**
      * If true, the year label (which is the first 4 digits of the acquisition date) will be displayed as a header for the group of scenes with the same acquisition date.
      * The year label will only be displayed when the year is different from the previous scene, or it's the first scene in the list
      */
     shouldShowYearLabel: boolean;
     /**
-     * Type of the disaster response scenes in the group. If any scene in the group is a post-event image, the image type of the group will be 'post-event', otherwise it will be 'pre-event'.
-     * This is used for adding indicators in the UI to differentiate pre-event and post-event images, which can help users quickly identify the scenes they are interested in.
+     * Indicates whether the acquisition date of the scenes in the group is the same as the event start date. This can be used for adding indicators in the UI to highlight the scenes that are acquired on the same day as the disaster response event starts
      */
-    imageType: 'pre-event' | 'post-event' | 'unknown';
-    /**
-     * Indicates whether this is the first group that contains post-event images in the list of scenes for the selected event.
-     */
-    firstGroupWithPostEventImage: boolean;
+    isEventStartDate: boolean;
     /**
      * List of object ids of the scenes with the same acquisition date. This is used to retrieve the scene information from the byObjectId map to display the scenes in the EventSceneSelector component
      */
     objectIds: number[];
+    /**
+     * Number of days between the acquisition date of the scenes in the group and the event start date.
+     * Negative value means the scenes are acquired before the event start date, positive value means the scenes are acquired after the event start date,
+     * and zero means the scenes are acquired on the same day as the event starts.
+     */
+    daysFromEventStart: number;
 };
 
 /**
