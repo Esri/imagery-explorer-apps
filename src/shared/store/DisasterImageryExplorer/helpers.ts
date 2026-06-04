@@ -57,7 +57,7 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
                 formattedAcquisitionDate,
                 shouldShowYearLabel: shouldShowYearLabel,
                 objectIds: [],
-                imageType: 'pre-event', // default to 'pre-event', will be updated to 'post-event' if any scene in the group is a post-event image
+                imageType,
                 firstGroupWithPostEventImage: false, // default to false, will be updated to true when the first group with post-event image is encountered in the list
             };
 
@@ -103,12 +103,10 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
 
         // if the current group is a post-event group, and the previous group is a pre-event group, then mark the current group as the first group with post-event image,
         // which can be used for adding indicators in the UI to differentiate pre-event and post-event images, and help users quickly identify the scenes they are interested in.
-        if (
-            currentGroup.imageType === 'post-event' &&
-            previousGroup &&
-            previousGroup.imageType === 'pre-event'
-        ) {
-            currentGroup.firstGroupWithPostEventImage = true;
+        if (currentGroup.imageType === 'post-event') {
+            if (!previousGroup || previousGroup?.imageType === 'pre-event') {
+                currentGroup.firstGroupWithPostEventImage = true;
+            }
         }
     }
 
