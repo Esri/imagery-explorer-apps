@@ -54,6 +54,11 @@ export type DisasterResponseScenesGroupedByAcquisitionDate = {
      */
     acquisitionYear: number;
     /**
+     * acquisition time in unix timestamp, e.g. 1700000000, etc.
+     * This is the acquisition time of the first scene in the group, which is used to calculate the number of days between the acquisition date and the event start date
+     */
+    acquisitionTimeOfFirstSceneInGroup: number;
+    /**
      * If true, the year label (which is the first 4 digits of the acquisition date) will be displayed as a header for the group of scenes with the same acquisition date.
      * The year label will only be displayed when the year is different from the previous scene, or it's the first scene in the list
      */

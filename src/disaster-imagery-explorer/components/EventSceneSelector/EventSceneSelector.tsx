@@ -155,6 +155,8 @@ export const EventSceneSelector: FC<Props> = ({
                                     {
                                         'border-dashed':
                                             d.isEventStartDate === false,
+                                        'border-custom-light-blue-50 border-l-2':
+                                            d.isEventStartDate === true,
                                     }
                                 )}
                             />

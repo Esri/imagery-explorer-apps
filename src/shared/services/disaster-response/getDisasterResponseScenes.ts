@@ -6,7 +6,6 @@ import {
 import { IFeature } from '@esri/arcgis-rest-feature-service';
 import { getFormatedDateString } from '@shared/utils/date-time/formatDateString';
 import { getFeatureByObjectId } from '../helpers/getFeatureById';
-import { get } from 'http';
 import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 const disasterResponseSceneByObjectId = new Map<
