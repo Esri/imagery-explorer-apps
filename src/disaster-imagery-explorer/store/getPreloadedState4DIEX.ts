@@ -38,7 +38,10 @@ import {
     ChangeCompareToolState,
     initialChangeCompareToolState,
 } from '@shared/store/ChangeCompareTool/reducer';
-import type { ImageryScenesState } from '@shared/store/ImageryScene/reducer';
+import type {
+    ImageryScenesState,
+    SwipeSubMode,
+} from '@shared/store/ImageryScene/reducer';
 import { getSwipeSubModeFromHashParams } from '@shared/utils/url-hash-params/swipeSubMode';
 
 const getPreloadedTemporalCompositeToolState = (
@@ -70,6 +73,42 @@ const getPreloadedChangeCompareToolState = (hashParams: URLSearchParams) => {
     return preloadedState;
 };
 
+/**
+ * Determines the initial swipe sub-mode for DIEX.
+ *
+ * 1. If a swipe sub-mode is specified in the URL hash params, it takes precedence.
+ * 2. If the current mode is 'analysis' with the 'temporal composite' tool and both main
+ *    and secondary scenes are selected, defaults to 'scene-to-scene'.
+ * 3. Otherwise, defaults to 'scene-to-basemap'.
+ */
+const getSwipeSubMode = (
+    preloadedState4ImageryScenes: ImageryScenesState,
+    hashParams: URLSearchParams
+): SwipeSubMode => {
+    const swipeSubModeFromHashParams =
+        getSwipeSubModeFromHashParams(hashParams);
+
+    // if the swipe sub-mode is specified in the URL hash params, use it to override the default swipe sub-mode for DIEX.
+    if (swipeSubModeFromHashParams?.selectedSubMode) {
+        return swipeSubModeFromHashParams.selectedSubMode;
+    }
+
+    // if the mode is analysis and the tool is temporal composite and both main and secondary scenes are selected, we will set the default swipe sub-mode to 'scene-to-scene'
+    // since it makes more sense to compare two scenes when user switches to swipe mode from the temporal composite tool with both main and secondary scenes selected
+    if (
+        preloadedState4ImageryScenes.mode === 'analysis' &&
+        preloadedState4ImageryScenes.tool === 'temporal composite' &&
+        preloadedState4ImageryScenes.queryParams4MainScene
+            ?.objectIdOfSelectedScene !== null &&
+        preloadedState4ImageryScenes.queryParams4SecondaryScene
+            ?.objectIdOfSelectedScene !== null
+    ) {
+        return 'scene-to-scene';
+    }
+
+    return 'scene-to-basemap'; // default swipe sub-mode for DIEX
+};
+
 const getStateForImageryScenes = (
     hashParams: URLSearchParams
 ): ImageryScenesState => {
@@ -91,6 +130,11 @@ const getStateForImageryScenes = (
     const swipeSubModeFromHashParams =
         getSwipeSubModeFromHashParams(hashParams);
 
+    const swipeSubMode = getSwipeSubMode(
+        preloadedState4ImageryScenes,
+        hashParams
+    );
+
     return {
         ...preloadedState4ImageryScenes,
         // override the mode to "find a scene" if the mode is "dynamic" since DRX only supports "find a scene" mode
@@ -99,8 +143,7 @@ const getStateForImageryScenes = (
         useTwoSceneComposite: true,
         // for DIEX, we want to support both 'scene-to-scene' and 'scene-to-basemap' sub-modes in the swipe mode, so we set the availableSwipeSubModes to include both sub-modes
         availableSwipeSubModes: ['scene-to-scene', 'scene-to-basemap'],
-        swipeSubMode:
-            swipeSubModeFromHashParams?.selectedSubMode || 'scene-to-basemap', // default to 'scene-to-scene' sub-mode if the swipeSubMode is not specified in the URL hash params,
+        swipeSubMode,
         isBasemapOnRightSideOfSwipe:
             swipeSubModeFromHashParams?.isBasemapOnRightSideOfSwipe || false, // default to having the basemap on the left side of the swipe by default if the swipeSubMode is not specified in the URL hash params
     };

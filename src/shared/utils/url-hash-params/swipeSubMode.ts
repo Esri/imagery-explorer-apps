@@ -32,7 +32,7 @@ const encodeSwipeSubMode = ({
     return `${selectedSubMode}|${isBasemapOnRightSideOfSwipe ? 'right' : 'left'}`;
 };
 
-type DecodedSwipeSubModeOutput = {
+export type DecodedSwipeSubModeOutput = {
     selectedSubMode: SwipeSubMode;
     isBasemapOnRightSideOfSwipe: boolean;
 } | null;
