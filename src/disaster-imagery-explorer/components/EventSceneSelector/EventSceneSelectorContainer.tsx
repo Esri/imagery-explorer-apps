@@ -157,7 +157,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 {children}
             </div>
 
-            <div className="w-[800px] relative pt-1 pb-2 mt-1 h-[150px]">
+            <div className="w-[700px] 2xl:w-[800px] relative pt-1 pb-2 mt-1 h-[150px]">
                 {shouldShowPagination && (
                     <div className="absolute top-0 bottom-0 left-[-20px] flex items-center">
                         <PaginationButton
