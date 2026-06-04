@@ -32,6 +32,8 @@ import { DisasterResponseScene } from '@typing/imagery-service';
 import { EventSceneSelector } from './EventSceneSelector';
 import { PaginationButton } from './PaginationButton';
 import { AcquisitionTimestampLabel } from './AcquisitionTimestampLabel';
+import { EventScenesLoadingIndicator } from './EventScenesLoadingIndicator';
+import { NoAvilableSceneMessage } from './NoAvilableSceneMessage';
 
 type Props = {
     children?: React.ReactNode;
@@ -95,41 +97,12 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
 
     const getContent = () => {
         if (isLoadingScenes) {
-            return (
-                <div className="w-full text-center">
-                    <div
-                        className="w-full flex items-center justify-center mt-2"
-                        style={
-                            {
-                                '--calcite-loader-spacing': '0px',
-                            } as React.CSSProperties
-                        }
-                    >
-                        <calcite-loader scale="s" label="loading" />
-                    </div>
-
-                    <p className="text-sm text-custom-light-blue-50 mt-1">
-                        {t('loading_scenes_for_selected_event', {
-                            ns: APP_NAME,
-                        })}
-                    </p>
-                </div>
-            );
+            return <EventScenesLoadingIndicator />;
         }
 
         if (!selectedEventName || !disasterResponseScenes?.length) {
             return (
-                <div className="w-full flex items-center justify-center text-center">
-                    <p className="text-sm text-custom-light-blue-50 max-w-sm mt-6">
-                        {!selectedEventName
-                            ? t('select_an_event_to_see_available_scenes', {
-                                  ns: APP_NAME,
-                              })
-                            : t('no_scenes_in_current_map_extent', {
-                                  ns: APP_NAME,
-                              })}
-                    </p>
-                </div>
+                <NoAvilableSceneMessage selectedEventName={selectedEventName} />
             );
         }
 

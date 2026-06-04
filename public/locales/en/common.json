@@ -341,5 +341,6 @@
 
     "world_imagery": "World Imagery",
     "disaster_imagery_explorer": "Disaster Imagery Explorer",
-    "launch_disaster_imagery_explorer": "Launch the Disaster Imagery Explorer in a new tab"
+    "launch_disaster_imagery_explorer": "Launch the Disaster Imagery Explorer in a new tab",
+    "acquisition_time": "Acquisition Time"
 }

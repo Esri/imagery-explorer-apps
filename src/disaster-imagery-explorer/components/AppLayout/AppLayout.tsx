@@ -32,7 +32,10 @@ import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
 import { SceneInfo } from '../SceneInfo';
 import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableDisasterResponseScenes';
-import { EventSceneSelector } from '../EventSceneSelector';
+import {
+    EventSceneSelector,
+    EventSceneSelector4Mobile,
+} from '../EventSceneSelector';
 import { useSaveDIEXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
 import { CloudFilter } from '@shared/components/CloudFilter';
 import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
@@ -81,8 +84,8 @@ export const AppLayout = () => {
             <>
                 <AppHeader />
                 <BottomPanel>
-                    <div className="mx-auto">
-                        <p>placeholder for mobile device</p>
+                    <div className="mx-2 w-full">
+                        <EventSceneSelector4Mobile />
                     </div>
                 </BottomPanel>
             </>

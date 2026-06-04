@@ -20,5 +20,9 @@
     "days_from_event_start_other": "{{count}} days since event start",
     "days_from_event_start_one": "{{count}} day since event start",
     "days_before_event_start_other": "{{count}} days before event start",
-    "days_before_event_start_one": "{{count}} day before event start"
+    "days_before_event_start_one": "{{count}} day before event start",
+    "acquired_on": "Acquired on {{date}}",
+    "post_event_scene_with_cloud_cover": "<bold>Post-event</bold> scene with <bold>{{cloudCover}}%</bold> cloud cover.",
+    "pre_event_scene_with_cloud_cover": "<bold>Pre-event</bold> scene with <bold>{{cloudCover}}%</bold> cloud cover.",
+    "scene_not_in_current_map_extent": "This scene is not in the current map extent. Zoom out or pan the map to find this scene on the map."
 }
