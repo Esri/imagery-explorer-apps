@@ -212,7 +212,7 @@ export const Dropdown: FC<Props> = ({
                         setShouldShowOptions(!shouldShowOptions);
                     }}
                 >
-                    <span className="mr-1 whitespace-nowrap ">
+                    <span className="mr-1 whitespace-nowrap overflow-hidden text-ellipsis min-w-0 flex-1">
                         {getLabel()}
                     </span>
 

@@ -40,5 +40,11 @@
         "description": "This app lets you explore and compare annual NLCD Land Cover data, highlighting dynamic changes through visual and statistical insights.",
         "pathname": "/nlcdlandcoverexplorer",
         "supportedLocales": ["en"]
+    },
+    "disasterimageryexplorer": {
+        "title": "Esri | Disaster Imagery Explorer",
+        "description": "",
+        "pathname": "/disasterimageryexplorer",
+        "supportedLocales": ["en"]
     }
 }

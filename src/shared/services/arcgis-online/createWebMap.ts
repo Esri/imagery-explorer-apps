@@ -17,10 +17,16 @@ import { getToken } from '@shared/utils/esri-oauth';
 import { addItem, AddItemParams } from './addItem';
 import { getExtentByObjectId } from '../helpers/getExtentById';
 import { WorldTopographicMapStyleURL } from './config';
+import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 export type ImagerySceneData4WebMap = {
     objectId: number;
     acquisitionDate: string;
+    /**
+     * The acquisition timestamp of the selected scene. This is an optional property that can be used to display the acquisition time in the web map's layer list,
+     * providing users with more accurate information about when the imagery was captured.
+     */
+    acquisitionTimestamp?: number;
 };
 
 type SaveImagerySceneAsWebMapOptions = {
@@ -109,10 +115,21 @@ const getOperationalLayers = ({
     }
 
     return scenes.map((scene) => {
+        // If acquisitionTimestamp is available, include the acquisition time in UTC as part of the layer title to provide more information to users.
+        const acquisitionTimeStr = scene.acquisitionTimestamp
+            ? getTimeStrInUTCTimeZone(scene.acquisitionTimestamp, true)
+            : '';
+
+        // The layer ID and title will include the service name, acquisition date, and acquisition time (if available) to help users differentiate between layers when multiple scenes are saved in the web map.
         const id = `${serviceName} - Single Scene ${scene.acquisitionDate}`;
+
+        const finalId = acquisitionTimeStr
+            ? id + ` (${acquisitionTimeStr})`
+            : id;
+
         return {
-            id,
-            title: id,
+            id: finalId,
+            title: finalId,
             url: serviceUrl,
             mosaicRule: {
                 ascending: true,

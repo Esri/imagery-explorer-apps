@@ -27,7 +27,7 @@ const DEFAULT_WEB_MAP_ID = '81609bbe235942919ad27c77e42c600e';
  * Try to use the value defined in the .env file first, otherwise fallback to the default value.
  */
 export const WEB_MAP_ID = ENV_WEB_MAP_ID || DEFAULT_WEB_MAP_ID;
-console.log('WEB_MAP_ID:', WEB_MAP_ID);
+// console.log('WEB_MAP_ID:', WEB_MAP_ID);
 
 /**
  * Default Map Center

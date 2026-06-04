@@ -188,5 +188,76 @@ describe('selectors of ImageryScene slice of Redux Store', () => {
                 } as any)
             ).toMatchObject(queryParams4AnotherScene);
         });
+
+        describe('temporal composite tool with useTwoSceneComposite', () => {
+            it('should return queryParams4MainScene when useTwoSceneComposite is true and secondary scene is not active', () => {
+                const initialState: ImageryScenesState = {
+                    ...initialImagerySceneState,
+                    mode: 'analysis',
+                    tool: 'temporal composite',
+                    isSecondarySceneActive: false,
+                    useTwoSceneComposite: true,
+                    queryParams4MainScene,
+                    queryParams4SecondaryScene,
+                };
+
+                const state = reducer(initialState, {} as any);
+
+                expect(
+                    selectQueryParams4SceneInSelectedMode({
+                        ImageryScenes: state,
+                    } as any)
+                ).toMatchObject(queryParams4MainScene);
+            });
+
+            it('should return queryParams4SecondaryScene when useTwoSceneComposite is true and secondary scene is active', () => {
+                const initialState: ImageryScenesState = {
+                    ...initialImagerySceneState,
+                    mode: 'analysis',
+                    tool: 'temporal composite',
+                    isSecondarySceneActive: true,
+                    useTwoSceneComposite: true,
+                    queryParams4MainScene,
+                    queryParams4SecondaryScene,
+                };
+
+                const state = reducer(initialState, {} as any);
+
+                expect(
+                    selectQueryParams4SceneInSelectedMode({
+                        ImageryScenes: state,
+                    } as any)
+                ).toMatchObject(queryParams4SecondaryScene);
+            });
+
+            it('should return selected item from queryParamsList when useTwoSceneComposite is false', () => {
+                const initialState: ImageryScenesState = {
+                    ...initialImagerySceneState,
+                    mode: 'analysis',
+                    tool: 'temporal composite',
+                    useTwoSceneComposite: false,
+                    queryParams4MainScene,
+                    queryParams4SecondaryScene,
+                };
+
+                const state = reducer(
+                    initialState,
+                    queryParamsListChanged({
+                        queryParams: [
+                            queryParams4MainScene,
+                            queryParams4SecondaryScene,
+                            queryParams4AnotherScene,
+                        ],
+                        selectedItemID: queryParams4AnotherScene.uniqueId,
+                    })
+                );
+
+                expect(
+                    selectQueryParams4SceneInSelectedMode({
+                        ImageryScenes: state,
+                    } as any)
+                ).toMatchObject(queryParams4AnotherScene);
+            });
+        });
     });
 });

@@ -18,6 +18,7 @@ import React, { FC, useEffect } from 'react';
 // import SwipeWidget from '@shared/components/SwipeWidget/SwipeWidget';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
+    selectIsSceneToSceneSwipeVisible,
     selectIsSwipeModeOn,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
@@ -48,7 +49,10 @@ export const SwipeComponent4ImageryLayers: FC<Props> = ({
 }: Props) => {
     const dispatch = useAppDispatch();
 
-    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
+    // const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
+    const isSwipeWidgetVisible = useAppSelector(
+        selectIsSceneToSceneSwipeVisible
+    );
 
     const queryParams4LeftSide = useAppSelector(selectQueryParams4MainScene);
 

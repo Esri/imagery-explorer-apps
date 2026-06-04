@@ -58,3 +58,23 @@ export const formatInUTCTimeZone = (
 ): string => {
     return formatInTimeZone(timestamp, 'Etc/UTC', formatStr);
 };
+
+/**
+ * This function takes a Unix timestamp and formats the time portion of this date in the UTC time zone regardless of the system's local time zone.
+ * @param timestamp - Unix timestamp to be formatted.
+ * @param shouldIncludeUTCAsSuffic - Whether to include "UTC" as a suffix in the formatted time string to explicitly indicate that the time is in UTC. Default is false.
+ * @returns
+ */
+export const getTimeStrInUTCTimeZone = (
+    timestamp: number,
+    shouldIncludeUTCAsSuffic = false
+): string => {
+    // check if the timestamp is valid
+    if (isNaN(timestamp)) {
+        return '';
+    }
+
+    const timeStr = formatInTimeZone(timestamp, 'Etc/UTC', 'HH:mm:ss');
+
+    return shouldIncludeUTCAsSuffic ? `${timeStr} UTC` : timeStr;
+};

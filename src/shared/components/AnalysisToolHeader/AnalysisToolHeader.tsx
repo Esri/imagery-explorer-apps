@@ -43,6 +43,23 @@ type Props = {
     children?: React.ReactNode;
 };
 
+export const AnalysisToolHeaderText: FC<{
+    title: string;
+    tooltipText?: string;
+}> = ({ title, tooltipText }) => {
+    return (
+        <div className="flex items-center mr-4">
+            {tooltipText && (
+                <Tooltip content={tooltipText} width={280}>
+                    <calcite-icon scale="s" icon="information" />
+                </Tooltip>
+            )}
+
+            <span className="uppercase text-sm ml-1">{title}</span>
+        </div>
+    );
+};
+
 export const AnalysisToolHeader: FC<Props> = ({
     title,
     dropdownListOptions,
@@ -64,7 +81,7 @@ export const AnalysisToolHeader: FC<Props> = ({
 
     return (
         <div className="flex items-center w-full select-none">
-            <div className="flex items-center mr-4">
+            {/* <div className="flex items-center mr-4">
                 {tooltipText && (
                     <Tooltip content={tooltipText} width={280}>
                         <calcite-icon scale="s" icon="information" />
@@ -72,7 +89,9 @@ export const AnalysisToolHeader: FC<Props> = ({
                 )}
 
                 <span className="uppercase text-sm ml-1">{title}</span>
-            </div>
+            </div> */}
+
+            <AnalysisToolHeaderText title={title} tooltipText={tooltipText} />
 
             <div className="flex-grow">
                 <Dropdown

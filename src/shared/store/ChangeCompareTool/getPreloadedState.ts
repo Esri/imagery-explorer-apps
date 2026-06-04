@@ -24,6 +24,10 @@ export const getPreloadedState4ChangeCompareTool = (
 ): ChangeCompareToolState => {
     const changeCompareToolData =
         getChangeCompareToolDataFromHashParams(hashParams);
+    console.log(
+        'changeCompareToolData loaded from hash params: ',
+        changeCompareToolData
+    );
 
     return {
         ...initialChangeCompareToolState,

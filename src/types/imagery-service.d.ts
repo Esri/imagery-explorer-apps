@@ -285,3 +285,73 @@ export type Sentinel1Scene = {
      */
     acquisitionMonth: number;
 };
+
+/**
+ * A disaster response imagery scene that is defined in the disaster response imagery service.
+ */
+export type DisasterResponseScene = {
+    objectId: number;
+    /**
+     * Name of the disaster response event that this scene belongs to, e.g. 'Cyclone-Ditwah-Sri-Lanka-Nov-2025', etc.
+     */
+    event: string;
+    /**
+     * Timestamp of when the event scene was acquired in unix timestamp.
+     */
+    eventTimestamp: number;
+    /**
+     * Timestamp of when the event started in unix timestamp.
+     */
+    eventStartDate: number;
+    /**
+     * Title of the disaster response scene that can be used in the UI
+     */
+    title: string;
+    /**
+     * Description of the disaster response scene that can be used in the UI to provide more information about the scene, such as the damage condition, etc.
+     */
+    description: string;
+    /**
+     * Name of the imagery scene: CycloneDitwahSriLankaNov2025_103001010C477F00_20250117``
+     */
+    name: string;
+    /**
+     * Provider of the imagery scene, e.g. 'Vantor'
+     */
+    provider: string;
+    /**
+     * Percent of cloud cover, the value ranges from 0 - 100
+     */
+    cloudCover: number;
+    /**
+     * Formatted acquisition date in string format like `2025-01-17` that can be used for display in the UI. The formatted acquisition date is derived from the `eventTimestamp` field.
+     */
+    formattedAcquisitionDate: string;
+    /**
+     * Acquisition date in unix timestamp, which is the same as the `eventTimestamp` field.
+     * We keep both fields because some UI components require acquisition date in unix timestamp for date comparison and formatting, while some other UI components require acquisition date in formatted string for display.
+     */
+    acquisitionDate: number;
+    /**
+     * Year when this scene was acquired, derived from the `eventTimestamp` field.
+     */
+    acquisitionYear: number;
+    /**
+     * Month when this scene was acquired, derived from the `eventTimestamp` field.
+     */
+    acquisitionMonth: number;
+    /**
+     * A formatted acquisition time string in the format of `HH:mm:ss` that can be used for display in the UI.
+     * The formatted acquisition time is derived from the `eventTimestamp` field.
+     */
+    formattedAcuisitionTime: string;
+    /**
+     * Image type of the scene, e.g. 'pre-event' or 'post-event', etc. This field is used to indicate whether the scene was captured before or after the disaster event, which can help users quickly identify the imagery they are interested in when they are exploring the disaster response scenes.
+     */
+    imageType: 'pre-event' | 'post-event' | 'unknown';
+    /**
+     * Number of days between the acquisition date of the scene and the event start date. Negative value means the scene was acquired before the event start date, positive value means the scene was acquired after the event start date, and zero means the scene was acquired on the same day as the event starts.
+     */
+    daysFromEventStart: number;
+    platform: string;
+};

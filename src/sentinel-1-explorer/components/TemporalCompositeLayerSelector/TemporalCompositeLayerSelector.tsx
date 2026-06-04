@@ -21,13 +21,13 @@ import classNames from 'classnames';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { Button } from '@shared/components/Button';
 
-import CompositeIndicatorRed from './images/Composite_Red.png';
-import CompositeIndicatorGreen from './images/Composite_Green.png';
-import CompositeIndicatorBlue from './images/Composite_Blue.png';
-import CompositeIndicatorRGB from './images/Composite_RGB.png';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { ViewCompositeLayerButton } from '@shared/components/TemporalCompositeLayerSelector/TemporalCompositeLayerSelector';
+import CompositeIndicatorRed from '@shared/components/TemporalCompositeLayerSelector/images/Composite_Red.png';
+import CompositeIndicatorGreen from '@shared/components/TemporalCompositeLayerSelector/images/Composite_Green.png';
+import CompositeIndicatorBlue from '@shared/components/TemporalCompositeLayerSelector/images/Composite_Blue.png';
 
 type Props = {
     /**
@@ -260,7 +260,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     'is-disabled': viewCompositeLayerDisabled,
                 })}
             >
-                <Button
+                {/* <Button
                     appearance={isCompositeLayerOn ? 'solid' : 'transparent'}
                     scale="s"
                     onClickHandler={viewCompositeLayerButtonOnClick}
@@ -278,6 +278,12 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 <img
                     src={CompositeIndicatorRGB}
                     className="absolute top-0 left-0"
+                /> */}
+                <ViewCompositeLayerButton
+                    isCompositeLayerOn={isCompositeLayerOn}
+                    viewCompositeLayerButtonOnClick={
+                        viewCompositeLayerButtonOnClick
+                    }
                 />
             </div>
         </div>

@@ -51,12 +51,22 @@ type Props = {
      * This text provide user instruction about how to use this tool
      */
     preselectionText?: string;
+    /**
+     * step value for the pixel range selector slider. The default value is 0.01, which means when user move the slider, the selected pixel value range will be updated in the increments of 0.01. You can adjust this value based on the expected pixel value range and the desired sensitivity of the slider.
+     */
+    rangeSliderStep?: number;
+    /**
+     * the count of ticks to be rendered on the pixel range selector.
+     */
+    rangeSliderCountOfTicks?: number;
 };
 
 export const ChangeCompareToolControls: FC<Props> = ({
     legendLabelText = [],
     comparisonTopic,
     preselectionText,
+    rangeSliderStep = 0.01,
+    rangeSliderCountOfTicks,
 }: Props) => {
     const { t } = useTranslation();
 
@@ -122,9 +132,10 @@ export const ChangeCompareToolControls: FC<Props> = ({
                 }}
                 min={min}
                 max={max}
-                steps={0.01}
+                steps={rangeSliderStep}
                 showSliderTooltip={true}
                 legend={legend}
+                countOfTicks={rangeSliderCountOfTicks}
             />
         );
     };

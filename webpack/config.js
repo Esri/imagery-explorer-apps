@@ -10,6 +10,7 @@ const ENTRY_POINTS_BY_APP_NAME = {
     spectralsampler: '/src/spectral-sampling-tool/index.tsx',
     surfacetemperature: '/src/surface-temp/index.tsx',
     nlcdlandcoverexplorer: '/src/nlcd-landcover-explorer/index.tsx',
+    disasterimageryexplorer: '/src/disaster-imagery-explorer/index.tsx',
 };
 
 /**
@@ -87,6 +88,16 @@ const ENV_VARIABLES_BY_APP_NAME = {
             required: true,
         },
     ],
+    disasterimageryexplorer: [
+        {
+            name: 'DISASTER_IMAGERY_EXPLORER_APP_ID',
+            required: true,
+        },
+        {
+            name: 'DISASTER_RESPONSE_SERVICE_URL',
+            required: true,
+        }
+    ]
 };
 
 module.exports = {

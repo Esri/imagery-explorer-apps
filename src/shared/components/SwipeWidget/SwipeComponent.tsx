@@ -24,6 +24,7 @@ import { ar } from 'date-fns/locale';
 import { ArcgisMap } from '@arcgis/map-components/components/arcgis-map';
 import { on } from 'events';
 import { useAutoSwipe4Component } from './useAutoSwipe4Component';
+import type TileLayer from '@arcgis/core/layers/TileLayer';
 
 type Props = {
     /**
@@ -34,8 +35,8 @@ type Props = {
      * MapView instance to which the Swipe Widget is added. If not provided, the Swipe Widget will try to find the MapView instance from the DOM.
      */
     mapView: MapView;
-    leadingLayer: ImageryLayer;
-    trailingLayer: ImageryLayer;
+    leadingLayer: ImageryLayer | TileLayer;
+    trailingLayer: ImageryLayer | TileLayer;
     /**
      * Fires when user drag and change swipe position
      */
@@ -55,6 +56,24 @@ export const SwipeComponent: FC<Props> = ({
     const arcgisSwipeRef = useRef<ArcgisSwipe | null>(null);
 
     useAutoSwipe4Component(arcgisSwipeRef.current);
+
+    const addLayersToSwipeWidget = () => {
+        if (!arcgisSwipeRef.current) {
+            console.warn('Swipe component is not initialized yet');
+            return;
+        }
+
+        if (!leadingLayer || !trailingLayer) {
+            console.warn('Leading layer or trailing layer is not ready yet');
+            return;
+        }
+
+        arcgisSwipeRef.current.startLayers.removeAll();
+        arcgisSwipeRef.current.endLayers.removeAll();
+
+        arcgisSwipeRef.current.startLayers.add(leadingLayer);
+        arcgisSwipeRef.current.endLayers.add(trailingLayer);
+    };
 
     const addSwipeComponentToMapView = () => {
         console.log('initializing swipe widget');
@@ -78,8 +97,8 @@ export const SwipeComponent: FC<Props> = ({
         ) as ArcgisSwipe;
         swipeComponent.position = 50;
         swipeComponent.view = mapView;
-        swipeComponent.startLayers.add(leadingLayer);
-        swipeComponent.endLayers.add(trailingLayer);
+        // swipeComponent.startLayers.add(leadingLayer);
+        // swipeComponent.endLayers.add(trailingLayer);
 
         // set css variables to customize the style of the Swipe component
         swipeComponent.style.setProperty(
@@ -102,29 +121,37 @@ export const SwipeComponent: FC<Props> = ({
 
         // Store the Swipe component instance in the ref so that we can access it later for cleanup
         arcgisSwipeRef.current = swipeComponent;
+
+        // Add layers to the Swipe component
+        addLayersToSwipeWidget();
     };
 
     const destroySwipeComponent = () => {
-        console.log('removing swipe component');
-
         if (arcgisSwipeRef.current) {
+            console.log('removing swipe component');
             arcgisSwipeRef.current.destroy();
             arcgisSwipeRef.current = null;
         }
     };
 
     useEffect(() => {
-        if (!leadingLayer || !trailingLayer) {
-            console.warn('Leading layer or trailing layer is not ready yet');
-            return;
-        }
+        // if (!leadingLayer || !trailingLayer) {
+        //     console.warn('Leading layer or trailing layer is not ready yet');
+        //     return;
+        // }
 
         if (visible) {
             addSwipeComponentToMapView();
         } else {
             destroySwipeComponent();
         }
-    }, [visible, leadingLayer, trailingLayer]);
+    }, [visible]);
+
+    useEffect(() => {
+        if (arcgisSwipeRef.current) {
+            addLayersToSwipeWidget();
+        }
+    }, [leadingLayer, trailingLayer]);
 
     return null;
 };

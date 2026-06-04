@@ -32,6 +32,15 @@ type Props = {
      * if true, Mode Selector should be disabled
      */
     disabled: boolean;
+    // /**
+    //  * If true, the sub modes under 'explore' (i.e. 'dynamic' and 'find a scene') will be hidden, and users won't be able to switch between these two modes.
+    //  * This is used by app like Disaster Imagery Explorer, which only has one explore mode, so there is no need to show the explore sub modes in the Mode Selector.
+    //  */
+    // hideExploreSubModes?: boolean;
+    /**
+     * List of modes to hide in the mode selector.
+     */
+    modesToHide?: AppMode[];
     /**
      * fires when app mode is changed
      * @param value
@@ -45,9 +54,14 @@ const ButtonWrapperClassnames = `relative mb-1 h-12`;
 export const ModeSelector: FC<Props> = ({
     selectedMode,
     disabled,
+    // hideExploreSubModes = false,
+    modesToHide = [],
     selectedModeOnChange,
 }: Props) => {
     const { t } = useTranslation();
+
+    // if modesToHide includes 'dynamic', then we will hide the explore sub modes and only show 'find a scene' mode in the mode selector, as 'dynamic' mode is not applicable for apps like Disaster Imagery Explorer
+    const hideExploreSubModes = modesToHide.includes('dynamic');
 
     const getFormattedModeName = (mode: AppMode) => {
         if (mode === 'analysis') {
@@ -96,7 +110,9 @@ export const ModeSelector: FC<Props> = ({
                 {modes.map((mode) => (
                     <div
                         key={mode}
-                        className={classNames(ButtonWrapperClassnames)}
+                        className={classNames(ButtonWrapperClassnames, {
+                            hidden: modesToHide.includes(mode),
+                        })}
                         data-testid={`mode-selector-${mode}`}
                     >
                         <Button
@@ -124,7 +140,9 @@ export const ModeSelector: FC<Props> = ({
                     {exploreModes.map((mode) => (
                         <div
                             key={mode}
-                            className={classNames('relative mb-1')}
+                            className={classNames('relative mb-1', {
+                                hidden: hideExploreSubModes,
+                            })}
                             data-testid={`mode-selector-${mode}`}
                         >
                             <Button

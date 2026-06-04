@@ -37,12 +37,14 @@
     "decrease": "Decrease",
     "no_change": "No change",
     "increase": "Increase",
+    "high_change": "High change",
     "select_two_scenes": "Select two scenes, SCENE A and SCENE B, and then click VIEW CHANGE.",
     "est_change_area_variable": "Est. Change Area ({{comparisonTopic}})",
     "estimated_change_area": "Estimated Change Area",
     "estimated_mask_area": "Estimated Mask Area",
     "cloud": "Cloud",
     "cloudy": "Cloudy",
+    "percent_cloudy": "{{percent}}% Cloudy",
     "powered_by_esri": "Powered by Esri",
     "dynamic_view": "Dynamic View",
     "dynamic_view_instruction": "To select an individual scene for a specific date, try the <span class='open-find-a-scene underline cursor-pointer hover:opacity-100 uppercase'>FIND A SCENE</span> mode.",
@@ -64,7 +66,7 @@
     "spectral_sampling": "Spectral Sampling",
     "renderer": "Renderer",
     "find a scene": "Find a scene",
-    "open_save_panel": "Open Save Panel",
+    "open_save_panel": "Open Save",
     "basemap": "Basemap",
     "terrain": "Terrain",
     "map_labels": "Map Labels",
@@ -329,5 +331,15 @@
 
     "esri_work_terms_of_use": "This work is licensed under the Esri Master License Agreement. <a class=\"underline\" href=\"https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf\" target=\"_blank\" rel=\"noreferrer\">View Summary</a> | <a class=\"underline\" href=\"https://www.esri.com/en-us/legal/terms/full-master-agreement\" target=\"_blank\" rel=\"noreferrer\">View Terms of Use</a>",
 
-    "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data."
+    "app_attribution_disclaimer": "This app is provided for informational purposes. The accuracy of the information provided is subject to the accuracy of the source data.",
+
+    "view_composite": "View Composite",
+    "composite": "Composite",
+
+    "scene_to_scene": "Scene to Scene",
+    "scene_to_basemap": "Scene to Basemap",
+
+    "world_imagery": "World Imagery",
+    "disaster_imagery_explorer": "Disaster Imagery Explorer",
+    "launch_disaster_imagery_explorer": "Launch the Disaster Imagery Explorer in a new tab"
 }
