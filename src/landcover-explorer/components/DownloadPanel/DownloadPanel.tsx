@@ -31,6 +31,7 @@ import MapView from '@shared/components/MapView/MapView';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 import { selectAvaiableYearsForLandCoverLayer } from '@shared/store/LandcoverExplorer/selectors';
+import classNames from 'classnames';
 
 const DownloadPanel = () => {
     const { t } = useTranslation();
@@ -73,7 +74,10 @@ const DownloadPanel = () => {
                 />
 
                 <div
-                    className="relative w-full flex-grow"
+                    className={classNames(
+                        'relative w-full flex-grow',
+                        'calcite-theme-override'
+                    )}
                     style={{
                         filter: `drop-shadow(1px 1px 8px #000)`,
                     }}

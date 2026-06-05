@@ -61,6 +61,9 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
         // behavior in order to display your own popup
         mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
+        mapView.popup.visibleElements = {
+            collapseButton: false,
+        };
         // mapView.popup.collapseEnabled = false;
 
         addEventHandlers();
@@ -107,13 +110,15 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
                 const url = getImageURL(year, imageName);
 
                 return `
-                    <div class='mb-1 text-sm'>
-                        <a href="${url}" target="_blank"
+                    <div style="margin-bottom: 4px; font-size: 0.875rem; line-height: 1.25rem;">
+                        <a href="${url}" target="_blank" style="color: rgb(191,238,254);"
                             data-testid="lulc-download-link-${year}"
+                            onmouseover="this.querySelector('.lulc-dl-icon').style.opacity='0.95'"
+                            onmouseout="this.querySelector('.lulc-dl-icon').style.opacity='0'"
                         >
-                            <div class="flex items-center group">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="opacity-0 group-hover:opacity-95" viewBox="0 0 16 16" height="16" width="16"><path fill="currentColor" d="M9 2v7.293l1.618-1.619.707.707-2.808 2.81-2.81-2.81.707-.707L8 9.26V2zM4 14h9v-1H4z"/><path fill="none" d="M0 0h16v16H0z"/></svg>
-                                <span class='ml-2'>${year}</span>
+                            <div style="display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lulc-dl-icon" style="opacity: 0;" viewBox="0 0 16 16" height="16" width="16"><path fill="currentColor" d="M9 2v7.293l1.618-1.619.707.707-2.808 2.81-2.81-2.81.707-.707L8 9.26V2zM4 14h9v-1H4z"/><path fill="none" d="M0 0h16v16H0z"/></svg>
+                                <span style="margin-left: 8px;">${year}</span>
                             </div>
                         </a>
                     </div>
@@ -121,27 +126,12 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
             })
             .join('');
 
-        // popupDiv.innerHTML = `
-        //     <div class="text-custom-light-blue"
-        //         data-testid="lulc-footprint-popup-content"
-        //     >
-        //         <div class="my-2">
-        //             <p>Estimated Size: ${size} MB</p>
-        //         </div>
-        //         <div class='flex'>
-        //             <div class='mt-2 ml-1'>
-        //                 ${links}
-        //             </div>
-        //         </div>
-        //     </div>
-        // `;
-
         popupDiv.innerHTML = `
-            <div class="text-custom-light-blue"
+            <div style="color: rgb(191,238,254);"
                 data-testid="lulc-footprint-popup-content"
             >
-                <div class='flex'>
-                    <div class='mt-2 ml-1'>
+                <div style="display: flex;">
+                    <div style="margin-top: 8px; margin-left: 4px;">
                         ${links}
                     </div>
                 </div>
