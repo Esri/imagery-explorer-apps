@@ -172,13 +172,13 @@ export const CustomTimeSlider: FC<Props> = ({
     if (!visible) return null;
 
     return (
-        <div className="w-full px-2">
+        <div className="w-full px-4 mt-2">
             {/* Track area */}
             <div className="relative h-[36px] flex items-center z-20">
                 {/* Track background */}
                 <div
                     ref={trackRef}
-                    className="absolute w-full h-[2px] bg-[var(--custom-slider-track-color)] cursor-pointer"
+                    className="absolute w-full h-[4px] border border-[var(--custom-slider-track-color)] cursor-pointer"
                     onClick={handleTrackClick}
                 >
                     {/* Tick marks — positioned just below the track line */}
@@ -222,7 +222,7 @@ export const CustomTimeSlider: FC<Props> = ({
                 {labelYears.map((year) => (
                     <span
                         key={year}
-                        className="absolute -translate-x-1/2 text-xs text-custom-light-blue-80 pointer-events-none"
+                        className="absolute -translate-x-1/2 text-xs text-custom-light-blue-90 pointer-events-none"
                         style={{ left: `${getPositionFromYear(year)}%` }}
                     >
                         {year}
