@@ -20,7 +20,9 @@ import {
 import { selectDisasterResponseEventScene } from '@shared/store/DisasterImageryExplorer/thunks';
 import {
     selectCloudCover,
+    selectQueryParams4MainScene,
     selectQueryParams4SceneInSelectedMode,
+    selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
 import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
@@ -34,6 +36,7 @@ import { PaginationButton } from './PaginationButton';
 import { AcquisitionTimestampLabel } from './AcquisitionTimestampLabel';
 import { EventScenesLoadingIndicator } from './EventScenesLoadingIndicator';
 import { NoAvilableSceneMessage } from './NoAvilableSceneMessage';
+import { useObjectIdsOfSelectedScenes4CompositeTool } from './useObjectIdsOfSelectedScenes4CompositeTool';
 
 type Props = {
     children?: React.ReactNode;
@@ -51,6 +54,11 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     // const disasterResponseScenes = useAppSelector(selectDisasterResponseScenes);
 
     const queryParams = useAppSelector(selectQueryParams4SceneInSelectedMode);
+
+    const [
+        objectIdOfSelectedScene4RedBandInCompositeTool,
+        objectIdOfSelectedScene4GreenAndBlueBandInCompositeTool,
+    ] = useObjectIdsOfSelectedScenes4CompositeTool();
 
     /**
      * if true, Calendar should be disbaled
@@ -114,6 +122,12 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 }
                 cloudCover={cloudCover}
                 objectidOfSelectedScene={queryParams?.objectIdOfSelectedScene}
+                objectIdOfSelectedScene4RedBandInCompositeTool={
+                    objectIdOfSelectedScene4RedBandInCompositeTool
+                }
+                objectIdOfSelectedScene4GreenAndBlueBandInCompositeTool={
+                    objectIdOfSelectedScene4GreenAndBlueBandInCompositeTool
+                }
                 handleSceneHover={handleSceneHover}
                 handleSceneSelect={(scene) =>
                     dispatch(selectDisasterResponseEventScene(scene))

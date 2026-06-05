@@ -28,6 +28,10 @@ type Props = {
      * The object ID of the currently selected scene. This is used to apply specific styling to the selected scene's indicator in the UI, distinguishing it from other scenes.
      */
     objectidOfSelectedScene: number;
+
+    objectIdOfSelectedScene4RedBandInCompositeTool: number | null;
+
+    objectIdOfSelectedScene4GreenAndBlueBandInCompositeTool: number | null;
     /**
      * Handler function that is called when a scene is hovered over (mouse over) or when the mouse leaves a scene (mouse out).
      * @param scene
@@ -47,6 +51,8 @@ export const EventSceneSelector: FC<Props> = ({
     objectIdsOfScenesInCurrentMapExtent,
     cloudCover,
     objectidOfSelectedScene,
+    objectIdOfSelectedScene4RedBandInCompositeTool,
+    objectIdOfSelectedScene4GreenAndBlueBandInCompositeTool,
     handleSceneHover,
     handleSceneSelect,
 }) => {
@@ -89,6 +95,17 @@ export const EventSceneSelector: FC<Props> = ({
 
         return output;
     }, [scenesGroupedByAcquisitionDate, byObjectIdOfScenes]);
+
+    const getBorderClass = (objectId: number, isSceneSelected: boolean) => {
+        if (objectId === objectIdOfSelectedScene4RedBandInCompositeTool)
+            return 'border-[#FF0000]';
+        if (
+            objectId === objectIdOfSelectedScene4GreenAndBlueBandInCompositeTool
+        )
+            return 'border-[#00FFFF]';
+        if (isSceneSelected) return 'border-custom-calendar-border-selected';
+        return 'border-custom-light-blue-50 ';
+    };
 
     return (
         <div className="flex justify-evenly h-full pb-4">
@@ -203,11 +220,13 @@ export const EventSceneSelector: FC<Props> = ({
                                                 <div
                                                     key={scene.objectId}
                                                     className={classNames(
-                                                        'relative shrink-0 w-[8px] h-[8px] border border-custom-light-blue-50 hover:border-arcgis-highlight  bg-custom-background  cursor-pointer group',
+                                                        'relative shrink-0 w-[8px] h-[8px] border hover:border-arcgis-highlight  bg-custom-background  cursor-pointer group',
+                                                        getBorderClass(
+                                                            scene.objectId,
+                                                            isSceneSelected
+                                                        ),
                                                         {
                                                             'bg-custom-calendar-background-selected':
-                                                                isSceneSelected,
-                                                            'border-custom-calendar-border-selected':
                                                                 isSceneSelected,
                                                             'bg-custom-calendar-background-available':
                                                                 withinThreshold &&
