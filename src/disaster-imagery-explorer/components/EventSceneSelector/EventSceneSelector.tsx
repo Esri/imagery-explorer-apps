@@ -125,13 +125,22 @@ export const EventSceneSelector: FC<Props> = ({
                         className="h-full relative flex flex-col items-center justify-even shrink-0"
                     >
                         <div
-                            className="w-full text-center flex flex-col justify-end h-5 mb-1"
+                            className={classNames(
+                                'w-full text-center flex flex-col justify-end h-5 mb-1',
+                                {
+                                    'font-bold': d.isEventStartDate === true,
+                                    'text-custom-light-blue-50':
+                                        d.isEventStartDate === false,
+                                    'text-custom-light-blue-90':
+                                        d.isEventStartDate === true,
+                                }
+                            )}
                             data-testid={`scene-selector-label-${date}`}
                             title={dateTooltipText}
                         >
                             <p
                                 className={classNames(
-                                    'text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none',
+                                    'text-[10px]  whitespace-nowrap leading-none',
                                     {
                                         hidden: shouldShowYearLabel === false,
                                     }
@@ -139,12 +148,19 @@ export const EventSceneSelector: FC<Props> = ({
                             >
                                 {date.slice(0, 4)}
                             </p>
-                            <p className="text-[10px] text-custom-light-blue-50 whitespace-nowrap leading-none mt-[2px]">
+                            <p className="text-[10px] whitespace-nowrap leading-none mt-[2px]">
                                 {date.slice(5)}
                             </p>
                         </div>
 
-                        <div className="flex-grow relative flex items-center justify-center">
+                        <div
+                            className="flex-grow relative flex items-center justify-center w-full"
+                            title={
+                                d.isEventStartDate
+                                    ? t('event_start_date', { ns: APP_NAME })
+                                    : undefined
+                            }
+                        >
                             <div
                                 className={classNames(
                                     'w-0 h-full border-l border-custom-light-blue-20 pointer-events-none',
