@@ -32,12 +32,12 @@ export const WEB_MAP_ID = ENV_WEB_MAP_ID || DEFAULT_WEB_MAP_ID;
 /**
  * Default Map Center
  */
-export const MAP_CENTER = [-117.18, 34.055];
+export const MAP_CENTER = [5, 20]; //[-117.18, 34.055];
 
 /**
  * Default Map Zoom
  */
-export const MAP_ZOOM = 10;
+export const MAP_ZOOM = 3;
 
 export const HUMAN_GEO_DARK_LABEL_LAYER_TITLE = 'Human Geography Dark Label';
 
