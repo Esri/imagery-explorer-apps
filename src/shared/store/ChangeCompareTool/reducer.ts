@@ -38,6 +38,10 @@ export type ChangeCompareToolState = {
      * the full range of pixel values
      */
     fullPixelValuesRange: number[];
+    /**
+     * The second selected range for change compare layer, when provided, this will be used with the first selected range to do a dual range selection that allows users to select two separate ranges of pixel values to be visualized on the map, instead of just one continuous range. This is useful when there are two distinct groups of pixel values that users want to focus on.
+     */
+    selectedRange2?: number[];
 };
 
 export const initialChangeCompareToolState: ChangeCompareToolState = {
@@ -45,6 +49,7 @@ export const initialChangeCompareToolState: ChangeCompareToolState = {
     changeCompareLayerIsOn: false,
     selectedRange: [-2, 2],
     fullPixelValuesRange: [-2, 2],
+    selectedRange2: null,
 };
 
 const slice = createSlice({
@@ -72,6 +77,9 @@ const slice = createSlice({
         ) => {
             state.fullPixelValuesRange = action.payload;
         },
+        selectedRange2Updated: (state, action: PayloadAction<number[]>) => {
+            state.selectedRange2 = action.payload;
+        },
     },
 });
 
@@ -82,6 +90,7 @@ export const {
     changeCompareLayerIsOnUpdated,
     selectedRangeUpdated,
     fullPixelValuesRangeUpdated,
+    selectedRange2Updated,
 } = slice.actions;
 
 export default reducer;

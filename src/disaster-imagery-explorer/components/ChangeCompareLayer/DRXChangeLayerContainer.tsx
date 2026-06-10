@@ -27,6 +27,7 @@ import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import {
     selectFullPixelValuesRangeInChangeCompareTool,
     selectSelectedOption4ChangeCompareTool,
+    selectSelectedRange2InChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
@@ -61,6 +62,10 @@ export const DRXChangeCompareLayerContainer: FC<Props> = ({
 
     const selectedRange = useAppSelector(
         selectUserSelectedRangeInChangeCompareTool
+    );
+
+    const selectedRange2 = useAppSelector(
+        selectSelectedRange2InChangeCompareTool
     );
 
     const fullPixelValueRange = useAppSelector(
@@ -110,6 +115,7 @@ export const DRXChangeCompareLayerContainer: FC<Props> = ({
             rasterFunction={rasterFunction}
             visible={isVisible}
             selectedPixelValueRange={selectedRange}
+            selectedPixelValueRange2={selectedRange2}
             fullPixelValueRange={fullPixelValueRange}
             getPixelColor={getPixelColor4ChangeCompareLayer}
             countOfPixelsOnChange={(totalPixels, visiblePixels) => {
