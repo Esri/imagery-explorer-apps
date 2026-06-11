@@ -22,18 +22,34 @@ import React, {
     useMemo,
     useEffect,
 } from 'react';
+import { formatTickLabel, getCountOfTicks, getTickLabels } from './RangeSlider';
 
 /**
- * type for the dragging state of the slider handles:
- * 'min' / 'max' for individual handles, 'segment' for dragging the range between them
+ * Identifies which handle (or segment) of the dual range slider is being dragged.
+ * `min1`/`max1` belong to the lower range (`values`), `min2`/`max2` belong to the
+ * higher range (`values2`), and `segment1`/`segment2` represent dragging the
+ * highlighted bar between a pair of handles to shift that range as a whole.
  */
-export type SliderHandleType = 'min' | 'max' | 'segment' | null;
+export type DualRangeSliderHandleType =
+    | 'min1'
+    | 'max1'
+    | 'min2'
+    | 'max2'
+    | 'segment1'
+    | 'segment2'
+    | null;
+
+type HandleType = 'min1' | 'max1' | 'min2' | 'max2';
 
 type Props = {
     /**
-     * Current [start, end] values of the slider (controlled)
+     * Current [start, end] values of the lower range (controlled)
      */
     values: number[];
+    /**
+     * Current [start, end] values of the higher range (controlled)
+     */
+    values2: number[];
     /**
      * Minimum value of the slider, defaults to -1
      */
@@ -59,16 +75,18 @@ type Props = {
      */
     showSliderTooltip?: boolean;
     /**
-     * Emits the updated [start, end] values whenever the user moves a handle or drags the segment
+     * Emits the updated [start, end] values for the lower range whenever the user moves one of its handles or drags its segment
      */
     valuesOnChange: (vals: number[]) => void;
+    /**
+     * Emits the updated [start, end] values for the higher range whenever the user moves one of its handles or drags its segment
+     */
+    values2OnChange: (vals: number[]) => void;
     /**
      * Optional static legend rendered above the track at full width, for visual reference only (no mouse events)
      */
     legend?: React.ReactNode;
 };
-
-type HandleType = 'min' | 'max';
 
 interface HandleProps {
     /**
@@ -84,14 +102,6 @@ interface HandleProps {
      */
     isDragging: boolean;
     /**
-     * Indicates whether this handle is the 'min' (left) or 'max' (right) handle, used to determine which value to update during dragging
-     */
-    handleType: HandleType;
-    /**
-     * Whether the two handles are adjacent (within one step of each other), used to adjust tooltip positioning to prevent overlap
-     */
-    isAdjacent: boolean;
-    /**
      * Whether to show the tooltip when hovering over the handle
      */
     showTooltip?: boolean;
@@ -100,52 +110,36 @@ interface HandleProps {
      */
     stepDecimals: number;
     /**
+     * Stacking order for this handle, used so that when two handles sit on top of
+     * each other, the leftmost one (the one with the highest z-index) receives mouse events
+     */
+    zIndex: number;
+    /**
      * Mouse down event handler to initiate dragging of this handle
      */
     onMouseDown: (e: React.MouseEvent) => void;
 }
 
-export const getTickLabels = (min: number, max: number): number[] => {
-    const fullRange = Math.abs(max - min);
-    const oneFourthOfFullRange = fullRange / 4;
-    return [
-        min,
-        min + oneFourthOfFullRange,
-        min + oneFourthOfFullRange * 2,
-        min + oneFourthOfFullRange * 3,
-        max,
-    ];
-};
-
-export const getCountOfTicks = (min: number, max: number): number => {
-    const fullRange = Math.abs(max - min);
-    return fullRange / 0.25 + 1;
-};
-
-export const formatTickLabel = (value: number) => {
-    // if the value is an integer, show without decimals
-    if (Number.isInteger(value)) {
-        return value.toString();
-    }
-
-    // try to have 1 or 2 decimals for non-integer values, but avoid trailing zeros
-    return value.toFixed(2).replace(/\.?0+$/, '');
+/**
+ * When two handles sit at the same position, the leftmost handle (in value order) is
+ * stacked on top so it receives mouse events and can always be picked up.
+ */
+const HANDLE_STACK_ORDER: Record<HandleType, number> = {
+    min1: 4,
+    max1: 3,
+    min2: 2,
+    max2: 1,
 };
 
 const Handle: FC<HandleProps> = ({
     position,
     value,
     isDragging,
-    handleType,
-    isAdjacent,
     showTooltip,
     stepDecimals,
+    zIndex,
     onMouseDown,
 }) => {
-    const tooltipOffset =
-        isAdjacent && handleType === 'min'
-            ? 'translateX(-75%)'
-            : 'translateX(-50%)';
     const displayValue = value.toFixed(stepDecimals);
 
     return (
@@ -155,14 +149,11 @@ const Handle: FC<HandleProps> = ({
                 position: 'absolute',
                 left: `${position}%`,
                 transform: 'translateX(-50%)',
-                zIndex: isDragging ? 3 : 2,
+                zIndex,
             }}
         >
             {showTooltip && (
-                <span
-                    className="absolute bottom-full mb-1 opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap text-xs text-custom-light-blue-80"
-                    style={{ left: '50%', transform: tooltipOffset }}
-                >
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap text-xs text-custom-light-blue-80">
                     {displayValue}
                 </span>
             )}
@@ -181,8 +172,9 @@ const Handle: FC<HandleProps> = ({
     );
 };
 
-export const RangeSlider: FC<Props> = ({
+export const RangeSliderWithDualRanges: FC<Props> = ({
     values,
+    values2,
     min = -1,
     max = 1,
     steps = 0.05,
@@ -190,18 +182,25 @@ export const RangeSlider: FC<Props> = ({
     tickLabels,
     showSliderTooltip,
     valuesOnChange,
+    values2OnChange,
     legend,
 }) => {
-    // track the position of the slider handles and whether the user is currently dragging a handle or the segment between them
-    const [startValue, setStartValue] = useState(values[0]); // position of the left (min) handle
-    const [endValue, setEndValue] = useState(values[1]); // position of the right (max) handle
-    const [dragging, setDragging] = useState<SliderHandleType>(null); // indicates which handle (or segment) is currently being dragged, if any
+    // lower range (values): [start1, end1]
+    const [start1, setStart1] = useState(values[0]);
+    const [end1, setEnd1] = useState(values[1]);
+    // higher range (values2): [start2, end2]
+    const [start2, setStart2] = useState(values2[0]);
+    const [end2, setEnd2] = useState(values2[1]);
+
+    const [dragging, setDragging] = useState<DualRangeSliderHandleType>(null);
     const trackRef = useRef<HTMLDivElement>(null);
 
     const segmentDragStartRef = useRef<{
         clientX: number;
-        startValue: number;
-        endValue: number;
+        start1: number;
+        end1: number;
+        start2: number;
+        end2: number;
     } | null>(null);
 
     // Calculate the number of decimal places in the step value to ensure proper rounding of handle values
@@ -210,14 +209,18 @@ export const RangeSlider: FC<Props> = ({
         [steps]
     );
 
-    // Synchronize internal state with the controlled `values` prop when not dragging.
-    // This mirrors the pattern in PixelRangeSlider where the slider widget's value
-    // was updated whenever the external prop changed.
+    // Synchronize internal state with the controlled `values`/`values2` props when not dragging
     useEffect(() => {
         if (!values || dragging) return;
-        if (values[0] !== startValue) setStartValue(values[0]);
-        if (values[1] !== endValue) setEndValue(values[1]);
+        if (values[0] !== start1) setStart1(values[0]);
+        if (values[1] !== end1) setEnd1(values[1]);
     }, [values]);
+
+    useEffect(() => {
+        if (!values2 || dragging) return;
+        if (values2[0] !== start2) setStart2(values2[0]);
+        if (values2[1] !== end2) setEnd2(values2[1]);
+    }, [values2]);
 
     // Helper functions to convert between value and position on the track
     const getPositionFromValue = (value: number) => {
@@ -228,43 +231,32 @@ export const RangeSlider: FC<Props> = ({
     const getValueFromPosition = (clientX: number): number => {
         if (!trackRef.current) return min;
 
-        // Calculate the percentage along the track where the event occurred
         const rect = trackRef.current.getBoundingClientRect();
 
-        // calc the percentage along the track where the event occurred, clamping between 0% and 100%
         const percentage = Math.max(
             0,
             Math.min(1, (clientX - rect.left) / rect.width)
         );
 
-        // rawValue is the exact value corresponding to the mouse position, which we then snap to the nearest step increment
         const rawValue = min + percentage * (max - min);
 
-        // Snap the raw value to the nearest step increment:
-        // first find how many steps fit into (rawValue - min), round to the nearest integer,
-        // then multiply back by steps and add min to get the snapped absolute value
         const stepsFromMin = Math.round((rawValue - min) / steps);
 
-        // Use toFixed to avoid floating point precision issues when snapping, ensuring the snapped value has the correct number of decimal places
         const snapped = parseFloat(
             (stepsFromMin * steps + min).toFixed(stepDecimals)
         );
 
-        // Ensure the snapped value is within the min/max bounds
         return Math.max(min, Math.min(max, snapped));
     };
 
-    // Calculate the positions of the handles as percentages for styling the track and handles
-    const startPosition = getPositionFromValue(startValue);
-    const endPosition = getPositionFromValue(endValue);
-
-    // Check if handles are adjacent (within one step of each other)
-    const isAdjacent = endValue - startValue <= steps;
+    // Positions of the 4 handles as percentages for styling the track and handles
+    const posMin1 = getPositionFromValue(start1);
+    const posMax1 = getPositionFromValue(end1);
+    const posMin2 = getPositionFromValue(start2);
+    const posMax2 = getPositionFromValue(end2);
 
     /**
-     * Handle the start of a drag on either handle, setting the dragging state to indicate which handle is being dragged
-     * @param handle
-     * @returns
+     * Handle the start of a drag on one of the 4 handles
      */
     const handleMouseDown = (handle: HandleType) => (e: React.MouseEvent) => {
         e.preventDefault();
@@ -277,18 +269,21 @@ export const RangeSlider: FC<Props> = ({
     }, []);
 
     /**
-     * Begins a segment drag, recording the initial mouse position and handle values
-     * so the entire selected range can be shifted as the user drags.
+     * Begins a segment drag, recording the initial mouse position and the values of both
+     * ranges so the dragged range can be shifted as a whole while it stays clear of the other range.
      */
-    const handleSegmentMouseDown = (e: React.MouseEvent) => {
-        e.preventDefault();
-        segmentDragStartRef.current = {
-            clientX: e.clientX,
-            startValue,
-            endValue,
+    const handleSegmentMouseDown =
+        (segment: 'segment1' | 'segment2') => (e: React.MouseEvent) => {
+            e.preventDefault();
+            segmentDragStartRef.current = {
+                clientX: e.clientX,
+                start1,
+                end1,
+                start2,
+                end2,
+            };
+            setDragging(segment);
         };
-        setDragging('segment');
-    };
 
     /**
      * Handles mouse movement during a drag operation, updating handle values based on mouse position.
@@ -297,56 +292,90 @@ export const RangeSlider: FC<Props> = ({
         (e: MouseEvent) => {
             if (!dragging) return;
 
-            // handle segment dragging separately to shift both handles together while maintaining their distance
-            if (dragging === 'segment') {
+            // handle segment dragging separately to shift both handles of a range together while maintaining their distance
+            if (dragging === 'segment1' || dragging === 'segment2') {
                 const ref = segmentDragStartRef.current;
                 if (!ref || !trackRef.current) return;
                 const rect = trackRef.current.getBoundingClientRect();
 
-                // Calculate how much the mouse has moved in terms of slider value, snapping to steps
                 const delta =
                     ((e.clientX - ref.clientX) / rect.width) * (max - min);
 
-                // Snap the delta to the nearest step increment
                 const snappedDelta = parseFloat(
                     (Math.round(delta / steps) * steps).toFixed(stepDecimals)
                 );
 
-                // Calculate the new start and end values by applying the snapped delta, ensuring the entire range shifts together without changing its width, and that it stays within bounds
-                const rangeWidth = ref.endValue - ref.startValue;
-                const newStart = parseFloat(
-                    Math.max(
-                        min,
-                        Math.min(
-                            ref.startValue + snappedDelta,
-                            max - rangeWidth
-                        )
-                    ).toFixed(stepDecimals)
-                );
-                const newEnd = parseFloat(
-                    (newStart + rangeWidth).toFixed(stepDecimals)
-                );
-                setStartValue(newStart);
-                setEndValue(newEnd);
-                valuesOnChange([newStart, newEnd]);
+                if (dragging === 'segment1') {
+                    // shift the lower range, stopping it from crossing into the higher range
+                    const rangeWidth = ref.end1 - ref.start1;
+                    const newStart1 = parseFloat(
+                        Math.max(
+                            min,
+                            Math.min(
+                                ref.start1 + snappedDelta,
+                                ref.start2 - rangeWidth
+                            )
+                        ).toFixed(stepDecimals)
+                    );
+                    const newEnd1 = parseFloat(
+                        (newStart1 + rangeWidth).toFixed(stepDecimals)
+                    );
+                    setStart1(newStart1);
+                    setEnd1(newEnd1);
+                    valuesOnChange([newStart1, newEnd1]);
+                } else {
+                    // shift the higher range, stopping it from crossing into the lower range
+                    const rangeWidth = ref.end2 - ref.start2;
+                    const newStart2 = parseFloat(
+                        Math.max(
+                            ref.end1,
+                            Math.min(
+                                ref.start2 + snappedDelta,
+                                max - rangeWidth
+                            )
+                        ).toFixed(stepDecimals)
+                    );
+                    const newEnd2 = parseFloat(
+                        (newStart2 + rangeWidth).toFixed(stepDecimals)
+                    );
+                    setStart2(newStart2);
+                    setEnd2(newEnd2);
+                    values2OnChange([newStart2, newEnd2]);
+                }
                 return;
             }
 
-            // For individual handle dragging, calculate the new value based on mouse position and update the corresponding handle, ensuring they don't cross each other
+            // For individual handle dragging, calculate the new value based on mouse position and update the corresponding handle.
+            // Each handle is stopped at the boundary of the other range — it never pushes or moves a handle that belongs to the other range.
             const newValue = getValueFromPosition(e.clientX);
-            if (dragging === 'min') {
-                // Prevent overlap: start must be at least one step less than end
-                const clamped = Math.min(newValue, endValue - steps);
-                setStartValue(clamped);
-                valuesOnChange([clamped, endValue]);
-            } else {
-                // Prevent overlap: end must be at least one step more than start
-                const clamped = Math.max(newValue, startValue + steps);
-                setEndValue(clamped);
-                valuesOnChange([startValue, clamped]);
+
+            if (dragging === 'min1') {
+                const clamped = Math.min(newValue, end1 - steps);
+                setStart1(clamped);
+                valuesOnChange([clamped, end1]);
+            } else if (dragging === 'max1') {
+                // end1 must stay at least one step ahead of start1, and cannot cross into the higher range
+                const clamped = Math.min(
+                    Math.max(newValue, start1 + steps),
+                    start2
+                );
+                setEnd1(clamped);
+                valuesOnChange([start1, clamped]);
+            } else if (dragging === 'min2') {
+                // start2 must stay at least one step behind end2, and cannot cross into the lower range
+                const clamped = Math.max(
+                    Math.min(newValue, end2 - steps),
+                    end1
+                );
+                setStart2(clamped);
+                values2OnChange([clamped, end2]);
+            } else if (dragging === 'max2') {
+                const clamped = Math.max(newValue, start2 + steps);
+                setEnd2(clamped);
+                values2OnChange([start2, clamped]);
             }
         },
-        [dragging, startValue, endValue, min, max, steps, stepDecimals]
+        [dragging, start1, end1, start2, end2, min, max, steps, stepDecimals]
     );
 
     useEffect(() => {
@@ -367,8 +396,6 @@ export const RangeSlider: FC<Props> = ({
                 ? tickLabels
                 : getTickLabels(min, max);
 
-        // there should not be more than 10 tick labels, so if there are too many, reduce them by only showing every other label until we have 10 or fewer
-        // if possible, we want to keep those labels as balanced as possible across the range, so we calculate a factor based on the total number of labels and filter accordingly
         const MAX_LABELS = 10;
         if (labels.length > MAX_LABELS) {
             const factor = Math.ceil(labels.length / MAX_LABELS);
@@ -386,15 +413,15 @@ export const RangeSlider: FC<Props> = ({
                 : getCountOfTicks(min, max)
         );
         return Array.from({ length: count }, (_, i) => {
-            // Calculate the fraction of the way through the range (0 at min, 1 at max)
             const fraction = i / (count - 1);
-
-            // Interpolate between min and max, then round to avoid floating-point drift
             const rawValue = min + fraction * (max - min);
-
             return parseFloat(rawValue.toFixed(stepDecimals));
         });
     }, [min, max, countOfTicks, stepDecimals]);
+
+    // The dragged handle is always brought to the front so it stays interactive while moving over other handles
+    const getZIndex = (handle: HandleType) =>
+        dragging === handle ? 10 : HANDLE_STACK_ORDER[handle];
 
     return (
         <div className="w-full px-2">
@@ -407,49 +434,74 @@ export const RangeSlider: FC<Props> = ({
                 >
                     {/* Static legend — absolutely positioned above the track line at a fixed height, pointer events disabled */}
                     {legend && (
-                        <div
-                            className="absolute bottom-full w-full pointer-events-none"
-                            // style={{ bottom: 'calc(50% + 2px)' }}
-                        >
+                        <div className="absolute bottom-full w-full pointer-events-none">
                             {legend}
                         </div>
                     )}
                 </div>
 
-                {/* Highlighted Range — draggable to shift both handles simultaneously */}
+                {/* Lower range highlight — draggable to shift both of its handles simultaneously */}
                 <div
                     className="absolute h-[2px] bg-[var(--custom-light-blue-50)]"
                     style={{
-                        left: `${startPosition}%`,
-                        width: `${endPosition - startPosition}%`,
-                        cursor: dragging === 'segment' ? 'grabbing' : 'grab',
+                        left: `${posMin1}%`,
+                        width: `${posMax1 - posMin1}%`,
+                        cursor: dragging === 'segment1' ? 'grabbing' : 'grab',
                         zIndex: 1,
                     }}
-                    onMouseDown={handleSegmentMouseDown}
+                    onMouseDown={handleSegmentMouseDown('segment1')}
                 />
 
-                {/* Start Handle */}
-                <Handle
-                    position={startPosition}
-                    value={startValue}
-                    isDragging={dragging === 'min'}
-                    handleType="min"
-                    isAdjacent={isAdjacent}
-                    showTooltip={showSliderTooltip}
-                    stepDecimals={stepDecimals}
-                    onMouseDown={handleMouseDown('min')}
+                {/* Higher range highlight — draggable to shift both of its handles simultaneously */}
+                <div
+                    className="absolute h-[2px] bg-[var(--custom-light-blue-50)]"
+                    style={{
+                        left: `${posMin2}%`,
+                        width: `${posMax2 - posMin2}%`,
+                        cursor: dragging === 'segment2' ? 'grabbing' : 'grab',
+                        zIndex: 1,
+                    }}
+                    onMouseDown={handleSegmentMouseDown('segment2')}
                 />
 
-                {/* End Handle */}
+                {/* Lower range handles */}
                 <Handle
-                    position={endPosition}
-                    value={endValue}
-                    isDragging={dragging === 'max'}
-                    handleType="max"
-                    isAdjacent={isAdjacent}
+                    position={posMin1}
+                    value={start1}
+                    isDragging={dragging === 'min1'}
                     showTooltip={showSliderTooltip}
                     stepDecimals={stepDecimals}
-                    onMouseDown={handleMouseDown('max')}
+                    zIndex={getZIndex('min1')}
+                    onMouseDown={handleMouseDown('min1')}
+                />
+                <Handle
+                    position={posMax1}
+                    value={end1}
+                    isDragging={dragging === 'max1'}
+                    showTooltip={showSliderTooltip}
+                    stepDecimals={stepDecimals}
+                    zIndex={getZIndex('max1')}
+                    onMouseDown={handleMouseDown('max1')}
+                />
+
+                {/* Higher range handles */}
+                <Handle
+                    position={posMin2}
+                    value={start2}
+                    isDragging={dragging === 'min2'}
+                    showTooltip={showSliderTooltip}
+                    stepDecimals={stepDecimals}
+                    zIndex={getZIndex('min2')}
+                    onMouseDown={handleMouseDown('min2')}
+                />
+                <Handle
+                    position={posMax2}
+                    value={end2}
+                    isDragging={dragging === 'max2'}
+                    showTooltip={showSliderTooltip}
+                    stepDecimals={stepDecimals}
+                    zIndex={getZIndex('max2')}
+                    onMouseDown={handleMouseDown('max2')}
                 />
 
                 {/* Tick Marks — positioned just below the track line */}

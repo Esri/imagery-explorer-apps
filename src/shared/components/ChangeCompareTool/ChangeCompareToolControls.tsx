@@ -18,12 +18,14 @@
 import {
     selectedRangeUpdated,
     selectedOption4ChangeCompareToolChanged,
+    selectedRange2Updated,
 } from '@shared/store/ChangeCompareTool/reducer';
 import {
     selectChangeCompareLayerIsOn,
     selectFullPixelValuesRangeInChangeCompareTool,
     selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
+    selectSelectedRange2InChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
@@ -35,6 +37,7 @@ import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
 import { TotalVisibleAreaInfo } from '../TotalAreaInfo/TotalAreaInfo';
 import { useTranslation } from 'react-i18next';
 import { RangeSlider } from '../Slider/RangeSlider';
+import { RangeSliderWithDualRanges } from '../Slider/RangeSliderWithDualRanges';
 
 type Props = {
     /**
@@ -78,6 +81,10 @@ export const ChangeCompareToolControls: FC<Props> = ({
         selectUserSelectedRangeInChangeCompareTool
     );
 
+    const selectedRange2 = useAppSelector(
+        selectSelectedRange2InChangeCompareTool
+    );
+
     const fullPixelValueRange = useAppSelector(
         selectFullPixelValuesRangeInChangeCompareTool
     );
@@ -112,6 +119,29 @@ export const ChangeCompareToolControls: FC<Props> = ({
                 }}
             ></div>
         );
+
+        if (selectedRange2) {
+            return (
+                <RangeSliderWithDualRanges
+                    values={selectedRange}
+                    values2={selectedRange2}
+                    valuesOnChange={(vals: number[]) => {
+                        dispatch(selectedRangeUpdated(vals));
+                        // dispatch(selectedOption4ChangeCompareToolChanged(SpectralIndex.LogDifference));
+                    }}
+                    values2OnChange={(vals: number[]) => {
+                        dispatch(selectedRange2Updated(vals));
+                        // dispatch(selectedOption4ChangeCompareToolChanged(SpectralIndex.LogDifference));
+                    }}
+                    min={min}
+                    max={max}
+                    steps={rangeSliderStep}
+                    showSliderTooltip={true}
+                    legend={legend}
+                    countOfTicks={rangeSliderCountOfTicks}
+                />
+            );
+        }
 
         return (
             // <PixelRangeSlider
