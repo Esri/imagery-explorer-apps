@@ -29,6 +29,7 @@ import {
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 import { DRXTemporalCompositeLayer } from './DRXTemporalCompositeLayer';
+import { useTemporalCompositeLayerVisibility } from './useTemporalCompositeLayerVisibility';
 
 type Props = {
     mapView?: MapView;
@@ -55,44 +56,45 @@ export const DRXTemporalCompositeLayerContainer: FC<Props> = ({
         selectQueryParams4SceneInSelectedMode
     );
 
-    /**
-     * Determines the visibility of the temporal composite layer
-     * @returns {boolean} True if the layer should be visible, otherwise false.
-     */
-    const isVisible = useMemo(() => {
-        if (mode !== 'analysis') {
-            return false;
-        }
+    // /**
+    //  * Determines the visibility of the temporal composite layer
+    //  * @returns {boolean} True if the layer should be visible, otherwise false.
+    //  */
+    // const isVisible = useMemo(() => {
+    //     if (mode !== 'analysis') {
+    //         return false;
+    //     }
 
-        if (anailysisTool !== 'temporal composite') {
-            return false;
-        }
+    //     if (anailysisTool !== 'temporal composite') {
+    //         return false;
+    //     }
 
-        // When displaying the final composite result that combines the two scenes, ensure that the main and secondary scenes both have an object ID assigned.
-        if (
-            isTemporalCompositeLayerOn &&
-            queryParams4SceneA?.objectIdOfSelectedScene &&
-            queryParams4SceneB?.objectIdOfSelectedScene
-        ) {
-            return true;
-        }
+    //     // When displaying the final composite result that combines the two scenes, ensure that the main and secondary scenes both have an object ID assigned.
+    //     if (
+    //         isTemporalCompositeLayerOn &&
+    //         queryParams4SceneA?.objectIdOfSelectedScene &&
+    //         queryParams4SceneB?.objectIdOfSelectedScene
+    //     ) {
+    //         return true;
+    //     }
 
-        // When displaying an individual selected scene on the map as part of the temporal composite analysis, ensure that the selected scene has an object ID assigned.
-        if (
-            isTemporalCompositeLayerOn === false &&
-            queryParams4SelectedScene?.objectIdOfSelectedScene
-        ) {
-            return true;
-        }
+    //     // When displaying an individual selected scene on the map as part of the temporal composite analysis, ensure that the selected scene has an object ID assigned.
+    //     if (
+    //         isTemporalCompositeLayerOn === false &&
+    //         queryParams4SelectedScene?.objectIdOfSelectedScene
+    //     ) {
+    //         return true;
+    //     }
 
-        // return false to hide the layer
-        return false;
-    }, [
-        mode,
-        anailysisTool,
-        isTemporalCompositeLayerOn,
-        queryParams4SelectedScene,
-    ]);
+    //     // return false to hide the layer
+    //     return false;
+    // }, [
+    //     mode,
+    //     anailysisTool,
+    //     isTemporalCompositeLayerOn,
+    //     queryParams4SelectedScene,
+    // ]);
+    const isVisible = useTemporalCompositeLayerVisibility();
 
     return (
         <DRXTemporalCompositeLayer

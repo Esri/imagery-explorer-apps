@@ -5,6 +5,7 @@ import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import FeatureLayerView from '@arcgis/core/views/layers/FeatureLayerView';
 import MapView from '@arcgis/core/views/MapView';
+import { useChangeCompareLayerVisibility } from '@shared/components/ChangeCompareLayer';
 import { DisasterResponseImageryServiceField } from '@shared/services/disaster-response/config';
 import { getEventFootprints } from '@shared/services/disaster-response/getEventFootprints';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
@@ -15,12 +16,17 @@ import {
     selectSelectedEventName,
 } from '@shared/store/DisasterImageryExplorer/selectors';
 import {
+    selectActiveAnalysisTool,
+    selectAppMode,
+} from '@shared/store/ImageryScene/selectors';
+import {
     selectMapCenter,
     selectMapExtent,
     selectMapZoom,
 } from '@shared/store/Map/selectors';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import React, { FC, useEffect, useRef } from 'react';
+import { useTemporalCompositeFinalOutputLayerVisibility } from '../TemporalCompositeLayer/useTemporalCompositeLayerVisibility';
 
 type Props = {
     mapView?: MapView;
@@ -55,7 +61,16 @@ export const DisasterResponseFootprintsLayer: FC<Props> = ({
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const visible = !!selectedEvent && !isAnimationPlaying;
+    const isChangeCompareLayerOn = useChangeCompareLayerVisibility();
+
+    const isTemporalCompositeLayerOn =
+        useTemporalCompositeFinalOutputLayerVisibility();
+
+    const visible =
+        !!selectedEvent &&
+        !isAnimationPlaying &&
+        !isChangeCompareLayerOn &&
+        !isTemporalCompositeLayerOn;
 
     // load the footprints for the selected event and add them to the map
     const updateLayer = async () => {
