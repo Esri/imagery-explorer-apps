@@ -193,6 +193,11 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
     const [end2, setEnd2] = useState(values2[1]);
 
     const [dragging, setDragging] = useState<DualRangeSliderHandleType>(null);
+    // The most recently dragged handle; when handles overlap, this one is stacked
+    // on top so the user can pick it up again instead of the handle underneath it.
+    const [lastActiveHandle, setLastActiveHandle] = useState<HandleType | null>(
+        null
+    );
     const trackRef = useRef<HTMLDivElement>(null);
 
     const segmentDragStartRef = useRef<{
@@ -261,6 +266,7 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
     const handleMouseDown = (handle: HandleType) => (e: React.MouseEvent) => {
         e.preventDefault();
         setDragging(handle);
+        setLastActiveHandle(handle);
     };
 
     const handleMouseUp = useCallback(() => {
@@ -419,9 +425,14 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
         });
     }, [min, max, countOfTicks, stepDecimals]);
 
-    // The dragged handle is always brought to the front so it stays interactive while moving over other handles
-    const getZIndex = (handle: HandleType) =>
-        dragging === handle ? 10 : HANDLE_STACK_ORDER[handle];
+    // The dragged handle is always brought to the front so it stays interactive while moving over other handles.
+    // The last handle the user dragged is kept above the default stacking order so it remains
+    // pickable if it ends up overlapping with another handle afterwards.
+    const getZIndex = (handle: HandleType) => {
+        if (dragging === handle) return 10;
+        if (lastActiveHandle === handle) return 9;
+        return HANDLE_STACK_ORDER[handle];
+    };
 
     return (
         <div className="w-full px-2">
