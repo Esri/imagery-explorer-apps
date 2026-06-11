@@ -197,11 +197,7 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
     const [end2, setEnd2] = useState(values2[1]);
 
     const [dragging, setDragging] = useState<DualRangeSliderHandleType>(null);
-    // The most recently dragged handle; when handles overlap, this one is stacked
-    // on top so the user can pick it up again instead of the handle underneath it.
-    const [lastActiveHandle, setLastActiveHandle] = useState<HandleType | null>(
-        null
-    );
+
     const trackRef = useRef<HTMLDivElement>(null);
 
     const segmentDragStartRef = useRef<{
@@ -270,7 +266,6 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
     const handleMouseDown = (handle: HandleType) => (e: React.MouseEvent) => {
         e.preventDefault();
         setDragging(handle);
-        setLastActiveHandle(handle);
     };
 
     const handleMouseUp = useCallback(() => {
@@ -358,29 +353,37 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
             // For individual handle dragging, calculate the new value based on mouse position and update the corresponding handle.
             // Each handle is stopped at the boundary of the other range — it never pushes or moves a handle that belongs to the other range.
             const newValue = getValueFromPosition(e.clientX);
+            const midpoint = (min + max) / 2;
+
+            // Convert the 8px minimum handle separation into an equivalent value-space gap based on the track's rendered width
+            const trackWidth =
+                trackRef.current?.getBoundingClientRect().width ?? 1;
+            const pixelGap = (8 / trackWidth) * (max - min);
 
             if (dragging === 'min1') {
-                const clamped = Math.min(newValue, end1 - steps);
+                // min1 must stay at least 8px away from max1
+                const clamped = Math.min(newValue, end1 - pixelGap);
                 setStart1(clamped);
                 valuesOnChange([clamped, end1]);
             } else if (dragging === 'max1') {
-                // end1 must stay at least one step ahead of start1, and cannot cross into the higher range
+                // end1 must stay at least one step ahead of start1, and cannot go beyond the midpoint
                 const clamped = Math.min(
                     Math.max(newValue, start1 + steps),
-                    start2
+                    midpoint
                 );
                 setEnd1(clamped);
                 valuesOnChange([start1, clamped]);
             } else if (dragging === 'min2') {
-                // start2 must stay at least one step behind end2, and cannot cross into the lower range
+                // start2 must stay at least one step behind end2, and cannot go below the midpoint
                 const clamped = Math.max(
                     Math.min(newValue, end2 - steps),
-                    end1
+                    midpoint
                 );
                 setStart2(clamped);
                 values2OnChange([clamped, end2]);
             } else if (dragging === 'max2') {
-                const clamped = Math.max(newValue, start2 + steps);
+                // max2 must stay at least 8px away from min2
+                const clamped = Math.max(newValue, start2 + pixelGap);
                 setEnd2(clamped);
                 values2OnChange([start2, clamped]);
             }
@@ -434,7 +437,7 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
     // pickable if it ends up overlapping with another handle afterwards.
     const getZIndex = (handle: HandleType) => {
         if (dragging === handle) return 10;
-        if (lastActiveHandle === handle) return 9;
+
         return HANDLE_STACK_ORDER[handle];
     };
 
