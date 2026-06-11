@@ -121,12 +121,16 @@ interface HandleProps {
 }
 
 /**
- * When two handles sit at the same position, the leftmost handle (in value order) is
- * stacked on top so it receives mouse events and can always be picked up.
+ * Z-index mapping to handle overlapping handles at identical positions.
+ * * Rules for visual stacking:
+ * - Left Range (1): The rightmost handle (max1) sits on top of the leftmost (min1).
+ * - Right Range (2): The leftmost handle (min2) sits on top of the rightmost (max2).
+ * * This ensures that handles moving toward the center of the slider remain
+ * on top, making them easily selectable by the user.
  */
 const HANDLE_STACK_ORDER: Record<HandleType, number> = {
-    min1: 4,
-    max1: 3,
+    min1: 3,
+    max1: 4,
     min2: 2,
     max2: 1,
 };
