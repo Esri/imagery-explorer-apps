@@ -35,8 +35,8 @@ export type DualRangeSliderHandleType =
     | 'max1'
     | 'min2'
     | 'max2'
-    | 'segment1'
-    | 'segment2'
+    // | 'segment1'
+    // | 'segment2'
     | null;
 
 type HandleType = 'min1' | 'max1' | 'min2' | 'max2';
@@ -274,22 +274,22 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
         segmentDragStartRef.current = null;
     }, []);
 
-    /**
-     * Begins a segment drag, recording the initial mouse position and the values of both
-     * ranges so the dragged range can be shifted as a whole while it stays clear of the other range.
-     */
-    const handleSegmentMouseDown =
-        (segment: 'segment1' | 'segment2') => (e: React.MouseEvent) => {
-            e.preventDefault();
-            segmentDragStartRef.current = {
-                clientX: e.clientX,
-                start1,
-                end1,
-                start2,
-                end2,
-            };
-            setDragging(segment);
-        };
+    // /**
+    //  * Begins a segment drag, recording the initial mouse position and the values of both
+    //  * ranges so the dragged range can be shifted as a whole while it stays clear of the other range.
+    //  */
+    // const handleSegmentMouseDown =
+    //     (segment: 'segment1' | 'segment2') => (e: React.MouseEvent) => {
+    //         e.preventDefault();
+    //         segmentDragStartRef.current = {
+    //             clientX: e.clientX,
+    //             start1,
+    //             end1,
+    //             start2,
+    //             end2,
+    //         };
+    //         setDragging(segment);
+    //     };
 
     /**
      * Handles mouse movement during a drag operation, updating handle values based on mouse position.
@@ -298,58 +298,58 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
         (e: MouseEvent) => {
             if (!dragging) return;
 
-            // handle segment dragging separately to shift both handles of a range together while maintaining their distance
-            if (dragging === 'segment1' || dragging === 'segment2') {
-                const ref = segmentDragStartRef.current;
-                if (!ref || !trackRef.current) return;
-                const rect = trackRef.current.getBoundingClientRect();
+            // // handle segment dragging separately to shift both handles of a range together while maintaining their distance
+            // if (dragging === 'segment1' || dragging === 'segment2') {
+            //     const ref = segmentDragStartRef.current;
+            //     if (!ref || !trackRef.current) return;
+            //     const rect = trackRef.current.getBoundingClientRect();
 
-                const delta =
-                    ((e.clientX - ref.clientX) / rect.width) * (max - min);
+            //     const delta =
+            //         ((e.clientX - ref.clientX) / rect.width) * (max - min);
 
-                const snappedDelta = parseFloat(
-                    (Math.round(delta / steps) * steps).toFixed(stepDecimals)
-                );
+            //     const snappedDelta = parseFloat(
+            //         (Math.round(delta / steps) * steps).toFixed(stepDecimals)
+            //     );
 
-                if (dragging === 'segment1') {
-                    // shift the lower range, stopping it from crossing into the higher range
-                    const rangeWidth = ref.end1 - ref.start1;
-                    const newStart1 = parseFloat(
-                        Math.max(
-                            min,
-                            Math.min(
-                                ref.start1 + snappedDelta,
-                                ref.start2 - rangeWidth
-                            )
-                        ).toFixed(stepDecimals)
-                    );
-                    const newEnd1 = parseFloat(
-                        (newStart1 + rangeWidth).toFixed(stepDecimals)
-                    );
-                    setStart1(newStart1);
-                    setEnd1(newEnd1);
-                    valuesOnChange([newStart1, newEnd1]);
-                } else {
-                    // shift the higher range, stopping it from crossing into the lower range
-                    const rangeWidth = ref.end2 - ref.start2;
-                    const newStart2 = parseFloat(
-                        Math.max(
-                            ref.end1,
-                            Math.min(
-                                ref.start2 + snappedDelta,
-                                max - rangeWidth
-                            )
-                        ).toFixed(stepDecimals)
-                    );
-                    const newEnd2 = parseFloat(
-                        (newStart2 + rangeWidth).toFixed(stepDecimals)
-                    );
-                    setStart2(newStart2);
-                    setEnd2(newEnd2);
-                    values2OnChange([newStart2, newEnd2]);
-                }
-                return;
-            }
+            //     if (dragging === 'segment1') {
+            //         // shift the lower range, stopping it from crossing into the higher range
+            //         const rangeWidth = ref.end1 - ref.start1;
+            //         const newStart1 = parseFloat(
+            //             Math.max(
+            //                 min,
+            //                 Math.min(
+            //                     ref.start1 + snappedDelta,
+            //                     ref.start2 - rangeWidth
+            //                 )
+            //             ).toFixed(stepDecimals)
+            //         );
+            //         const newEnd1 = parseFloat(
+            //             (newStart1 + rangeWidth).toFixed(stepDecimals)
+            //         );
+            //         setStart1(newStart1);
+            //         setEnd1(newEnd1);
+            //         valuesOnChange([newStart1, newEnd1]);
+            //     } else {
+            //         // shift the higher range, stopping it from crossing into the lower range
+            //         const rangeWidth = ref.end2 - ref.start2;
+            //         const newStart2 = parseFloat(
+            //             Math.max(
+            //                 ref.end1,
+            //                 Math.min(
+            //                     ref.start2 + snappedDelta,
+            //                     max - rangeWidth
+            //                 )
+            //             ).toFixed(stepDecimals)
+            //         );
+            //         const newEnd2 = parseFloat(
+            //             (newStart2 + rangeWidth).toFixed(stepDecimals)
+            //         );
+            //         setStart2(newStart2);
+            //         setEnd2(newEnd2);
+            //         values2OnChange([newStart2, newEnd2]);
+            //     }
+            //     return;
+            // }
 
             // For individual handle dragging, calculate the new value based on mouse position and update the corresponding handle.
             // Each handle is stopped at the boundary of the other range — it never pushes or moves a handle that belongs to the other range.
@@ -457,10 +457,10 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
                     style={{
                         left: `${posMin1}%`,
                         width: `${posMax1 - posMin1}%`,
-                        cursor: dragging === 'segment1' ? 'grabbing' : 'grab',
+                        // cursor: dragging === 'segment1' ? 'grabbing' : 'grab',
                         zIndex: 1,
                     }}
-                    onMouseDown={handleSegmentMouseDown('segment1')}
+                    // onMouseDown={handleSegmentMouseDown('segment1')}
                 />
 
                 {/* Higher range highlight — draggable to shift both of its handles simultaneously */}
@@ -469,10 +469,10 @@ export const RangeSliderWithDualRanges: FC<Props> = ({
                     style={{
                         left: `${posMin2}%`,
                         width: `${posMax2 - posMin2}%`,
-                        cursor: dragging === 'segment2' ? 'grabbing' : 'grab',
+                        // cursor: dragging === 'segment2' ? 'grabbing' : 'grab',
                         zIndex: 1,
                     }}
-                    onMouseDown={handleSegmentMouseDown('segment2')}
+                    // onMouseDown={handleSegmentMouseDown('segment2')}
                 />
 
                 {/* Lower range handles */}
