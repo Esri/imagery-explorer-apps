@@ -76,7 +76,9 @@ const getPreloadedChangeCompareToolState = (hashParams: URLSearchParams) => {
 
     const preloadedState: ChangeCompareToolState = {
         ...initialChangeCompareToolState,
-        selectedOption: '', // for DRX, we don't have spectral index or radar index options in the change compare tool, so we set selectedOption to an empty string
+        selectedOption: '', // for DRX, we don't have spectral index or radar index options in the change compare tool, so we set selectedOption to an empty string,
+        changeCompareLayerIsOn:
+            changeCompareToolData.changeCompareLayerIsOn || false,
         fullPixelValuesRange,
         selectedRange,
         selectedRange2,
