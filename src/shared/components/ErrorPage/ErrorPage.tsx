@@ -26,13 +26,21 @@ export const ErrorPage: FC<Props> = ({ error }) => {
         <div className="flex justify-center items-center w-screen h-screen theme-background text-custom-light-blue">
             <div className="max-w-3xl">
                 <p>
-                    This app is temporarily unavailable due to an issue fetching
-                    data from one of the data services.
+                    This app is temporarily unavailable due to an unexpected
+                    issue, such as a problem fetching data from one of the data
+                    services.
                 </p>
 
                 <p className="mt-4 text-sm italic">
                     {'Error Details'}: {erroMessage}
                 </p>
+
+                {error?.stack && (
+                    <p className="mt-4 text-sm italic">
+                        {'Error Stacks'}: <br />
+                        <span>{error.stack.toString()}</span>
+                    </p>
+                )}
 
                 <div className="mt-6 pt-6 border-t border-custom-light-blue-50">
                     {/* <Trans
