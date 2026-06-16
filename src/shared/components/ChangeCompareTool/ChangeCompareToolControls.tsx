@@ -62,6 +62,10 @@ type Props = {
      * the count of ticks to be rendered on the pixel range selector.
      */
     rangeSliderCountOfTicks?: number;
+    /**
+     * If true, hide the total area indicator above the pixel value range selector
+     */
+    hideTotalAreaInfo?: boolean;
 };
 
 export const ChangeCompareToolControls: FC<Props> = ({
@@ -70,6 +74,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
     preselectionText,
     rangeSliderStep = 0.01,
     rangeSliderCountOfTicks,
+    hideTotalAreaInfo = false,
 }: Props) => {
     const { t } = useTranslation();
 
@@ -243,7 +248,9 @@ export const ChangeCompareToolControls: FC<Props> = ({
     return (
         <div className={classNames('relative w-full h-[0px]')}>
             <div className="mt-3 mb-3 w-full text-right ">
-                <TotalVisibleAreaInfo label={totalVisibleAreaInfo} />
+                {hideTotalAreaInfo === false && (
+                    <TotalVisibleAreaInfo label={totalVisibleAreaInfo} />
+                )}
             </div>
 
             {/* <div className="relative w-full">

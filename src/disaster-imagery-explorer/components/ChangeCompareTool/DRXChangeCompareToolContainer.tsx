@@ -33,6 +33,7 @@ export const DRXChangeCompareToolContainer = () => {
                     t('no_change'),
                     t('high_change'),
                 ]}
+                hideTotalAreaInfo={true}
             />
         </div>
     );
