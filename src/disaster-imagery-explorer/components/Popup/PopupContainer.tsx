@@ -35,7 +35,11 @@ import {
 } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import { identify } from '@shared/services/helpers/identify';
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
-import { getDIExPopupContent4SelectedScene } from './helpers';
+import {
+    getDIExPopupContent4SelectedScene,
+    getPopupContentForWorldImagery,
+} from './helpers';
+import { selectMapScale } from '@shared/store/Map/selectors';
 
 type Props = {
     mapView?: MapView;
@@ -59,6 +63,10 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
     const isBasemapOnRightSideOfSwipeWidget = useAppSelector(
         selectIsBasemapOnRightSideOfSwipe
     );
+
+    const mapScale = useAppSelector(selectMapScale);
+
+    const mapScaleRef = useRef(mapScale);
 
     const fetchPopupData = async (
         mapPoint: Point,
@@ -87,6 +95,14 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
                 popupTitle = 'World Imagery';
                 popupContent =
                     'This is the basemap layer, no scene data available.';
+
+                const res = await getPopupContentForWorldImagery({
+                    mapPoint,
+                    scale: mapScaleRef.current,
+                });
+
+                popupTitle = res.title;
+                popupContent = res.content;
             } else {
                 // If the user clicked on the scene layer, we need to get the popup content based on the selected scene's objectId and the mapPoint of the click event.
                 let queryParams = queryParams4MainScene;
@@ -140,6 +156,10 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
             });
         }
     };
+
+    useEffect(() => {
+        mapScaleRef.current = mapScale;
+    }, [mapScale]);
 
     return <MapPopup data={data} mapView={mapView} onOpen={fetchPopupData} />;
 };

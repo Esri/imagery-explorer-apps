@@ -1,5 +1,5 @@
 import TileLayer from '@arcgis/core/layers/TileLayer';
-import { WORLD_IMAGERY_BASEMAP_LAYER_ITEM_ID } from '@shared/constants/map';
+import { WORLD_IMAGERY_BASEMAP_LAYER_ITEM_ID } from '@shared/services/world-imagery/config';
 import React, { useEffect } from 'react';
 
 export const useBasemapLayerForSwipeWidget = ({
