@@ -26,14 +26,13 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
-import { identify } from '@shared/services/helpers/identify';
-import {
-    SENTINEL_1_SERVICE_URL,
-    Sentinel1FunctionName,
-} from '@shared/services/sentinel-1/config';
-import { getFormattedSentinel1Scenes } from '@shared/services/sentinel-1/getSentinel1Scenes';
 import { getPopUpContentWithLocationInfo } from '@shared/components/MapPopup/helper';
-import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
+import {
+    getDisasterResponseSceneByObjectId,
+    getFormattedDisasterResponseScenes,
+} from '@shared/services/disaster-response/getDisasterResponseScenes';
+import { identify } from '@shared/services/helpers/identify';
+import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
 
 type Props = {
     mapView?: MapView;
@@ -72,48 +71,44 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
 
             controller = new AbortController();
 
-            // const res = await identify({
-            //     serviceURL: SENTINEL_1_SERVICE_URL,
-            //     point: mapPoint,
-            //     objectIds:
-            //         mode !== 'dynamic'
-            //             ? [queryParams?.objectIdOfSelectedScene]
-            //             : null,
-            //     maxItemCount: 1,
-            //     resolution: mapView.resolution,
-            //     abortController: controller,
-            // });
+            const objectId = queryParams?.objectIdOfSelectedScene;
 
-            // // console.log(res)
+            if (!objectId) {
+                throw new Error('No scene is selected');
+            }
 
-            // const features = res?.catalogItems?.features;
+            const res = await identify({
+                serviceURL: DISASTER_RESPONSE_IMAGERY_SERVICE_URL,
+                point: mapPoint,
+                objectIds: [objectId],
+                maxItemCount: 1,
+                resolution: mapView.resolution,
+                abortController: controller,
+            });
 
-            // if (!features.length) {
-            //     throw new Error('cannot find sentinel-1 scene');
-            // }
+            // console.log(res)
 
-            // const sceneData = getFormattedSentinel1Scenes(features)[0];
+            const features = res?.catalogItems?.features;
 
-            // const bandValues: number[] =
-            //     getPixelValuesFromIdentifyTaskResponse(res);
+            if (!features.length) {
+                throw new Error('cannot find sentinel-1 scene');
+            }
 
-            // if (!bandValues) {
-            //     throw new Error('identify task does not return band values');
-            // }
-            // // console.log(bandValues)
+            const sceneData = getFormattedDisasterResponseScenes(features)[0];
 
-            // const title = `Sentinel-1 | ${formatInUTCTimeZone(
-            //     sceneData.acquisitionDate,
-            //     'MMM dd, yyyy'
-            // )}`;
+            if (!sceneData) {
+                throw new Error('failed to get disaster response scene data');
+            }
 
             const title = `Disaster Imagery`;
+
+            const content = `Acquisition Date: ${sceneData.formattedAcquisitionDate + ' ' + sceneData.formattedAcuisitionTime}`;
 
             setData({
                 // Set the popup's title to the coordinates of the location
                 title,
                 location: mapPoint, // Set the location of the popup to the clicked location
-                content: getPopUpContentWithLocationInfo(mapPoint, ''),
+                content: getPopUpContentWithLocationInfo(mapPoint, content),
             });
         } catch (error: any) {
             setData({

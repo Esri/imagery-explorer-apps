@@ -30,12 +30,15 @@ import {
     selectActiveAnalysisTool,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
+    selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import {
     getLoadingIndicator,
     didClickOnLeftSideOfSwipeWidget,
     formatPopupElements,
 } from './helper';
+import { selectChangeCompareLayerIsOn } from '@shared/store/ChangeCompareTool/selectors';
+import { selectIsTemporalCompositeLayerOn } from '@shared/store/TemporalCompositeTool/selectors';
 
 export type MapPopupData = {
     /**
@@ -77,6 +80,16 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
         selectQueryParams4SecondaryScene
     );
 
+    const queryParams4SceneInSelectedMode = useAppSelector(
+        selectQueryParams4SceneInSelectedMode
+    );
+
+    const isChangeCompareLayerOn = useAppSelector(selectChangeCompareLayerIsOn);
+
+    const isTemporalCompositeLayerOn = useAppSelector(
+        selectIsTemporalCompositeLayerOn
+    );
+
     const swipePosition = useAppSelector(selectSwipeWidgetHandlerPosition);
 
     const openPopupRef = useRef<MapViewOnClickHandler>(null);
@@ -101,6 +114,24 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
             (analysisTool === 'trend' ||
                 analysisTool === 'spectral' ||
                 analysisTool === 'urban heat island')
+        ) {
+            return;
+        }
+
+        // no need to show pop-up in change analysis when change compare layer is on
+        if (
+            mode === 'analysis' &&
+            analysisTool === 'change' &&
+            isChangeCompareLayerOn
+        ) {
+            return;
+        }
+
+        // no need to show pop-up if the temporal composite layer is on
+        if (
+            mode === 'analysis' &&
+            analysisTool === 'temporal composite' &&
+            isTemporalCompositeLayerOn
         ) {
             return;
         }
@@ -180,8 +211,11 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
         mode,
         analysisTool,
         swipePosition,
-        queryParams4MainScene?.objectIdOfSelectedScene,
-        queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        // queryParams4MainScene?.objectIdOfSelectedScene,
+        // queryParams4SecondaryScene?.objectIdOfSelectedScene,
+        queryParams4SceneInSelectedMode?.objectIdOfSelectedScene,
+        isChangeCompareLayerOn,
+        isTemporalCompositeLayerOn,
     ]);
 
     useEffect(() => {
