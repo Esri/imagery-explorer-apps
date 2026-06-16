@@ -1,4 +1,5 @@
 import TileLayer from '@arcgis/core/layers/TileLayer';
+import { WORLD_IMAGERY_BASEMAP_LAYER_ITEM_ID } from '@shared/constants/map';
 import React, { useEffect } from 'react';
 
 export const useBasemapLayerForSwipeWidget = ({
@@ -14,7 +15,7 @@ export const useBasemapLayerForSwipeWidget = ({
         if (!basemapRef.current) {
             basemapRef.current = new TileLayer({
                 portalItem: {
-                    id: '10df2279f9684e4a9f6a7f08febac2a9', // World Imagery
+                    id: WORLD_IMAGERY_BASEMAP_LAYER_ITEM_ID,
                 },
                 visible,
             });

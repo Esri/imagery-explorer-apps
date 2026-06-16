@@ -53,3 +53,9 @@ export const TERRAIN_LAYER_ITEM_ID = '1b243539f4514b6ba35e7d995890db1d';
 export const WORLD_IMAGERY_BASEMAP_LAYER_TITLE = 'World Imagery';
 
 export const CUSTOM_OCEAN_BASEMAP_LAYER_TITLE = 'LandCoverAppOceans';
+
+/**
+ * Item ID of the World Imagery basemap layer used in the application.
+ */
+export const WORLD_IMAGERY_BASEMAP_LAYER_ITEM_ID =
+    '10df2279f9684e4a9f6a7f08febac2a9';
