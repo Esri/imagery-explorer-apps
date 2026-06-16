@@ -21,8 +21,10 @@ import { useAppSelector } from '@shared/store/configureStore';
 import {
     // selectActiveAnalysisTool,
     selectAppMode,
+    selectIsBasemapOnRightSideOfSwipe,
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
+    selectSwipeSubMode,
 } from '@shared/store/ImageryScene/selectors';
 import { formatInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { MapPopup, MapPopupData } from '@shared/components/MapPopup/MapPopup';
@@ -33,6 +35,7 @@ import {
 } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import { identify } from '@shared/services/helpers/identify';
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
+import { getDIExPopupContent4SelectedScene } from './helpers';
 
 type Props = {
     mapView?: MapView;
@@ -51,64 +54,82 @@ export const PopupContainer: FC<Props> = ({ mapView }) => {
 
     const [data, setData] = useState<MapPopupData>();
 
+    const swipeSubMode = useAppSelector(selectSwipeSubMode);
+
+    const isBasemapOnRightSideOfSwipeWidget = useAppSelector(
+        selectIsBasemapOnRightSideOfSwipe
+    );
+
     const fetchPopupData = async (
         mapPoint: Point,
         clickedOnLeftSideOfSwipeWidget: boolean
     ) => {
         try {
-            let queryParams = queryParams4MainScene;
-
-            // in swipe mode, we need to use the query Params based on position of mouse click event
-            if (mode === 'swipe') {
-                queryParams = clickedOnLeftSideOfSwipeWidget
-                    ? queryParams4MainScene
-                    : queryParams4SecondaryScene;
-            }
-
             if (controller) {
                 controller.abort();
             }
 
             controller = new AbortController();
 
-            const objectId = queryParams?.objectIdOfSelectedScene;
+            let popupTitle = '';
+            let popupContent = '';
 
-            if (!objectId) {
-                throw new Error('No scene is selected');
+            // Check if the user clicked on the basemap layer in swipe mode
+            const clickedOnBasemapLayer =
+                mode === 'swipe' &&
+                swipeSubMode === 'scene-to-basemap' &&
+                ((clickedOnLeftSideOfSwipeWidget &&
+                    isBasemapOnRightSideOfSwipeWidget === false) ||
+                    (!clickedOnLeftSideOfSwipeWidget &&
+                        isBasemapOnRightSideOfSwipeWidget));
+
+            if (clickedOnBasemapLayer) {
+                popupTitle = 'World Imagery';
+                popupContent =
+                    'This is the basemap layer, no scene data available.';
+            } else {
+                // If the user clicked on the scene layer, we need to get the popup content based on the selected scene's objectId and the mapPoint of the click event.
+                let queryParams = queryParams4MainScene;
+
+                // If user is vieweing the scene to scene swipe mode, we need to use the query params based on position of mouse click event
+                if (mode === 'swipe' && swipeSubMode === 'scene-to-scene') {
+                    queryParams = clickedOnLeftSideOfSwipeWidget
+                        ? queryParams4MainScene
+                        : queryParams4SecondaryScene;
+                }
+
+                const objectId = queryParams?.objectIdOfSelectedScene;
+
+                if (!objectId) {
+                    throw new Error('No scene is selected');
+                }
+
+                const res = await getDIExPopupContent4SelectedScene({
+                    objectId,
+                    mapPoint,
+                    resolution: mapView?.resolution,
+                    abortController: controller,
+                });
+
+                popupTitle = res.title;
+                popupContent = res.content;
             }
 
-            const res = await identify({
-                serviceURL: DISASTER_RESPONSE_IMAGERY_SERVICE_URL,
-                point: mapPoint,
-                objectIds: [objectId],
-                maxItemCount: 1,
-                resolution: mapView.resolution,
-                abortController: controller,
-            });
-
-            // console.log(res)
-
-            const features = res?.catalogItems?.features;
-
-            if (!features.length) {
-                throw new Error('cannot find sentinel-1 scene');
+            if (!popupTitle || !popupContent) {
+                // safe guard, this should not happen if the above code is working correctly
+                throw new Error(
+                    'Failed to get popup content for the selected scene'
+                );
             }
-
-            const sceneData = getFormattedDisasterResponseScenes(features)[0];
-
-            if (!sceneData) {
-                throw new Error('failed to get disaster response scene data');
-            }
-
-            const title = `Disaster Imagery`;
-
-            const content = `Acquisition Date: ${sceneData.formattedAcquisitionDate + ' ' + sceneData.formattedAcuisitionTime}`;
 
             setData({
                 // Set the popup's title to the coordinates of the location
-                title,
+                title: popupTitle,
                 location: mapPoint, // Set the location of the popup to the clicked location
-                content: getPopUpContentWithLocationInfo(mapPoint, content),
+                content: getPopUpContentWithLocationInfo(
+                    mapPoint,
+                    popupContent
+                ),
             });
         } catch (error: any) {
             setData({

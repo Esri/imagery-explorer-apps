@@ -31,6 +31,8 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
     selectQueryParams4SceneInSelectedMode,
+    selectSwipeSubMode,
+    selectIsBasemapOnRightSideOfSwipe,
 } from '@shared/store/ImageryScene/selectors';
 import {
     getLoadingIndicator,
@@ -74,11 +76,11 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
 
     const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
-    const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
+    // const queryParams4MainScene = useAppSelector(selectQueryParams4MainScene);
 
-    const queryParams4SecondaryScene = useAppSelector(
-        selectQueryParams4SecondaryScene
-    );
+    // const queryParams4SecondaryScene = useAppSelector(
+    //     selectQueryParams4SecondaryScene
+    // );
 
     const queryParams4SceneInSelectedMode = useAppSelector(
         selectQueryParams4SceneInSelectedMode
@@ -91,6 +93,12 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
     );
 
     const swipePosition = useAppSelector(selectSwipeWidgetHandlerPosition);
+
+    const swipeSubMode = useAppSelector(selectSwipeSubMode);
+
+    const isBasemapOnRightSideOfSwipeWidget = useAppSelector(
+        selectIsBasemapOnRightSideOfSwipe
+    );
 
     const openPopupRef = useRef<MapViewOnClickHandler>(null);
 
@@ -216,6 +224,8 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
         queryParams4SceneInSelectedMode?.objectIdOfSelectedScene,
         isChangeCompareLayerOn,
         isTemporalCompositeLayerOn,
+        swipeSubMode,
+        isBasemapOnRightSideOfSwipeWidget,
     ]);
 
     useEffect(() => {
