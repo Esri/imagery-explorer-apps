@@ -22,6 +22,7 @@ import * as reactiveUtils from '@arcgis/core/core/reactiveUtils';
 import { LULC_TIMESERIES_STORE } from '@landcover-explorer/constants';
 import { ResourceHandle } from '@arcgis/core/core/Handles';
 import FeatureLayerView from '@arcgis/core/views/layers/FeatureLayerView';
+import { formatPopupElements } from '@shared/components/MapPopup/helper';
 
 type Props = {
     availableYears?: number[];
@@ -61,9 +62,9 @@ const LulcFootprintsLayer: FC<Props> = ({ availableYears, mapView }: Props) => {
         // behavior in order to display your own popup
         mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
-        mapView.popup.visibleElements = {
-            collapseButton: false,
-        };
+
+        formatPopupElements(mapView);
+
         // mapView.popup.collapseEnabled = false;
 
         addEventHandlers();

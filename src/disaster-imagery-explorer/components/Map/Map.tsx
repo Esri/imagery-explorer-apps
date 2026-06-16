@@ -33,6 +33,7 @@ import { MapActionButtonGroup } from '@shared/components/MapActionButton/';
 import { DRXTemporalCompositeLayer } from '../TemporalCompositeLayer';
 import { DRXChangeCompareLayer } from '../ChangeCompareLayer';
 import { SwipeComponent4ImageryAndBasemapLayers } from '@shared/components/SwipeWidget/SwipeComponent4ImageryAndBasemapLayers';
+import { DIExPopup } from '../Popup';
 
 export const Map = () => {
     const dispatch = useAppDispatch();
@@ -87,6 +88,8 @@ export const Map = () => {
             />
 
             <ZoomToExtentOfSelectedSceneAndEvent />
+
+            <DIExPopup />
         </MapViewContainer>
     );
 };

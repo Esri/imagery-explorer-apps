@@ -31,7 +31,11 @@ import {
     selectQueryParams4MainScene,
     selectQueryParams4SecondaryScene,
 } from '@shared/store/ImageryScene/selectors';
-import { getLoadingIndicator, didClickOnLeftSideOfSwipeWidget } from './helper';
+import {
+    getLoadingIndicator,
+    didClickOnLeftSideOfSwipeWidget,
+    formatPopupElements,
+} from './helper';
 
 export type MapPopupData = {
     /**
@@ -128,10 +132,9 @@ export const MapPopup: FC<Props> = ({ data, mapView, onOpen }: Props) => {
         mapView.popup.dockEnabled = false;
         // mapView.popup.collapseEnabled = false;
         mapView.popup.alignment = 'bottom-right';
-        mapView.popup.visibleElements = {
-            collapseButton: false,
-            actionBar: false,
-        };
+
+        // Forrmat the popup elements to only show the necessary elements
+        formatPopupElements(mapView);
 
         mapView.on('click', (evt) => {
             openPopupRef.current(evt.mapPoint, evt.x);

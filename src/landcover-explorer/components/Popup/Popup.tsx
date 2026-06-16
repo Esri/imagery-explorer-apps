@@ -44,6 +44,7 @@ import {
 } from '@shared/services/helpers/getLandcoverClassificationsByLocation';
 import { LandcoverClassificationData } from '@typing/landcover';
 import { selectAnimationStatus } from '@shared/store/UI/selectors';
+import { formatPopupElements } from '@shared/components/MapPopup/helper';
 
 type Props = {
     /**
@@ -380,9 +381,9 @@ const Popup: FC<Props> = ({
         // behavior in order to display your own popup
         mapView.popupEnabled = false;
         mapView.popup.dockEnabled = false;
-        mapView.popup.visibleElements = {
-            collapseButton: false,
-        };
+
+        // Forrmat the popup elements to only show the necessary elements
+        formatPopupElements(mapView);
 
         mapView.on('click', async (evt) => {
             mapViewOnClickHandlerRef.current(evt.mapPoint, evt.x);

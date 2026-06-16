@@ -14,6 +14,7 @@
  */
 
 import Point from '@arcgis/core/geometry/Point';
+import type MapView from '@arcgis/core/views/MapView';
 import { t } from 'i18next';
 
 /**
@@ -118,4 +119,19 @@ export const getPopUpContentWithLocationInfo = (
     });
 
     return popupDiv;
+};
+
+/**
+ * Format the popup elements, such as hide the collapse button and action bar, disable the dock option, etc.
+ * @param mapView
+ */
+export const formatPopupElements = (mapView: MapView): void => {
+    mapView.popup.visibleElements = {
+        collapseButton: false,
+        actionBar: false,
+    };
+
+    mapView.popup.dockOptions = {
+        buttonEnabled: false,
+    };
 };
