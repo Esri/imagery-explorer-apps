@@ -24,5 +24,15 @@
     "acquired_on": "Acquired on {{date}}",
     "post_event_scene_with_cloud_cover": "<bold>Post-event</bold> scene with <bold>{{cloudCover}}%</bold> cloud cover.",
     "pre_event_scene_with_cloud_cover": "<bold>Pre-event</bold> scene with <bold>{{cloudCover}}%</bold> cloud cover.",
-    "scene_not_in_current_map_extent": "This scene is not in the current map extent. Zoom out or pan the map to find this scene on the map."
+    "scene_not_in_current_map_extent": "This scene is not in the current map extent. Zoom out or pan the map to find this scene on the map.",
+    "disaster_imagery": "Disaster Imagery",
+    "world_imagery": "World Imagery",
+    "acquisition_date": "Acquisition Date",
+    "resolution": "Resolution",
+    "sample_accuracy": "Sample Accuracy",
+    "unknown": "Unknown",
+    "acquisition_date_popup_field": "Acquisition Date: <span style='color: var(--custom-light-blue);'>{{date}}</span>",
+    "resolution_popup_field": "Resolution: <span style='color: var(--custom-light-blue);'>{{resolution}}</span> meters",
+    "accuracy_popup_field": "Accuracy: <span style='color: var(--custom-light-blue);'>{{accuracy}}</span> meters",
+    "provider_popup_field": "Provider: <span style='color: var(--custom-light-blue);'>{{provider}}</span>"
 }

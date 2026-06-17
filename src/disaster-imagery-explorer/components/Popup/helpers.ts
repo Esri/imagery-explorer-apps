@@ -1,8 +1,10 @@
 import type Point from '@arcgis/core/geometry/Point';
+import { APP_NAME } from '@shared/config';
 import { DISASTER_RESPONSE_IMAGERY_SERVICE_URL } from '@shared/services/disaster-response/config';
 import { getFormattedDisasterResponseScenes } from '@shared/services/disaster-response/getDisasterResponseScenes';
 import { identify } from '@shared/services/helpers/identify';
 import { getWorldImageryMetadata } from '@shared/services/world-imagery/getWorldImageryMetadata';
+import { t } from 'i18next';
 
 type GetPopupContent4SelectedSceneParams = {
     objectId: number;
@@ -51,9 +53,14 @@ export const getDIExPopupContent4SelectedScene = async ({
         throw new Error('failed to get disaster response scene data');
     }
 
-    const title = `Disaster Imagery`;
+    const title = t('disaster_imagery', { ns: APP_NAME });
 
-    const content = `Acquisition Date: ${sceneData.formattedAcquisitionDate + ' ' + sceneData.formattedAcuisitionTime}`;
+    const content = `
+        <div style="font-size: 0.8rem; color: var(--custom-light-blue-50);">
+            <span>${t('provider_popup_field', { provider: sceneData.provider, ns: APP_NAME })}</span><br />
+            <span>${t('acquisition_date_popup_field', { date: sceneData.formattedAcquisitionDate + ' ' + sceneData.formattedAcuisitionTime, ns: APP_NAME })}</span><br />
+        </div><br/>
+    `;
 
     return {
         title,
@@ -76,14 +83,15 @@ export const getPopupContentForWorldImagery = async ({
         abortController: new AbortController(),
     });
 
-    const title = `World Imagery`;
+    const title = t('world_imagery', { ns: APP_NAME });
 
     const content = `
-    <div style="font-size: 0.8rem;">
-        <span style='color: var(--custom-light-blue-50);'>${metadata.provider} imagery captured on <span style='color: var(--custom-light-blue);'>${metadata.formattedAcquisitionDate}</span></span>.<br/>
-        <span style='color: var(--custom-light-blue-50);'>Pixels in the source image cover a ground distance of <span style='color: var(--custom-light-blue);'>${metadata.resolution} meters</span>.<br/>
-        <span style='color: var(--custom-light-blue-50);'>Objects displayed in this image are within <span style='color: var(--custom-light-blue);'>${metadata.sampleAccuracy}</span> meters of true location.</span><br/><br/>
-    </div>
+    <div style="font-size: 0.8rem; color: var(--custom-light-blue-50);">
+        <span>${t('provider_popup_field', { provider: metadata.provider, ns: APP_NAME })}</span><br />
+        <span>${t('acquisition_date_popup_field', { date: metadata.formattedAcquisitionDate, ns: APP_NAME })}</span><br />
+        <span>${t('resolution_popup_field', { resolution: metadata.resolution, ns: APP_NAME })}</span><br />
+        <span>${t('accuracy_popup_field', { accuracy: metadata.accuracy, ns: APP_NAME })}</span><br />
+    </div><br/>
     `;
 
     return {

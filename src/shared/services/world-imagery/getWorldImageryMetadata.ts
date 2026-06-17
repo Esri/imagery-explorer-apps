@@ -5,8 +5,8 @@ type WorldImageryMetadata = {
     acquisitionDate: number;
     formattedAcquisitionDate: string;
     resolution: number;
-    sampleAccuracy: number;
-    [key: string]: any; // for any additional metadata properties that may be added in the future
+    accuracy: number;
+    // [key: string]: any; // for any additional metadata properties that may be added in the future
 };
 
 type GetWorldImageryMetadataParams = {
@@ -92,13 +92,15 @@ export const getWorldImageryMetadata = async ({
             feature.attributes[WORLD_IMAGERY_METADATA_FIELDS.NICE_DESC] ||
             'Unknown',
         acquisitionDate: acquisitionDate || 'Unknown',
-        formattedAcquisitionDate: getFormatedDateString({
-            date: acquisitionDate,
-        }),
+        formattedAcquisitionDate: acquisitionDate
+            ? getFormatedDateString({
+                  date: acquisitionDate,
+              })
+            : 'Unknown',
         resolution:
             feature.attributes[WORLD_IMAGERY_METADATA_FIELDS.SRC_RES] ||
             'Unknown',
-        sampleAccuracy:
+        accuracy:
             feature.attributes[WORLD_IMAGERY_METADATA_FIELDS.SRC_ACC] ||
             'Unknown',
     };

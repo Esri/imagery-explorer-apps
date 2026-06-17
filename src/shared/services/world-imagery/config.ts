@@ -17,9 +17,9 @@ export enum WORLD_IMAGERY_METADATA_FIELDS {
     // SRC_DATE is in UNIX timestamp format
     SRC_DATE2 = 'SRC_DATE2',
     /**
-     * SRC_RES is the spatial resolution of the imagery in meters. For example, a value of 0.3 means the imagery has a spatial resolution of 30cm.
+     * SAMP_RES is the spatial resolution of the imagery in meters. For example, a value of 0.3 means the imagery has a spatial resolution of 30cm.
      */
-    SRC_RES = 'SRC_RES',
+    SRC_RES = 'SAMP_RES',
     /**
      * Describes the provider of the imagery, e.g. Vantor
      */
@@ -28,6 +28,10 @@ export enum WORLD_IMAGERY_METADATA_FIELDS {
      * Sample accuracy of the imagery in meters. For example, a value of 5 means the imagery has a positional accuracy of 5 meters.
      */
     SRC_ACC = 'SRC_ACC',
+    /**
+     * Source name of the imagery
+     */
+    SOURCE_NAME = 'SRC_DESC',
 }
 
 export const WORLD_IMAGERY_SERVICE_SUB_LAYERS: {
