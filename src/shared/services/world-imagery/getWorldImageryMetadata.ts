@@ -41,10 +41,10 @@ export const getWorldImageryMetadata = async ({
     const queryParams = new URLSearchParams({
         where: '1=1',
         geometry: JSON.stringify({
-            x: mapPoint.x,
-            y: mapPoint.y,
+            spatialReference: { wkid: 4326 },
+            x: mapPoint.longitude,
+            y: mapPoint.latitude,
         }),
-        inSR: '102100', // Web Mercator spatial reference
         geometryType: 'esriGeometryPoint',
         spatialRel: 'esriSpatialRelIntersects',
         outFields: [
