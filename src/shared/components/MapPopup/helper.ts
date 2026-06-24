@@ -149,7 +149,7 @@ export const formatPopupComponent = (popupComponent: ArcgisPopup): void => {
     popupComponent.hideCollapseButton = true;
     popupComponent.hideActionBar = true;
     popupComponent.headingLevel = 3;
-    popupComponent.alignment = 'bottom-right';
+    // popupComponent.alignment = 'bottom-right';
 
     popupComponent.dockOptions = {
         buttonEnabled: false,

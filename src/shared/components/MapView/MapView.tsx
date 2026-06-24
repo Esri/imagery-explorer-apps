@@ -171,6 +171,7 @@ const MapView: React.FC<Props> = ({
                     }
                     itemId={webmapId}
                     hideAttribution={true}
+                    popup-component-enabled
                 ></arcgis-map>
             </div>
             {mapView
