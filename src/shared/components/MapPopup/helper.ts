@@ -15,6 +15,7 @@
 
 import Point from '@arcgis/core/geometry/Point';
 import type MapView from '@arcgis/core/views/MapView';
+import type { ArcgisPopup } from '@arcgis/map-components/components/arcgis-popup';
 import { t } from 'i18next';
 
 /**
@@ -35,6 +36,10 @@ export const didClickOnLeftSideOfSwipeWidget = (
 
 export const getLoadingIndicator = () => {
     const popupDiv = document.createElement('div');
+    popupDiv.style.width = '100%';
+    popupDiv.style.display = 'flex';
+    popupDiv.style.justifyContent = 'center';
+    popupDiv.style.alignItems = 'center';
     popupDiv.innerHTML = `<calcite-loader scale="s"></calcite-loader>`;
     return popupDiv;
 };
@@ -132,6 +137,21 @@ export const formatPopupElements = (mapView: MapView): void => {
     };
 
     mapView.popup.dockOptions = {
+        buttonEnabled: false,
+    };
+};
+
+/**
+ * Format the popup component, such as hide the collapse button and action bar, disable the dock option, etc.
+ * @param popupComponent
+ */
+export const formatPopupComponent = (popupComponent: ArcgisPopup): void => {
+    popupComponent.hideCollapseButton = true;
+    popupComponent.hideActionBar = true;
+    popupComponent.headingLevel = 3;
+    popupComponent.alignment = 'bottom-right';
+
+    popupComponent.dockOptions = {
         buttonEnabled: false,
     };
 };

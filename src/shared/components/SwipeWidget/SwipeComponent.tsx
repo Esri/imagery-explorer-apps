@@ -20,9 +20,7 @@ import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 import { ArcgisSwipe } from '@arcgis/map-components/components/arcgis-swipe';
 import '@arcgis/map-components/components/arcgis-swipe';
 import MapView from '@arcgis/core/views/MapView';
-import { ar } from 'date-fns/locale';
 import { ArcgisMap } from '@arcgis/map-components/components/arcgis-map';
-import { on } from 'events';
 import { useAutoSwipe4Component } from './useAutoSwipe4Component';
 import type TileLayer from '@arcgis/core/layers/TileLayer';
 
