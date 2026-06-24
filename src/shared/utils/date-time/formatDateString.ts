@@ -74,7 +74,7 @@ export const getFormatedDateString = ({
      */
     date?: number;
 }): string => {
-    if (!date && !year && !month && day) {
+    if (!date && !year && !month && !day) {
         throw new Error('missing input date');
     }
 

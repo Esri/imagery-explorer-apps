@@ -22,6 +22,10 @@ const addEventStartDateToGroups = (
         return [];
     }
 
+    if (!eventStartDate) {
+        return groups;
+    }
+
     // get the formatted event start date, in the format of 'yyyy-MM-dd', which is the same format as the formatted acquisition date of each scene
     const formattedEventStartDate = getFormatedDateString({
         date: eventStartDate,
@@ -103,9 +107,11 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
     const eventStartDate = scenes[0].eventStartDate;
 
     // get the formatted event start date, in the format of 'yyyy-MM-dd', which is the same format as the formatted acquisition date of each scene
-    const formattedEventStartDate = getFormatedDateString({
-        date: eventStartDate,
-    });
+    const formattedEventStartDate = eventStartDate
+        ? getFormatedDateString({
+              date: eventStartDate,
+          })
+        : '';
     // console.log('formattedEventStartDate', formattedEventStartDate);
 
     const groups: DisasterResponseScenesGroupedByAcquisitionDate[] = [];
