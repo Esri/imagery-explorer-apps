@@ -24,6 +24,7 @@ import {
 import { numberWithCommas } from 'helper-toolkit-ts';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { MapScaleIndicator } from '../MapScaleIndicator/MapScaleIndicator';
 
 type Props = {
     /**
@@ -97,10 +98,7 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
             {mapScale !== null && resolution !== null && (
                 <div className="hidden md:block custom-attribution-text">
                     <div className="pointer-events-none pr-10">
-                        <span>
-                            1:{numberWithCommas(+mapScale.toFixed(0))} | 1px:{' '}
-                            {numberWithCommas(+resolution.toFixed(0))}m
-                        </span>
+                        <MapScaleIndicator />
                     </div>
                 </div>
             )}
