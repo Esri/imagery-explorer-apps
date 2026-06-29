@@ -25,6 +25,11 @@ type Props = {
      */
     cloudCover: number;
     /**
+     * Array of object IDs for scenes that intersect with another selected scene in a swipe mode.
+     * This helps to visually indicate which scenes are relevant for comparison in the UI.
+     */
+    objectIdsOfScenesIntersectingSwipeScene: number[] | null;
+    /**
      * The object ID of the currently selected scene. This is used to apply specific styling to the selected scene's indicator in the UI, distinguishing it from other scenes.
      */
     objectidOfSelectedScene: number;
@@ -50,6 +55,7 @@ export const EventSceneSelector: FC<Props> = ({
     scenesGroupedByAcquisitionDate,
     objectIdsOfScenesInCurrentMapExtent,
     cloudCover,
+    objectIdsOfScenesIntersectingSwipeScene,
     objectidOfSelectedScene,
     objectIdOfSelectedScene4RedBandInCompositeTool,
     objectIdOfSelectedScene4GreenAndBlueBandInCompositeTool,
@@ -216,8 +222,25 @@ export const EventSceneSelector: FC<Props> = ({
                                                 scene.cloudCover <=
                                                 cloudCover * 100;
 
+                                            let isIntersectingSwipeScene = true;
+
+                                            // check if the objectIdsOfScenesIntersectingSwipeScene is not null and is an array, then check if the current scene's objectId is included in that array
+                                            if (
+                                                objectIdsOfScenesIntersectingSwipeScene !==
+                                                    null &&
+                                                Array.isArray(
+                                                    objectIdsOfScenesIntersectingSwipeScene
+                                                )
+                                            ) {
+                                                isIntersectingSwipeScene =
+                                                    objectIdsOfScenesIntersectingSwipeScene.includes(
+                                                        scene.objectId
+                                                    );
+                                            }
+
                                             const withinThreshold =
-                                                withinCloudCoverThreshold;
+                                                withinCloudCoverThreshold &&
+                                                isIntersectingSwipeScene;
 
                                             return (
                                                 <div

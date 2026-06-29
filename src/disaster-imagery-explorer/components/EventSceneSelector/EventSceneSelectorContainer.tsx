@@ -37,6 +37,7 @@ import { AcquisitionTimestampLabel } from './AcquisitionTimestampLabel';
 import { EventScenesLoadingIndicator } from './EventScenesLoadingIndicator';
 import { NoAvilableSceneMessage } from './NoAvilableSceneMessage';
 import { useObjectIdsOfSelectedScenes4CompositeTool } from './useObjectIdsOfSelectedScenes4CompositeTool';
+import { useObjectIdsOfScenesIntersectingSwipeScene } from './useObjectIdsOfScenesIntersectingSwipeScene';
 
 type Props = {
     children?: React.ReactNode;
@@ -70,6 +71,9 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
     const objectIdsOfScenesInCurrentMapExtent = useAppSelector(
         selectObjectIdsOfScenesInCurrentMapExtent
     );
+
+    const objectIdsOfScenesIntersectingSwipeScene =
+        useObjectIdsOfScenesIntersectingSwipeScene();
 
     const scenesGroupedByAcquisitionDate = useAppSelector(
         selectScenesGroupedByAcquisitionDateForSelectedPage
@@ -121,6 +125,9 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                     objectIdsOfScenesInCurrentMapExtent
                 }
                 cloudCover={cloudCover}
+                objectIdsOfScenesIntersectingSwipeScene={
+                    objectIdsOfScenesIntersectingSwipeScene
+                }
                 objectidOfSelectedScene={queryParams?.objectIdOfSelectedScene}
                 objectIdOfSelectedScene4RedBandInCompositeTool={
                     objectIdOfSelectedScene4RedBandInCompositeTool
