@@ -83,6 +83,9 @@ const addEventStartDateToGroups = (
     ];
 };
 
+// 14 unique acquisition dates (two weeks) per page, per John Nelson's feedback.
+export const MAX_ACQUISITION_DATE_GROUPS_PER_PAGE = 14;
+
 /**
  * Groups an array of disaster response scenes by their acquisition date and paginates the result.
  * Each page contains at most 14 date groups. Within each group, the `objectIds` array holds the
@@ -101,9 +104,6 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
     if (!scenes || !scenes.length) {
         return [];
     }
-
-    // 14 unique acquisition dates (two weeks) per page, per John Nelson's feedback.
-    const maxNumOfGroupsPerPage = 14;
 
     const eventStartDate = scenes[0].eventStartDate;
 
@@ -181,7 +181,7 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
 
         currentPage.push(group);
 
-        if (currentPage.length >= maxNumOfGroupsPerPage) {
+        if (currentPage.length >= MAX_ACQUISITION_DATE_GROUPS_PER_PAGE) {
             pages.push(currentPage);
             currentPage = [];
         }

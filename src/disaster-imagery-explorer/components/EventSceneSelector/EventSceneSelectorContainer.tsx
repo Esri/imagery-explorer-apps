@@ -39,6 +39,7 @@ import { NoAvilableSceneMessage } from './NoAvilableSceneMessage';
 import { useObjectIdsOfSelectedScenes4CompositeTool } from './useObjectIdsOfSelectedScenes4CompositeTool';
 import { useObjectIdsOfScenesIntersectingSwipeScene } from './useObjectIdsOfScenesIntersectingSwipeScene';
 import { Tooltip } from '@shared/components/Tooltip';
+import { MAX_ACQUISITION_DATE_GROUPS_PER_PAGE } from '@shared/store/DisasterImageryExplorer/helpers';
 
 type Props = {
     children?: React.ReactNode;
@@ -152,7 +153,10 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
         >
             <div className="flex items-center justify-center mb-2">
                 <Tooltip
-                    content={t('scene_selection_tooltip', { ns: APP_NAME })}
+                    content={t('scene_selection_tooltip', {
+                        pageSize: MAX_ACQUISITION_DATE_GROUPS_PER_PAGE,
+                        ns: APP_NAME,
+                    })}
                     width={400}
                 >
                     <calcite-icon scale="s" icon="information" />
