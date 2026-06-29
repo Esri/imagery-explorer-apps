@@ -85,7 +85,7 @@ const addEventStartDateToGroups = (
 
 /**
  * Groups an array of disaster response scenes by their acquisition date and paginates the result.
- * Each page contains at most 16 date groups. Within each group, the `objectIds` array holds the
+ * Each page contains at most 14 date groups. Within each group, the `objectIds` array holds the
  * object IDs of all scenes that share that acquisition date.
  *
  * The `shouldShowYearLabel` flag on each group is set to `true` when the group is the first on
@@ -102,7 +102,8 @@ export const getPaginatedScenesGroupedByAcquisitionDate = (
         return [];
     }
 
-    const maxNumOfGroupsPerPage = 12;
+    // 14 unique acquisition dates (two weeks) per page, per John Nelson's feedback.
+    const maxNumOfGroupsPerPage = 14;
 
     const eventStartDate = scenes[0].eventStartDate;
 
