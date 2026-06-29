@@ -38,6 +38,7 @@ import { EventScenesLoadingIndicator } from './EventScenesLoadingIndicator';
 import { NoAvilableSceneMessage } from './NoAvilableSceneMessage';
 import { useObjectIdsOfSelectedScenes4CompositeTool } from './useObjectIdsOfSelectedScenes4CompositeTool';
 import { useObjectIdsOfScenesIntersectingSwipeScene } from './useObjectIdsOfScenesIntersectingSwipeScene';
+import { Tooltip } from '@shared/components/Tooltip';
 
 type Props = {
     children?: React.ReactNode;
@@ -149,8 +150,15 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
                 'is-disabled': shouldBeDisabled,
             })}
         >
-            <div className="text-center mb-2">
-                <span className="uppercase text-sm">
+            <div className="flex items-center justify-center mb-2">
+                <Tooltip
+                    content={t('scene_selection_tooltip', { ns: APP_NAME })}
+                    width={400}
+                >
+                    <calcite-icon scale="s" icon="information" />
+                </Tooltip>
+
+                <span className="uppercase text-sm ml-1">
                     {t('scene_selection')}
                 </span>
             </div>
