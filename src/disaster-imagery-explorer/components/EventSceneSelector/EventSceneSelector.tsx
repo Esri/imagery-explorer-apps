@@ -212,9 +212,12 @@ export const EventSceneSelector: FC<Props> = ({
                                                     scene.objectId
                                                 );
 
-                                            const withinThreshold =
+                                            const withinCloudCoverThreshold =
                                                 scene.cloudCover <=
                                                 cloudCover * 100;
+
+                                            const withinThreshold =
+                                                withinCloudCoverThreshold;
 
                                             return (
                                                 <div
