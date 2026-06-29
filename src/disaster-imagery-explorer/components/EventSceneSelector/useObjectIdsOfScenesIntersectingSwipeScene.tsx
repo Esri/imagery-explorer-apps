@@ -1,3 +1,4 @@
+import { getObjectIdsOfIntersectingScenes } from '@shared/services/disaster-response/getObjectIdsOfIntersectingScenes';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
@@ -7,7 +8,7 @@ import {
     selectQueryParams4SecondaryScene,
     selectSwipeSubMode,
 } from '@shared/store/ImageryScene/selectors';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export const useObjectIdsOfScenesIntersectingSwipeScene = (): number[] => {
     const mode = useAppSelector(selectAppMode);
@@ -63,6 +64,54 @@ export const useObjectIdsOfScenesIntersectingSwipeScene = (): number[] => {
         isSecondarySceneActive,
         queryParams4LeftSide?.objectIdOfSelectedScene,
         queryParams4RightSide?.objectIdOfSelectedScene,
+    ]);
+
+    const fetchObjectIdsOfIntersectedScenes = async (
+        objectIdOfSceneToIntersectWith: number
+    ): Promise<void> => {
+        if (!objectIdOfSceneToIntersectWith) {
+            setObjectIdsOfIntersectedScenes([]);
+        }
+
+        try {
+            const intersectedScenes: number[] =
+                await getObjectIdsOfIntersectingScenes(
+                    objectIdOfSceneToIntersectWith
+                );
+            setObjectIdsOfIntersectedScenes(intersectedScenes);
+        } catch (error) {
+            console.error('Error fetching intersected scenes:', error);
+            setObjectIdsOfIntersectedScenes([]);
+        }
+    };
+
+    useEffect(() => {
+        if (!shouldCalculateIntersectedScenes) {
+            setObjectIdsOfIntersectedScenes([]);
+            return;
+        }
+
+        // logic to calculate the intersected scenes based on the selected scenes on both sides of the swipe
+        const leftSceneId = queryParams4LeftSide?.objectIdOfSelectedScene;
+        const rightSceneId = queryParams4RightSide?.objectIdOfSelectedScene;
+
+        // placeholder for actual intersection calculation logic
+        const objectIdOfSceneToIntersectWith = isSecondarySceneActive
+            ? leftSceneId
+            : rightSceneId;
+
+        if (!objectIdOfSceneToIntersectWith) {
+            setObjectIdsOfIntersectedScenes([]);
+            return;
+        }
+
+        // fetch intersected scenes based on the selected scene's object ID
+        fetchObjectIdsOfIntersectedScenes(objectIdOfSceneToIntersectWith);
+    }, [
+        shouldCalculateIntersectedScenes,
+        queryParams4LeftSide?.objectIdOfSelectedScene,
+        queryParams4RightSide?.objectIdOfSelectedScene,
+        isSecondarySceneActive,
     ]);
 
     if (!shouldCalculateIntersectedScenes) {
