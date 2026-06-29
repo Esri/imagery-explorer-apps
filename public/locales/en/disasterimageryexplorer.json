@@ -1,5 +1,5 @@
 {
-    "animation_metadata": "__Animation Metadata__",
+    "animation_metadata": "Esri, Vantor",
     "drx_attribution": "__attribution for disaster response explorer__",
     "provider": "Provider",
     "event_timestamp": "Event Timestamp",
@@ -34,5 +34,20 @@
     "acquisition_date_popup_field": "Acquisition Date: <span style='color: var(--custom-light-blue);'>{{date}}</span>",
     "resolution_popup_field": "Resolution: <span style='color: var(--custom-light-blue);'>{{resolution}}</span> meters",
     "accuracy_popup_field": "Accuracy: <span style='color: var(--custom-light-blue);'>{{accuracy}}</span> meters",
-    "provider_popup_field": "Provider: <span style='color: var(--custom-light-blue);'>{{provider}}</span>"
+    "provider_popup_field": "Provider: <span style='color: var(--custom-light-blue);'>{{provider}}</span>",
+    "about_data_section_1": "Supporting global disaster response and recovery, Vantor makes select high resolution satellite imagery publicly available through their <a class=\"underline\" href=\"https://vantor.com/company/open-data-program/\" target=\"_blank\">Open Data Program</a>.",
+    "about_data_section_2": "Imagery from Vantor’s Open Data Program is made available in ArcGIS Living Atlas of the World within a dynamic time enabled image service, accessible across the ArcGIS system and used to power this app. For more information about the service, see <a class=\"underline\" href=\"https://www.arcgis.com/home/item.html?id=\" target=\"_blank\">Disaster Imagery</a>.",
+    "about_data_section_3": "The Disaster Imagery service and the Disaster Imagery Explorer app are intended to support disaster response and recovery efforts. Availability of imagery is subject to Vantor activating an event for their Open Data Program. You can follow <a class=\"underline\" href=\"https://vantor.com/company/open-data-program/\" target=\"_blank\">this link to learn more</a> about the program including data licensing and event activation protocol.",
+    "about_app_section_1": "Timely and accessible imagery aids first responders in accelerating humanitarian response and recovery.",
+    "about_app_section_2": "With a focus on discovery and accessibility, this app leverages various ArcGIS capabilities to explore and unlock insights from the imagery. Some of the key capabilities include:",
+    "about_app_list_item_1": "Select from a list of current and past events.",
+    "about_app_list_item_2": "Discover available imagery by geographic and temporal extents.",
+    "about_app_list_item_3": "Filter available imagery by cloud cover and overlap.",
+    "about_app_list_item_4": "Visually compare pre and post event imagery with swipe.",
+    "about_app_list_item_5": "Create temporal composites and difference images.",
+    "terms_of_use_app_header": "Disaster Imagery Explorer App - Esri ",
+    "terms_of_use_imagery_header": "Vantor Open Data Program Imagery",
+    "disaster_imagery_service_section_title": "Disaster Imagery Service - Esri",
+    "vantor_imagery_source_section_title": "Source Imagery - Vantor",
+    "vantor_imagery_source_section_content": "Vantor releases before and after satellite imagery into the public domain under a <a class=\"underline\" href=\"https://creativecommons.org/licenses/by-nc/4.0/deed.en\" target=\"_blank\">Creative Commons BY-NC 4.0</a> license, which allows for its rapid use and easy integration with existing humanitarian response technologies. "
 }

@@ -39,17 +39,23 @@ export const AboutDisasterResponseExplorerContent = () => {
                     {t('about_the_data')}
                 </h3>
 
-                <p className="mb-4">
-                    {t('about_data_section_1', {
-                        ns: APP_NAME,
-                    })}
-                </p>
+                <p
+                    className="mb-4"
+                    dangerouslySetInnerHTML={{
+                        __html: t('about_data_section_1', {
+                            ns: APP_NAME,
+                        }),
+                    }}
+                ></p>
 
-                <p className="mb-4">
-                    {t('about_data_section_2', {
-                        ns: APP_NAME,
-                    })}
-                </p>
+                <p
+                    className="mb-4"
+                    dangerouslySetInnerHTML={{
+                        __html: t('about_data_section_2', {
+                            ns: APP_NAME,
+                        }),
+                    }}
+                ></p>
 
                 <p
                     className="mb-4"
@@ -119,7 +125,48 @@ export const AboutDisasterResponseExplorerContent = () => {
                 </h3>
 
                 <div className="mb-4">
-                    <p>__placeholder__</p>
+                    <p className="font-bold mb-1">
+                        {t('terms_of_use_imagery_header', {
+                            ns: APP_NAME,
+                        })}
+                    </p>
+
+                    <div className="pl-8 mt-2">
+                        <p className="mb-1">
+                            <span className="font-bold">
+                                {t('vantor_imagery_source_section_title', {
+                                    ns: APP_NAME,
+                                })}
+                            </span>
+                        </p>
+                        <p
+                            className="mb-2"
+                            dangerouslySetInnerHTML={{
+                                __html: t(
+                                    'vantor_imagery_source_section_content',
+                                    {
+                                        ns: APP_NAME,
+                                    }
+                                ),
+                            }}
+                        ></p>
+                        <p
+                            className="mb-1 font-bold"
+                            dangerouslySetInnerHTML={{
+                                __html: t(
+                                    'disaster_imagery_service_section_title',
+                                    {
+                                        ns: APP_NAME,
+                                    }
+                                ),
+                            }}
+                        ></p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: t('esri_work_terms_of_use'),
+                            }}
+                        ></p>
+                    </div>
                 </div>
 
                 <div className="mb-4">
