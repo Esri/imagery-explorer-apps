@@ -15,13 +15,9 @@
 
 import React, { useEffect } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectMapCenter } from '@shared/store/Map/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
-// import { updateObjectIdOfSelectedScene } from '@shared/store/ImageryScene/thunks';
-import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { selectSelectedEventName } from '@shared/store/DisasterImageryExplorer/selectors';
 import { queryAvailableDisasterResponseScenes } from '@shared/store/DisasterImageryExplorer/thunks';
-// import { selectAcquisitionYear } from '@shared/store/ImageryScene/selectors';
 
 /**
  * This custom hook queries the Disaster Response scenes for the selected event.
@@ -29,14 +25,14 @@ import { queryAvailableDisasterResponseScenes } from '@shared/store/DisasterImag
 export const useQueryAvailableDisasterResponseScenes = (): void => {
     const dispatch = useAppDispatch();
 
-    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
+    // const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const selectedEventName = useAppSelector(selectSelectedEventName);
 
     useEffect(() => {
-        if (isAnimationPlaying) {
-            return;
-        }
+        // if (isAnimationPlaying) {
+        //     return;
+        // }
 
         dispatch(
             queryAvailableDisasterResponseScenes({

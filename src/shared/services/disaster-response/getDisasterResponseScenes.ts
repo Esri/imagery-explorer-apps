@@ -13,6 +13,8 @@ const disasterResponseSceneByObjectId = new Map<
     DisasterResponseScene
 >();
 
+const cachedScenesByEventName = new Map<string, DisasterResponseScene[]>();
+
 export const getFormattedDisasterResponseScenes = (
     features: IFeature[]
 ): DisasterResponseScene[] => {
@@ -133,6 +135,10 @@ export const getDisasterResponseScenes = async ({
         return [];
     }
 
+    if (cachedScenesByEventName.has(eventName)) {
+        return cachedScenesByEventName.get(eventName);
+    }
+
     const whereClauses = [
         `(${DisasterResponseImageryServiceField.CATEGORY} = 1)`,
     ];
@@ -192,16 +198,22 @@ export const getDisasterResponseScenes = async ({
         throw data.error;
     }
 
-    const scens: DisasterResponseScene[] = getFormattedDisasterResponseScenes(
+    const scenes: DisasterResponseScene[] = getFormattedDisasterResponseScenes(
         data?.features || []
     );
 
+    if (!scenes || !scenes.length) {
+        return [];
+    }
+
     // save the landsat scenes to `landsatSceneByObjectId` map
-    for (const scene of scens) {
+    for (const scene of scenes) {
         disasterResponseSceneByObjectId.set(scene.objectId, scene);
     }
 
-    return scens;
+    cachedScenesByEventName.set(eventName, scenes);
+
+    return cachedScenesByEventName.get(eventName);
 };
 
 /**
