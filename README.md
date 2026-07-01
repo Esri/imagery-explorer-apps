@@ -10,6 +10,7 @@ This repository contains a collection of Imagery Explorer web applications devel
 - [Sentinel-1 Explorer](#sentinel-1-explorer)
 - [Sentinel-2 Landcover Explorer](#sentinel-2-land-cover-explorer)
 - [NLCD Land Cover Explorer](#nlcd-land-cover-explorer)
+- [Disaster Imagery Explorer](#disaster-imagery-explorer)
 
 ## Getting Started
 
@@ -425,6 +426,65 @@ npm run build:nlcd-landcover
 
 - [USA Annual NLCD Land Cover](https://www.arcgis.com/home/item.html?id=32e2ccc6416746a9a72b4d216813f84f)
 - [NLCD Land Cover Explorer - quickstart guide](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/nlcd-land-cover-explorer-quickstart-guide)
+
+## Disaster Imagery Explorer
+
+Timely, accessible imagery helps first responders accelerate humanitarian response and recovery. This app leverages ArcGIS capabilities to make disaster imagery easy to discover, compare, and analyze.
+
+[View it live](https://livingatlas.arcgis.com/disasterimageryexplorer/)
+
+![App](./public/thumbnails/disasterimageryexplorer.jpg)
+
+### Features:
+- Select from a list of current and past events.
+- Discover available imagery by geographic and temporal extents.
+- Filter available imagery by cloud cover and overlap.
+- Visually compare pre and post event imagery with swipe.
+- Create temporal composites and difference images.
+
+### Pre-requisites
+
+#### 1. Create an ArcGIS Application ID
+
+To use the Disaster Imagery Explorer app, you need to create an ArcGIS Application ID. This ID is used for user authentication, which is required for features such as saving web map. You can create an application ID by following the instructions in the [ArcGIS Developer documentation](https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow).
+
+This application ID will be used in the `.env` file as `DISASTER_IMAGERY_EXPLORER_APP_ID`.
+
+#### 2. Create `.env` file
+
+Before running the application, create a `.env` file in the project root using the following template:
+
+```sh
+# Application ID for the Disaster Imagery Explorer app.
+# Required for authentication and features such as saving web maps.
+# see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
+DISASTER_IMAGERY_EXPLORER_APP_ID = YOUR_NLCD_LANDCOVER_EXPLORER_APP_ID
+
+# Disaster Response imagery service URL (default: https://di-disasterresponse.img.arcgis.com/arcgis/rest/services/drp_imagery/ImageServer)
+DISASTER_RESPONSE_SERVICE_URL = https://di-disasterresponse.img.arcgis.com/arcgis/rest/services/drp_imagery/ImageServer
+
+# Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
+ARCGIS_PORTAL_ROOT_URL = https://www.arcgis.com
+```
+
+### Usage
+
+To run and test the app on your local machine using the `.env` file you created above:
+
+```sh
+npm run start:diex
+```
+
+To build the app, you can run the command below, this will place all files needed for deployment into the `/dist/nlcdlandcoverexplorer` directory.
+
+```sh
+npm run build:diex
+```
+
+### Vantor Open Data Program Imagery Licensing
+
+- Source Imagery (Vantor) - Vantor releases before and after satellite imagery into the public domain under a [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.en) license, which allows for its rapid use and easy integration with existing humanitarian response technologies.
+- Disaster Imagery Service (Esri) - This work is licensed under the Esri Master License Agreement. [View Summary](https://downloads2.esri.com/arcgisonline/docs/tou_summary.pdf) | [View Terms of Use](https://www.esri.com/en-us/legal/terms/full-master-agreement)
 
 ## Issues
 
