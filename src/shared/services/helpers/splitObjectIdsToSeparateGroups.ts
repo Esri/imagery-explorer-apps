@@ -32,7 +32,7 @@ export const splitObjectIdsToSeparateGroups = (
     // Initialize an array of empty arrays to hold the separate groups of object IDs
     const objectsIdsInSeparateGroups: number[][] = [
         ...new Array(numOfGroups),
-    ].map(() => []);
+    ].map(() => [] as number[]);
 
     for (let i = 0; i < numOfGroups; i++) {
         // Calculate the start and end indices for the current group
