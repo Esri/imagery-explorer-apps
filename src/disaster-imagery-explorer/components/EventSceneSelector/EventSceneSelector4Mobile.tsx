@@ -44,84 +44,91 @@ export const EventSceneSelector4Mobile: FC<Props> = ({
 
     return (
         <div className="w-full pb-4">
-            {data.map((scene) => {
-                const isSceneInCurrentMapExtent =
-                    objectIdsOfScenesInCurrentMapExtent &&
-                    objectIdsOfScenesInCurrentMapExtent?.includes(
-                        scene.objectId
-                    );
+            {[...data]
+                .sort((a, b) => b.eventTimestamp - a.eventTimestamp)
+                .map((scene) => {
+                    const isSceneInCurrentMapExtent =
+                        objectIdsOfScenesInCurrentMapExtent &&
+                        objectIdsOfScenesInCurrentMapExtent?.includes(
+                            scene.objectId
+                        );
 
-                return (
-                    <div
-                        key={scene.objectId}
-                        className={classNames(
-                            'w-full border  mb-2 p-2 text-sm flex items-center gap-2',
-                            {
-                                'border-custom-light-blue-20':
-                                    scene.objectId !== objectIdOfSelectedScene,
-                                'border-custom-light-blue-70':
-                                    scene.objectId === objectIdOfSelectedScene,
-                                'is-disabled':
-                                    isSceneInCurrentMapExtent === false,
-                            }
-                        )}
-                        onClick={() => {
-                            handleSceneSelect(scene);
-                        }}
-                    >
-                        <div className="flex-shrink-0 mr-2">
-                            <calcite-icon
-                                icon={
-                                    scene.objectId === objectIdOfSelectedScene
-                                        ? 'check-circle'
-                                        : 'circle'
+                    return (
+                        <div
+                            key={scene.objectId}
+                            className={classNames(
+                                'w-full border  mb-2 p-2 text-sm flex items-center gap-2',
+                                {
+                                    'border-custom-light-blue-20':
+                                        scene.objectId !==
+                                        objectIdOfSelectedScene,
+                                    'border-custom-light-blue-70':
+                                        scene.objectId ===
+                                        objectIdOfSelectedScene,
+                                    'is-disabled':
+                                        isSceneInCurrentMapExtent === false,
                                 }
-                                scale="s"
-                            />
-                        </div>
-
-                        <div className="grow">
-                            <p className=" text-xs">
-                                <Trans
-                                    i18nKey={'acquired_on'}
-                                    ns={APP_NAME}
-                                    values={{
-                                        date:
-                                            scene.formattedAcquisitionDate +
-                                            ' ' +
-                                            scene.formattedAcuisitionTime,
-                                    }}
-                                />
-                            </p>
-
-                            <p className="text-custom-light-blue-80 text-xs">
-                                <Trans
-                                    i18nKey={
-                                        scene.imageType === 'pre-event'
-                                            ? 'pre_event_scene_with_cloud_cover'
-                                            : 'post_event_scene_with_cloud_cover'
-                                    }
-                                    ns={APP_NAME}
-                                    values={{ cloudCover: scene.cloudCover }}
-                                    components={{
-                                        bold: (
-                                            <strong className="font-medium" />
-                                        ),
-                                    }}
-                                />
-                            </p>
-
-                            {isSceneInCurrentMapExtent === false && (
-                                <p className="text-custom-light-blue-50 text-xs mt-1">
-                                    {t('scene_not_in_current_map_extent', {
-                                        ns: APP_NAME,
-                                    })}
-                                </p>
                             )}
+                            onClick={() => {
+                                handleSceneSelect(scene);
+                            }}
+                        >
+                            <div className="flex-shrink-0 mr-2">
+                                <calcite-icon
+                                    icon={
+                                        scene.objectId ===
+                                        objectIdOfSelectedScene
+                                            ? 'check-circle'
+                                            : 'circle'
+                                    }
+                                    scale="s"
+                                />
+                            </div>
+
+                            <div className="grow">
+                                <p className=" text-xs">
+                                    <Trans
+                                        i18nKey={'acquired_on'}
+                                        ns={APP_NAME}
+                                        values={{
+                                            date:
+                                                scene.formattedAcquisitionDate +
+                                                ' ' +
+                                                scene.formattedAcuisitionTime,
+                                        }}
+                                    />
+                                </p>
+
+                                <p className="text-custom-light-blue-80 text-xs">
+                                    <Trans
+                                        i18nKey={
+                                            scene.imageType === 'pre-event'
+                                                ? 'pre_event_scene_with_cloud_cover'
+                                                : 'post_event_scene_with_cloud_cover'
+                                        }
+                                        ns={APP_NAME}
+                                        values={{
+                                            cloudCover: scene.cloudCover,
+                                        }}
+                                        components={{
+                                            bold: (
+                                                <strong className="font-medium" />
+                                            ),
+                                        }}
+                                    />
+                                </p>
+
+                                {isSceneInCurrentMapExtent === false && (
+                                    <p className="text-custom-light-blue-50 text-xs mt-1">
+                                        {t('scene_not_in_current_map_extent', {
+                                            ns: APP_NAME,
+                                        })}
+                                    </p>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
         </div>
     );
 };

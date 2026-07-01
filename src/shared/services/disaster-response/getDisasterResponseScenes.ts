@@ -22,7 +22,34 @@ export const getFormattedDisasterResponseScenes = (
 
     const scenes: DisasterResponseScene[] = [];
 
-    for (const feature of features) {
+    const featuresCleaned: IFeature[] = features.filter((feature) => {
+        const { attributes } = feature;
+
+        const eventTimestamp =
+            attributes[DisasterResponseImageryServiceField.DATETIME] != null &&
+            Number.isFinite(
+                +attributes[DisasterResponseImageryServiceField.DATETIME]
+            )
+                ? +attributes[DisasterResponseImageryServiceField.DATETIME]
+                : null;
+
+        const eventStartDate =
+            attributes[DisasterResponseImageryServiceField.EVENT_START_DATE] !=
+                null &&
+            Number.isFinite(
+                +attributes[
+                    DisasterResponseImageryServiceField.EVENT_START_DATE
+                ]
+            )
+                ? +attributes[
+                      DisasterResponseImageryServiceField.EVENT_START_DATE
+                  ]
+                : null;
+
+        return eventTimestamp !== null && eventStartDate !== null;
+    });
+
+    for (const feature of featuresCleaned) {
         const { attributes } = feature;
 
         const eventTimestamp =
@@ -111,7 +138,9 @@ export const getDisasterResponseScenes = async ({
     ];
 
     whereClauses.push(
-        `${DisasterResponseImageryServiceField.EVENT} = '${eventName}'`
+        `(${DisasterResponseImageryServiceField.EVENT} = '${eventName}')`,
+        `(${DisasterResponseImageryServiceField.EVENT_START_DATE} IS NOT NULL)`,
+        `(${DisasterResponseImageryServiceField.DATETIME} IS NOT NULL)`
     );
 
     const params = new URLSearchParams({
@@ -197,10 +226,11 @@ export const getDisasterResponseSceneByObjectId = async (
         return null;
     }
 
-    const scene = getFormattedDisasterResponseScenes([feature])[0];
+    const scene = getFormattedDisasterResponseScenes([feature])[0] ?? null;
 
-    // save the scene to `disasterResponseSceneByObjectId` map for future query
-    disasterResponseSceneByObjectId.set(objectId, scene);
+    if (scene) {
+        disasterResponseSceneByObjectId.set(objectId, scene);
+    }
 
     return scene;
 };
