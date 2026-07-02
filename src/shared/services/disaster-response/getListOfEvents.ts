@@ -8,8 +8,13 @@ import { IFeature } from '@esri/arcgis-rest-feature-service';
 export const getDistinctListOfEvents = async (): Promise<
     DisasterResponseEvent[]
 > => {
+    const whereClause = [
+        `(${DisasterResponseImageryServiceField.EVENT} IS NOT NULL)`,
+        `(${DisasterResponseImageryServiceField.EVENT_START_DATE} IS NOT NULL)`,
+    ];
+
     const params = new URLSearchParams({
-        where: `${DisasterResponseImageryServiceField.EVENT} IS NOT NULL`,
+        where: whereClause.join(' AND '),
         outFields: [
             DisasterResponseImageryServiceField.EVENT,
             DisasterResponseImageryServiceField.TITLE,
@@ -49,7 +54,7 @@ export const getDistinctListOfEvents = async (): Promise<
     const events: DisasterResponseEvent[] = data.features.map(
         (feature: IFeature) => {
             const attributes = feature.attributes;
-            return {
+            const event: DisasterResponseEvent = {
                 event: attributes[DisasterResponseImageryServiceField.EVENT],
                 title: attributes[DisasterResponseImageryServiceField.TITLE],
                 description:
@@ -59,9 +64,12 @@ export const getDistinctListOfEvents = async (): Promise<
                         DisasterResponseImageryServiceField.EVENT_START_DATE
                     ],
             };
+            return event;
         }
     );
     // console.log('fetched distinct list of events: ', events);
 
-    return events;
+    const sortedEvents = events.sort((a, b) => b.startDate - a.startDate);
+
+    return sortedEvents;
 };
