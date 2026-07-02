@@ -49,8 +49,12 @@ import { selectSelectedEventName } from '@shared/store/DisasterImageryExplorer/s
 import classNames from 'classnames';
 import { useSyncPaginationWithScene } from '../../hooks/useSyncPaginationWithScene';
 import { DisasterImageryExplorerSavePanel } from '../SavePanel/DisasterImageryExplorerSavePanel';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
 
 export const AppLayout = () => {
+    const { t } = useTranslation();
+
     const mode = useAppSelector(selectAppMode);
 
     const analysisTool = useAppSelector(selectActiveAnalysisTool);
@@ -119,6 +123,14 @@ export const AppLayout = () => {
                         <ContainerOfSecondaryControls>
                             <SwipeLayerSelector
                                 useAcquisitionTimestampAsLabel={true}
+                                tooltip4LeadingLayerSelector={t(
+                                    'swipe_layer_selector_tooltip',
+                                    { ns: APP_NAME }
+                                )}
+                                tooltip4TrailingLayerSelector={t(
+                                    'swipe_layer_selector_tooltip',
+                                    { ns: APP_NAME }
+                                )}
                             />
                             {/* <AnimationControl /> */}
                             <DRXAnalyzeToolSelector />

@@ -38,10 +38,20 @@ import { SwipeLayerSelectorScene2Basemap } from './SwipeLayerSelectorScene2Basem
 
 type Props = {
     useAcquisitionTimestampAsLabel?: boolean;
+    /**
+     * tooltip text shown on the leading (left) layer selector, if provided
+     */
+    tooltip4LeadingLayerSelector?: string;
+    /**
+     * tooltip text shown on the trailing (right) layer selector, if provided
+     */
+    tooltip4TrailingLayerSelector?: string;
 };
 
 export const SwipeLayerSelectorContainer: FC<Props> = ({
     useAcquisitionTimestampAsLabel = false,
+    tooltip4LeadingLayerSelector,
+    tooltip4TrailingLayerSelector,
 }) => {
     const dispatch = useAppDispatch();
 
@@ -88,6 +98,12 @@ export const SwipeLayerSelectorContainer: FC<Props> = ({
                         queryParams4SceneOnRight={queryParams4RightSide}
                         useAcquisitionTimestampAsLabel={
                             useAcquisitionTimestampAsLabel
+                        }
+                        tooltip4LeadingLayerSelector={
+                            tooltip4LeadingLayerSelector
+                        }
+                        tooltip4TrailingLayerSelector={
+                            tooltip4TrailingLayerSelector
                         }
                         onChange={(value) => {
                             const isSecondarySceneActive = value === 'right';

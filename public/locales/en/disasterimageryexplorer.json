@@ -1,6 +1,6 @@
 {
     "animation_metadata": "Esri, Vantor",
-    "drx_attribution": "__attribution for disaster response explorer__",
+    "drx_attribution": "Imagery Courtesy of Vantor",
     "provider": "Provider",
     "event_timestamp": "Event Timestamp",
     "event_type": "event type",
@@ -50,5 +50,6 @@
     "disaster_imagery_service_section_title": "Disaster Imagery Service - Esri",
     "vantor_imagery_source_section_title": "Source Imagery - Vantor",
     "vantor_imagery_source_section_content": "Vantor releases before and after satellite imagery into the public domain under a <a class=\"underline\" href=\"https://creativecommons.org/licenses/by-nc/4.0/deed.en\" target=\"_blank\">Creative Commons BY-NC 4.0</a> license, which allows for its rapid use and easy integration with existing humanitarian response technologies. ",
-    "scene_selection_tooltip": "Only Images within your current map view and selected event are displayed on the timeline. Dates and images available on the timeline dynamically update as the map extent changes. <br/><br/>Up to {{pageSize}} unique dates are displayed on the timeline at one time. The timeline can be scrolled left and right to see additional options when the number of unique dates for an event exceeds {{pageSize}}. <br /><br/>Swipe Mode includes two different scene selection options. 'Scene to Basemap' uses the World Imagery basemap for comparison versus a single selected scene, and 'Scene to Scene' requires two selections for comparison. <br/><br/>Analyze Mode includes two options, 'Change Detection' and 'Temporal Composite'. Both options require the selection of two overlapping scenes for that analysis computation. "
+    "scene_selection_tooltip": "Only Images within your current map view and selected event are displayed on the timeline. Dates and images available on the timeline dynamically update as the map extent changes. <br/><br/>Up to {{pageSize}} unique dates are displayed on the timeline at one time. The timeline can be scrolled left and right to see additional options when the number of unique dates for an event exceeds {{pageSize}}. <br /><br/>Swipe Mode includes two different scene selection options. 'Scene to Basemap' uses the World Imagery basemap for comparison versus a single selected scene, and 'Scene to Scene' requires two selections for comparison. <br/><br/>Analyze Mode includes two options, 'Change Detection' and 'Temporal Composite'. Both options require the selection of two overlapping scenes for that analysis computation. ",
+    "swipe_layer_selector_tooltip": "A selection from one side of the swipe will filter available scenes for the other side based on their intersection."
 }

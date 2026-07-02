@@ -27,6 +27,8 @@ type Props = {
     selectedSide: Side4SwipeMode;
     queryParams4SceneOnLeft: QueryParams4ImageryScene;
     queryParams4SceneOnRight: QueryParams4ImageryScene;
+    tooltip4LeadingLayerSelector?: string;
+    tooltip4TrailingLayerSelector?: string;
     /**
      * Whether to use the acquisition timestamp as the label in the SwipeLayerSelector instead of the raster function name.
      */
@@ -40,6 +42,8 @@ export const SwipeLayerSelector: FC<Props> = ({
     queryParams4SceneOnLeft,
     queryParams4SceneOnRight,
     useAcquisitionTimestampAsLabel = false,
+    tooltip4LeadingLayerSelector,
+    tooltip4TrailingLayerSelector,
     onChange,
     swapButtonOnClick,
 }) => {
@@ -72,6 +76,7 @@ export const SwipeLayerSelector: FC<Props> = ({
             <div
                 className={classNames('relative mb-1 h-1/2 flex items-center')}
                 key={'left'}
+                title={tooltip4LeadingLayerSelector}
             >
                 <Button
                     appearance={
@@ -109,6 +114,7 @@ export const SwipeLayerSelector: FC<Props> = ({
             <div
                 className={classNames('relative mb-1 h-1/2 flex items-center')}
                 key={'right'}
+                title={tooltip4TrailingLayerSelector}
             >
                 <Button
                     appearance={
