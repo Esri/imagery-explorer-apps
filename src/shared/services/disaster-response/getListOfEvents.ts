@@ -56,7 +56,9 @@ export const getDistinctListOfEvents = async (): Promise<
             const attributes = feature.attributes;
             const event: DisasterResponseEvent = {
                 event: attributes[DisasterResponseImageryServiceField.EVENT],
-                title: attributes[DisasterResponseImageryServiceField.TITLE],
+                title:
+                    attributes[DisasterResponseImageryServiceField.TITLE] ||
+                    attributes[DisasterResponseImageryServiceField.EVENT],
                 description:
                     attributes[DisasterResponseImageryServiceField.DESCRIPTION],
                 startDate:

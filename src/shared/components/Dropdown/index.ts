@@ -14,4 +14,4 @@
  */
 
 export { Dropdown } from './Dropdown';
-export type { DropdownData } from './Dropdown';
+export type { DropdownData, GroupedDropdownData } from './Dropdown';
