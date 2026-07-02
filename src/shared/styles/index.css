@@ -62,3 +62,9 @@
 
     --calcite-color-border-3: var(--custom-light-blue-50);
 }
+
+button:focus-visible,
+div[role='button']:focus-visible {
+    outline: 2px solid #0079c1;
+    outline-offset: 2px;
+}
