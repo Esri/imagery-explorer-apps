@@ -213,6 +213,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                 className={classNames('relative', {
                     'is-disabled': viewChangeButtonDisabled,
                 })}
+                inert={viewChangeButtonDisabled}
             >
                 <Button
                     appearance={

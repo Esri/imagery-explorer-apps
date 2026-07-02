@@ -90,6 +90,7 @@ export const SwipeLayerSelectorContainer: FC<Props> = ({
                 style={{
                     height: `calc(100% - 30px)`,
                 }}
+                inert={isAnimationPlaying}
             >
                 {swipeSubMode === 'scene-to-scene' && (
                     <SwipeLayerSelector

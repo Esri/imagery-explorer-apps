@@ -150,6 +150,7 @@ export const EventSceneSelectorContainer: FC<Props> = ({ children }) => {
             className={classNames('select-none', {
                 'is-disabled': shouldBeDisabled,
             })}
+            inert={shouldBeDisabled}
         >
             <div className="flex items-center justify-center mb-2">
                 <Tooltip

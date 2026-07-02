@@ -65,6 +65,7 @@ export const EventScnenSelector4MobileContainer = () => {
             className={classNames('select-none', {
                 'is-disabled': shouldBeDisabled,
             })}
+            inert={shouldBeDisabled}
         >
             <div className="text-center mb-2 w-full">
                 <span className="uppercase text-sm">

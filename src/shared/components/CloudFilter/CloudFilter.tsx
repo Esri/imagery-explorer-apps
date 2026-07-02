@@ -109,6 +109,7 @@ export const CloudFilter: FC<Props> = ({
             className={classNames('mx-1 flex items-center', {
                 'is-disabled': disabled,
             })}
+            inert={disabled}
         >
             <TitleText cloudCoverage={cloudCoverage} />
 

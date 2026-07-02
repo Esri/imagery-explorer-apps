@@ -94,6 +94,8 @@ export const Button: FC<Props> = ({
                 }
             }}
             aria-label={label}
+            disabled={disabled}
+            tabIndex={disabled || !onClickHandler ? -1 : 0}
         >
             <div className="w-full">{children}</div>
         </button>

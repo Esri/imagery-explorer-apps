@@ -41,6 +41,7 @@ export const SwipeSubModeToggle = () => {
             className={classNames({
                 'is-disabled': isAnimationPlaying,
             })}
+            inert={isAnimationPlaying}
         >
             <div
                 className={classNames('relative mb-2 w-full')}

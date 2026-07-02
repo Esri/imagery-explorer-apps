@@ -86,6 +86,7 @@ export const AutoSwipeControls = () => {
                 className={classNames('flex-grow mx-2', {
                     'is-disabled': !status,
                 })}
+                inert={!status}
             >
                 {/* <Slider
                     value={AUTO_SWIPE_SPEEDS.indexOf(speed)}

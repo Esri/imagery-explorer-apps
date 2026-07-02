@@ -262,6 +262,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 className={classNames('relative mt-4', {
                     'is-disabled': viewCompositeLayerDisabled,
                 })}
+                inert={viewCompositeLayerDisabled}
             >
                 {/* <Button
                     appearance={isCompositeLayerOn ? 'solid' : 'transparent'}

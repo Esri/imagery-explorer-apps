@@ -73,10 +73,12 @@ export const MapActionButton: FC<Props> = ({
             }}
             title={tooltip}
             onClick={onClickHandler}
+            inert={disabled}
         >
             <button
                 className="w-map-action-button-size h-map-action-button-size flex items-center justify-center bg-custom-background text-custom-light-blue-90 cursor-pointer"
                 aria-label={tooltip}
+                // disabled={disabled}
             >
                 {showLoadingIndicator ? (
                     <div className="w-full h-full flex items-center justify-center text-center">

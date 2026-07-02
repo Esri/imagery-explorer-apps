@@ -93,6 +93,7 @@ export const RenderingControls: FC<Props> = ({
                 className={classNames({
                     'is-disabled': shouldClip,
                 })}
+                inert={shouldClip}
             >
                 <ColorPicker color={color} onChange={colorOnChange} />
             </div>

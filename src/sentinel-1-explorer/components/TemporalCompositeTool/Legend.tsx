@@ -246,6 +246,7 @@ export const TemproalCompositeToolLegend: FC<Props> = ({
             className={classNames('relative text-center max-w-[220px]', {
                 'is-disabled': isDisabled,
             })}
+            inert={isDisabled}
         >
             <div className="relative w-full text-center my-2">
                 <canvas

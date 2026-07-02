@@ -104,6 +104,7 @@ export const AppLayout = () => {
                     className={classNames('flex flex-shrink-0', {
                         'is-disabled': !selectedEvent, // disable the controls in the header when no event is selected, as there is no scene to operate on
                     })}
+                    inert={!selectedEvent}
                 >
                     <ModeSelector
                         // hideExploreSubModes={true}

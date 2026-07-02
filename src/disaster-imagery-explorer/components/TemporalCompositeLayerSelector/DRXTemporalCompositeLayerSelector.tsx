@@ -213,6 +213,7 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
                 className={classNames('relative mt-2', {
                     'is-disabled': viewCompositeLayerDisabled,
                 })}
+                inert={viewCompositeLayerDisabled}
             >
                 <ViewCompositeLayerButton
                     isCompositeLayerOn={isTemporalCompositeLayerOn}

@@ -84,6 +84,7 @@ export const ModeSelector: FC<Props> = ({
                 className={classNames('relative', {
                     'is-disabled': disabled,
                 })}
+                inert={disabled}
             >
                 {/* this is button to enable selection of either 'find a scene' or 'dynamic' mode */}
                 <div className={classNames(ButtonWrapperClassnames)}>

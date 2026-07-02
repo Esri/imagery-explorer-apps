@@ -97,6 +97,7 @@ export const AnimationFramesList: FC<Props> = ({
             className={classNames({
                 'is-disabled': disabled,
             })}
+            inert={disabled}
         >
             <div
                 ref={containerRef}

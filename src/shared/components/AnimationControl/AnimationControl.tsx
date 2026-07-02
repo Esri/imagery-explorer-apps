@@ -186,6 +186,7 @@ export const AnimationControl: FC<Props> = ({
                             }
                         )}
                         onClick={addButtonOnClick}
+                        inert={shouldDisableAddFrameButton}
                     >
                         <calcite-icon icon="plus" scale="s" />
                         <span
