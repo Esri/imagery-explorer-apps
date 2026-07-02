@@ -54,6 +54,7 @@ export const ViewCompositeLayerButton: FC<ViewCompositeButtonProps> = ({
                 decorativeIndicator={
                     isCompositeLayerOn === true ? 'left' : null
                 }
+                label="view composite layer"
             >
                 <div className="text-xs normal-case">
                     <span className="uppercase">{t('view_composite')}</span>

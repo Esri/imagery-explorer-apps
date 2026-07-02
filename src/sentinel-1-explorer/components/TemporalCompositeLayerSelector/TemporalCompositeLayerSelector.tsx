@@ -152,6 +152,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         shouldHighlightScene4Red ? 'left' : null
                     }
+                    label="chhose red band"
                 >
                     <div className="text-xs normal-case">
                         {/* <span>choose</span>
@@ -192,6 +193,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         shouldHighlightScene4Green ? 'left' : null
                     }
+                    label="chhose green band"
                 >
                     <div className="text-xs normal-case">
                         {/* <span>choose</span>
@@ -234,6 +236,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         shouldHighlightScene4Blue ? 'left' : null
                     }
+                    label="chhose blue band"
                 >
                     <div className="text-xs normal-case">
                         {/* <span>choose</span>

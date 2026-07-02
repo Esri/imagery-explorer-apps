@@ -208,6 +208,7 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         scale="s"
                         appearance="transparent"
                         disabled={okButtonDisabled}
+                        label="save"
                     >
                         {t('OK')}
                     </Button>

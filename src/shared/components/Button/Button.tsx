@@ -43,6 +43,10 @@ type Props = {
      */
     disabled?: boolean;
     /**
+     * accessible label text
+     */
+    label: string;
+    /**
      * fire when user clicks the button.
      * If not provided, the button will be rendered without pointer cursor and click events will be ignored.
      * This is useful for cases where the button is used for display purposes and should not be interactive.
@@ -59,11 +63,12 @@ export const Button: FC<Props> = ({
     scale = 'm',
     disabled,
     decorativeIndicator,
+    label,
 }: Props) => {
     return (
-        <div
+        <button
             className={classNames(
-                'relative p-2 px-0 border min-w-[8rem] shrink-0 text-sm border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center select-none',
+                'relative p-2 px-0 border min-w-[8rem] shrink-0 text-sm border-custom-light-blue border-opacity-50 uppercase cursor-pointer text-center select-none w-full',
                 {
                     'bg-custom-light-blue': appearance === 'solid',
                     'text-custom-background': appearance === 'solid',
@@ -88,8 +93,9 @@ export const Button: FC<Props> = ({
                     onClickHandler();
                 }
             }}
+            aria-label={label}
         >
             <div className="w-full">{children}</div>
-        </div>
+        </button>
     );
 };

@@ -130,6 +130,7 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
                             ? 'left'
                             : null
                     }
+                    label="select scene a"
                 >
                     {/* <div className="text-xs normal-case">
                         <span>choose</span>
@@ -184,6 +185,7 @@ export const DRXTemporalCompositeLayerSelector: FC<Props> = ({
                             ? 'left'
                             : null
                     }
+                    label="select scene b"
                 >
                     {/* <div className="text-xs normal-case">
                         <span>choose</span>

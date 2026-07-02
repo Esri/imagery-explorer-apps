@@ -102,6 +102,7 @@ export const ModeSelector: FC<Props> = ({
                         decorativeIndicator={
                             isExploreButtonSelected ? 'right' : null
                         }
+                        label="open explorer mode"
                     >
                         <span className="uppercase">{t('explore')}</span>
                     </Button>
@@ -126,6 +127,7 @@ export const ModeSelector: FC<Props> = ({
                             onClickHandler={() => {
                                 selectedModeOnChange(mode);
                             }}
+                            label={`open ${mode} mode`}
                         >
                             <span className="uppercase">
                                 {getFormattedModeName(mode)}
@@ -159,6 +161,7 @@ export const ModeSelector: FC<Props> = ({
                                 onClickHandler={() => {
                                     selectedModeOnChange(mode);
                                 }}
+                                label={`open ${mode} mode`}
                             >
                                 <span className="uppercase">{t(mode)}</span>
                             </Button>

@@ -72,6 +72,7 @@ export const SwipeLayerSelectorScene2Basemap: FC<Props> = ({
                     // }}
                     decorativeIndicator={decorationIndicatorOfLeftButton}
                     // onClickHandler={()=>{}}
+                    label="select basemap"
                 >
                     {/* {getButtonContent('left')} */}
                     {getButtonContent('left')}
@@ -95,6 +96,7 @@ export const SwipeLayerSelectorScene2Basemap: FC<Props> = ({
                     appearance={appearanceOfRightButton}
                     fullHeight={true}
                     decorativeIndicator={decorationIndicatorOfRightButton}
+                    label="select-scene"
                 >
                     {getButtonContent('right')}
                 </Button>

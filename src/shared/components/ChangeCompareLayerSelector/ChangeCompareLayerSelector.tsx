@@ -153,6 +153,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                             ? 'left'
                             : null
                     }
+                    label="select scene a"
                 >
                     {/* <div className="text-xs normal-case">
                         <span>choose</span>
@@ -189,6 +190,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                             ? 'left'
                             : null
                     }
+                    label="select scene b"
                 >
                     {/* <div className="text-xs normal-case">
                         <span>choose</span>
@@ -221,6 +223,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         changeCompareLayerIsOn === true ? 'left' : null
                     }
+                    label="view change"
                 >
                     <div className="text-xs normal-case">
                         <span className="uppercase">{t('view_change')}</span>

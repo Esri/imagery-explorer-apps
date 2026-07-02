@@ -84,6 +84,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         selectedSide === 'left' ? 'left' : null
                     }
+                    label="select leading layer"
                 >
                     <SwipeLayerSelectorButtonContent
                         side="left"
@@ -120,6 +121,7 @@ export const SwipeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         selectedSide === 'right' ? 'left' : null
                     }
+                    label="select trailing layer"
                 >
                     <SwipeLayerSelectorButtonContent
                         side="right"

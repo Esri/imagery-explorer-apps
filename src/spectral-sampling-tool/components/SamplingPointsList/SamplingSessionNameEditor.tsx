@@ -68,6 +68,7 @@ export const SamplingSessionNameEditor: FC<Props> = ({
                     onClickHandler={() => {
                         classificationNameOnEnter(classificationName);
                     }}
+                    label="start new session"
                 >
                     Start a New Session
                 </Button>

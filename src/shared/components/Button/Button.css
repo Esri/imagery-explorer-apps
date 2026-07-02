@@ -1,3 +1,9 @@
+button[data-element='button']:focus-visible {
+    outline-style: solid;
+    outline-width:2px;
+    outline-color: var(--calcite-color-brand);
+}
+
 .horizontal-indicator-on-right::after {
     content: '';
     @apply absolute left-full w-space-between-main-secondary-selectors top-[50%] h-[1px] bg-custom-light-blue-50;

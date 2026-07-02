@@ -52,7 +52,10 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
             })}
         >
             <div>
-                <Button onClickHandler={onClick}>
+                <Button
+                    onClickHandler={onClick}
+                    label={'save option for ' + title}
+                >
                     <div className="text-center ">
                         <span className="uppercase">{title}</span>
                         <br />

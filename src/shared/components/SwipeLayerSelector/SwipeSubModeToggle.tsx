@@ -52,6 +52,7 @@ export const SwipeSubModeToggle = () => {
                     onClickHandler={onChange.bind(null, 'scene-to-basemap')}
                     decorativeIndicator={isSceneToBasemapMode ? 'left' : null}
                     scale="s"
+                    label="select scene to basemap"
                 >
                     <div className="text-center text-xs">
                         {t('scene_to_basemap')}
@@ -69,6 +70,7 @@ export const SwipeSubModeToggle = () => {
                     onClickHandler={onChange.bind(null, 'scene-to-scene')}
                     decorativeIndicator={isSceneToSceneMode ? 'left' : null}
                     scale="s"
+                    label="select scene to scene"
                 >
                     <div className="text-center text-xs">
                         {t('scene_to_scene')}
