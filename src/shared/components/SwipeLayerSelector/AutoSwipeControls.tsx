@@ -112,27 +112,43 @@ export const AutoSwipeControls = () => {
                 />
             </div>
 
-            <div className={'flex cursor-pointer items-center mx-1'}>
+            <div
+                className={'flex cursor-pointer items-center mx-1 mt-1'}
+                style={{
+                    '--calcite-button-text-color': 'var(--custom-light-blue)',
+                }}
+            >
                 {!status && (
-                    <div
-                        className=" bg-custom-light-blue-5 px-1"
+                    <calcite-button
+                        // className=" bg-custom-light-blue-5 px-1"
                         onClick={statusOnChange.bind(null, 'playing')}
                         title={t('enable_auto_swipe')}
+                        label={t('enable_auto_swipe')}
+                        iconStart={'play'}
+                        scale="s"
+                        style={{
+                            '--calcite-button-background-color':
+                                'var(--custom-light-blue-5)',
+                        }}
                     >
-                        {StartPlayButton}
-                    </div>
+                        {/* {StartPlayButton} */}
+                    </calcite-button>
                 )}
                 {status && (
-                    <div
-                        className="mr-1"
+                    <calcite-button
+                        // className="mr-1"
                         onClick={handleCopyLink}
                         title={
                             linkCopied
                                 ? t('link_copied')
                                 : t('copy_animation_link')
                         }
+                        label={t('copy_animation_link')}
+                        iconStart={linkCopied ? 'check' : 'link'}
+                        scale="s"
+                        appearance="transparent"
                     >
-                        {linkCopied ? (
+                        {/* {linkCopied ? (
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
@@ -158,13 +174,19 @@ export const AutoSwipeControls = () => {
                                 />
                                 <path fill="none" d="M0 0h24v24H0z" />
                             </svg>
-                        )}
-                    </div>
+                        )} */}
+                    </calcite-button>
                 )}
                 {status && (
-                    <div onClick={statusOnChange.bind(null, null)}>
-                        {CloseButton}
-                    </div>
+                    <calcite-button
+                        scale="s"
+                        appearance="transparent"
+                        onClick={statusOnChange.bind(null, null)}
+                        iconStart="x-circle"
+                        label={'stop animation'}
+                    >
+                        {/* {CloseButton} */}
+                    </calcite-button>
                 )}
             </div>
         </div>
