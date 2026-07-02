@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Button } from '@shared/components/Button';
+// import { Button } from '@shared/components/Button';
 import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
 import React, { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { SaveOptionInfo, saveOptionInfoLookup } from '../constants';
@@ -194,14 +194,14 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                 </div>
 
                 <div className=" mt-8 flex justify-end items-center">
-                    <div
+                    {/* <div
                         className=" mr-8 cursor-pointer"
                         onClick={closeButtonOnClick}
                     >
                         <span className="uppercase">{t('cancel')}</span>
-                    </div>
+                    </div> */}
 
-                    <Button
+                    {/* <Button
                         onClickHandler={() => {
                             saveButtonOnClick(title, summary);
                         }}
@@ -211,7 +211,38 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                         label="save"
                     >
                         {t('OK')}
-                    </Button>
+                    </Button> */}
+
+                    <calcite-button
+                        className="mr-4 uppercase"
+                        onClick={closeButtonOnClick}
+                        scale="l"
+                        appearance="transparent"
+                        style={{
+                            '--calcite-button-text-color':
+                                'var(--custom-light-blue)',
+                        }}
+                        label={'cancel'}
+                    >
+                        {t('cancel')}
+                    </calcite-button>
+
+                    <calcite-button
+                        onClick={() => {
+                            saveButtonOnClick(title, summary);
+                        }}
+                        scale="l"
+                        appearance="outline"
+                        style={{
+                            '--calcite-button-text-color':
+                                'var(--custom-light-blue)',
+                            '--calcite-button-border-color':
+                                'var(--custom-light-blue)',
+                        }}
+                        label={'save'}
+                    >
+                        {t('OK')}
+                    </calcite-button>
                 </div>
             </div>
         </div>
