@@ -47,7 +47,7 @@
     "percent_cloudy": "{{percent}}% Cloudy",
     "powered_by_esri": "Powered by Esri",
     "dynamic_view": "Dynamic View",
-    "dynamic_view_instruction": "To select an individual scene for a specific date, try the <span class='open-find-a-scene underline cursor-pointer hover:opacity-100 uppercase'>FIND A SCENE</span> mode.",
+    "dynamic_view_instruction": "To select an individual scene for a specific date, try the <action>FIND A SCENE</action> mode.",
     "something_went_wrong": "Something went wrong and the app has crashed.",
     "app_temporarily_unavailable": "This app is temporarily unavailable due to an issue fetching data from one of the data services.",
     "error_message": "Error message",
