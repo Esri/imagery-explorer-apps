@@ -198,7 +198,7 @@ const InfoPanel = () => {
     }
 
     return (
-        <div className="absolute top-0 left-0 w-screen h-screen flex justify-center items-center bg-custom-background-95 z-20">
+        <div className="absolute top-0 left-0 w-screen h-screen flex justify-center items-center bg-custom-background-95 z-[100]">
             <CloseButton
                 onClick={() => {
                     dispatch(showInfoPanelToggled(false));
