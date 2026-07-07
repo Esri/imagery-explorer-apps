@@ -1,5 +1,9 @@
+const DISASTER_RESPONSE_IMAGERY_SERVICE_URL_DEFAULT =
+    'https://di-disasterresponse.img.arcgis.com/arcgis/rest/services/drp_imagery/ImageServer';
+
 export const DISASTER_RESPONSE_IMAGERY_SERVICE_URL =
-    ENV_DISASTER_RESPONSE_SERVICE_URL;
+    ENV_DISASTER_RESPONSE_SERVICE_URL ||
+    DISASTER_RESPONSE_IMAGERY_SERVICE_URL_DEFAULT;
 
 /**
  * List of Raster Functions for the Disaster Response imagery service.
