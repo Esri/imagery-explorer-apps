@@ -15,6 +15,7 @@
 
 import classNames from 'classnames';
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import useWindowSize from '@shared/hooks/useWindowSize';
 
@@ -79,6 +80,14 @@ export const Dropdown: FC<Props> = ({
 
     const containerRef = useRef<HTMLDivElement>(null);
 
+    /**
+     * Ref of the dropdown menu that is rendered via a portal to `document.body` (see
+     * `getDropdownMenuAtFixedPosition`). It needs to be tracked separately from `containerRef`
+     * so that clicks on it are not treated as "outside" clicks by `useOnClickOutside`, since it
+     * is not a DOM descendant of `containerRef` once portaled.
+     */
+    const menuAtFixedPositionRef = useRef<HTMLDivElement>(null);
+
     const windowSize = useWindowSize();
 
     const flattenedOptions = useMemo(() => {
@@ -98,7 +107,7 @@ export const Dropdown: FC<Props> = ({
 
     const selectedOption = flattenedOptions.find((d) => d.selected === true);
 
-    useOnClickOutside(containerRef, () => {
+    useOnClickOutside([containerRef, menuAtFixedPositionRef], () => {
         setShouldShowOptions(false);
     });
 
@@ -245,6 +254,12 @@ export const Dropdown: FC<Props> = ({
      *
      * We need to use the fixed position to ensure that the dropdown menu can extend to outside of the bottom panel when the bottom panel
      * is displayed in a narrow screen (with overflow-x turned on).
+     *
+     * The menu is rendered via a portal to `document.body` rather than in place: on iOS Safari, a
+     * `position: fixed` element that is still a DOM descendant of a scrollable ancestor (the bottom
+     * panel) gets painted within that ancestor's compositing layer instead of the true viewport, so
+     * it can end up rendered behind the map once the bottom panel becomes scrollable. Portaling it
+     * to `document.body` removes it from that ancestor entirely.
      * @returns
      */
     const getDropdownMenuAtFixedPosition = () => {
@@ -261,8 +276,9 @@ export const Dropdown: FC<Props> = ({
         // get the container's position relative to the viewport
         const { x, y, width } = containerRef.current.getBoundingClientRect();
 
-        return (
+        return createPortal(
             <div
+                ref={menuAtFixedPositionRef}
                 className={classNames(
                     'block bottom-panel-content-min-width:hidden fixed z-50'
                 )}
@@ -276,7 +292,8 @@ export const Dropdown: FC<Props> = ({
                 }}
             >
                 {getDropdownMenu()}
-            </div>
+            </div>,
+            document.body
         );
     };
 
