@@ -259,7 +259,7 @@ export const Dropdown: FC<Props> = ({
      * `position: fixed` element that is still a DOM descendant of a scrollable ancestor (the bottom
      * panel) gets painted within that ancestor's compositing layer instead of the true viewport, so
      * it can end up rendered behind the map once the bottom panel becomes scrollable. Portaling it
-     * to `document.body` removes it from that ancestor entirely.
+     * to `document.body` removes it from that ancestor entirely, so it always stacks above.
      * @returns
      */
     const getDropdownMenuAtFixedPosition = () => {
