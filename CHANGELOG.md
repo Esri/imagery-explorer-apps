@@ -4,12 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]:
+## 2026-07-09:
+
+### Disaster Imagery Explorer
+
+#### Added
+- Initial release of Disaster Imagery Explorer app including:
+    - Select from a list of current and past events.
+    - Discover available imagery by geographic and temporal extents.
+    - Filter available imagery by cloud cover and overlap.
+    - Visually compare pre and post event imagery with swipe.
+    - Create temporal composites and difference images.
 
 ### Shared
 
 #### Changed
-- Updated @arcgis/core to version 5.0.18 and added @arcgis/map-components and @esri/calcite-components dependencies.
+- Updated @arcgis/core to version 5.1.8 and added @arcgis/map-components and @esri/calcite-components dependencies.
 - Refactored the cadebase to use calcite components instead of calcite-components-react, which has been deprecated. 
 
 ## 2026-01-26
