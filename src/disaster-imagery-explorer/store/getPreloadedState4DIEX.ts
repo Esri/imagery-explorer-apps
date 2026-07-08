@@ -91,9 +91,7 @@ const getPreloadedChangeCompareToolState = (hashParams: URLSearchParams) => {
  * Determines the initial swipe sub-mode for DIEX.
  *
  * 1. If a swipe sub-mode is specified in the URL hash params, it takes precedence.
- * 2. If the current mode is 'analysis' with the 'temporal composite' tool and both main
- *    and secondary scenes are selected, defaults to 'scene-to-scene'.
- * 3. Otherwise, defaults to 'scene-to-basemap'.
+ * 2. Otherwise, defaults to 'scene-to-scene'.
  */
 const getSwipeSubMode = (
     preloadedState4ImageryScenes: ImageryScenesState,
@@ -107,20 +105,20 @@ const getSwipeSubMode = (
         return swipeSubModeFromHashParams.selectedSubMode;
     }
 
-    // if the mode is analysis and the tool is temporal composite and both main and secondary scenes are selected, we will set the default swipe sub-mode to 'scene-to-scene'
-    // since it makes more sense to compare two scenes when user switches to swipe mode from the temporal composite tool with both main and secondary scenes selected
-    if (
-        preloadedState4ImageryScenes.mode === 'analysis' &&
-        preloadedState4ImageryScenes.tool === 'temporal composite' &&
-        preloadedState4ImageryScenes.queryParams4MainScene
-            ?.objectIdOfSelectedScene !== null &&
-        preloadedState4ImageryScenes.queryParams4SecondaryScene
-            ?.objectIdOfSelectedScene !== null
-    ) {
-        return 'scene-to-scene';
-    }
+    // // if the mode is analysis and the tool is temporal composite and both main and secondary scenes are selected, we will set the default swipe sub-mode to 'scene-to-scene'
+    // // since it makes more sense to compare two scenes when user switches to swipe mode from the temporal composite tool with both main and secondary scenes selected
+    // if (
+    //     preloadedState4ImageryScenes.mode === 'analysis' &&
+    //     preloadedState4ImageryScenes.tool === 'temporal composite' &&
+    //     preloadedState4ImageryScenes.queryParams4MainScene
+    //         ?.objectIdOfSelectedScene !== null &&
+    //     preloadedState4ImageryScenes.queryParams4SecondaryScene
+    //         ?.objectIdOfSelectedScene !== null
+    // ) {
+    //     return 'scene-to-scene';
+    // }
 
-    return 'scene-to-basemap'; // default swipe sub-mode for DIEX
+    return 'scene-to-scene'; // default swipe sub-mode for DIEX
 };
 
 const getStateForImageryScenes = (

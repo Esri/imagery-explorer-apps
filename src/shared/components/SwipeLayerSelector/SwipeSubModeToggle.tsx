@@ -44,25 +44,7 @@ export const SwipeSubModeToggle = () => {
             inert={isAnimationPlaying}
         >
             <div
-                className={classNames('relative mb-2 w-full')}
-                key={'scene-to-scene'}
-            >
-                <Button
-                    appearance={isSceneToBasemapMode ? 'solid' : 'transparent'}
-                    fullHeight={true}
-                    onClickHandler={onChange.bind(null, 'scene-to-basemap')}
-                    decorativeIndicator={isSceneToBasemapMode ? 'left' : null}
-                    scale="s"
-                    label="select scene to basemap"
-                >
-                    <div className="text-center text-xs">
-                        {t('scene_to_basemap')}
-                    </div>
-                </Button>
-            </div>
-
-            <div
-                className={classNames('relative w-full')}
+                className={classNames('relative w-full mb-2')}
                 key={'scene-to-basemap'}
             >
                 <Button
@@ -75,6 +57,24 @@ export const SwipeSubModeToggle = () => {
                 >
                     <div className="text-center text-xs">
                         {t('scene_to_scene')}
+                    </div>
+                </Button>
+            </div>
+
+            <div
+                className={classNames('relative w-full')}
+                key={'scene-to-scene'}
+            >
+                <Button
+                    appearance={isSceneToBasemapMode ? 'solid' : 'transparent'}
+                    fullHeight={true}
+                    onClickHandler={onChange.bind(null, 'scene-to-basemap')}
+                    decorativeIndicator={isSceneToBasemapMode ? 'left' : null}
+                    scale="s"
+                    label="select scene to basemap"
+                >
+                    <div className="text-center text-xs">
+                        {t('scene_to_basemap')}
                     </div>
                 </Button>
             </div>
