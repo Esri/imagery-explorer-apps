@@ -273,6 +273,7 @@ export const EventSceneSelector: FC<Props> = ({
                                                     onMouseOut={() =>
                                                         handleSceneHover(null)
                                                     }
+                                                    data-testid={`scene-selector-scene-${scene.objectId}`}
                                                 >
                                                     <div
                                                         className={`
