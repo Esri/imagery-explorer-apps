@@ -107,6 +107,7 @@ const CalendarContainer: FC<Props> = ({ children }: Props) => {
             className={classNames('select-none', {
                 'is-disabled': shouldBeDisabled,
             })}
+            inert={shouldBeDisabled}
             data-testid="calendar-container"
         >
             <div className="text-center mb-2">

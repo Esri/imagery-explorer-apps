@@ -39,7 +39,6 @@ import {
 } from '@shared/store/SpectralSamplingTool/reducer';
 import { ResetDialog } from './ResetDialog';
 import { deleteSessionDataFromIndexedDB } from '@shared/utils/indexedDB/sessioOfSpectralSamplingTool';
-import { CalciteButton } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 
@@ -146,7 +145,7 @@ export const SamplingPointsListContainer = () => {
                     addButtonOnClick={samplingPointOnAdd}
                 />
 
-                <CalciteButton
+                <calcite-button
                     style={{
                         '--calcite-button-text-color':
                             'var(--custom-light-blue)',

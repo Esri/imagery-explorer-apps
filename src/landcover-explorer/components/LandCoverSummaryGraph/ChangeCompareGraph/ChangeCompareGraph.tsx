@@ -17,7 +17,6 @@ import React, { FC, useMemo, useRef } from 'react';
 import useGetTooltipPositionOnHover from '@shared/hooks/useGetTooltipPositionOnHover';
 import { DivergingBarChart } from '@vannizhang/react-d3-charts';
 import { DivergingBarChartDataItem } from '@vannizhang/react-d3-charts/dist/DivergingBarChart/types';
-import { CalciteLoader } from '@esri/calcite-components-react';
 
 // import DivergingBarChart from '@landcover-explorer/QuickD3Chart/DivergingBarChart/DivergingBarChart';
 // import { QuickD3ChartData } from '@landcover-explorer/QuickD3Chart/types';
@@ -57,7 +56,10 @@ const ChangeCompareGraph: FC<Props> = ({
         if (!data) {
             return (
                 <div className="w-full flex justify-center items-center">
-                    <CalciteLoader scale="s"></CalciteLoader>
+                    <calcite-loader
+                        scale="s"
+                        label={'loading'}
+                    ></calcite-loader>
                 </div>
             );
         }

@@ -20,7 +20,6 @@ import { CreateWebMapResponse } from './createWebMap';
 import { CloseButton } from '@shared/components/CloseButton';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
-import { CalciteInputText } from '@esri/calcite-components-react';
 
 export type WebMapMetadata = {
     /**
@@ -106,9 +105,9 @@ const TextInput: FC<TextInputProps> = ({
                 {isRequired ? '*' : ''}
             </h4>
 
-            <CalciteInputText
+            <calcite-input-text
                 value={value}
-                onCalciteInputTextInput={(evt: any) => {
+                oncalciteInputTextInput={(evt) => {
                     onChange(evt.target?.value);
                 }}
             />
@@ -129,7 +128,7 @@ export const SaveWebMap: FC<Props> = ({
     const { t } = useTranslation();
 
     const [title, setTitle] = useState<string>(
-        // 'Sentinel-2 Land Cover Exlorer export map'
+        // 'Sentinel-2 Land Cover Explorerexport map'
         t('output_webmap_default_title', { ns: APP_NAME })
     );
     const [tags, setTags] = useState<string>(

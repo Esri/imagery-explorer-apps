@@ -142,6 +142,19 @@ const getGlobalConstants = (app, envConfig) => {
         ENV_SUREFACE_TEMP_EXPLORER_APP_ID: JSON.stringify(
             envConfig.SUREFACE_TEMP_EXPLORER_APP_ID
         ),
+
+        /**
+         * URL for Disaster Imagery Explorer service
+         */
+        ENV_DISASTER_RESPONSE_SERVICE_URL: JSON.stringify(
+            envConfig.DISASTER_RESPONSE_SERVICE_URL
+        ),
+        /**
+         * Application ID for the Disaster Imagery Explorer app.
+         */
+        ENV_DISASTER_IMAGERY_EXPLORER_APP_ID: JSON.stringify(
+            envConfig.DISASTER_IMAGERY_EXPLORER_APP_ID
+        ),
     };
 };
 

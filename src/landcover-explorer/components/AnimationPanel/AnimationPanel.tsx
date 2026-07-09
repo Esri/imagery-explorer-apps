@@ -39,7 +39,7 @@ import { AnimationFrameData } from '@vannizhang/images-to-video-converter-client
 import { CloseButton } from '@shared/components/CloseButton';
 import { selectShouldShowSatelliteImageryLayer } from '@shared/store/LandcoverExplorer/selectors';
 import { once } from '@arcgis/core/core/reactiveUtils';
-import { CalciteLoader } from '@esri/calcite-components-react';
+
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
@@ -215,7 +215,7 @@ const AnimationPanel: FC<Props> = ({
             )}
         >
             {animationMode === 'loading' && (
-                <CalciteLoader scale="l"></CalciteLoader>
+                <calcite-loader label="loading" scale="l"></calcite-loader>
             )}
 
             <AnimationYearDisplay animationStatus={animationMode} />

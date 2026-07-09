@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { CalciteIcon } from '@esri/calcite-components-react';
 import { usePrevious } from '@shared/hooks/usePrevious';
 import classNames from 'classnames';
 import React, { FC, useEffect, useLayoutEffect, useRef } from 'react';
@@ -98,6 +97,7 @@ export const AnimationFramesList: FC<Props> = ({
             className={classNames({
                 'is-disabled': disabled,
             })}
+            inert={disabled}
         >
             <div
                 ref={containerRef}
@@ -159,7 +159,7 @@ export const AnimationFramesList: FC<Props> = ({
                                     frameId
                                 )}
                             >
-                                <CalciteIcon
+                                <calcite-icon
                                     icon="x"
                                     scale="s"
                                     style={{

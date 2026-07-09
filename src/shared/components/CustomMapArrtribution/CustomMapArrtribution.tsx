@@ -16,6 +16,7 @@
 import { useAppSelector } from '@shared/store/configureStore';
 import './style.css';
 import React, { FC, useEffect, useState } from 'react';
+import { ArcgisMap } from '@arcgis/map-components/dist/components/arcgis-map';
 import {
     selectMapResolution,
     selectMapScale,
@@ -23,6 +24,7 @@ import {
 import { numberWithCommas } from 'helper-toolkit-ts';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { MapScaleIndicator } from '../MapScaleIndicator/MapScaleIndicator';
 
 type Props = {
     /**
@@ -52,8 +54,22 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
     // };
 
     useEffect(() => {
-        const element = document.querySelector('.esri-attribution');
-        element.classList.toggle('show', shouldShowEsriAttribution);
+        // const element = document.querySelector('.esri-attribution');
+        // if (!element) {
+        //     console.warn('Esri attribution element not found');
+        //     return;
+        // }
+
+        // element.classList.toggle('show', shouldShowEsriAttribution);
+
+        const viewElement = document.querySelector('arcgis-map') as ArcgisMap;
+
+        if (!viewElement) {
+            console.warn('ArcGIS Map element not found');
+            return;
+        }
+
+        viewElement.hideAttribution = !shouldShowEsriAttribution;
     }, [shouldShowEsriAttribution]);
 
     return (
@@ -82,10 +98,7 @@ const CustomMapArrtribution: FC<Props> = ({ atrribution }) => {
             {mapScale !== null && resolution !== null && (
                 <div className="hidden md:block custom-attribution-text">
                     <div className="pointer-events-none pr-10">
-                        <span>
-                            1:{numberWithCommas(+mapScale.toFixed(0))} | 1px:{' '}
-                            {numberWithCommas(+resolution.toFixed(0))}m
-                        </span>
+                        <MapScaleIndicator />
                     </div>
                 </div>
             )}

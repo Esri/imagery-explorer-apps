@@ -1,5 +1,5 @@
-@import 'https://js.arcgis.com/4.34/@arcgis/core/assets/esri/themes/dark/main.css';
-@import url('@esri/calcite-components/dist/calcite/calcite.css');
+/* @import 'https://js.arcgis.com/5.0.18/@arcgis/core/assets/esri/themes/dark/main.css'; */
+/* @import url('@esri/calcite-components/dist/calcite/calcite.css'); */
 @import './variables.css';
 @import './global.css';
 @import './fancy-scrollbar.css';
@@ -40,11 +40,31 @@
     }
 }
 
-#root .esri-view-root {
+/* #root .esri-view-root {
     --esri-view-outline: 0;
-}
+} */
 
 /* Prevent user interaction and visually indicate disabled state when animation mode is active */
 .disabled-when-animation-mode-is-on {
     @apply pointer-events-none opacity-40;
+}
+
+/* Custom styles to override Calcite components' default styles to fit our theme */
+.calcite-theme-override {
+    --calcite-color-foreground-1: var(--custom-background);
+    --calcite-color-foreground-2: var(--custom-background);
+    --calcite-color-foreground-3: var(--custom-background);
+    --calcite-color-foreground-4: var(--custom-background);
+
+    --calcite-color-text-1: var(--custom-light-blue);
+    --calcite-color-text-2: var(--custom-light-blue);
+    --calcite-color-text-3: var(--custom-light-blue);
+
+    --calcite-color-border-3: var(--custom-light-blue-50);
+}
+
+button:focus-visible,
+div[role='button']:focus-visible {
+    outline: 2px solid #0079c1;
+    outline-offset: 2px;
 }

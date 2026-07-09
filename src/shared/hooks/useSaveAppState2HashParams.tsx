@@ -21,10 +21,13 @@ import {
     // selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
     selectActiveAnalysisTool,
+    selectUseTwoSceneComposite,
 } from '@shared/store/ImageryScene/selectors';
 import {
     selectAutoSwipeSpeed,
     selectAutoSwipeStatus,
+    selectMapCenter,
+    selectMapZoom,
     selectShowBasemap,
     selectShowMapLabel,
     selectShowTerrain,
@@ -47,6 +50,7 @@ import {
     saveSpectralProfileToolStateToHashParams,
     saveChangeCompareToolStateToHashParams,
     saveTemporalCompositeToolStateToHashParams,
+    saveMapCenterToHashParams,
 } from '@shared/utils/url-hash-params';
 import React, { FC, useEffect } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -99,6 +103,12 @@ export const useSaveAppState2HashParams = () => {
 
     const hideBottomPanel = useAppSelector(selectHideBottomPanel);
 
+    const center = useAppSelector(selectMapCenter) as [number, number];
+
+    const zoom = useAppSelector(selectMapZoom);
+
+    const useTwoSceneComposite = useAppSelector(selectUseTwoSceneComposite);
+
     useEffect(() => {
         updateHashParams('mode', mode);
 
@@ -113,6 +123,14 @@ export const useSaveAppState2HashParams = () => {
         }
 
         if (mode === 'analysis' && analysisTool === 'change') {
+            queryParams = queryParams4SecondaryScene;
+        }
+
+        if (
+            mode === 'analysis' &&
+            analysisTool === 'temporal composite' &&
+            useTwoSceneComposite
+        ) {
             queryParams = queryParams4SecondaryScene;
         }
 
@@ -211,4 +229,9 @@ export const useSaveAppState2HashParams = () => {
     useEffect(() => {
         updateHashParams('hideBottomPanel', hideBottomPanel ? 'true' : null);
     }, [hideBottomPanel]);
+
+    useEffect(() => {
+        // console.log('map view zoom and center has changed', center, zoom);
+        saveMapCenterToHashParams(center, zoom);
+    }, [zoom, center]);
 };

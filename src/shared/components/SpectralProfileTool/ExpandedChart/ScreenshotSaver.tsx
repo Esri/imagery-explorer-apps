@@ -15,7 +15,6 @@
 
 import React, { FC } from 'react';
 import { EXPANDED_SPECTRAL_PROFILE_CHART_CONTAINER_ID } from './ExpandedSpectralProfileChart';
-import { CalciteIcon } from '@esri/calcite-components-react';
 
 const resolveCSSVariablesInSVGString = (svgElement: Element) => {
     const computedStyle = getComputedStyle(svgElement);
@@ -120,8 +119,8 @@ export const ScreenshotSaver: FC = () => {
     };
 
     return (
-        <CalciteIcon
-            class="cursor-pointer mx-4"
+        <calcite-icon
+            className="cursor-pointer mx-4"
             title="Save the chart as an image"
             icon="camera"
             scale="s"

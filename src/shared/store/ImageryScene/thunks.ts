@@ -32,6 +32,8 @@ import {
     selectIdOfSelectedItemInListOfQueryParams,
     selectActiveAnalysisTool,
     selectIsSecondarySceneActive,
+    selectUseTwoSceneComposite,
+    selectSwipeSubMode,
     // selectLandsatMissionsToBeExcluded,
 } from './selectors';
 // import { nanoid } from 'nanoid';
@@ -47,9 +49,13 @@ import { getDateRangeForYear } from '@shared/utils/date-time/getTimeRange';
 export const updateQueryParams4SceneInSelectedMode =
     (updatedQueryParams: QueryParams4ImageryScene) =>
     (dispatch: StoreDispatch, getState: StoreGetState) => {
-        const mode = selectAppMode(getState());
-        const analysisTool = selectActiveAnalysisTool(getState());
-        const isSecondarySceneActive = selectIsSecondarySceneActive(getState());
+        const state = getState();
+
+        const mode = selectAppMode(state);
+        const analysisTool = selectActiveAnalysisTool(state);
+        const isSecondarySceneActive = selectIsSecondarySceneActive(state);
+        const useTwoSceneComposite = selectUseTwoSceneComposite(state);
+        const swipeSubMode = selectSwipeSubMode(state);
 
         if (mode === 'find a scene' || mode === 'dynamic') {
             dispatch(queryParams4MainSceneChanged(updatedQueryParams));
@@ -57,7 +63,12 @@ export const updateQueryParams4SceneInSelectedMode =
         }
 
         if (mode === 'analysis') {
-            if (analysisTool === 'change') {
+            // when in 'change compare' tool, we need to find the query params based on selected scene
+            // when in 'temporal composite' tool, if useTwoSceneComposite is true, we will use the main and secondary scenes for the temporal composite layer, otherwise we will use the three scenes specified in queryParamsList for the temporal composite layer
+            if (
+                analysisTool === 'change' ||
+                (analysisTool === 'temporal composite' && useTwoSceneComposite)
+            ) {
                 if (isSecondarySceneActive) {
                     dispatch(
                         queryParams4SecondarySceneChanged(updatedQueryParams)
@@ -81,6 +92,12 @@ export const updateQueryParams4SceneInSelectedMode =
         }
 
         if (mode === 'swipe') {
+            if (swipeSubMode === 'scene-to-basemap') {
+                // in the 'scene-to-basemap' sub-mode, we will always update the main scene since the other layer is the basemap
+                dispatch(queryParams4MainSceneChanged(updatedQueryParams));
+                return;
+            }
+
             if (isSecondarySceneActive) {
                 dispatch(queryParams4SecondarySceneChanged(updatedQueryParams));
             } else {
@@ -134,6 +151,28 @@ export const updateObjectIdOfSelectedScene =
             const updatedQueryParams: QueryParams4ImageryScene = {
                 ...queryParams,
                 objectIdOfSelectedScene,
+            };
+
+            dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+export const updateAcquisitionTimestampOfSelectedScene =
+    (acquisitionTimestampOfSelectedScene: number) =>
+    async (dispatch: StoreDispatch, getState: StoreGetState) => {
+        try {
+            const queryParams =
+                selectQueryParams4SceneInSelectedMode(getState());
+
+            if (!queryParams) {
+                return;
+            }
+
+            const updatedQueryParams: QueryParams4ImageryScene = {
+                ...queryParams,
+                acquisitionTimestampOfSelectedScene,
             };
 
             dispatch(updateQueryParams4SceneInSelectedMode(updatedQueryParams));
@@ -259,6 +298,9 @@ export const addNewItemToQueryParamsList =
                       ...queryParamsToInheritDataFrom,
                       uniqueId,
                   };
+
+        // reset objectIdOfSelectedScene because the newly added frame won't have a selected scene at the beginning
+        queryParamsOfNewFrame.objectIdOfSelectedScene = null;
 
         dispatch(
             queryParamsListChanged({

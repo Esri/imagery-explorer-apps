@@ -14,7 +14,7 @@
  */
 
 import classNames from 'classnames';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import MapView from './MapView';
 // import { WEB_MAP_ID } from '../../constants/map';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -33,14 +33,14 @@ import EventHandlers from './EventHandlers';
 import { useAppDispatch } from '@shared/store/configureStore';
 import {
     centerChanged,
-    extentUpdated,
+    // extentUpdated,
     isUpdatingChanged,
     resolutionUpdated,
     scaleUpdated,
-    swipeWidgetHanlderPositionChanged,
+    // swipeWidgetHanlderPositionChanged,
     zoomChanged,
 } from '../../store/Map/reducer';
-import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
+// import { saveMapCenterToHashParams } from '../../utils/url-hash-params';
 import { MapLoadingIndicator } from './MapLoadingIndicator';
 // import { queryLocation4TrendToolChanged } from '@shared/store/TrendTool/reducer';
 // import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
@@ -49,20 +49,21 @@ import { ReferenceLayersControl } from '../ReferenceLayersControl';
 import ReferenceLayers from './ReferenceLayers';
 // import SearchWidget from '../SearchWidget/SearchWidget';
 import {
-    selectActiveAnalysisTool,
+    // selectActiveAnalysisTool,
     selectAppMode,
     selectIsSwipeModeOn,
 } from '@shared/store/ImageryScene/selectors';
 // import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { MapCenterIndicator } from './MapCenterIndicator';
 // import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
-import { appConfig } from '@shared/config';
-import { ZoomWidget } from './ZoomWidget';
+// import { appConfig } from '@shared/config';
+// import { ZoomWidget } from './ZoomWidget';
 import { autoSwipeStatusChanged } from '@shared/store/Map/reducer';
 import { WEB_MAP_ID } from '@shared/constants/map';
 import { AnimationStartButtonOnMapContainer } from '../AnimationStartButtonOnMap/AnimationStartButtonOnMapContainer';
 
 type Props = {
+    hideMapCenterIndicator?: boolean;
     /**
      * emits when user click on the map
      * @param point map point where the user has clicked
@@ -72,10 +73,14 @@ type Props = {
     children?: React.ReactNode;
 };
 
-const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
+const MapViewContainer: FC<Props> = ({
+    hideMapCenterIndicator = false,
+    mapOnClick,
+    children,
+}) => {
     const dispatch = useAppDispatch();
 
-    const center = useAppSelector(selectMapCenter);
+    const center = useAppSelector(selectMapCenter) as [number, number];
 
     const zoom = useAppSelector(selectMapZoom);
 
@@ -89,43 +94,16 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
         selectSwipeWidgetHandlerPosition
     );
 
-    const [isUpdating, setIsUpdating] = useState<boolean>(true);
-
     const mode = useAppSelector(selectAppMode);
 
     // const analysisTool = useAppSelector(selectActiveAnalysisTool);
 
     const anchorLocation = useAppSelector(selectMapPopupAnchorLocation);
 
-    // const showMagnifier = useMemo(() => {
-    //     if (mode !== 'analysis') {
-    //         return false;
-    //     }
-
-    //     return analysisTool === 'trend' || analysisTool === 'spectral';
-    // }, [analysisTool, mode]);
-
-    const showMapLoadingIndicator = useMemo(() => {
-        if (isAnimationPlaying) {
-            return false;
-        }
-
-        return isUpdating;
-    }, [isUpdating, isAnimationPlaying]);
-
-    useEffect(() => {
-        // console.log('map view zoom and center has changed', center, zoom);
-        saveMapCenterToHashParams(center, zoom);
-    }, [zoom, center]);
-
     useEffect(() => {
         // adding this class will hide map zoom widget when animation mode is on
         document.body.classList.toggle('hide-map-control', isAnimationPlaying);
     }, [isAnimationPlaying]);
-
-    useEffect(() => {
-        dispatch(isUpdatingChanged(isUpdating));
-    }, [isUpdating]);
 
     useEffect(() => {
         // turn off auto swipe when app mode is not swipe
@@ -139,12 +117,27 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
         <div
             className={classNames(
                 'absolute top-app-header-size md:top-0 left-0 w-full',
+                'calcite-theme-override',
                 {
                     'bottom-0': shouldHideBottomPanel === true,
                     'bottom-bottom-panel-height':
                         shouldHideBottomPanel === false,
                 }
             )}
+            // style={
+            //     {
+            //         '--calcite-color-foreground-1': 'var(--custom-background)',
+            //         '--calcite-color-foreground-2': 'var(--custom-background)',
+            //         '--calcite-color-foreground-3': 'var(--custom-background)',
+            //         '--calcite-color-foreground-4': 'var(--custom-background)',
+
+            //         '--calcite-color-text-1': 'var(--custom-light-blue)',
+            //         '--calcite-color-text-2': 'var(--custom-light-blue)',
+            //         '--calcite-color-text-3': 'var(--custom-light-blue)',
+
+            //         '--calcite-color-border-3': 'var(--custom-light-blue-50)',
+            //     } as React.CSSProperties
+            // }
         >
             <MapView
                 webmapId={WEB_MAP_ID}
@@ -182,11 +175,12 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
                             mapOnClick(queryLocation);
                         }
                     }}
-                    mapViewUpdatingOnChange={setIsUpdating}
+                    mapViewUpdatingOnChange={(val) =>
+                        dispatch(isUpdatingChanged(val))
+                    }
                 />
 
                 <MapLoadingIndicator
-                    active={showMapLoadingIndicator}
                     swipeWidgetHandlerPosition={
                         isSwipeWidgetVisible ? swipeWidgetHandlerPosition : null
                     }
@@ -194,7 +188,9 @@ const MapViewContainer: FC<Props> = ({ mapOnClick, children }) => {
 
                 <MapCenterIndicator
                     shouldShow={
-                        mode === 'find a scene' && anchorLocation === null
+                        mode === 'find a scene' &&
+                        anchorLocation === null &&
+                        !hideMapCenterIndicator
                     }
                 />
 

@@ -1,0 +1,181 @@
+/* Copyright 2025 Esri
+ *
+ * Licensed under the Apache License Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import React from 'react';
+import BottomPanel from '@shared/components/BottomPanel/BottomPanel';
+import { AppHeader } from '@shared/components/AppHeader';
+import {
+    ContainerOfSecondaryControls,
+    ModeSelector,
+} from '@shared/components/ModeSelector';
+import { useAppSelector } from '@shared/store/configureStore';
+import {
+    selectActiveAnalysisTool,
+    selectAppMode,
+    selectShouldShowSwipeSubModeToggle,
+} from '@shared/store/ImageryScene/selectors';
+import { SwipeLayerSelector } from '@shared/components/SwipeLayerSelector';
+import { useSaveAppState2HashParams } from '@shared/hooks/useSaveAppState2HashParams';
+import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { useShouldShowSecondaryControls } from '@shared/hooks/useShouldShowSecondaryControls';
+import { SceneInfo } from '../SceneInfo';
+import { useQueryAvailableDisasterResponseScenes } from '../../hooks/useQueryAvailableDisasterResponseScenes';
+import {
+    EventSceneSelector,
+    EventSceneSelector4Mobile,
+} from '../EventSceneSelector';
+import { useSaveDIEXStatesToHashParams } from '../../hooks/useSaveDRXStatesToHashParams';
+import { CloudFilter } from '@shared/components/CloudFilter';
+import { DRXAnalyzeToolSelector } from '../AnalyzeToolSelector/AnalyzeToolSelector';
+import { DRXTemporalCompositeLayerSelector } from '../TemporalCompositeLayerSelector/';
+import { TemporalCompositeTool } from '../TemporalCompositeTool';
+import { ChangeCompareLayerSelector } from '@shared/components/ChangeCompareLayerSelector';
+import { DRXChangeCompareTool } from '../ChangeCompareTool/';
+import { useShouldShowSwipeSubModeToggle } from '@shared/hooks/useShouldShowSwipeSubModeToggle';
+import { SwipeSubModeToggle } from '@shared/components/SwipeLayerSelector/SwipeSubModeToggle';
+import { selectSelectedEventName } from '@shared/store/DisasterImageryExplorer/selectors';
+import classNames from 'classnames';
+import { useSyncPaginationWithScene } from '../../hooks/useSyncPaginationWithScene';
+import { DisasterImageryExplorerSavePanel } from '../SavePanel/DisasterImageryExplorerSavePanel';
+import { useTranslation } from 'react-i18next';
+import { APP_NAME } from '@shared/config';
+
+export const AppLayout = () => {
+    const { t } = useTranslation();
+
+    const mode = useAppSelector(selectAppMode);
+
+    const analysisTool = useAppSelector(selectActiveAnalysisTool);
+
+    const shouldShowSecondaryControls = useShouldShowSecondaryControls();
+
+    const shouldShowSwipeSubModeToggle = useShouldShowSwipeSubModeToggle();
+
+    const selectedEvent = useAppSelector(selectSelectedEventName);
+
+    /**
+     * Query the available Disaster Response scenes when the selected event changes
+     */
+    useQueryAvailableDisasterResponseScenes();
+
+    useSaveAppState2HashParams();
+
+    /**
+     * Save the states specific to Disaster Imagery Explorer (e.g. selected event, selected scene) to hash params, so that the app state can be restored when users share the URL or revisit the app
+     */
+    useSaveDIEXStatesToHashParams();
+
+    /**
+     * Keeps the pagination page in sync with the selected scene.
+     * When switching between selected scenes (e.g. in swipe mode), the pagination automatically navigates to the page containing that scene.
+     */
+    useSyncPaginationWithScene();
+
+    if (IS_MOBILE_DEVICE) {
+        return (
+            <>
+                <AppHeader />
+                <BottomPanel>
+                    <div className="mx-2 w-full">
+                        <EventSceneSelector4Mobile />
+                    </div>
+                </BottomPanel>
+            </>
+        );
+    }
+
+    return (
+        <>
+            <AppHeader />
+            <BottomPanel>
+                <div
+                    className={classNames('flex flex-shrink-0', {
+                        'is-disabled': !selectedEvent, // disable the controls in the header when no event is selected, as there is no scene to operate on
+                    })}
+                    inert={!selectedEvent}
+                >
+                    <ModeSelector
+                        // hideExploreSubModes={true}
+                        modesToHide={[
+                            'dynamic', // hide 'dynamic' mode as it is not applicable for Disaster Imagery Explorer. Hidding  'dynamic' mode will cause the sub modes under 'explore' mode (i.e. 'dynamic' and 'find a scene') to be hidden in the Mode Selector, as they are not applicable for Disaster Imagery Explorer, which only has one explore mode.
+                            'animate', // hide 'animate' mode as animation is not applicable for Disaster Imagery Explorer
+                        ]}
+                    />
+
+                    {shouldShowSwipeSubModeToggle && (
+                        <ContainerOfSecondaryControls>
+                            <SwipeSubModeToggle />
+                        </ContainerOfSecondaryControls>
+                    )}
+
+                    {shouldShowSecondaryControls && (
+                        <ContainerOfSecondaryControls>
+                            <SwipeLayerSelector
+                                useAcquisitionTimestampAsLabel={true}
+                                tooltip4LeadingLayerSelector={t(
+                                    'swipe_layer_selector_tooltip',
+                                    { ns: APP_NAME }
+                                )}
+                                tooltip4TrailingLayerSelector={t(
+                                    'swipe_layer_selector_tooltip',
+                                    { ns: APP_NAME }
+                                )}
+                            />
+                            {/* <AnimationControl /> */}
+                            <DRXAnalyzeToolSelector />
+                        </ContainerOfSecondaryControls>
+                    )}
+
+                    {mode === 'analysis' && analysisTool === 'change' && (
+                        <ContainerOfSecondaryControls>
+                            <ChangeCompareLayerSelector
+                                showAcquisitionTimestamp={true}
+                            />
+                        </ContainerOfSecondaryControls>
+                    )}
+
+                    {mode === 'analysis' &&
+                        analysisTool === 'temporal composite' && (
+                            <ContainerOfSecondaryControls>
+                                <DRXTemporalCompositeLayerSelector />
+                            </ContainerOfSecondaryControls>
+                        )}
+                </div>
+
+                <div className="flex flex-grow justify-center shrink-0">
+                    <div className="ml-2 3xl:ml-0 flex gap-4">
+                        {/* <Calendar>
+                            <LandsatMissionFilter />
+                            <CloudFilter />
+                        </Calendar> */}
+                        <EventSceneSelector>
+                            <CloudFilter />
+                        </EventSceneSelector>
+                    </div>
+
+                    {mode === 'analysis' && (
+                        <div className="analyze-tool-and-scene-info-container">
+                            <DRXChangeCompareTool />
+                            <TemporalCompositeTool />
+                        </div>
+                    )}
+
+                    <SceneInfo />
+                </div>
+            </BottomPanel>
+            <DisasterImageryExplorerSavePanel />
+        </>
+    );
+};

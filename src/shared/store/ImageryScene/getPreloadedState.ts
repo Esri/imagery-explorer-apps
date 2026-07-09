@@ -33,6 +33,7 @@ import {
 } from '@shared/utils/url-hash-params';
 import { Sentinel2FunctionName } from '@shared/services/sentinel-2/config';
 import { Sentinel1FunctionName } from '@shared/services/sentinel-1/config';
+import { DisasterResponseRasterFunctionName } from '@shared/services/disaster-response/config';
 
 export const getPreloadedState4ImageryScenes = (
     hashParams: URLSearchParams,
@@ -41,6 +42,7 @@ export const getPreloadedState4ImageryScenes = (
         | LandsatRasterFunctionName
         | Sentinel2FunctionName
         | Sentinel1FunctionName
+        | DisasterResponseRasterFunctionName
 ): ImageryScenesState => {
     let mode: AppMode =
         (getHashParamValueByKey('mode', hashParams) as AppMode) || 'dynamic';

@@ -13,74 +13,76 @@
  * limitations under the License.
  */
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 import MapView from '@arcgis/core/views/MapView';
 import Extent from '@arcgis/core/geometry/Extent';
 import Graphic from '@arcgis/core/Graphic';
-import ArcGISSearchWidget from '@arcgis/core/widgets/Search';
 import classNames from 'classnames';
+import type { ArcgisSearch } from '@arcgis/map-components/dist/components/arcgis-search';
+import '@arcgis/map-components/components/arcgis-search';
 
 type SearchResult = {
-    extent: Extent;
+    extent?: Extent;
     feature: Graphic;
     name: string;
-    target: string;
+    target: Graphic;
 };
 
 type Props = {
-    // containerId?: string;
     mapView?: MapView;
     hide?: boolean;
     searchCompletedHandler?: (result: SearchResult) => void;
 };
 
 const SearchWidget: React.FC<Props> = ({
-    // containerId,
     mapView,
     hide,
     searchCompletedHandler,
 }: Props) => {
-    const containerRef = useRef<HTMLDivElement>(null);
+    const searchRef = useRef<ArcgisSearch>(null);
 
-    const init = async () => {
-        const searchWidget = new ArcGISSearchWidget({
-            view: mapView,
-            resultGraphicEnabled: false,
-            popupEnabled: false,
-            container: containerRef.current,
-        });
-
-        // mapView.ui.add(searchWidget, 'top-right');
-
-        if (searchCompletedHandler) {
-            searchWidget.on('search-complete', (evt) => {
-                if (
-                    searchWidget.results[0] &&
-                    searchWidget?.results[0]?.results[0]
-                ) {
-                    const searchResult: SearchResult =
-                        searchWidget.results[0].results[0];
-                    // console.log(searchResultGeom);
-                    searchCompletedHandler(searchResult);
-                }
-            });
+    useEffect(() => {
+        if (!mapView || !searchRef.current) {
+            return;
         }
-    };
 
-    React.useEffect(() => {
-        if (mapView) {
-            init();
+        const searchEl = searchRef.current as any;
+        searchEl.view = mapView;
+
+        if (!searchCompletedHandler) {
+            return;
         }
+
+        const handleSearchComplete = (evt: CustomEvent) => {
+            const results = evt.detail?.results;
+            if (results?.[0]?.results?.[0]) {
+                searchCompletedHandler(results[0].results[0] as SearchResult);
+            }
+        };
+
+        searchEl.addEventListener('arcgisSearchComplete', handleSearchComplete);
+
+        return () => {
+            searchEl.removeEventListener(
+                'arcgisSearchComplete',
+                handleSearchComplete
+            );
+        };
     }, [mapView]);
 
     return (
         <div
             className={classNames('relative w-full z-20 bg-custom-background', {
-                'opacity-0': hide,
+                'opacity-0 pointer-events-none': hide,
             })}
-            ref={containerRef}
-        ></div>
+        >
+            <arcgis-search
+                ref={searchRef}
+                resultGraphicDisabled={true}
+                popupDisabled={true}
+            ></arcgis-search>
+        </div>
     );
 };
 

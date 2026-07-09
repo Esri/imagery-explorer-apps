@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import { Button } from '@shared/components/Button';
+// import { Button } from '@shared/components/Button';
 import { PublishAndDownloadJobType } from '@shared/store/PublishAndDownloadJobs/reducer';
 import React, { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { SaveOptionInfo, saveOptionInfoLookup } from '../constants';
@@ -22,7 +22,6 @@ import { useDefaultTitleAndSummary } from './useDefaultTitleAndSummary';
 import { formatHostedImageryServiceName } from '@shared/services/raster-analysis/createHostedImageryService';
 import { useValidateTextInput } from './useValidateTextInput';
 import { useTranslation } from 'react-i18next';
-import { CalciteLoader } from '@esri/calcite-components-react';
 
 type SaveJobDialogProps = {
     saveJobType: PublishAndDownloadJobType;
@@ -155,7 +154,10 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                     {validateTitleResponse.isValid &&
                         isCheckingTitleAvailability && (
                             <div className="text-sm text-custom-light-blue-50 mt-2 flex items-center">
-                                <CalciteLoader inline></CalciteLoader>
+                                <calcite-loader
+                                    label={t('loading')}
+                                    inline
+                                ></calcite-loader>
                                 <span className="ml-1">
                                     {t('checking_title_availability')}...
                                 </span>
@@ -192,23 +194,55 @@ export const SaveJobDialog: FC<SaveJobDialogProps> = ({
                 </div>
 
                 <div className=" mt-8 flex justify-end items-center">
-                    <div
+                    {/* <div
                         className=" mr-8 cursor-pointer"
                         onClick={closeButtonOnClick}
                     >
                         <span className="uppercase">{t('cancel')}</span>
-                    </div>
+                    </div> */}
 
-                    <Button
+                    {/* <Button
                         onClickHandler={() => {
                             saveButtonOnClick(title, summary);
                         }}
                         scale="s"
                         appearance="transparent"
                         disabled={okButtonDisabled}
+                        label="save"
                     >
                         {t('OK')}
-                    </Button>
+                    </Button> */}
+
+                    <calcite-button
+                        className="mr-4 uppercase"
+                        onClick={closeButtonOnClick}
+                        scale="l"
+                        appearance="transparent"
+                        style={{
+                            '--calcite-button-text-color':
+                                'var(--custom-light-blue)',
+                        }}
+                        label={'cancel'}
+                    >
+                        {t('cancel')}
+                    </calcite-button>
+
+                    <calcite-button
+                        onClick={() => {
+                            saveButtonOnClick(title, summary);
+                        }}
+                        scale="l"
+                        appearance="outline"
+                        style={{
+                            '--calcite-button-text-color':
+                                'var(--custom-light-blue)',
+                            '--calcite-button-border-color':
+                                'var(--custom-light-blue)',
+                        }}
+                        label={'save'}
+                    >
+                        {t('OK')}
+                    </calcite-button>
                 </div>
             </div>
         </div>

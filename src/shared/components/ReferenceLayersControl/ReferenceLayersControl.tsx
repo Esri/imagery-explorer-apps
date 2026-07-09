@@ -12,37 +12,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// import {
-//     showMapLabelToggled,
-//     showTerrainToggled,
-//     showBasemapToggled,
-// } from '@shared/store/Map/reducer';
-// import {
-//     selectShowMapLabel,
-//     selectShowTerrain,
-//     selectShowBasemap,
-// } from '@shared/store/Map/selectors';
-// import { selectAnimationStatus } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
 import React, { FC } from 'react';
-// import { useAppDispatch } from '@shared/store/configureStore';
-// import { useAppSelector } from '@shared/store/configureStore';
-// import { useTranslation } from 'react-i18next';
 import { ReferenceLayersToggleControl } from './ReferenceLayersToggleControl';
-// import { useSupportedLocales } from './useSupportedLocales';
-// import { CalciteButton } from '@esri/calcite-components-react';
-// import { LocaleSwitcher } from './LocaleSwitcher';
 import { useTranslation } from 'react-i18next';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { ReferenceLayersControlMobileDevice } from './ReferenceLayersControlMobileDevice';
-// import useOnClickOutside from '@shared/hooks/useOnClickOutside';
-
-// type ToggleButtonProps = {
-//     label: string;
-//     active: boolean;
-//     onToggle: () => void;
-// };
 
 type Props = {
     shoudHide: boolean;

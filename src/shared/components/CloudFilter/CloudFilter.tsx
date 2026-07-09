@@ -15,9 +15,10 @@
 
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames';
-import { Slider } from '../Slider/Slider';
+// import { Slider } from '../Slider/Slider';
 import { useTranslation } from 'react-i18next';
-import { CalciteIcon } from '@esri/calcite-components-react';
+// import { CalciteSlider } from '../Slider/CalciteSlider';
+import { CalciteSliderByValues } from '../Slider/CalidteSliderByValues';
 
 type Props = {
     /**
@@ -64,6 +65,11 @@ const TitleText: FC<TitleTextProps> = ({ cloudCoverage }: TitleTextProps) => {
     );
 };
 
+const CLOUD_COVERAGE_STEPS = [
+    0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65,
+    0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0,
+];
+
 /**
  * A slider component to select cloud coverage that will be used to find Landsat scenes
  * @param param0
@@ -103,12 +109,13 @@ export const CloudFilter: FC<Props> = ({
             className={classNames('mx-1 flex items-center', {
                 'is-disabled': disabled,
             })}
+            inert={disabled}
         >
             <TitleText cloudCoverage={cloudCoverage} />
 
             <div className="flex items-center ml-2">
                 {/* use offline icon to indicate low cloud tolerance */}
-                <CalciteIcon
+                <calcite-icon
                     scale="s"
                     icon="offline"
                     style={{
@@ -119,9 +126,9 @@ export const CloudFilter: FC<Props> = ({
 
                 <div
                     // id="cloud-filter-container"
-                    className="w-12 h-4 mx-1"
+                    className="w-12 mx-[2px]"
                 >
-                    <Slider
+                    {/* <Slider
                         steps={[
                             0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4,
                             0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85,
@@ -129,11 +136,18 @@ export const CloudFilter: FC<Props> = ({
                         ]}
                         value={cloudCoverage}
                         onChange={onChange}
+                    /> */}
+                    <CalciteSliderByValues
+                        value={cloudCoverage}
+                        steps={CLOUD_COVERAGE_STEPS}
+                        onChange={(val) => {
+                            onChange(val);
+                        }}
                     />
                 </div>
 
                 {/* use online icon to indicate high cloud tolerance */}
-                <CalciteIcon
+                <calcite-icon
                     scale="s"
                     icon="online"
                     style={{

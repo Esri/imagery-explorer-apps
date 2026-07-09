@@ -35,10 +35,11 @@ import {
 import classNames from 'classnames';
 // import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { SpectralIndex } from '@typing/imagery-service';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalAreaInfo';
 import { useSentinel2MaskToolFullPixelValueRange } from './useSentinel2MaskToolFullPixelValueRange';
 import { useTranslation } from 'react-i18next';
+import { RangeSlider } from '@shared/components/Slider/RangeSlider';
 
 export const MaskToolContainer = () => {
     const { t } = useTranslation();
@@ -103,14 +104,26 @@ export const MaskToolContainer = () => {
                 <MaskToolWarnigMessage />
             ) : (
                 <>
-                    <div className={classNames('relative w-full h-[120px]')}>
-                        <div className="absolute top-3 right-0">
+                    <div className={classNames('relative w-full')}>
+                        <div className="relative mt-3 mb-4 text-right">
                             <TotalVisibleAreaInfo
                                 label={t('estimated_mask_area')}
                             />
                         </div>
 
-                        <PixelRangeSlider
+                        {/* <PixelRangeSlider
+                            values={maskOptions.selectedRange}
+                            min={fullPixelValueRange[0]}
+                            max={fullPixelValueRange[1]}
+                            valuesOnChange={(values) => {
+                                dispatch(updateMaskLayerSelectedRange(values));
+                            }}
+                            countOfTicks={17}
+                            tickLabels={[-1, -0.5, 0, 0.5, 1]}
+                            showSliderTooltip={true}
+                        /> */}
+
+                        <RangeSlider
                             values={maskOptions.selectedRange}
                             min={fullPixelValueRange[0]}
                             max={fullPixelValueRange[1]}
@@ -123,7 +136,9 @@ export const MaskToolContainer = () => {
                         />
                     </div>
 
-                    <MaskLayerRenderingControls />
+                    <div className="mt-4">
+                        <MaskLayerRenderingControls />
+                    </div>
                 </>
             )}
         </div>

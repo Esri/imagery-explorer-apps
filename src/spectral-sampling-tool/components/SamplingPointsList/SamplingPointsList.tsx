@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
-import { CalciteIcon, CalciteLoader } from '@esri/calcite-components-react';
 
 type Props = {
     data: FormattedSpectralSamplingData[];
@@ -69,7 +68,7 @@ export const SamplingPointsList: FC<Props> = ({
         if (isLoading) {
             return (
                 <div className="flex items-center justify-center">
-                    <CalciteLoader inline />
+                    <calcite-loader label={'loading'} inline />
                     <span className="ml-1">fetching data</span>
                 </div>
             );
@@ -129,7 +128,7 @@ export const SamplingPointsList: FC<Props> = ({
                             className="absolute top-0 right-0 hidden group-hover:block"
                             onClick={onRemove.bind(null, uniqueId)}
                         >
-                            <CalciteIcon
+                            <calcite-icon
                                 icon="x"
                                 scale="s"
                                 style={{

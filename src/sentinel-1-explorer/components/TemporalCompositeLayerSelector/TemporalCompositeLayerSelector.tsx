@@ -21,14 +21,13 @@ import classNames from 'classnames';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { Button } from '@shared/components/Button';
 
-import CompositeIndicatorRed from './images/Composite_Red.png';
-import CompositeIndicatorGreen from './images/Composite_Green.png';
-import CompositeIndicatorBlue from './images/Composite_Blue.png';
-import CompositeIndicatorRGB from './images/Composite_RGB.png';
 import { formatFormattedDateStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
-import { CalciteIcon } from '@esri/calcite-components-react';
+import { ViewCompositeLayerButton } from '@shared/components/TemporalCompositeLayerSelector/TemporalCompositeLayerSelector';
+import CompositeIndicatorRed from '@shared/components/TemporalCompositeLayerSelector/images/Composite_Red.png';
+import CompositeIndicatorGreen from '@shared/components/TemporalCompositeLayerSelector/images/Composite_Green.png';
+import CompositeIndicatorBlue from '@shared/components/TemporalCompositeLayerSelector/images/Composite_Blue.png';
 
 type Props = {
     /**
@@ -153,6 +152,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         shouldHighlightScene4Red ? 'left' : null
                     }
+                    label="chhose red band"
                 >
                     <div className="text-xs normal-case">
                         {/* <span>choose</span>
@@ -176,7 +176,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 title={t('swap_red_green', { ns: APP_NAME })}
                 onClick={swapButtonOnClick.bind(null, 0, 1)}
             >
-                <CalciteIcon icon="arrow-up-down" scale="s" />
+                <calcite-icon icon="arrow-up-down" scale="s" />
             </div>
 
             <div className={classNames('relative mb-1')}>
@@ -193,6 +193,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         shouldHighlightScene4Green ? 'left' : null
                     }
+                    label="chhose green band"
                 >
                     <div className="text-xs normal-case">
                         {/* <span>choose</span>
@@ -218,7 +219,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 title={t('swap_green_blue', { ns: APP_NAME })}
                 onClick={swapButtonOnClick.bind(null, 1, 2)}
             >
-                <CalciteIcon icon="arrow-up-down" scale="s" />
+                <calcite-icon icon="arrow-up-down" scale="s" />
             </div>
 
             <div className={classNames('relative mb-1')}>
@@ -235,6 +236,7 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         shouldHighlightScene4Blue ? 'left' : null
                     }
+                    label="chhose blue band"
                 >
                     <div className="text-xs normal-case">
                         {/* <span>choose</span>
@@ -260,8 +262,9 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 className={classNames('relative mt-4', {
                     'is-disabled': viewCompositeLayerDisabled,
                 })}
+                inert={viewCompositeLayerDisabled}
             >
-                <Button
+                {/* <Button
                     appearance={isCompositeLayerOn ? 'solid' : 'transparent'}
                     scale="s"
                     onClickHandler={viewCompositeLayerButtonOnClick}
@@ -279,6 +282,12 @@ export const TemporalCompositeLayerSelector: FC<Props> = ({
                 <img
                     src={CompositeIndicatorRGB}
                     className="absolute top-0 left-0"
+                /> */}
+                <ViewCompositeLayerButton
+                    isCompositeLayerOn={isCompositeLayerOn}
+                    viewCompositeLayerButtonOnClick={
+                        viewCompositeLayerButtonOnClick
+                    }
                 />
             </div>
         </div>

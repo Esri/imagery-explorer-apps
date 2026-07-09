@@ -63,6 +63,7 @@ export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                     onClickHandler={() => {
                         dispatch(modeChanged('step'));
                     }}
+                    label="select step mode"
                 >
                     <span className="uppercase">{t('animate')}</span>
                 </Button>
@@ -81,6 +82,7 @@ export const ModeSelector: FC<Props> = ({ disabled }: Props) => {
                     onClickHandler={() => {
                         dispatch(modeChanged('swipe'));
                     }}
+                    label="select swipe mode"
                 >
                     <span className="uppercase">{t('swipe')}</span>
                 </Button>

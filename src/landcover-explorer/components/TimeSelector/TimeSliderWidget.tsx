@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import './TimeSliderWidget.css';
+// import './TimeSliderWidget.css';
 import React, { useRef, useEffect, FC, useMemo } from 'react';
 // import ISlider from '@arcgis/core/widgets/Slider';
 import TimeSlider from '@arcgis/core/widgets/TimeSlider';
@@ -32,6 +32,7 @@ import { yearUpdated } from '@shared/store/LandcoverExplorer/reducer';
 import { getSliderTickValues } from './helpers';
 import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
+import { CustomTimeSlider } from './CustomTimeSlider';
 
 type TimeSliderMode = 'time-window' | 'instant';
 
@@ -90,138 +91,133 @@ export const TimeSliderWidgetContainer = () => {
                 'pointer-events-none': animationMode !== null,
             })}
         >
-            <TimeSliderWidget
-                mode="instant"
+            <CustomTimeSlider
                 years={years}
-                initialTimeExtent={{
-                    start: getUTCDate(year, 0, 1),
-                    end: getUTCDate(year, 0, 1),
-                }}
-                visible={timeStepSliderVisibility}
-                timeExtentOnChange={(startYear) => {
-                    dispatch(yearUpdated(startYear));
-                }}
                 selectedYear={year}
+                visible={timeStepSliderVisibility}
+                onChange={(selectedYear) => {
+                    dispatch(yearUpdated(selectedYear));
+                }}
             />
         </div>
     );
 };
 
-export const TimeSliderWidget: FC<Props> = ({
-    mode = 'time-window',
-    years,
-    initialTimeExtent,
-    visible,
-    timeExtentOnChange,
-    selectedYear,
-}: Props) => {
-    const containerRef = useRef<HTMLDivElement>(null);
+// export const TimeSliderWidget: FC<Props> = ({
+//     mode = 'time-window',
+//     years,
+//     initialTimeExtent,
+//     visible,
+//     timeExtentOnChange,
+//     selectedYear,
+// }: Props) => {
+//     const containerRef = useRef<HTMLDivElement>(null);
 
-    const sliderRef = useRef<TimeSlider>(null);
+//     const sliderRef = useRef<TimeSlider>(null);
 
-    const debounceDelay = useRef<NodeJS.Timeout>(null);
+//     const debounceDelay = useRef<NodeJS.Timeout>(null);
 
-    const init = async () => {
-        try {
-            // get an array of Date objects represent the input years, use Jan 1st as month and day when create the Date obj
-            const yearsAsDateObj: Date[] = years.map((year) => {
-                return getUTCDate(year, 1, 1);
-            });
+//     const init = async () => {
+//         try {
+//             // get an array of Date objects represent the input years, use Jan 1st as month and day when create the Date obj
+//             const yearsAsDateObj: Date[] = years.map((year) => {
+//                 return getUTCDate(year, 1, 1);
+//             });
 
-            const startYear = years[0];
-            const endYear = years[years.length - 1];
+//             const startYear = years[0];
+//             const endYear = years[years.length - 1];
 
-            const NUM_TICKS = IS_MOBILE_DEVICE ? 5 : 10; // reduce the number of ticks for mobile devices
+//             const NUM_TICKS = IS_MOBILE_DEVICE ? 5 : 10; // reduce the number of ticks for mobile devices
 
-            sliderRef.current = new TimeSlider({
-                container: containerRef.current,
-                mode,
-                fullTimeExtent: {
-                    start: getUTCDate(startYear, 1, 1),
-                    end: getUTCDate(endYear, 1, 1),
-                },
-                timeExtent: initialTimeExtent,
-                stops: { dates: yearsAsDateObj },
-                tickConfigs: [
-                    {
-                        mode: 'position',
-                        values: getSliderTickValues(yearsAsDateObj, NUM_TICKS),
-                        labelsVisible: true,
-                        labelFormatFunction: (value: any) => {
-                            return new Date(value).getUTCFullYear();
-                        },
-                    } as any,
-                ],
-                visible,
-            });
+//             sliderRef.current = new TimeSlider({
+//                 container: containerRef.current,
+//                 mode,
+//                 fullTimeExtent: {
+//                     start: getUTCDate(startYear, 1, 1),
+//                     end: getUTCDate(endYear, 1, 1),
+//                 },
+//                 timeExtent: initialTimeExtent,
+//                 stops: { dates: yearsAsDateObj },
+//                 tickConfigs: [
+//                     {
+//                         mode: 'position',
+//                         values: getSliderTickValues(yearsAsDateObj, NUM_TICKS),
+//                         labelsVisible: true,
+//                         labelFormatFunction: (value: any) => {
+//                             return new Date(value).getUTCFullYear();
+//                         },
+//                     } as any,
+//                 ],
+//                 visible,
+//             });
 
-            // console.log(sliderRef.current);
+//             // console.log(sliderRef.current);
 
-            if (timeExtentOnChange) {
-                reactiveUtils.watch(
-                    () => sliderRef.current.timeExtent,
-                    (timeExtent) => {
-                        clearTimeout(debounceDelay.current);
+//             if (timeExtentOnChange) {
+//                 reactiveUtils.watch(
+//                     () => sliderRef.current.timeExtent,
+//                     (timeExtent) => {
+//                         clearTimeout(debounceDelay.current);
 
-                        debounceDelay.current = setTimeout(() => {
-                            timeExtentOnChange(
-                                timeExtent.start.getUTCFullYear(),
-                                timeExtent.end.getUTCFullYear()
-                            );
-                        }, 500);
-                    }
-                );
-            }
+//                         debounceDelay.current = setTimeout(() => {
+//                             timeExtentOnChange(
+//                                 timeExtent.start.getUTCFullYear(),
+//                                 timeExtent.end.getUTCFullYear()
+//                             );
+//                         }, 500);
+//                     }
+//                 );
+//             }
 
-            // sliderRef.current.on('thumb-drag', (evt) => {
-            //     clearTimeout(debounceDelay.current);
+//             // sliderRef.current.on('thumb-drag', (evt) => {
+//             //     clearTimeout(debounceDelay.current);
 
-            // });
-        } catch (err) {
-            console.error(err);
-        }
-    };
+//             // });
+//         } catch (err) {
+//             console.error(err);
+//         }
+//     };
 
-    useEffect(() => {
-        init();
+//     useEffect(() => {
+//         init();
 
-        return () => {
-            sliderRef.current.destroy();
-            console.log(sliderRef.current.destroyed);
-        };
-    }, []);
+//         return () => {
+//             sliderRef.current.destroy();
+//             console.log(sliderRef.current.destroyed);
+//         };
+//     }, []);
 
-    useEffect(() => {
-        if (sliderRef.current) {
-            sliderRef.current.visible = visible;
-        }
-    }, [visible]);
+//     useEffect(() => {
+//         if (sliderRef.current) {
+//             sliderRef.current.visible = visible;
+//         }
+//     }, [visible]);
 
-    useEffect(() => {
-        if (!sliderRef.current || !selectedYear) {
-            return;
-        }
+//     useEffect(() => {
+//         if (!sliderRef.current || !selectedYear) {
+//             return;
+//         }
 
-        const yearFromTimeSlider =
-            sliderRef.current.timeExtent.start.getUTCFullYear();
+//         const yearFromTimeSlider =
+//             sliderRef.current.timeExtent.start.getUTCFullYear();
 
-        if (yearFromTimeSlider === selectedYear) {
-            return;
-        }
+//         if (yearFromTimeSlider === selectedYear) {
+//             return;
+//         }
 
-        sliderRef.current.timeExtent = {
-            start: getUTCDate(selectedYear, 1, 1),
-            end: getUTCDate(selectedYear, 1, 1),
-        } as any;
-    }, [selectedYear]);
+//         sliderRef.current.timeExtent = {
+//             start: getUTCDate(selectedYear, 1, 1),
+//             end: getUTCDate(selectedYear, 1, 1),
+//         } as any;
+//     }, [selectedYear]);
 
-    return (
-        <div
-            // id="timeSliderDiv"
-            ref={containerRef}
-            className={classNames(
-                'customized-time-slider time-slider-container'
-            )}
-        ></div>
-    );
-};
+//     return (
+//         <div
+//             // id="timeSliderDiv"
+//             ref={containerRef}
+//             className={classNames(
+//                 'customized-time-slider time-slider-container'
+//             )}
+//         ></div>
+//     );
+// };

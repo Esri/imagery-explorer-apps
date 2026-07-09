@@ -3,11 +3,6 @@ import { SIUHIAnalysisSubJob } from '@shared/store/UrbanHeatIslandTool/reducer';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SIUHIAnalysisJobCardContainerClassName } from './JobCard';
-import {
-    CalciteButton,
-    CalciteIcon,
-    CalciteLoader,
-} from '@esri/calcite-components-react';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 
 type SubJobCardProps = {
@@ -61,7 +56,11 @@ export const SubJobCard: FC<SubJobCardProps> = ({
                             'var(--custom-light-blue-50)',
                     }}
                 >
-                    <CalciteLoader scale="s" text={message} />
+                    <calcite-loader
+                        label={'loading'}
+                        scale="s"
+                        text={message}
+                    />
                 </div>
             );
         }
@@ -75,7 +74,7 @@ export const SubJobCard: FC<SubJobCardProps> = ({
             return (
                 <div className="text-xs text-center text-red-500">
                     <div className="mb-1 w-full text-center">
-                        <CalciteIcon icon="exclamation-mark-circle" />
+                        <calcite-icon icon="exclamation-mark-circle" />
                     </div>
 
                     <p>
@@ -91,7 +90,7 @@ export const SubJobCard: FC<SubJobCardProps> = ({
         return (
             <div className="text-xs  text-center">
                 <div className="mb-1 w-full text-center text-green-500">
-                    <CalciteIcon icon="check-circle" />
+                    <calcite-icon icon="check-circle" />
                 </div>
 
                 <p>{t('sub_job_completed', { ns: APP_NAME })}</p>
@@ -104,7 +103,7 @@ export const SubJobCard: FC<SubJobCardProps> = ({
                                 'var(--calcite-color-status-success)',
                         }}
                     >
-                        <CalciteButton
+                        <calcite-button
                             width="full"
                             scale="s"
                             href={`${AGOL_PORTAL_ROOT}/home/item.html?id=${subJobData.outputItemId}`}
@@ -113,7 +112,7 @@ export const SubJobCard: FC<SubJobCardProps> = ({
                             iconEnd="launch"
                         >
                             {t('view_result_item', { ns: APP_NAME })}
-                        </CalciteButton>
+                        </calcite-button>
                     </div>
                 ) : (
                     <p>{t('sub_job_completed', { ns: APP_NAME })}</p>

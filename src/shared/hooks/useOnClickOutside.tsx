@@ -16,16 +16,27 @@
 import React, { useEffect } from 'react';
 
 const useOnClickOutside = (
-    ref: React.MutableRefObject<HTMLDivElement>,
+    ref:
+        | React.MutableRefObject<HTMLDivElement>
+        | React.MutableRefObject<HTMLDivElement>[],
     handler: (event: MouseEvent) => void
 ) => {
     useEffect(
         () => {
+            const refs = Array.isArray(ref) ? ref : [ref];
+
             const listener = (event: MouseEvent) => {
                 const targetElement = event.target as HTMLElement;
 
-                // Do nothing if clicking ref's element or descendent elements
-                if (!ref.current || ref.current.contains(targetElement)) {
+                // Do nothing if clicking one of the refs' elements or their descendent elements.
+                // Multiple refs are supported so that content rendered via a portal (e.g. a menu
+                // attached to document.body to escape a scrollable ancestor) can still be treated
+                // as "inside" for the purpose of this check.
+                if (
+                    refs.some(
+                        (r) => r.current && r.current.contains(targetElement)
+                    )
+                ) {
                     return;
                 }
 

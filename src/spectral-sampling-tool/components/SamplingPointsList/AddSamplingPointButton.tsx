@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { CalciteIcon } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
 import classNames from 'classnames';
 import React, { FC } from 'react';
@@ -48,7 +47,7 @@ export const AddSamplingPointButton: FC<Props> = ({
             )}
             onClick={addButtonOnClick}
         >
-            <CalciteIcon icon="plus" scale="s" />
+            <calcite-icon icon="plus" scale="s" />
             <span
                 className=" text-custom-light-blue uppercase ml-1 underline"
                 style={{

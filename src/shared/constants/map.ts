@@ -27,17 +27,17 @@ const DEFAULT_WEB_MAP_ID = '81609bbe235942919ad27c77e42c600e';
  * Try to use the value defined in the .env file first, otherwise fallback to the default value.
  */
 export const WEB_MAP_ID = ENV_WEB_MAP_ID || DEFAULT_WEB_MAP_ID;
-console.log('WEB_MAP_ID:', WEB_MAP_ID);
+// console.log('WEB_MAP_ID:', WEB_MAP_ID);
 
 /**
  * Default Map Center
  */
-export const MAP_CENTER = [-117.18, 34.055];
+export const MAP_CENTER = [5, 20]; //[-117.18, 34.055];
 
 /**
  * Default Map Zoom
  */
-export const MAP_ZOOM = 10;
+export const MAP_ZOOM = 3;
 
 export const HUMAN_GEO_DARK_LABEL_LAYER_TITLE = 'Human Geography Dark Label';
 

@@ -13,15 +13,13 @@
  * limitations under the License.
  */
 
-import { CalciteLoader } from '@esri/calcite-components-react';
 import classNames from 'classnames';
 import React, { CSSProperties, FC } from 'react';
+import { useAppSelector } from '@shared/store/configureStore';
+import { selectIsMapUpdating } from '@shared/store/Map/selectors';
+import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 
 type Props = {
-    /**
-     * if true, show map loading indicator
-     */
-    active: boolean;
     /**
      * position of swipe widget handler on x axis
      */
@@ -29,9 +27,13 @@ type Props = {
 };
 
 export const MapLoadingIndicator: FC<Props> = ({
-    active,
     swipeWidgetHandlerPosition,
 }: Props) => {
+    const isMapUpdating = useAppSelector(selectIsMapUpdating);
+    const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
+
+    const active = isMapUpdating && !isAnimationPlaying;
+
     if (!active) {
         return null;
     }
@@ -54,7 +56,7 @@ export const MapLoadingIndicator: FC<Props> = ({
                     } as CSSProperties
                 }
             >
-                <CalciteLoader />
+                <calcite-loader label={'loading'} />
             </div>
 
             {swipeWidgetHandlerPosition && (
@@ -71,7 +73,7 @@ export const MapLoadingIndicator: FC<Props> = ({
                         } as CSSProperties
                     }
                 >
-                    <CalciteLoader />
+                    <calcite-loader label={'loading'} />
                 </div>
             )}
         </>

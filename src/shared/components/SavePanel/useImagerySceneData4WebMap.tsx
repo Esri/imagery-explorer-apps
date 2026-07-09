@@ -73,6 +73,8 @@ export const useImagerySceneData4WebMap = () => {
             .map((d) => ({
                 objectId: d.objectIdOfSelectedScene,
                 acquisitionDate: d.acquisitionDate,
+                acquisitionTimestampOfSelectedScene:
+                    d?.acquisitionTimestampOfSelectedScene || null,
             }));
     }, [
         mode,

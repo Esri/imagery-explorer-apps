@@ -13,17 +13,19 @@
  * limitations under the License.
  */
 
-import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import {
     selectedRangeUpdated,
     selectedOption4ChangeCompareToolChanged,
+    selectedRange2Updated,
 } from '@shared/store/ChangeCompareTool/reducer';
 import {
     selectChangeCompareLayerIsOn,
     selectFullPixelValuesRangeInChangeCompareTool,
     selectSelectedOption4ChangeCompareTool,
     selectUserSelectedRangeInChangeCompareTool,
+    selectSelectedRange2InChangeCompareTool,
 } from '@shared/store/ChangeCompareTool/selectors';
 import { selectActiveAnalysisTool } from '@shared/store/ImageryScene/selectors';
 import { SpectralIndex } from '@typing/imagery-service';
@@ -34,6 +36,8 @@ import { useAppSelector } from '@shared/store/configureStore';
 import { getChangeCompareLayerColorrampAsCSSGradient } from './helpers';
 import { TotalVisibleAreaInfo } from '../TotalAreaInfo/TotalAreaInfo';
 import { useTranslation } from 'react-i18next';
+import { RangeSlider } from '../Slider/RangeSlider';
+import { RangeSliderWithDualRanges } from '../Slider/RangeSliderWithDualRanges';
 
 type Props = {
     /**
@@ -50,12 +54,27 @@ type Props = {
      * This text provide user instruction about how to use this tool
      */
     preselectionText?: string;
+    /**
+     * step value for the pixel range selector slider. The default value is 0.01, which means when user move the slider, the selected pixel value range will be updated in the increments of 0.01. You can adjust this value based on the expected pixel value range and the desired sensitivity of the slider.
+     */
+    rangeSliderStep?: number;
+    /**
+     * the count of ticks to be rendered on the pixel range selector.
+     */
+    rangeSliderCountOfTicks?: number;
+    /**
+     * If true, hide the total area indicator above the pixel value range selector
+     */
+    hideTotalAreaInfo?: boolean;
 };
 
 export const ChangeCompareToolControls: FC<Props> = ({
     legendLabelText = [],
     comparisonTopic,
     preselectionText,
+    rangeSliderStep = 0.01,
+    rangeSliderCountOfTicks,
+    hideTotalAreaInfo = false,
 }: Props) => {
     const { t } = useTranslation();
 
@@ -65,6 +84,10 @@ export const ChangeCompareToolControls: FC<Props> = ({
 
     const selectedRange = useAppSelector(
         selectUserSelectedRangeInChangeCompareTool
+    );
+
+    const selectedRange2 = useAppSelector(
+        selectSelectedRange2InChangeCompareTool
     );
 
     const fullPixelValueRange = useAppSelector(
@@ -92,16 +115,62 @@ export const ChangeCompareToolControls: FC<Props> = ({
 
         // console.log(min, max, fullRange, countOfTicks, tickLabels);
 
+        // a static legend rendered above the track, for visual reference only (no mouse events)
+        const legend: React.ReactNode = (
+            <div
+                className="w-full h-2"
+                style={{
+                    background: getChangeCompareLayerColorrampAsCSSGradient(),
+                }}
+            ></div>
+        );
+
+        if (selectedRange2) {
+            return (
+                <RangeSliderWithDualRanges
+                    values={selectedRange}
+                    values2={selectedRange2}
+                    valuesOnChange={(vals: number[]) => {
+                        dispatch(selectedRangeUpdated(vals));
+                        // dispatch(selectedOption4ChangeCompareToolChanged(SpectralIndex.LogDifference));
+                    }}
+                    values2OnChange={(vals: number[]) => {
+                        dispatch(selectedRange2Updated(vals));
+                        // dispatch(selectedOption4ChangeCompareToolChanged(SpectralIndex.LogDifference));
+                    }}
+                    min={min}
+                    max={max}
+                    steps={rangeSliderStep}
+                    showSliderTooltip={true}
+                    legend={legend}
+                    countOfTicks={rangeSliderCountOfTicks}
+                />
+            );
+        }
+
         return (
-            <PixelRangeSlider
+            // <PixelRangeSlider
+            //     values={selectedRange}
+            //     valuesOnChange={(vals: number[]) => {
+            //         dispatch(selectedRangeUpdated(vals));
+            //     }}
+            //     min={min}
+            //     max={max}
+            //     steps={0.01}
+            //     showSliderTooltip={true}
+            // />
+
+            <RangeSlider
                 values={selectedRange}
                 valuesOnChange={(vals: number[]) => {
                     dispatch(selectedRangeUpdated(vals));
                 }}
                 min={min}
                 max={max}
-                steps={0.01}
+                steps={rangeSliderStep}
                 showSliderTooltip={true}
+                legend={legend}
+                countOfTicks={rangeSliderCountOfTicks}
             />
         );
     };
@@ -147,7 +216,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
             return null;
         }
 
-        return <div className="w-full mt-12">{content}</div>;
+        return <div className="w-full mt-3">{content}</div>;
     };
 
     const totalVisibleAreaInfo = useMemo(() => {
@@ -177,13 +246,14 @@ export const ChangeCompareToolControls: FC<Props> = ({
     }
 
     return (
-        <div className={classNames('relative w-full h-[0px] pt-[50px]')}>
-            <div className="absolute top-3 w-full text-right ">
-                {/* <span className="text-xs">{legendTitle}</span> */}
-                <TotalVisibleAreaInfo label={totalVisibleAreaInfo} />
+        <div className={classNames('relative w-full h-[0px]')}>
+            <div className="mt-3 mb-3 w-full text-right ">
+                {hideTotalAreaInfo === false && (
+                    <TotalVisibleAreaInfo label={totalVisibleAreaInfo} />
+                )}
             </div>
 
-            <div className="relative w-full">
+            {/* <div className="relative w-full">
                 <div
                     className="w-full h-2"
                     style={{
@@ -191,7 +261,7 @@ export const ChangeCompareToolControls: FC<Props> = ({
                             getChangeCompareLayerColorrampAsCSSGradient(),
                     }}
                 ></div>
-            </div>
+            </div> */}
 
             {getPixelRangeSlider()}
             {getLegendLabelText()}

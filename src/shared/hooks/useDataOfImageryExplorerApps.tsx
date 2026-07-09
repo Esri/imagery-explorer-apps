@@ -32,44 +32,46 @@ export type ImageryExplorerAppInfo = {
 export const useDataOfImageryExplorerApps = () => {
     const { t } = useTranslation();
 
-    const dataOfImageryExplorerApps = React.useMemo(() => {
-        const data: ImageryExplorerAppInfo[] = [
-            {
-                appName: 'landsatexplorer',
-                title: t('landsat_explorer'),
-                url: config.landsatexplorer.pathname,
-                tooltip: t('launch_landsat_explorer'),
-            },
-            {
-                appName: 'sentinel2explorer',
-                title: t('sentinel_2_explorer'),
-                url: config.sentinel2explorer.pathname,
-                tooltip: t('launch_sentinel_2_explorer'),
-            },
-            {
-                appName: 'sentinel1explorer',
-                title: t('sentinel_1_explorer'),
-                url: config.sentinel1explorer.pathname,
-                tooltip: t('launch_sentinel_1_explorer'),
-            },
-            {
-                appName: 'landcoverexplorer',
-                title: t('landcover_explorer'),
-                url: config.landcoverexplorer.pathname,
-                tooltip: t('launch_landcover_explorer'),
-            },
-            {
-                appName: 'nlcdlandcoverexplorer',
-                title: t('nlcd_landcover_explorer'),
-                url: config.nlcdlandcoverexplorer.pathname,
-                tooltip: t('launch_nlcd_landcover_explorer'),
-            },
-        ];
+    const data: ImageryExplorerAppInfo[] = [
+        {
+            appName: 'landsatexplorer',
+            title: t('landsat_explorer'),
+            url: config.landsatexplorer.pathname,
+            tooltip: t('launch_landsat_explorer'),
+        },
+        {
+            appName: 'sentinel2explorer',
+            title: t('sentinel_2_explorer'),
+            url: config.sentinel2explorer.pathname,
+            tooltip: t('launch_sentinel_2_explorer'),
+        },
+        {
+            appName: 'sentinel1explorer',
+            title: t('sentinel_1_explorer'),
+            url: config.sentinel1explorer.pathname,
+            tooltip: t('launch_sentinel_1_explorer'),
+        },
+        {
+            appName: 'landcoverexplorer',
+            title: t('landcover_explorer'),
+            url: config.landcoverexplorer.pathname,
+            tooltip: t('launch_landcover_explorer'),
+        },
+        {
+            appName: 'nlcdlandcoverexplorer',
+            title: t('nlcd_landcover_explorer'),
+            url: config.nlcdlandcoverexplorer.pathname,
+            tooltip: t('launch_nlcd_landcover_explorer'),
+        },
+        {
+            appName: 'disasterimageryexplorer',
+            title: t('disaster_imagery_explorer'),
+            url: config.disasterimageryexplorer.pathname,
+            tooltip: t('launch_disaster_imagery_explorer'),
+        },
+    ];
 
-        return data;
-    }, []);
-
-    return dataOfImageryExplorerApps;
+    return data;
 };
 
 export const useDataOfImageryUtilityApps = () => {
@@ -86,7 +88,7 @@ export const useDataOfImageryUtilityApps = () => {
         ];
 
         return data; // Exclude the current app
-    }, []);
+    }, [t]);
 
     return dataOfImageryExplorerApps;
 };

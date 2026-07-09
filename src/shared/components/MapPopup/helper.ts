@@ -14,6 +14,8 @@
  */
 
 import Point from '@arcgis/core/geometry/Point';
+import type MapView from '@arcgis/core/views/MapView';
+import type { ArcgisPopup } from '@arcgis/map-components/components/arcgis-popup';
 import { t } from 'i18next';
 
 /**
@@ -34,6 +36,10 @@ export const didClickOnLeftSideOfSwipeWidget = (
 
 export const getLoadingIndicator = () => {
     const popupDiv = document.createElement('div');
+    popupDiv.style.width = '100%';
+    popupDiv.style.display = 'flex';
+    popupDiv.style.justifyContent = 'center';
+    popupDiv.style.alignItems = 'center';
     popupDiv.innerHTML = `<calcite-loader scale="s"></calcite-loader>`;
     return popupDiv;
 };
@@ -54,14 +60,33 @@ export const getPopUpContentWithLocationInfo = (
 
     const popupDiv = document.createElement('div');
 
+    // const coordinatesHTML = `
+    //     <span><span class='text-custom-light-blue-50'>x</span> ${lon}</span>
+    //     <span class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</span>
+    // `;
+
+    // const locationInfoHTML = `
+    //     <div
+    //         class='popup-location-info-container text-custom-light-blue text-xs cursor-pointer'
+    //         title="${t('click_to_copy_coordinates')}"
+    //     >
+    //         <div class='popup-location-info-content'
+    //             data-testid='popup-location-info-content'
+    //         >
+    //             ${coordinatesHTML}
+    //         </div>
+    //     </div>
+    // `;
+
     const coordinatesHTML = `
-        <span><span class='text-custom-light-blue-50'>x</span> ${lon}</span>
-        <span class='ml-2'><span class='text-custom-light-blue-50'>y</span> ${lat}</span>
+        <span><span style='color: var(--custom-light-blue-50);'>x</span> ${lon}</span>
+        <span style='margin-left: 0.5rem;'><span style='color: var(--custom-light-blue-50);'>y</span> ${lat}</span>
     `;
 
     const locationInfoHTML = `
         <div 
-            class='popup-location-info-container text-custom-light-blue text-xs cursor-pointer' 
+            class='popup-location-info-container'
+            style='color: var(--custom-light-blue); font-size: 0.75rem; line-height: 1rem; cursor: pointer;'
             title="${t('click_to_copy_coordinates')}"
         >
             <div class='popup-location-info-content'
@@ -99,4 +124,34 @@ export const getPopUpContentWithLocationInfo = (
     });
 
     return popupDiv;
+};
+
+/**
+ * Format the popup elements, such as hide the collapse button and action bar, disable the dock option, etc.
+ * @param mapView
+ */
+export const formatPopupElements = (mapView: MapView): void => {
+    mapView.popup.visibleElements = {
+        collapseButton: false,
+        actionBar: false,
+    };
+
+    mapView.popup.dockOptions = {
+        buttonEnabled: false,
+    };
+};
+
+/**
+ * Format the popup component, such as hide the collapse button and action bar, disable the dock option, etc.
+ * @param popupComponent
+ */
+export const formatPopupComponent = (popupComponent: ArcgisPopup): void => {
+    popupComponent.hideCollapseButton = true;
+    popupComponent.hideActionBar = true;
+    popupComponent.headingLevel = 3;
+    // popupComponent.alignment = 'bottom-right';
+
+    popupComponent.dockOptions = {
+        buttonEnabled: false,
+    };
 };

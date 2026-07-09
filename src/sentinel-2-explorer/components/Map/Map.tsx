@@ -27,7 +27,7 @@ import { MapActionButtonGroup } from '@shared/components/MapActionButton';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
-import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
+// import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { ZoomToExtent } from '@shared/components/ZoomToExtent';
 import { SENTINEL_2_SERVICE_URL } from '@shared/services/sentinel-2/config';
 import { Sentinel2Layer } from '../Sentinel2Layer';
@@ -36,6 +36,7 @@ import { Sentinel2ChangeLayer } from '../ChangeCompareLayer';
 import { APP_NAME } from '@shared/config';
 import { useTranslation } from 'react-i18next';
 import { FootPrintOfSelectedScene } from '@shared/components/FootPrintOfSelectedScene';
+import { SwipeComponent4ImageryLayers } from '@shared/components/SwipeWidget/SwipeComponent4ImageryLayers';
 
 const Map = () => {
     const dispatch = useAppDispatch();
@@ -68,7 +69,8 @@ const Map = () => {
                     })}
                 />
             </GroupLayer>
-            <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_2_SERVICE_URL} />
+            {/* <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_2_SERVICE_URL} /> */}
+            <SwipeComponent4ImageryLayers serviceUrl={SENTINEL_2_SERVICE_URL} />
 
             <HillshadeLayer />
 

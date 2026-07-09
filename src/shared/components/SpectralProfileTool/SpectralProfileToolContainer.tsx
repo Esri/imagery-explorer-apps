@@ -39,7 +39,6 @@ import { SpectralProfileChart } from './SpectralProfileChart';
 import { ExpandedSpectralProfileChart } from './ExpandedChart';
 import { set } from 'date-fns';
 import { useTranslation } from 'react-i18next';
-import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     /**
@@ -127,10 +126,10 @@ export const SpectralProfileToolContainer: FC<Props> = ({
                     setSelectedLandCoverType(val as LandCoverType);
                 }}
             >
-                <CalciteIcon
+                <calcite-icon
                     icon="zoom-out-fixed"
                     scale="s"
-                    class={classNames('ml-1 cursor-pointer', {
+                    className={classNames('ml-1 cursor-pointer', {
                         'is-disabled':
                             !spectralProfileData ||
                             !spectralProfileData?.length,

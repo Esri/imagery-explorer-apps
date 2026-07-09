@@ -86,6 +86,8 @@ export const TotalAreaGraphContainer: FC<Props> = ({
 
     const landCoverTotalsDataRef = useRef<LandCoverArea[]>(null);
 
+    const debounceRef = useRef<NodeJS.Timeout>(null);
+
     const fetchData = async (): Promise<void> => {
         if (!resolution || !extent || !year) {
             return undefined;
@@ -167,7 +169,10 @@ export const TotalAreaGraphContainer: FC<Props> = ({
         //     return;
         // }
 
-        fetchData();
+        clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+            fetchData();
+        }, 500);
     }, [resolution, extent, year, zoom]);
 
     return (

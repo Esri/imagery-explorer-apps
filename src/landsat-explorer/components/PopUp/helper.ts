@@ -56,14 +56,26 @@ export const getMainContent = (values: number[], mapPoint: Point) => {
 
     const waterIndex = calcSpectralIndex('water', values).toFixed(3);
 
+    // const content = `
+    //     <div class='text-custom-light-blue text-xs'>
+    //         <div class='mb-2'>
+    //             <span><span class='text-custom-light-blue-50'>${t(
+    //                 'surface_temp'
+    //             )}:</span> ${surfaceTempInfo}</span><br />
+    //             <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span>
+    //             <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
+    //         </div>
+    //     </div>
+    // `;
+
     const content = `
-        <div class='text-custom-light-blue text-xs'>
-            <div class='mb-2'>
-                <span><span class='text-custom-light-blue-50'>${t(
+        <div style='color: var(--custom-light-blue); font-size: 0.75rem; line-height: 1rem;'>
+            <div style='margin-bottom: 0.5rem;'>
+                <span><span style='color: var(--custom-light-blue-50);'>${t(
                     'surface_temp'
                 )}:</span> ${surfaceTempInfo}</span><br />
-                <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span>
-                <span class='ml-2'><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
+                <span><span style='color: var(--custom-light-blue-50);'>NDVI:</span> ${vegetationIndex}</span>
+                <span style='margin-left: 0.5rem;'><span style='color: var(--custom-light-blue-50);'>MNDWI:</span> ${waterIndex}</span>
             </div>
         </div>
     `;

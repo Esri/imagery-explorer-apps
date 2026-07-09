@@ -13,15 +13,29 @@
  * limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { selectAppMode } from '@shared/store/ImageryScene/selectors';
-import { modeChanged } from '@shared/store/ImageryScene/reducer';
+import { AppMode, modeChanged } from '@shared/store/ImageryScene/reducer';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import { ModeSelector } from './ModeSelector';
 
-export const ModeSelectorContainer = () => {
+type Props = {
+    // /**
+    //  * If true, the sub modes under "Explore" mode (i.e. "Swipe" and "Opacity") will be hidden in the mode selector, as they are not applicable for app like Disaster Imagery Explorer, which only has one explore mode.
+    //  */
+    // hideExploreSubModes?: boolean;
+    /**
+     * List of modes to hide in the mode selector.
+     */
+    modesToHide?: AppMode[];
+};
+
+export const ModeSelectorContainer: FC<Props> = ({
+    // hideExploreSubModes = false,
+    modesToHide = [],
+}) => {
     const dispatch = useAppDispatch();
 
     const selectedMode = useAppSelector(selectAppMode);
@@ -32,6 +46,7 @@ export const ModeSelectorContainer = () => {
         <ModeSelector
             selectedMode={selectedMode}
             disabled={isAnimationPlaying}
+            modesToHide={modesToHide}
             selectedModeOnChange={(value) => {
                 dispatch(modeChanged(value));
             }}

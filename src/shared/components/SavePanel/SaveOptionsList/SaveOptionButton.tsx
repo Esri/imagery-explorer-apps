@@ -50,9 +50,13 @@ export const SaveOptionButton: FC<SaveOptionButtonProps> = ({
             className={classNames(SAVE_OPTION_ROW_CLASS, 'my-6', {
                 'opacity-50 pointer-events-none': disabled,
             })}
+            inert={disabled}
         >
             <div>
-                <Button onClickHandler={onClick}>
+                <Button
+                    onClickHandler={onClick}
+                    label={'save option for ' + title}
+                >
                     <div className="text-center ">
                         <span className="uppercase">{title}</span>
                         <br />

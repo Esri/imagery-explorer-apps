@@ -1,4 +1,3 @@
-import { CalciteInputText } from '@esri/calcite-components-react';
 import { Button } from '@shared/components/Button';
 import { APP_NAME } from '@shared/config';
 import { SpectralSamplingToolSupportedService } from '@shared/store/SpectralSamplingTool/reducer';
@@ -71,6 +70,7 @@ export const CreateNewSession: FC<Props> = ({
                                 appearance={
                                     item.isSelected ? 'solid' : 'transparent'
                                 }
+                                label="set target service"
                             >
                                 <span className="ml-2">{item.label}</span>
                             </Button>
@@ -94,12 +94,12 @@ export const CreateNewSession: FC<Props> = ({
                         })}
                         :
                     </h5>
-                    <CalciteInputText
+                    <calcite-input-text
                         value={sessionName}
                         minLength={2}
                         maxLength={100}
                         clearable
-                        onCalciteInputTextInput={(e) => {
+                        oncalciteInputTextInput={(e) => {
                             if (!e?.target?.value) {
                                 setSessionName(null);
                                 return;
@@ -135,6 +135,7 @@ export const CreateNewSession: FC<Props> = ({
                     disabled={
                         !targetService || !sessionName || sessionName.length < 2
                     }
+                    label="create new session"
                 >
                     {t('create_new_session', { ns: APP_NAME })}
                 </Button>

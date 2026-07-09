@@ -70,7 +70,7 @@ const MonthPicker: FC<Props> = ({ disabled }: Props) => {
 
     return (
         <div
-            className={classNames('relative', {
+            className={classNames('relative ml-2', {
                 'disabled-when-animation-mode-is-on': disabled,
             })}
         >

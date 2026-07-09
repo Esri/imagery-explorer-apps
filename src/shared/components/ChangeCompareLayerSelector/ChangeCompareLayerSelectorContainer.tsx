@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 import {
     ChangeCompareLayerSelector,
     ActiveScene4ChangeCompareTool,
@@ -36,7 +36,16 @@ import {
 } from '@shared/store/ImageryScene/selectors';
 import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
 
-export const ChangeCompareLayerSelectorContainer = () => {
+type Props = {
+    /**
+     * If true, the acquisition timestamp will be shown in the label of each scene in the change compare layer selector. Otherwise, only the acquisition date will be shown.
+     */
+    showAcquisitionTimestamp?: boolean;
+};
+
+export const ChangeCompareLayerSelectorContainer: FC<Props> = ({
+    showAcquisitionTimestamp = false,
+}) => {
     const dispatch = useAppDispatch();
 
     const isSecondarySceneActive = useAppSelector(selectIsSecondarySceneActive);
@@ -60,6 +69,7 @@ export const ChangeCompareLayerSelectorContainer = () => {
             viewChangeButtonDisabled={viewChangeButtonDisabled}
             queryParams4SceneA={queryParams4SceneA}
             queryParams4SceneB={queryParams4SceneB}
+            showAcquisitionTimestamp={showAcquisitionTimestamp}
             viewChangeButtonOnClick={() => {
                 dispatch(changeCompareLayerIsOnUpdated(true));
             }}

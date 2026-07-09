@@ -50,12 +50,14 @@ export const AnimationOptions: FC<AnimationOptionsProps> = ({
                             shouldOptionButtonsBeDisabled,
                     })}
                 >
-                    <AnimationSpeedSlider
-                        speedInMilliseonds={animationSpeed}
-                        speedOnChange={speedOnChange}
-                    />
+                    <div className=" w-12">
+                        <AnimationSpeedSlider
+                            speedInMilliseonds={animationSpeed}
+                            speedOnChange={speedOnChange}
+                        />
+                    </div>
 
-                    <span className="ml-3">{t('speed')}</span>
+                    <span className="ml-1">{t('speed')}</span>
                 </div>
 
                 <OptionButton

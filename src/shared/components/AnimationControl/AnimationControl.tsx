@@ -18,7 +18,6 @@ import { AnimationStatus } from '../../store/UI/reducer';
 import classNames from 'classnames';
 import { AnimationSpeedControl } from './AnimationSpeedControl';
 import { useTranslation } from 'react-i18next';
-import { CalciteIcon, CalciteLoader } from '@esri/calcite-components-react';
 
 const ICON_SIZE = 22;
 
@@ -187,8 +186,9 @@ export const AnimationControl: FC<Props> = ({
                             }
                         )}
                         onClick={addButtonOnClick}
+                        inert={shouldDisableAddFrameButton}
                     >
-                        <CalciteIcon icon="plus" scale="s" />
+                        <calcite-icon icon="plus" scale="s" />
                         <span
                             className=" text-custom-light-blue uppercase ml-1"
                             style={{
@@ -230,7 +230,11 @@ export const AnimationControl: FC<Props> = ({
                 )}
                 {status === 'loading' && (
                     <div data-testid="animation-loading-indicator">
-                        <CalciteLoader scale="m" inline></CalciteLoader>
+                        <calcite-loader
+                            label={'loading'}
+                            scale="m"
+                            inline
+                        ></calcite-loader>
                     </div>
                 )}
                 {isAnimtaionOn && (

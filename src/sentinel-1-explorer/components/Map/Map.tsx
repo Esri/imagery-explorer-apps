@@ -27,7 +27,7 @@ import { MapMagnifier } from '@shared/components/MapMagnifier';
 import CustomMapArrtribution from '@shared/components/CustomMapArrtribution/CustomMapArrtribution';
 // import { MapActionButtonsGroup } from '@shared/components/MapActionButton';
 import { Sentinel1Layer } from '../Sentinel1Layer';
-import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
+// import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { SENTINEL_1_SERVICE_URL } from '@shared/services/sentinel-1/config';
 import { Popup } from '../Popup';
 import { TemporalCompositeLayer } from '../TemporalCompositeLayer';
@@ -40,6 +40,7 @@ import { MapActionButtonGroup } from '@shared/components/MapActionButton';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { FootPrintOfSelectedScene } from '@shared/components/FootPrintOfSelectedScene';
+import { SwipeComponent4ImageryLayers } from '@shared/components/SwipeWidget/SwipeComponent4ImageryLayers';
 // import { MapNavButtonsGroup } from '@shared/components/MapActionButton/MapActionButtonsGroup';
 
 export const Map = () => {
@@ -74,7 +75,8 @@ export const Map = () => {
                     })}
                 />
             </GroupLayer>
-            <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_1_SERVICE_URL} />
+            {/* <SwipeWidget4ImageryLayers serviceUrl={SENTINEL_1_SERVICE_URL} /> */}
+            <SwipeComponent4ImageryLayers serviceUrl={SENTINEL_1_SERVICE_URL} />
 
             <HillshadeLayer />
 
