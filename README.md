@@ -455,12 +455,12 @@ This application ID will be used in the `.env` file as `DISASTER_IMAGERY_EXPLORE
 Before running the application, create a `.env` file in the project root using the following template:
 
 ```sh
-# Application ID for the Disaster Imagery Explorer app.
+# Required: Application ID for the Disaster Imagery Explorer app.
 # Required for authentication and features such as saving web maps.
 # see https://developers.arcgis.com/documentation/security-and-authentication/app-authentication/how-to-implement-app-authentication/#2-implement-a-client-credentials-flow
 DISASTER_IMAGERY_EXPLORER_APP_ID = YOUR_NLCD_LANDCOVER_EXPLORER_APP_ID
 
-# Disaster Response imagery service URL (default: https://di-disasterresponse.img.arcgis.com/arcgis/rest/services/drp_imagery/ImageServer)
+# Optional: Disaster Response imagery service URL (default: https://di-disasterresponse.img.arcgis.com/arcgis/rest/services/drp_imagery/ImageServer)
 DISASTER_RESPONSE_SERVICE_URL = https://di-disasterresponse.img.arcgis.com/arcgis/rest/services/drp_imagery/ImageServer
 
 # Optional: Portal root URL for ArcGIS Online/Enterprise (default: https://www.arcgis.com)
