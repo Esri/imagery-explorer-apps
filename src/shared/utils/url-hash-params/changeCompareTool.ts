@@ -25,9 +25,19 @@ export const encodeChangeCompareToolData = (
         return null;
     }
 
-    const { selectedOption, changeCompareLayerIsOn, selectedRange } = data;
+    const {
+        selectedOption,
+        changeCompareLayerIsOn,
+        selectedRange,
+        selectedRange2,
+    } = data;
 
-    return [selectedOption, changeCompareLayerIsOn, selectedRange].join('|');
+    return [
+        selectedOption,
+        changeCompareLayerIsOn,
+        selectedRange,
+        selectedRange2,
+    ].join('|');
 };
 
 export const decodeChangeCompareToolData = (
@@ -37,14 +47,21 @@ export const decodeChangeCompareToolData = (
         return null;
     }
 
-    const [selectedOption, changeCompareLayerIsOn, selectedRange] =
-        val.split('|');
+    const [
+        selectedOption,
+        changeCompareLayerIsOn,
+        selectedRange,
+        selectedRange2,
+    ] = val.split('|');
 
     return {
         ...initialChangeCompareToolState,
         selectedOption,
         changeCompareLayerIsOn: changeCompareLayerIsOn === 'true',
         selectedRange: selectedRange.split(',').map((d) => +d),
+        selectedRange2: selectedRange2
+            ? selectedRange2.split(',').map((d) => +d)
+            : null,
     } as ChangeCompareToolState;
 };
 

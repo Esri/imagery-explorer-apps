@@ -81,7 +81,7 @@ export const useImageryLayerByObjectId = ({
     /**
      * initialize imagery layer using mosaic created using the input year
      */
-    const init = async () => {
+    const init = () => {
         const mosaicRule = objectId
             ? getLockRasterMosaicRule(objectId)
             : defaultMosaicRule;

@@ -1,4 +1,4 @@
-// import { CalciteIcon } from '@esri/calcite-components-react';
+//
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,

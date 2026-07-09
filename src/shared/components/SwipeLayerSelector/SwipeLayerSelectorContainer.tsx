@@ -13,23 +13,46 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
 import {
     selectAppMode,
+    selectIsBasemapOnRightSideOfSwipe,
     selectIsSecondarySceneActive,
     selectQueryParams4MainScene,
+    selectQueryParams4SceneInSelectedMode,
     selectQueryParams4SecondaryScene,
+    selectSwipeSubMode,
 } from '@shared/store/ImageryScene/selectors';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { SwipeLayerSelector } from './SwipeLayerSelector';
-import { isSecondarySceneActiveToggled } from '@shared/store/ImageryScene/reducer';
+import {
+    isBasemapOnRightSideOfSwipeChanged,
+    isSecondarySceneActiveToggled,
+} from '@shared/store/ImageryScene/reducer';
 import { swapMainAndSecondaryScenes } from '@shared/store/ImageryScene/thunks';
 import { AutoSwipeControls } from './AutoSwipeControls';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
 import classNames from 'classnames';
+import { SwipeLayerSelectorScene2Basemap } from './SwipeLayerSelectorScene2Basemap';
 
-export const SwipeLayerSelectorContainer = () => {
+type Props = {
+    useAcquisitionTimestampAsLabel?: boolean;
+    /**
+     * tooltip text shown on the leading (left) layer selector, if provided
+     */
+    tooltip4LeadingLayerSelector?: string;
+    /**
+     * tooltip text shown on the trailing (right) layer selector, if provided
+     */
+    tooltip4TrailingLayerSelector?: string;
+};
+
+export const SwipeLayerSelectorContainer: FC<Props> = ({
+    useAcquisitionTimestampAsLabel = false,
+    tooltip4LeadingLayerSelector,
+    tooltip4TrailingLayerSelector,
+}) => {
     const dispatch = useAppDispatch();
 
     const appMode = useAppSelector(selectAppMode);
@@ -42,7 +65,17 @@ export const SwipeLayerSelectorContainer = () => {
         selectQueryParams4SecondaryScene
     );
 
+    const queryParams4SelectedScene = useAppSelector(
+        selectQueryParams4SceneInSelectedMode
+    );
+
+    const swipeSubMode = useAppSelector(selectSwipeSubMode);
+
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
+
+    const showBasemapOnRightSide = useAppSelector(
+        selectIsBasemapOnRightSideOfSwipe
+    );
 
     if (appMode !== 'swipe') {
         return null;
@@ -57,23 +90,52 @@ export const SwipeLayerSelectorContainer = () => {
                 style={{
                     height: `calc(100% - 30px)`,
                 }}
+                inert={isAnimationPlaying}
             >
-                <SwipeLayerSelector
-                    selectedSide={isSecondarySceneActive ? 'right' : 'left'}
-                    queryParams4SceneOnLeft={queryParams4LeftSide}
-                    queryParams4SceneOnRight={queryParams4RightSide}
-                    onChange={(value) => {
-                        const isSecondarySceneActive = value === 'right';
-                        dispatch(
-                            isSecondarySceneActiveToggled(
-                                isSecondarySceneActive
-                            )
-                        );
-                    }}
-                    swapButtonOnClick={() => {
-                        dispatch(swapMainAndSecondaryScenes());
-                    }}
-                />
+                {swipeSubMode === 'scene-to-scene' && (
+                    <SwipeLayerSelector
+                        selectedSide={isSecondarySceneActive ? 'right' : 'left'}
+                        queryParams4SceneOnLeft={queryParams4LeftSide}
+                        queryParams4SceneOnRight={queryParams4RightSide}
+                        useAcquisitionTimestampAsLabel={
+                            useAcquisitionTimestampAsLabel
+                        }
+                        tooltip4LeadingLayerSelector={
+                            tooltip4LeadingLayerSelector
+                        }
+                        tooltip4TrailingLayerSelector={
+                            tooltip4TrailingLayerSelector
+                        }
+                        onChange={(value) => {
+                            const isSecondarySceneActive = value === 'right';
+                            dispatch(
+                                isSecondarySceneActiveToggled(
+                                    isSecondarySceneActive
+                                )
+                            );
+                        }}
+                        swapButtonOnClick={() => {
+                            dispatch(swapMainAndSecondaryScenes());
+                        }}
+                    />
+                )}
+
+                {swipeSubMode === 'scene-to-basemap' && (
+                    <SwipeLayerSelectorScene2Basemap
+                        queryParams4SelectedScene={queryParams4SelectedScene}
+                        useAcquisitionTimestampAsLabel={
+                            useAcquisitionTimestampAsLabel
+                        }
+                        showBasemapOnRightSide={showBasemapOnRightSide}
+                        swapButtonOnClick={() => {
+                            dispatch(
+                                isBasemapOnRightSideOfSwipeChanged(
+                                    !showBasemapOnRightSide
+                                )
+                            );
+                        }}
+                    />
+                )}
             </div>
 
             <AutoSwipeControls />

@@ -32,10 +32,11 @@ import { LANDSAT_LEVEL_2_SERVICE_URL } from '@shared/services/landsat-level-2/co
 import { useAppDispatch } from '@shared/store/configureStore';
 import { updateQueryLocation4TrendTool } from '@shared/store/TrendTool/thunks';
 import { updateQueryLocation4SpectralProfileTool } from '@shared/store/SpectralProfileTool/thunks';
-import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
+// import { SwipeWidget4ImageryLayers } from '@shared/components/SwipeWidget/SwipeWidget4ImageryLayers';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
 import { FootPrintOfSelectedScene } from '@shared/components/FootPrintOfSelectedScene';
+import { SwipeComponent4ImageryLayers } from '@shared/components/SwipeWidget/SwipeComponent4ImageryLayers';
 
 const Map = () => {
     const dispatch = useAppDispatch();
@@ -72,7 +73,10 @@ const Map = () => {
                 />
             </GroupLayer>
             {/* <SwipeWidget /> */}
-            <SwipeWidget4ImageryLayers
+            {/* <SwipeWidget4ImageryLayers
+                serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
+            /> */}
+            <SwipeComponent4ImageryLayers
                 serviceUrl={LANDSAT_LEVEL_2_SERVICE_URL}
             />
 

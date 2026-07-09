@@ -16,14 +16,14 @@
 import { AnalysisToolHeader } from '@shared/components/AnalysisToolHeader';
 // import { PixelRangeSlider as MaskLayerPixelRangeSlider4SpectralIndex } from '@shared/components/MaskTool/PixelRangeSlider';
 // import { PixelRangeSlider as MaskLayerPixelRangeSlider4SurfaceTemp } from './PixelRangeSlider4SurfaceTemp';
-import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
+// import { MaskLayerRenderingControls } from '@shared/components/MaskTool';
 import { selectedIndex4MaskToolChanged } from '@shared/store/MaskTool/reducer';
 import {
     selectSelectedIndex4MaskTool,
-    selectMaskLayerPixelValueRange,
+    // selectMaskLayerPixelValueRange,
     // selectActiveAnalysisTool,
 } from '@shared/store/MaskTool/selectors';
-import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
+// import { updateMaskLayerSelectedRange } from '@shared/store/MaskTool/thunks';
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@shared/store/configureStore';
 import { useAppSelector } from '@shared/store/configureStore';
@@ -33,16 +33,16 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
-import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
+// import { celsius2fahrenheit } from '@shared/utils/temperature-conversion';
 // import { MASK_TOOL_HEADER_TOOLTIP } from '@shared/components/MaskTool/config';
 import { SpectralIndex } from '@typing/imagery-service';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
-import {
-    LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
-    LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
-} from '@shared/services/landsat-level-2/config';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import {
+//     LANDSAT_SURFACE_TEMPERATURE_MIN_CELSIUS,
+//     LANDSAT_SURFACE_TEMPERATURE_MIN_FAHRENHEIT,
+//     LANDSAT_SURFACE_TEMPERATURE_MAX_CELSIUS,
+//     LANDSAT_SURFACE_TEMPERATURE_MAX_FAHRENHEIT,
+// } from '@shared/services/landsat-level-2/config';
 import { MaskLayerOpacityControl } from './MaskToolControl';
 import {
     SurfaceTempCelsiusPixelRangeSlider,

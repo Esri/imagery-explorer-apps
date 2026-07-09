@@ -1,4 +1,3 @@
-import { CalciteIcon } from '@esri/calcite-components-react';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { animationStatusChanged } from '@shared/store/UI/reducer';
 import React, { FC } from 'react';
@@ -36,7 +35,7 @@ export const AnimationStartButtonOnMap: FC<AnimationStartButtonOnMapProps> = ({
                     startAnimationButtonOnClick();
                 }}
             >
-                <CalciteIcon icon="play-f" scale="l" />
+                <calcite-icon icon="play-f" scale="l" />
             </div>
         </div>
     );

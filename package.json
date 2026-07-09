@@ -50,6 +50,12 @@
         "start:surface-temp:dev": "webpack serve --mode development --open --env app=surfacetemperature --env envFileName=.env.development",
         "build:surface-temp:dev": "webpack --mode production --env app=surfacetemperature --env envFileName=.env.development",
         "build:surface-temp:prod": "webpack --mode production --env app=surfacetemperature --env envFileName=.env.production",
+        "start:diex": "webpack serve --mode development --open --env app=disasterimageryexplorer --env envFileName=.env",
+        "start:diex:dev": "webpack serve --mode development --open --env app=disasterimageryexplorer --env envFileName=.env.development",
+        "start:diex:prod": "webpack serve --mode development --open --env app=disasterimageryexplorer --env envFileName=.env.production",
+        "build:diex": "webpack --mode production --env app=disasterimageryexplorer --env envFileName=.env",
+        "build:diex:dev": "webpack --mode production --env app=disasterimageryexplorer --env envFileName=.env.development",
+        "build:diex:prod": "webpack --mode production --env app=disasterimageryexplorer --env envFileName=.env.production",
         "e2e:all": "npm run e2e:landsat && npm run e2e:sentinel2 && npm run e2e:sentinel1 && npm run e2e:landcover",
         "build:all:prod": "npm run build:landsat:prod && npm run build:sentinel2:prod && npm run build:sentinel1:prod && npm run build:landcover:prod && npm run build:nlcd-landcover:prod && build:spectral-sampler:prod",
         "prepare": "husky install",
@@ -57,10 +63,13 @@
         "lint": "eslint src --ext .ts,.tsx --fix"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx,json,css}": [
+        "src/**/*.{ts,tsx,json}": [
             "prettier --write",
             "eslint src --fix",
             "jest --bail --findRelatedTests --passWithNoTests"
+        ],
+        "src/**/*.css}": [
+            "prettier --write"
         ],
         "e2e/**/*.{ts,tsx,json}": [
             "prettier --write"
@@ -109,9 +118,9 @@
         "@typescript-eslint/parser": "6.12",
         "autoprefixer": "^10.4.21",
         "babel-loader": "^10.0.0",
-        "copy-webpack-plugin": "^13.0.0",
+        "copy-webpack-plugin": "^14.0.0",
         "css-loader": "^7.1.2",
-        "css-minimizer-webpack-plugin": "^7.0.2",
+        "css-minimizer-webpack-plugin": "^8.0.0",
         "dotenv": "^16.4.5",
         "eslint": "8.54",
         "eslint-config-prettier": "^8.5.0",
@@ -122,9 +131,9 @@
         "husky": "^8.0.1",
         "jest": "^29.7.0",
         "jest-environment-jsdom": "^29.7.0",
-        "lint-staged": "^13.0.3",
+        "lint-staged": "^17.0.8",
         "mini-css-extract-plugin": "^2.9.2",
-        "postcss": "8.4",
+        "postcss": "^8.5.16",
         "postcss-loader": "7.3",
         "postcss-preset-env": "8.4",
         "prettier": "^3.6.2",
@@ -133,16 +142,17 @@
         "tailwindcss": "3.3",
         "terser-webpack-plugin": "^5.3.14",
         "ts-node": "^10.9.1",
-        "typescript": "^5.5.4",
+        "typescript": "^5.9.3",
         "webpack": "^5.101.0",
         "webpack-bundle-analyzer": "^4.4.2",
         "webpack-cli": "^6.0.1",
         "webpack-dev-server": "^5.2.2"
     },
     "dependencies": {
-        "@arcgis/core": "4.34",
+        "@arcgis/core": "^5.1.8",
+        "@arcgis/map-components": "^5.1.8",
         "@esri/arcgis-rest-feature-service": "^4.0.4",
-        "@esri/calcite-components-react": "^3.3.3",
+        "@esri/calcite-components": "^5.1.1",
         "@reduxjs/toolkit": "2.5",
         "@vannizhang/images-to-video-converter-client": "^1.1.14",
         "@vannizhang/react-d3-charts": "^1.0.38",
@@ -162,5 +172,8 @@
     },
     "browserslist": [
         "defaults"
-    ]
+    ],
+    "overrides": {
+        "uuid": "^11.1.1"
+    }
 }

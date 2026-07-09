@@ -4,7 +4,6 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatHistoricalData } from './formateHistoricalData';
 import { downloadBlob } from '@shared/utils/snippets/downloadBlob';
-import { CalciteButton } from '@esri/calcite-components-react';
 
 type Props = {
     data: HistoricalLandCoverData[];
@@ -67,7 +66,7 @@ export const DownloadHistoricalData: FC<Props> = ({
             <div className="mb-2">
                 {t('download_historical_data', { ns: APP_NAME })}
             </div>
-            <CalciteButton
+            <calcite-button
                 icon-start="download"
                 appearance="outline"
                 kind="neutral"
@@ -76,7 +75,7 @@ export const DownloadHistoricalData: FC<Props> = ({
                 {t('donwload_as_csv', {
                     ns: APP_NAME,
                 })}
-            </CalciteButton>
+            </calcite-button>
         </div>
     );
 };

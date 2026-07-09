@@ -62,6 +62,13 @@ export type AnalysisTool =
     | 'urban heat island'; // urban heat island tool that runs Landsat Surface Intra-Urban Heat Island (SIUHI) workflow.
 
 /**
+ * the sub-mode of the Swipe mode, which determines how the two scenes are compared with each other
+ * - `scene-to-scene` to compare two different scenes, each on one side of the swipe widget;
+ * - `scene-to-basemap` to compare one scene with the basemap, where the scene is on one side of the swipe widget and the basemap is on the other side.
+ */
+export type SwipeSubMode = 'scene-to-scene' | 'scene-to-basemap';
+
+/**
  * Query Params and Rendering Options for a Imagery Scene (e.g. Landsat or Sentinel-2)
  */
 export type QueryParams4ImageryScene = {
@@ -90,6 +97,10 @@ export type QueryParams4ImageryScene = {
      * User selected acquisition date range that will be used to query available imagery scenes.
      */
     acquisitionDateRange: DateRange;
+    /**
+     * Acquisition timestamp of the selected scene. This will be used in UI when the acquisition timestamp is needed to be displayed.
+     */
+    acquisitionTimestampOfSelectedScene?: number;
 };
 
 export type ImageryScene = {
@@ -188,12 +199,40 @@ export type ImageryScenesState = {
      * will be overridden, and the scene will be reselected from the new list of scenes.
      */
     shouldForceSceneReselection: boolean;
+    /**
+     * If true, the temporal composite is built from the main and secondary scenes only (2 scenes),
+     * rather than three independent scenes.
+     *
+     * Set once at app initialization; do not change at runtime.
+     */
+    useTwoSceneComposite?: boolean;
+    /**
+     * the sub-mode of the Swipe mode, which determines how the two scenes are compared with each other.
+     * By default, the Swipe mode is in `scene-to-scene` sub-mode, which means two different scenes will be compared, each on one side of the swipe widget.
+     */
+    swipeSubMode?: SwipeSubMode;
+    /**
+     * The list of sub-modes available in the Swipe mode.
+     * Defaults to `['scene-to-scene']`. The `scene-to-basemap` sub-mode is only available
+     * for select apps (e.g. Disaster Imagery Explorer) and must be explicitly enabled
+     * by including it in this array.
+     *
+     * Used by the UI to determine whether to show the sub-mode toggle.
+     * Set once at app initialization; do not change at runtime.
+     */
+    availableSwipeSubModes?: SwipeSubMode[];
+    /**
+     * Flag to determine whether to show the basemap on the right side of the Swipe in the 'scene-to-basemap' sub-mode,
+     * or to show the selected scene on the right side. This is only applicable for the 'scene-to-basemap' sub-mode.
+     */
+    isBasemapOnRightSideOfSwipe?: boolean;
 };
 
 export const DefaultQueryParams4ImageryScene: QueryParams4ImageryScene = {
     acquisitionDate: '',
     rasterFunctionName: '',
     objectIdOfSelectedScene: null,
+    acquisitionTimestampOfSelectedScene: null,
     uniqueId: null,
     acquisitionDateRange: getDateRangeForPast12Month(),
 };
@@ -219,6 +258,10 @@ export const initialImagerySceneState: ImageryScenesState = {
     },
     cloudCover: 0.5,
     shouldForceSceneReselection: false,
+    useTwoSceneComposite: false,
+    swipeSubMode: 'scene-to-scene',
+    availableSwipeSubModes: ['scene-to-scene'],
+    isBasemapOnRightSideOfSwipe: false,
 };
 
 const slice = createSlice({
@@ -330,6 +373,15 @@ const slice = createSlice({
         ) => {
             state.shouldForceSceneReselection = action.payload;
         },
+        swipeSubModeChanged: (state, action: PayloadAction<SwipeSubMode>) => {
+            state.swipeSubMode = action.payload;
+        },
+        isBasemapOnRightSideOfSwipeChanged: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.isBasemapOnRightSideOfSwipe = action.payload;
+        },
     },
 });
 
@@ -348,6 +400,8 @@ export const {
     activeAnalysisToolChanged,
     availableImageryScenesUpdated,
     shouldForceSceneReselectionUpdated,
+    swipeSubModeChanged,
+    isBasemapOnRightSideOfSwipeChanged,
 } = slice.actions;
 
 export default reducer;

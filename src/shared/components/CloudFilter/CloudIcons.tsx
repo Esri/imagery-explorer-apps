@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { CalciteIcon } from '@esri/calcite-components-react';
 import React from 'react';
 
 export const CloudIcons = () => {
@@ -21,12 +20,12 @@ export const CloudIcons = () => {
         <div className="relative h-cloud-slider-height ml-1">
             <div className="absolute top-[-6px]">
                 {/* use online icon to indicate with cloud */}
-                <CalciteIcon scale="s" icon="online" />
+                <calcite-icon scale="s" icon="online" />
             </div>
 
             <div className="absolute bottom-[-12px]">
                 {/* use offline icon to indicate non-cloud */}
-                <CalciteIcon scale="s" icon="offline" />
+                <calcite-icon scale="s" icon="offline" />
             </div>
         </div>
     );

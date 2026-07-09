@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+/// <reference types="@arcgis/map-components/types/react" />
+
 export type BlendMode =
     | 'average'
     | 'color-burn'

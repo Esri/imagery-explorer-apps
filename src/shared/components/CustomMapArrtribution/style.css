@@ -11,14 +11,14 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-.esri-attribution {
+/* .esri-attribution {
     opacity: 0;
 }
 
 .esri-attribution.show {
     opacity: 1;
-}
+} */
 
-.esri-attribution__powered-by {
+/* .esri-attribution__powered-by {
     margin-right: 50px;
-}
+} */

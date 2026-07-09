@@ -14,14 +14,10 @@
  */
 
 import classNames from 'classnames';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import useWindowSize from '@shared/hooks/useWindowSize';
-import {
-    CalciteCheckbox,
-    CalciteIcon,
-    CalciteLabel,
-} from '@esri/calcite-components-react';
 
 export type DropdownData = {
     /**
@@ -38,8 +34,20 @@ export type DropdownData = {
     selected: boolean;
 };
 
+export type GroupedDropdownData = {
+    /**
+     * Title of the group
+     */
+    groupTitle: string;
+    /**
+     * Dropdown options of the group
+     */
+    options: DropdownData[];
+};
+
 type Props = {
-    data: DropdownData[];
+    data?: DropdownData[];
+    groupedData?: GroupedDropdownData[];
     disabled?: boolean;
     tooltip?: string;
     /**
@@ -60,6 +68,7 @@ type Props = {
 
 export const Dropdown: FC<Props> = ({
     data,
+    groupedData,
     disabled,
     tooltip,
     skipUppercase,
@@ -71,9 +80,34 @@ export const Dropdown: FC<Props> = ({
 
     const containerRef = useRef<HTMLDivElement>(null);
 
+    /**
+     * Ref of the dropdown menu that is rendered via a portal to `document.body` (see
+     * `getDropdownMenuAtFixedPosition`). It needs to be tracked separately from `containerRef`
+     * so that clicks on it are not treated as "outside" clicks by `useOnClickOutside`, since it
+     * is not a DOM descendant of `containerRef` once portaled.
+     */
+    const menuAtFixedPositionRef = useRef<HTMLDivElement>(null);
+
     const windowSize = useWindowSize();
 
-    useOnClickOutside(containerRef, () => {
+    const flattenedOptions = useMemo(() => {
+        if (data && data.length) {
+            return data;
+        }
+
+        if (groupedData && groupedData.length) {
+            return groupedData.reduce<DropdownData[]>(
+                (acc, group) => [...acc, ...group.options],
+                []
+            );
+        }
+
+        return [];
+    }, [data, groupedData]);
+
+    const selectedOption = flattenedOptions.find((d) => d.selected === true);
+
+    useOnClickOutside([containerRef, menuAtFixedPositionRef], () => {
         setShouldShowOptions(false);
     });
 
@@ -82,28 +116,88 @@ export const Dropdown: FC<Props> = ({
             return title;
         }
 
-        let selectedItem = data.find((d) => d.selected);
+        if (selectedOption) {
+            return selectedOption.label || selectedOption.value;
+        }
 
-        if (!selectedItem && title) {
+        if (title) {
             return title;
         }
 
-        if (!selectedItem) {
-            selectedItem = data[0];
-        }
-
-        return selectedItem.label || selectedItem.value;
+        return flattenedOptions[0]?.label || flattenedOptions[0]?.value || '';
     };
 
     const getDropdownMenu = () => {
+        const dropdownOptionsContainerClassName = classNames(
+            'max-h-[351px] overflow-y-auto',
+            'text-xs bg-custom-background border border-custom-light-blue-5 border-b-0',
+            'fancy-scrollbar'
+        );
+
+        const dropdownOptionContainerClassName =
+            'p-1 border-custom-light-blue-5 border-b cursor-pointer';
+
+        if (groupedData && groupedData.length) {
+            return (
+                <div className={dropdownOptionsContainerClassName}>
+                    {groupedData.map((d) => {
+                        return (
+                            <div key={d.groupTitle}>
+                                <div
+                                    className={classNames(
+                                        dropdownOptionContainerClassName,
+                                        'py-2 pl-2 cursor-default'
+                                    )}
+                                >
+                                    <span className="text-sm font-semibold">
+                                        {d.groupTitle}
+                                    </span>
+                                </div>
+
+                                {d.options.map((optionData) => {
+                                    const { value, label, selected } =
+                                        optionData;
+                                    return (
+                                        <div
+                                            className={classNames(
+                                                dropdownOptionContainerClassName,
+                                                'flex items-center py-[6px]'
+                                            )}
+                                            key={optionData.value}
+                                            data-testid={`dropdown-option-${value}`}
+                                            onClick={() => {
+                                                onChange(value);
+                                                setShouldShowOptions(false);
+                                            }}
+                                        >
+                                            <div className="w-8 shrink-0 flex items-center justify-center">
+                                                {selected && (
+                                                    <calcite-icon icon="bullet-point" />
+                                                )}
+                                            </div>
+
+                                            <div className="flex-grow">
+                                                <span
+                                                    className={classNames({
+                                                        uppercase:
+                                                            !skipUppercase,
+                                                    })}
+                                                >
+                                                    {label || value}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        }
+
         return (
-            <div
-                className={classNames(
-                    'max-h-[351px] overflow-y-auto',
-                    'text-xs bg-custom-background border border-custom-light-blue-5 border-b-0',
-                    'fancy-scrollbar'
-                )}
-            >
+            <div className={dropdownOptionsContainerClassName}>
                 {data.map((d, index) => {
                     const { value, label } = d;
 
@@ -119,7 +213,7 @@ export const Dropdown: FC<Props> = ({
 
                     return (
                         <div
-                            className="p-1 border-custom-light-blue-5 border-b cursor-pointer"
+                            className={dropdownOptionContainerClassName}
                             key={value}
                             data-testid={`dropdown-option-${value}`}
                             onClick={() => {
@@ -138,11 +232,11 @@ export const Dropdown: FC<Props> = ({
                                             'var(--custom-light-blue-90)',
                                     }}
                                 >
-                                    <CalciteCheckbox
-                                        class="mx-1"
+                                    <calcite-checkbox
+                                        className="mx-1"
                                         checked={d.selected}
                                         scale="s"
-                                    ></CalciteCheckbox>
+                                    ></calcite-checkbox>
                                     {labelText}
                                 </div>
                             )}
@@ -160,6 +254,12 @@ export const Dropdown: FC<Props> = ({
      *
      * We need to use the fixed position to ensure that the dropdown menu can extend to outside of the bottom panel when the bottom panel
      * is displayed in a narrow screen (with overflow-x turned on).
+     *
+     * The menu is rendered via a portal to `document.body` rather than in place: on iOS Safari, a
+     * `position: fixed` element that is still a DOM descendant of a scrollable ancestor (the bottom
+     * panel) gets painted within that ancestor's compositing layer instead of the true viewport, so
+     * it can end up rendered behind the map once the bottom panel becomes scrollable. Portaling it
+     * to `document.body` removes it from that ancestor entirely, so it always stacks above.
      * @returns
      */
     const getDropdownMenuAtFixedPosition = () => {
@@ -176,8 +276,9 @@ export const Dropdown: FC<Props> = ({
         // get the container's position relative to the viewport
         const { x, y, width } = containerRef.current.getBoundingClientRect();
 
-        return (
+        return createPortal(
             <div
+                ref={menuAtFixedPositionRef}
                 className={classNames(
                     'block bottom-panel-content-min-width:hidden fixed z-50'
                 )}
@@ -191,7 +292,8 @@ export const Dropdown: FC<Props> = ({
                 }}
             >
                 {getDropdownMenu()}
-            </div>
+            </div>,
+            document.body
         );
     };
 
@@ -200,7 +302,7 @@ export const Dropdown: FC<Props> = ({
         setShouldShowOptions(false);
     }, [windowSize]);
 
-    if (!data || !data.length) {
+    if (!data?.length && !groupedData?.length) {
         return null;
     }
 
@@ -217,11 +319,11 @@ export const Dropdown: FC<Props> = ({
                         setShouldShowOptions(!shouldShowOptions);
                     }}
                 >
-                    <span className="mr-1 whitespace-nowrap ">
+                    <span className="mr-1 whitespace-nowrap overflow-hidden text-ellipsis min-w-0 flex-1">
                         {getLabel()}
                     </span>
 
-                    <CalciteIcon icon="chevron-down" scale="s" />
+                    <calcite-icon icon="chevron-down" scale="s" />
                 </div>
 
                 {tooltip && (

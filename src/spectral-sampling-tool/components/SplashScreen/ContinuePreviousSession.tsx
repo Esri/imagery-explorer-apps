@@ -52,6 +52,7 @@ export const ContinuePreviousSession: FC<ContinuePreviousSessionProps> = ({
                         }}
                         scale="s"
                         disabled={!previousSession}
+                        label="select previous session"
                     >
                         {t('continue_previous_session', { ns: APP_NAME })}
                     </Button>

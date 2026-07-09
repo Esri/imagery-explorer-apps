@@ -69,12 +69,19 @@ export const encodeQueryParams4ImageryScene = (
         return null;
     }
 
-    const { acquisitionDate, rasterFunctionName, objectIdOfSelectedScene } =
-        data;
+    const {
+        acquisitionDate,
+        rasterFunctionName,
+        objectIdOfSelectedScene,
+        acquisitionTimestampOfSelectedScene,
+    } = data;
 
-    return [acquisitionDate, rasterFunctionName, objectIdOfSelectedScene].join(
-        '|'
-    );
+    return [
+        acquisitionDate,
+        rasterFunctionName,
+        objectIdOfSelectedScene,
+        acquisitionTimestampOfSelectedScene,
+    ].join('|');
 };
 
 const decodeQueryParams4ImageryScene = (
@@ -84,7 +91,12 @@ const decodeQueryParams4ImageryScene = (
         return null;
     }
 
-    const [acquisitionDate, rasterFunctionName, objectId] = val.split('|');
+    const [
+        acquisitionDate,
+        rasterFunctionName,
+        objectId,
+        acquisitionTimestampOfSelectedScene,
+    ] = val.split('|');
 
     const acquisitionYear = getYearFromFormattedDateString(acquisitionDate);
 
@@ -101,6 +113,9 @@ const decodeQueryParams4ImageryScene = (
         acquisitionDateRange: acquisitionDate
             ? getDateRangeForYear(acquisitionYear)
             : getDateRangeForPast12Month(),
+        acquisitionTimestampOfSelectedScene: acquisitionTimestampOfSelectedScene
+            ? +acquisitionTimestampOfSelectedScene
+            : null,
     };
 };
 

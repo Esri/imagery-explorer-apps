@@ -25,7 +25,7 @@ export const selectMapCenter = createSelector(
     (state: RootState) => state.Map.center[0],
     (state: RootState) => state.Map.center[1],
     (longitude, latitude) => {
-        return [longitude, latitude];
+        return [longitude, latitude] as [number, number];
     }
 );
 

@@ -104,6 +104,7 @@ Props) => {
                     decorativeIndicator={
                         shouldShowSentinel2Layer === false ? 'right' : null
                     }
+                    label="select landcover layer"
                 >
                     <span className="uppercase">{t('land_cover')}</span>
                 </Button>
@@ -119,6 +120,7 @@ Props) => {
                     decorativeIndicator={
                         shouldShowSentinel2Layer ? 'right' : null
                     }
+                    label="select imagery layer"
                 >
                     <span className="uppercase">{t('imagery')}</span>
                 </Button>

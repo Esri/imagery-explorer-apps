@@ -69,6 +69,9 @@ module.exports = {
                     70: `var(--calcite-color-green-070)`,
                 },
             },
+            arcgis: {
+                highlight: 'var(--arcgis-highlight-color)',
+            }
         },
         extend: {
             spacing: {

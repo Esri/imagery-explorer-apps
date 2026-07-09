@@ -18,7 +18,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import { IS_MOBILE_DEVICE } from '@shared/constants/UI';
 import { modeChanged } from '@shared/store/ImageryScene/reducer';
 import { useAppDispatch } from '@shared/store/configureStore';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 type Props = {
     content: string;
@@ -33,24 +33,24 @@ export const DynamicModeInfo: FC<Props> = ({ content }) => {
         dispatch(modeChanged('find a scene'));
     };
 
-    const instructionTextRef = useRef<HTMLParagraphElement>(null);
+    // const instructionTextRef = useRef<HTMLParagraphElement>(null);
 
-    useEffect(() => {
-        const element = instructionTextRef.current;
+    // useEffect(() => {
+    //     const element = instructionTextRef.current;
 
-        if (!element) return;
+    //     if (!element) return;
 
-        const openFindASceneLink = element.querySelector('.open-find-a-scene');
+    //     const openFindASceneLink = element.querySelector('.open-find-a-scene');
 
-        if (!openFindASceneLink) return;
+    //     if (!openFindASceneLink) return;
 
-        openFindASceneLink?.addEventListener('click', (e) => {
-            e.preventDefault();
-            dispatch(modeChanged('find a scene'));
-        });
+    //     openFindASceneLink?.addEventListener('click', (e) => {
+    //         e.preventDefault();
+    //         dispatch(modeChanged('find a scene'));
+    //     });
 
-        // ('click', openFindASceneMode, { once: true });
-    }, []);
+    //     // ('click', openFindASceneMode, { once: true });
+    // }, []);
 
     return (
         <div className="max-w-sm ml-4 2xl:ml-10">
@@ -63,10 +63,10 @@ export const DynamicModeInfo: FC<Props> = ({ content }) => {
             {IS_MOBILE_DEVICE === false ? (
                 <p
                     className="text-sm opacity-80 mt-2"
-                    ref={instructionTextRef}
-                    dangerouslySetInnerHTML={{
-                        __html: t('dynamic_view_instruction'),
-                    }} // TODO: remove this
+                    // ref={instructionTextRef}
+                    // dangerouslySetInnerHTML={{
+                    //     __html: t('dynamic_view_instruction'),
+                    // }} // TODO: remove this
                 >
                     {/* To select an individual scene for a specific date, try the{' '}
                     <span
@@ -76,6 +76,18 @@ export const DynamicModeInfo: FC<Props> = ({ content }) => {
                         FIND A SCENE
                     </span>{' '}
                     mode. */}
+
+                    <Trans
+                        i18nKey="dynamic_view_instruction"
+                        components={{
+                            action: (
+                                <span
+                                    className="underline cursor-pointer hover:opacity-100 uppercase"
+                                    onClick={openFindASceneMode}
+                                />
+                            ),
+                        }}
+                    />
                 </p>
             ) : null}
         </div>

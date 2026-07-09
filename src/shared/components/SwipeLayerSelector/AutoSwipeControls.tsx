@@ -30,10 +30,11 @@ import {
     AutoSwipeStatus,
     autoSwipeStatusChanged,
 } from '@shared/store/Map/reducer';
-import { Slider } from '../Slider';
+// import { Slider } from '../Slider';
 import classNames from 'classnames';
 import { delay } from '@shared/utils/snippets/delay';
 import { useTranslation } from 'react-i18next';
+import { AnimationSpeedControl } from '../AnimationControl/AnimationSpeedControl';
 
 export const AutoSwipeControls = () => {
     const dispatch = useAppDispatch();
@@ -82,11 +83,12 @@ export const AutoSwipeControls = () => {
     return (
         <div className="flex items-center">
             <div
-                className={classNames('flex-grow mx-2 mt-2', {
+                className={classNames('flex-grow mx-2', {
                     'is-disabled': !status,
                 })}
+                inert={!status}
             >
-                <Slider
+                {/* <Slider
                     value={AUTO_SWIPE_SPEEDS.indexOf(speed)}
                     steps={sliderSteps}
                     onChange={(index) => {
@@ -101,30 +103,53 @@ export const AutoSwipeControls = () => {
 
                 <div className="text-xs text-center mt-1">
                     <span>{t('speed')}</span>
-                </div>
+                </div> */}
+                <AnimationSpeedControl
+                    speed={speed}
+                    speeedOptions={AUTO_SWIPE_SPEEDS}
+                    onChange={(val) => {
+                        dispatch(autoSwipeSpeedChanged(val));
+                    }}
+                />
             </div>
 
-            <div className={'flex cursor-pointer items-center mx-1'}>
+            <div
+                className={'flex cursor-pointer items-center mx-1 mt-1'}
+                style={{
+                    '--calcite-button-text-color': 'var(--custom-light-blue)',
+                }}
+            >
                 {!status && (
-                    <div
-                        className=" bg-custom-light-blue-5 px-1"
+                    <calcite-button
+                        // className=" bg-custom-light-blue-5 px-1"
                         onClick={statusOnChange.bind(null, 'playing')}
                         title={t('enable_auto_swipe')}
+                        label={t('enable_auto_swipe')}
+                        iconStart={'play'}
+                        scale="s"
+                        style={{
+                            '--calcite-button-background-color':
+                                'var(--custom-light-blue-5)',
+                        }}
                     >
-                        {StartPlayButton}
-                    </div>
+                        {/* {StartPlayButton} */}
+                    </calcite-button>
                 )}
                 {status && (
-                    <div
-                        className="mr-1"
+                    <calcite-button
+                        // className="mr-1"
                         onClick={handleCopyLink}
                         title={
                             linkCopied
                                 ? t('link_copied')
                                 : t('copy_animation_link')
                         }
+                        label={t('copy_animation_link')}
+                        iconStart={linkCopied ? 'check' : 'link'}
+                        scale="s"
+                        appearance="transparent"
                     >
-                        {linkCopied ? (
+                        {/* {linkCopied ? (
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
@@ -150,13 +175,19 @@ export const AutoSwipeControls = () => {
                                 />
                                 <path fill="none" d="M0 0h24v24H0z" />
                             </svg>
-                        )}
-                    </div>
+                        )} */}
+                    </calcite-button>
                 )}
                 {status && (
-                    <div onClick={statusOnChange.bind(null, null)}>
-                        {CloseButton}
-                    </div>
+                    <calcite-button
+                        scale="s"
+                        appearance="transparent"
+                        onClick={statusOnChange.bind(null, null)}
+                        iconStart="x-circle"
+                        label={'stop animation'}
+                    >
+                        {/* {CloseButton} */}
+                    </calcite-button>
                 )}
             </div>
         </div>

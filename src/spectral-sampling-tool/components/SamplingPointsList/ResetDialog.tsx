@@ -36,12 +36,16 @@ export const ResetDialog: FC<Props> = ({
             </p>
 
             <div className="my-1">
-                <Button scale="s" onClickHandler={cancelButtonOnClick}>
+                <Button
+                    scale="s"
+                    onClickHandler={cancelButtonOnClick}
+                    label="cancel"
+                >
                     {t('cancel')}
                 </Button>
             </div>
 
-            <Button scale="s" onClickHandler={resetButtonOnClick}>
+            <Button scale="s" onClickHandler={resetButtonOnClick} label="reset">
                 Reset
             </Button>
         </div>

@@ -19,6 +19,7 @@ import {
     selectError4SpectralProfileTool,
 } from '@shared/store/SpectralProfileTool/selectors';
 import React, { FC, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
     LandCoverType,
     ListOfLandCoverTypes,
@@ -140,8 +141,8 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
         return null;
     }
 
-    return (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-custom-background-90 z-50 flex items-center justify-center">
+    return createPortal(
+        <div className="fixed top-0 left-0 w-screen h-screen bg-custom-background-90 z-50 flex items-center justify-center backdrop-blur-sm">
             <CloseButton onClick={closeButtonClickHandler} />
 
             <div className="mx-auto w-4/5 max-w-7xl overflow-x-auto fancy-scrollbar">
@@ -176,6 +177,7 @@ export const ExpandedSpectralProfileChartContainer: FC<Props> = ({
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };

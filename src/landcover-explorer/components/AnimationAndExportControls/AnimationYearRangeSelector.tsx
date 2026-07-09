@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
-import { TimeSliderWidget } from '../TimeSelector/TimeSliderWidget';
+import { RangeSlider } from '@shared/components/Slider/RangeSlider';
 // import { getAvailableYears } from '@shared/services/sentinel-2-10m-landcover/timeInfo';
-import { getUTCDate } from '@shared/utils/date-time/getUTCDate';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import {
     selectAvaiableYearsForLandCoverLayer,
@@ -26,26 +25,18 @@ export const AnimationYearRangeSelector = () => {
 
     const availableYears = useAppSelector(selectAvaiableYearsForLandCoverLayer);
 
-    const initialTimeExtent = useMemo(() => {
+    const sliderValues = useMemo(() => {
         const currentYear = getCurrentYear();
-
         const { start, end } = aminationYearRange || {
             start: currentYear,
-            end: currentYear, // default to current year
+            end: currentYear,
         };
+        return [start || currentYear, end || currentYear];
+    }, [aminationYearRange]);
 
-        if (!start || !end || start > end) {
-            return {
-                start: getUTCDate(currentYear - 1, 1, 1), // January 1st of the start year
-                end: getUTCDate(currentYear, 1, 1),
-            };
-        }
-
-        return {
-            start: getUTCDate(start, 1, 1), // January 1st of the start year
-            end: getUTCDate(end, 1, 1),
-        };
-    }, [availableYears, aminationYearRange]);
+    const minYear = availableYears?.[0] ?? getCurrentYear() - 1;
+    const maxYear =
+        availableYears?.[availableYears.length - 1] ?? getCurrentYear();
 
     return (
         <div className="mt-4">
@@ -59,25 +50,23 @@ export const AnimationYearRangeSelector = () => {
                 </span>
             </div>
 
-            <TimeSliderWidget
-                mode="time-window"
-                years={availableYears}
-                initialTimeExtent={initialTimeExtent}
-                visible={true}
-                timeExtentOnChange={(startYear, endYear) => {
-                    if (!startYear || !endYear || startYear > endYear) {
-                        return; // invalid range, do nothing
-                    }
-
+            <RangeSlider
+                values={sliderValues}
+                min={minYear}
+                max={maxYear}
+                steps={1}
+                tickLabels={availableYears}
+                countOfTicks={20}
+                valuesOnChange={(vals) => {
+                    const [startYear, endYear] = vals;
+                    if (!startYear || !endYear || startYear > endYear) return;
                     dispatch(
                         landcoverAnimationYearRangeChanged({
                             start: startYear,
                             end: endYear,
                         })
                     );
-                    // console.log(startYear, endYear)
                 }}
-                // selectedYear={year}
             />
         </div>
     );

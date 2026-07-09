@@ -70,7 +70,7 @@ const useSentinel2Layer = ({
     /**
      * get sentinel 2 layer using mosaic created using the input year
      */
-    const getSentinel2Layer = async () => {
+    const getSentinel2Layer = () => {
         layerRef.current = new ImageryLayer({
             // URL to the imagery service
             url: SENTINEL_2_SERVICE_URL,

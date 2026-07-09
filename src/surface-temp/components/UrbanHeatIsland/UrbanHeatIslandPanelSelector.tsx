@@ -37,6 +37,7 @@ export const UrbanHeatIslandPanelSelector = () => {
                     decorativeIndicator={
                         activePanel === 'create new job' ? 'left' : null
                     }
+                    label="create new job"
                 >
                     <span className="text-xs">
                         {t('new_job', { ns: APP_NAME })}
@@ -58,6 +59,7 @@ export const UrbanHeatIslandPanelSelector = () => {
                     decorativeIndicator={
                         activePanel === 'view pending job' ? 'left' : null
                     }
+                    label="view pending job"
                 >
                     <span className="text-xs">
                         {t('pending_job', { ns: APP_NAME })}
@@ -79,6 +81,7 @@ export const UrbanHeatIslandPanelSelector = () => {
                     decorativeIndicator={
                         activePanel === 'view previous jobs' ? 'left' : null
                     }
+                    label="view previous jobs"
                 >
                     <span className="text-xs">
                         {t('previous_jobs', { ns: APP_NAME })}

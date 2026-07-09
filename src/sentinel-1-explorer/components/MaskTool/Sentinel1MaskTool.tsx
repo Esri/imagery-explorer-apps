@@ -37,7 +37,7 @@ import {
     selectQueryParams4SceneInSelectedMode,
 } from '@shared/store/ImageryScene/selectors';
 import classNames from 'classnames';
-import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
+// import { PixelRangeSlider } from '@shared/components/PixelRangeSlider';
 import { RadarIndex } from '@typing/imagery-service';
 import {
     SENTINEL1_WATER_ANOMALY_INDEX_PIXEL_RANGE,
@@ -48,6 +48,7 @@ import { TotalVisibleAreaInfo } from '@shared/components/TotalAreaInfo/TotalArea
 import { useSentinel1MaskToolFullPixelValueRange } from './useSentinel1MaskToolFullPixelValueRange';
 import { useTranslation } from 'react-i18next';
 import { APP_NAME } from '@shared/config';
+import { RangeSlider } from '@shared/components/Slider/RangeSlider';
 
 export const Sentinel1PixelValueRangeByIndex: Record<RadarIndex, number[]> = {
     water: SENTINEL1_WATER_INDEX_PIXEL_RANGE,
@@ -143,14 +144,14 @@ export const Sentinel1MaskTool = () => {
                 <MaskToolWarnigMessage />
             ) : (
                 <>
-                    <div className={classNames('relative w-full h-[120px]')}>
-                        <div className="absolute top-3 right-0">
+                    <div className={classNames('relative w-full')}>
+                        <div className="text-right mb-4 mt-3">
                             <TotalVisibleAreaInfo
                                 label={t('estimated_mask_area')}
                             />
                         </div>
 
-                        <PixelRangeSlider
+                        <RangeSlider
                             values={maskOptions.selectedRange}
                             min={fullPixelValueRange[0]}
                             max={fullPixelValueRange[1]}
@@ -163,7 +164,9 @@ export const Sentinel1MaskTool = () => {
                         />
                     </div>
 
-                    <MaskLayerRenderingControls />
+                    <div className="mt-4">
+                        <MaskLayerRenderingControls />
+                    </div>
                 </>
             )}
         </div>

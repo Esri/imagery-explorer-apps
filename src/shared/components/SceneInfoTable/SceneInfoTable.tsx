@@ -45,6 +45,10 @@ export type SceneInfoTableData = {
 
 type Props = {
     data: SceneInfoTableData[];
+    /**
+     * text to be displayed when no scene is selected, or the selected scene has no info to be displayed in the table
+     */
+    noSelectionText?: string;
 };
 
 const SceneInfoRow: FC<SceneInfoTableData> = ({
@@ -134,16 +138,23 @@ const SceneInfoRow: FC<SceneInfoTableData> = ({
     );
 };
 
-export const SceneInfoTable: FC<Props> = ({ data }: Props) => {
+export const SceneInfoTable: FC<Props> = ({ data, noSelectionText }: Props) => {
     const { t } = useTranslation();
 
     const getContent = () => {
         if (!data || !data.length) {
             return (
                 <div className="text-xs opacity-80 text-center mx-auto max-w-[240px]">
-                    <p className="my-3 mx-3">{t('select_acquisition_date')}</p>
-
-                    <p>{t('scenes_displayed_based_on_intersection')}</p>
+                    {noSelectionText ? (
+                        <p className="my-3 mx-3">{noSelectionText}</p>
+                    ) : (
+                        <>
+                            <p className="my-3 mx-3">
+                                {t('select_acquisition_date')}
+                            </p>
+                            <p>{t('scenes_displayed_based_on_intersection')}</p>
+                        </>
+                    )}
                 </div>
             );
         }

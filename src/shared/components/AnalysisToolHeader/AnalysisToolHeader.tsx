@@ -16,7 +16,6 @@
 import React, { FC, useMemo } from 'react';
 import { Dropdown, DropdownData } from '../Dropdown';
 import { Tooltip } from '../Tooltip';
-import { CalciteIcon } from '@esri/calcite-components-react';
 
 type Props = {
     title: string;
@@ -44,6 +43,23 @@ type Props = {
     children?: React.ReactNode;
 };
 
+export const AnalysisToolHeaderText: FC<{
+    title: string;
+    tooltipText?: string;
+}> = ({ title, tooltipText }) => {
+    return (
+        <div className="flex items-center mr-4">
+            {tooltipText && (
+                <Tooltip content={tooltipText} width={280}>
+                    <calcite-icon scale="s" icon="information" />
+                </Tooltip>
+            )}
+
+            <span className="uppercase text-sm ml-1">{title}</span>
+        </div>
+    );
+};
+
 export const AnalysisToolHeader: FC<Props> = ({
     title,
     dropdownListOptions,
@@ -65,15 +81,17 @@ export const AnalysisToolHeader: FC<Props> = ({
 
     return (
         <div className="flex items-center w-full select-none">
-            <div className="flex items-center mr-4">
+            {/* <div className="flex items-center mr-4">
                 {tooltipText && (
                     <Tooltip content={tooltipText} width={280}>
-                        <CalciteIcon scale="s" icon="information" />
+                        <calcite-icon scale="s" icon="information" />
                     </Tooltip>
                 )}
 
                 <span className="uppercase text-sm ml-1">{title}</span>
-            </div>
+            </div> */}
+
+            <AnalysisToolHeaderText title={title} tooltipText={tooltipText} />
 
             <div className="flex-grow">
                 <Dropdown

@@ -50,6 +50,7 @@ export const AnalysisToolSelector: FC<Props> = ({
                         decorativeIndicator={
                             tool === selectedTool ? 'left' : null
                         }
+                        label="select analyze too;"
                     >
                         <div className="text-center text-xs">
                             <span className="uppercase">{title}</span>

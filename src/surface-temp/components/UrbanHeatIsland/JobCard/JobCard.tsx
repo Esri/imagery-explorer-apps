@@ -1,4 +1,3 @@
-import { CalciteButton, CalciteLoader } from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
 import { PublishAndDownloadJobStatus } from '@shared/store/PublishAndDownloadJobs/reducer';
 import { SIUHIAnalysisJob } from '@shared/store/UrbanHeatIslandTool/reducer';
@@ -85,14 +84,14 @@ export const JobCard: FC<Props> = ({
                 <div className="text-xs mb-2">
                     <p className="opacity-50 mb-2">{errorMessage}</p>
 
-                    <CalciteButton
+                    <calcite-button
                         scale="s"
                         appearance="outline"
                         kind="neutral"
                         onClick={removeJobButtonOnClick}
                     >
                         {t('remove_job', { ns: APP_NAME })}
-                    </CalciteButton>
+                    </calcite-button>
                 </div>
             );
         }
@@ -164,7 +163,7 @@ export const JobCard: FC<Props> = ({
                                 })}
                             </p>
                             <div className="grid grid-cols-2 gap-1">
-                                <CalciteButton
+                                <calcite-button
                                     scale="s"
                                     // width="full"
                                     appearance="outline"
@@ -173,9 +172,9 @@ export const JobCard: FC<Props> = ({
                                     onClick={acceptCreditsButtonOnClick}
                                 >
                                     {t('accept_credits', { ns: APP_NAME })}
-                                </CalciteButton>
+                                </calcite-button>
 
-                                <CalciteButton
+                                <calcite-button
                                     scale="s"
                                     appearance="outline"
                                     kind="neutral"
@@ -184,7 +183,7 @@ export const JobCard: FC<Props> = ({
                                     onClick={rejectCreditsButtonOnClick}
                                 >
                                     {t('reject_credits', { ns: APP_NAME })}
-                                </CalciteButton>
+                                </calcite-button>
                             </div>
                         </>
                     )}
@@ -192,7 +191,7 @@ export const JobCard: FC<Props> = ({
                 {jobCost?.status ===
                     PublishAndDownloadJobStatus.PendingCheckingCost && (
                     <div className="opacity-50 w-full text-sm mt-2 flex items-center">
-                        <CalciteLoader inline scale="m" />
+                        <calcite-loader label={t('loading')} inline scale="m" />
                         <span className="ml-1">
                             {t('credit_estimation_pending', { ns: APP_NAME })}
                         </span>
@@ -214,7 +213,7 @@ export const JobCard: FC<Props> = ({
                                 '--calcite-button-text-color': '#000',
                             }}
                         >
-                            <CalciteButton
+                            <calcite-button
                                 width="full"
                                 scale="s"
                                 onClick={openOutputItemButtonOnClick}
@@ -222,7 +221,7 @@ export const JobCard: FC<Props> = ({
                                 iconEnd="launch"
                             >
                                 {t('view_result_item', { ns: APP_NAME })}
-                            </CalciteButton>
+                            </calcite-button>
                         </div>
                     )}
             </>

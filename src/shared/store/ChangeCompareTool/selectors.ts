@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../configureStore';
 
 export const selectSelectedOption4ChangeCompareTool = (state: RootState) =>
@@ -31,3 +30,6 @@ export const selectFullPixelValuesRangeInChangeCompareTool = (
 
 export const selectChangeCompareToolState = (state: RootState) =>
     state.ChangeCompareTool;
+
+export const selectSelectedRange2InChangeCompareTool = (state: RootState) =>
+    state.ChangeCompareTool.selectedRange2;

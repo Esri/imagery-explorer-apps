@@ -30,17 +30,32 @@ export const getMainContent = (values: number[], mapPoint: Point) => {
         values
     ).toFixed(3);
 
+    // const content = `
+    //     <div class='text-custom-light-blue text-xs'
+    //         data-testid='sentinel-2-popup-content'
+    //         data-sentinel-2-ndmi="${moistureIndex}"
+    //         data-sentinel-2-ndvi="${vegetationIndex}"
+    //         data-sentinel-2-mndwi="${waterIndex}"
+    //     >
+    //         <div class='mb-2'>
+    //             <span><span class='text-custom-light-blue-50'>NDMI:</span> ${moistureIndex}</span><br />
+    //             <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span><br />
+    //             <span><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
+    //         </div>
+    //     </div>
+    // `;
+
     const content = `
-        <div class='text-custom-light-blue text-xs'
+        <div style='color: var(--custom-light-blue); font-size: 0.75rem; line-height: 1rem;'
             data-testid='sentinel-2-popup-content'
             data-sentinel-2-ndmi="${moistureIndex}"
             data-sentinel-2-ndvi="${vegetationIndex}"
             data-sentinel-2-mndwi="${waterIndex}"
         >
-            <div class='mb-2'>
-                <span><span class='text-custom-light-blue-50'>NDMI:</span> ${moistureIndex}</span><br />
-                <span><span class='text-custom-light-blue-50'>NDVI:</span> ${vegetationIndex}</span><br />
-                <span><span class='text-custom-light-blue-50'>MNDWI:</span> ${waterIndex}</span>
+            <div style='margin-bottom: 0.5rem;'>
+                <span><span style='color: var(--custom-light-blue-50);'>NDMI:</span> ${moistureIndex}</span><br />
+                <span><span style='color: var(--custom-light-blue-50);'>NDVI:</span> ${vegetationIndex}</span><br />
+                <span><span style='color: var(--custom-light-blue-50);'>MNDWI:</span> ${waterIndex}</span>
             </div>
         </div>
     `;

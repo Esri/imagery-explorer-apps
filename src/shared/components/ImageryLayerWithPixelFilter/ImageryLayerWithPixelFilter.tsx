@@ -17,7 +17,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import ImageryLayer from '@arcgis/core/layers/ImageryLayer';
 import MapView from '@arcgis/core/views/MapView';
 import RasterFunction from '@arcgis/core/layers/support/RasterFunction';
-import PixelBlock from '@arcgis/core/layers/support/PixelBlock';
+import type { PixelData } from '@arcgis/core/layers/raster/types';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import { getLockRasterMosaicRule } from '../ImageryLayer/useImageLayer';
 import { BlendMode } from '@typing/argis-sdk-for-javascript';
@@ -46,6 +46,11 @@ type Props = {
      * user selected pixel value range
      */
     selectedPixelValueRange: number[];
+    /**
+     * second user selected pixel value range, when provided, this will be used with the first selected range to do a dual range selection
+     * that allows users to select two separate ranges of pixel values to be visualized on the map, instead of just one continuous range
+     */
+    selectedPixelValueRange2?: number[];
     /**
      * user selected pixel value range for band 2.
      */
@@ -85,10 +90,6 @@ type Props = {
     ) => void;
 };
 
-type PixelData = {
-    pixelBlock: PixelBlock;
-};
-
 export const ImageryLayerWithPixelFilter: FC<Props> = ({
     mapView,
     groupLayer,
@@ -97,6 +98,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
     rasterFunction,
     visible,
     selectedPixelValueRange,
+    selectedPixelValueRange2,
     selectedPixelValueRange4Band2,
     fullPixelValueRange,
     blendMode,
@@ -111,6 +113,8 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
      * user selected pixel value range for band 1
      */
     const selectedRangeRef = useRef<number[]>(null);
+
+    const selectedRange2Ref = useRef<number[]>(null);
 
     /**
      * user selected pixel value range for band 2
@@ -149,7 +153,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
      * Pixel filter function to process and filter pixel data based on the provided ranges and colors
      * @param pixelData - The pixel data to filter
      */
-    const pixelFilterFunction = (pixelData: PixelData) => {
+    const pixelFilterFunction = (pixelData: PixelData): void => {
         // const color = colorRef.current || [255, 255, 255];
 
         const { pixelBlock } = pixelData || {};
@@ -222,16 +226,46 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
                 totalPixels--;
             }
 
+            // If the second selected pixel value range is not provided, we will only use one continuous range to filter the pixels.
             // If the adjusted pixel value is outside the selected range, or if the original pixel value is 0, hide this pixel.
             // A pixel value of 0 typically indicates it is outside the extent of the selected imagery scene.
             if (
-                adjustedPixelValueFromBand1 < minValSelectedPixelRange4Band1 ||
-                adjustedPixelValueFromBand1 > maxValSelectedPixelRange4Band1 ||
-                band1[i] === 0
+                !selectedRange2Ref.current &&
+                (adjustedPixelValueFromBand1 < minValSelectedPixelRange4Band1 ||
+                    adjustedPixelValueFromBand1 >
+                        maxValSelectedPixelRange4Band1 ||
+                    band1[i] === 0)
             ) {
                 pixelBlock.mask[i] = 0;
                 visiblePixels--;
                 continue;
+            }
+
+            if (selectedRange2Ref.current) {
+                const [minValSelectedPixelRange2, maxValSelectedPixelRange2] =
+                    selectedRange2Ref.current || [undefined, undefined];
+
+                const isWithInSelectedRange =
+                    adjustedPixelValueFromBand1 >=
+                        minValSelectedPixelRange4Band1 &&
+                    adjustedPixelValueFromBand1 <=
+                        maxValSelectedPixelRange4Band1;
+
+                const isWithInSelectedRange2 =
+                    adjustedPixelValueFromBand1 >= minValSelectedPixelRange2 &&
+                    adjustedPixelValueFromBand1 <= maxValSelectedPixelRange2;
+
+                // If the second selected pixel value range is provided, we will use two separate ranges to filter the pixels.
+                // If the adjusted pixel value is within either of the two selected ranges, or if the original pixel value is 0, hide this pixel.
+                if (
+                    (isWithInSelectedRange === false &&
+                        isWithInSelectedRange2 === false) ||
+                    band1[i] === 0
+                ) {
+                    pixelBlock.mask[i] = 0;
+                    visiblePixels--;
+                    continue;
+                }
             }
 
             // If band 2 exists, adjust its pixel value to ensure it fits within the full pixel value range.
@@ -343,6 +377,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
         selectedRange4Band2Ref.current = selectedPixelValueRange4Band2;
         fullPixelValueRangeRef.current = fullPixelValueRange;
         pixelColorRef.current = pixelColor;
+        selectedRange2Ref.current = selectedPixelValueRange2;
 
         if (!layerRef.current) {
             return;
@@ -355,6 +390,7 @@ export const ImageryLayerWithPixelFilter: FC<Props> = ({
         }
     }, [
         selectedPixelValueRange,
+        selectedPixelValueRange2,
         selectedPixelValueRange4Band2,
         fullPixelValueRange,
         pixelColor,

@@ -20,7 +20,7 @@ import React, { FC, useEffect, useMemo, useState } from 'react';
 // import { getAvailableYears } from '@landcover-explorer/services/sentinel-2-10m-landcover/timeInfo';
 import { GroupedBarChartGroupData } from '@vannizhang/react-d3-charts/dist/GroupedBarChart/types';
 import { GroupedBarChart } from '@vannizhang/react-d3-charts';
-import { CalciteLoader } from '@esri/calcite-components-react';
+
 // import { MARGIN } from '@landcover-explorer/QuickD3Chart/constants';
 
 // const margin = {
@@ -78,7 +78,7 @@ Props) => {
                     height: '60vh',
                 }}
             >
-                <CalciteLoader scale="s"></CalciteLoader>
+                <calcite-loader label={'loading'} scale="s"></calcite-loader>
             </div>
         );
     }

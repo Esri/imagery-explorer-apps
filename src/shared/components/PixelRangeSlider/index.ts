@@ -13,4 +13,4 @@
  * limitations under the License.
  */
 
-export { PixelRangeSlider } from '../Slider/PixelRangeSlider';
+// export { PixelRangeSlider } from '../Slider/PixelRangeSlider';

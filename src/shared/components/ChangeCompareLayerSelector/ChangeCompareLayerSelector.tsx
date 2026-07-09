@@ -16,10 +16,9 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 import { Button } from '../Button';
-import { Dropdown } from '../Dropdown';
-import { SpectralIndex } from '@typing/imagery-service';
 import { QueryParams4ImageryScene } from '@shared/store/ImageryScene/reducer';
 import { useTranslation } from 'react-i18next';
+import { getTimeStrInUTCTimeZone } from '@shared/utils/date-time/formatInUTCTimeZone';
 
 export type ActiveScene4ChangeCompareTool = 'scene a' | 'scene b';
 
@@ -41,12 +40,10 @@ type Props = {
      * query params for selected Scene B
      */
     queryParams4SceneB: QueryParams4ImageryScene;
-    // /**
-    //  * emits when user selects a new spectral index
-    //  * @param val
-    //  * @returns
-    //  */
-    // selectedSpectralIndexOnChange: (val: SpectralIndex) => void;
+    /**
+     * If true, the acquisition timestamp will be shown in the label of each scene in the change compare layer selector. Otherwise, only the acquisition date will be shown.
+     */
+    showAcquisitionTimestamp?: boolean;
     /**
      * emits when user clicks on view change button
      * @returns
@@ -61,12 +58,17 @@ type Props = {
 
 type ButtonTextLabelProps = {
     nameOfScene: ActiveScene4ChangeCompareTool;
+    /**
+     * If true, the acquisition timestamp will be shown in the label of each scene in the change compare layer selector. Otherwise, only the acquisition date will be shown.
+     */
+    showAcquisitionTimestamp?: boolean;
     queryParams4ActiveScene: QueryParams4ImageryScene;
 };
 
 const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
     nameOfScene,
     queryParams4ActiveScene,
+    showAcquisitionTimestamp = false,
 }) => {
     const { t } = useTranslation();
 
@@ -87,6 +89,18 @@ const ButtonTextLabel: FC<ButtonTextLabelProps> = ({
             <span className="uppercase">{nameLabel}</span>
             <br />
             <span className="">{queryParams4ActiveScene.acquisitionDate}</span>
+            {showAcquisitionTimestamp &&
+                queryParams4ActiveScene.acquisitionTimestampOfSelectedScene && (
+                    <>
+                        <br />
+                        <span className="">
+                            {getTimeStrInUTCTimeZone(
+                                queryParams4ActiveScene.acquisitionTimestampOfSelectedScene,
+                                true
+                            )}
+                        </span>
+                    </>
+                )}
         </div>
     );
 };
@@ -96,6 +110,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
     changeCompareLayerIsOn,
     queryParams4SceneA,
     queryParams4SceneB,
+    showAcquisitionTimestamp,
     activeSceneOnChange,
     viewChangeButtonOnClick,
     // selectedSpectralIndexOnChange,
@@ -138,6 +153,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                             ? 'left'
                             : null
                     }
+                    label="select scene a"
                 >
                     {/* <div className="text-xs normal-case">
                         <span>choose</span>
@@ -147,6 +163,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     <ButtonTextLabel
                         nameOfScene={'scene a'}
                         queryParams4ActiveScene={queryParams4SceneA}
+                        showAcquisitionTimestamp={showAcquisitionTimestamp}
                     />
                 </Button>
             </div>
@@ -173,6 +190,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                             ? 'left'
                             : null
                     }
+                    label="select scene b"
                 >
                     {/* <div className="text-xs normal-case">
                         <span>choose</span>
@@ -182,6 +200,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     <ButtonTextLabel
                         nameOfScene={'scene b'}
                         queryParams4ActiveScene={queryParams4SceneB}
+                        showAcquisitionTimestamp={showAcquisitionTimestamp}
                     />
                 </Button>
             </div>
@@ -194,6 +213,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                 className={classNames('relative', {
                     'is-disabled': viewChangeButtonDisabled,
                 })}
+                inert={viewChangeButtonDisabled}
             >
                 <Button
                     appearance={
@@ -204,6 +224,7 @@ export const ChangeCompareLayerSelector: FC<Props> = ({
                     decorativeIndicator={
                         changeCompareLayerIsOn === true ? 'left' : null
                     }
+                    label="view change"
                 >
                     <div className="text-xs normal-case">
                         <span className="uppercase">{t('view_change')}</span>

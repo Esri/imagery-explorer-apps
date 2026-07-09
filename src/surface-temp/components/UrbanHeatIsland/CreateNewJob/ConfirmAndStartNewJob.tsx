@@ -1,8 +1,3 @@
-import {
-    CalciteButton,
-    CalciteInputText,
-    CalciteLabel,
-} from '@esri/calcite-components-react';
 import { APP_NAME } from '@shared/config';
 import { useAppDispatch, useAppSelector } from '@shared/store/configureStore';
 import { urbanHeatIslandToolFiltersReset } from '@shared/store/UrbanHeatIslandTool/reducer';
@@ -53,7 +48,7 @@ export const ConfirmAndStartNewJob = () => {
                     } as React.CSSProperties
                 }
             >
-                {/* <CalciteButton
+                {/* <calcite-button
                     appearance="outline"
                     scale="m"
                     width="full"
@@ -61,9 +56,9 @@ export const ConfirmAndStartNewJob = () => {
                     disabled={shouldDisableCreateJobButton}
                 >
                     {t('get_estimate', { ns: APP_NAME })}
-                </CalciteButton> */}
+                </calcite-button> */}
 
-                <CalciteButton
+                <calcite-button
                     appearance="outline"
                     scale="m"
                     width="full"
@@ -78,10 +73,10 @@ export const ConfirmAndStartNewJob = () => {
                     }}
                 >
                     {t('create_new_job', { ns: APP_NAME })}
-                </CalciteButton>
+                </calcite-button>
 
                 {failedToCreateJobErrorMessage && (
-                    <CalciteButton
+                    <calcite-button
                         appearance="outline"
                         scale="s"
                         width="full"
@@ -92,7 +87,7 @@ export const ConfirmAndStartNewJob = () => {
                         }}
                     >
                         {t('reset', { ns: APP_NAME })}
-                    </CalciteButton>
+                    </calcite-button>
                 )}
             </div>
 
