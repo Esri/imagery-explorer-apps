@@ -481,6 +481,11 @@ To build the app, you can run the command below, this will place all files neede
 npm run build:diex
 ```
 
+### Resources
+
+- [Disaster Imagery Layer](https://www.arcgis.com/home/item.html?id=ac032dd7c48248fe954ca625d83faa72#overview)
+- [Disaster Imagery Explorer - quickstart guide](https://www.esri.com/arcgis-blog/products/arcgis-living-atlas/imagery/disaster-imagery-explorer-quick-start-guide)
+
 ### Vantor Open Data Program Imagery Licensing
 
 - Source Imagery (Vantor) - Vantor releases before and after satellite imagery into the public domain under a [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.en) license, which allows for its rapid use and easy integration with existing humanitarian response technologies.
