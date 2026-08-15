@@ -16,23 +16,34 @@
 import classNames from 'classnames';
 import React, { CSSProperties, FC } from 'react';
 import { useAppSelector } from '@shared/store/configureStore';
-import { selectIsMapUpdating } from '@shared/store/Map/selectors';
+import {
+    selectIsMapUpdating,
+    selectSwipeWidgetHandlerPosition,
+} from '@shared/store/Map/selectors';
 import { selectIsAnimationPlaying } from '@shared/store/UI/selectors';
+import { selectIsSwipeModeOn } from '@shared/store/ImageryScene/selectors';
 
-type Props = {
-    /**
-     * position of swipe widget handler on x axis
-     */
-    swipeWidgetHandlerPosition?: number;
-};
+// type Props = {
+//     // /**
+//     //  * position of swipe widget handler on x axis
+//     //  */
+//     // swipeWidgetHandlerPosition?: number;
+// };
 
-export const MapLoadingIndicator: FC<Props> = ({
-    swipeWidgetHandlerPosition,
-}: Props) => {
+export const MapLoadingIndicator: FC = () => {
     const isMapUpdating = useAppSelector(selectIsMapUpdating);
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
     const active = isMapUpdating && !isAnimationPlaying;
+
+    const swipeWidgetHandlerPosition = useAppSelector(
+        selectSwipeWidgetHandlerPosition
+    );
+
+    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
+
+    const shouldSplitBySwipePosition =
+        isSwipeWidgetVisible && swipeWidgetHandlerPosition;
 
     if (!active) {
         return null;
@@ -47,7 +58,7 @@ export const MapLoadingIndicator: FC<Props> = ({
                 )}
                 style={
                     {
-                        width: swipeWidgetHandlerPosition
+                        width: shouldSplitBySwipePosition
                             ? `${swipeWidgetHandlerPosition}%`
                             : '100%',
                         // '--calcite-ui-brand': 'var(--custom-light-blue)',
@@ -59,7 +70,7 @@ export const MapLoadingIndicator: FC<Props> = ({
                 <calcite-loader label={'loading'} />
             </div>
 
-            {swipeWidgetHandlerPosition && (
+            {shouldSplitBySwipePosition && (
                 <div
                     className={classNames(
                         'flex items-center h-full absolute top-0 right-0 pointer-events-none'

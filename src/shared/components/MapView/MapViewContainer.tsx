@@ -22,7 +22,7 @@ import {
     selectMapCenter,
     selectMapPopupAnchorLocation,
     selectMapZoom,
-    selectSwipeWidgetHandlerPosition,
+    // selectSwipeWidgetHandlerPosition,
 } from '../../store/Map/selectors';
 import {
     selectAnimationStatus,
@@ -51,7 +51,7 @@ import ReferenceLayers from './ReferenceLayers';
 import {
     // selectActiveAnalysisTool,
     selectAppMode,
-    selectIsSwipeModeOn,
+    // selectIsSwipeModeOn,
 } from '@shared/store/ImageryScene/selectors';
 // import { selectActiveAnalysisTool } from '@shared/store/Analysis/selectors';
 import { MapCenterIndicator } from './MapCenterIndicator';
@@ -88,11 +88,11 @@ const MapViewContainer: FC<Props> = ({
 
     const isAnimationPlaying = useAppSelector(selectIsAnimationPlaying);
 
-    const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
+    // const isSwipeWidgetVisible = useAppSelector(selectIsSwipeModeOn);
 
-    const swipeWidgetHandlerPosition = useAppSelector(
-        selectSwipeWidgetHandlerPosition
-    );
+    // const swipeWidgetHandlerPosition = useAppSelector(
+    //     selectSwipeWidgetHandlerPosition
+    // );
 
     const mode = useAppSelector(selectAppMode);
 
@@ -181,9 +181,9 @@ const MapViewContainer: FC<Props> = ({
                 />
 
                 <MapLoadingIndicator
-                    swipeWidgetHandlerPosition={
-                        isSwipeWidgetVisible ? swipeWidgetHandlerPosition : null
-                    }
+                // swipeWidgetHandlerPosition={
+                //     isSwipeWidgetVisible ? swipeWidgetHandlerPosition : null
+                // }
                 />
 
                 <MapCenterIndicator

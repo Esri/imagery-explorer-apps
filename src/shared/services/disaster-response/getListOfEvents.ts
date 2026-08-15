@@ -3,7 +3,6 @@ import {
     DISASTER_RESPONSE_IMAGERY_SERVICE_URL,
     DisasterResponseImageryServiceField,
 } from './config';
-import { IFeature } from '@esri/arcgis-rest-feature-service';
 
 export const getDistinctListOfEvents = async (): Promise<
     DisasterResponseEvent[]
@@ -51,25 +50,43 @@ export const getDistinctListOfEvents = async (): Promise<
         );
     }
 
-    const events: DisasterResponseEvent[] = data.features.map(
-        (feature: IFeature) => {
-            const attributes = feature.attributes;
-            const event: DisasterResponseEvent = {
-                event: attributes[DisasterResponseImageryServiceField.EVENT],
-                title:
-                    attributes[DisasterResponseImageryServiceField.TITLE] ||
-                    attributes[DisasterResponseImageryServiceField.EVENT],
-                description:
-                    attributes[DisasterResponseImageryServiceField.DESCRIPTION],
-                startDate:
-                    attributes[
-                        DisasterResponseImageryServiceField.EVENT_START_DATE
-                    ],
-            };
-            return event;
+    const events: DisasterResponseEvent[] = [];
+
+    // returnDistinctValues only dedupes on the exact combination of outFields requested,
+    // so rows with the same event name but differing title/description/date still come
+    // back as separate features; track seen event names to collapse those into one.
+    const eventNameSet: Set<string> = new Set();
+
+    for (const feature of data.features) {
+        const attributes = feature.attributes;
+
+        if (!attributes) {
+            continue;
         }
-    );
-    // console.log('fetched distinct list of events: ', events);
+
+        const eventName = attributes[DisasterResponseImageryServiceField.EVENT];
+
+        if (!eventName || eventNameSet.has(eventName)) {
+            continue;
+        }
+
+        eventNameSet.add(eventName);
+
+        const event: DisasterResponseEvent = {
+            event: attributes[DisasterResponseImageryServiceField.EVENT],
+            title:
+                attributes[DisasterResponseImageryServiceField.TITLE] ||
+                attributes[DisasterResponseImageryServiceField.EVENT],
+            description:
+                attributes[DisasterResponseImageryServiceField.DESCRIPTION],
+            startDate:
+                attributes[
+                    DisasterResponseImageryServiceField.EVENT_START_DATE
+                ],
+        };
+
+        events.push(event);
+    }
 
     const sortedEvents = events.sort((a, b) => b.startDate - a.startDate);
 
